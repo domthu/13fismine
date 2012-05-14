@@ -1,0 +1,58 @@
+<h1>Listing organizations</h1>
+
+<table>
+  <tr>
+    <th>region_id</th>
+    <th>province_id</th>
+    <th>data_scadenza</th>
+    <th>User</th>
+    <th>nota</th>
+    <th>testo2</th>
+    <th>testo3</th>
+    <th>numero1</th>
+    <th>numero2</th>
+    <th>numero3</th>
+    <th>data1</th>
+    <th>data2</th>
+    <th>data3</th>
+    <th>flag1</th>
+    <th>flag2</th>
+    <th>flag3</th>
+    <th>richiedinumeroregistrazione</th>
+    <th>asso_id</th>
+    <th>cross_organization_id</th>
+    <th>comune_id</th>
+  </tr>
+
+<% @organizations.each do |organization| %>
+  <tr>
+    <td><%=h organization.region_id %></td>
+    <td><%=h organization.province_id %></td>
+    <td><%=h organization.data_scadenza %></td>
+    <td><%=h organization.user_id %></td>
+    <td><%=h organization.nota %></td>
+    <td><%=h organization.testo2 %></td>
+    <td><%=h organization.testo3 %></td>
+    <td><%=h organization.numero1 %></td>
+    <td><%=h organization.numero2 %></td>
+    <td><%=h organization.numero3 %></td>
+    <td><%=h organization.data1 %></td>
+    <td><%=h organization.data2 %></td>
+    <td><%=h organization.data3 %></td>
+    <td><%=h organization.flag1 %></td>
+    <td><%=h organization.flag2 %></td>
+    <td><%=h organization.flag3 %></td>
+    <td><%=h organization.richiedinumeroregistrazione %></td>
+    <td><%=h organization.asso_id %></td>
+    <td><%=h organization.cross_organization_id %></td>
+    <td><%=h organization.comune_id %></td>
+    <td><%= link_to 'Show', organization %></td>
+    <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
+    <td><%= link_to 'Destroy', organization, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New organization', new_organization_path %>

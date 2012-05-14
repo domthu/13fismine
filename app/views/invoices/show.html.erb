@@ -1,0 +1,48 @@
+<p>
+  <b>User:</b>
+  <%=h @invoice.user_id %>
+</p>
+
+<p>
+  <b>numero_fattura:</b>
+  <%=h @invoice.numero_fattura %>
+</p>
+
+<p>
+  <b>data_fattura:</b>
+  <%=h @invoice.data_fattura %>
+</p>
+
+<p>
+  <b>sezione:</b>
+  <%=h @invoice.sezione %>
+</p>
+
+<p>
+  <b>anno:</b>
+  <%=h @invoice.anno %>
+</p>
+
+<p>
+  <b>tariffa:</b>
+  <%=h @invoice.tariffa %>
+</p>
+
+<p>
+  <b>sconto:</b>
+  <%=h @invoice.sconto %>
+</p>
+
+<p>
+  <b>iva:</b>
+  <%=h @invoice.iva %>
+</p>
+
+<p>
+  <b>pagamento:</b>
+  <%=h @invoice.pagamento %>
+</p>
+
+
+<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
+<%= link_to 'Back', invoices_path %>

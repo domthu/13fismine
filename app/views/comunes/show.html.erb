@@ -1,0 +1,18 @@
+<p>
+  <b>Name:</b>
+  <%=h @comune.name %>
+</p>
+
+<p>
+  <b>province_id:</b>
+  <%=h @comune.province_id %>
+</p>
+
+<p>
+  <b>region_id:</b>
+  <%=h @comune.region_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_comune_path(@comune) %> |
+<%= link_to 'Back', comunes_path %>

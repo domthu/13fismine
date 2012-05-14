@@ -1,0 +1,2 @@
+module TopSectionsHelper
+end

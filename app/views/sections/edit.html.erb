@@ -1,0 +1,28 @@
+<h1>Editing section</h1>
+
+<% form_for(@section) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :sezione %><br />
+    <%= f.text_field :sezione %>
+  </p>
+  <p>
+    <%= f.label :protetto %><br />
+    <%= f.check_box :protetto %>
+  </p>
+  <p>
+    <%= f.label :ordinamento %><br />
+    <%= f.text_field :ordinamento %>
+  </p>
+  <p>
+    <%= f.label :top_section_id %><br />
+    <%= f.text_field :top_section_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @section %> |
+<%= link_to 'Back', sections_path %>

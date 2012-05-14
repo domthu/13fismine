@@ -1,0 +1,23 @@
+<p>
+  <b>sezione:</b>
+  <%=h @section.sezione %>
+</p>
+
+<p>
+  <b>protetto:</b>
+  <%=h @section.protetto %>
+</p>
+
+<p>
+  <b>ordinamento:</b>
+  <%=h @section.ordinamento %>
+</p>
+
+<p>
+  <b>top_section_id:</b>
+  <%=h @section.top_section_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_section_path(@section) %> |
+<%= link_to 'Back', sections_path %>

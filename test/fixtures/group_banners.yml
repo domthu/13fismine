@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  espositore: MyString
+  url: MyString
+  priorita: 1
+  posizione: MyString
+  se_visibile: false
+  banner: MyString
+  impressions: 1
+  clicks: 1
+  didascalia: MyText
+  se_prima_pagina: false
+  impressions_history: 1
+
+two:
+  espositore: MyString
+  url: MyString
+  priorita: 1
+  posizione: MyString
+  se_visibile: false
+  banner: MyString
+  impressions: 1
+  clicks: 1
+  didascalia: MyText
+  se_prima_pagina: false
+  impressions_history: 1

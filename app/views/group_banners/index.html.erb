@@ -1,0 +1,40 @@
+<h1>Listing group_banners</h1>
+
+<table>
+  <tr>
+    <th>espositore</th>
+    <th>URL</th>
+    <th>priorita</th>
+    <th>posizione</th>
+    <th>se_visibile</th>
+    <th>banner</th>
+    <th>impressions</th>
+    <th>clicks</th>
+    <th>didascalia</th>
+    <th>se_prima_pagina</th>
+    <th>impressions_history</th>
+  </tr>
+
+<% @group_banners.each do |group_banner| %>
+  <tr>
+    <td><%=h group_banner.espositore %></td>
+    <td><%=h group_banner.url %></td>
+    <td><%=h group_banner.priorita %></td>
+    <td><%=h group_banner.posizione %></td>
+    <td><%=h group_banner.se_visibile %></td>
+    <td><%=h group_banner.banner %></td>
+    <td><%=h group_banner.impressions %></td>
+    <td><%=h group_banner.clicks %></td>
+    <td><%=h group_banner.didascalia %></td>
+    <td><%=h group_banner.se_prima_pagina %></td>
+    <td><%=h group_banner.impressions_history %></td>
+    <td><%= link_to 'Show', group_banner %></td>
+    <td><%= link_to 'Edit', edit_group_banner_path(group_banner) %></td>
+    <td><%= link_to 'Destroy', group_banner, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New group_banner', new_group_banner_path %>

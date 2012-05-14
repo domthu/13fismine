@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/news
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/news/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/news/index.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/news/new.html.erb
+END
+index.api.rsb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/news/index.api.rsb
+END
+_news.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/news/_news.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/news/show.html.erb
+END
+_form.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/news/_form.html.erb
+END

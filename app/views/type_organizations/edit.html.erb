@@ -1,0 +1,24 @@
+<h1>Editing type_organization</h1>
+
+<% form_for(@type_organization) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :tipo %><br />
+    <%= f.text_field :tipo %>
+  </p>
+  <p>
+    <%= f.label :descrizione %><br />
+    <%= f.text_field :descrizione %>
+  </p>
+  <p>
+    <%= f.label :priorita %><br />
+    <%= f.text_field :priorita %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @type_organization %> |
+<%= link_to 'Back', type_organizations_path %>

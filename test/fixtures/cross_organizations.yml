@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  organizzazione: MyString
+  sigla: MyString
+  se_visibile: false
+  type_organization_id: 1
+
+two:
+  organizzazione: MyString
+  sigla: MyString
+  se_visibile: false
+  type_organization_id: 1

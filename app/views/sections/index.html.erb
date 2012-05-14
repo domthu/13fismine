@@ -1,0 +1,26 @@
+<h1>Listing sections</h1>
+
+<table>
+  <tr>
+    <th>sezione</th>
+    <th>protetto</th>
+    <th>ordinamento</th>
+    <th>top_section_id</th>
+  </tr>
+
+<% @sections.each do |section| %>
+  <tr>
+    <td><%=h section.sezione %></td>
+    <td><%=h section.protetto %></td>
+    <td><%=h section.ordinamento %></td>
+    <td><%=h section.top_section_id %></td>
+    <td><%= link_to 'Show', section %></td>
+    <td><%= link_to 'Edit', edit_section_path(section) %></td>
+    <td><%= link_to 'Destroy', section, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New section', new_section_path %>

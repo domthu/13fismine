@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/9158/branches/1.3-stable/app/views/projects
+END
+list_members.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/list_members.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/index.html.erb
+END
+destroy.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/destroy.html.erb
+END
+new.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/new.html.erb
+END
+copy.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/copy.html.erb
+END
+index.api.rsb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/index.api.rsb
+END
+settings.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/settings.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/show.html.erb
+END
+_members_box.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/_members_box.html.erb
+END
+_form.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/_form.html.erb
+END
+show.api.rsb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/show.api.rsb
+END
+_edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/projects/_edit.html.erb
+END

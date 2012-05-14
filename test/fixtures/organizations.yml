@@ -1,0 +1,45 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  region_id: 1
+  province_id: 1
+  data_scadenza: 2012-05-14 23:27:47
+  user_id: 1
+  nota: MyString
+  testo2: MyString
+  testo3: MyString
+  numero1: MyText
+  numero2: MyText
+  numero3: MyText
+  data1: 2012-05-14 23:27:47
+  data2: 2012-05-14 23:27:47
+  data3: 2012-05-14 23:27:47
+  flag1: false
+  flag2: false
+  flag3: false
+  richiedinumeroregistrazione: false
+  asso_id: 1
+  cross_organization_id: 1
+  comune_id: 1
+
+two:
+  region_id: 1
+  province_id: 1
+  data_scadenza: 2012-05-14 23:27:47
+  user_id: 1
+  nota: MyString
+  testo2: MyString
+  testo3: MyString
+  numero1: MyText
+  numero2: MyText
+  numero3: MyText
+  data1: 2012-05-14 23:27:47
+  data2: 2012-05-14 23:27:47
+  data3: 2012-05-14 23:27:47
+  flag1: false
+  flag2: false
+  flag3: false
+  richiedinumeroregistrazione: false
+  asso_id: 1
+  cross_organization_id: 1
+  comune_id: 1

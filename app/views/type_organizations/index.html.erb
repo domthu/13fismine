@@ -1,0 +1,24 @@
+<h1>Listing type_organizations</h1>
+
+<table>
+  <tr>
+    <th>tipo</th>
+    <th>descrizione</th>
+    <th>priorita</th>
+  </tr>
+
+<% @type_organizations.each do |type_organization| %>
+  <tr>
+    <td><%=h type_organization.tipo %></td>
+    <td><%=h type_organization.descrizione %></td>
+    <td><%=h type_organization.priorita %></td>
+    <td><%= link_to 'Show', type_organization %></td>
+    <td><%= link_to 'Edit', edit_type_organization_path(type_organization) %></td>
+    <td><%= link_to 'Destroy', type_organization, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New type_organization', new_type_organization_path %>

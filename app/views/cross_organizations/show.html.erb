@@ -1,0 +1,23 @@
+<p>
+  <b>organizzazione:</b>
+  <%=h @cross_organization.organizzazione %>
+</p>
+
+<p>
+  <b>sigla:</b>
+  <%=h @cross_organization.sigla %>
+</p>
+
+<p>
+  <b>se_visibile:</b>
+  <%=h @cross_organization.se_visibile %>
+</p>
+
+<p>
+  <b>type_organization_id:</b>
+  <%=h @cross_organization.type_organization_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_cross_organization_path(@cross_organization) %> |
+<%= link_to 'Back', cross_organizations_path %>

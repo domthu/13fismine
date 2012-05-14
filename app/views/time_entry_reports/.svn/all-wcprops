@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/time_entry_reports
+END
+report.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/time_entry_reports/report.html.erb
+END
+_report_criteria.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/time_entry_reports/_report_criteria.html.erb
+END

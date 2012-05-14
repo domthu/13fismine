@@ -1,0 +1,56 @@
+<h1>Editing group_banner</h1>
+
+<% form_for(@group_banner) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :espositore %><br />
+    <%= f.text_field :espositore %>
+  </p>
+  <p>
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    <%= f.label :priorita %><br />
+    <%= f.text_field :priorita %>
+  </p>
+  <p>
+    <%= f.label :posizione %><br />
+    <%= f.text_field :posizione %>
+  </p>
+  <p>
+    <%= f.label :se_visibile %><br />
+    <%= f.check_box :se_visibile %>
+  </p>
+  <p>
+    <%= f.label :banner %><br />
+    <%= f.text_field :banner %>
+  </p>
+  <p>
+    <%= f.label :impressions %><br />
+    <%= f.text_field :impressions %>
+  </p>
+  <p>
+    <%= f.label :clicks %><br />
+    <%= f.text_field :clicks %>
+  </p>
+  <p>
+    <%= f.label :didascalia %><br />
+    <%= f.text_area :didascalia %>
+  </p>
+  <p>
+    <%= f.label :se_prima_pagina %><br />
+    <%= f.check_box :se_prima_pagina %>
+  </p>
+  <p>
+    <%= f.label :impressions_history %><br />
+    <%= f.text_field :impressions_history %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @group_banner %> |
+<%= link_to 'Back', group_banners_path %>

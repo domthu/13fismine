@@ -1,0 +1,24 @@
+<h1>Listing comunes</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>province_id</th>
+    <th>region_id</th>
+  </tr>
+
+<% @comunes.each do |comune| %>
+  <tr>
+    <td><%=h comune.name %></td>
+    <td><%=h comune.province_id %></td>
+    <td><%=h comune.region_id %></td>
+    <td><%= link_to 'Show', comune %></td>
+    <td><%= link_to 'Edit', edit_comune_path(comune) %></td>
+    <td><%= link_to 'Destroy', comune, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New comune', new_comune_path %>

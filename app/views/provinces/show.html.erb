@@ -1,0 +1,18 @@
+<p>
+  <b>Name:</b>
+  <%=h @province.name %>
+</p>
+
+<p>
+  <b>region_id:</b>
+  <%=h @province.region_id %>
+</p>
+
+<p>
+  <b>sigla:</b>
+  <%=h @province.sigla %>
+</p>
+
+
+<%= link_to 'Edit', edit_province_path(@province) %> |
+<%= link_to 'Back', provinces_path %>

@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/9322/branches/1.3-stable/vendor/plugins/rfpdf
+END
+utf8test.txt
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/7992/branches/1.3-stable/vendor/plugins/rfpdf/utf8test.txt
+END
+init.rb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/7992/branches/1.3-stable/vendor/plugins/rfpdf/init.rb
+END
+test_unicode.rfpdf
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/7992/branches/1.3-stable/vendor/plugins/rfpdf/test_unicode.rfpdf
+END
+CHANGELOG
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/7992/branches/1.3-stable/vendor/plugins/rfpdf/CHANGELOG
+END
+MIT-LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/7992/branches/1.3-stable/vendor/plugins/rfpdf/MIT-LICENSE
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/7992/branches/1.3-stable/vendor/plugins/rfpdf/README
+END
+logo_example.png
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/7992/branches/1.3-stable/vendor/plugins/rfpdf/logo_example.png
+END

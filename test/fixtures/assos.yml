@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  ragione_sociale: MyString
+  indirizzo: MyString
+  email: MyString
+  presidente: MyString
+  referente: MyString
+  consulente: MyString
+  logo: MyString
+  telefono: MyString
+  telefono_alt: MyString
+  fax: MyString
+  comunicazioni: MyText
+  email_alt: MyString
+
+two:
+  ragione_sociale: MyString
+  indirizzo: MyString
+  email: MyString
+  presidente: MyString
+  referente: MyString
+  consulente: MyString
+  logo: MyString
+  telefono: MyString
+  telefono_alt: MyString
+  fax: MyString
+  comunicazioni: MyText
+  email_alt: MyString

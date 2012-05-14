@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/reports
+END
+_simple.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/reports/_simple.html.erb
+END
+issue_report_details.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/reports/issue_report_details.html.erb
+END
+issue_report.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/reports/issue_report.html.erb
+END
+_details.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/reports/_details.html.erb
+END

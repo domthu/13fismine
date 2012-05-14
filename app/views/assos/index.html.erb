@@ -1,0 +1,42 @@
+<h1>Listing assos</h1>
+
+<table>
+  <tr>
+    <th>ragione_sociale</th>
+    <th>indirizzo</th>
+    <th>email</th>
+    <th>presidente</th>
+    <th>referente</th>
+    <th>consulente</th>
+    <th>logo</th>
+    <th>telefono</th>
+    <th>telefono_alt</th>
+    <th>fax</th>
+    <th>comunicazioni</th>
+    <th>email_alt</th>
+  </tr>
+
+<% @assos.each do |asso| %>
+  <tr>
+    <td><%=h asso.ragione_sociale %></td>
+    <td><%=h asso.indirizzo %></td>
+    <td><%=h asso.email %></td>
+    <td><%=h asso.presidente %></td>
+    <td><%=h asso.referente %></td>
+    <td><%=h asso.consulente %></td>
+    <td><%=h asso.logo %></td>
+    <td><%=h asso.telefono %></td>
+    <td><%=h asso.telefono_alt %></td>
+    <td><%=h asso.fax %></td>
+    <td><%=h asso.comunicazioni %></td>
+    <td><%=h asso.email_alt %></td>
+    <td><%= link_to 'Show', asso %></td>
+    <td><%= link_to 'Edit', edit_asso_path(asso) %></td>
+    <td><%= link_to 'Destroy', asso, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New asso', new_asso_path %>

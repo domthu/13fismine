@@ -1,0 +1,24 @@
+<h1>Editing comune</h1>
+
+<% form_for(@comune) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :province_id %><br />
+    <%= f.text_field :province_id %>
+  </p>
+  <p>
+    <%= f.label :region_id %><br />
+    <%= f.text_field :region_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @comune %> |
+<%= link_to 'Back', comunes_path %>

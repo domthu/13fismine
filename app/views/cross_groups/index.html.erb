@@ -1,0 +1,24 @@
+<h1>Listing cross_groups</h1>
+
+<table>
+  <tr>
+    <th>asso_id</th>
+    <th>group_banner_id</th>
+    <th>se_visibile</th>
+  </tr>
+
+<% @cross_groups.each do |cross_group| %>
+  <tr>
+    <td><%=h cross_group.asso_id %></td>
+    <td><%=h cross_group.group_banner_id %></td>
+    <td><%=h cross_group.se_visibile %></td>
+    <td><%= link_to 'Show', cross_group %></td>
+    <td><%= link_to 'Edit', edit_cross_group_path(cross_group) %></td>
+    <td><%= link_to 'Destroy', cross_group, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New cross_group', new_cross_group_path %>

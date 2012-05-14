@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/common
+END
+_diff.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/common/_diff.html.erb
+END
+_calendar.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/common/_calendar.html.erb
+END
+_tabs.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/common/_tabs.html.erb
+END
+error.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/common/error.html.erb
+END
+feed.atom.builder
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/common/feed.atom.builder
+END
+_file.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/common/_file.html.erb
+END
+_preview.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/common/_preview.html.erb
+END

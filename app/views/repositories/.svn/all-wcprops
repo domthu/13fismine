@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/8765/branches/1.3-stable/app/views/repositories
+END
+diff.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/diff.html.erb
+END
+changes.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/changes.html.erb
+END
+_dir_list.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/_dir_list.html.erb
+END
+annotate.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/annotate.html.erb
+END
+_revision_graph.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/8765/branches/1.3-stable/app/views/repositories/_revision_graph.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/show.html.erb
+END
+_revisions.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/8023/branches/1.3-stable/app/views/repositories/_revisions.html.erb
+END
+revisions.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/revisions.html.erb
+END
+committers.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/committers.html.erb
+END
+_link_to_functions.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/_link_to_functions.html.erb
+END
+_breadcrumbs.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/_breadcrumbs.html.erb
+END
+stats.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/stats.html.erb
+END
+revision.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/revision.html.erb
+END
+_navigation.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/_navigation.html.erb
+END
+entry.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/entry.html.erb
+END
+_dir_list_content.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/repositories/_dir_list_content.html.erb
+END

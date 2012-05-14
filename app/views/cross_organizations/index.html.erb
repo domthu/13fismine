@@ -1,0 +1,26 @@
+<h1>Listing cross_organizations</h1>
+
+<table>
+  <tr>
+    <th>organizzazione</th>
+    <th>sigla</th>
+    <th>se_visibile</th>
+    <th>type_organization_id</th>
+  </tr>
+
+<% @cross_organizations.each do |cross_organization| %>
+  <tr>
+    <td><%=h cross_organization.organizzazione %></td>
+    <td><%=h cross_organization.sigla %></td>
+    <td><%=h cross_organization.se_visibile %></td>
+    <td><%=h cross_organization.type_organization_id %></td>
+    <td><%= link_to 'Show', cross_organization %></td>
+    <td><%= link_to 'Edit', edit_cross_organization_path(cross_organization) %></td>
+    <td><%= link_to 'Destroy', cross_organization, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New cross_organization', new_cross_organization_path %>

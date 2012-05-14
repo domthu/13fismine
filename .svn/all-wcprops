@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/9414/branches/1.3-stable
+END
+.hgignore
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/7992/branches/1.3-stable/.hgignore
+END
+Rakefile
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/7992/branches/1.3-stable/Rakefile
+END
+README.rdoc
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/7992/branches/1.3-stable/README.rdoc
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/7992/branches/1.3-stable/.gitignore
+END

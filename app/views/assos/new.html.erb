@@ -1,0 +1,59 @@
+<h1>New asso</h1>
+
+<% form_for(@asso) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :ragione_sociale %><br />
+    <%= f.text_field :ragione_sociale %>
+  </p>
+  <p>
+    <%= f.label :indirizzo %><br />
+    <%= f.text_field :indirizzo %>
+  </p>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :presidente %><br />
+    <%= f.text_field :presidente %>
+  </p>
+  <p>
+    <%= f.label :referente %><br />
+    <%= f.text_field :referente %>
+  </p>
+  <p>
+    <%= f.label :consulente %><br />
+    <%= f.text_field :consulente %>
+  </p>
+  <p>
+    <%= f.label :logo %><br />
+    <%= f.text_field :logo %>
+  </p>
+  <p>
+    <%= f.label :telefono %><br />
+    <%= f.text_field :telefono %>
+  </p>
+  <p>
+    <%= f.label :telefono_alt %><br />
+    <%= f.text_field :telefono_alt %>
+  </p>
+  <p>
+    <%= f.label :fax %><br />
+    <%= f.text_field :fax %>
+  </p>
+  <p>
+    <%= f.label :comunicazioni %><br />
+    <%= f.text_area :comunicazioni %>
+  </p>
+  <p>
+    <%= f.label :email_alt %><br />
+    <%= f.text_field :email_alt %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', assos_path %>

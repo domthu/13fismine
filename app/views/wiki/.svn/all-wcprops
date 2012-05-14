@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki
+END
+edit.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/edit.html.erb
+END
+index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/index.html.erb
+END
+rename.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/rename.html.erb
+END
+_sidebar.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/_sidebar.html.erb
+END
+diff.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/diff.html.erb
+END
+_content.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/_content.html.erb
+END
+annotate.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/annotate.html.erb
+END
+destroy.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/destroy.html.erb
+END
+export_multiple.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/export_multiple.html.erb
+END
+show.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/show.html.erb
+END
+export.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/export.html.erb
+END
+history.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/history.html.erb
+END
+date_index.html.erb
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/7992/branches/1.3-stable/app/views/wiki/date_index.html.erb
+END
