@@ -8,7 +8,8 @@ class AddFieldsToUser < ActiveRecord::Migration
     add_column :users, :note, :text
 
     add_column :users, :pwd, :string
-    add_column :users, :login, :string
+    #add_column :users, :login, :string  Kappao esiste già
+    add_column :users, :login_fisco, :string
 
     add_column :users, :asso_id, :integer, :null => true
     #add_column :users, :account_id, :integer
@@ -20,7 +21,8 @@ class AddFieldsToUser < ActiveRecord::Migration
     add_column :users, :prov, :string
     add_column :users, :telefono, :string
     add_column :users, :fax, :string
-    add_column :users, :mail, :string
+    #add_column :users, :mail, :string  Kappao esiste già
+    add_column :users, :mail_fisco, :string
     add_column :users, :telefono2, :string
     add_column :users, :mail2, :string
     add_column :users, :data, :string
@@ -81,9 +83,11 @@ class AddFieldsToUser < ActiveRecord::Migration
     remove_column :users, :registrato
     remove_column :users, :pwd
     remove_column :users, :mail2
-    remove_column :users, :login
+    #remove_column :users, :login  Kappao esiste già
+    remove_column :users, :login_fisco
     remove_column :users, :telefono2
-    remove_column :users, :mail
+    #remove_column :users, :mail  Kappao esiste già
+    remove_column :users, :mail_fisco 
     remove_column :users, :fax
     remove_column :users, :telefono
     remove_column :users, :indirizzo
