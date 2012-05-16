@@ -1,30 +1,35 @@
 class AddFieldsToUser < ActiveRecord::Migration
   def self.up
-    add_column :users, :asso_id, :integer
-    add_column :users, :organization_id, :integer
     add_column :users, :codice, :integer
     add_column :users, :nome, :string
     add_column :users, :titolo, :string
     add_column :users, :soc, :string
+    add_column :users, :parent, :integer
+    add_column :users, :note, :text
+
+    add_column :users, :pwd, :string
+    add_column :users, :login, :string
+
+    add_column :users, :asso_id, :integer, :null => true
+    #add_column :users, :account_id, :integer
+    add_column :users, :organization_id, :integer, :null => true
+    add_column :users, :comune_id, :integer, :null => true
     add_column :users, :sede, :string
     add_column :users, :indirizzo, :string
+    add_column :users, :cap, :string
+    add_column :users, :prov, :string
     add_column :users, :telefono, :string
     add_column :users, :fax, :string
     add_column :users, :mail, :string
     add_column :users, :telefono2, :string
-    add_column :users, :login, :string
     add_column :users, :mail2, :string
-    add_column :users, :pwd, :string
-    add_column :users, :registrato, :string
     add_column :users, :data, :string
     add_column :users, :datascadenza, :datetime
-    add_column :users, :cap, :string
-    add_column :users, :prov, :string
-    add_column :users, :note, :text
     add_column :users, :sez, :string
     add_column :users, :iva_, :string
     add_column :users, :codicefiscale, :string
     add_column :users, :partitaiva, :string
+
     add_column :users, :annotazioni, :text
     add_column :users, :tariffa_precedente, :float
     add_column :users, :sconto_precedente, :text
@@ -33,22 +38,20 @@ class AddFieldsToUser < ActiveRecord::Migration
     add_column :users, :data_ultimo_pagamento, :datetime
     add_column :users, :data_accredito, :datetime
     add_column :users, :anno_competenza, :integer
-    add_column :users, :conferma_registrazione, :boolean
-    add_column :users, :abbonato, :boolean
-    add_column :users, :disabilitato, :boolean
-    add_column :users, :parent, :integer
     add_column :users, :crediti, :integer
-    add_column :users, :power_user, :boolean
+
+    add_column :users, :registrato, :string
     add_column :users, :num_reg_coni, :string
-    add_column :users, :forum_redattore, :boolean
-    add_column :users, :forum_notifica, :boolean
-    add_column :users, :account_id, :integer
-    add_column :users, :comune_id, :integer
+    add_column :users, :abbonato, :boolean, :default => 0
+    add_column :users, :conferma_registrazione, :boolean, :default => 1
+    add_column :users, :disabilitato, :boolean, :default => 0
+    add_column :users, :power_user, :boolean, :default => 0
+    add_column :users, :forum_redattore, :boolean, :default => 0
+    add_column :users, :forum_notifica, :boolean, :default => 0
+    #User.update_all "type = 'User'"
   end
 
   def self.down
-    remove_column :users, :comune_id
-    remove_column :users, :account_id
     remove_column :users, :forum_notifica
     remove_column :users, :forum_redattore
     remove_column :users, :num_reg_coni
@@ -90,6 +93,8 @@ class AddFieldsToUser < ActiveRecord::Migration
     remove_column :users, :nome
     remove_column :users, :codice
     remove_column :users, :organization_id
+    remove_column :users, :comune_id
+    #remove_column :users, :account_id
     remove_column :users, :asso_id
   end
 end

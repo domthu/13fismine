@@ -3,7 +3,7 @@ class CreateTopSections < ActiveRecord::Migration
     create_table :top_sections do |t|
       t.string :sezione_top
       t.integer :ordinamento
-      t.boolean :se_visibile
+      t.boolean :se_visibile, :default => 1
       t.string :immagine
       t.string :style
 

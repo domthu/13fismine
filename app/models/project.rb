@@ -56,6 +56,9 @@ class Project < ActiveRecord::Base
                           :join_table => "#{table_name_prefix}custom_fields_projects#{table_name_suffix}",
                           :association_foreign_key => 'custom_field_id'
 
+  #domthu20120516
+  #migration AddFieldsToProject titolo:string data_dal:datetime data_al:datetime search_key:string 
+
   acts_as_nested_set :order => 'name', :dependent => :destroy
   acts_as_attachable :view_permission => :view_files,
                      :delete_permission => :manage_files

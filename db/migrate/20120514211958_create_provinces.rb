@@ -2,7 +2,7 @@ class CreateProvinces < ActiveRecord::Migration
   def self.up
     create_table :provinces do |t|
       t.string :name
-      t.integer :region_id
+      t.integer :region_id, :null => false
       t.string :sigla
 
       t.timestamps

@@ -5,12 +5,12 @@ class CreateGroupBanners < ActiveRecord::Migration
       t.string :url
       t.integer :priorita
       t.string :posizione
-      t.boolean :se_visibile
+      t.boolean :se_visibile, :default => 0
       t.string :banner
       t.integer :impressions
       t.integer :clicks
       t.text :didascalia
-      t.boolean :se_prima_pagina
+      t.boolean :se_prima_pagina, :default => 0
       t.integer :impressions_history
 
       t.timestamps

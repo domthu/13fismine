@@ -52,6 +52,18 @@ class User < Principal
   has_one :api_token, :class_name => 'Token', :conditions => "action='api'"
   belongs_to :auth_source
 
+  #domthu20120516
+  belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id'
+  #belongs_to :account, :class_name => 'Account', :foreign_key => 'account_id'
+  belongs_to :asso, :class_name => 'Asso', :foreign_key => 'asso_id'
+  #l'utente può appartenere o non ad una organizzazione (non paga ma è abilitato al servizio)
+  belongs_to :organization, :class_name => 'Organization', :foreign_key => 'organization_id'
+  #l'utente può essere il referente di una (o più) organizzazione
+  #2.7 Choosing Between belongs_to and has_one. La foreign key si trova sulla tabella che fa belongs_to
+  #has_one :reference, :class_name => 'Organization', :dependent => :nullify
+  has_many :references, :class_name => 'Organization', :dependent => :nullify
+  has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
+
   # Active non-anonymous users scope
   named_scope :active, :conditions => "#{User.table_name}.status = #{STATUS_ACTIVE}"
 

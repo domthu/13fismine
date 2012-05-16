@@ -3,8 +3,8 @@ class CreateCrossOrganizations < ActiveRecord::Migration
     create_table :cross_organizations do |t|
       t.string :organizzazione
       t.string :sigla
-      t.boolean :se_visibile
-      t.integer :type_organization_id
+      t.boolean :se_visibile, :default => 1
+      t.integer :type_organization_id, :null => false
 
       t.timestamps
     end

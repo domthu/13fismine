@@ -4,6 +4,7 @@ class AddFieldsToProject < ActiveRecord::Migration
     add_column :projects, :data_dal, :datetime
     add_column :projects, :data_al, :datetime
     add_column :projects, :search_key, :string
+    #User.update_all "type = 'User'"
   end
 
   def self.down

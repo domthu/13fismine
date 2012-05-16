@@ -1,17 +1,17 @@
 class AddFieldsToIssue < ActiveRecord::Migration
   def self.up
-    add_column :issues, :section_id, :integer
+    add_column :issues, :section_id, :integer, :null => true
     add_column :issues, :ordinamento, :integer
-    add_column :issues, :se_sommario, :boolean
+    add_column :issues, :se_sommario, :boolean, :default => 1
     add_column :issues, :riassunto, :text
     add_column :issues, :titolo, :text
     add_column :issues, :testo, :text
     add_column :issues, :riferimento, :string
-    add_column :issues, :se_visible_web, :boolean
+    add_column :issues, :se_visible_web, :boolean, :default => 0
     add_column :issues, :data_scadenza, :datetime
-    add_column :issues, :se_visible_data, :boolean
-    add_column :issues, :se_visible_newsletter, :boolean
-    add_column :issues, :se_protetto, :boolean
+    add_column :issues, :se_visible_data, :boolean, :default => 0
+    add_column :issues, :se_visible_newsletter, :boolean, :default => 0
+    add_column :issues, :se_protetto, :boolean, :default => 1
     add_column :issues, :immagine_url, :string
     add_column :issues, :titolo_no_format, :text
     add_column :issues, :testo_no_format, :text
