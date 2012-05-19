@@ -33,6 +33,7 @@
            "#{l(:label_logged_as)} #{link_to_user(User.current, :format => :username)}".html_safe,
            :id => 'loggedas') if User.current.logged? %>
     <%= render_menu :top_menu if User.current.logged? || !Setting.login_required? -%>
+    <%= render_menu :application_menu if !User.current.logged? %>
 </div>
 
 <div id="header">

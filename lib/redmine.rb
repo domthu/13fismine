@@ -151,10 +151,15 @@ end
 
 Redmine::MenuManager.map :top_menu do |menu|
   menu.push :home, :home_path
+  #domthu 20120517
+  menu.push :section, :sections_path
+  menu.push :asso, :assos_path
+  #menu.push :my_page, :table_path
   menu.push :my_page, { :controller => 'my', :action => 'page' }, :if => Proc.new { User.current.logged? }
   menu.push :projects, { :controller => 'projects', :action => 'index' }, :caption => :label_project_plural
   menu.push :administration, { :controller => 'admin', :action => 'index' }, :if => Proc.new { User.current.admin? }, :last => true
-  menu.push :help, Redmine::Info.help_url, :last => true
+  #menu.push :help, Redmine::Info.help_url, :last => true
+  menu.push :help, Redmine::Info.help_url, :if => Proc.new { User.current.admin? }, :last => true
 end
 
 Redmine::MenuManager.map :account_menu do |menu|
@@ -166,6 +171,18 @@ end
 
 Redmine::MenuManager.map :application_menu do |menu|
   # Empty
+  #domthu 20120517
+  menu.push :section, :sections_path
+  menu.push :top_section, :top_sections_path
+  menu.push :region, :regions_path
+  menu.push :province, :provinces_path
+  menu.push :comune, :comunes_path
+  menu.push :asso, :assos_path
+  menu.push :cross_group, :cross_groups_path
+  menu.push :group_banner, :group_banners_path
+  menu.push :invoice, :invoices_path
+  menu.push :type_organization, :type_organizations_path
+  menu.push :cross_organization, :cross_organizations_path
 end
 
 Redmine::MenuManager.map :admin_menu do |menu|

@@ -1,9 +1,11 @@
 module Redmine
   module Info
     class << self
-      def app_name; 'Redmine' end
-      def url; 'http://www.redmine.org/' end
-      def help_url; 'http://www.redmine.org/guide' end
+      def app_name; 'fismine' end
+      def url; 'http://monamiweb.it/fismine/' end
+      #dom@monamiweb.it
+      #def help_url; 'http://www.dom.monamiweb.it/' end
+      def help_url; 'http://www.dom.monamiweb.it/' end
       def versioned_name; "#{app_name} #{Redmine::VERSION}" end
 
       # Creates the url string to a specific Redmine issue
