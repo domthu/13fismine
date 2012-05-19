@@ -42,6 +42,24 @@ namespace :db do
 
 #le tabelle da integrare devono essere fatte in questo ordine
 
+
+
+
+#    cross_groups
+#    group_banners
+#    assos
+
+#    organizations
+#    cross_organizations
+#    type_organizations
+
+#    sections
+#    top_sections
+
+#    invoices
+
+
+
   end
 end
 

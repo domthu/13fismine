@@ -1,27 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :invoices
-
-  map.resources :sections
-
-  map.resources :top_sections
-
-  map.resources :organizations
-
-  map.resources :cross_organizations
-
-  map.resources :type_organizations
-
-  map.resources :cross_groups
-
-  map.resources :group_banners
-
-  map.resources :assos
-
-  map.resources :comunes
-
-  map.resources :provinces
-
-  map.resources :regions
 
   # Add your own custom routes here.
   # The priority is based upon order of creation: first created -> highest priority.
@@ -30,7 +7,43 @@ ActionController::Routing::Routes.draw do |map|
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
 
-  map.home '', :controller => 'welcome'
+  map.home '', :controller => 'welcome'   #REDMINE HOME
+
+  map.root :controller => "editorial", :action => 'home'   #FRONT END
+#      create  app/views/editorial/home.html.erb
+#      create  app/views/editorial/contact.html.erb
+#      create  app/views/editorial/help.html.erb
+#      create  app/views/editorial/about.html.erb
+#      create  app/views/editorial/edizioni.html.erb
+#      create  app/views/editorial/edizione.html.erb
+#      create  app/views/editorial/articoli.html.erb
+#      create  app/views/editorial/articolo.html.erb
+  # Routes for static pages.
+  map.editorial '/home',     :controller => 'editorial', :action => 'home'
+  map.contact   '/contact',  :controller => 'editorial', :action => 'contact'
+  map.about     '/about',    :controller => 'editorial', :action => 'about'
+  map.help      '/help',     :controller => 'editorial', :action => 'help'
+  map.edizioni  '/edizioni', :controller => 'editorial', :action => 'edizioni'
+  map.edizione  '/edizione', :controller => 'editorial', :action => 'edizione'
+  map.articoli  '/articoli', :controller => 'editorial', :action => 'articoli'
+  map.articolo  '/articolo', :controller => 'editorial', :action => 'articolo'
+
+  map.resources :comunes
+  map.resources :provinces
+  map.resources :regions
+
+  map.resources :cross_groups
+  map.resources :group_banners
+  map.resources :assos
+
+  map.resources :organizations
+  map.resources :cross_organizations
+  map.resources :type_organizations
+
+  map.resources :sections
+  map.resources :top_sections
+
+  map.resources :invoices
 
   map.signin 'login', :controller => 'account', :action => 'login'
   map.signout 'logout', :controller => 'account', :action => 'logout'

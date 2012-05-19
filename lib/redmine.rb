@@ -152,8 +152,8 @@ end
 Redmine::MenuManager.map :top_menu do |menu|
   menu.push :home, :home_path
   #domthu 20120517
-  menu.push :section, :sections_path
-  menu.push :asso, :assos_path
+  #menu.push :section, :sections_path
+  #menu.push :asso, :assos_path
   #menu.push :my_page, :table_path
   menu.push :my_page, { :controller => 'my', :action => 'page' }, :if => Proc.new { User.current.logged? }
   menu.push :projects, { :controller => 'projects', :action => 'index' }, :caption => :label_project_plural
@@ -172,17 +172,17 @@ end
 Redmine::MenuManager.map :application_menu do |menu|
   # Empty
   #domthu 20120517
-  menu.push :section, :sections_path
-  menu.push :top_section, :top_sections_path
-  menu.push :region, :regions_path
-  menu.push :province, :provinces_path
-  menu.push :comune, :comunes_path
-  menu.push :asso, :assos_path
-  menu.push :cross_group, :cross_groups_path
-  menu.push :group_banner, :group_banners_path
-  menu.push :invoice, :invoices_path
-  menu.push :type_organization, :type_organizations_path
-  menu.push :cross_organization, :cross_organizations_path
+  menu.push :section, :sections_path, :if => Proc.new { User.current.admin? }
+  menu.push :top_section, :top_sections_path, :if => Proc.new { User.current.admin? }
+  #menu.push :region, :regions_path, :if => Proc.new { User.current.admin? }
+  #menu.push :province, :provinces_path, :if => Proc.new { User.current.admin? }
+  #menu.push :comune, :comunes_path, :if => Proc.new { User.current.admin? }
+  menu.push :asso, :assos_path, :if => Proc.new { User.current.admin? }
+  menu.push :cross_group, :cross_groups_path, :if => Proc.new { User.current.admin? }
+  menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
+  menu.push :type_organization, :type_organizations_path, :if => Proc.new { User.current.admin? }
+  menu.push :cross_organization, :cross_organizations_path, :if => Proc.new { User.current.admin? }
+  menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
 end
 
 Redmine::MenuManager.map :admin_menu do |menu|
