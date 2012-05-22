@@ -622,7 +622,7 @@ it:
   label_changeset_plural: Changeset
   field_column_names: Colonne
   label_default_columns: Colonne predefinite
-  setting_issue_list_default_columns: Colonne predefinite mostrate nell'elenco articoli
+  setting_issue_list_default_columns: "Colonne predefinite mostrate nell'elenco articoli"
   notice_no_issue_selected: "Nessun articolo selezionato! Seleziona gli articoli che intendi modificare."
   label_bulk_edit_selected_issues: Modifica massiva degli articoli selezionati
   label_no_change_option: (Nessuna modifica)
@@ -688,7 +688,7 @@ it:
   project_module_news: Notizie
   project_module_time_tracking: Time tracking
   text_file_repository_writable: Repository dei file scrivibile
-  text_default_administrator_account_changed: L'account amministrativo predefinito è stato modificato
+  text_default_administrator_account_changed: "L'account amministrativo predefinito è stato modificato"
   text_rmagick_available: RMagick disponibile (opzionale)
   button_configure: Configura
   label_plugins: Plugin
@@ -705,16 +705,16 @@ it:
   label_add_another_file: Aggiungi un altro file
   label_optional_description: Descrizione opzionale
   text_destroy_time_entries_question: "%{hours} ore risultano spese ssugli articoli che stai per eliminare. Cosa vuoi fare ?"
-  error_issue_not_found_in_project: 'L'articolo non è stato trovata o non appartiene all'edizione'
-  text_assign_time_entries_to_project: Assegna le ore segnalate all'edizione
+  error_issue_not_found_in_project: "L'articolo non è stato trovata o non appartiene all'edizione"
+  text_assign_time_entries_to_project: "Assegna le ore segnalate all'edizione"
   text_destroy_time_entries: Elimina le ore segnalate
   text_reassign_time_entries: 'Riassegna le ore a questo articolo:'
-  setting_activity_days_default: Giorni mostrati sulle attività dell'edizione
+  setting_activity_days_default: "Giorni mostrati sulle attività dell'edizione"
   label_chronological_order: In ordine cronologico
   field_comments_sorting: Mostra commenti
   label_reverse_chronological_order: In ordine cronologico inverso
   label_preferences: Preferenze
-  setting_display_subprojects_issues: Mostra gli articoli delle sottoedizioni nell'edizione principale in modo predefinito
+  setting_display_subprojects_issues: "Mostra gli articoli delle sottoedizioni nell'edizione principale in modo predefinito"
   label_overall_activity: Attività generale
   setting_default_projects_public: Le nuove edizioni sono pubblici in modo predefinito
   error_scm_annotate: "L'oggetto non esiste o non può essere annotato."
@@ -832,7 +832,7 @@ it:
   label_view_all_revisions: Mostra tutte le revisioni
   label_tag: Tag
   label_branch: Branch
-  error_no_tracker_in_project: Nessun tracker è associato a questa edizione. Per favore verifica le impostazioni dell'edizione.
+  error_no_tracker_in_project: "Nessun tracker è associato a questa edizione. Per favore verifica le impostazioni dell'edizione."
   error_no_default_issue_status: Nessuno stato predefinito degli articoli è configurato. Per favore verifica le impostazioni (Vai in "Amministrazione -> Stati articoli").
   text_journal_changed: "%{label} modificata da %{old} a %{new}"
   text_journal_set_to: "%{label} impostata a %{value}"
@@ -903,7 +903,7 @@ it:
   permission_manage_subtasks: Gestisci sottoattività
   field_parent_issue: Attività principale
   label_subtask_plural: Sottoattività
-  label_project_copy_notifications: Invia notifiche email durante la copia dell'edizione
+  label_project_copy_notifications: "Invia notifiche email durante la copia dell'edizione"
   error_can_not_delete_custom_field: Impossibile eliminare il campo personalizzato
   error_unable_to_connect: Impossibile connettersi (%{value})
   error_can_not_remove_role: Questo ruolo è in uso e non può essere eliminato.
@@ -919,16 +919,16 @@ it:
   project_module_gantt: Gantt
   project_module_calendar: Calendario
   button_edit_associated_wikipage: "Modifica la pagina wiki associata: %{page_title}"
-  text_are_you_sure_with_children: Eliminare l'articolo e tutti i discendenti?
+  text_are_you_sure_with_children: "Eliminare l'articolo e tutti i discendenti?"
   field_text: Campo di testo
   label_user_mail_option_only_owner: Solo se io sono il proprietario
   setting_default_notification_option: Opzione di notifica predefinita
   label_user_mail_option_only_my_events: Solo se sono un osservatore o sono coinvolto
   label_user_mail_option_only_assigned: Solo quando mi assegnano attività
   label_user_mail_option_none: Nessun evento
-  field_member_of_group: Gruppo dell'assegnatario
-  field_assigned_to_role: Ruolo dell'assegnatario
-  notice_not_authorized_archived_project: L'edizione a cui stai accedendo è stata archiviata.
+  field_member_of_group: "Gruppo dell'assegnatario"
+  field_assigned_to_role: "Ruolo dell'assegnatario"
+  notice_not_authorized_archived_project: "L'edizione a cui stai accedendo è stata archiviata."
   label_principal_search: "Cerca utente o gruppo:"
   label_user_search: "Cerca utente:"
   field_visible: Visibile
@@ -945,16 +945,16 @@ it:
   label_news_comment_added: Commento aggiunto a una notizia
   button_expand_all: Espandi tutto
   button_collapse_all: Comprimi tutto
-  label_additional_workflow_transitions_for_assignee: Transizioni supplementari consentite quando l'utente è l'assegnatario
-  label_additional_workflow_transitions_for_author: Transizioni supplementari consentite quando l'utente è l'autore
+  label_additional_workflow_transitions_for_assignee: "Transizioni supplementari consentite quando l'utente è l'assegnatario"
+  label_additional_workflow_transitions_for_author: "Transizioni supplementari consentite quando l'utente è l'autore"
   label_bulk_edit_selected_time_entries: Modifica massiva delle ore segnalate selezionate
-  text_time_entries_destroy_confirmation: Sei sicuro di voler eliminare l'ora\e selezionata\e?
+  text_time_entries_destroy_confirmation: "Sei sicuro di voler eliminare l'ora\e selezionata\e?"
   label_role_anonymous: Anonimo
   label_role_non_member: Non membro
   label_issue_note_added: Nota aggiunta
   label_issue_status_updated: Stato aggiornato
   label_issue_priority_updated: Priorità aggiornata
-  label_issues_visibility_own: Articoli creati o assegnati all'utente
+  label_issues_visibility_own: "Articoli creati o assegnati all'utente"
   field_issues_visibility: Visibilità articoli
   label_issues_visibility_all: Tutti gli articoli
   permission_set_own_issues_private: Imposta i propri articoli pubblici o privati
@@ -1007,3 +1007,45 @@ it:
   button_export: Esporta
   label_export_options: "%{export_format} opzioni per l'export"
   error_attachment_too_big: Questo file non può essere caricato in quanto la sua dimensione supera la massima consentita (%{max_size})
+
+  field_riassunto: Sommario
+  field_cross_group: AssoGRPO
+  field_Invoice: Fattura
+  field_Date_from: Valido dal 
+  field_Date_to: fino al 
+
+  label_invoice: Fattura
+  label_invoice_plural: Fatture
+  label_invoice_new: Nuova fattura
+
+  label_section: Sezione
+  label_section_plural: Sezioni
+  label_section_new: Nuova Sezione
+  label_top_section: Categoria
+  label_top_section_plural: Categorie
+  label_top_section_new: Nuova categoria
+
+# asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
+# asso (Categoria utente) ha tanti utenti
+  label_asso: Cat. Utente
+  label_asso_plural: Cat. Utenti
+  label_asso_new: Nuova categoria utente
+  label_cross_group: Banner utente
+  label_cross_group_plural: Banner Utenti
+  label_cross_group_new: Nuovo banner per utente
+  label_group_banner: Banner
+  label_group_banner_plural: Banners
+  label_group_banner_new: Nuovo banner
+
+# asso (Categoria utente) ha tanti organismi
+#Organismo associato collegato a type_organization, asso, e sigla 
+  label_organization: Org. associato
+  label_organization_plural: Org. asso.
+  label_organization_new: Nuova organismo associato
+  label_type_organization: Org. tipo
+  label_type_organization_plural: Org. tipi
+  label_type_organization_new: Nuovo tipo di organismo
+  label_cross_organization: Sigla
+  label_cross_organization_plural: Sigle
+  label_cross_organization_new: Nuova sigla
+

@@ -1019,3 +1019,5 @@ h2 img { vertical-align:middle; }
   height:1px;
   overflow:hidden;
 }
+
+.hide{display: none;}
