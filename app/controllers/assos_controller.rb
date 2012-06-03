@@ -1,4 +1,8 @@
 class AssosController < ApplicationController
+  layout 'admin'
+
+  before_filter :require_admin
+
   # GET /assos
   # GET /assos.xml
   def index

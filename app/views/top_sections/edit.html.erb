@@ -1,32 +1,7 @@
-<h1>Editing top_section</h1>
+<h2><%= link_to l(:label_top_section_plural), top_sections_path %> &#187; <%= h(@top_section) %></h2>
 
-<% form_for(@top_section) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :sezione_top %><br />
-    <%= f.text_field :sezione_top %>
-  </p>
-  <p>
-    <%= f.label :ordinamento %><br />
-    <%= f.text_field :ordinamento %>
-  </p>
-  <p>
-    <%= f.label :se_visibile %><br />
-    <%= f.check_box :se_visibile %>
-  </p>
-  <p>
-    <%= f.label :immagine %><br />
-    <%= f.text_field :immagine %>
-  </p>
-  <p>
-    <%= f.label :style %><br />
-    <%= f.text_field :style %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
+<% labelled_tabular_form_for :top_section, @top_section, :url => { :action => 'edit' }, :html => {:id => 'top_section_form'} do |f| %>
+<%= render :partial => 'form', :locals => { :f => f } %>
+<%= submit_tag l(:button_save) %>
 <% end %>
 
-<%= link_to 'Show', @top_section %> |
-<%= link_to 'Back', top_sections_path %>

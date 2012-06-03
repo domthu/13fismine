@@ -1,4 +1,8 @@
 class CrossOrganizationsController < ApplicationController
+  layout 'admin'
+
+  before_filter :require_admin
+
   # GET /cross_organizations
   # GET /cross_organizations.xml
   def index

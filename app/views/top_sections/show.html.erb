@@ -1,28 +1,56 @@
-<p>
-  <b>sezione_top:</b>
-  <%=h @top_section.sezione_top %>
-</p>
+<div class="contextual">
+<%= link_to(l(:button_edit), edit_top_section_path(@top_section), :class => 'icon icon-edit') if User.current.admin? %>
+<%= link_to(l(:button_delete),
+      top_section_path(@top_section),
+      :confirm => l(:text_are_you_sure),
+      :method => :delete,
+      :class => 'icon icon-del') if User.current.admin? %>
+</div>
+<h2><%= link_to l(:label_top_section_plural), top_sections_path %> &#187; <%=h @top_section %></h2>
 
-<p>
-  <b>ordinamento:</b>
-  <%=h @top_section.ordinamento %>
-</p>
+<div class="splitcontentleft">
 
-<p>
-  <b>se_visibile:</b>
-  <%=h @top_section.se_visibile %>
-</p>
+<fieldset class="box tabular">
+  <legend><%=l(:label_top_section)%></legend>
 
-<p>
-  <b>immagine:</b>
-  <%=h @top_section.immagine %>
-</p>
+        <p>
+        <% unless @top_section.sezione_top.blank? %>
+            <em><%=h @top_section.sezione_top %></em>
+            <br />
+        <% end %>
+        </p>
+        <p>
+            <%=h @top_section.ordinamento %>
+        </p>
+        <p>
+            <%=h @top_section.immagine %>
+        </p>
+        <div class="wiki">
+            <%= textilizable(@top_section.style) %>
+        </div>
 
-<p>
-  <b>style:</b>
-  <%=h @top_section.style %>
-</p>
+        <p>
+            <%=h @top_section.se_visibile %>
+        </p>
+        <p>
+            <%= check_box_tag l(:label_se_visibile), @top_section.se_visibile, true %> <%= l(:label_se_visibile) %> 
+        </p>
+</fieldset>
+</div>
 
+<div class="splitcontentright">
+    <fieldset class="box tabular">
+      <legend><%=l(:label_section_plural)%></legend>
 
-<%= link_to 'Edit', edit_top_section_path(@top_section) %> |
-<%= link_to 'Back', top_sections_path %>
+        <% if @top_section.sections.any? %>
+            <ul>
+            <% @top_section.sections.each do |section| %>
+                <li><%=h section %></li>
+            <% end %>
+            </ul>
+        <% else %>
+            <p class="nodata"><%= l(:label_no_data) %></p>
+        <% end %>
+    </fieldset>
+</div>
+

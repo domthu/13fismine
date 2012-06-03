@@ -1,4 +1,8 @@
 class GroupBannersController < ApplicationController
+  layout 'admin'
+
+  before_filter :require_admin
+
   # GET /group_banners
   # GET /group_banners.xml
   def index

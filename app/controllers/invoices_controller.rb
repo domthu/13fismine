@@ -1,4 +1,8 @@
 class InvoicesController < ApplicationController
+  layout 'admin'
+
+  before_filter :require_admin
+
   # GET /invoices
   # GET /invoices.xml
   def index

@@ -1,4 +1,8 @@
 class CrossGroupsController < ApplicationController
+  layout 'admin'
+
+  before_filter :require_admin
+
   # GET /cross_groups
   # GET /cross_groups.xml
   def index

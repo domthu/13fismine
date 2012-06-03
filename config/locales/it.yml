@@ -1018,13 +1018,6 @@ it:
   label_invoice_plural: Fatture
   label_invoice_new: Nuova fattura
 
-  label_section: Sezione
-  label_section_plural: Sezioni
-  label_section_new: Nuova Sezione
-  label_top_section: Categoria
-  label_top_section_plural: Categorie
-  label_top_section_new: Nuova categoria
-
 # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
 # asso (Categoria utente) ha tanti utenti
   label_asso: Cat. Utente
@@ -1048,4 +1041,23 @@ it:
   label_cross_organization: Sigla
   label_cross_organization_plural: Sigle
   label_cross_organization_new: Nuova sigla
+
+#top_section
+  label_top_section: Sezione
+  label_top_section_plural: Sezioni
+  label_top_section_new: Nuova Sezione
+  label_ordinamento: Ord.
+  label_se_visibile: Visibile?
+  label_immagine: immagine
+  label_style: style
+  field_sezione_top: Descrizione Sezione
+  field_ordinamento: Ordinamento			
+  field_se_visibile: Visibile
+  field_immagine: Immagine
+  field_style: Foglio di stile
+
+#section
+  label_section: Categoria
+  label_section_plural: Categorie
+  label_section_new: Nuova categoria
 

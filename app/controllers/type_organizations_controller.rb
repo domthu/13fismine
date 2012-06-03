@@ -1,4 +1,8 @@
 class TypeOrganizationsController < ApplicationController
+  layout 'admin'
+
+  before_filter :require_admin
+
   # GET /type_organizations
   # GET /type_organizations.xml
   def index

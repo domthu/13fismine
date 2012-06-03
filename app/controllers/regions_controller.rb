@@ -1,4 +1,8 @@
 class RegionsController < ApplicationController
+  layout 'admin'
+
+  before_filter :require_admin
+
   # GET /regions
   # GET /regions.xml
   def index

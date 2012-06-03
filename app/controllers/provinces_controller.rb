@@ -1,4 +1,8 @@
 class ProvincesController < ApplicationController
+  layout 'admin'
+
+  before_filter :require_admin
+
   # GET /provinces
   # GET /provinces.xml
   def index

@@ -1,4 +1,8 @@
 class ComunesController < ApplicationController
+  layout 'admin'
+
+  before_filter :require_admin
+
   # GET /comunes
   # GET /comunes.xml
   def index

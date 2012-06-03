@@ -1,28 +1,31 @@
-<h1>Listing top_sections</h1>
+<div class="contextual">
+<%= link_to l(:label_top_section_new), new_top_section_path, :class => 'icon icon-add' %>
+</div>
 
-<table>
-  <tr>
-    <th>sezione_top</th>
-    <th>ordinamento</th>
-    <th>se_visibile</th>
-    <th>immagine</th>
-    <th>style</th>
-  </tr>
+<h2><%= l(:label_top_section_plural) %></h2>
 
+<% if @top_sections.any? %>
+<table class="list top_sections">
+  <thead><tr>
+  <th><%=l(:label_top_section)%></th>
+  <th><%=l(:label_ordinamento)%></th>
+  <th><%=l(:label_immagine)%></th>
+  <th><%=l(:label_style)%></th>
+  <th><%=l(:label_se_visibile)%></th>
+  <th></th>
+  </tr></thead>
+  <tbody>
 <% @top_sections.each do |top_section| %>
-  <tr>
-    <td><%=h top_section.sezione_top %></td>
-    <td><%=h top_section.ordinamento %></td>
-    <td><%=h top_section.se_visibile %></td>
+  <tr class="<%= cycle 'odd', 'even' %>">
+    <td><%= link_to h(top_section), edit_top_section_path(top_section) %></td>
+    <td align="right"><%=h top_section.ordinamento %></td>
     <td><%=h top_section.immagine %></td>
-    <td><%=h top_section.style %></td>
-    <td><%= link_to 'Show', top_section %></td>
-    <td><%= link_to 'Edit', edit_top_section_path(top_section) %></td>
-    <td><%= link_to 'Destroy', top_section, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td align="center"><%=h top_section.style %></td>
+    <td align="center"><%=h top_section.se_visibile %></td>
+    <td class="buttons"><%= link_to l(:button_delete), top_section, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del' %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New top_section', new_top_section_path %>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

@@ -1,4 +1,8 @@
 class TopSectionsController < ApplicationController
+  layout 'admin'
+
+  before_filter :require_admin
+
   # GET /top_sections
   # GET /top_sections.xml
   def index
