@@ -1,7 +1,16 @@
 <h2><%= link_to l(:label_top_section_plural), top_sections_path %> &#187; <%= h(@top_section) %></h2>
 
-<% labelled_tabular_form_for :top_section, @top_section, :url => { :action => 'edit' }, :html => {:id => 'top_section_form'} do |f| %>
+
+<!-- :url => { :action => 'update' 'edit' }
+< form_for(@top_section) do |f| >
+< labelled_tabular_form_for :top_section, @top_section, :url => { :action => 'update' }, :html => {:id => 'top_section_form'} do |f| >
+<= f.submit 'Update' >
+ --> 
+
+<% form_for(@top_section) do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>
 <%= submit_tag l(:button_save) %>
+<%= f.submit 'Update' %>
+
 <% end %>
 

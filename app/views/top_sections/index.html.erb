@@ -7,12 +7,12 @@
 <% if @top_sections.any? %>
 <table class="list top_sections">
   <thead><tr>
-  <th><%=l(:label_top_section)%></th>
-  <th><%=l(:label_ordinamento)%></th>
-  <th><%=l(:label_immagine)%></th>
-  <th><%=l(:label_style)%></th>
-  <th><%=l(:label_se_visibile)%></th>
-  <th></th>
+  <%= sort_header_tag('sezione_top', :title => l(:label_top_section), :style => 'width: 40%;')%>
+  <%= sort_header_tag('ordinamento', :title => l(:label_ordinamento), :style => 'color:red; width: 10%;')%>
+  <th style='width: 20%;'><%= l(:label_immagine)%></th>
+  <%= sort_header_tag('style', :title => l(:label_style), :style => 'width: 10%;')%>
+  <%= sort_header_tag('se_visibile', :title => l(:label_se_visibile), :style => 'width: 10%;')%>
+  <th style='width: 10%;'></th>
   </tr></thead>
   <tbody>
 <% @top_sections.each do |top_section| %>
@@ -26,6 +26,9 @@
   </tr>
 <% end %>
 </table>
+
+<p class="pagination"><%= pagination_links_full @top_section_pages, @top_section_count %></p>
+
 <% else %>
 <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
