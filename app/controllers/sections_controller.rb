@@ -3,13 +3,36 @@ class SectionsController < ApplicationController
 
   before_filter :require_admin
 
+  helper :sort
+  include SortHelper
+
   # GET /sections
   # GET /sections.xml
   def index
-    @sections = Section.all
+    #@sections = Section.all
+
+    #Sorting
+    sort_init 'sezione'
+    sort_update 'sezione' => 'sezione',
+                'top_sezione' => 'sezione_top_id',
+                'top_sezione_name' => "top_sections.sezione_top",   #Nome della tabella
+                'ordinamento' => 'sections.ordinamento',
+                'protetto' => 'protetto'
+
 
     respond_to do |format|
-      format.html # index.html.erb
+      #ovverride for paging format.html # index.html.erb
+      format.html {
+        # Paginate results
+        @section_count = Section.all.count
+        @section_pages = Paginator.new self, @section_count, per_page_option, params['page']
+        @sections = Section.find(:all,
+                                  :order => sort_clause,
+                                  :limit  =>  @section_pages.items_per_page,
+                                  :include => [:top_section],
+                                  :offset =>  @section_pages.current.offset)
+        render :layout => !request.xhr?
+      }
       format.xml  { render :xml => @sections }
     end
   end

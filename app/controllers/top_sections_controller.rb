@@ -33,9 +33,8 @@ class TopSectionsController < ApplicationController
     sort_init 'sezione_top'
     sort_update 'sezione_top' => 'sezione_top',
                 'ordinamento' => 'ordinamento',
-                'style' => 'ordinamento',
+                'style' => 'style',
                 'se_visible' => 'se_visible'
-
 
 #    @top_sections = TopSection.all
 #    @top_section_pages, @items = paginate :top_sections,

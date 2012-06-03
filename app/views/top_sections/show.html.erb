@@ -28,12 +28,8 @@
         <div class="wiki">
             <%= textilizable(@top_section.style) %>
         </div>
-
         <p>
-            <%=h @top_section.se_visibile %>
-        </p>
-        <p>
-            <%= check_box_tag l(:label_se_visibile), @top_section.se_visibile, true %> <%= l(:label_se_visibile) %> 
+            <%= check_box_tag l(:label_se_visibile), 1, @top_section.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %> 
         </p>
 </fieldset>
 </div>

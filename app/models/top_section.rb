@@ -10,6 +10,7 @@ class TopSection < ActiveRecord::Base
 
   #integer
   validates_presence_of :ordinamento
+  validates_numericality_of :ordinamento, :allow_nil => true
 
   #boolean
   #validates_presence_of :se_visibile
@@ -21,12 +22,10 @@ class TopSection < ActiveRecord::Base
   #validates_presence_of :style
   validates_length_of :style, :maximum => 4000
 
-
   def to_s
     sezione_top.to_s
   end
 
   alias :name :to_s
-
 
 end

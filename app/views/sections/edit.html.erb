@@ -1,28 +1,8 @@
-<h1>Editing section</h1>
+<h2><%= link_to l(:label_section_plural), sections_path %> &#187; <%= h(@section) %></h2>
 
-<% form_for(@section) do |f| %>
-  <%= f.error_messages %>
+<% labelled_form_for @section do |f| %>
+<%= render :partial => 'form', :locals => { :f => f } %>
+<%= f.submit 'Update' %>
 
-  <p>
-    <%= f.label :sezione %><br />
-    <%= f.text_field :sezione %>
-  </p>
-  <p>
-    <%= f.label :protetto %><br />
-    <%= f.check_box :protetto %>
-  </p>
-  <p>
-    <%= f.label :ordinamento %><br />
-    <%= f.text_field :ordinamento %>
-  </p>
-  <p>
-    <%= f.label :top_section_id %><br />
-    <%= f.text_field :top_section_id %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
 <% end %>
 
-<%= link_to 'Show', @section %> |
-<%= link_to 'Back', sections_path %>

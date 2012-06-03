@@ -1,26 +1,32 @@
-<h1>Listing sections</h1>
+<div class="contextual">
+<%= link_to l(:label_section_new), new_section_path, :class => 'icon icon-add' %>
+</div>
 
-<table>
-  <tr>
-    <th>sezione</th>
-    <th>protetto</th>
-    <th>ordinamento</th>
-    <th>top_section_id</th>
-  </tr>
+<h2><%= l(:label_section_plural) %></h2>
 
+<% if @sections.any? %>
+<table class="list sections">
+  <thead><tr>
+  <%= sort_header_tag('sezione', :title => l(:label_section), :style => 'width: 40%;text-align:left;')%>
+  <%= sort_header_tag('top_sezione_name', :title => l(:label_top_section), :style => 'width: 40%;text-align:left;')%>
+  <%= sort_header_tag('ordinamento', :title => l(:label_ordinamento), :style => 'color:red; width: 10%;')%>
+  <%= sort_header_tag('protetto', :title => l(:label_protetto), :style => 'width: 10%;')%>
+  <th style='width: 10%;'></th>
+  </tr></thead>
+  <tbody>
 <% @sections.each do |section| %>
-  <tr>
-    <td><%=h section.sezione %></td>
-    <td><%=h section.protetto %></td>
-    <td><%=h section.ordinamento %></td>
-    <td><%=h section.top_section_id %></td>
-    <td><%= link_to 'Show', section %></td>
-    <td><%= link_to 'Edit', edit_section_path(section) %></td>
-    <td><%= link_to 'Destroy', section, :confirm => 'Are you sure?', :method => :delete %></td>
+  <tr class="<%= cycle 'odd', 'even' %>">
+    <td><%= link_to h(section), edit_section_path(section) %></td>
+    <td><%= link_to h(section.top_section), edit_top_section_path(section.top_section, :id => section.top_section_id) %></td>
+    <td align="right"><%=h section.ordinamento %></td>
+    <td align="center"><%= check_box_tag '', 1, section.protetto, :disabled => 'disabled' %></td>
+    <td class="buttons"><%= link_to l(:button_delete), section, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del' %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<p class="pagination"><%= pagination_links_full @section_pages, @section_count %></p>
 
-<%= link_to 'New section', new_section_path %>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

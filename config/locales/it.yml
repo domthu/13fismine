@@ -1060,4 +1060,6 @@ it:
   label_section: Categoria
   label_section_plural: Categorie
   label_section_new: Nuova categoria
+  label_protetto: Privato
+  field_top_section: Sezione 
 

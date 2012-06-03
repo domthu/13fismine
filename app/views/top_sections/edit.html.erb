@@ -7,7 +7,7 @@
 <= f.submit 'Update' >
  --> 
 
-<% form_for(@top_section) do |f| %>
+<% labelled_form_for (@top_section) do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>
 <%= submit_tag l(:button_save) %>
 <%= f.submit 'Update' %>
