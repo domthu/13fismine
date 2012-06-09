@@ -48,7 +48,7 @@ class ComunesController < ApplicationController
 
     respond_to do |format|
       if @comune.save
-        format.html { redirect_to(@comune, :notice => 'Comune was successfully created.') }
+        format.html { redirect_to(@comune, :notice => l(:notice_successful_create)) }
         format.xml  { render :xml => @comune, :status => :created, :location => @comune }
       else
         format.html { render :action => "new" }
@@ -64,7 +64,7 @@ class ComunesController < ApplicationController
 
     respond_to do |format|
       if @comune.update_attributes(params[:comune])
-        format.html { redirect_to(@comune, :notice => 'Comune was successfully updated.') }
+        format.html { redirect_to(@comune, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

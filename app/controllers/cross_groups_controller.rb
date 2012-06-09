@@ -48,7 +48,7 @@ class CrossGroupsController < ApplicationController
 
     respond_to do |format|
       if @cross_group.save
-        format.html { redirect_to(@cross_group, :notice => 'CrossGroup was successfully created.') }
+        format.html { redirect_to(@cross_group, :notice => l(:notice_successful_create)) }
         format.xml  { render :xml => @cross_group, :status => :created, :location => @cross_group }
       else
         format.html { render :action => "new" }
@@ -64,7 +64,7 @@ class CrossGroupsController < ApplicationController
 
     respond_to do |format|
       if @cross_group.update_attributes(params[:cross_group])
-        format.html { redirect_to(@cross_group, :notice => 'CrossGroup was successfully updated.') }
+        format.html { redirect_to(@cross_group, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

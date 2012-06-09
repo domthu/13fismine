@@ -48,7 +48,7 @@ class InvoicesController < ApplicationController
 
     respond_to do |format|
       if @invoice.save
-        format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
+        format.html { redirect_to(@invoice, :notice => l(:notice_successful_create)) }
         format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
       else
         format.html { render :action => "new" }
@@ -64,7 +64,7 @@ class InvoicesController < ApplicationController
 
     respond_to do |format|
       if @invoice.update_attributes(params[:invoice])
-        format.html { redirect_to(@invoice, :notice => 'Invoice was successfully updated.') }
+        format.html { redirect_to(@invoice, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

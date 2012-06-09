@@ -6,6 +6,9 @@ class TopSectionsController < ApplicationController
   helper :sort
   include SortHelper
 
+  helper :attachments
+  include AttachmentsHelper
+
 #     sort_init 'last_name'
 #     sort_update %w(first_name last_name)
 #                'activity' => 'activity_id',
@@ -92,6 +95,9 @@ class TopSectionsController < ApplicationController
 #    end
   end
 
+
+#undefined method `unsaved_attachments'
+
   # POST /top_sections
   # POST /top_sections.xml
   def create
@@ -99,7 +105,16 @@ class TopSectionsController < ApplicationController
 
     respond_to do |format|
       if @top_section.save
-        format.html { redirect_to(@top_section, :notice => 'TopSection was successfully created.') }
+        #Image as Attachement
+#        attachments = Attachment.attach_files(@top_section, params[:attachments])
+        #if !attachments.empty? && !attachments[:files].blank? && Setting.notified_events.include?('file_added')
+        #  Mailer.deliver_attachments_added(attachments[:files])
+        #end
+
+        format.html { 
+            render_attachment_warning_if_needed(@top_section)
+            flash[:notice] = l(:notice_top_section_successful_create, :id => "<a href='#{top_section_path(@top_section)}'>##{@top_section.id}</a>")
+            redirect_to(@top_section) }
         format.xml  { render :xml => @top_section, :status => :created, :location => @top_section }
       else
         format.html { render :action => "new" }
@@ -115,7 +130,7 @@ class TopSectionsController < ApplicationController
 
     respond_to do |format|
       if @top_section.update_attributes(params[:top_section])
-        format.html { redirect_to(@top_section, :notice => 'TopSection was successfully updated.') }
+        format.html { redirect_to(@top_section, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

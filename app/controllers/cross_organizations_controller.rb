@@ -48,7 +48,7 @@ class CrossOrganizationsController < ApplicationController
 
     respond_to do |format|
       if @cross_organization.save
-        format.html { redirect_to(@cross_organization, :notice => 'CrossOrganization was successfully created.') }
+        format.html { redirect_to(@cross_organization, :notice => l(:notice_successful_create)) }
         format.xml  { render :xml => @cross_organization, :status => :created, :location => @cross_organization }
       else
         format.html { render :action => "new" }
@@ -64,7 +64,7 @@ class CrossOrganizationsController < ApplicationController
 
     respond_to do |format|
       if @cross_organization.update_attributes(params[:cross_organization])
-        format.html { redirect_to(@cross_organization, :notice => 'CrossOrganization was successfully updated.') }
+        format.html { redirect_to(@cross_organization, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

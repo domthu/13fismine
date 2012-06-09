@@ -48,7 +48,7 @@ class TypeOrganizationsController < ApplicationController
 
     respond_to do |format|
       if @type_organization.save
-        format.html { redirect_to(@type_organization, :notice => 'TypeOrganization was successfully created.') }
+        format.html { redirect_to(@type_organization, :notice => l(:notice_successful_create)) }
         format.xml  { render :xml => @type_organization, :status => :created, :location => @type_organization }
       else
         format.html { render :action => "new" }
@@ -64,7 +64,7 @@ class TypeOrganizationsController < ApplicationController
 
     respond_to do |format|
       if @type_organization.update_attributes(params[:type_organization])
-        format.html { redirect_to(@type_organization, :notice => 'TypeOrganization was successfully updated.') }
+        format.html { redirect_to(@type_organization, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

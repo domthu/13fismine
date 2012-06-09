@@ -48,7 +48,7 @@ class OrganizationsController < ApplicationController
 
     respond_to do |format|
       if @organization.save
-        format.html { redirect_to(@organization, :notice => 'Organization was successfully created.') }
+        format.html { redirect_to(@organization, :notice => l(:notice_successful_create)) }
         format.xml  { render :xml => @organization, :status => :created, :location => @organization }
       else
         format.html { render :action => "new" }
@@ -64,7 +64,7 @@ class OrganizationsController < ApplicationController
 
     respond_to do |format|
       if @organization.update_attributes(params[:organization])
-        format.html { redirect_to(@organization, :notice => 'Organization was successfully updated.') }
+        format.html { redirect_to(@organization, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

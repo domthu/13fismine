@@ -1055,6 +1055,7 @@ it:
   field_se_visibile: Visibile
   field_immagine: Immagine
   field_style: Foglio di stile
+  notice_top_section_successful_create: Sezione %{id} creata
 
 #section
   label_section: Categoria

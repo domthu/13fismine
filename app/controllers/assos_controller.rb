@@ -48,7 +48,7 @@ class AssosController < ApplicationController
 
     respond_to do |format|
       if @asso.save
-        format.html { redirect_to(@asso, :notice => 'Asso was successfully created.') }
+        format.html { redirect_to(@asso, :notice => l(:notice_successful_create)) }
         format.xml  { render :xml => @asso, :status => :created, :location => @asso }
       else
         format.html { render :action => "new" }
@@ -64,7 +64,7 @@ class AssosController < ApplicationController
 
     respond_to do |format|
       if @asso.update_attributes(params[:asso])
-        format.html { redirect_to(@asso, :notice => 'Asso was successfully updated.') }
+        format.html { redirect_to(@asso, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

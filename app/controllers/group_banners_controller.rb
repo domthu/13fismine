@@ -48,7 +48,7 @@ class GroupBannersController < ApplicationController
 
     respond_to do |format|
       if @group_banner.save
-        format.html { redirect_to(@group_banner, :notice => 'GroupBanner was successfully created.') }
+        format.html { redirect_to(@group_banner, :notice => l(:notice_successful_create)) }
         format.xml  { render :xml => @group_banner, :status => :created, :location => @group_banner }
       else
         format.html { render :action => "new" }
@@ -64,7 +64,7 @@ class GroupBannersController < ApplicationController
 
     respond_to do |format|
       if @group_banner.update_attributes(params[:group_banner])
-        format.html { redirect_to(@group_banner, :notice => 'GroupBanner was successfully updated.') }
+        format.html { redirect_to(@group_banner, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
