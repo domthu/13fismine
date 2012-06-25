@@ -6,4 +6,13 @@ class CrossGroup < ActiveRecord::Base
   belongs_to :asso 
   belongs_to :group_banner
 
+  #boolean
+  validates_presence_of :se_visibile
+
+  def to_s
+    asso.name + ' ' + group_banner.name
+  end
+
+  alias :name :to_s
+
 end

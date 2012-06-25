@@ -9,4 +9,21 @@ class Asso < ActiveRecord::Base
   #has_many :group_banners, :through => :cross_group, :dependent => :delete
   has_many :group_banners, :through => :cross_group, :dependent => :delete_all
 
+  #string
+  validates_presence_of :ragione_sociale
+  validates_uniqueness_of :ragione_sociale, :case_sensitive => false
+  validates_length_of :ragione_sociale, :maximum => 255
+  validates_presence_of :email
+  validates_uniqueness_of :email, :case_sensitive => false
+  validates_length_of :email, :maximum => 100
+
+  #text-area? CSS? HTML area
+  validates_length_of :comunicazioni, :maximum => 4000
+
+  def to_s
+    ragione_sociale.to_s
+  end
+
+  alias :name :to_s
+
 end

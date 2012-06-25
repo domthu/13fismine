@@ -6,4 +6,25 @@ class GroupBanner < ActiveRecord::Base
   has_many :cross_groups, :dependent => :nullify
   has_many :assos, :through => :cross_group, :dependent => :delete_all
 
+  #string
+  validates_presence_of :espositore
+  validates_uniqueness_of :espositore, :case_sensitive => false
+  validates_length_of :espositore, :maximum => 255
+
+  #integer
+  validates_presence_of :priorita
+  validates_numericality_of :priorita, :allow_nil => false
+
+  #boolean
+  validates_presence_of :se_visibile
+
+  #text-area? CSS? HTML area
+  validates_length_of :didascalia, :maximum => 4000
+
+  def to_s
+    espositore.to_s
+  end
+
+  alias :name :to_s
+
 end

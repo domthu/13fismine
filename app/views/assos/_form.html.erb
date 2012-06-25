@@ -1,0 +1,9 @@
+<%= f.error_messages %>
+
+<div class="box tabular">
+  <p><%= f.text_field :sezione_top, :label => :field_top_section, :required => true, :size => 60 %></p>
+  <p><%= f.text_field :ordinamento, :label => :field_ordinamento, :size => 3 %></p>
+  <p><%= f.text_field :immagine, :label => :field_immagine %></p>
+  <p><%= f.text_field :style, :label => :field_style %></p>
+  <p><%= f.check_box :se_visibile, :label => :field_se_visibile %></p>
+</div>

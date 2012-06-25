@@ -1,0 +1,15 @@
+<%= f.error_messages %>
+
+<div class="box tabular">
+  <p><%= f.text_field :espositore, :label => :field_espositore, :required => true %></p>
+  <p><%= f.text_field :url, :label => :field_url, :required => true, :size => 200 %></p>
+  <p><%= f.text_field :priorita, :label => :field_priorita, :size => 3 %></p>
+  <p><%= f.text_field :posizione, :label => :field_posizione, :required => true, :size => 200 %></p>
+  <p><%= f.check_box :se_visibile, :label => :field_se_visibile %></p>
+  <p><%= f.text_field :banner, :label => :field_banner, :required => true, :size => 200 %></p>
+  <p><%= f.text_field :impressions, :label => :field_impressions, :size => 3 %></p>
+  <p><%= f.text_field :clicks, :label => :field_clicks, :size => 3 %></p>
+  <p><%= f.text_area :didascalia, :label => :field_didascalia %></p>
+  <p><%= f.check_box :se_prima_pagina, :label => :field_se_prima_pagina %></p>
+  <p><%= f.text_field :impressions_history, :label => :field_impressions_history, :size => 3 %></p>
+</div>

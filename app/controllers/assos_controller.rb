@@ -3,13 +3,38 @@ class AssosController < ApplicationController
 
   before_filter :require_admin
 
+  helper :sort
+  include SortHelper
+
   # GET /assos
   # GET /assos.xml
   def index
-    @assos = Asso.all
+    #@assos = Asso.all
+
+    #Sorting
+    sort_init 'ragione_sociale'
+    sort_update 'ragione_sociale' => 'ragione_sociale',
+                'email' => 'email',
+                'indirizzo' => "indirizzo",  
+                'presidente' => 'presidente',
+                'referente' => 'referente',
+                'consulente' => 'consulente',
+                'logo' => 'logo',
+                'telefono' => 'telefono',
+                'fax' => 'fax'
 
     respond_to do |format|
-      format.html # index.html.erb
+      #ovverride for paging format.html # index.html.erb
+      format.html {
+        # Paginate results
+        @asso_count = Asso.all.count
+        @asso_pages = Paginator.new self, @asso_count, per_page_option, params['page']
+        @assos = Asso.find(:all,
+                          :order => sort_clause,
+                          :limit  =>  @asso_pages.items_per_page,
+                          :offset =>  @asso_pages.current.offset)
+        render :layout => !request.xhr?
+      }
       format.xml  { render :xml => @assos }
     end
   end

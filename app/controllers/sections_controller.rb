@@ -15,7 +15,7 @@ class SectionsController < ApplicationController
     sort_init 'sezione'
     sort_update 'sezione' => 'sezione',
                 'top_sezione' => 'sezione_top_id',
-                'top_sezione_name' => "top_sections.sezione_top",   #Nome della tabella
+                'top_sezione_name' => "top_sections.sezione_top",   #related table.Field
                 'ordinamento' => 'sections.ordinamento',
                 'protetto' => 'protetto'
 

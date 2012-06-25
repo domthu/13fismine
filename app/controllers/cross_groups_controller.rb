@@ -3,13 +3,35 @@ class CrossGroupsController < ApplicationController
 
   before_filter :require_admin
 
+  helper :sort
+  include SortHelper
+
   # GET /cross_groups
   # GET /cross_groups.xml
   def index
-    @cross_groups = CrossGroup.all
+    #@cross_groups = CrossGroup.all
+
+    #Sorting
+    sort_init 'asso_name'
+    sort_update 'id' => 'id',
+                'asso_name' => "assos.ragione_sociale",   #related table.Field
+                'group_banner_name' => "group_banners.espositore",   #related table.Field
+                'se_visibile' => 'se_visibile'
+
 
     respond_to do |format|
-      format.html # index.html.erb
+      #ovverride for paging format.html # index.html.erb
+      format.html {
+        # Paginate results
+        @cross_group_count = CrossGroup.all.count
+        @cross_group_pages = Paginator.new self, @cross_group_count, per_page_option, params['page']
+        @cross_groups = CrossGroup.find(:all,
+                                  :order => sort_clause,
+                                  :limit  =>  @cross_group_pages.items_per_page,
+                                  :include => [:asso, :group_banner],
+                                  :offset =>  @cross_group_pages.current.offset)
+        render :layout => !request.xhr?
+      }
       format.xml  { render :xml => @cross_groups }
     end
   end

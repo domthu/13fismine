@@ -1064,3 +1064,43 @@ it:
   label_protetto: Privato
   field_top_section: Sezione 
 
+# asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
+# asso (Categoria utente) ha tanti utenti
+  label_asso: Cat. Utente
+  label_asso_plural: Cat. Utenti
+  label_asso_new: Nuova categoria utente
+  label_cross_group: Banner utente
+  label_cross_group_plural: Banner Utenti
+  label_cross_group_new: Nuovo banner per utente
+  label_group_banner: Banner
+  label_group_banner_plural: Banners
+  label_group_banner_new: Nuovo banner
+
+  label_ragione_sociale: Ragione sociale
+  label_email: Email 
+  label_indirizzo: Indirizzo 
+  label_presidente: Presidente 
+  label_referente: Referente 
+  label_consulente: Consulente 
+  label_logo: Logo 
+  label_telefono: Telefono 
+  label_fax: Fax 
+  label_: 
+  label_: 
+  label_: 
+  label_: 
+  label_: 
+  label_: 
+
+  field_espositore: Espositore
+  field_url: Url 
+  field_priorita: Priorita 
+  field_posizione: Posizione 
+  field_se_visibile: Visibile? 
+  field_banner: Banner 
+  field_impressions: Impressions 
+  field_clicks: Clicks 
+  field_didascalia: Didascalia 
+  field_se_prima_pagina: promosso in prima pagina 
+  field_impressions_history: Storico impressione 
+

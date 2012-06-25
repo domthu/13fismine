@@ -1,0 +1,7 @@
+<%= f.error_messages %>
+
+<div class="box tabular">
+  <p><%= f.select :asso_id, (Asso.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_asso) %></p>
+  <p><%= f.select :group_banner_id, (GroupBanner.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_group_banner) %></p>
+  <p><%= f.check_box :se_visibile, :label => :label_se_visibile %></p>
+</div>

@@ -1,24 +1,32 @@
-<h1>Listing cross_groups</h1>
+<div class="contextual">
+<%= link_to l(:label_cross_group_new), new_cross_group_path, :class => 'icon icon-add' %>
+</div>
 
-<table>
-  <tr>
-    <th>asso_id</th>
-    <th>group_banner_id</th>
-    <th>se_visibile</th>
-  </tr>
+<h2><%= l(:label_cross_group_plural) %></h2>
 
+<% if @cross_groups.any? %>
+<table class="list cross_groups">
+  <thead><tr>
+  <%= sort_header_tag('id', :title => l(:label_cross_group), :style => 'width: 10%;text-align:left;')%>
+  <%= sort_header_tag('asso_name', :title => l(:label_asso), :style => 'width: 35%;text-align:left;')%>
+  <%= sort_header_tag('group_banner_name', :title => l(:label_group_banner), :style => 'width: 35%;text-align:left;')%>
+  <%= sort_header_tag('se_visibile', :title => l(:label_se_visibile_abrv), :style => 'width: 10%;text-align:right;')%>
+  <th style='width: 10%;'></th>
+  </tr></thead>
+  <tbody>
 <% @cross_groups.each do |cross_group| %>
-  <tr>
-    <td><%=h cross_group.asso_id %></td>
-    <td><%=h cross_group.group_banner_id %></td>
-    <td><%=h cross_group.se_visibile %></td>
-    <td><%= link_to 'Show', cross_group %></td>
-    <td><%= link_to 'Edit', edit_cross_group_path(cross_group) %></td>
-    <td><%= link_to 'Destroy', cross_group, :confirm => 'Are you sure?', :method => :delete %></td>
+  <tr class="<%= cycle 'odd', 'even' %>">
+    <td><%= link_to h(cross_group), edit_cross_group_path(cross_group) %></td>
+    <td><%= link_to h(cross_group.asso), edit_asso_path(cross_group.asso, :id => cross_group.asso_id) %></td>
+    <td><%= link_to h(cross_group.group_banner), edit_group_banner_path(cross_group.group_banner, :id => cross_group.group_banner_id) %></td>
+    <td align="center"><%= check_box_tag '', 1, cross_group.se_visibile, :disabled => 'disabled' %></td>
+    <td class="buttons"><%= link_to l(:button_delete), cross_group, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del' %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<p class="pagination"><%= pagination_links_full @cross_group_pages, @cross_group_count %></p>
 
-<%= link_to 'New cross_group', new_cross_group_path %>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

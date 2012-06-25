@@ -3,13 +3,40 @@ class GroupBannersController < ApplicationController
 
   before_filter :require_admin
 
+  helper :sort
+  include SortHelper
+
   # GET /group_banners
   # GET /group_banners.xml
   def index
-    @group_banners = GroupBanner.all
+    #@group_banners = GroupBanner.all
+
+    #Sorting
+    sort_init 'espositore'
+    #asso number of occurrence
+    sort_update 'espositore' => 'espositore',
+                'url' => 'url',
+                'priorita' => 'priorita',
+                'posizione' => 'posizione',
+                'se_visibile' => 'se_visibile',
+                'banner' => 'banner',
+                'impressions' => 'impressions',
+                'clicks' => 'clicks',
+                'se_prima_pagina' => 'se_prima_pagina',
+                'impressions_history' => 'impressions_history'
 
     respond_to do |format|
-      format.html # index.html.erb
+      #ovverride for paging format.html # index.html.erb
+      format.html {
+        # Paginate results
+        @group_banner_count = GroupBanner.all.count
+        @group_banner_pages = Paginator.new self, @group_banner_count, per_page_option, params['page']
+        @group_banners = GroupBanner.find(:all,
+                                  :order => sort_clause,
+                                  :limit  =>  @group_banner_pages.items_per_page,
+                                  :offset =>  @group_banner_pages.current.offset)
+        render :layout => !request.xhr?
+      }
       format.xml  { render :xml => @group_banners }
     end
   end
