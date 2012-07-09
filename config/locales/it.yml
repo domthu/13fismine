@@ -1021,6 +1021,7 @@ it:
 # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
 # asso (Categoria utente) ha tanti utenti
   label_asso: Cat. Utente
+  label_asso_full: Categoria Utente
   label_asso_plural: Cat. Utenti
   label_asso_new: Nuova categoria utente
   label_cross_group: Banner utente
@@ -1066,15 +1067,23 @@ it:
 
 # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
 # asso (Categoria utente) ha tanti utenti
+# asso ha uno (o più) Organismi Associati NON ha asso.organization_id?
+  field_asso: Categoria utente
   label_asso: Cat. Utente
-  label_asso_plural: Cat. Utenti
+  label_asso_plural: Categorie utenti
   label_asso_new: Nuova categoria utente
+  label_asso_associated_group_banner: Banner associati
+
+  field_cross_group: Banner utente
   label_cross_group: Banner utente
   label_cross_group_plural: Banner Utenti
   label_cross_group_new: Nuovo banner per utente
+
+  field_group_banner: Banner
   label_group_banner: Banner
   label_group_banner_plural: Banners
   label_group_banner_new: Nuovo banner
+  label_group_banner_associated_asso: Categorie utenti associate
 
   label_ragione_sociale: Ragione sociale
   label_email: Email 
@@ -1084,14 +1093,36 @@ it:
   label_consulente: Consulente 
   label_logo: Logo 
   label_telefono: Telefono 
+  label_telefono_alt: Telefono alternativo 
   label_fax: Fax 
-  label_: 
-  label_: 
-  label_: 
-  label_: 
-  label_: 
-  label_: 
+  label_comunicazioni: Comunicazioni 
+  label_email_alt: Email alternativo 
 
+  field_ragione_sociale: Ragione sociale
+  field_email: Email 
+  field_indirizzo: Indirizzo 
+  field_presidente: Presidente 
+  field_referente: Referente 
+  field_consulente: Consulente 
+  field_logo: Logo 
+  field_telefono: Telefono 
+  field_telefono_alt: Telefono alternativo 
+  field_fax: Fax 
+  field_comunicazioni: Comunicazioni 
+  field_email_alt: Email alternativo 
+
+  label_espositore: Espositore
+  label_url: Url 
+  label_priorita: Priorita 
+  label_posizione: Posizione 
+  label_se_visibile: Visibile? 
+  label_banner: Banner 
+  label_impressions: Impressions 
+  label_clicks: Clicks 
+  label_didascalia: Didascalia 
+  label_se_prima_pagina: promosso in prima pagina 
+  label_impressions_history: Storico impressione
+  
   field_espositore: Espositore
   field_url: Url 
   field_priorita: Priorita 
@@ -1103,4 +1134,5 @@ it:
   field_didascalia: Didascalia 
   field_se_prima_pagina: promosso in prima pagina 
   field_impressions_history: Storico impressione 
+  
 

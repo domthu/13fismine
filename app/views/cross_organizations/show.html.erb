@@ -1,23 +1,63 @@
-<p>
-  <b>organizzazione:</b>
-  <%=h @cross_organization.organizzazione %>
-</p>
+<div class="contextual">
+<%= link_to(l(:button_edit), edit_cross_organization_path(@cross_organization), :class => 'icon icon-edit') if User.current.admin? %>
+<%= link_to(l(:button_delete),
+      cross_organization_path(@cross_organization),
+      :confirm => l(:text_are_you_sure),
+      :method => :delete,
+      :class => 'icon icon-del') if User.current.admin? %>
+</div>
+<h2><%= link_to l(:label_cross_organization_plural), cross_organizations_path %> &#187; <%=h @cross_organization %></h2>
 
-<p>
-  <b>sigla:</b>
-  <%=h @cross_organization.sigla %>
-</p>
+<div class="splitcontentleft">
 
-<p>
-  <b>se_visibile:</b>
-  <%=h @cross_organization.se_visibile %>
-</p>
+<fieldset class="box tabular">
+  <legend><%=l(:label_cross_organization)%></legend>
 
-<p>
-  <b>type_organization_id:</b>
-  <%=h @cross_organization.type_organization_id %>
-</p>
+        <p>
+        <% unless @cross_organization.organizzazione.blank? %>
+            <em><%=h @cross_organization.organizzazione %></em>
+            <br />
+        <% end %>
+        </p>
+        <p>
+            <%= l(:label_type_organization) %>: <%= link_to h(@cross_organization.type_organization), type_organization_path(@cross_organization.type_organization, :id => @cross_organization.type_organization_id) %>
+        </p>
+        
+        <p>
+            <%=h @cross_organization.top_cross_organization %>
+        </p>
+        <p>
+            <%= l(:label_sigla) %>: <%=h @cross_organization.sigla %>
+        </p>
+        <p>
+            <%= check_box_tag '', 1, @cross_organization.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>  
+
+        </p>
+</fieldset>
+</div>
 
 
-<%= link_to 'Edit', edit_cross_organization_path(@cross_organization) %> |
-<%= link_to 'Back', cross_organizations_path %>
+<div class="splitcontentright">
+    <fieldset class="box tabular">
+      <legend><%=l(:label_other_cross_organization_sametype)%></legend>
+        <table>
+          <tr>
+            <th>l(:label_organizzazione)</th>
+            <th>l(:label_sigla)</th>
+            <th></th>
+          </tr>
+          <% @cross_organization.type_organization.cross_organizations.each do |type_related_cross| 
+                if (type_related_cross != @cross_organization) %>
+                  <tr>
+                    <td class="buttons">
+                        <%= link_to h(type_related_cross.organizzazione), cross_organization_path(type_related_cross), :class => 'icon icon-summary')  if User.current.admin?   %>
+                    </td>
+                    <td><%=h type_related_cross.sigla %></td>
+                    <td><%= check_box_tag '', 1, @type_related_cross.se_visibile, :disabled => 'disabled'  %></td>
+                  </tr>
+                <% end
+          end %>
+        </table>
+    </fieldset>
+</div>
+

@@ -1,63 +1,85 @@
-<p>
-  <b>ragione_sociale:</b>
-  <%=h @asso.ragione_sociale %>
-</p>
+<div class="contextual">
+<%= link_to(l(:button_edit), edit_asso_path(@asso), :class => 'icon icon-edit') if User.current.admin? %>
+<%= link_to(l(:button_delete),
+      asso_path(@asso),
+      :confirm => l(:text_are_you_sure),
+      :method => :delete,
+      :class => 'icon icon-del') if User.current.admin? %>
+</div>
+<h2><%= link_to l(:label_asso_plural), assos_path %> &#187; <%=h @asso %></h2>
 
-<p>
-  <b>indirizzo:</b>
-  <%=h @asso.indirizzo %>
-</p>
+<div class="splitcontentleft">
 
-<p>
-  <b>email:</b>
-  <%=h @asso.email %>
-</p>
+<fieldset class="box tabular">
+  <legend><%=l(:label_asso_full)%></legend>
 
-<p>
-  <b>presidente:</b>
-  <%=h @asso.presidente %>
-</p>
+        <p>
+        <% unless @asso.ragione_sociale.blank? %>
+            <em><%=h @asso.ragione_sociale %></em>
+            <br />
+        <% end %>
+        </p>
+        <p>
+            <%= l(:label_indirizzo) %>: <%=h @asso.indirizzo %>
+        </p>
 
-<p>
-  <b>referente:</b>
-  <%=h @asso.referente %>
-</p>
+        <p>
+            <%= l(:label_email) %>: <%=h @asso.email %>
+        </p>
 
-<p>
-  <b>consulente:</b>
-  <%=h @asso.consulente %>
-</p>
+        <p>
+            <%= l(:label_presidente) %>: <%=h @asso.presidente %>
+        </p>
 
-<p>
-  <b>logo:</b>
-  <%=h @asso.logo %>
-</p>
+        <p>
+            <%= l(:label_referente) %>: <%=h @asso.referente %>
+        </p>
 
-<p>
-  <b>telefono:</b>
-  <%=h @asso.telefono %>
-</p>
+        <p>
+            <%= l(:label_consulente) %>: <%=h @asso.consulente %>
+        </p>
 
-<p>
-  <b>telefono_alt:</b>
-  <%=h @asso.telefono_alt %>
-</p>
+        <p>
+            <%= l(:label_logo) %>: <%=h @asso.logo %>
+        </p>
 
-<p>
-  <b>fax:</b>
-  <%=h @asso.fax %>
-</p>
+        <p>
+            <%= l(:label_telefono) %>: <%=h @asso.telefono %>
+        </p>
 
-<p>
-  <b>comunicazioni:</b>
-  <%=h @asso.comunicazioni %>
-</p>
+        <p>
+            <%= l(:label_telefono_alt) %>: <%=h @asso.telefono_alt %>
+        </p>
 
-<p>
-  <b>email_alt:</b>
-  <%=h @asso.email_alt %>
-</p>
+        <p>
+            <%= l(:label_fax) %>: <%=h @asso.fax %>
+        </p>
+
+        <p>
+            <%= l(:label_comunicazioni) %>: <%=h @asso.comunicazioni %>
+        </p>
+
+        <p>
+            <%= l(:label_email_alt) %>: <%=h @asso.email_alt %>
+        </p>
+</fieldset>
+</div>
+
+<div class="splitcontentright">
+    <fieldset class="box tabular">
+      <legend><%=l(:label_asso_associated_group_banner)%></legend>
+        <table>
+          <tr>
+            <th>l(:label_group_banner)</th>
+          </tr>
+          <% @asso.group_banners.each do |related_banner| %>
+              <tr>
+                <td class="buttons">
+                    <%= link_to(h(related_banner.espositore), group_banner_path(related_banner), :class => 'icon icon-summary')  if User.current.admin?   %>
+              </tr>
+          <% end %>
+        </table>
+    </fieldset>
+</div>
 
 
-<%= link_to 'Edit', edit_asso_path(@asso) %> |
-<%= link_to 'Back', assos_path %>

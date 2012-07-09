@@ -1,18 +1,30 @@
-<p>
-  <b>tipo:</b>
-  <%=h @type_organization.tipo %>
-</p>
+<div class="contextual">
+<%= link_to(l(:button_edit), edit_type_organization_path(@type_organization), :class => 'icon icon-edit') if User.current.admin? %>
+<%= link_to(l(:button_delete),
+      type_organization_path(@type_organization),
+      :confirm => l(:text_are_you_sure),
+      :method => :delete,
+      :class => 'icon icon-del') if User.current.admin? %>
+</div>
+<h2><%= link_to l(:label_type_organization_plural), type_organizations_path %> &#187; <%=h @type_organization %></h2>
 
-<p>
-  <b>descrizione:</b>
-  <%=h @type_organization.descrizione %>
-</p>
+<div class="splitcontentleft">
 
-<p>
-  <b>priorita:</b>
-  <%=h @type_organization.priorita %>
-</p>
+<fieldset class="box tabular">
+  <legend><%=l(:label_type_organization)%></legend>
 
+        <p>
+        <% unless @type_organization.tipo.blank? %>
+            <em><%=h @type_organization.tipo %></em>
+            <br />
+        <% end %>
+        </p>
+        <p>
+            <%= l(:label_descrizione) %>: <%=h @type_organization.descrizione %>
+        </p>
+        <p>
+            <%= check_box_tag l(:label_priorita), 1, @type_organization.priorita, :disabled => 'disabled'  %> <%= l(:label_priorita) %>  
 
-<%= link_to 'Edit', edit_type_organization_path(@type_organization) %> |
-<%= link_to 'Back', type_organizations_path %>
+        </p>
+</fieldset>
+</div>

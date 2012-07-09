@@ -1,18 +1,72 @@
-<p>
-  <b>asso_id:</b>
-  <%=h @cross_group.asso_id %>
-</p>
-
-<p>
-  <b>group_banner_id:</b>
-  <%=h @cross_group.group_banner_id %>
-</p>
-
-<p>
-  <b>se_visibile:</b>
-  <%=h @cross_group.se_visibile %>
-</p>
+<div class="contextual">
+<%= link_to(l(:button_edit), edit_cross_group_path(@cross_group), :class => 'icon icon-edit') if User.current.admin? %>
+<%= link_to(l(:button_delete),
+      cross_group_path(@cross_group),
+      :confirm => l(:text_are_you_sure),
+      :method => :delete,
+      :class => 'icon icon-del') if User.current.admin? %>
+</div>
+<h2><%= link_to l(:label_cross_group_plural), cross_groups_path %> &#187; <%=h @cross_group %></h2>
 
 
-<%= link_to 'Edit', edit_cross_group_path(@cross_group) %> |
-<%= link_to 'Back', cross_groups_path %>
+<div class="splitcontentleft">
+
+<fieldset class="box tabular">
+  <legend><%=l(:label_cross_group)%></legend>
+
+        <p>
+            <%= l(:label_asso) %>: <%= link_to(h(@cross_group.asso), asso_path(@cross_group.asso, :id => @cross_group.asso_id)) %>
+        </p>
+        
+        <p>
+            <%= l(:label_group_banner) %>: <%= link_to(h(@cross_group.group_banner), group_banner_path(@cross_group.group_banner, :id => @cross_group.group_banner_id)) %>
+        </p>
+        <p>
+            <%= check_box_tag '', 1, @cross_group.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>  
+
+        </p>
+</fieldset>
+</div>
+
+<div class="splitcontentleft">
+    <fieldset class="box tabular">
+      <legend><%=l(:label_asso_associated_group_banner)%></legend>
+        <h2>@cross_group.asso</h2>
+        <table>
+          <tr>
+            <th>l(:label_group_banner)</th>
+          </tr>
+          <% @cross_group.asso.group_banners.each do |related_banner| 
+                if (related_banner != @cross_group) %>
+                  <tr>
+                    <td class="buttons">
+                        <%= link_to(h(related_banner.espositore), group_banner_path(related_banner), :class => 'icon icon-summary')  if User.current.admin?   %>
+                  </tr>
+                <% end
+          end %>
+        </table>
+    </fieldset>
+</div>
+
+<div class="splitcontentright">
+    <fieldset class="box tabular">
+      <legend><%=l(:label_group_banner_associated_asso)%></legend>
+        <h2>@cross_group.group_banner</h2>
+        <table>
+          <tr>
+            <th>l(:label_asso)</th>
+          </tr>
+          <% @cross_group.group_banner.assos.each do |related_asso| 
+                if (related_asso != @cross_group) %>
+                  <tr>
+                    <td class="buttons">
+                        <%= link_to(h(related_asso), asso_path(related_asso), :class => 'icon icon-summary')  if User.current.admin?   %>
+                  </tr>
+                <% end
+          end %>
+        </table>
+    </fieldset>
+</div>
+
+
+

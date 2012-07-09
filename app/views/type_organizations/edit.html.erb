@@ -1,24 +1,10 @@
-<h1>Editing type_organization</h1>
+<h2><%= link_to l(:label_type_organization_plural), type_organizations_path %> &#187; <%= h(@type_organization) %></h2>
 
-<% form_for(@type_organization) do |f| %>
-  <%= f.error_messages %>
+<% labelled_form_for @type_organization do |f| %>
+<%= submit_tag l(:button_save) %>
+<%= render :partial => 'form', :locals => { :f => f } %>
+<%= submit_tag l(:button_save) %>
+<!-- <%= f.submit 'Update' %> --> 
 
-  <p>
-    <%= f.label :tipo %><br />
-    <%= f.text_field :tipo %>
-  </p>
-  <p>
-    <%= f.label :descrizione %><br />
-    <%= f.text_field :descrizione %>
-  </p>
-  <p>
-    <%= f.label :priorita %><br />
-    <%= f.text_field :priorita %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
 <% end %>
 
-<%= link_to 'Show', @type_organization %> |
-<%= link_to 'Back', type_organizations_path %>

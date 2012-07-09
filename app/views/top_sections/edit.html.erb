@@ -8,9 +8,11 @@
  --> 
 
 <% labelled_form_for (@top_section) do |f| %>
+<%= submit_tag l(:button_save) %>
 <%= render :partial => 'form', :locals => { :f => f } %>
 <%= submit_tag l(:button_save) %>
-<%= f.submit 'Update' %>
+<!-- <%= f.submit 'Update' %> --> 
+
 
 <% end %>
 

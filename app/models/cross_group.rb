@@ -5,6 +5,8 @@ class CrossGroup < ActiveRecord::Base
   #2.8 Choosing Between has_many :through and has_and_belongs_to_many
   belongs_to :asso 
   belongs_to :group_banner
+  validates_presence_of :asso
+  validates_presence_of :group_banner
 
   #boolean
   validates_presence_of :se_visibile

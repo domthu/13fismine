@@ -1,28 +1,10 @@
-<h1>Editing cross_organization</h1>
+<h2><%= link_to l(:label_cross_organization_plural), cross_organizations_path %> &#187; <%= h(@cross_organization) %></h2>
 
-<% form_for(@cross_organization) do |f| %>
-  <%= f.error_messages %>
+<% labelled_form_for @cross_organization do |f| %>
+<%= submit_tag l(:button_save) %>
+<%= render :partial => 'form', :locals => { :f => f } %>
+<%= submit_tag l(:button_save) %>
+<!-- <%= f.submit 'Update' %> --> 
 
-  <p>
-    <%= f.label :organizzazione %><br />
-    <%= f.text_field :organizzazione %>
-  </p>
-  <p>
-    <%= f.label :sigla %><br />
-    <%= f.text_field :sigla %>
-  </p>
-  <p>
-    <%= f.label :se_visibile %><br />
-    <%= f.check_box :se_visibile %>
-  </p>
-  <p>
-    <%= f.label :type_organization_id %><br />
-    <%= f.text_field :type_organization_id %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
 <% end %>
 
-<%= link_to 'Show', @cross_organization %> |
-<%= link_to 'Back', cross_organizations_path %>

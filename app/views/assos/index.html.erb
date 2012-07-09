@@ -16,12 +16,13 @@
   <%= sort_header_tag('logo', :title => l(:label_logo), :style => 'width: 10%;text-align:left;')%>
   <%= sort_header_tag('telefono', :title => l(:label_telefono), :style => 'width: 10%;text-align:left;')%>
   <%= sort_header_tag('fax', :title => l(:label_fax), :style => 'width: 10%;text-align:left;')%>
-  <th style='width: 10%;'></th>
+  <th style='width: 5%;'></th>
+  <th style='width: 5%;'></th>
   </tr></thead>
   <tbody>
 <% @assos.each do |asso| %>
   <tr class="<%= cycle 'odd', 'even' %>">
-    <td><%= link_to h(asso), edit_asso_path(asso) %></td>
+    <td><%= link_to h(asso), asso_path(asso) %></td>
     <td><%=h asso.email %></td>
     <td><%=h asso.indirizzo %></td>
     <td><%=h asso.presidente %></td>
@@ -30,7 +31,8 @@
     <td><%=h asso.logo %></td>
     <td><%=h asso.telefono %></td>
     <td><%=h asso.fax %></td>
-    <td class="buttons"><%= link_to l(:button_delete), asso, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del' %></td>
+    <td class="buttons"><%= link_to('', edit_asso_path(asso), :class => 'icon icon-edit') if User.current.admin? %></td>
+    <td class="buttons"><%= link_to ('', asso, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
   </tr>
 <% end %>
 </table>

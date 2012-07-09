@@ -1,8 +1,10 @@
 <h2><%= link_to l(:label_section_plural), sections_path %> &#187; <%= h(@section) %></h2>
 
 <% labelled_form_for @section do |f| %>
+<%= submit_tag l(:button_save) %>
 <%= render :partial => 'form', :locals => { :f => f } %>
-<%= f.submit 'Update' %>
+<%= submit_tag l(:button_save) %>
+<!-- <%= f.submit 'Update' %> --> 
 
 <% end %>
 

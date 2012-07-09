@@ -17,12 +17,13 @@
   <%= sort_header_tag('clicks', :title => l(:label_clicks), :style => 'width: 20px;')%>
   <%= sort_header_tag('se_prima_pagina', :title => l(:label_se_prima_pagina_abrv), :style => 'width: 20px;text-align:right;')%>
   <%= sort_header_tag('impressions_history', :title => l(:label_impressions_history_abrv), :style => 'width: 20px;')%>
-  <th style='width: 10%;'></th>
+  <th style='width: 5%;'></th>
+  <th style='width: 5%;'></th>
   </tr></thead>
   <tbody>
 <% @group_banners.each do |group_banner| %>
   <tr class="<%= cycle 'odd', 'even' %>">
-    <td><%= link_to h(group_banner), edit_group_banner_path(group_banner) %></td>
+    <td><%= link_to h(group_banner), group_banner_path(group_banner) %></td>
     <td><%=h group_banner.url %></td>
     <td style="text-align: right;"><%=h group_banner.priorita %></td>
     <td><%=h group_banner.posizione %></td>
@@ -32,7 +33,8 @@
     <td style="text-align: right;"><%=h group_banner.clicks %></td>
     <td align="center"><%= check_box_tag '', 1, group_banner.se_prima_pagina, :disabled => 'disabled' %></td>
     <td style="text-align: right;"><%=h group_banner.impressions_history %></td>
-    <td class="buttons"><%= link_to l(:button_delete), group_banner, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del' %></td>
+    <td class="buttons"><%= link_to('', edit_group_banner_path(group_banner), :class => 'icon icon-edit') if User.current.admin? %></td>
+    <td class="buttons"><%= link_to ('', group_banner, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
   </tr>
 <% end %>
 </table>

@@ -1,24 +1,10 @@
-<h1>Editing cross_group</h1>
+<h2><%= link_to l(:label_cross_group_plural), cross_groups_path %> &#187; <%= h(@cross_group) %></h2>
 
-<% form_for(@cross_group) do |f| %>
-  <%= f.error_messages %>
+<% labelled_form_for @cross_group do |f| %>
+<%= submit_tag l(:button_save) %>
+<%= render :partial => 'form', :locals => { :f => f } %>
+<%= submit_tag l(:button_save) %>
+<!-- <%= f.submit 'Update' %> --> 
 
-  <p>
-    <%= f.label :asso_id %><br />
-    <%= f.text_field :asso_id %>
-  </p>
-  <p>
-    <%= f.label :group_banner_id %><br />
-    <%= f.text_field :group_banner_id %>
-  </p>
-  <p>
-    <%= f.label :se_visibile %><br />
-    <%= f.check_box :se_visibile %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
 <% end %>
 
-<%= link_to 'Show', @cross_group %> |
-<%= link_to 'Back', cross_groups_path %>
