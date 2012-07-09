@@ -18,3 +18,23 @@ class CrossGroup < ActiveRecord::Base
   alias :name :to_s
 
 end
+
+#You need to define the join model as a separate association when using has_many :through:
+#class Post < ActiveRecord::Base
+#  has_many :user_posts
+#  has_many :users, :through => :user_posts
+#class User < ActiveRecord::Base
+#  has_many :user_posts
+#  has_many :posts, :through => :user_posts
+#class UserPost < ActiveRecord::Base
+#  belongs_to :user # foreign_key is user_id
+#  belongs_to :post # foreign_key is post_id
+#This works best when you need to keep data that pertains to the join model itself, or if you want to perform validations on the join separate from the other two models.
+
+#If you just want a simple join table, it's easier to use the old HABTM syntax:
+#class User < ActiveRecord::Base
+#  has_and_belongs_to_many :posts
+#class Post < ActiveRecord::Base
+#  has_and_belongs_to_many :users
+
+
