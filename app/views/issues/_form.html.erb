@@ -1,6 +1,6 @@
 <%= call_hook(:view_issues_form_details_top, { :issue => @issue, :form => f }) %>
 
-<div id="issue_descr_fields" <%= 'style="display:none"' unless @issue.new_record? || @issue.errors.any? %>>
+<div id="issue_descr_fields" >
 <% if @issue.safe_attribute_names.include?('is_private') %>
 <p style="float:right; margin-right:1em;">
   <label class="inline" for="issue_is_private" id="issue_is_private_label"><%= f.check_box :is_private, :no_label => true %> <%= l(:field_is_private) %></label>
@@ -11,10 +11,16 @@
                                      :update => :attributes,
                                      :with => "Form.serialize('issue-form')" %>
 
-<p><%= f.text_field :subject, :size => 80, :required => true %></p>
+<p style="display:none;">On ne fait pas d'omelette sans casser des oeufs
+<= f.text_field :subject, :size => 80, :required => true ></p>
+<p><%= f.text_area :subject,
+                   :cols => 20,
+                   :rows => (@issue.subject.blank? ? 2 : [[2, @issue.subject.length / 50].max, 20].min),
+                   :accesskey => accesskey(:edit),
+                   :class => 'wiki-edit' %></p>
 <p><%= f.text_area :riassunto,
                    :cols => 20,
-                   :rows => (@issue.riassunto.blank? ? 10 : [[10, @issue.riassunto.length / 50].max, 100].min),
+                   :rows => (@issue.riassunto.blank? ? 5 : [[5, @issue.riassunto.length / 50].max, 50].min),
                    :accesskey => accesskey(:edit),
                    :class => 'wiki-edit' %></p>
 
@@ -43,4 +49,6 @@
 
 <%= call_hook(:view_issues_form_details_bottom, { :issue => @issue, :form => f }) %>
 
+<%= wikitoolbar_for 'issue_subject' %>
+<%= wikitoolbar_for 'issue_riassunto' %>
 <%= wikitoolbar_for 'issue_description' %>

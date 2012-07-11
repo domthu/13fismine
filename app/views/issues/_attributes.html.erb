@@ -6,6 +6,11 @@
 <% else %>
 <p><label><%= l(:field_status) %></label> <%= h(@issue.status.name) %></p>
 <% end %>
+<p><label><%= l(:field_ordinamento) %></label> <%= f.text_field :ordinamento, :size => 2 %></p>
+<p><%= f.check_box :se_visible_web %></p>
+<p><%= f.check_box :se_visible_data %></p>
+<p><%= f.check_box :se_visible_newsletter %></p>
+<p><%= f.check_box :se_protetto %></p>
 
 <p><%= f.select :priority_id, (@priorities.collect {|p| [p.name, p.id]}), {:required => true}, :disabled => !@issue.leaf? %></p>
 <p><%= f.select :assigned_to_id, principals_options_for_select(@issue.assignable_users, @issue.assigned_to), :include_blank => true %></p>
@@ -18,6 +23,7 @@
                      :title => l(:label_issue_category_new),
                      :tabindex => 199) if authorize_for('issue_categories', 'new') %></p>
 <% end %>
+
 <% unless @issue.assignable_versions.empty? %>
 <p><%= f.select :fixed_version_id, version_options_for_select(@issue.assignable_versions, @issue.fixed_version), :include_blank => true %>
 <%= prompt_to_remote(image_tag('add.png', :style => 'vertical-align: middle;'),

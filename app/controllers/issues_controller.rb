@@ -142,6 +142,8 @@ class IssuesController < ApplicationController
 
   def create
     call_hook(:controller_issues_new_before_save, { :params => params, :issue => @issue })
+    #domthu 20120710
+    #@issue.riassunto =  (params[:riassunto].present? ? params[:riassunto] : '?')
     if @issue.save
       attachments = Attachment.attach_files(@issue, params[:attachments])
       call_hook(:controller_issues_new_after_save, { :params => params, :issue => @issue})
@@ -176,7 +178,8 @@ class IssuesController < ApplicationController
 
   def update
     update_issue_from_params
-
+    #domthu 20120710
+    #@issue.riassunto =  params[:riassunto]
     if @issue.save_issue_with_child_records(params, @time_entry)
       render_attachment_warning_if_needed(@issue)
       flash[:notice] = l(:notice_successful_update) unless @issue.current_journal.new_record?
@@ -292,6 +295,11 @@ private
 
     @notes = params[:notes] || (params[:issue].present? ? params[:issue][:notes] : nil)
     @issue.init_journal(User.current, @notes)
+
+    #domthu 20120710
+    #@issue.riassunto =  (params[:riassunto].present? ? params[:riassunto] : 'updt')
+    #@issue.riassunto =  (params[:issue][:riassunto].present? ? params[:issue][:riassunto] : 'updt2')
+    #--> Add to safe_attribute
     @issue.safe_attributes = params[:issue]
   end
 

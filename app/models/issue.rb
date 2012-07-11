@@ -266,6 +266,7 @@ class Issue < ActiveRecord::Base
     'priority_id',
     'fixed_version_id',
     'subject',
+    'riassunto',
     'description',
     'start_date',
     'due_date',
@@ -274,8 +275,31 @@ class Issue < ActiveRecord::Base
     'custom_field_values',
     'custom_fields',
     'lock_version',
+    'se_visible_web',
+    'se_visible_data',
+    'se_visible_newsletter',
+    'se_protetto',
+    'ordinamento',
     :if => lambda {|issue, user| issue.new_record? || user.allowed_to?(:edit_issues, issue.project) }
-
+    
+#    add_column :issues, :section_id, :integer, :null => true
+#    add_column :issues, :ordinamento, :integer
+#    add_column :issues, :se_sommario, :boolean, :default => 1
+#    add_column :issues, :riassunto, :text
+#    add_column :issues, :titolo, :text
+#    add_column :issues, :testo, :text
+#    add_column :issues, :riferimento, :string
+#    add_column :issues, :se_visible_web, :boolean, :default => 0
+#    add_column :issues, :data_scadenza, :datetime
+#    add_column :issues, :se_visible_data, :boolean, :default => 0
+#    add_column :issues, :se_visible_newsletter, :boolean, :default => 0
+#    add_column :issues, :se_protetto, :boolean, :default => 1
+#    add_column :issues, :immagine_url, :string
+#    add_column :issues, :titolo_no_format, :text
+#    add_column :issues, :testo_no_format, :text
+#    add_column :issues, :riassunto_no_format, :text
+#    add_column :issues, :tag_link, :string
+    
   safe_attributes 'status_id',
     'assigned_to_id',
     'fixed_version_id',

@@ -1135,4 +1135,14 @@ it:
   field_se_prima_pagina: promosso in prima pagina 
   field_impressions_history: Storico impressione 
   
+#ISSUE --> ATTIVITA
+  label_se_visible_web: Visibile Web? 
+  label_se_visible_data: Visibile Data?
+  label_se_visible_newsletter: Visibile Mail? 
+  label_se_protetto: Protetto? 
+  
+  field_se_visible_web: Visibile Web? 
+  field_se_visible_data: Visibile Data?
+  field_se_visible_newsletter: Visibile Mail? 
+  field_se_protetto: Protetto? 
 
