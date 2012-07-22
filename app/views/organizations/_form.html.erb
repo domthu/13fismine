@@ -5,7 +5,7 @@
   <p><%= f.select :user_id, (User.all.collect {|c| [c.lastname + ' ' + c.firstname +  ' (' + c.login + ')', c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_user) %></p>
   <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [c.organizzazione + ' (' + c.sigla + ')', c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_cross_organization) %></p>
   <p><%= f.check_box :richiedinumeroregistrazione, :label => :label_richiedinumeroregistrazione %></p>
-  <p><%= f.datetime_select :data_scadenza %></p>
+  <p><%= f.date_select :data_scadenza, :label => :field_data_scadenza %></p>
   <p><%= f.text_field :nota, :label => :field_nota, :size => 40  %></p>
   <p><%= f.select :region_id, (Region.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_region) %></p>
   <p><%= f.select :province_id, (Province.all.collect {|c| [c.name + ' (' + c.sigla + ')', c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_province) %></p>
@@ -15,9 +15,9 @@
   <p><%= f.text_area :numero1, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
   <p><%= f.text_area :numero2, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
   <p><%= f.text_area :numero3, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
-  <p><%= f.datetime_select :data1 %></p>
-  <p><%= f.datetime_select :data2 %></p>
-  <p><%= f.datetime_select :data3 %></p>
+  <p><%= f.date_select :data1, :label => :field_data1 %></p>
+  <p><%= f.date_select :data2, :label => :field_data2 %></p>
+  <p><%= f.date_select :data3, :label => :field_data3 %></p>
   <p><%= f.check_box :flag1, :label => :label_flag1 %></p>
   <p><%= f.check_box :flag2, :label => :label_flag2 %></p>
   <p><%= f.check_box :flag3, :label => :label_flag3 %></p>

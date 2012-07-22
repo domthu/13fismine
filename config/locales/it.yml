@@ -1017,6 +1017,24 @@ it:
   label_invoice: Fattura
   label_invoice_plural: Fatture
   label_invoice_new: Nuova fattura
+  
+  label_numero_fattura: Numero fattura
+  label_data_fattura: Data fattura
+  label_sezione: Sezione
+  label_anno: Anno
+  label_tariffa: Tariffa
+  label_sconto: Sconto
+  label_iva: IVA
+  label_pagamento: Pagamento
+
+  field_numero_fattura: N° fattura
+  field_data_fattura: Data fattura
+  field_sezione: Sezione
+  field_anno: Anno
+  field_tariffa: Tariffa
+  field_sconto: Sconto
+  field_iva: IVA
+  field_pagamento: Pagamento
 
 # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
 # asso (Categoria utente) ha tanti utenti
@@ -1036,12 +1054,71 @@ it:
   label_organization: Org. associato
   label_organization_plural: Org. asso.
   label_organization_new: Nuova organismo associato
+  label_organization_plural_long: Organismo associato
+  
   label_type_organization: Org. tipo
   label_type_organization_plural: Org. tipi
   label_type_organization_new: Nuovo tipo di organismo
+  label_type_organization_plural_long: Tipi di organismo
+  
   label_cross_organization: Sigla
   label_cross_organization_plural: Sigle
   label_cross_organization_new: Nuova sigla
+  label_other_cross_organization_sametype: Altre sigle correlate
+
+  label_tipo: Tipo dell'organismo
+  label_descrizione: Descrizione
+  label_organizzazione: Organizzazione 
+  label_sigla: Sigla 
+  label_type_organization: Tipo organizzazione
+
+  field_tipo: Tipo dell'organismo
+  field_descrizione: Descrizione
+  field_organizzazione: Organizzazione
+  field_sigla: Sigla
+  field_type_organization: Tipo organizzazione 
+
+  label_cross_organization: Sigla
+  label_richiedinumeroregistrazione: Richiedi N° di Registrazione
+  label_data_scadenza: Data scadenza
+  label_nota: Note
+  label_region: Regione
+  label_province: Provincia
+  label_comune: Comune
+  label_testo2: Testo 2 
+  label_testo3: Testo 3
+  label_numero1: Numero 1
+  label_numero2: Numero 2
+  label_numero3: Numero 3
+  label_data1: Data 1
+  label_data2: Data 2
+  label_data3: Data 3
+  label_flag1: Flag 1
+  label_flag2: Flag 2
+  label_flag3: Flag 3
+  
+  field_cross_organization: Sigla 
+  field_richiedinumeroregistrazione: Richiedi N° Reg.
+  field_data_scadenza: Data scadenza
+  field_nota: Note
+  field_region: Regione
+  field_province: Provincia
+  field_comune: Comune 
+  field_nota: Note
+  field_region: Regione
+  field_province: Provincia
+  field_comune: Comune
+  field_testo2: Testo 2 
+  field_testo3: Testo 3
+  field_numero1: Numero 1
+  field_numero2: Numero 2
+  field_numero3: Numero 3
+  field_data1: Data 1
+  field_data2: Data 2
+  field_data3: Data 3
+  field_flag1: Flag 1
+  field_flag2: Flag 2
+  field_flag3: Flag 3
 
 #top_section
   label_top_section: Sezione

@@ -36,10 +36,10 @@
 <div class="splitcontentright">
     <fieldset class="box tabular">
       <legend><%=l(:label_other_cross_organization_sametype)%></legend>
-        <table>
+        <table class="subtable">
           <tr>
-            <th>l(:label_organizzazione)</th>
-            <th>l(:label_sigla)</th>
+            <th><%= l(:label_organizzazione) %></th>
+            <th><%= l(:label_cross_organization) %></th>
             <th></th>
           </tr>
           <% @cross_organization.type_organization.cross_organizations.each do |type_related_cross| 

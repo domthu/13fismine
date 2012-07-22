@@ -6,7 +6,7 @@
       :method => :delete,
       :class => 'icon icon-del') if User.current.admin? %>
 </div>
-<h2><%= link_to l(:label_organization_plural), organizations_path %> &#187; <%=h @organization %></h2>
+<h2><%= link_to l(:label_organization_plural_long), organizations_path %> &#187; <%=h @organization %></h2>
 
 <div class="splitcontentleft">
   <fieldset class="box tabular">

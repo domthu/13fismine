@@ -7,7 +7,7 @@
      prossima fattura: <%= @cnt %> [<%= @anno %>]
     <% end %>
   </p>
-  <p><%= f.datetime_select :data_fattura %></p>
+  <p><%= f.date_select :data_fattura, :label => :field_fattura %></p>
   <p><%= f.text_field :sezione, :label => :field_sezione, :size => 3 %></p>
   <p><%= f.text_field :anno, :label => :field_anno, :size => 3 %></p>
   <p><%= f.text_field :tariffa, :label => :field_tariffa, :size => 3 %></p>
