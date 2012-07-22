@@ -1,103 +1,88 @@
-<p>
-  <b>region_id:</b>
-  <%=h @organization.region_id %>
-</p>
+<div class="contextual">
+<%= link_to(l(:button_edit), edit_organization_path(@organization), :class => 'icon icon-edit') if User.current.admin? %>
+<%= link_to(l(:button_delete),
+      organization_path(@organization),
+      :confirm => l(:text_are_you_sure),
+      :method => :delete,
+      :class => 'icon icon-del') if User.current.admin? %>
+</div>
+<h2><%= link_to l(:label_organization_plural), organizations_path %> &#187; <%=h @organization %></h2>
 
-<p>
-  <b>province_id:</b>
-  <%=h @organization.province_id %>
-</p>
-
-<p>
-  <b>data_scadenza:</b>
-  <%=h @organization.data_scadenza %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%=h @organization.user_id %>
-</p>
-
-<p>
-  <b>nota:</b>
-  <%=h @organization.nota %>
-</p>
-
-<p>
-  <b>testo2:</b>
-  <%=h @organization.testo2 %>
-</p>
-
-<p>
-  <b>testo3:</b>
-  <%=h @organization.testo3 %>
-</p>
-
-<p>
-  <b>numero1:</b>
-  <%=h @organization.numero1 %>
-</p>
-
-<p>
-  <b>numero2:</b>
-  <%=h @organization.numero2 %>
-</p>
-
-<p>
-  <b>numero3:</b>
-  <%=h @organization.numero3 %>
-</p>
-
-<p>
-  <b>data1:</b>
-  <%=h @organization.data1 %>
-</p>
-
-<p>
-  <b>data2:</b>
-  <%=h @organization.data2 %>
-</p>
-
-<p>
-  <b>data3:</b>
-  <%=h @organization.data3 %>
-</p>
-
-<p>
-  <b>flag1:</b>
-  <%=h @organization.flag1 %>
-</p>
-
-<p>
-  <b>flag2:</b>
-  <%=h @organization.flag2 %>
-</p>
-
-<p>
-  <b>flag3:</b>
-  <%=h @organization.flag3 %>
-</p>
-
-<p>
-  <b>richiedinumeroregistrazione:</b>
-  <%=h @organization.richiedinumeroregistrazione %>
-</p>
-
-<p>
-  <b>asso_id:</b>
-  <%=h @organization.asso_id %>
-</p>
-
-<p>
-  <b>cross_organization_id:</b>
-  <%=h @organization.cross_organization_id %>
-</p>
-
-<p>
-  <b>comune_id:</b>
-  <%=h @organization.comune_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_organization_path(@organization) %> |
-<%= link_to 'Back', organizations_path %>
+<div class="splitcontentleft">
+  <fieldset class="box tabular">
+    <legend><%=l(:label_organization)%></legend>
+    <p>
+    <% unless @organization.asso.ragione_sociale.blank? %>
+      <em><%= link_to h(@organization.asso), asso_path(@organization.asso, :id => @organization.asso_id) %>
+</em>
+      <br />
+    <% end %>
+    </p>
+    <p>
+      <%= l(:label_user) %>: <%= link_to h(@organization.user), user_path(@organization.user, :id => @organization.user_id) %>
+    </p>
+    <p>
+      <%= l(:label_cross_organization) %>: <%= link_to h(@organization.cross_organization), cross_organization_path(@organization.cross_organization, :id => @organization.cross_organization_id) %>
+    </p>
+    <p>
+        <%= check_box_tag '', 1, @organization.richiedinumeroregistrazione, :disabled => 'disabled'  %> <%= l(:label_richiedinumeroregistrazione) %>  
+    </p>
+    <p>
+      <%=l(:label_data_scadenza)%>: <%= format_date(@organization.data_scadenza) %>
+    </p>
+    <p>
+      <%= l(:label_nota) %>: <%=h @organization.nota %>
+    </p>
+    <p>
+      <%= l(:label_region) %>: <%=h @organization.region %>
+    </p>
+    <p>
+      <%= l(:label_province) %>: <%=h @organization.province %>
+    </p>
+    <p>
+      <%= l(:label_comune) %>: <%=h @organization.comune %>
+    </p>
+    <p>
+      <%= l(:label_testo2) %>: <%=h @organization.testo2 %>
+    </p>
+    <p>
+      <%= l(:label_testo3) %>: <%=h @organization.testo3 %>
+    </p>
+    <p>
+      <%= l(:label_numero1) %>: 
+      <div class="wiki">
+        <%= textilizable(@organization.numero1) %>
+      </div>
+    </p>
+    <p>
+      <%= l(:label_numero2) %>: 
+      <div class="wiki">
+        <%= textilizable(@organization.numero2) %>
+      </div>
+    </p>
+    <p>
+      <%= l(:label_numero3) %>: 
+      <div class="wiki">
+        <%= textilizable(@organization.numero3) %>
+      </div>
+    </p>    
+    <p>
+      <%=l(:label_data1)%>: <%= format_date(@organization.data1) %>
+    </p>
+    <p>
+      <%=l(:label_data2)%>: <%= format_date(@organization.data2) %>
+    </p>
+    <p>
+      <%=l(:label_data3)%>: <%= format_date(@organization.data3) %>
+    </p>
+    <p>
+        <%= check_box_tag '', 1, @organization.flag1, :disabled => 'disabled'  %> <%= l(:label_flag1) %>  
+    </p>
+    <p>
+        <%= check_box_tag '', 1, @organization.flag2, :disabled => 'disabled'  %> <%= l(:label_flag2) %>  
+    </p>
+    <p>
+        <%= check_box_tag '', 1, @organization.flag3, :disabled => 'disabled'  %> <%= l(:label_flag3) %>  
+    </p>
+  </fieldset>
+</div>

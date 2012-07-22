@@ -16,7 +16,7 @@ class GroupBanner < ActiveRecord::Base
   validates_numericality_of :priorita, :allow_nil => false
 
   #boolean
-  validates_presence_of :se_visibile
+  #validates_presence_of :se_visibile
 
   #text-area? CSS? HTML area
   validates_length_of :didascalia, :maximum => 4000

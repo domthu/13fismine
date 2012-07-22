@@ -9,22 +9,22 @@
 <h2><%= link_to l(:label_type_organization_plural), type_organizations_path %> &#187; <%=h @type_organization %></h2>
 
 <div class="splitcontentleft">
-
-<fieldset class="box tabular">
-  <legend><%=l(:label_type_organization)%></legend>
-
-        <p>
-        <% unless @type_organization.tipo.blank? %>
-            <em><%=h @type_organization.tipo %></em>
-            <br />
-        <% end %>
-        </p>
-        <p>
-            <%= l(:label_descrizione) %>: <%=h @type_organization.descrizione %>
-        </p>
-        <p>
-            <%= check_box_tag l(:label_priorita), 1, @type_organization.priorita, :disabled => 'disabled'  %> <%= l(:label_priorita) %>  
-
-        </p>
-</fieldset>
+  <fieldset class="box tabular">
+    <legend><%=l(:label_type_organization)%></legend>
+    <p>
+    <% unless @type_organization.tipo.blank? %>
+      <em><%=h @type_organization.tipo %></em>
+      <br />
+    <% end %>
+    </p>
+    <p>
+      <%= l(:label_descrizione) %>: 
+      <div class="wiki">
+        <%= textilizable(@type_organization.descrizione) %>
+      </div>
+    </p>
+    <p>
+      <%= l(:label_priorita) %>: <%=h @type_organization.priorita %>
+    </p>
+  </fieldset>
 </div>

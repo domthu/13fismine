@@ -19,5 +19,10 @@ class Region < ActiveRecord::Base
 #   c.name = "My new name"
 #end
 
+  def to_s
+    name
+  end
+
+  #alias :name :to_s
 
 end

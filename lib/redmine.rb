@@ -182,6 +182,7 @@ Redmine::MenuManager.map :application_menu do |menu|
   menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
   menu.push :type_organization, :type_organizations_path, :if => Proc.new { User.current.admin? }
   menu.push :cross_organization, :cross_organizations_path, :if => Proc.new { User.current.admin? }
+  menu.push :organization, :organizations_path, :if => Proc.new { User.current.admin? }
   menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
 end
 

@@ -1,36 +1,39 @@
-<h1>Listing invoices</h1>
+<div class="contextual">
+<%= link_to l(:label_invoice_new), new_invoice_path, :class => 'icon icon-add' %>
+</div>
 
-<table>
-  <tr>
-    <th>User</th>
-    <th>numero_fattura</th>
-    <th>data_fattura</th>
-    <th>sezione</th>
-    <th>anno</th>
-    <th>tariffa</th>
-    <th>sconto</th>
-    <th>iva</th>
-    <th>pagamento</th>
-  </tr>
+<h2><%= l(:label_invoice_plural) %></h2>
 
+<% if @invoices.any? %>
+<table class="list invoices">
+  <thead><tr>
+  <%= sort_header_tag('numero_fattura', :title => l(:label_numero_fattura), :style => 'width: 20%;text-align:left;')%>
+  <%= sort_header_tag('user', :title => l(:label_user), :style => 'width: 20%;text-align:left;')%>
+  <%= sort_header_tag('data_fattura', :title => l(:label_data_fattura), :style => 'width: 15%;')%>
+  <%= sort_header_tag('anno', :title => l(:label_anno), :style => 'width: 10%;')%>
+  <%= sort_header_tag('tariffa', :title => l(:label_tariffa), :style => 'width: 10%;')%>
+  <%= sort_header_tag('pagamento', :title => l(:label_pagamento), :style => 'width: 25%;')%>
+  <th style='width: 5%;'></th>
+  <th style='width: 5%;'></th>
+  </tr></thead>
+  <tbody>
 <% @invoices.each do |invoice| %>
-  <tr>
-    <td><%=h invoice.user_id %></td>
-    <td><%=h invoice.numero_fattura %></td>
-    <td><%=h invoice.data_fattura %></td>
-    <td><%=h invoice.sezione %></td>
-    <td><%=h invoice.anno %></td>
-    <td><%=h invoice.tariffa %></td>
-    <td><%=h invoice.sconto %></td>
-    <td><%=h invoice.iva %></td>
-    <td><%=h invoice.pagamento %></td>
-    <td><%= link_to 'Show', invoice %></td>
-    <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
-    <td><%= link_to 'Destroy', invoice, :confirm => 'Are you sure?', :method => :delete %></td>
+  <tr class="<%= cycle 'odd', 'even' %>">
+    <td><%= link_to h(invoice.numero_fattura), invoice_path(invoice) %></td>
+    <td><%= link_to h(invoice.user), user_path(invoice.user, :id => invoice.user_id) %></td>
+    <td align="left"><%= format_date(invoice.data_fattura) %></td>
+    <td align="right"><%=h invoice.anno %></td>
+    <td align="right"><%=h invoice.tariffa %></td>
+    <td align="left"><%=h invoice.pagamento %></td>
+    <td class="buttons"><%= link_to('', edit_invoice_path(invoice), :class => 'icon icon-edit') if User.current.admin? %></td>
+    <td class="buttons"><%= link_to ('', invoice, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<p class="pagination"><%= pagination_links_full @invoice_pages, @invoice_count %></p>
 
-<%= link_to 'New invoice', new_invoice_path %>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+

@@ -1073,6 +1073,7 @@ it:
   label_asso_plural: Categorie utenti
   label_asso_new: Nuova categoria utente
   label_asso_associated_group_banner: Banner associati
+  label_asso_associated_group_banner_noone: Nessun banner associato
 
   field_cross_group: Banner utente
   label_cross_group: Banner utente
@@ -1084,6 +1085,7 @@ it:
   label_group_banner_plural: Banners
   label_group_banner_new: Nuovo banner
   label_group_banner_associated_asso: Categorie utenti associate
+  label_group_banner_associated_asso_noone: Nessuna categoria utente associata
 
   label_ragione_sociale: Ragione sociale
   label_email: Email 

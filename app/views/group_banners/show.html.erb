@@ -9,73 +9,68 @@
 <h2><%= link_to l(:label_group_banner_plural), group_banners_path %> &#187; <%=h @group_banner %></h2>
 
 <div class="splitcontentleft">
-
-<fieldset class="box tabular">
-  <legend><%=l(:label_group_banner)%></legend>
-
-        <p>
-        <% unless @group_banner.espositore.blank? %>
-            <em><%=h @group_banner.espositore %></em>
-            <br />
-        <% end %>
-        </p>
-        <p>
-            <%= l(:label_url) %>: <%=h @group_banner.url %>
-        </p>
-
-        <p>
-            <%= l(:label_priorita) %>: <%=h @group_banner.priorita %>
-        </p>
-
-        <p>
-            <%= l(:label_posizione) %>: <%=h @group_banner.posizione %>
-        </p>
-
-        <p>
-            <%= check_box_tag l(:label_se_visibile), 1, @group_banner.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>  
-        </p>
-
-        <p>
-            <%= l(:label_banner) %>: <%=h @group_banner.banner %>
-        </p>
-
-        <p>
-            <%= l(:label_impressions) %>: <%=h @group_banner.impressions %>
-        </p>
-
-        <p>
-            <%= l(:label_clicks) %>: <%=h @group_banner.clicks %>
-        </p>
-
-        <p>
-            <%= l(:label_didascalia) %>: <%=h @group_banner.didascalia %>
-        </p>
-
-        <p>
-            <%= check_box_tag l(:label_se_prima_pagina), 1, @group_banner.se_prima_pagina, :disabled => 'disabled'  %> <%= l(:label_se_prima_pagina) %>  
-        </p>
-
-        <p>
-            <%= l(:label_impressions_history) %>: <%=h @group_banner.impressions_history %>
-        </p>
-</fieldset>
+  <fieldset class="box tabular">
+    <legend><%=l(:label_group_banner)%></legend>
+    <p>
+    <% unless @group_banner.espositore.blank? %>
+        <em><%=h @group_banner.espositore %></em>
+        <br />
+    <% end %>
+    </p>
+    <p>
+        <%= l(:label_url) %>: <%=h @group_banner.url %>
+    </p>
+    <p>
+        <%= l(:label_priorita) %>: <%=h @group_banner.priorita %>
+    </p>
+    <p>
+        <%= l(:label_posizione) %>: <%=h @group_banner.posizione %>
+    </p>
+    <p>
+        <%= check_box_tag '', 1, @group_banner.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>  
+    </p>
+    <p>
+        <%= l(:label_banner) %>: <%=h @group_banner.banner %>
+    </p>
+    <p>
+        <%= l(:label_impressions) %>: <%=h @group_banner.impressions %>
+    </p>
+    <p>
+        <%= l(:label_clicks) %>: <%=h @group_banner.clicks %>
+    </p>
+    <p>
+      <%= l(:label_didascalia) %>: 
+      <div class="wiki">
+        <%= textilizable(@group_banner.didascalia) %>
+      </div>
+    </p>
+    <p>
+        <%= check_box_tag '', 1, @group_banner.se_prima_pagina, :disabled => 'disabled'  %> <%= l(:label_se_prima_pagina) %>  
+    </p>
+    <p>
+        <%= l(:label_impressions_history) %>: <%=h @group_banner.impressions_history %>
+    </p>
+  </fieldset>
 </div>
 
 <div class="splitcontentright">
     <fieldset class="box tabular">
       <legend><%=l(:label_group_banner_associated_asso)%></legend>
+        <% if @group_banner.assos.any? %>
         <table>
           <tr>
-            <th>l(:label_asso)</th>
+            <th><%=l(:label_asso)%></th>
           </tr>
-          <% @group_banner.assos.each do |related_asso| 
-                if (related_asso != @cross_group) %>
-                  <tr>
-                    <td class="buttons">
-                        <%= link_to(h(related_asso), asso_path(related_asso), :class => 'icon icon-summary')  if User.current.admin?   %>
-                  </tr>
-                <% end
-          end %>
+          <% @group_banner.assos.each do |related_asso| %>
+            <tr>
+              <td class="buttons">
+                <%= link_to(h(related_asso), asso_path(related_asso), :class => 'icon icon-summary')  if User.current.admin?   %>
+                <%= h(related_asso) if !User.current.admin? %>
+            </tr>
+          <% end %>
         </table>
+        <% else %>
+          <%=l(:label_group_banner_associated_asso_noone)%>
+        <% end %>
     </fieldset>
 </div>

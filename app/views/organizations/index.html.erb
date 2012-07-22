@@ -1,58 +1,41 @@
-<h1>Listing organizations</h1>
+<div class="contextual">
+<%= link_to l(:label_organization_new), new_organization_path, :class => 'icon icon-add' %>
+</div>
 
-<table>
-  <tr>
-    <th>region_id</th>
-    <th>province_id</th>
-    <th>data_scadenza</th>
-    <th>User</th>
-    <th>nota</th>
-    <th>testo2</th>
-    <th>testo3</th>
-    <th>numero1</th>
-    <th>numero2</th>
-    <th>numero3</th>
-    <th>data1</th>
-    <th>data2</th>
-    <th>data3</th>
-    <th>flag1</th>
-    <th>flag2</th>
-    <th>flag3</th>
-    <th>richiedinumeroregistrazione</th>
-    <th>asso_id</th>
-    <th>cross_organization_id</th>
-    <th>comune_id</th>
-  </tr>
+<h2><%= l(:label_organization_plural) %></h2>
 
+<% if @organizations.any? %>
+<table class="list organizations">
+  <thead><tr>
+  <th style='width: 5%;'></th>
+  <%= sort_header_tag('asso_name', :title => l(:label_organization), :style => 'width: 20%;text-align:left;')%>
+  <%= sort_header_tag('cross_org_name', :title => l(:label_cross_organization), :style => 'width: 20%;text-align:left;')%>
+  <%= sort_header_tag('user_name', :title => l(:label_user), :style => 'width: 20%;text-align:left;')%>
+  <%= sort_header_tag('comune_name', :title => l(:label_comune), :style => 'width: 15%;')%>
+  <%= sort_header_tag('data_scadenza', :title => l(:label_data_scadenza), :style => 'width: 15%;')%>
+  <%= sort_header_tag('richiedinumeroregistrazione', :title => l(:label_richiedinumeroregistrazione), :style => 'width: 5%;')%>
+  <th style='width: 5%;'></th>
+  <th style='width: 5%;'></th>
+  </tr></thead>
+  <tbody>
 <% @organizations.each do |organization| %>
-  <tr>
-    <td><%=h organization.region_id %></td>
-    <td><%=h organization.province_id %></td>
-    <td><%=h organization.data_scadenza %></td>
-    <td><%=h organization.user_id %></td>
-    <td><%=h organization.nota %></td>
-    <td><%=h organization.testo2 %></td>
-    <td><%=h organization.testo3 %></td>
-    <td><%=h organization.numero1 %></td>
-    <td><%=h organization.numero2 %></td>
-    <td><%=h organization.numero3 %></td>
-    <td><%=h organization.data1 %></td>
-    <td><%=h organization.data2 %></td>
-    <td><%=h organization.data3 %></td>
-    <td><%=h organization.flag1 %></td>
-    <td><%=h organization.flag2 %></td>
-    <td><%=h organization.flag3 %></td>
-    <td><%=h organization.richiedinumeroregistrazione %></td>
-    <td><%=h organization.asso_id %></td>
-    <td><%=h organization.cross_organization_id %></td>
-    <td><%=h organization.comune_id %></td>
-    <td><%= link_to 'Show', organization %></td>
-    <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
-    <td><%= link_to 'Destroy', organization, :confirm => 'Are you sure?', :method => :delete %></td>
+  <tr class="<%= cycle 'odd', 'even' %>">
+    <td class="buttons"><%= link_to('', organization_path(organization), :class => 'icon icon-summary') %></td>
+    <td><%= link_to h(organization.asso), asso_path(organization.asso, :id => organization.asso_id) %></td>
+    <td><%= link_to h(organization.cross_organization), cross_organization_path(organization.cross_organization, :id => organization.cross_organization_id) %></td>
+    <td><%= link_to h(organization.user), user_path(organization.user, :id => organization.user_id) %></td>
+    <td align="left"><%=h organization.comune %></td>
+    <td align="left"><%= format_date(organization.data_scadenza) %></td>
+    <td align="center"><%= check_box_tag '', 1, organization.richiedinumeroregistrazione, :disabled => 'disabled' %></td>
+    <td class="buttons"><%= link_to('', edit_organization_path(organization), :class => 'icon icon-edit') if User.current.admin? %></td>
+    <td class="buttons"><%= link_to ('', organization, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<p class="pagination"><%= pagination_links_full @organization_pages, @organization_count %></p>
 
-<%= link_to 'New organization', new_organization_path %>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+

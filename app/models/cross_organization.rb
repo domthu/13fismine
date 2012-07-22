@@ -4,4 +4,10 @@ class CrossOrganization < ActiveRecord::Base
   has_many :organizations, :dependent => :nullify
   belongs_to :type_organization, :class_name => 'TypeOrganization', :foreign_key => 'type_organization_id'
 
+  def to_s
+    organizzazione #to_s
+  end
+
+  alias :name :to_s
+
 end

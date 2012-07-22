@@ -1,0 +1,18 @@
+<%= f.error_messages %>
+
+<div class="box tabular">
+  <p><%= f.select :user_id, (User.all.collect {|c| [c.lastname + ' ' + c.firstname +  ' (' + c.login + ')', c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_user) %></p>
+  <p><%= f.text_field :numero_fattura, :label => :field_numero_fattura, :size => 3 %>
+    <% unless @cnt.blank? %>
+     prossima fattura: <%= @cnt %> [<%= @anno %>]
+    <% end %>
+  </p>
+  <p><%= f.datetime_select :data_fattura %></p>
+  <p><%= f.text_field :sezione, :label => :field_sezione, :size => 3 %></p>
+  <p><%= f.text_field :anno, :label => :field_anno, :size => 3 %></p>
+  <p><%= f.text_field :tariffa, :label => :field_tariffa, :size => 3 %></p>
+  <p><%= f.text_area :sconto, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+  <p><%= f.text_field :iva, :label => :field_iva, :size => 3 %></p>
+  <p><%= f.text_field :pagamento, :label => :field_pagamento, :size => 3 %></p>
+</div>
+<%= wikitoolbar_for 'sconto' %>

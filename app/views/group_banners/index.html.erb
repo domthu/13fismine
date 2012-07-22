@@ -7,16 +7,16 @@
 <% if @group_banners.any? %>
 <table class="list group_banners">
   <thead><tr>
-  <%= sort_header_tag('espositore', :title => l(:label_espositore), :style => 'width: 10%;text-align:left;')%>
-  <%= sort_header_tag('url', :title => l(:label_url), :style => 'width: 10%;text-align:left;')%>
-  <%= sort_header_tag('priorita', :title => l(:label_priorita_abrv), :style => 'width: 20px;text-align:right;')%>
+  <%= sort_header_tag('espositore', :title => l(:label_espositore), :style => 'width: 15%;text-align:left;')%>
+  <%= sort_header_tag('url', :title => l(:label_url), :style => 'width: 15%;text-align:left;')%>
+  <%= sort_header_tag('priorita', :title => l(:label_priorita), :style => 'width: 5%;text-align:center;')%>
   <%= sort_header_tag('posizione', :title => l(:label_posizione), :style => 'width: 10%;text-align:left;')%>
-  <%= sort_header_tag('se_visibile', :title => l(:label_se_visibile_abrv), :style => 'width: 20px;text-align:right;')%>
+  <%= sort_header_tag('se_visibile', :caption => '', :title => l(:label_se_visibile), :style => 'width: 5%;text-align:center;', :class => 'icon icon-protected')%>
   <%= sort_header_tag('banner', :title => l(:label_banner), :style => 'width: 10%;text-align:left;')%>
-  <%= sort_header_tag('impressions', :title => l(:label_impressions_abrv), :style => 'width: 20px;')%>
-  <%= sort_header_tag('clicks', :title => l(:label_clicks), :style => 'width: 20px;')%>
-  <%= sort_header_tag('se_prima_pagina', :title => l(:label_se_prima_pagina_abrv), :style => 'width: 20px;text-align:right;')%>
-  <%= sort_header_tag('impressions_history', :title => l(:label_impressions_history_abrv), :style => 'width: 20px;')%>
+  <%= sort_header_tag('impressions', :title => l(:label_impressions), :style => 'width: 5%;')%>
+  <%= sort_header_tag('clicks', :title => l(:label_clicks), :style => 'width: 5%;text-align:center;')%>
+  <%= sort_header_tag('se_prima_pagina', :caption => '', :title => l(:label_se_prima_pagina), :style => 'width: 5%;text-align:center;', :class => 'icon icon-home')%>
+  <%= sort_header_tag('impressions_history', :caption => '', :title => l(:label_impressions_history), :style => 'width: 5%;text-align:center;', :class => 'icon icon-pic')%>
   <th style='width: 5%;'></th>
   <th style='width: 5%;'></th>
   </tr></thead>

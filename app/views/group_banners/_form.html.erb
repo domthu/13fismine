@@ -9,7 +9,9 @@
   <p><%= f.text_field :banner, :label => :field_banner, :required => true, :size => 80 %></p>
   <p><%= f.text_field :impressions, :label => :field_impressions, :size => 3 %></p>
   <p><%= f.text_field :clicks, :label => :field_clicks, :size => 3 %></p>
-  <p><%= f.text_area :didascalia, :label => :field_didascalia %></p>
+  <p><%= f.text_area :didascalia, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
   <p><%= f.check_box :se_prima_pagina, :label => :field_se_prima_pagina %></p>
   <p><%= f.text_field :impressions_history, :label => :field_impressions_history, :size => 3 %></p>
 </div>
+
+<%= wikitoolbar_for 'didascalia' %>

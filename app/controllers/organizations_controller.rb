@@ -3,13 +3,42 @@ class OrganizationsController < ApplicationController
 
   before_filter :require_admin
 
+  helper :sort
+  include SortHelper
+
   # GET /organizations
   # GET /organizations.xml
   def index
-    @organizations = Organization.all
+    #@organizations = Organization.all
+    #respond_to do |format|
+    #  format.html # index.html.erb
+    #  format.xml  { render :xml => @organizations }
+    #end
 
+    #Sorting
+    sort_init 'data_scadenza'
+    sort_update 'asso_name' => "data_scadenza",   #TODO related table.Field
+                'cross_org_name' => 'cross_organizations.organizzazione',   #related table.Field
+                'cross_org_name' => 'cross_organizations.sigla',   #related table.Field
+                'user_name' => 'users.firstname',   #related table.Field
+                'comune_name' => 'comunes.name',   #related table.Field
+                'data_scadenza' => 'data_scadenza',
+                'richiedinumeroregistrazione' => 'richiedinumeroregistrazione'
+#'asso_name' => "assos.ragione_sociale",   #related table.Field
+#Mysql::Error: Unknown column 'assos.ragione_sociale' in 'order clause': SELECT * FROM `organizations`  ORDER BY assos.ragione_sociale LIMIT 0, 2
+ 
     respond_to do |format|
-      format.html # index.html.erb
+      #ovverride for paging format.html # index.html.erb
+      format.html {
+        # Paginate results
+        @organization_count = Organization.all.count
+        @organization_pages = Paginator.new self, @organization_count, per_page_option, params['page']
+        @organizations = Organization.find(:all,
+                          :order => sort_clause,
+                          :limit  =>  @organization_pages.items_per_page,
+                          :offset =>  @organization_pages.current.offset)
+        render :layout => !request.xhr?
+      }
       format.xml  { render :xml => @organizations }
     end
   end

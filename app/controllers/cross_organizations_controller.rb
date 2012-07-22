@@ -3,13 +3,37 @@ class CrossOrganizationsController < ApplicationController
 
   before_filter :require_admin
 
+  helper :sort
+  include SortHelper
+
   # GET /cross_organizations
   # GET /cross_organizations.xml
   def index
-    @cross_organizations = CrossOrganization.all
+    #@cross_organizations = CrossOrganization.all
+    #respond_to do |format|
+    #  format.html # index.html.erb
+    #  format.xml  { render :xml => @cross_organizations }
+    #end
 
+    #Sorting
+    sort_init 'organizzazione'
+    sort_update 'organizzazione' => 'organizzazione',
+                'type_organization' => 'type_organization',
+                'sigla' => 'sigla',
+                'se_visibile' => 'se_visibile'
+  
     respond_to do |format|
-      format.html # index.html.erb
+      #ovverride for paging format.html # index.html.erb
+      format.html {
+        # Paginate results
+        @cross_organization_count = CrossOrganization.all.count
+        @cross_organization_pages = Paginator.new self, @cross_organization_count, per_page_option, params['page']
+        @cross_organizations = CrossOrganization.find(:all,
+                          :order => sort_clause,
+                          :limit  =>  @cross_organization_pages.items_per_page,
+                          :offset =>  @cross_organization_pages.current.offset)
+        render :layout => !request.xhr?
+      }
       format.xml  { render :xml => @cross_organizations }
     end
   end

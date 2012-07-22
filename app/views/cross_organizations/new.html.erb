@@ -1,27 +1,11 @@
-<h1>New cross_organization</h1>
+<h2><%= link_to l(:label_cross_organization_plural), cross_organizations_path %> &#187; <%= l(:label_cross_organization_new) %></h2>
 
-<% form_for(@cross_organization) do |f| %>
-  <%= f.error_messages %>
+<% labelled_form_for @cross_organization do |f| %>
 
-  <p>
-    <%= f.label :organizzazione %><br />
-    <%= f.text_field :organizzazione %>
-  </p>
-  <p>
-    <%= f.label :sigla %><br />
-    <%= f.text_field :sigla %>
-  </p>
-  <p>
-    <%= f.label :se_visibile %><br />
-    <%= f.check_box :se_visibile %>
-  </p>
-  <p>
-    <%= f.label :type_organization_id %><br />
-    <%= f.text_field :type_organization_id %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
+<%= render :partial => 'form', :locals => { :f => f } %>
+
+<p>
+  <%= f.submit l(:button_create) %>
+  <%= f.submit l(:button_create_and_continue), :name => 'continue' %>
+</p>
 <% end %>
-
-<%= link_to 'Back', cross_organizations_path %>

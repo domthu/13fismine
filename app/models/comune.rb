@@ -6,5 +6,10 @@ class Comune < ActiveRecord::Base
 
   belongs_to :province, :class_name => 'Province', :foreign_key => 'province_id'
 
+  def to_s
+    name #+ '(' + ?codice fiscale? + ')'
+  end
+
+  #alias :name :to_s
 
 end

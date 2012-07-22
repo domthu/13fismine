@@ -2,8 +2,10 @@
 
 <div class="box tabular">
 
-  <p>Organismi Associati<= f.select :organization_id???, (Organization.all.collect {|c| [c.name, c.id]}), :include_blank => true, :required => true, :size => 60, :title => l(:label_organization) ></p>  
-    <p><%= f.text_field :ragione_sociale, :label => :field_ragione_sociale, :required => true, :size => 40 %></p>
+TODO Vewrificare pero la chiave sembra sull'altra tabella
+  <p><= f.select :organization_id???, (Organization.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => false, :size => 60, :title => l(:label_organization) % ></p>
+
+  <p><%= f.text_field :ragione_sociale, :label => :field_ragione_sociale, :required => true, :size => 40 %></p>
   <p><%= f.text_field :indirizzo, :label => :field_indirizzo, :size => 50 %></p>
   <p><%= f.text_field :email, :label => :field_email, :required => true, :size => 20 %></p>
   <p><%= f.text_field :presidente, :label => :field_presidente, :size => 40  %></p>
@@ -12,15 +14,15 @@
   <p><%= f.text_field :telefono, :label => :field_telefono, :size => 40  %></p>
   <p><%= f.text_field :telefono_alt, :label => :field_telefono_alt, :size => 40  %></p>
   <p><%= f.text_field :fax, :label => :field_fax, :fax => 40  %></p>
-  <p><%= f.text_area :comunicazioni, :label => :field_comunicazioni %></p>
+  <p><%= f.text_area :comunicazioni, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
   <p><%= f.text_field :email_alt, :label => :field_email_alt, :size => 20 %></p>
 </div>
 
-
+TODO:
 gestione validazione email su asso
 vedere delete va in errore 
 Logo è un imagine? 
-
+<%= wikitoolbar_for 'comunicazioni' %>
 
 
 

@@ -1,0 +1,8 @@
+<%= f.error_messages %>
+
+<div class="box tabular">
+  <p><%= f.text_field :tipo, :label => :field_tipo, :size => 40  %></p>
+  <p><%= f.text_area :descrizione, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+  <p><%= f.text_field :priorita, :label => :field_priorita, :size => 3 %></p>
+</div>
+<%= wikitoolbar_for 'descrizione' %>

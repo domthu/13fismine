@@ -3,13 +3,35 @@ class TypeOrganizationsController < ApplicationController
 
   before_filter :require_admin
 
+  helper :sort
+  include SortHelper
+
   # GET /type_organizations
   # GET /type_organizations.xml
   def index
-    @type_organizations = TypeOrganization.all
+    #@type_organizations = TypeOrganization.all
+    #respond_to do |format|
+    #  format.html # index.html.erb
+    #  format.xml  { render :xml => @type_organizations }
+    #end
+
+    #Sorting
+    sort_init 'priorita'
+    sort_update 'tipo' => 'tipo',
+                'priorita' => 'priorita'
 
     respond_to do |format|
-      format.html # index.html.erb
+      #ovverride for paging format.html # index.html.erb
+      format.html {
+        # Paginate results
+        @type_organization_count = TypeOrganization.all.count
+        @type_organization_pages = Paginator.new self, @type_organization_count, per_page_option, params['page']
+        @type_organizations = TypeOrganization.find(:all,
+                          :order => sort_clause,
+                          :limit  =>  @type_organization_pages.items_per_page,
+                          :offset =>  @type_organization_pages.current.offset)
+        render :layout => !request.xhr?
+      }
       format.xml  { render :xml => @type_organizations }
     end
   end

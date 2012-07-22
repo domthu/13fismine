@@ -9,29 +9,27 @@
 <h2><%= link_to l(:label_top_section_plural), top_sections_path %> &#187; <%=h @top_section %></h2>
 
 <div class="splitcontentleft">
-
-<fieldset class="box tabular">
-  <legend><%=l(:label_top_section)%></legend>
-
-        <p>
-        <% unless @top_section.sezione_top.blank? %>
-            <em><%=h @top_section.sezione_top %></em>
-            <br />
-        <% end %>
-        </p>
-        <p>
-            <%=h @top_section.ordinamento %>
-        </p>
-        <p>
-            <%=h @top_section.immagine %>
-        </p>
-        <div class="wiki">
-            <%= textilizable(@top_section.style) %>
-        </div>
-        <p>
-            <%= check_box_tag l(:label_se_visibile), 1, @top_section.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %> 
-        </p>
-</fieldset>
+  <fieldset class="box tabular">
+    <legend><%=l(:label_top_section)%></legend>
+    <p>
+    <% unless @top_section.sezione_top.blank? %>
+        <em><%=h @top_section.sezione_top %></em>
+        <br />
+    <% end %>
+    </p>
+    <p>
+        <%=h @top_section.ordinamento %>
+    </p>
+    <p>
+        <%=h @top_section.immagine %>
+    </p>
+    <div class="wiki">
+        <%= textilizable(@top_section.style) %>
+    </div>
+    <p>
+        <%= check_box_tag l(:label_se_visibile), 1, @top_section.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %> 
+    </p>
+  </fieldset>
 </div>
 
 <div class="splitcontentright">

@@ -2,7 +2,7 @@ class CrossGroupsController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin
-
+                
   helper :sort
   include SortHelper
 

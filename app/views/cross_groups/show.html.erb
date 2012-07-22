@@ -28,16 +28,16 @@
 </fieldset>
 </div>
 
-<div class="splitcontentleft">
+<div class="splitcontentright">
     <fieldset class="box tabular">
       <legend><%=l(:label_asso_associated_group_banner)%></legend>
-        <h2>@cross_group.asso</h2>
+        <% if (@cross_group.asso.group_banners.any? && @cross_group.asso.group_banners.count() > 1) %>
         <table>
           <tr>
-            <th>l(:label_group_banner)</th>
+            <th><%=l(:label_group_banner)%></th>
           </tr>
           <% @cross_group.asso.group_banners.each do |related_banner| 
-                if (related_banner != @cross_group) %>
+                if (related_banner != @cross_group.group_banner) %>
                   <tr>
                     <td class="buttons">
                         <%= link_to(h(related_banner.espositore), group_banner_path(related_banner), :class => 'icon icon-summary')  if User.current.admin?   %>
@@ -45,19 +45,22 @@
                 <% end
           end %>
         </table>
+        <% else %>
+          <%=l(:label_asso_associated_group_banner_noone)%>
+        <% end %>        
     </fieldset>
 </div>
 
 <div class="splitcontentright">
     <fieldset class="box tabular">
       <legend><%=l(:label_group_banner_associated_asso)%></legend>
-        <h2>@cross_group.group_banner</h2>
+        <% if (@cross_group.group_banner.assos.any? && @cross_group.group_banner.assos.count() > 1) %>
         <table>
           <tr>
-            <th>l(:label_asso)</th>
+            <th><%=l(:label_asso)%></th>
           </tr>
           <% @cross_group.group_banner.assos.each do |related_asso| 
-                if (related_asso != @cross_group) %>
+                if (related_asso != @cross_group.asso) %>
                   <tr>
                     <td class="buttons">
                         <%= link_to(h(related_asso), asso_path(related_asso), :class => 'icon icon-summary')  if User.current.admin?   %>
@@ -65,6 +68,9 @@
                 <% end
           end %>
         </table>
+        <% else %>
+          <%=l(:label_group_banner_associated_asso_noone)%>
+        <% end %>        
     </fieldset>
 </div>
 

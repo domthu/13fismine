@@ -1,26 +1,34 @@
-<h1>Listing cross_organizations</h1>
+<div class="contextual">
+<%= link_to l(:label_cross_organization_new), new_cross_organization_path, :class => 'icon icon-add' %>
+</div>
 
-<table>
-  <tr>
-    <th>organizzazione</th>
-    <th>sigla</th>
-    <th>se_visibile</th>
-    <th>type_organization_id</th>
-  </tr>
+<h2><%= l(:label_cross_organization_plural) %></h2>
 
+<% if @cross_organizations.any? %>
+<table class="list cross_organizations">
+  <thead><tr>
+  <%= sort_header_tag('organizzazione', :title => l(:label_organizzazione), :style => 'width: 30%;text-align:left;')%>
+  <%= sort_header_tag('type_organization', :title => l(:label_type_organization), :style => 'width: 30%;text-align:left;')%>
+  <%= sort_header_tag('sigla', :title => l(:label_sigla), :style => 'color:red; width: 25%;')%>
+  <%= sort_header_tag('se_visibile', :title => l(:label_se_visibile), :style => 'width: 5%;')%>
+  <th style='width: 5%;'></th>
+  <th style='width: 5%;'></th>
+  </tr></thead>
+  <tbody>
 <% @cross_organizations.each do |cross_organization| %>
-  <tr>
-    <td><%=h cross_organization.organizzazione %></td>
-    <td><%=h cross_organization.sigla %></td>
-    <td><%=h cross_organization.se_visibile %></td>
-    <td><%=h cross_organization.type_organization_id %></td>
-    <td><%= link_to 'Show', cross_organization %></td>
-    <td><%= link_to 'Edit', edit_cross_organization_path(cross_organization) %></td>
-    <td><%= link_to 'Destroy', cross_organization, :confirm => 'Are you sure?', :method => :delete %></td>
+  <tr class="<%= cycle 'odd', 'even' %>">
+    <td><%= link_to h(cross_organization.organizzazione), cross_organization_path(cross_organization) %></td>
+    <td><%= link_to h(cross_organization.type_organization), type_organization_path(cross_organization.type_organization, :id => cross_organization.type_organization_id) %></td>
+    <td align="right"><%=h cross_organization.sigla %></td>
+    <td align="center"><%= check_box_tag '', 1, cross_organization.se_visibile, :disabled => 'disabled' %></td>
+    <td class="buttons"><%= link_to('', edit_cross_organization_path(cross_organization), :class => 'icon icon-edit') if User.current.admin? %></td>
+    <td class="buttons"><%= link_to ('', cross_organization, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<p class="pagination"><%= pagination_links_full @cross_organization_pages, @cross_organization_count %></p>
 
-<%= link_to 'New cross_organization', new_cross_organization_path %>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

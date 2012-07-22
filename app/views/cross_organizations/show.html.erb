@@ -22,10 +22,6 @@
         <p>
             <%= l(:label_type_organization) %>: <%= link_to h(@cross_organization.type_organization), type_organization_path(@cross_organization.type_organization, :id => @cross_organization.type_organization_id) %>
         </p>
-        
-        <p>
-            <%=h @cross_organization.top_cross_organization %>
-        </p>
         <p>
             <%= l(:label_sigla) %>: <%=h @cross_organization.sigla %>
         </p>
@@ -50,7 +46,7 @@
                 if (type_related_cross != @cross_organization) %>
                   <tr>
                     <td class="buttons">
-                        <%= link_to h(type_related_cross.organizzazione), cross_organization_path(type_related_cross), :class => 'icon icon-summary')  if User.current.admin?   %>
+                        <%= link_to(h(type_related_cross.organizzazione), cross_organization_path(type_related_cross ), :class => 'icon icon-summary') if User.current.admin? %>
                     </td>
                     <td><%=h type_related_cross.sigla %></td>
                     <td><%= check_box_tag '', 1, @type_related_cross.se_visibile, :disabled => 'disabled'  %></td>

@@ -21,13 +21,13 @@ class Asso < ActiveRecord::Base
 #  validates_uniqueness_of :mail, :if => Proc.new { |user| !user.mail.blank? }, :case_sensitive => false
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :allow_blank => true
   validates_length_of :indirizzo, :maximum => 255
-  validates_length_of :email, :maximum => 255
-  validates_length_of :email, :maximum => 255
-  validates_length_of :email, :maximum => 255
-  validates_length_of :email, :maximum => 255
-  validates_length_of :email, :maximum => 255
-  validates_length_of :email, :maximum => 255
-  validates_length_of :email, :maximum => 255
+#  validates_length_of :email, :maximum => 255
+#  validates_length_of :email, :maximum => 255
+#  validates_length_of :email, :maximum => 255
+#  validates_length_of :email, :maximum => 255
+#  validates_length_of :email, :maximum => 255
+#  validates_length_of :email, :maximum => 255
+#  validates_length_of :email, :maximum => 255
   validates_length_of :email_alt, :maximum => 100, :allow_nil => true
 #  validates_uniqueness_of :mail, :if => Proc.new { |user| !user.mail.blank? }, :case_sensitive => false
   validates_format_of :email_alt, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :allow_blank => true

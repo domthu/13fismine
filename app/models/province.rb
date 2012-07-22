@@ -6,4 +6,10 @@ class Province < ActiveRecord::Base
 
   belongs_to :region, :class_name => 'Region', :foreign_key => 'region_id'
 
+  def to_s
+    name + '(' + sigla + ')'
+  end
+
+  #alias :name :to_s
+
 end

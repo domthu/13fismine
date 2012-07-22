@@ -1,92 +1,9 @@
-<h1>Editing organization</h1>
+<h2><%= link_to l(:label_organization_plural), organizations_path %> &#187; <%= h(@organization) %></h2>
 
-<% form_for(@organization) do |f| %>
-  <%= f.error_messages %>
+<% labelled_form_for @organization do |f| %>
+<%= submit_tag l(:button_save) %>
+<%= render :partial => 'form', :locals => { :f => f } %>
+<%= submit_tag l(:button_save) %>
+<!-- <%= f.submit 'Update' %> --> 
 
-  <p>
-    <%= f.label :region_id %><br />
-    <%= f.text_field :region_id %>
-  </p>
-  <p>
-    <%= f.label :province_id %><br />
-    <%= f.text_field :province_id %>
-  </p>
-  <p>
-    <%= f.label :data_scadenza %><br />
-    <%= f.datetime_select :data_scadenza %>
-  </p>
-  <p>
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </p>
-  <p>
-    <%= f.label :nota %><br />
-    <%= f.text_field :nota %>
-  </p>
-  <p>
-    <%= f.label :testo2 %><br />
-    <%= f.text_field :testo2 %>
-  </p>
-  <p>
-    <%= f.label :testo3 %><br />
-    <%= f.text_field :testo3 %>
-  </p>
-  <p>
-    <%= f.label :numero1 %><br />
-    <%= f.text_area :numero1 %>
-  </p>
-  <p>
-    <%= f.label :numero2 %><br />
-    <%= f.text_area :numero2 %>
-  </p>
-  <p>
-    <%= f.label :numero3 %><br />
-    <%= f.text_area :numero3 %>
-  </p>
-  <p>
-    <%= f.label :data1 %><br />
-    <%= f.datetime_select :data1 %>
-  </p>
-  <p>
-    <%= f.label :data2 %><br />
-    <%= f.datetime_select :data2 %>
-  </p>
-  <p>
-    <%= f.label :data3 %><br />
-    <%= f.datetime_select :data3 %>
-  </p>
-  <p>
-    <%= f.label :flag1 %><br />
-    <%= f.check_box :flag1 %>
-  </p>
-  <p>
-    <%= f.label :flag2 %><br />
-    <%= f.check_box :flag2 %>
-  </p>
-  <p>
-    <%= f.label :flag3 %><br />
-    <%= f.check_box :flag3 %>
-  </p>
-  <p>
-    <%= f.label :richiedinumeroregistrazione %><br />
-    <%= f.check_box :richiedinumeroregistrazione %>
-  </p>
-  <p>
-    <%= f.label :asso_id %><br />
-    <%= f.text_field :asso_id %>
-  </p>
-  <p>
-    <%= f.label :cross_organization_id %><br />
-    <%= f.text_field :cross_organization_id %>
-  </p>
-  <p>
-    <%= f.label :comune_id %><br />
-    <%= f.text_field :comune_id %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
 <% end %>
-
-<%= link_to 'Show', @organization %> |
-<%= link_to 'Back', organizations_path %>
