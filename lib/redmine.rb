@@ -160,6 +160,7 @@ Redmine::MenuManager.map :top_menu do |menu|
   menu.push :administration, { :controller => 'admin', :action => 'index' }, :if => Proc.new { User.current.admin? }, :last => true
   #menu.push :help, Redmine::Info.help_url, :last => true
   menu.push :help, Redmine::Info.help_url, :if => Proc.new { User.current.admin? }, :last => true
+  menu.push :help_user, Redmine::Info.help_user_url, :if => Proc.new { User.current.admin? }, :target => '_blank', :last => true
 end
 
 Redmine::MenuManager.map :account_menu do |menu|
@@ -177,12 +178,12 @@ Redmine::MenuManager.map :application_menu do |menu|
   #menu.push :region, :regions_path, :if => Proc.new { User.current.admin? }
   #menu.push :province, :provinces_path, :if => Proc.new { User.current.admin? }
   #menu.push :comune, :comunes_path, :if => Proc.new { User.current.admin? }
-  menu.push :asso, :assos_path, :if => Proc.new { User.current.admin? }
-  menu.push :cross_group, :cross_groups_path, :if => Proc.new { User.current.admin? }
-  menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
   menu.push :type_organization, :type_organizations_path, :if => Proc.new { User.current.admin? }
   menu.push :cross_organization, :cross_organizations_path, :if => Proc.new { User.current.admin? }
   menu.push :organization, :organizations_path, :if => Proc.new { User.current.admin? }
+  menu.push :asso, :assos_path, :if => Proc.new { User.current.admin? }
+  menu.push :cross_group, :cross_groups_path, :if => Proc.new { User.current.admin? }
+  menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
   menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
 end
 
