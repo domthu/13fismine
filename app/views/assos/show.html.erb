@@ -12,9 +12,11 @@
   <fieldset class="box tabular">
     <legend><%=l(:label_asso_full)%></legend>
     <p>
-    <% unless @asso.ragione_sociale.blank? %>
-        <em><%=h @asso.ragione_sociale %></em>
-        <br />
+        <em><%= l(:label_ragione_sociale) %>: <%=h @asso.ragione_sociale %></em>
+    </p>
+    <p>
+    <% unless @asso.organization.blank? %>
+      <%= link_to(h(@asso.organization.to_s), organization_path(@asso.organization), :class => 'icon icon-summary') %>
     <% end %>
     </p>
     <p>

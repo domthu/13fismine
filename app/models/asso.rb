@@ -5,6 +5,7 @@ class Asso < ActiveRecord::Base
   #Organismi Associati
   #domthu20120708   has_many :organizations, :dependent => :nullify
   has_one :organization, :dependent => :nullify
+  #has_one :cross_organization, :through => :organization, :dependent => :delete_all
   #http://guides.rubyonrails.org/v2.3.8/association_basics.html#choosing-between-belongs-to-and-has-one
   #2.8 Choosing Between has_many :through and has_and_belongs_to_many
   has_many :cross_groups, :dependent => :nullify
@@ -36,7 +37,7 @@ class Asso < ActiveRecord::Base
   validates_length_of :comunicazioni, :maximum => 4000
 
   def to_s
-    ragione_sociale.to_s
+    ragione_sociale #.to_s
   end
 
   alias :name :to_s

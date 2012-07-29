@@ -20,3 +20,8 @@ namespace :db do
 	#end
 
 	#for articolo in existing_articles do
+	#end
+	
+  end
+end	
+	

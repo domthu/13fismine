@@ -57,11 +57,15 @@ class User < Principal
   #belongs_to :account, :class_name => 'Account', :foreign_key => 'account_id'
   belongs_to :asso, :class_name => 'Asso', :foreign_key => 'asso_id'
   #l'utente può appartenere o non ad una organizzazione (non paga ma è abilitato al servizio)
-  belongs_to :organization, :class_name => 'Organization', :foreign_key => 'organization_id'
+  belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
+  #belongs_to :organization, :through => :cross_organization
+  
   #l'utente può essere il referente di una (o più) organizzazione
   #2.7 Choosing Between belongs_to and has_one. La foreign key si trova sulla tabella che fa belongs_to
+  #Puo anche essere il power_user di un organization
   #has_one :reference, :class_name => 'Organization', :dependent => :nullify
   has_many :references, :class_name => 'Organization', :dependent => :nullify
+
   has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
 
   # Active non-anonymous users scope

@@ -2,9 +2,11 @@
 
 <div class="box tabular">
 
-TODO Vewrificare pero la chiave sembra sull'altra tabella
-  <p><= f.select :organization_id???, (Organization.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => false, :size => 60, :title => l(:label_organization) % ></p>
 
+<p style="display:none2;">  NON USARE
+  <%=h (f.codice) %></p>
+</p>
+  
   <p><%= f.text_field :ragione_sociale, :label => :field_ragione_sociale, :required => true, :size => 40 %></p>
   <p><%= f.text_field :indirizzo, :label => :field_indirizzo, :size => 50 %></p>
   <p><%= f.text_field :email, :label => :field_email, :required => true, :size => 20 %></p>

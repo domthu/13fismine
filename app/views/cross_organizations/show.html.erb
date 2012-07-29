@@ -13,7 +13,7 @@
 <fieldset class="box tabular">
   <legend><%=l(:label_cross_organization)%></legend>
 
-        <p>
+        <p style="display:none;">  NON USARE
         <% unless @cross_organization.organizzazione.blank? %>
             <em><%=h @cross_organization.organizzazione %></em>
             <br />
@@ -33,26 +33,84 @@
 </div>
 
 
-<div class="splitcontentright">
+<div class="splitcontentleft">
     <fieldset class="box tabular">
       <legend><%=l(:label_other_cross_organization_sametype)%></legend>
         <table class="subtable">
           <tr>
-            <th><%= l(:label_organizzazione) %></th>
-            <th><%= l(:label_cross_organization) %></th>
+            <th><%= l(:label_type_organization) %></th>
+            <th><%= l(:label_sigla) %></th>
             <th></th>
           </tr>
           <% @cross_organization.type_organization.cross_organizations.each do |type_related_cross| 
                 if (type_related_cross != @cross_organization) %>
                   <tr>
                     <td class="buttons">
-                        <%= link_to(h(type_related_cross.organizzazione), cross_organization_path(type_related_cross ), :class => 'icon icon-summary') if User.current.admin? %>
+                        <%= link_to(h(type_related_cross.type_organization), cross_organization_path(type_related_cross), :class => 'icon icon-summary') if User.current.admin? %>
                     </td>
                     <td><%=h type_related_cross.sigla %></td>
                     <td><%= check_box_tag '', 1, @type_related_cross.se_visibile, :disabled => 'disabled'  %></td>
                   </tr>
                 <% end
           end %>
+        </table>
+    </fieldset>
+</div>
+
+<div class="splitcontentright">
+    <fieldset class="box tabular">
+      <legend><%=l(:label_users)%></legend>
+        <table class="subtable">
+          <tr>
+            <th><%= l(:label_users) %></th>
+            <th><%= l(:label_data_scadenza) %></th>
+            <th><%= l(:label_organization) + '?' %></th>
+          </tr>
+          <% @cross_organization.users.each do |user| 
+              <tr>
+                <td class="buttons">
+                    <%= link_to(h(user.to_s), user_path(user), :class => 'icon icon-summary') if User.current.admin? %>
+                </td>
+                <td><%= format_date(user.data_scadenza) %></td>
+                <td><% unless user.organization.blank? %>
+                    <%= link_to(h(user.organization.to_s), organization_path(user), :class => 'icon icon-summary') if User.current.admin? %>
+                    <%= h(user.organization.to_s) if !User.current.admin? %>
+                    <% end %>
+                </td>
+              </tr>
+            <% end %>
+        </table>
+    </fieldset>
+</div>
+
+<div class="splitcontentright">
+    <fieldset class="box tabular">
+      <legend><%=l(:label_organizations)%></legend>
+        <table class="subtable">
+          <tr>
+            <th><%= l(:label_organization) %></th>
+            <th><%= l(:label_data_scadenza) %></th>
+            <th><%= l(:label_asso) %></th>
+            <th><%= l(:label_power_user) + '?' %></th>
+          </tr>
+          <% @cross_organization.organizations.each do |org| 
+              <tr>
+                <td class="buttons">
+                    <%= link_to(h(org.to_s), organization_path(org), :class => 'icon icon-summary') if User.current.admin? %>
+                    <%= h(org.to_s) if !User.current.admin? %>
+                </td>
+                <td><%= format_date(org.data_scadenza) %></td>
+                <td class="buttons">
+                    <%= link_to(h(org.asso.to_s), asso_path(org.asso), :class => 'icon icon-summary') if User.current.admin? %>
+                    <%= h(org.asso.to_s) if !User.current.admin? %>
+                </td>
+                <td><% unless org.user.blank? %>
+                    <%= link_to(h(org.user.to_s), user_path(org.user), :class => 'icon icon-summary') if User.current.admin? %>
+                    <%= h(org.user.to_s) if !User.current.admin? %>
+                    <% end %>
+                </td>
+              </tr>
+            <% end %>
         </table>
     </fieldset>
 </div>

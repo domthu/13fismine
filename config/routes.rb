@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :templates
+
 
   # Add your own custom routes here.
   # The priority is based upon order of creation: first created -> highest priority.
@@ -18,7 +20,7 @@ ActionController::Routing::Routes.draw do |map|
 #      create  app/views/editorial/edizione.html.erb
 #      create  app/views/editorial/articoli.html.erb
 #      create  app/views/editorial/articolo.html.erb
-  # Routes for static pages.
+  # Named Routes for static pages.
   map.editorial '/home',     :controller => 'editorial', :action => 'home'
   map.contact   '/contact',  :controller => 'editorial', :action => 'contact'
   map.about     '/about',    :controller => 'editorial', :action => 'about'
@@ -28,10 +30,12 @@ ActionController::Routing::Routes.draw do |map|
   map.articoli  '/articoli', :controller => 'editorial', :action => 'articoli'
   map.articolo  '/articolo', :controller => 'editorial', :action => 'articolo'
 
-  map.resources :comunes
-  map.resources :provinces
   map.resources :regions
-
+  #map.resources :provinces
+  map.resources :provinces, :has_many => :regions
+  #map.resources :comunes
+  map.resources :comunes, :has_many => :provinces
+  
   map.resources :cross_groups
   map.resources :group_banners
   map.resources :assos
