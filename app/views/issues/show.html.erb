@@ -60,6 +60,12 @@
 <hr />
 
   <p><strong><%=l(:field_riassunto)%></strong></p>
+  <div class="html">
+    <% unless @issue.riassunto.nil? %>
+      <%= @issue.riassunto.html_safe %>
+    <% end %>
+  </div>
+<--html safe----------------------------------------------------------------------textilizable--> 
   <div class="wiki">
   <%= textilizable @issue, :riassunto, :attachments => @issue.attachments %>
   </div>
@@ -73,6 +79,12 @@
   </div>
 
   <p><strong><%=l(:field_description)%></strong></p>
+  <div class="html">
+    <% unless @issue.description.nil? %>
+      <%= @issue.description.html_safe %>
+    <% end %>
+  </div>
+<--html safe----------------------------------------------------------------------textilizable--> 
   <div class="wiki">
   <%= textilizable @issue, :description, :attachments => @issue.attachments %>
   </div>

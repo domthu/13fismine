@@ -7,9 +7,8 @@
 <% if @cross_organizations.any? %>
 <table class="list cross_organizations">
   <thead><tr>
-  <%= sort_header_tag('organizzazione', :title => l(:label_organizzazione), :style => 'width: 30%;text-align:left;')%>
-  <%= sort_header_tag('type_organization', :title => l(:label_type_organization), :style => 'width: 30%;text-align:left;')%>
   <%= sort_header_tag('sigla', :title => l(:label_sigla), :style => 'color:red; width: 25%;')%>
+  <%= sort_header_tag('type_organization', :title => l(:label_type_organization), :style => 'width: 30%;text-align:left;')%>
   <%= sort_header_tag('se_visibile', :title => l(:label_se_visibile), :style => 'width: 5%;')%>
   <th style='width: 5%;'></th>
   <th style='width: 5%;'></th>
@@ -17,9 +16,8 @@
   <tbody>
 <% @cross_organizations.each do |cross_organization| %>
   <tr class="<%= cycle 'odd', 'even' %>">
-    <td><%= link_to h(cross_organization.organizzazione), cross_organization_path(cross_organization) %></td>
+    <td><%= link_to h(cross_organization.sigla), cross_organization_path(cross_organization) %></td>
     <td><%= link_to h(cross_organization.type_organization), type_organization_path(cross_organization.type_organization, :id => cross_organization.type_organization_id) %></td>
-    <td align="right"><%=h cross_organization.sigla %></td>
     <td align="center"><%= check_box_tag '', 1, cross_organization.se_visibile, :disabled => 'disabled' %></td>
     <td class="buttons"><%= link_to('', edit_cross_organization_path(cross_organization), :class => 'icon icon-edit') if User.current.admin? %></td>
     <td class="buttons"><%= link_to ('', cross_organization, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>

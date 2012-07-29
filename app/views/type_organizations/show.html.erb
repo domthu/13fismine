@@ -19,6 +19,12 @@
     </p>
     <p>
       <%= l(:label_descrizione) %>: 
+      <div class="html">
+        <% unless @type_organization.descrizione.nil? %>
+          <%= @type_organization.descrizione.html_safe %>
+        <% end %>
+      </div>
+<--html safe----------------------------------------------------------------------textilizable--> 
       <div class="wiki">
         <%= textilizable(@type_organization.descrizione) %>
       </div>

@@ -23,6 +23,12 @@
     <p>
         <%=h @top_section.immagine %>
     </p>
+    <div class="html">
+      <% unless @top_section.style.nil? %>
+        <%= @top_section.style.html_safe %>
+      <% end %>
+    </div>
+<--html safe----------------------------------------------------------------------textilizable--> 
     <div class="wiki">
         <%= textilizable(@top_section.style) %>
     </div>

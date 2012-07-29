@@ -1,12 +1,9 @@
 <%= f.error_messages %>
 
 <div class="box tabular">
-TODO: verificare se il nome dell'associazione non deve essere sostituita da un organization_id
-  <p><= f.select :organization_id, (Organization.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_organization) % ></p>
--------------------------------------
-
-  <p style="display:none;">  NON USARE
-  <%= f.text_field :organizzazione, :label => :field_organizzazione, :size => 40  %></p>
+  <p style="display:none2;">  NON USARE .organizzazione come stringa ==> 
+    <%= h f.object.organizzazione %>
+  </p>
   <p><%= f.select :type_organization_id, (TypeOrganization.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_type_organization) %></p>
 
   <p><%= f.text_field :sigla, :label => :field_sigla, :size => 40  %></p>

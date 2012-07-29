@@ -40,6 +40,12 @@
     </p>
     <p>
       <%= l(:label_didascalia) %>: 
+      <div class="html">
+        <% unless @group_banner.didascalia.nil? %>
+          <%= @group_banner.didascalia.html_safe %>
+        <% end %>
+      </div>
+<--html safe----------------------------------------------------------------------textilizable-->      
       <div class="wiki">
         <%= textilizable(@group_banner.didascalia) %>
       </div>

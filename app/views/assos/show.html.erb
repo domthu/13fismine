@@ -48,8 +48,14 @@
     </p>
     <p>
       <%= l(:label_comunicazioni) %>: 
+      <div class="html">
+        <% unless @asso.comunicazioni.nil? %>
+          <%= @asso.comunicazioni.html_safe %>
+        <% end %>
+      </div>
+<--html safe----------------------------------------------------------------------textilizable--> 
       <div class="wiki">
-        <%= textilizable(@group_banner.comunicazioni) %>
+        <%= textilizable(@asso.comunicazioni) %>
       </div>
     </p>
     <p>
@@ -80,4 +86,15 @@
     </fieldset>
 </div>
 
+<div class="splitcontentright">
+    <fieldset class="box tabular">
+      <legend><%=l(:label_asso_organization)%></legend>
+        <% unless @asso.organization.nil? %>
+          <%= link_to(h(@asso.organization.name), organization_path(@asso.organization), :class => 'icon icon-summary') if User.current.admin?   %>
+          <%= h(@asso.organization.to_s) if !User.current.admin?   %>
+        <% else %>
+          <%=l(:label_asso_organization_noone)%>
+        <% end %>
+    </fieldset>
+</div>
 
