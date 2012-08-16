@@ -34,15 +34,18 @@ class AccountController < ApplicationController
   # Log out current user and redirect to welcome page
   def logout
     logout_user
-    redirect_to home_url
+    #domthu redirect_to home_url
+    redirect_to editorial_url
   end
 
   # Enable user to choose a new password
   def lost_password
-    redirect_to(home_url) && return unless Setting.lost_password?
+    #domthu redirect_to(home_url) && return unless Setting.lost_password?
+    redirect_to(editorial_url) && return unless Setting.lost_password?
     if params[:token]
       @token = Token.find_by_action_and_value("recovery", params[:token])
-      redirect_to(home_url) && return unless @token and !@token.expired?
+      #redirect_to(home_url) && return unless @token and !@token.expired?
+      redirect_to(editorial_url) && return unless @token and !@token.expired?
       @user = @token.user
       if request.post?
         @user.password, @user.password_confirmation = params[:new_password], params[:new_password_confirmation]
@@ -76,7 +79,8 @@ class AccountController < ApplicationController
 
   # User self-registration
   def register
-    redirect_to(home_url) && return unless Setting.self_registration? || session[:auth_source_registration]
+    #domthu redirect_to(home_url) && return unless Setting.self_registration? || session[:auth_source_registration]
+    redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     if request.get?
       session[:auth_source_registration] = nil
       @user = User.new(:language => Setting.default_language)
@@ -112,11 +116,14 @@ class AccountController < ApplicationController
 
   # Token based account activation
   def activate
-    redirect_to(home_url) && return unless Setting.self_registration? && params[:token]
+    #domthu redirect_to(home_url) && return unless Setting.self_registration? && params[:token]
+    redirect_to(editorial_url) && return unless Setting.self_registration? && params[:token]
     token = Token.find_by_action_and_value('register', params[:token])
-    redirect_to(home_url) && return unless token and !token.expired?
+    #domthu redirect_to(home_url) && return unless Setting.self_registration? && params[:token]
+    redirect_to(editorial_url) && return unless Setting.self_registration? && params[:token]
     user = token.user
-    redirect_to(home_url) && return unless user.registered?
+    #domthu redirect_to(home_url) && return unless user.registered?
+    redirect_to(editorial_url) && return unless user.registered?
     user.activate
     if user.save
       token.destroy
@@ -162,7 +169,8 @@ class AccountController < ApplicationController
         user = User.find_or_initialize_by_identity_url(identity_url)
         if user.new_record?
           # Self-registration off
-          redirect_to(home_url) && return unless Setting.self_registration?
+          #domthu redirect_to(home_url) && return unless Setting.self_registration?
+          redirect_to(editorial_url) && return unless Setting.self_registration?
 
           # Create on the fly
           user.login = registration['nickname'] unless registration['nickname'].nil?
@@ -205,7 +213,14 @@ class AccountController < ApplicationController
       set_autologin_cookie(user)
     end
     call_hook(:controller_account_success_authentication_after, {:user => user })
-    redirect_back_or_default :controller => 'my', :action => 'page'
+    #domthu redirect on FrontEnd if no permissions for backend
+    #if User.current.allowed_to?(:access_back_end, nil, :global => true)
+    #if self.logged_user.allowed_to?(:access_back_end, nil, :global => true)
+    if user.allowed_to?(:access_back_end, nil, :global => true)
+      redirect_back_or_default :controller => 'my', :action => 'page'
+    else
+      redirect_to(editorial_url)
+    end
   end
 
   def set_autologin_cookie(user)

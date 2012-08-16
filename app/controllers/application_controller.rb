@@ -38,7 +38,8 @@ class ApplicationController < ActionController::Base
   def delete_broken_cookies
     if cookies['_redmine_session'] && cookies['_redmine_session'] !~ /--/
       cookies.delete '_redmine_session'
-      redirect_to home_path
+      #redirect_to home_path
+      redirect_to editorial_path
       return false
     end
   end

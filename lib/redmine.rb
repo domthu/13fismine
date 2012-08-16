@@ -47,6 +47,10 @@ end
 
 # Permissions
 Redmine::AccessControl.map do |map|
+  #domthu permission :access_back_end, :welcome => :index, :require => :loggedin
+  #This permissions are at role level and not at project level
+  map.permission :access_back_end, :welcome => :index, :require => :loggedin
+  map.permission :front_end_quesito, :editorial => :poniquesito, :require => :loggedin
   map.permission :view_project, {:projects => [:show], :activities => [:index]}, :public => true
   map.permission :search_project, {:search => :index}, :public => true
   map.permission :add_project, {:projects => [:new, :create]}, :require => :loggedin
@@ -247,6 +251,9 @@ Redmine::Search.map do |search|
   search.register :wiki_pages
   search.register :messages
   search.register :projects
+  search.register_fs :issues
+  search.register_fs :news
+  search.register_fs :projects
 end
 
 Redmine::WikiFormatting.map do |format|

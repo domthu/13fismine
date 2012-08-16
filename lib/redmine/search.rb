@@ -19,18 +19,26 @@ module Redmine
   module Search
 
     mattr_accessor :available_search_types
+    mattr_accessor :available_search_types_fs
 
     @@available_search_types = []
+    @@available_search_types_fs = []
 
     class << self
       def map(&block)
         yield self
       end
 
-      # Registers a search provider
+      # Registers a search provider for BackEnd
       def register(search_type, options={})
         search_type = search_type.to_s
         @@available_search_types << search_type unless @@available_search_types.include?(search_type)
+      end
+
+      # Registers a search provider for FrontEnd
+      def register_fs(search_type, options={})
+        search_type = search_type.to_s
+        @@available_search_types_fs << search_type unless @@available_search_types_fs.include?(search_type)
       end
     end
 

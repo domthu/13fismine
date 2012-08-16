@@ -12,23 +12,21 @@ ActionController::Routing::Routes.draw do |map|
   map.home '', :controller => 'welcome'   #REDMINE HOME
 
   map.root :controller => "editorial", :action => 'home'   #FRONT END
-#      create  app/views/editorial/home.html.erb
-#      create  app/views/editorial/contact.html.erb
-#      create  app/views/editorial/help.html.erb
-#      create  app/views/editorial/about.html.erb
-#      create  app/views/editorial/edizioni.html.erb
-#      create  app/views/editorial/edizione.html.erb
-#      create  app/views/editorial/articoli.html.erb
-#      create  app/views/editorial/articolo.html.erb
   # Named Routes for static pages.
-  map.editorial '/home',     :controller => 'editorial', :action => 'home'
-  map.contact   '/contact',  :controller => 'editorial', :action => 'contact'
-  map.about     '/about',    :controller => 'editorial', :action => 'about'
-  map.help      '/help',     :controller => 'editorial', :action => 'help'
-  map.edizioni  '/edizioni', :controller => 'editorial', :action => 'edizioni'
-  map.edizione  '/edizione', :controller => 'editorial', :action => 'edizione'
-  map.articoli  '/articoli', :controller => 'editorial', :action => 'articoli'
-  map.articolo  '/articolo', :controller => 'editorial', :action => 'articolo'
+  map.editorial     '/home',     :controller => 'editorial', :action => 'home'
+  map.contact       '/contact',  :controller => 'editorial', :action => 'contact'
+  map.about         '/about',    :controller => 'editorial', :action => 'about'
+  map.help          '/help',     :controller => 'editorial', :action => 'help'
+  map.edizioni      '/edizioni', :controller => 'editorial', :action => 'edizioni'
+  map.edizione      '/edizione', :controller => 'editorial', :action => 'edizione'
+  map.articoli      '/articoli', :controller => 'editorial', :action => 'articoli'
+  map.articolo      '/articolo', :controller => 'editorial', :action => 'articolo'
+  #map.registrazione '/registrazione', :controller => 'editorial', :action => 'register'
+  #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
+  map.quesiti       '/quesiti', :controller => 'editorial', :action => 'quesiti'
+  map.quesito       '/quesito', :controller => 'editorial', :action => 'quesito'
+  map.poniquesito   '/poniquesito', :controller => 'editorial', :action => 'poniquesito'
+  map.ricerca       '/ricerca', :controller => 'editorial', :action => 'ricerca'
 
   map.resources :regions
   #map.resources :provinces

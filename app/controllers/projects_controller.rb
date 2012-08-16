@@ -143,7 +143,12 @@ class ProjectsController < ApplicationController
   def show
     if params[:jump]
       # try to redirect to the requested menu item
+      #domthu avoid the need to redirect here, prefere refactor the search engine and URL redirect
+      #if User.current.allowed_to?(:access_back_end, nil, :global => true)
       redirect_to_project_menu_item(@project, params[:jump]) && return
+      #else
+      #  redirect_to edizione_path(@project, params[:jump]) && return
+      #end
     end
 
     @users_by_role = @project.users_by_role

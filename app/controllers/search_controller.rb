@@ -44,7 +44,11 @@ class SearchController < ApplicationController
 
     # quick jump to an issue
     if @question.match(/^#?(\d+)$/) && Issue.visible.find_by_id($1.to_i)
-      redirect_to :controller => "issues", :action => "show", :id => $1
+      if user.allowed_to?(:access_back_end, nil, :global => true)
+        redirect_to :controller => "issues", :action => "show", :id => $1
+      else
+        redirect_to :controller => "editorial", :action => "articolo", :id => $1
+      end 
       return
     end
 

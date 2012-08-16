@@ -46,11 +46,12 @@ activity_days_default:
 per_page_options:
   default: '25,50,100'
 mail_from:
-  default: redmine@example.net
+  default: dom_thual@yahoo.fr
 bcc_recipients:
   default: 1
 plain_text_mail:
   default: 0
+#Wiki
 text_formatting:
   default: textile
 cache_formatted_text:
@@ -151,19 +152,27 @@ issue_done_ratio:
   default: 'issue_field'
 default_projects_public:
   default: 1
+#default_projects_modules:
+#  serialized: true
+#  default: 
+#  - issue_tracking
+#  - time_tracking
+#  - news
+#  - documents
+#  - files
+#  - wiki
+#  - repository
+#  - boards
+#  - calendar
+#  - gantt
 default_projects_modules:
   serialized: true
   default: 
   - issue_tracking
-  - time_tracking
   - news
   - documents
   - files
-  - wiki
-  - repository
   - boards
-  - calendar
-  - gantt
 # Role given to a non-admin user who creates a project
 new_project_user_role_id:
   format: int

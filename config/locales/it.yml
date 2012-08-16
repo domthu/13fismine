@@ -1001,7 +1001,7 @@ it:
   label_parent_revision: Padre
   label_child_revision: Figlio
   error_scm_annotate_big_text_file: La nota non può essere salvata, supera la dimensiona massima del campo di testo.
-  setting_default_issue_start_date_to_creation_date: Usa la data corrente come data d'inizio per i nuovi articoli
+  setting_default_issue_start_date_to_creation_date: Usa la data corrente come data d''inizio per i nuovi articoli
   button_edit_section: Modifica questa sezione
   setting_repositories_encodings: Codifica degli allegati e dei repository
   description_all_columns: Tutte le colonne
@@ -1069,13 +1069,13 @@ it:
   label_other_organization_sametype: Altre organismi associati correlati
   label_other_organization_noone: Nessun organismo associato
   
-  label_tipo: Tipo dell'organismo
+  label_tipo: Tipo dell''organismo
   label_descrizione: Descrizione
   label_organizzazione: Organizzazione 
   label_sigla: Sigla 
   label_type_organization: Tipo organizzazione
 
-  field_tipo: Tipo dell'organismo
+  field_tipo: Tipo dell''organismo
   field_descrizione: Descrizione
   field_organizzazione: Organizzazione
   field_sigla: Sigla
@@ -1231,7 +1231,7 @@ it:
 #User
   label_power_user: Resp. Asso.
   label_users: Utenti  
-  label_user_invoices: Altre fatture legate all'utente
+  label_user_invoices: Altre fatture legate all''utente
   label_organization_user_asso: Referenti org. asso correlati 
   label_cross_organization_user_asso: Sigla utente
   label_asso_organization: Organismo associato
@@ -1240,4 +1240,8 @@ it:
   field_power_user:  Responsabile organismo associato
   field_users: Utenti 
   field_: 
+  
+#Permission
+  permission_access_back_end: Accedi al backEnd?
+  permission_front_end_quesito: Poni quesito in FrontEnd?
 

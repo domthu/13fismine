@@ -241,6 +241,21 @@ module ApplicationHelper
     end
   end
 
+  def render_project_jump_box_fs
+    return unless User.current.logged?
+    projects = Project.all.compact.uniq
+    if projects.any?
+      s = '<select onchange="if (this.value != \'\') { window.location = this.value; }">' +
+            "<option value=''>#{ l(:label_jump_to_a_project) }</option>" +
+            '<option value="" disabled="disabled">---</option>'
+      s << project_tree_options_for_select(projects, :selected => @project) do |p|
+        { :value => url_for(:controller => 'editorial', :action => 'edizione', :id => p, :jump => current_menu_item) }
+      end
+      s << '</select>'
+      s.html_safe
+    end
+  end
+
   def project_tree_options_for_select(projects, options = {})
     s = ''
     project_tree(projects) do |project, level|
@@ -346,9 +361,6 @@ module ApplicationHelper
     Redmine::SyntaxHighlighting.highlight_by_filename(content, name)
   end
 
-  def to_path_param(path)
-    path.to_s.split(%r{[/\\]}).select {|p| !p.blank?}
-  end
 
   def pagination_links_full(paginator, count=nil, options={})
     page_param = options.delete(:page_param) || :page
@@ -1057,6 +1069,11 @@ module ApplicationHelper
     end
   end
 
+  def to_path_param(path)
+    path.to_s.split(%r{[/\\]}).select {|p| !p.blank?}
+  end
+
+#######################
   private
 
   def wiki_helper
@@ -1068,4 +1085,5 @@ module ApplicationHelper
   def link_to_content_update(text, url_params = {}, html_options = {})
     link_to(text, url_params, html_options)
   end
+
 end
