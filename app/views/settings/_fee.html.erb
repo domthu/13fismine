@@ -1,0 +1,50 @@
+<% if Setting.fee %>
+  <% form_tag({:action => 'edit', :tab => 'notifications'}) do %>
+
+    <div class="box tabular settings">
+
+      <p><%= setting_text_field :register_days, :size => 6, :title => l(:label_register_days) %> <%= l(:label_day_plural) %>
+      <br /><small><%= l(:label_register_days) %></small></p>
+
+      <p><%= setting_text_field :renew_days, :size => 6, :title => l(:label_renew_days) %> <%= l(:label_day_plural) %>
+      <br /><small><%= l(:label_renew_days) %></small></p>
+
+      <p><%= setting_check_box :fee_bcc_recipients , :title => l(:label_fee_bcc_recipients) %>
+      <br /><small><%= l(:label_fee_bcc_recipients) %></small></p>
+
+    </div>
+
+    <br />
+
+<fieldset class="box"><legend><%= l(:setting_emails_fee_proposal) %></legend>
+<%= setting_text_area :template_fee_proposal, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<%= l(:label_emails_fee_proposal) %>
+</fieldset>
+
+<fieldset class="box"><legend><%= l(:setting_emails_fee_register_asso) %></legend>
+<%= setting_text_area :template_fee_register_asso, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<%= l(:label_emails_fee_register_asso) %>
+</fieldset>
+
+<fieldset class="box"><legend><%= l(:setting_emails_fee_renew) %></legend>
+<%= setting_text_area :template_fee_renew, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<%= l(:label_emails_fee_renew) %>
+</fieldset>
+
+<fieldset class="box"><legend><%= l(:setting_fee_thanks) %></legend>
+<%= setting_text_area :template_fee_thanks, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<%= l(:label_fee_thanks) %>
+</fieldset>
+
+<div style="float:right;">
+<%= link_to l(:label_send_test_email_fee), :controller => 'admin', :action => 'test_email_fee' %>
+</div>
+
+<%= submit_tag l(:button_save) %>
+<% end %>
+
+<% else %>
+  <div class="nodata">
+  <%= simple_format(l(:fee_not_abilitated)) %>
+  </div>
+<% end %>
