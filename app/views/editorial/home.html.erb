@@ -1,18 +1,51 @@
-<h1>Editorial#home</h1>
-<p>Find me in app/views/editorial/home.html.erb</p>
+<% if Setting.info_promoted_fs %>
+  <%= l(:label_info_fs) %>
+  <div class="nodata">
+  <%= simple_format(Setting.info_fs) %>
+  </div>
+  <br />
+<% end %>
+<%# textilizable Setting.welcome_text_fs %>
+<h2><%= l(:label_home_fs) %></h2>
 
-    <ul class="navigation round">
-      <li><%= link_to "Editoriale", editorial_path %></li>
-      <li><%= link_to "Edizioni", edizioni_path %></li>
-      <li><%= link_to "Articoli", articoli_path %></li>
-      <li><%= link_to "contact", contact_path %></li>
-      <li><%= link_to "about", about_path %></li>
-      <li><%= link_to "help", help_path %></li>
-      <li style="display: none;"><= link_to "registrazione", registrazione_path %></li>
-      <li style="display: none;"><= link_to "accedi", accedi_path %></li>
-      <li><%= link_to "ricerca", ricerca_path %></li>
-      <li><%= link_to "quesiti", quesiti_path %></li>
-      <li><%= link_to "quesito", quesito_path %></li>
-      <li><%= link_to "poniquesito", poniquesito_path %></li>
+<div class="splitcontentright">
+  <% if @issues.any? %>
+  <div class="issues box">
+  <h3><%=l(:label_issues_latest)%></h3>
+    <%= render :partial => 'issues/list_simple', :locals => { :issues => @issues } %>
+    <%= link_to l(:label_issues_view_all), :action => 'articoli' %>
+  </div>
+  <% end %>
+</div>
+
+<div class="splitcontentleft">
+  <% if @news.any? %>
+  <div class="news box">
+  <h3><%=l(:label_news_latest)%></h3>
+    <%= render :partial => 'news/news', :collection => @news %>
+    <%= link_to l(:label_news_view_all), :action => 'quesiti' %>
+  </div>
+  <% end %>
+  <%= call_hook(:view_welcome_index_left, :projects => @projects) %>
+</div>
+
+<div class="splitcontentleft">
+  <% if @projects.any? %>
+  <div class="projects box">
+  <h3><%=l(:label_project_latest)%></h3>
+    <ul>
+    <% for project in @projects %>
+      <% @project = project %>
+      <li>
+      <%= link_to_project project %> (<%= format_time(project.created_on) %>)
+      <%= textilizable project.short_description, :project => project %>
+      </li>
+    <% end %>
+    <% @project = nil %>
     </ul>
+    <%= link_to l(:label_projects_view_all), :action => 'edizione' %>
+  </div>
+  <% end %>
+  <%= call_hook(:view_welcome_index_right, :projects => @projects) %>
+</div>
 

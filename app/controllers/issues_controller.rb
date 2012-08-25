@@ -109,6 +109,11 @@ class IssuesController < ApplicationController
   end
 
   def show
+    if not User.current.allowed_to?(:access_back_end, nil, :global => true)
+      redirect_to(url_for(:controller => 'editorial', :action => 'articolo', :id => params[:id]))
+      return
+    end
+
     @journals = @issue.journals.find(:all, :include => [:user, :details], :order => "#{Journal.table_name}.created_on ASC")
     @journals.each_with_index {|j,i| j.indice = i+1}
     @journals.reverse! if User.current.wants_comments_in_reverse_order?

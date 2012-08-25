@@ -57,6 +57,11 @@ class NewsController < ApplicationController
   end
 
   def show
+    if not User.current.allowed_to?(:access_back_end, nil, :global => true)
+      redirect_to(url_for(:controller => 'editorial', :action => 'quesito', :id => params[:id]))
+      return
+    end
+
     @comments = @news.comments
     @comments.reverse! if User.current.wants_comments_in_reverse_order?
   end

@@ -26,13 +26,13 @@
 <div id="wrapper2">
 <div id="top-menu">
     <div id="account">
-        <%= render_menu :account_menu -%>
+        <%= render_menu :account_menu %>
     </div>
     <%= content_tag(
            'div',
            "#{l(:label_logged_as)} #{link_to_user(User.current, :format => :username)}".html_safe,
            :id => 'loggedas') if User.current.logged? %>
-    <%= render_menu :top_menu_fs if User.current.logged? || !Setting.login_required? -%>
+    <%= render_menu :top_menu_fs if User.current.logged? || !Setting.login_required? %>
     <%= render_menu :application_menu_fs if !User.current.logged? %>
 </div>
 
@@ -76,9 +76,15 @@
 <div id="ajax-indicator" style="display:none;"><span><%= l(:label_loading) %></span></div>
 
 <div id="footer">
-  <div class="bgl"><div class="bgr">
-    Powered by <%= link_to Redmine::Info.app_name, Redmine::Info.url %> &copy; 2006-2012 Jean-Philippe Lang
-  </div></div>
+  <div id="footer-menu" class="box">
+    <%= render_menu :footer_menu_fs %>
+  </div>
+  <div class="bgl">
+    <div class="bgr">
+      
+      Powered by <%= link_to Redmine::Info.app_name_fs, Redmine::Info.url_fs %> &copy; 
+    </div>
+  </div>
 </div>
 </div>
 </div>

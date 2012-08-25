@@ -9,10 +9,11 @@ ActionController::Routing::Routes.draw do |map|
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
 
+  # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome'   #REDMINE HOME
 
   map.root :controller => "editorial", :action => 'home'   #FRONT END
-  # Named Routes for static pages.
+  # Named Routes for static pages. 
   map.editorial     '/home',     :controller => 'editorial', :action => 'home'
   map.contact       '/contact',  :controller => 'editorial', :action => 'contact'
   map.about         '/about',    :controller => 'editorial', :action => 'about'

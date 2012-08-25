@@ -154,19 +154,55 @@ Redmine::AccessControl.map do |map|
 end
 
 Redmine::MenuManager.map :top_menu do |menu|
-  menu.push :home, :home_path
+  menu.push :home_fs, :editorial_path
+  menu.push :home, :home_path, :if => Proc.new { User.current.logged? }
   #domthu 20120517
   #menu.push :section, :sections_path
   #menu.push :asso, :assos_path
   #menu.push :my_page, :table_path
   menu.push :my_page, { :controller => 'my', :action => 'page' }, :if => Proc.new { User.current.logged? }
-  menu.push :projects, { :controller => 'projects', :action => 'index' }, :caption => :label_project_plural
+  menu.push :projects, { :controller => 'projects', :action => 'index' }, :caption => :label_project_plural, :if => Proc.new { User.current.logged? }
   menu.push :administration, { :controller => 'admin', :action => 'index' }, :if => Proc.new { User.current.admin? }, :last => true
   #menu.push :help, Redmine::Info.help_url, :last => true
   menu.push :help, Redmine::Info.help_url, :if => Proc.new { User.current.admin? }, :last => true
   menu.push :help_user, Redmine::Info.help_user_url, :if => Proc.new { User.current.admin? }, :target => '_blank', :last => true
 end
 
+Redmine::MenuManager.map :top_menu_fs do |menu|
+  menu.push :public_site_home, :editorial_path
+  menu.push :my_page, { :controller => 'my', :action => 'page' }, :if => Proc.new { User.current.logged? }
+  menu.push :projects, { :controller => 'editorial', :action => 'edizioni' }, :caption => :label_project_plural
+  menu.push :issues, { :controller => 'editorial', :action => 'articoli' }, :caption => :label_issue_plural
+  menu.push :news, { :controller => 'editorial', :action => 'quesiti' }, :caption => :label_news_plural
+  menu.push :poniquesito, { :controller => 'editorial', :action => 'poniquesito' }, :if => Proc.new { User.current.logged? && User.current.allowed_to?(:front_end_quesito, nil, :global => true) }
+  menu.push :aboutus, :about_path
+  menu.push :faq, :help_path
+  menu.push :contact, :contact_path
+
+end
+
+Redmine::MenuManager.map :footer_menu_fs do |menu|
+  menu.push :editoriale, :editorial_path
+  menu.push :edizioni, :edizioni_path
+  menu.push :articoli, :articoli_path
+  menu.push :quesiti, :quesiti_path
+  menu.push :poniquesito, :poniquesito_path
+  menu.push :contact, :contact_path
+  menu.push :about, :about_path
+  menu.push :help, :help_path
+  menu.push :ricerca, :ricerca_path
+  #menu.push :registrazione, :registrazione_path
+  #menu.push :accedi, :accedi_path
+  menu.push :edizione, :edizione_path
+  menu.push :articolo, :articolo_path
+  menu.push :quesito, :quesito_path
+end
+
+#Lista delle categorie
+Redmine::MenuManager.map :application_menu_fs do |menu|
+
+end
+    
 Redmine::MenuManager.map :account_menu do |menu|
   menu.push :login, :signin_path, :if => Proc.new { !User.current.logged? }
   menu.push :register, { :controller => 'account', :action => 'register' }, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
@@ -190,7 +226,7 @@ Redmine::MenuManager.map :application_menu do |menu|
   menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
   menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
 end
-
+    
 Redmine::MenuManager.map :admin_menu do |menu|
   menu.push :projects, {:controller => 'admin', :action => 'projects'}, :caption => :label_project_plural
   menu.push :users, {:controller => 'users'}, :caption => :label_user_plural

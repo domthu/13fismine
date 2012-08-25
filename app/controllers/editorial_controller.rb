@@ -8,7 +8,18 @@ class EditorialController < ApplicationController
   helper :messages
   include MessagesHelper
 
+  caches_action :robots
+
   def home
+#    @last_editorial = Project.visible.find(:all, :order => 'lft')
+#    @p = Project.find(:first, :order => 'created_on DESC')
+#    @projects = Project.all.compact.uniq
+#    @link_project = Project.find_by_identifier($1) || Project.find_by_name($1)
+    
+    @news = News.latest_fs
+    @issues = Issue.latest_fs
+    @projects = Project.latest_fs
+
   end
 
   def contact
@@ -62,6 +73,11 @@ class EditorialController < ApplicationController
 #SCADUTI --> KAPPAO
 #ARCHIVIATI --> KAPPAO
   def poniquesito
+    if not User.current.allowed_to?(:front_end_quesito, nil, :global => true)
+      redirect_to(login_url) && return
+    end
+    #DO SOME USRE STUFF HERE
+    
   end
 
 #{"all_words"=>"1",

@@ -91,6 +91,13 @@ class Issue < ActiveRecord::Base
   after_save :reschedule_following_issues, :update_nested_set_attributes, :update_parent_attributes, :create_journal
   after_destroy :update_parent_attributes
 
+  # returns latest issues for public area 
+  def self.latest_fs(user = User.current, count = 5)
+    #:conditions => [ "catchment_areas_id = ?", params[:id]]
+    find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")	
+  end
+
+
   # Returns a SQL conditions string used to find all issues visible by the specified user
   def self.visible_condition(user, options={})
     Project.allowed_to_condition(user, :view_issues, options) do |role, user|

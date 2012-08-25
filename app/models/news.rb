@@ -49,6 +49,15 @@ class News < ActiveRecord::Base
     find(:all, :limit => count, :conditions => Project.allowed_to_condition(user, :view_news), :include => [ :author, :project ], :order => "#{News.table_name}.created_on DESC")	
   end
 
+  # returns latest news for public area 
+  def self.latest_fs(user = User.current, count = 5)
+    #:conditions => [ "catchment_areas_id = ?", params[:id]]
+    #:conditions => Project.is_public == true  -->  method missing
+    #:conditions => projects.is_public = 1
+    #:conditions => Project.is_public = 1
+    find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [ :author, :project ], :order => "#{News.table_name}.created_on DESC")	
+  end
+
   private
 
   def add_author_as_watcher

@@ -150,6 +150,11 @@ class ProjectsController < ApplicationController
       #  redirect_to edizione_path(@project, params[:jump]) && return
       #end
     end
+    if not User.current.allowed_to?(:access_back_end, nil, :global => true)
+      redirect_to(url_for(:controller => 'editorial', :action => 'edizione', :id => params[:id]))
+      return
+    end
+
 
     @users_by_role = @project.users_by_role
     @subprojects = @project.children.visible.all

@@ -145,15 +145,15 @@ it:
   general_pdf_encoding: UTF-8
   general_first_day_of_week: '1'
 
-  notice_account_updated: L'utente è stato aggiornato.
+  notice_account_updated: "L'utente è stato aggiornato."
   notice_account_invalid_creditentials: Nome utente o password non validi.
   notice_account_password_updated: La password è stata aggiornata.
   notice_account_wrong_password: Password errata
-  notice_account_register_done: L'utente è stato creato.
+  notice_account_register_done: "L'utente è stato creato."
   notice_account_unknown_email: Utente sconosciuto.
   notice_can_t_change_password: Questo utente utilizza un metodo di autenticazione esterno. Impossibile cambiare la password.
   notice_account_lost_email_sent: Ti è stata spedita una email con le istruzioni per cambiare la password.
-  notice_account_activated: Il tuo account è stato attivato. Ora puoi effettuare l'accesso.
+  notice_account_activated: "Il tuo account è stato attivato. Ora puoi effettuare l'accesso."
   notice_successful_create: Creazione effettuata.
   notice_successful_update: Modifica effettuata.
   notice_successful_delete: Eliminazione effettuata.
@@ -202,7 +202,7 @@ it:
   field_issue: Articolo
   field_status: Stato
   field_notes: Note
-  field_is_closed: Chiudi l'articolo
+  field_is_closed: "Chiudi l'articolo"
   field_is_default: Stato predefinito
   field_tracker: Tracker
   field_subject: Oggetto
@@ -235,7 +235,7 @@ it:
   field_attr_firstname: Attributo nome
   field_attr_lastname: Attributo cognome
   field_attr_mail: Attributo email
-  field_onthefly: Creazione utente "al volo"
+  field_onthefly: "Creazione utente 'al volo'"
   field_start_date: Inizio
   field_done_ratio: "% completato"
   field_auth_source: Modalità di autenticazione
@@ -251,14 +251,15 @@ it:
   field_is_filter: Usato come filtro
   field_issue_to: Articoli correlati
   field_delay: Ritardo
-  field_assignable: E' possibile assegnare articoli a questo ruolo
+  field_assignable: "E' possibile assegnare articoli a questo ruolo"
   field_redirect_existing_links: Redirige i collegamenti esistenti
   field_estimated_hours: Tempo stimato
   field_default_value: Stato predefinito
 
   setting_app_title: Titolo applicazione
   setting_app_subtitle: Sottotitolo applicazione
-  setting_welcome_text: Testo di benvenuto
+  setting_welcome_text: "Test'o di benvenuto sulla HOME della redazione: Area Riservata"
+  setting_welcome_text_fs: "Testo di benvenuto lato abbonati: sul sito pubblico"
   setting_default_language: Lingua predefinita
   setting_login_required: Autenticazione richiesta
   setting_self_registration: Auto-registrazione abilitata
@@ -283,6 +284,7 @@ it:
   label_project: Edizione
   label_project_new: Nuova edizione
   label_project_plural: Edizioni
+  label_projects_view_all: Percori tutte le edizioni
   label_x_projects:
     zero:  nessuna edizione
     one:   1 edizione
@@ -290,6 +292,8 @@ it:
   label_project_all: tutte le edizioni
   label_project_latest: Ultime edizioni registrate
   label_issue: Articolo
+  label_issues_latest: Ultimi articoli
+  label_issues_view_all: Vedi tutti articoli
   label_issue_new: Nuovo articolo
   label_issue_plural: Articoli
   label_issue_view_all: Mostra tutti gli articoli
@@ -365,11 +369,11 @@ it:
   label_attachment_plural: File
   label_report: Report
   label_report_plural: Report
-  label_news: Notizia
-  label_news_new: Aggiungi notizia
-  label_news_plural: Notizie
-  label_news_latest: Utime notizie
-  label_news_view_all: Tutte le notizie
+  label_news: Quesito
+  label_news_new: Proponi quesito
+  label_news_plural: Quesiti
+  label_news_latest: Utimi quesiti
+  label_news_view_all: Tutti gli quesiti
   label_settings: Impostazioni
   label_overview: Panoramica
   label_version: Versione
@@ -519,7 +523,7 @@ it:
   label_message_last: Ultimo messaggio
   label_message_new: Nuovo messaggio
   label_reply_plural: Risposte
-  label_send_information: Invia all'utente le informazioni relative all'account
+  label_send_information: "Invia all'utente le informazioni relative all'account"
   label_year: Anno
   label_month: Mese
   label_week: Settimana
@@ -532,7 +536,7 @@ it:
   label_module_plural: Moduli
   label_added_time_by: "Aggiunto da %{author} %{age} fa"
   label_updated_time: "Aggiornato %{value} fa"
-  label_jump_to_a_project: Vai all'edizione...
+  label_jump_to_a_project: "Vai all'edizione..."
 
   button_login: Entra
   button_submit: Invia
@@ -574,7 +578,7 @@ it:
   text_select_mail_notifications: Seleziona le azioni per cui deve essere inviata una notifica.
   text_regexp_info: es. ^[A-Z0-9]+$
   text_min_max_length_info: 0 significa nessuna restrizione
-  text_project_destroy_confirmation: Sei sicuro di voler eliminare l'edizione e tutti i dati ad essa collegati?
+  text_project_destroy_confirmation: "Sei sicuro di voler eliminare l'edizione e tutti i dati ad essa collegati?"
   text_workflow_edit: Seleziona un ruolo ed un tracker per modificare il workflow
   text_are_you_sure: Sei sicuro ?
   text_tip_issue_begin_day: attività che iniziano in questa giornata
@@ -679,14 +683,14 @@ it:
   label_document_added: Documenti aggiunti
   label_message_posted: Messaggi aggiunti
   label_file_added: File aggiunti
-  label_news_added: Notizie aggiunte
+  label_news_added: Quesiti aggiunti
   project_module_boards: Forum
   project_module_issue_tracking: Tracking degli articoli
   project_module_wiki: Wiki
   project_module_files: File
   project_module_documents: Documenti
   project_module_repository: Repository
-  project_module_news: Notizie
+  project_module_news: Quesiti
   project_module_time_tracking: Time tracking
   text_file_repository_writable: Repository dei file scrivibile
   text_default_administrator_account_changed: "L'account amministrativo predefinito è stato modificato"
@@ -698,7 +702,7 @@ it:
   label_this_month: questo mese
   label_last_n_days: "ultimi %{count} giorni"
   label_all_time: sempre
-  label_this_year: quest'anno
+  label_this_year: "quest'anno"
   label_date_range: Intervallo di date
   label_last_week: ultima settimana
   label_yesterday: ieri
@@ -754,7 +758,7 @@ it:
   permission_manage_wiki: Gestisci wiki
   permission_manage_categories: Gestisci categorie articoli
   permission_protect_wiki_pages: Proteggi pagine wiki
-  permission_comment_news: Commenta notizie
+  permission_comment_news: Commenta quesito
   permission_delete_messages: Elimina messaggi
   permission_select_project_modules: Seleziona moduli edizione
   permission_manage_documents: Gestisci documenti
@@ -771,7 +775,7 @@ it:
   permission_view_messages: Vedi messaggi
   permission_manage_files: Gestisci files
   permission_edit_issue_notes: Modifica note
-  permission_manage_news: Gestisci notizie
+  permission_manage_news: Gestisci quesiti
   permission_view_calendar: Vedi calendario
   permission_manage_members: Gestisci membri
   permission_edit_messages: Modifica messaggi
@@ -849,7 +853,7 @@ it:
   version_status_closed: chiusa
   version_status_locked: bloccata
   version_status_open: aperta
-  error_can_not_reopen_issue_on_closed_version: Un'articolo assegnato ad una versione chiusa non può essere riaperto
+  error_can_not_reopen_issue_on_closed_version: "Un'articolo assegnato ad una versione chiusa non può essere riaperto"
   label_user_anonymous: Anonimo
   button_move_and_follow: Sposta e segui
   setting_default_projects_modules: Moduli predefiniti abilitati per le nuove edizioni
@@ -943,7 +947,7 @@ it:
   text_warn_on_leaving_unsaved: La pagina corrente contiene del testo non salvato che verrà perso se lasci questa pagina.
   label_my_queries: Le mie queries personalizzate
   text_journal_changed_no_detail: "%{label} aggiornato"
-  label_news_comment_added: Commento aggiunto a una notizia
+  label_news_comment_added: Commento aggiunto ad un quesito
   button_expand_all: Espandi tutto
   button_collapse_all: Comprimi tutto
   label_additional_workflow_transitions_for_assignee: "Transizioni supplementari consentite quando l'utente è l'assegnatario"
@@ -973,8 +977,8 @@ it:
   text_mercurial_repository_note: Repository locale (es. /hgrepo, c:\hgrepo)
   text_scm_command: Comando
   text_scm_command_version: Versione
-  label_git_report_last_commit: Riporta l'ultimo commit per files e directories
-  text_scm_config: Puoi configurare i comandi scm nel file config/configuration.yml. E' necessario riavviare l'applicazione dopo averlo modificato.
+  label_git_report_last_commit: "Riporta l'ultimo commit per files e directories"
+  text_scm_config: "Puoi configurare i comandi scm nel file config/configuration.yml. E' necessario riavviare l'applicazione dopo averlo modificato."
   text_scm_command_not_available: Il comando scm non è disponibile. Controllare le impostazioni nel pannello di amministrazione.
   notice_issue_successful_create: Articolo %{id} creato.
   label_between: tra
@@ -985,14 +989,14 @@ it:
   description_project_scope: Search scope
   description_filter: Filtro
   description_user_mail_notification: Impostazioni notifica via mail
-  description_date_from: Inserisci la data d'inizio
+  description_date_from: "Inserisci la data d'inizio"
   description_message_content: Contenuto del messaggio
   description_available_columns: Colonne disponibili
-  description_date_range_interval: Scegli l'intervallo selezionando la data di inizio e di fine
-  description_issue_category_reassign: Scegli la categoria dell'articolo
+  description_date_range_interval: "Scegli l'intervallo selezionando la data di inizio e di fine"
+  description_issue_category_reassign: "Scegli la categoria dell'articolo"
   description_search: Campo di ricerca
   description_notes: Note
-  description_date_range_list: Scegli l'intervallo dalla lista
+  description_date_range_list: "Scegli l'intervallo dalla lista"
   description_choose_project: Edizioni
   description_date_to: Inserisci la data di fine
   description_query_sort_criteria_attribute: Attributo di ordinamento
@@ -1001,7 +1005,7 @@ it:
   label_parent_revision: Padre
   label_child_revision: Figlio
   error_scm_annotate_big_text_file: La nota non può essere salvata, supera la dimensiona massima del campo di testo.
-  setting_default_issue_start_date_to_creation_date: Usa la data corrente come data d''inizio per i nuovi articoli
+  setting_default_issue_start_date_to_creation_date: "Usa la data corrente come data d'inizio per i nuovi articoli"
   button_edit_section: Modifica questa sezione
   setting_repositories_encodings: Codifica degli allegati e dei repository
   description_all_columns: Tutte le colonne
@@ -1069,13 +1073,13 @@ it:
   label_other_organization_sametype: Altre organismi associati correlati
   label_other_organization_noone: Nessun organismo associato
   
-  label_tipo: Tipo dell''organismo
+  label_tipo: "Tipo dell'organismo"
   label_descrizione: Descrizione
   label_organizzazione: Organizzazione 
   label_sigla: Sigla 
   label_type_organization: Tipo organizzazione
 
-  field_tipo: Tipo dell''organismo
+  field_tipo: "Tipo dell'organismo"
   field_descrizione: Descrizione
   field_organizzazione: Organizzazione
   field_sigla: Sigla
@@ -1231,7 +1235,7 @@ it:
 #User
   label_power_user: Resp. Asso.
   label_users: Utenti  
-  label_user_invoices: Altre fatture legate all''utente
+  label_user_invoices: "Altre fatture legate all'utente"
   label_organization_user_asso: Referenti org. asso correlati 
   label_cross_organization_user_asso: Sigla utente
   label_asso_organization: Organismo associato
@@ -1244,4 +1248,33 @@ it:
 #Permission
   permission_access_back_end: Accedi al backEnd?
   permission_front_end_quesito: Poni quesito in FrontEnd?
-
+  label_public_site_home: Prima pagina
+  label_contact: Contatti
+  label_aboutus: Chi siamo
+  label_poniquesito: Richiedi
+  label_home_fs: Prima pagina
+  
+#Fee
+  label_fee: Abbonamento
+  label_fee_plural: Abbonamenti
+  fee_not_abilitated: Gestione abbonamento non abilitata
+  setting_register_days: Giorni abilitazione
+  label_register_days: "Numero di giorni di abilitazione per un utente che si è appena registrato ed ha dichiarato di far parte di un Organismo Associato. passato questi finestra di tempo l'utente verà disabilitato dal motore se non è stato confermato dal power-user, se non è stato abilitato dall'amministratore p se non ha contrattao abbonamenti durante il periodo di prova."
+  setting_renew_days: Giorni prima del rilancio
+  label_renew_days: "Numero di giorni prima dello scadere dell'abbonamento. Passato questo momento il motore inviera un email all'abbonato per invitarlo a rinnovare il suo abbonamento in scadenza."
+  setting_fee_bcc_recipients: Emails in ascolto
+  label_fee_bcc_recipients: Lista delle email da mettere in bcc per le persone in ascolto degli email inviati (ruolo amministratore ed segretaria). Serve principalmente per seguire quello che invia il motore in automatico. 
+  setting_emails_fee_proposal: Email di proposta abbonamenti
+  label_emails_fee_proposal: "Template di composizione email per propore ad uno o più utenti i possibili abbonamenti in corso. Segue un link alla pagina degli abbonamenti."
+  setting_emails_fee_renew: Email di rinovo abbonamento
+  label_emails_fee_renew: "Template di composizione email per invitare un utente ad rinnovare il proprio abbonamento di prossima scadenza. "
+  setting_emails_fee_register_asso: Conferma nuovo membro associativo
+  label_emails_fee_register_asso: "Template inviato al power_user di un organismo associato in seguito alla registrazione di un nuovo utente che si auto dichiara membro. Questo messaggio invita il power_user ad confermare o no questo utente usando un apposito link in basso alla pagina."
+  setting_fee_thanks: Email di ringraziamento pagamento ricevuto
+  label_fee_thanks: "Template per confermare il ricevuto pagamento ed ringrazziare l'abbonato del rinnovo."
+  label_send_test_email_fee: Invia email di prova (Ringrazio, PowerUser conferma, Rilancio)
+  setting_info_fs: Fiscosport informa
+  label_info_fs: "Contenuto dell'informazione temporranea da presentare in prima pagina  nell'area pubblica"
+  setting_info_promoted_fs: Promosso in front page 
+  label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporranea "
+ 

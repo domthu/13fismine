@@ -20,6 +20,7 @@ class Project < ActiveRecord::Base
 
   # Project statuses
   STATUS_ACTIVE     = 1
+  STATUS_FS         = 99
   STATUS_ARCHIVED   = 9
 
   # Maximum length for project identifiers
@@ -120,6 +121,17 @@ class Project < ActiveRecord::Base
   def self.latest(user=nil, count=5)
     visible(user).find(:all, :limit => count, :order => "created_on DESC")	
   end	
+
+  # returns latest projects for public area 
+  def self.latest_fs(user = User.current, count = 5)
+    #:conditions => [ "catchment_areas_id = ?", params[:id]]
+    find(:all, :limit => count, :conditions => "#{table_name}.is_public = 1", :order => "#{table_name}.created_on DESC")	
+  end
+
+  #TODO
+  def is_public_fs?
+    self.is_public == true #&& self.promoted_to_front_page == true
+  end
 
   # Returns true if the project is visible to +user+ or to the current user.
   def visible?(user=User.current)
@@ -261,6 +273,12 @@ class Project < ActiveRecord::Base
 
   def active?
     self.status == STATUS_ACTIVE
+  end
+
+  #TODO
+  def promoted_to_front_page?
+    #quando si pubblica la newsletter il sistema dovrà impostare status == STATUS_FS e is_public == true
+    self.status ==   STATUS_FS
   end
 
   def archived?

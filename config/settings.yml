@@ -20,11 +20,13 @@
 # Settings can be defined through the application in Admin -> Settings
 
 app_title:
-  default: Redmine
+  default: Fismine < Redmine
 app_subtitle:
-  default: Project management
+  default: Newsletter management
 welcome_text:
-  default:
+  default: Panello di controllo dei redattori e collaboratori
+welcome_text_fs:
+  default: "Prima pagina dell'editoriale"
 login_required:
   default: 0
 self_registration:
@@ -59,7 +61,7 @@ cache_formatted_text:
 wiki_compression:
   default: ""
 default_language:
-  default: en
+  default: it
 host_name:
   default: localhost:3000
 protocol:
@@ -193,8 +195,8 @@ ui_theme:
   default: ''
 emails_footer:
   default: |-
-    You have received this notification because you have either subscribed to it, or are involved in it.
-    To change your notification preferences, please click here: http://hostname/my/account
+    Hai ricevuto questa notificazione perchè sei abbonato o sei coinvolto nella redazione.
+    Per cambiare la gestione delle notificazione via nelle tue preferenze, clicca cui here: http://hostname/my/account
 gravatar_enabled:  
   default: 0
 openid:
@@ -208,4 +210,46 @@ rest_api_enabled:
 default_notification_option:
   default: 'only_my_events'
 emails_header:
-  default: ''
+  default: '==========  Fiscosport notifica =========='
+fee:
+  default: 0
+register_days:
+  default: 30
+renew_days:
+  default: 20
+fee_bcc_recipients:
+  default: "dom_thual@yahoo.fr"
+template_fee_register_asso:
+  default: "Caro @@poweruser_username@@. Codice Fiscosport è @@poweruser_codice@@. 
+    E stato fatta una nuova registrazione per l'utente @@uer_username@@ con codice @@user_codice@@
+    Ti invitiamo ad usare uno dei due link cui sotto per confermare o disabilitare questa nuova registrazione
+    In caso di dubbio, contattaci al 0000 o via email. 
+    La squadra di Fiscosport
+    @@logged_username@@
+  "
+template_fee_renew:
+  default: "Caro @@user_username@@. Codice Fiscosport è @@user_codice@@. 
+    Il tuo abbonamento scadrà prossimamente il @@user_scadenza@@
+    Ti invitiamo a rinnovarlo.
+    Contattaci al 0000 o via email. 
+    Usi questa pagina per rinnovarlo da solo. 
+    La squadra di Fiscosport
+    @@logged_username@@
+  "
+template_fee_thanks:
+  default: "Caro @@user_username@@. Il tuo codice Fiscosport è @@user_codice@@. 
+    Il tuo pagamento è stato coretttamente registrato. 
+    L'abbonamento scadrà il @@user_scadenza@@
+    Ti ringraziamo della fiducia. 
+    La squadra di Fiscosport
+    @@logged_username@@
+  "
+template_fee_proposal:
+  default: "Ti invito a visitare la pagina degli abbonamenti per conoscere i piani di abbonamento disponibili.
+    La squadra di Fiscosport
+    @@logged_username@@
+  "
+info_fs:
+  default: ""
+info_promoted_fs:
+  default: 0
