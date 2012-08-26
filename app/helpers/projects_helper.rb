@@ -73,10 +73,13 @@ module ProjectsHelper
           end
         end
         classes = (ancestors.empty? ? 'root' : 'child')
-        s << "<li class='#{classes}'><div class='#{classes}'>" +
+        s << "<li class='#{classes}'><div class='#{classes}'><table><tr><td>" +
                link_to_project(project, {}, :class => "project #{User.current.member_of?(project) ? 'my-project' : nil}")
+        #domthu
+        s << "</td><td align='center'>#{checked_image(project.is_public?)} </td><td>"
+        s << "</td><td><div class='due_date'>#{format_date(project.data_dal)} / #{format_date(project.data_al)} </div></td><td>"
         s << "<div class='wiki description'>#{textilizable(project.short_description, :project => project)}</div>" unless project.description.blank?
-        s << "</div>\n"
+        s << "</td></tr></table></div>\n"
         ancestors << project
       end
       s << ("</li></ul>\n" * ancestors.size)

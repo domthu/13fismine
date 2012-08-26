@@ -170,6 +170,7 @@ end
 
 Redmine::MenuManager.map :top_menu_fs do |menu|
   menu.push :public_site_home, :editorial_path
+  menu.push :home, :home_path, :if => Proc.new { User.current.logged? && User.current.allowed_to?(:access_back_end, nil, :global => true) }
   menu.push :my_page, { :controller => 'my', :action => 'page' }, :if => Proc.new { User.current.logged? }
   menu.push :projects, { :controller => 'editorial', :action => 'edizioni' }, :caption => :label_project_plural
   menu.push :issues, { :controller => 'editorial', :action => 'articoli' }, :caption => :label_issue_plural

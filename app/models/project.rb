@@ -20,8 +20,9 @@ class Project < ActiveRecord::Base
 
   # Project statuses
   STATUS_ACTIVE     = 1
-  STATUS_FS         = 99
   STATUS_ARCHIVED   = 9
+  #domthu verificare i status possibily dentro la gestione amministrazione
+  STATUS_FS         = 99
 
   # Maximum length for project identifiers
   IDENTIFIER_MAX_LENGTH = 100
@@ -600,7 +601,11 @@ class Project < ActiveRecord::Base
     'custom_field_values',
     'custom_fields',
     'tracker_ids',
-    'issue_custom_field_ids'
+    'issue_custom_field_ids',
+    'data_dal',
+    'data_da',
+    'titolo',
+    'search_key'
 
   safe_attributes 'enabled_module_names',
     :if => lambda {|project, user| project.new_record? || user.allowed_to?(:select_project_modules, project) }

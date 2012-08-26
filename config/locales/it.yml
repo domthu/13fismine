@@ -527,8 +527,8 @@ it:
   label_year: Anno
   label_month: Mese
   label_week: Settimana
-  label_date_from: Da
-  label_date_to: A
+  label_date_from: Data da
+  label_date_to: fino a 
   label_language_based: Basato sul linguaggio
   label_sort_by: "Ordina per %{value}"
   label_send_test_email: Invia una email di prova
@@ -1013,6 +1013,10 @@ it:
   label_export_options: "%{export_format} opzioni per l'export"
   error_attachment_too_big: Questo file non può essere caricato in quanto la sua dimensione supera la massima consentita (%{max_size})
 
+#Add to project 
+  field_search_key: Chiave di ricerca
+  label_search_key: tags
+  
   field_riassunto: Sommario
   field_cross_group: AssoGRPO
   field_Invoice: Fattura

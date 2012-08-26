@@ -1,26 +1,37 @@
 <%= error_messages_for 'project' %>
 
 <div class="box">
-<!--[form:project]-->
-<p><%= f.text_field :name, :required => true, :size => 60 %></p>
+  <!--[form:project]-->
+  <p><%= f.text_field :name, :required => true, :size => 60 %></p>
 
-<% unless @project.allowed_parents.compact.empty? %>
-    <p><%= label(:project, :parent_id, l(:field_parent)) %><%= parent_project_select_tag(@project) %></p>
-<% end %>
+  <p><%= f.text_field :identifier, :required => true, :size => 60, :disabled => @project.identifier_frozen? %>
+  <% unless @project.identifier_frozen? %>
+  <br /><em><%= l(:text_length_between, :min => 1, :max => Project::IDENTIFIER_MAX_LENGTH) %> <%= l(:text_project_identifier_info).html_safe %></em>
+  <% end %></p>
+  <p style="display:none">f.date_select :data_dal, :label => :label_date_from ></p>
+  <table><tr><td>
+  <%#label for='project_data_dal'><%= l(:label_date_from) % ></label>
+  <%# text_field_tag 'project[data_dal]', format_date(@project.data_dal), :size => 10 %><%# calendar_for('project_data_dal') %>
+    <p><%= f.text_field :data_dal, :label => l(:label_date_from), :size => 10 %><%= calendar_for('project_data_dal') %></p>
+  </td><td>
+    <p><%= f.text_field :data_al, :label => l(:label_date_to), :size => 10 %><%= calendar_for('project_data_al') %></p>
+  </td></tr></table>
+  <p><%= f.check_box :is_public %></p>
+  <p><%= f.text_field :search_key %></p>
+  <p><%= f.text_area :description, :rows => 5, :class => 'wiki-edit' %></p>
+  <%= wikitoolbar_for 'project_description' %>
 
-<p><%= f.text_area :description, :rows => 5, :class => 'wiki-edit' %></p>
-<p><%= f.text_field :identifier, :required => true, :size => 60, :disabled => @project.identifier_frozen? %>
-<% unless @project.identifier_frozen? %>
-<br /><em><%= l(:text_length_between, :min => 1, :max => Project::IDENTIFIER_MAX_LENGTH) %> <%= l(:text_project_identifier_info).html_safe %></em>
-<% end %></p>
-<p><%= f.text_field :homepage, :size => 60 %></p>
-<p><%= f.check_box :is_public %></p>
-<%= wikitoolbar_for 'project_description' %>
+  <% @project.custom_field_values.each do |value| %>
+    <p><%= custom_field_tag_with_label :project, value %></p>
+  <% end %>
 
-<% @project.custom_field_values.each do |value| %>
-  <p><%= custom_field_tag_with_label :project, value %></p>
-<% end %>
-<%= call_hook(:view_projects_form, :project => @project, :form => f) %>
+  <% unless @project.allowed_parents.compact.empty? %>
+      <p><%= label(:project, :parent_id, l(:field_parent)) %><%= parent_project_select_tag(@project) %></p>
+  <% end %>
+  <p style="display:none"><%= f.text_field :homepage, :size => 60 %></p>
+  <p style="display:none"><%= f.text_field :titolo, :size => 60 %></p>
+
+  <%= call_hook(:view_projects_form, :project => @project, :form => f) %>
 </div>
 
 <% if @project.new_record? %>
