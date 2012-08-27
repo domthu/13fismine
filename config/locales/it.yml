@@ -1276,9 +1276,18 @@ it:
   label_emails_fee_register_asso: "Template inviato al power_user di un organismo associato in seguito alla registrazione di un nuovo utente che si auto dichiara membro. Questo messaggio invita il power_user ad confermare o no questo utente usando un apposito link in basso alla pagina."
   setting_fee_thanks: Email di ringraziamento pagamento ricevuto
   label_fee_thanks: "Template per confermare il ricevuto pagamento ed ringrazziare l'abbonato del rinnovo."
-  label_send_test_email_fee: Invia email di prova (Ringrazio, PowerUser conferma, Rilancio)
+  label_send_test_email_fee_thanks: Invia email di prova Ringrazio(me stesso)
+  label_send_test_email_fee_asso: Invia email di prova al PowerUser(me stesso)
+  label_send_test_email_fee_confirm: Invia email di prova Conferma
+  label_send_test_email_fee_renew: Invia email di prova Rilancio
   setting_info_fs: Fiscosport informa
   label_info_fs: "Contenuto dell'informazione temporranea da presentare in prima pagina  nell'area pubblica"
   setting_info_promoted_fs: Promosso in front page 
   label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporranea "
+  #Deliver_fee  type
+  proposal: Abbonamenti disponibili
+  thanks: Pagamento ricevuto, grazie
+  asso: Conferma registrazione nuovo membro
+  renew: Rinnova abbonamento
+
  

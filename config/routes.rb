@@ -47,6 +47,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :top_sections
 
   map.resources :invoices
+  map.email_fee 'invoices/email_fee', :controller => 'invoices', :action => 'email_fee', :conditions => {:method => :get}
 
   map.signin 'login', :controller => 'account', :action => 'login'
   map.signout 'logout', :controller => 'account', :action => 'logout'

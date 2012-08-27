@@ -299,6 +299,32 @@ class Mailer < ActionMailer::Base
     render_multipart('test', body)
   end
 
+  # Builds a tmail object used to email fee management.
+  #
+  # Example:
+  #   document_added(document) => tmail object
+  #   Mailer.deliver_document_added(document) => sends an email to the document's project recipients
+  def fee(user, type, setting_text)
+    #redmine_headers 'Project' => 'Abbonamento test'
+    recipients user.mail
+    subject "Fiscosport abbonamenti: [#{type}]"
+    #body :document => document,
+    #     :document_url => url_for(:controller => 'documents', :action => 'show', :id => document)
+    #render_multipart('document_added', body)
+    body :fee_type => type, :fee_text => setting_text, :fee_url => url_for(:controller => 'editorial')
+    render_multipart('fee', body)
+    #domthu TODO
+    # => fee.text.erb
+    # => fee.html.erb
+    #render_multipart(type, body)
+    #TEMPLATE: 
+    #'proposal'
+    #'thanks'
+    #'asso'
+    #'renew'
+    end
+  end
+
   # Overrides default deliver! method to prevent from sending an email
   # with no recipient, cc or bcc
   def deliver!(mail = @mail)

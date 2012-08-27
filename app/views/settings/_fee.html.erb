@@ -4,13 +4,13 @@
     <div class="box tabular settings">
 
       <p><%= setting_text_field :register_days, :size => 6, :title => l(:label_register_days) %> <%= l(:label_day_plural) %>
-      <br /><small><%= l(:label_register_days) %></small></p>
+      <br /><em><%= l(:label_register_days) %></em></p>
 
       <p><%= setting_text_field :renew_days, :size => 6, :title => l(:label_renew_days) %> <%= l(:label_day_plural) %>
-      <br /><small><%= l(:label_renew_days) %></small></p>
+      <br /><em><%= l(:label_renew_days) %></em></p>
 
-      <p><%= setting_check_box :fee_bcc_recipients , :title => l(:label_fee_bcc_recipients) %>
-      <br /><small><%= l(:label_fee_bcc_recipients) %></small></p>
+      <p><%= setting_text_field :fee_bcc_recipients, :size => 60, :title => l(:label_fee_bcc_recipients) %><br />
+<em><%= l(:label_fee_bcc_recipients) %></em></p>
 
     </div>
 
@@ -19,26 +19,34 @@
 <fieldset class="box"><legend><%= l(:setting_emails_fee_proposal) %></legend>
 <%= setting_text_area :template_fee_proposal, :label => false, :class => 'wiki-edit', :rows => 5 %>
 <%= l(:label_emails_fee_proposal) %>
+<div style="float:right;">
+<%= link_to l(:label_send_test_email_fee_confirm), :controller => 'invoices', :action => 'email_fee', :params => { :type => 'proposal'} %>
+</div>
 </fieldset>
 
 <fieldset class="box"><legend><%= l(:setting_emails_fee_register_asso) %></legend>
 <%= setting_text_area :template_fee_register_asso, :label => false, :class => 'wiki-edit', :rows => 5 %>
 <%= l(:label_emails_fee_register_asso) %>
+<div style="float:right;">
+<%= link_to l(:label_send_test_email_fee_asso), :controller => 'invoices', :action => 'email_fee', :params => { :type => 'asso'} %>
+</div>
 </fieldset>
 
 <fieldset class="box"><legend><%= l(:setting_emails_fee_renew) %></legend>
 <%= setting_text_area :template_fee_renew, :label => false, :class => 'wiki-edit', :rows => 5 %>
 <%= l(:label_emails_fee_renew) %>
+<div style="float:right;">
+<%= link_to l(:label_send_test_email_fee_renew), :controller => 'invoices', :action => 'email_fee', :params => { :type => 'renew'} %>
+</div>
 </fieldset>
 
 <fieldset class="box"><legend><%= l(:setting_fee_thanks) %></legend>
 <%= setting_text_area :template_fee_thanks, :label => false, :class => 'wiki-edit', :rows => 5 %>
 <%= l(:label_fee_thanks) %>
-</fieldset>
-
 <div style="float:right;">
-<%= link_to l(:label_send_test_email_fee), :controller => 'admin', :action => 'test_email_fee' %>
+<%= link_to l(:label_send_test_email_fee_thanks), :controller => 'invoices', :action => 'email_fee', :params => { :type => 'thanks'} %>
 </div>
+</fieldset>
 
 <%= submit_tag l(:button_save) %>
 <% end %>

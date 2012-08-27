@@ -31,6 +31,12 @@ class EditorialController < ApplicationController
   def about
   end
 
+  #dal menu sezione si accede all'insieme degli articoli riferiti alla sezione
+  def sezione
+    @id = params[:id].to_i
+    
+  end
+
   def edizioni
   end
 
