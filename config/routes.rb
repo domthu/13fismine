@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :templates
 
+#Run rake routes to see all routes
 
   # Add your own custom routes here.
   # The priority is based upon order of creation: first created -> highest priority.
@@ -28,6 +29,9 @@ ActionController::Routing::Routes.draw do |map|
   map.quesito       '/quesito', :controller => 'editorial', :action => 'quesito'
   map.poniquesito   '/poniquesito', :controller => 'editorial', :action => 'poniquesito'
   map.ricerca       '/ricerca', :controller => 'editorial', :action => 'ricerca'
+  #map.sezione       '/sezione', :controller => 'editorial', :action => 'sezione'
+  #Map menu 
+  map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
 
   map.resources :regions
   #map.resources :provinces

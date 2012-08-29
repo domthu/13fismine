@@ -201,7 +201,7 @@ end
 
 #Lista delle categorie
 Redmine::MenuManager.map :application_menu_fs do |menu|
-  menu.push l(:5permille), :categoria_path
+  menu.push :cinquepermille, { :controller => 'editorial', :action => 'sezione', :id => 1 }
 end
     
 Redmine::MenuManager.map :account_menu do |menu|
