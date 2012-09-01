@@ -33,7 +33,6 @@
            "#{l(:label_logged_as)} #{link_to_user(User.current, :format => :username)}".html_safe,
            :id => 'loggedas') if User.current.logged? %>
     <%= render_menu :top_menu_fs if User.current.logged? || !Setting.login_required? %>
-    <%= render_menu :application_menu_fs if !User.current.logged? %>
 </div>
 
 <div id="header">
@@ -52,11 +51,9 @@
 
     <h1><%= page_header_title %></h1>
 
-    <% if display_main_menu?(@project) %>
     <div id="main-menu">
-        <%= render_main_menu(@project) %>
+      <%= render_menu :application_menu_fs %>
     </div>
-    <% end %>
 </div>
 
 <%= tag('div', {:id => 'main', :class => (has_content?(:sidebar) ? '' : 'nosidebar')}, true) %>

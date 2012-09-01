@@ -1284,10 +1284,104 @@ it:
   label_info_fs: "Contenuto dell'informazione temporranea da presentare in prima pagina  nell'area pubblica"
   setting_info_promoted_fs: Promosso in front page 
   label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporranea "
-  #Deliver_fee  type
+
+#Deliver_fee  type
   proposal: Abbonamenti disponibili
   thanks: Pagamento ricevuto, grazie
   asso: Conferma registrazione nuovo membro
   renew: Rinnova abbonamento
 
- 
+#Application menu FS
+#18, 'Comunicati stampa', 0
+  label_stampa: Stampa
+  field_stampa: Comunicati stampa
+#10, 'Le newsletters', 0
+  label_newsletters: Newsletters
+  field_newsletters: Le newsletters
+###16, 'Progetto Fiscosport', 1
+  label_prjfisco: Progetto
+  field_prjfisco: Progetto Fiscosport
+###29, 'Revisione newsletter', 1
+  label_revnews: Revisione
+  field_revnews: Revisione newsletter
+###24, 'Tariffe Utenti', 1
+  label_feeusr: Tariffe
+  field_feeusr: Tariffe Utenti
+###4, 'Convegni ed eventi', 3
+  label_evt: Eventi
+  field_evt: Convegni ed eventi
+###14, 'News dal mondo sportivo ', 4
+  label_newssport: News
+  field_newssport: News dal mondo sportivo
+###12, 'Le risposte ai quesiti', 4
+  label_respreq: Quesiti
+  field_respreq: Le risposte ai quesiti
+###25, 'Le dichiarazioni', 5
+  label_declare: Dichiarazioni
+  field_declare: Le dichiarazioni
+###23, 'Casi pratici ', 6
+  label_usecase: Casi
+  field_usecase: Casi pratici
+###19, 'Circolari e risoluzioni', 8
+  label_risolve: Circolari
+  field_risolve: Circolari e risoluzioni
+###15, 'Normativa', 8
+  label_law: Normativa
+  field_law: Normativa
+###5, 'Giurisprudenza', 8
+  label_guild: Giurisprudenza
+  field_guild: Giurisprudenza
+###9, 'Lavoro e previdenza', 9
+  label_welfare: Lavoro
+  field_welfare: Lavoro e previdenza
+###7, 'La modulistica', 9
+  label_moduli: Modulistica
+  field_moduli: La modulistica
+###11, 'Le pillole di Fiscosport', 10
+  label_pillole: Pillole
+  field_pillole: Le pillole di Fiscosport
+###28, 'I nuovi consulenti/collaboratori Fiscosport', 10
+  label_newmembers: Collaboratori
+  field_newmembers: I nuovi consulenti/collaboratori Fiscosport
+###2, 'Ultima ora', 10
+  label_lasthour: Ultima ora
+  field_lasthour: Ultima ora
+###13, 'Lo scadenzario', 11
+  label_cadence: Scadenzario
+  field_cadence: Lo scadenzario
+###26, 'Agenzia delle Entrate', 12
+  label_agenda: AE
+  field_agenda: Agenzia delle Entrate
+###21, '5 per mille', 12
+  label_cinquepermille: 5/oo
+  field_cinquepermille: 5 per mille
+###17, 'Rassegna stampa', 13
+  label_primapagina: Stampa
+  field_primapagina: Rassegna stampa
+###6, 'Guide e Vademecum', 15
+  label_guide: Vademecum
+  field_guide: Guide e Vademecum
+###1, 'Approfondimenti', 18
+  label_understand: Approfondimenti
+  field_understand: Approfondimenti
+###22, 'Registro CONI', 19
+  label_regconi: CONI
+  field_regconi: Registro CONI
+###27, 'Attualità_', 25
+  label_actual: Attualità
+  field_actual: Attualità
+###8, 'La redazione', 26
+  label_redaction: Redazione
+  field_redaction: La redazione
+###20, 'UTILITY', 99
+  label_utility: Utilità
+  field_utility: UTILITY
+###3, 'Comunicazioni FORUM', 99
+  label_comforum: Forum
+  field_comforum: Comunicazioni FORUM
+  
+#ABBONAMENTI
+  label_abbo_plural: Abbonamenti
+  label_abbo: Abbonamento
+  field_abbo: Abbonamento
+

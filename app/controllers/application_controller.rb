@@ -155,6 +155,16 @@ class ApplicationController < ActionController::Base
     true
   end
 
+  #Use only for application that implement fee management
+  def require_fee
+    return unless require_login
+    if !Setting.fee?
+      render_403
+      return false
+    end
+    true
+  end
+
   def deny_access
     User.current.logged? ? render_403 : require_login
   end

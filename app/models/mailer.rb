@@ -311,7 +311,7 @@ class Mailer < ActionMailer::Base
     #body :document => document,
     #     :document_url => url_for(:controller => 'documents', :action => 'show', :id => document)
     #render_multipart('document_added', body)
-    body :fee_type => type, :fee_text => setting_text, :fee_url => url_for(:controller => 'editorial')
+    body :fee_type => type, :fee_text => setting_text, :fee_url => url_for(:controller => 'fees')
     render_multipart('fee', body)
     #domthu TODO
     # => fee.text.erb

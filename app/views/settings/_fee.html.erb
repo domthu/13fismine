@@ -20,7 +20,7 @@
 <%= setting_text_area :template_fee_proposal, :label => false, :class => 'wiki-edit', :rows => 5 %>
 <%= l(:label_emails_fee_proposal) %>
 <div style="float:right;">
-<%= link_to l(:label_send_test_email_fee_confirm), :controller => 'invoices', :action => 'email_fee', :params => { :type => 'proposal'} %>
+<%= link_to l(:label_send_test_email_fee_confirm), :controller => 'fees', :action => 'email_fee', :params => { :type => 'proposal'} %>
 </div>
 </fieldset>
 
@@ -28,7 +28,7 @@
 <%= setting_text_area :template_fee_register_asso, :label => false, :class => 'wiki-edit', :rows => 5 %>
 <%= l(:label_emails_fee_register_asso) %>
 <div style="float:right;">
-<%= link_to l(:label_send_test_email_fee_asso), :controller => 'invoices', :action => 'email_fee', :params => { :type => 'asso'} %>
+<%= link_to l(:label_send_test_email_fee_asso), :controller => 'fees', :action => 'email_fee', :params => { :type => 'asso'} %>
 </div>
 </fieldset>
 
@@ -36,7 +36,7 @@
 <%= setting_text_area :template_fee_renew, :label => false, :class => 'wiki-edit', :rows => 5 %>
 <%= l(:label_emails_fee_renew) %>
 <div style="float:right;">
-<%= link_to l(:label_send_test_email_fee_renew), :controller => 'invoices', :action => 'email_fee', :params => { :type => 'renew'} %>
+<%= link_to l(:label_send_test_email_fee_renew), :controller => 'fees', :action => 'email_fee', :params => { :type => 'renew'} %>
 </div>
 </fieldset>
 
@@ -44,7 +44,7 @@
 <%= setting_text_area :template_fee_thanks, :label => false, :class => 'wiki-edit', :rows => 5 %>
 <%= l(:label_fee_thanks) %>
 <div style="float:right;">
-<%= link_to l(:label_send_test_email_fee_thanks), :controller => 'invoices', :action => 'email_fee', :params => { :type => 'thanks'} %>
+<%= link_to l(:label_send_test_email_fee_thanks), :controller => 'fees', :action => 'email_fee', :params => { :type => 'thanks'} %>
 </div>
 </fieldset>
 

@@ -212,7 +212,7 @@ default_notification_option:
 emails_header:
   default: '==========  Fiscosport notifica =========='
 fee:
-  default: 0
+  default: 1
 register_days:
   default: 30
 renew_days:

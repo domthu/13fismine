@@ -51,7 +51,18 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :top_sections
 
   map.resources :invoices
-  map.email_fee 'invoices/email_fee', :controller => 'invoices', :action => 'email_fee', :conditions => {:method => :get}
+  map.fee 'fee', :controller => 'fees', :action => 'index'
+  map.registrati 'registrati', :controller => 'fees', :action => 'registrati'
+  map.scaduti 'scaduti', :controller => 'fees', :action => 'scaduti'
+  map.archiviati 'archiviati', :controller => 'fees', :action => 'archiviati'
+  map.pagamento 'pagamento', :controller => 'fees', :action => 'pagamento'
+  map.invia_fatture 'invia_fatture', :controller => 'fees', :action => 'invia_fatture'
+  map.paganti 'paganti', :controller => 'fees', :action => 'paganti'
+  map.privati 'privati', :controller => 'fees', :action => 'privati'
+  map.associati 'associati', :controller => 'fees', :action => 'associati'
+  map.email_fee 'email_fee', :controller => 'fees', :action => 'email_fee', :conditions => {:method => :get}
+  #in POST not in Get for params[:username]...
+  map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
 
   map.signin 'login', :controller => 'account', :action => 'login'
   map.signout 'logout', :controller => 'account', :action => 'logout'

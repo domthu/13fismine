@@ -69,6 +69,7 @@ margin-right: 0.5em;}
 #admin-menu a.plugins { background-image: url(../images/plugin.png); }
 #admin-menu a.info { background-image: url(../images/help.png); }
 #admin-menu a.server_authentication { background-image: url(../images/server_key.png); }
+#admin-menu a.abbo { background-image: url(../images/server_key.png); }
 
 #main {background-color:#EEEEEE;}
 
