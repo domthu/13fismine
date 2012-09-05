@@ -1399,3 +1399,18 @@ it:
   button_verify: Verifica
   who_pay: Chi paga? (Organismi associati)
   associations: Associazioni
+  
+#EDITORIAL
+  list_edizioni: Lista edizioni
+  details_edizione: Dettaglio di un edizione => NEWSLETTER
+  list_articoli: Lista articoli
+  details_articolo: Dettaglio di un articolo
+  list_quesiti: Lista quesiti
+  details_quesito: Dettaglio di un quesito
+  list_sezioni: Lista categorie articoli
+  details_sezione: Dettaglio di una categoria articoli
+  poniquesito: Immetti un quesito a FISCOSPORT
+  contact: Contatti Merce Dolci
+  about: Chi siamo?
+  help: Bisogno di aiuto?
+

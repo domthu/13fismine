@@ -95,7 +95,6 @@ class FeesController < ApplicationController
     #asso
     #renew
     @type = params[:type]
-    return redirect_to :controller => 'settings', :action => 'edit', :tab => 'general'
     raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
     # Force ActionMailer to raise delivery errors so we can catch it
     ActionMailer::Base.raise_delivery_errors = true
@@ -120,5 +119,5 @@ class FeesController < ApplicationController
     ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
     redirect_to :controller => 'settings', :action => 'edit', :tab => 'fee'
   end
-  
+
 end

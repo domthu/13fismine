@@ -297,6 +297,7 @@ Redmine::MenuManager.map :application_menu do |menu|
   menu.push :cross_group, :cross_groups_path, :if => Proc.new { User.current.admin? }
   menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
   menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
+  menu.push :fee, :fee_path, :if => Proc.new { User.current.admin? && Setting.fee? }
 end
     
 Redmine::MenuManager.map :admin_menu do |menu|
@@ -343,17 +344,16 @@ Redmine::MenuManager.map :project_menu do |menu|
 end
 
 Redmine::MenuManager.map :menu_fee_fs do |menu|
-  menu.push :fee, :fee_path
   menu.push :registrati, :registrati_path
-  menu.push :scaduti, :scaduti_path
-  menu.push :archiviati, :archiviati_path
-  menu.push :pagamento, :pagamento_path
-  menu.push :invia_fatture, :invia_fatture_path
-  menu.push :paganti, :paganti_path
+  menu.push :abbonamenti, :abbonamenti_path
   menu.push :privati, :privati_path
   menu.push :associati, :associati_path
+  menu.push :scaduti, :scaduti_path
+  menu.push :archiviati, :archiviati_path
+  menu.push :paganti, :paganti_path
+  menu.push :pagamento, :pagamento_path
+  menu.push :invia_fatture, :invia_fatture_path
   menu.push :email_fee, :email_fee_path
-  menu.push :abbonamenti, :abbonamenti_path
 end
 
 Redmine::Activity.map do |activity|
