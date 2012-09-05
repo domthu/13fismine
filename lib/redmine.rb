@@ -49,6 +49,7 @@ end
 Redmine::AccessControl.map do |map|
   #domthu permission :access_back_end, :welcome => :index, :require => :loggedin
   #This permissions are at role level and not at project level
+  map.permission :fee_control, :welcome => :index, :require => :loggedin, :public => true
   map.permission :access_back_end, :welcome => :index, :require => :loggedin
   map.permission :front_end_quesito, :editorial => :poniquesito, :require => :loggedin
   map.permission :view_project, {:projects => [:show], :activities => [:index]}, :public => true

@@ -1384,4 +1384,18 @@ it:
   label_abbo_plural: Abbonamenti
   label_abbo: Abbonamento
   field_abbo: Abbonamento
-
+  list_abbonamenti: Lista abbonati
+  list_archiviati: Lista utenti archiviati
+  list_privati: Lista abbonati privati
+  list_associati: Lista membri di organismi associati
+  email_fee: pagina di gestione delle email per abbonamento
+  invia_fatture: Pagina di invio delle fattture
+  list_pagamento: Lista pagamenti --> Invoices list?
+  list_paganti: Lista dei paganti
+  list_registrati: Lista dei registrati
+  list_scaduti: Lista dei scaduti
+  control_fee: Gestione abbonamenti --> Pannello di controllo
+  stato_utenze: Stato delle utenze FISCOSPORT
+  button_verify: Verifica
+  who_pay: Chi paga? (Organismi associati)
+  associations: Associazioni

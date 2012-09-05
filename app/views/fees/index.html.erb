@@ -1,4 +1,93 @@
-<h1>Gestione abbonamenti</h1>
+<h2><%=l(:control_fee)%>. Utenti: <%= @num_users %></h2>
   <div id="footer-menu" class="box">
     <%= render_menu :menu_fee_fs %>
   </div>
+  In questa pagina:
+  <ul> 
+    <li>Pulsante per verificare tutti gli abbonamenti</li>
+    <li>Lista numero utenti per ruolo </li>
+    <li>Menu per le singole pagine di gestione</li>
+    <li>Ricerca di un utente con redirect alla pagina dell'utente</li>
+  </ul> 
+    
+
+<div class="splitcontentleft">
+  <fieldset class="box tabular">
+    <legend>Ruoli non sottoposti a controllo di abbonamento</legend>
+    <h5>
+      Numero amministratori: <%= @num_admin %><br />
+      con ruoli di gestione interna all'editoriale non sottoposto a controllo di abbonamento<br />
+    </h5>
+    </small>
+      ROLE_AUTHOR         = 2<br />
+      ROLE_COLLABORATOR   = 3<br />
+      ROLE_VIP            = 9<br />
+    </small>
+    <ul> 
+      <li><b>Numero di redattori: <%= @num_admin %></b></li>
+      <li><%= @name_admin %></li>      
+      <li><b>Numero di collaboratori: <%= @num_collaboratori %></b></li>
+      <li><%= @name_collaboratori %></li>      
+      <li><b>Numero di invitati: <%= @num_invitati %></b></li>
+      <li><%= @name_invitati %></li>      
+    </ul>
+    
+  </fieldset>
+</div>
+
+<div class="splitcontentright">
+  <fieldset class="box tabular">
+    <legend><%=l(:who_pay)%></legend>
+    <h5>
+      Paganti: organismi associati o privati
+    </h5>
+    <ul> 
+      <li>Numero di organismi associati: <%= @num_organismi %></li>
+      <li>Numero di power_user: <%= @num_power_user %></li>
+      <li>Numero di membri: <%= @num_members %></li>
+      <li>Numero di <b>PRIVATI: <%= @num_privati %></b></li>
+    </ul>
+
+    <% form_tag({:action => 'index', :verify => 1}, :class => "tabular") do %>
+      <%= submit_tag l(:button_verify) %>
+    <% end %>   
+    <div> 
+       <%= @msg %>
+    </div> 
+  </fieldset>
+
+  <fieldset class="box tabular">
+    <legend><%=l(:associations)%></legend>
+    <h5>
+      Utenti legati ad una associazione
+    </h5>
+    <ul> 
+      <li>Numero di associazioni: <%= @num_Associations %></li>
+      <li>Numero di soci: <%= @num_Associated %></li>
+    </ul>
+  </fieldset>
+</div>
+
+
+<div class="splitcontentleft">
+  <fieldset class="box tabular">
+    <legend>Ruoli sottoposti a controllo di abbonamento (manuale ed automatico)</legend>
+    </small>
+      ROLE_ABBONATO       = 5  #user.data_sacdenza > (today - Setting.renew_days)<br />
+      ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days<br />
+      ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days<br />
+      ROLE_EXPIRED        = 6  #user.data_sacdenza < today<br />
+      ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
+    </small>
+    <ul> 
+      <li>Numero di abbonati: <%= @num_abbonati %></li>
+      <li>Numero di abbonati in stato di rinnovamento (Scadenza - <%= Setting.renew_days%> giorni): <%= @num_rinnovamento %></li>
+      <li>Numero di registrati: <%= @num_registrati %>. Con periodo di prova (Data di registrazione + <%= Setting.register_days%> giorni)</li>
+      <li>Numero di scaduti: <%= @num_scaduti %></li>
+      <li>Numero di archiviati: <%= @num_archiviati %></li>
+    </ul>
+  </fieldset>
+</div>
+
+        
+
