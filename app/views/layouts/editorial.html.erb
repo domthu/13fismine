@@ -8,6 +8,7 @@
 <%= csrf_meta_tag %>
 <%= favicon %>
 <%= stylesheet_link_tag 'application', :media => 'all' %>
+<%# stylesheet_link_tag 'editorial', :media => 'all' %>
 <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
 <%= javascript_heads %>
 <%= heads_for_theme %>
@@ -17,14 +18,14 @@
       body {behavior: url(<%= stylesheet_path "csshover.htc" %>);}
     </style>
 <![endif]-->
-<%= call_hook :view_layouts_editorial_html_head %>
+<%# call_hook :view_layouts_editorial_html_head %>
 <!-- page specific tags -->
 <%= yield :header_tags -%>
 </head>
 <body class="<%=h body_css_classes %>">
 <div id="wrapper">
 <div id="wrapper2">
-<div id="top-menu">
+  <div id="top-menu">
     <div id="account">
         <%= render_menu :account_menu %>
     </div>
@@ -34,7 +35,6 @@
            :id => 'loggedas') if User.current.logged? %>
     <%= render_menu :top_menu_fs if User.current.logged? || !Setting.login_required? %>
 </div>
-
 <div id="header">
     <% if User.current.logged? || !Setting.login_required? %>
     <div id="quick-search">
@@ -83,7 +83,7 @@
   </div>
 </div>
 </div>
-</div>
+<%#</div>      %>
 <%= call_hook :view_layouts_base_body_bottom %>
 </body>
 </html>
