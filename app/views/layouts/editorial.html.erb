@@ -8,7 +8,7 @@
 <%= csrf_meta_tag %>
 <%= favicon %>
 <%= stylesheet_link_tag 'application', :media => 'all' %>
-<%# stylesheet_link_tag 'editorial', :media => 'all' %>
+<%= stylesheet_link_tag 'editorial', :media => 'all' %>
 <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
 <%= javascript_heads %>
 <%= heads_for_theme %>
@@ -23,67 +23,124 @@
 <%= yield :header_tags -%>
 </head>
 <body class="<%=h body_css_classes %>">
-<div id="wrapper">
-<div id="wrapper2">
-  <div id="top-menu">
-    <div id="account">
-        <%= render_menu :account_menu %>
-    </div>
-    <%= content_tag(
-           'div',
-           "#{l(:label_logged_as)} #{link_to_user(User.current, :format => :username)}".html_safe,
-           :id => 'loggedas') if User.current.logged? %>
-    <%= render_menu :top_menu_fs if User.current.logged? || !Setting.login_required? %>
-</div>
-<div id="header">
-    <% if User.current.logged? || !Setting.login_required? %>
-    <div id="quick-search">
-        <% form_tag({:controller => 'editorial', :action => 'ricerca', :id => @project}, :method => :get ) do %>
-        <%= hidden_field_tag(controller.default_search_scope, 1, :id => nil) if controller.default_search_scope %>
-        <label for='q'>
-          <%= link_to l(:label_search), {:controller => 'editorial', :action => 'ricerca', :id => @project}, :accesskey => accesskey(:search) %>:
-        </label>
-        <%= text_field_tag 'q', @question, :size => 20, :class => 'small', :accesskey => accesskey(:quick_search) %>
-        <% end %>
-        <%= render_project_jump_box_fs %>
-    </div>
-    <% end %>
-
-    <h1><%= page_header_title %></h1>
-
-    <div id="main-menu">
-      <%= render_menu :application_menu_fs %>
-    </div>
-</div>
-
-<%= tag('div', {:id => 'main', :class => (has_content?(:sidebar) ? '' : 'nosidebar')}, true) %>
-    <div id="sidebar">
-        <%= yield :sidebar %>
-        <%= call_hook :view_layouts_base_sidebar %>
-    </div>
-
-    <div id="content">
-        <%= render_flash_messages %>
-        <%= yield %>
-        <%= call_hook :view_layouts_base_content %>
-        <div style="clear:both;"></div>
-    </div>
-</div>
-
-<div id="ajax-indicator" style="display:none;"><span><%= l(:label_loading) %></span></div>
-
-<div id="footer">
-  <div id="footer-menu" class="box">
-    <%= render_menu :footer_menu_fs %>
+<div id="fs-main">
+        <div class="cleared reset-box"></div>
+  <div id="contenitore-top">
+        <div id="fs-top-menu">
+            <div id="account">
+                <%= render_menu :account_menu %>
+            </div>
+        </div>
   </div>
-  <div class="bgl">
-    <div class="bgr">
-      Powered by <%= link_to Redmine::Info.app_name_fs, Redmine::Info.url_fs %> &copy; 
+        <%# header intestazione e menu %>
+        <%#render 'header' %>
+<%#      inizio                               pagina_dei_contenuti                inizio             %>
+<%# PAGINA --->>> FRONT END intestazione e menu %>
+<div class="fs-header">
+    <div class="fs-header-position">
+        <div class="fs-header-wrapper">
+            <div class="cleared reset-box"></div>
+            <div class="fs-header-inner">
+                <div class="fs-logo">
+                    <div class="fs-logo-name" >
+                      <div class="fs-logo-img"></div>
+                    </div>
+
+
+                        <h4 class="fs-logo-text">professionisti esperti in materie fiscali sportive</h4>
+</div>
+
+            </div>
+        </div>
     </div>
-  </div>
+
+    <div class="fs-bar fs-m1nav">
+        <div class="fs-m1nav-outer">
+            <div class="fs-m1nav-wrapper">
+                <div class="fs-m1nav-inner">
+
+                    <%# render_navigation :context => :fe , :level => 1 %>
+
+                    <%= render_navigation(:level => 1) %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fs-bar fs-m2nav">
+        <div class="fs-m2nav-wrapper">
+
+            <%# render_navigation :context => :fe , :level => 2%>
+            <%= render_navigation  :level => 2  %>
+
+        </div>
+    </div>
+    <div class="cleared reset-box"></div>
+
 </div>
+<div class="cleared reset-box"></div>
+<%# --->>> I CONTENUTI --->>> FRONT END  %>
+<div class="fs-box fs-sheet">
+    <div class="fs-box-body fs-sheet-body">
+        <div class="fs-layout-wrapper">
+            <div class="fs-content-layout">
+                <div class="fs-content-layout-row">
+                    <div class="fs-layout-cell fs-content">
+                        <div class="fs-box fs-post">
+                            <div class="fs-box-body fs-post-body">
+                                <div class="fs-post-inner fs-article">
+                                   <h2> questo è il posto degli articoli</h2>
+                                        <%#h2 class="fs-postheader"><span class="fs-postheadericon">Page 1
+                                        </span></h2> %>
+
+                                    <div class="fs-postcontent">
+                                        <div class="fs-content-layout">
+                                            <div class="fs-content-layout-row">
+                                                <div class="fs-layout-cell layout-item-0" style="width: 100%;">
+                                                   <h2> questo è il posto degli articoli</h2>
+                                                  <%#>Enter Page content here...%>
+                                                    <%#	yield %>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="fs-content-layout">
+                                        <div class="fs-content-layout-row">
+                                    </div>
+                        </div>
+                                    </div>
+                                    <div class="cleared"></div>
+                                </div>
+		                        <div class="cleared"></div>
+                            </div>
+                        </div>
+                        <div class="cleared"></div>
+                    </div>
+                        <%#sidebar a centro destra %>
+                        <%# render 'blocco_sidebar1' %>
+
+                        <%#sidebar a destra %>
+                        <%=	render :partial => 'blocco_sidebar2' %>
+                </div>
+            </div>
+        </div>
+        <div class="cleared"></div>
+
+        <%# render :partial => 'footer' %>
+        <%= render :partial => 'footer' %>
+
+        <div class="cleared"></div>
+    </div>
 </div>
-<%#</div>      %>
-<%= call_hook :view_layouts_base_body_bottom %>
+<div class="cleared"></div>
+
+
+
+ <%# fine pagina_dei_contenuti  %>
+       <div class="cleared reset-box"></div>
+        <div class="cleared"></div>
+</div>
+
+
 </body>
 </html>
