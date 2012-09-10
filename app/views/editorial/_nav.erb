@@ -1,0 +1,24 @@
+<div class ="example">
+ <%= example :title => 'Example 3: Tabbed Main Navigation with Sidebar Sub Navigation' do %>
+    <div class="example_content">
+      <div id="top_navigation" >
+        <%= render_navigation :level => 1%>
+        <div class="clear_float"></div>
+        <div class="content_wrapper" >
+          <div id="sub_navigation">
+            <%= render_navigation :level => 2 %>
+            <div class="content">
+              <div class="breadcrumbs">
+                <div class="title"> breadcrumbs:
+                  <%= render_navigation(:renderer => :breadcrumbs) %>
+                </div>
+              </div>
+            </div>
+            <div class="clear_float"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%end %>
+ </div>
+<hr>

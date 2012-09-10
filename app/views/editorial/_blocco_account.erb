@@ -1,0 +1,26 @@
+<div class="fs-box fs-block">
+    <div class="fs-box-body fs-block-body">
+        <div class="fs-bar fs-blockheader">
+                <h3 class="t">Sezione utenti</h3>
+        </div>
+            <div class="fs-box fs-blockcontent">
+                <div class="fs-box-body fs-blockcontent-body">
+                  <div>
+                 <ul>
+
+
+   <%# render 'account/login' %>
+
+
+     </ul>
+     <%- flash.each do |name, msg| -%>
+   <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+     <%- end -%>
+
+                </div>
+                 <div class="cleared"></div>
+                 </div>
+                </div>
+		<div class="cleared"></div>
+    </div>
+</div>
