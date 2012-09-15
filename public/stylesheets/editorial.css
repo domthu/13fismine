@@ -1105,7 +1105,7 @@ ul.fs-vmenu ul li a:hover {
   font-size: 0;
   background-image: url("../images/block_b.png"); }
 .fs-block:after {
-  content: url("block_t.png");
+  content: url("../images/block_t.png");
   font-size: 0;
   background-image: url("../images/block_b.png");
   clip: rect(auto, auto, auto, 991px); }
@@ -1301,7 +1301,7 @@ pre {
       color: #15859E; }
 
 .fs-postheadericon {
-  background: url("postheadericon.png") no-repeat left 0.5em;
+  background: url("../images/postheadericon.png") no-repeat left 0.5em;
   padding-top: 16px;
   margin-top: -16px;
   padding-left: 38px;
@@ -1670,7 +1670,7 @@ ul.fs-m1hmenu {
     z-index: 10;
     left: 0;
     top: 0;
-    background-image: url("spacer.gif");
+    background-image: url("../images/spacer.gif");
     padding: 10px 30px 30px 30px;
     margin: -10px 0 0 -30px; }
     ul.fs-m1hmenu ul:after {
@@ -1723,7 +1723,7 @@ ul.fs-m1hmenu {
   top: 31px; }
   .fs-m1nav:before, .fs-m1nav:after {
                   /*
-background-image: url('fe_m1nav.png');*/ }
+background-image: url('../images/fe_m1nav.png');*/ }
   .fs-m1nav:before {
     right: 5px; }
   .fs-m1nav:after {
@@ -1761,7 +1761,7 @@ ul.fs-m1hmenu > li > a {
     top: 0;
     bottom: 0;
     z-index: -1;
-    background-image: url("fe_m1menuitem.png"); }
+    background-image: url("../images/fe_m1menuitem.png"); }
   ul.fs-m1hmenu > li > a:before {
     left: 0;
     right: 10px;
@@ -1811,7 +1811,7 @@ ul.fs-m1hmenu > li {
   display: block;
   white-space: nowrap;
   height: 25px;
-  background-image: url("fe_m1subitem.png");
+  background-image: url("../images/fe_m1subitem.png");
   background-position: left top;
   background-repeat: repeat-x;
   border-width: 1px;
