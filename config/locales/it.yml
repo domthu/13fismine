@@ -1281,7 +1281,7 @@ it:
   label_send_test_email_fee_confirm: Invia email di prova Conferma
   label_send_test_email_fee_renew: Invia email di prova Rilancio
   setting_info_fs: Fiscosport informa
-  label_info_fs: "Contenuto dell'informazione temporranea da presentare in prima pagina  nell'area pubblica"
+  label_info_fs: "Fiscosport informa"
   setting_info_promoted_fs: Promosso in front page 
   label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporranea "
 

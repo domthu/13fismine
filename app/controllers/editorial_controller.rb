@@ -3,6 +3,7 @@ class EditorialController < ApplicationController
   #before_filter :require_admin
   helper :sort
   include SortHelper	
+  include FeesHelper  #ROLE_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
   helper :messages
@@ -15,11 +16,20 @@ class EditorialController < ApplicationController
 #    @p = Project.find(:first, :order => 'created_on DESC')
 #    @projects = Project.all.compact.uniq
 #    @link_project = Project.find_by_identifier($1) || Project.find_by_name($1)
-    
-    @news = News.latest_fs
-    @issues = Issue.latest_fs
     @projects = Project.latest_fs
-
+    @issues = Issue.latest_fs
+    #MariaCristina Non mostrare i quesiti nella home page
+    #@news = News.latest_fs
+    #<div class="splitcontentleft">
+    #  <% if @news.any? %>
+    #  <div class="news box">
+    #  <h3><%=l(:label_news_latest)%></h3>
+    #    <%= render :partial => 'news/news', :collection => @news %>
+    #    <%= link_to l(:label_news_view_all), :action => 'quesiti' %>
+    #  </div>
+    #  <% end %>
+    #  <%= call_hook(:view_welcome_index_left, :projects => @projects) %>
+    #</div>
   end
 
   def contact
@@ -34,15 +44,21 @@ class EditorialController < ApplicationController
   #dal menu sezione si accede all'insieme degli articoli riferiti alla sezione
   def sezione
     @id = params[:id].to_i
-    
+    #MariaCristina Condizione per VisibileWeb, ordinamento per 
+    @issues = Issue.all_byCategory_fs(@id)
   end
 
   def edizioni
+    @projects = Project.all_fs
   end
 
   def edizione
     #Newsletter
+    #project --> 'e000259'
+    #@id = params[:id] # attenzione è una stringa .to_i
+    #project.id --> 23
     @id = params[:id].to_i
+    @project = Project.find_public(@id)
   end
 
   def articoli
@@ -50,14 +66,7 @@ class EditorialController < ApplicationController
 
   def articolo
     @id = params[:id].to_i
-  end
-
-  #def register
-  #end
-  #def login
-  #end
-
-  def ricerca
+    @comune = Comune.find(params[:id])
   end
 
   def quesiti
@@ -65,6 +74,7 @@ class EditorialController < ApplicationController
 
   def quesito
     @id = params[:id].to_i
+    @comune = Comune.find(params[:id])
   end
 
 #domthu permission :front_end_quesito, :editorial => :poniquesito, :require => :loggedin
@@ -85,6 +95,11 @@ class EditorialController < ApplicationController
     #DO SOME USRE STUFF HERE
     
   end
+
+  #def register
+  #end
+  #def login
+  #end
 
 #{"all_words"=>"1",
 # "submit"=>"Invia",

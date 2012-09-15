@@ -73,10 +73,10 @@
   <fieldset class="box tabular">
     <legend>Ruoli sottoposti a controllo di abbonamento (manuale ed automatico)</legend>
     </small>
-      ROLE_ABBONATO       = 5  #user.data_sacdenza > (today - Setting.renew_days)<br />
+      ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)<br />
       ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days<br />
       ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days<br />
-      ROLE_EXPIRED        = 6  #user.data_sacdenza < today<br />
+      ROLE_EXPIRED        = 6  #user.data_scadenza < today<br />
       ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
     </small>
     <ul> 
