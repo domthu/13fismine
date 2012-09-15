@@ -1,6 +1,6 @@
 <% if Setting.info_promoted_fs %>
   <%= l(:label_info_fs) %>
-  <div class="nodata">
+  <div id="fs_informa" class="nodata">
   <%= simple_format(Setting.info_fs) %>
   </div>
   <br />
@@ -8,7 +8,7 @@
 <%# textilizable Setting.welcome_text_fs %>
 <h2><%= l(:label_home_fs) %></h2>
 
-<div class="splitcontentright">
+<div class="splitcontentright fs_box_opacity">
   <% if @issues.any? %>
   <div class="issues box">
   <h3><%=l(:label_issues_latest)%></h3>
@@ -18,18 +18,7 @@
   <% end %>
 </div>
 
-<div class="splitcontentleft">
-  <% if @news.any? %>
-  <div class="news box">
-  <h3><%=l(:label_news_latest)%></h3>
-    <%= render :partial => 'news/news', :collection => @news %>
-    <%= link_to l(:label_news_view_all), :action => 'quesiti' %>
-  </div>
-  <% end %>
-  <%= call_hook(:view_welcome_index_left, :projects => @projects) %>
-</div>
-
-<div class="splitcontentleft">
+<div class="splitcontentleft fs_box_opacity">
   <% if @projects.any? %>
   <div class="projects box">
   <h3><%=l(:label_project_latest)%></h3>
@@ -37,13 +26,13 @@
     <% for project in @projects %>
       <% @project = project %>
       <li>
-      <%= link_to_project project %> (<%= format_time(project.created_on) %>)
+      <%= link_to h(project), :action => 'edizione', :id => project.id %> (<%= format_time(project.created_on) %>)
       <%= textilizable project.short_description, :project => project %>
       </li>
     <% end %>
     <% @project = nil %>
     </ul>
-    <%= link_to l(:label_projects_view_all), :action => 'edizione' %>
+    <%= link_to l(:label_projects_view_all), :action => 'edizioni' %>
   </div>
   <% end %>
   <%= call_hook(:view_welcome_index_right, :projects => @projects) %>

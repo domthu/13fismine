@@ -6,7 +6,7 @@ class FeesController < ApplicationController
 
   helper :sort
   include SortHelper
-  include FeesHelper
+  include FeesHelper  #ROLE_XXX
 
   def index
     @num_users = User.all.count
@@ -25,10 +25,10 @@ class FeesController < ApplicationController
     @name_collaboratori = User.all(:conditions => {:role_id => ROLE_COLLABORATOR})
     @name_invitati = User.all(:conditions => {:role_id => ROLE_VIP})
     #BY CLIENT ROLE
-    #  ROLE_ABBONATO       = 5  #user.data_sacdenza > (today - Setting.renew_days)
+    #  ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
     #  ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
     #  ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
-    #  ROLE_EXPIRED        = 6  #user.data_sacdenza < today
+    #  ROLE_EXPIRED        = 6  #user.data_scadenza < today
     #  ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGOISTERED)
     @num_abbonati = User.all(:conditions => {:role_id => ROLE_ABBONATO}).count
     @num_rinnovamento = User.all(:conditions => {:role_id => ROLE_RENEW}).count
@@ -53,17 +53,27 @@ class FeesController < ApplicationController
   end
 
 ###########LISTE UTENTI PER RUOLO##############
+  def paganti
+    #  ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
+    #  ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
+    @users = User.all(:conditions => {:role_id => Fee::ROLE_ABBONATO && :role_id => Fee::ROLE_RENEW }, :include => :role)
+  end
+
   def registrati
+    #  ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
+    @users = User.all(:conditions => {:role_id => Fee::ROLE_REGISTERED}, :include => :role)
   end
 
   def scaduti
+    #  ROLE_EXPIRED        = 6  #user.data_scadenza < today
+    @users = User.all(:conditions => {:role_id => Fee::ROLE_EXPIRED}, :include => :role)
   end
 
   def archiviati
+    #  ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGOISTERED)
+    @users = User.all(:conditions => {:role_id => Fee::ROLE_ARCHIVIED}, :include => :role)
   end
 
-  def paganti
-  end
 
   def abbonamenti
     @username = params[:user] ? params[:user].to_i : ''

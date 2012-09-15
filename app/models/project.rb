@@ -123,10 +123,38 @@ class Project < ActiveRecord::Base
     visible(user).find(:all, :limit => count, :order => "created_on DESC")	
   end	
 
-  # returns latest projects for public area 
-  def self.latest_fs(user = User.current, count = 5)
+  # returns all projects for public area 
+  def self.all_fs(user = User.current)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
-    find(:all, :limit => count, :conditions => "#{table_name}.is_public = 1", :order => "#{table_name}.created_on DESC")	
+    find(:all, :conditions => "#{table_name}.is_public = 1", :order => "#{table_name}.created_on DESC")	
+  end
+
+  # returns limited latest projects for homepage in public area 
+  # MariaCristina creare flag .promoted_to_front_page, per il momento usiamo .is_public combinato con .status 
+  def self.latest_fs(user = User.current, count = 5)
+    find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1 AND #{table_name}.status = #{STATUS_FS}"], :order => "#{table_name}.created_on DESC")	
+    #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in home page
+    #Il STATUS_FS dovrebbe essere presso quando la newsletter viene inviata
+  end
+
+  #Generate the newsletter, program to send it, set project status to FS 
+  def self.send_newsletter(user = User.current)
+    #creare tabella di invio
+    #reccuperare l'html da un template senza la personalizzazione per utente
+    #salvare su una tabella di invio (con destinatari?)
+    
+    # MOTORE Gestisce gli invi
+        
+    self.promoted_to_front_page = true
+    self.status = STATUS_FS #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in home page
+    save
+  end
+  
+  def self.find_public(id = 0, user = User.current)
+    #@edizione = Project.find(params[:id]) 
+    #Project.find(:first, :conditions
+    #Project.find_by_id(id)
+    find(id,:conditions => "#{table_name}.is_public = 1 AND #{table_name}.status IN ( #{STATUS_ARCHIVED}, #{STATUS_FS} )", :include => :role)
   end
 
   #TODO
