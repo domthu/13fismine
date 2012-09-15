@@ -51,9 +51,17 @@
     <% form_tag({:action => 'index', :verify => 1}, :class => "tabular") do %>
       <%= submit_tag l(:button_verify) %>
     <% end %>   
-    <div> 
-       <%= @msg %>
-    </div> 
+    <% if !@msg.nil? && @msg.any? %>
+      <%= l(:results) %>
+      <div id="fs_informa" class="nodata">
+        <ul style="text-align: left;">
+          <% @msg.each_with_index do |say, index| %>
+            <li><%= index.to_s + '-' + say%></li>
+          <% end %>  
+        <ul>
+      </div>
+      <br />
+    <% end %>  
   </fieldset>
 
   <fieldset class="box tabular">
@@ -87,6 +95,7 @@
       <li>Numero di archiviati: <%= @num_archiviati %></li>
     </ul>
   </fieldset>
+
 </div>
 
         

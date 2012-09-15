@@ -45,33 +45,64 @@ class FeesController < ApplicationController
     #User member of ASSOCIATION
     @num_Associations =  Asso.all.count
     @num_Associated =  User.all(:conditions => {:asso_id => !nil}).count
-    @msg = ""
-    if params['verify'] == 1
-      @msg = "---Verificazione degli utenti---"
+    #@msg[] << ""
+    if params['verify'].to_i == 1
+      @msg = ["---Verificazione degli utenti---"]
+      #User.each do |user|
+      #    existing_regions = Region.all()
+      for usr in User.all() do
+        if !usr.nil?
+          str = "<b>" << usr.name << "</b>, code: " << usr.codice.to_s << ", data: " <<  usr.datascadenza.to_s << ", role: " <<  usr.role_id.to_s << ", Asso: " <<  usr.asso_id.to_s << "(" << usr.power_user.to_s << ")"
+          @msg << str
+          #@msg << (str << ", code: " << usr.codice << ", data: " <<  usr.datascadenza << ", role: " <<  usr.role_id << ", Asso: " <<  usr.asso_id << "(" << usr.power_user << ")")
+        end
+      end 
     end
 
+  end
+  
+  def verifica
+    #per ogni utente 
+    # prendere codice utente e data scadenza
+    # --> definire il ruolo
+    
+    # verificare il codice utente per determinare se 
+    #  è un pagante o un privato
+    
   end
 
 ###########LISTE UTENTI PER RUOLO##############
   def paganti
     #  ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
     #  ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
-    @users = User.all(:conditions => {:role_id => Fee::ROLE_ABBONATO && :role_id => Fee::ROLE_RENEW }, :include => :role)
+    @users = User.find(
+    :all,
+    :conditions => ["role_id = :role_1 OR role_id = :role_2 ", { :role_1 => ROLE_ABBONATO, :role_2 => ROLE_RENEW } ],
+    :include => :role)
+    #:conditions => {:role_id => ROLE_ABBONATO, :role_id => ROLE_RENEW },
+    
+#    workflows.find(:all,
+#        :include => :new_status,
+#        :conditions => ["role_id IN (:role_ids) AND tracker_id = :tracker_id AND (#{conditions})",
+#          {:role_ids => roles.collect(&:id), :tracker_id => tracker.id, :true => true, :false => false}
+#          ]
+#        ).collect{|w| w.new_status}.compact.sort
+        
   end
 
   def registrati
     #  ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
-    @users = User.all(:conditions => {:role_id => Fee::ROLE_REGISTERED}, :include => :role)
+    @users = User.all(:conditions => {:role_id => ROLE_REGISTERED}, :include => :role)
   end
 
   def scaduti
     #  ROLE_EXPIRED        = 6  #user.data_scadenza < today
-    @users = User.all(:conditions => {:role_id => Fee::ROLE_EXPIRED}, :include => :role)
+    @users = User.all(:conditions => {:role_id => ROLE_EXPIRED}, :include => :role)
   end
 
   def archiviati
     #  ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGOISTERED)
-    @users = User.all(:conditions => {:role_id => Fee::ROLE_ARCHIVIED}, :include => :role)
+    @users = User.all(:conditions => {:role_id => ROLE_ARCHIVIED}, :include => :role)
   end
 
 
