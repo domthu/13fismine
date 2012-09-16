@@ -29,7 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   map.quesito       '/quesito/:id', :controller => 'editorial', :action => 'quesito'
   map.poniquesito   '/poniquesito', :controller => 'editorial', :action => 'poniquesito'
   map.ricerca       '/ricerca', :controller => 'editorial', :action => 'ricerca'
-  #map.sezione       '/sezione', :controller => 'editorial', :action => 'sezione'
+  map.sezione       '/sezione/:id', :controller => 'editorial', :action => 'sezione'
   #Map menu 
   map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
 

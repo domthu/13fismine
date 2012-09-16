@@ -52,6 +52,8 @@ class User < Principal
   has_one :api_token, :class_name => 'Token', :conditions => "action='api'"
   belongs_to :auth_source
 
+  #domthu20120916
+  belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id'
   #domthu20120516
   belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id'
   #belongs_to :account, :class_name => 'Account', :foreign_key => 'account_id'
@@ -103,6 +105,16 @@ class User < Principal
     group_id = group.is_a?(Group) ? group.id : group.to_i
     { :conditions => ["#{User.table_name}.id NOT IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id] }
   }
+
+  def organization()
+    if self.cross_organization_id.nil? || self.cross_organization_id.nil?
+      nil
+    else
+      Organization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", { \
+      :co_id => self.cross_organization_id, \
+      :asso_id => self.asso_id}])  #.to_s
+    end
+  end
 
   def set_mail_notification
     self.mail_notification = Setting.default_notification_option if self.mail_notification.blank?

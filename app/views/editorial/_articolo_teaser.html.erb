@@ -1,0 +1,8 @@
+<% if !articolo.nil? %>
+  <div class="fs_box_opacity">
+    <%= link_to(h(articolo.id), :controller => 'editorial', :action => 'articolo', :id => articolo) %>
+    <%= link_to(h(articolo.id), :controller => 'editorial', :action => 'edizione', :id => articolo.project) %>
+    <%= h(truncate(articolo.subject, :length => 60)) %>
+    <%=h articolo.status %>
+  </div>
+<% end %>

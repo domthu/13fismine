@@ -96,6 +96,12 @@ class Issue < ActiveRecord::Base
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
     find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")	
   end
+  
+  
+  # returns latest issues for public area 
+  def self.all_by_sezione_fs(sezione = 1, user = User.current)
+    find(:all, :limit => count, :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.section_id = :secid", {:secid => sezione }], :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")	
+  end
 
 
   # Returns a SQL conditions string used to find all issues visible by the specified user

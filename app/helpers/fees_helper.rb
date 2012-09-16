@@ -12,7 +12,7 @@ module FeesHelper
   #NOTA BENE usare i permissi per quesi casi 
   ROLE_MANAGER        = 1
   ROLE_AUTHOR         = 2
-  ROLE_COLLABORATOR   = 3
+  ROLE_COLLABORATOR   = 3  #ROLE_REDATTORE
 
 #La gestione dipende del ruolo
 # Se sottoposto a controllo abbonamento
@@ -22,5 +22,4 @@ module FeesHelper
 #Altre permissione per chi dipende della gestione del ruolo/abboanmento
 #  map.permission :access_back_end, :welcome => :index, :require => :loggedin
 #  map.permission :front_end_quesito, :editorial => :poniquesito, :require => :loggedin
-
 end

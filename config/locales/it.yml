@@ -1414,3 +1414,5 @@ it:
   about: Chi siamo?
   help: Bisogno di aiuto?
   results: Risultati
+  label_issues_by_section: Lista articoli legati alla sezione
+  notice_missing_parameters: La pagina non puo essere caricata per mancanza di informazione

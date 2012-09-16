@@ -294,7 +294,7 @@ box-shadow: 0 0 10px 5px black, /*200px -15px lime,*/ 20px 15px 25px red, -20px 
 box-shadow: 5px 5px rgba(80,122,170,0.1);
 }
 .fs_box_opacity div.box{margin:0}
-
+#fs_informa p {color: blue;}
 /***** Other data ****/
 .hide{display: none;}
 

@@ -21,7 +21,14 @@ class CrossOrganization < ActiveRecord::Base
 
   #ERROR fail to grab related table using  @cross_organization.organizations
   def organizations2
-    Organization.find(:all, :conditions => ["cross_organization_id == ?", self.id.to_s], :limit => 10)
+    Organization.find(:all, :conditions => ["cross_organization_id == ?", self.id.to_s]) #, :limit => 10)
   end
 
+  def organization_for_user(user)
+    asso_id = user.nil? ? -1 : user.asso_id
+    Organization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", {
+    :co_id => self.id,
+    :asso_id => asso_id}]
+    )
+  end
 end

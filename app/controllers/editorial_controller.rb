@@ -44,8 +44,17 @@ class EditorialController < ApplicationController
   #dal menu sezione si accede all'insieme degli articoli riferiti alla sezione
   def sezione
     @id = params[:id].to_i
-    #MariaCristina Condizione per VisibileWeb, ordinamento per 
-    @issues = Issue.all_byCategory_fs(@id)
+    if @id.nil?
+      flash[:notice] = l(:notice_missing_parameters)
+      redirect_to :action => 'home'
+    else
+      @sottosezione = Section.find(@id)
+      @sezione = @sottosezione.nil? ? TopSection.find(:first, :include => [ :section ], :conditions => ["#{Section.table_name}.id = :secid", {:secid => @id }]) : @sottosezione.top_section
+
+      #MariaCristina Condizione per VisibileWeb, ordinamento per 
+      @issues = Issue.find(:all, :conditions => ["section_id =  ?", @id], :limit => 100)  
+      #@issues = Issue.all_by_sezione_fs(@id)
+    end 
   end
 
   def edizioni
