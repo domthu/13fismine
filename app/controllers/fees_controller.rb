@@ -118,7 +118,7 @@ class FeesController < ApplicationController
 #      #  ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
 #      #TODO EXPIRALO se ha superato il numero di giorni previsti
 #      today = Date.today
-#      fee_deadline = user.created_on + Setting.register_days
+#      fee_deadline = user.created_on + Setting.register_days.to_i.days
 #      if today < fee_deadline
 #        str = ensure_role(user, ROLE_EXPIRED, "EXPIRED", "espirato", old_state)
 #      else
@@ -179,12 +179,16 @@ class FeesController < ApplicationController
         str = ", <b style='color:orange'>Scadenza NULL</b>"
         str << ensure_role(user, ROLE_EXPIRED, "EXPIRED", "espirato", old_state)
     else
-      str = ", Scadenza: " << data_scadenza.strftime("%y%m%d%H%M ")
+      #Note that Time.zone.parse returns a DateTime, while appending the .utc gives you a Time.
+      #scadenza = Time.zone.parse(data_scadenza) 
+      #undefined method `parse' for nil:NilClass
+      scadenza = data_scadenza.to_date
+      str = ", Scadenza: " << scadenza.strftime("%y%m%d%H%M ")
       today = Date.today
-      renew_deadline = data_scadenza - Setting.renew_days
-      if (today <= renew_deadline)
+      renew_deadline = scadenza - Setting.renew_days.to_i.days 
+      if (today < renew_deadline)
         str << ensure_role(user, ROLE_ABBONATO, "ABBONATO", "abbonato", old_state)
-      elsif (today <= data_scadenza)
+      elsif (today < scadenza)
         #IN_SCADENZA           (controllo sulla data di scadenza del privato o dell'Organismo Associato)
         #  ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
         str << ensure_role(user, ROLE_RENEW, "ABBONATO in scadenza", "inscadenza", old_state)
