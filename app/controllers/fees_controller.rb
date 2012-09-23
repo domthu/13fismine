@@ -16,7 +16,8 @@ class FeesController < ApplicationController
       @msg = ["---Verificazione degli utenti---"]
       #User.each do |user|
       #    existing_regions = Region.all()
-      for usr in User.all(:limit => 20) do
+      #for usr in User.all(:limit => 20) do
+      for usr in User.all() do
         str = control_assign_role(usr)
         if !str.nil?
           @msg << str
@@ -31,6 +32,8 @@ class FeesController < ApplicationController
     #  ROLE_AUTHOR         = 2
     #  ROredattoriLE_COLLABORATOR   = 3
     #  ROLE_VIP            = 9
+    @num_users = User.count
+    @num_no_role = User.all(:conditions => {:role_id => nil}).count
     @num_admin = User.all(:conditions => {:admin => 1}).count
     @name_admin = User.all(:conditions => {:admin => 1})
 
@@ -51,17 +54,29 @@ class FeesController < ApplicationController
     @num_registrati = User.all(:conditions => {:role_id => ROLE_REGISTERED}).count
     @num_scaduti = User.all(:conditions => {:role_id => ROLE_EXPIRED}).count
     @num_archiviati = User.all(:conditions => {:role_id => ROLE_ARCHIVIED}).count
+
     #Who pay?
     #BY PAYMENTS PRIVATE or CROSS ORGANIZATION
-    @num_organismi = CrossOrganization.all.count
     #@num_power_user = User.all(:conditions => {:power_user => 1}).count
-    @num_power_user = User.all(:conditions => {:power_user => true}).count
-    @num_members =  User.all(:conditions => {:cross_organization_id => !nil}).count
-    @num_privati = User.all(:conditions => {:cross_organization_id => nil}).count
-
     #User member of ASSOCIATION
     @num_Associations =  Asso.all.count
     @num_Associated =  User.all(:conditions => {:asso_id => !nil}).count
+    @num_power_user = User.all(:conditions => {:power_user => true}).count
+    #Utenti che non dipendono di un associazione PAGANTI
+    @num_maybe_privati = User.all(:conditions => {:asso_id => nil}).count
+    #@num_privati = User.all(:conditions => {:asso_id => nil, :role_id => nil}).count
+    @roles = []
+    @roles << ROLE_ABBONATO << ROLE_RENEW << ROLE_REGISTERED << ROLE_EXPIRED << ROLE_ARCHIVIED
+    @num_privati = User.all(:conditions => ['asso_id is null AND role_id IN (?)', @roles]).count
+    @active = []
+    @active << ROLE_ABBONATO << ROLE_RENEW << ROLE_REGISTERED 
+    @num_active = User.all(:conditions => ['asso_id is null AND role_id IN (?)', @active]).count
+
+    #AFFILIATI
+    @num_organismi = CrossOrganization.all.count
+    @num_members =  User.all(:conditions => {:cross_organization_id => !nil}).count
+
+
   end
   
   #per ogni utente 
@@ -90,7 +105,7 @@ class FeesController < ApplicationController
     if _usr.scadenza.nil?
       old_state << ", --NO scad--"
     else
-      old_state << ", scad[" << _usr.scadenza << "]"
+      old_state << ", scad[" << _usr.scadenza.to_s << "]"
     end 
     
     #Cross Organization
@@ -291,7 +306,7 @@ class FeesController < ApplicationController
         end
         str << "asso.id: " << (_usr.asso_id.nil? ? "" : ("(" << _usr.asso_id.to_s << ")--> " << ((_usr.asso.nil? || _usr.asso.scadenza.nil?) ? "No scadenza?" : _usr.asso.scadenza.to_s)))
         str << "/cross.id: " << (_usr.cross_organization_id.nil? ? "" : _usr.cross_organization_id.to_s)
-        str << "/user.data: " << (_usr.data.nil? ? "" : _usr.data)
+        str << "/user.data: " << (_usr.data.nil? ? "" : _usr.data.to_s)
         str << "/user.scadenza" << (_usr.datascadenza.nil? ? " " : _usr.datascadenza.to_s)
         str << "]</b>"
         str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", "espirato", old_state)
@@ -301,7 +316,8 @@ class FeesController < ApplicationController
       #scadenza = Time.zone.parse(data_scadenza) 
       #undefined method `parse' for nil:NilClass
       scadenza = data_scadenza.to_date
-      str = ", Scadenza: " << scadenza.strftime("%y%m%d%H%M ")
+      #str = ", Scadenza: " << scadenza.strftime("%y%m%d%H%M ")
+      str = ", Scadenza: " << scadenza.strftime("%Y %b(%m) %d")
       today = Date.today
       renew_deadline = scadenza - Setting.renew_days.to_i.days 
       if (today < renew_deadline)

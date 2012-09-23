@@ -1397,8 +1397,10 @@ it:
   control_fee: Gestione abbonamenti --> Pannello di controllo
   stato_utenze: Stato delle utenze FISCOSPORT
   button_verify: Verifica
-  who_pay: Chi paga? (Organismi associati)
+  who_pay: Paganti
   associations: Associazioni
+  affiliati: Affiliati
+  siglatipo: Sigla e Tipi organismi
   
 #EDITORIAL
   list_edizioni: Lista edizioni

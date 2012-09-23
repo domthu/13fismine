@@ -14,26 +14,62 @@
 <div class="splitcontentleft">
   <fieldset class="box tabular">
     <legend>Ruoli non sottoposti a controllo di abbonamento</legend>
+    <blockquote>
+  ROLE_MANAGER        = 3  #Manager<br />
+  ROLE_AUTHOR         = 4  #Redattore  <br />
+  #ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore tutti uguali<br />
+  ROLE_VIP            = 10 #Invitato Gratuito<br />
+    </blockquote>
+
     <h5>
-      Numero amministratori: <%= @num_admin %><br />
+      Utenti <%= @num_users %><br />
+      Numero amministratori: <b><%= @num_admin %></b><br />
       con ruoli di gestione interna all'editoriale non sottoposto a controllo di abbonamento<br />
     </h5>
     <%= @name_admin %>
-    </small>
-      ROLE_AUTHOR         = 2 == ROLE_COLLABORATOR   = 3<br />
-      ROLE_VIP            = 9<br />
-    </small>
+
     <ul> 
-      <li><b>Numero di redattori: <%= @num_author %></b>
-        <%= @name_author %>
-      </li>      
-      <li style="display: none;"><b>Numero di collaboratori: <%= @num_collaboratori %></b>
+      <li>Numero di redattori: <b><%= @num_author %></b></li>      
+    </ul>
+    <%= @name_author %>
+    <ul> 
+      <li style="display: none;">Numero di collaboratori: <b><%= @num_collaboratori %></b>
         <%= @name_collaboratori %>
       </li>      
-      <li><b>Numero di invitati: <%= @num_invitati %></b></li>
-      <li><%= @name_invitati %></li>      
     </ul>
+    <ul> 
+      <li>Numero di invitati: <b><%= @num_invitati %></b></li>
+    </ul>
+    <%= @name_invitati %>
     
+  </fieldset>
+</div>
+
+<div class="splitcontentright">
+  <fieldset class="box tabular">
+    <legend><%=l(:siglatipo)%></legend>
+    <blockquote>
+      Organismi al quale si riferiscono: Cross organizations ed utenti
+    </blockquote>
+    <ul> 
+      <li>Numero di cross organismi: <b><%= @num_organismi %></b></li>
+      <li>Numero di utenti che si riferiscono: <b><%= @num_members %></b></li>
+    </ul>
+  </fieldset>
+</div>
+
+
+<div class="splitcontentright">
+  <fieldset class="box tabular">
+    <legend><%=l(:affiliati)%></legend>
+    <h5>
+      Organismi associati e Utenti con affiliazione
+    </h5>
+    <ul> 
+      <li>Numero di organismi associati: <b><%= @num_Associations %></b></li>
+      <li>Numero di power_user: <b><%= @num_power_user %></b></li>
+      <li>Numero di membri (soci) <b>NON PAGANTI: <%= @num_Associated %></b></li>
+    </ul>
   </fieldset>
 </div>
 
@@ -41,15 +77,17 @@
   <fieldset class="box tabular">
     <legend><%=l(:who_pay)%></legend>
     <h5>
-      Paganti: organismi associati o privati
+      Privati
     </h5>
     <ul> 
-      <li>Numero di organismi associati: <%= @num_organismi %></li>
-      <li>Numero di power_user: <%= @num_power_user %></li>
-      <li>Numero di membri: <%= @num_members %></li>
-      <li>Numero di <b>PRIVATI: <%= @num_privati %></b></li>
+      <li>Numero di utenti senza affiliazione <b>: <%= @num_maybe_privati %></b></li>
+      <li>Numero di PRIVATI: <b><%= @num_privati %></b> (<%= @num_maybe_privati - @num_privati %>)</li>
+      <li>Numero di <b>PRIVATI ATTIVI: <%= @num_active %></b></li>
     </ul>
 
+    <blockquote>
+      Utenti senza ruolo: <b><%= @num_no_role %></b>
+    </blockquote>
     <% form_tag({:action => 'index', :verify => 1}, :class => "tabular") do %>
       <%= submit_tag l(:button_verify) %>
     <% end %>   
@@ -65,30 +103,19 @@
       <br />
     <% end %>  
   </fieldset>
-
-  <fieldset class="box tabular">
-    <legend><%=l(:associations)%></legend>
-    <h5>
-      Utenti legati ad una associazione
-    </h5>
-    <ul> 
-      <li>Numero di associazioni: <%= @num_Associations %></li>
-      <li>Numero di soci: <%= @num_Associated %></li>
-    </ul>
-  </fieldset>
 </div>
 
 
 <div class="splitcontentleft">
   <fieldset class="box tabular">
     <legend>Ruoli sottoposti a controllo di abbonamento (manuale ed automatico)</legend>
-    </small>
-      ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)<br />
-      ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days<br />
-      ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days<br />
-      ROLE_EXPIRED        = 6  #user.data_scadenza < today<br />
-      ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
-    </small>
+    <blockquote>
+  ROLE_ABBONATO       = 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
+  ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
+  ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
+  ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
+  ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
+    </blockquote>
     <ul> 
       <li>Numero di abbonati: <%= @num_abbonati %></li>
       <li>Numero di abbonati in stato di rinnovamento (Scadenza - <%= Setting.renew_days%> giorni): <%= @num_rinnovamento %></li>
