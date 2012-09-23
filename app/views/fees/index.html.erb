@@ -18,16 +18,18 @@
       Numero amministratori: <%= @num_admin %><br />
       con ruoli di gestione interna all'editoriale non sottoposto a controllo di abbonamento<br />
     </h5>
+    <%= @name_admin %>
     </small>
-      ROLE_AUTHOR         = 2<br />
-      ROLE_COLLABORATOR   = 3<br />
+      ROLE_AUTHOR         = 2 == ROLE_COLLABORATOR   = 3<br />
       ROLE_VIP            = 9<br />
     </small>
     <ul> 
-      <li><b>Numero di redattori: <%= @num_admin %></b></li>
-      <li><%= @name_admin %></li>      
-      <li><b>Numero di collaboratori: <%= @num_collaboratori %></b></li>
-      <li><%= @name_collaboratori %></li>      
+      <li><b>Numero di redattori: <%= @num_author %></b>
+        <%= @name_author %>
+      </li>      
+      <li style="display: none;"><b>Numero di collaboratori: <%= @num_collaboratori %></b>
+        <%= @name_collaboratori %>
+      </li>      
       <li><b>Numero di invitati: <%= @num_invitati %></b></li>
       <li><%= @name_invitati %></li>      
     </ul>
