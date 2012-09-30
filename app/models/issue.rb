@@ -26,7 +26,6 @@ class Issue < ActiveRecord::Base
   belongs_to :fixed_version, :class_name => 'Version', :foreign_key => 'fixed_version_id'
   belongs_to :priority, :class_name => 'IssuePriority', :foreign_key => 'priority_id'
   belongs_to :category, :class_name => 'IssueCategory', :foreign_key => 'category_id'
-
   #domthu20120516
   belongs_to :section, :class_name => 'Section', :foreign_key => 'section_id' 
 

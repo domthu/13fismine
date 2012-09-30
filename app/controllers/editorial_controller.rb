@@ -71,6 +71,9 @@ class EditorialController < ApplicationController
   end
 
   def articoli
+
+    @issues = Issue.latest_fs
+    #@sezione = @sottosezione.nil? ? TopSection.find(:first, :include => [ :section ], :conditions => ["#{Section.table_name}.id = :secid", {:secid => @id }]) : @sottosezione.top_section
   end
 
   def articolo

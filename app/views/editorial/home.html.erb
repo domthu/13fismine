@@ -4,14 +4,19 @@
   <%= simple_format(Setting.info_fs) %>
   </div>
   <br />
+
 <% end %>
 <%# textilizable Setting.welcome_text_fs %>
 <h2><%= l(:label_home_fs) %></h2>
+<h2>render il nuovo menu </h2>
+
+
+
 
 <div class="splitcontentright fs_box_opacity">
   <% if @issues.any? %>
   <div class="issues box">
-  <h3><%=l(:label_issues_latest)%></h3>
+  <h3><%=l(:label_issues_latest)%> ss</h3>
     <%= render :partial => 'issues/list_simple', :locals => { :issues => @issues } %>
     <%= link_to l(:label_issues_view_all), :action => 'articoli' %>
   </div>

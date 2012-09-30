@@ -8,6 +8,8 @@
 <%= csrf_meta_tag %>
 <%= favicon %>
 <%# stylesheet_link_tag 'application', :media => 'all' %>
+  <link href='http://fonts.googleapis.com/css?family=Cabin+Condensed:400,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,400italic' rel='stylesheet' type='text/css'>
 <%= stylesheet_link_tag 'application_fs', :media => 'all' %>
 <%= stylesheet_link_tag 'editorial', :media => 'all' %>
 <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
@@ -18,13 +20,24 @@
 <%= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
 <%= javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
 <%# superfish %>
-<%= stylesheet_link_tag 'superfish-1.4.8/superfish.css', :media => 'screen' %>
-<%= stylesheet_link_tag 'superfish-1.4.8/superfish-navbar.css', :media => 'all' %>
-<%= stylesheet_link_tag 'superfish-1.4.8/superfish-vertical.css', :media => 'all' %>
+<%# stylesheet_link_tag 'superfish-1.4.8/superfish.css', :media => 'screen' %>
+<%# stylesheet_link_tag 'superfish-1.4.8/superfish-navbar.css', :media => 'all' %>
+<%# stylesheet_link_tag 'superfish-1.4.8/superfish-vertical.css', :media => 'all' %>
 <%# javascript_include_tag "superfish-1.4.8/jquery-1.2.6.min.js" %>
-<%= javascript_include_tag "superfish-1.4.8/hoverIntent.js" %>
-<%= javascript_include_tag "superfish-1.4.8/superfish.js" %>
+<%# javascript_include_tag "superfish-1.4.8/hoverIntent.js" %>
+<%#= javascript_include_tag "superfish-1.4.8/superfish.js" %>
+<!--
+<script>
 
+    $(document).ready(function(){
+        $("ul.sf-menu").superfish({
+            pathClass:  'active'  ,
+            hoverClass:    'active'
+        });
+    });
+
+</script>
+  <!--
 		<script type="text/javascript">
 			$(function(){
 		    // initialise plugins
@@ -32,6 +45,7 @@
 		    $("#main-menu ul").superfish();
 			});
 		</script>
+-->
 
 <%= heads_for_theme %>
 <!--[if IE 6]>
@@ -113,10 +127,12 @@
                       <div class="fs-postcontent">
                         <div class="fs-content-layout">
                           <div class="fs-content-layout-row">
-                            <div class="fs-layout-cell layout-item-0" style="width: 100%;">
+                           <!-- <div class="fs-layout-cell layout-item-0" style="width: 100%;">  -->
                               <%#>Enter Page content here...%>
+
                               <%=	yield %>
-                            </div>
+
+                           <!-- </div>    -->
                           </div>
                         </div>
 
@@ -130,9 +146,9 @@
               </div><%#fs-layout-cell fs-content%>
 
               <%#sidebar a centro destra %>
-              <%# render 'blocco_sidebar1' %>
+              <%= render :partial => 'blocco_sidebar1' %>
               <%#sidebar a destra %>
-              <%=	render :partial => 'blocco_sidebar2' %>
+              <%= render :partial => 'blocco_sidebar2' %>
 
             </div><%#fs-content-layout-row%>
           </div>

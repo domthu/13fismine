@@ -1,10 +1,10 @@
 /* begin Page */
 /* #fs-main, table
  {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+   font-family: 'Lato', sans-serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 1px;
  }
 
@@ -18,139 +18,139 @@
   text-align: left; }
 
 .fs-postcontent {
-  font-family: Georgia, "Times New Roman", Times, Serif;
-  font-size: 12px;
+ font-family: 'Lato', sans-serif;
+  font-size: 13px;
   color: black;
   min-height: 60px; }
   .fs-postcontent li, .fs-postcontent table {
-    font-family: Georgia, "Times New Roman", Times, Serif; }
+   font-family: 'Lato', sans-serif; }
   .fs-postcontent a {
-    font-family: Georgia, "Times New Roman", Times, Serif; }
+   font-family: 'Lato', sans-serif; }
     .fs-postcontent a:link, .fs-postcontent a:visited, .fs-postcontent a.visited, .fs-postcontent a:hover, .fs-postcontent a.hovered {
-      font-family: Georgia, "Times New Roman", Times, Serif; }
+     font-family: 'Lato', sans-serif; }
   .fs-postcontent p {
     margin: 12px 0; }
   .fs-postcontent h1 {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+   font-family:  'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-postcontent h1 a {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
       text-decoration: none;
       letter-spacing: 2px; }
       .fs-postcontent h1 a:link, .fs-postcontent h1 a:visited, .fs-postcontent h1 a:hover {
-        font-family: Georgia, "Times New Roman", Times, Serif;
+      font-family: 'Cabin Condensed', sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 28px;
         text-decoration: none;
         letter-spacing: 2px; }
   .fs-postcontent h2 {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+  font-family: 'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-postcontent h2 a {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
       text-decoration: none;
       letter-spacing: 2px; }
       .fs-postcontent h2 a:link, .fs-postcontent h2 a:visited, .fs-postcontent h2 a:hover {
-        font-family: Georgia, "Times New Roman", Times, Serif;
+      font-family: 'Cabin Condensed', sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 28px;
         text-decoration: none;
         letter-spacing: 2px; }
   .fs-postcontent h3 {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+  font-family: 'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-postcontent h3 a {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
       text-decoration: none;
       letter-spacing: 2px; }
       .fs-postcontent h3 a:link, .fs-postcontent h3 a:visited, .fs-postcontent h3 a:hover {
-        font-family: Georgia, "Times New Roman", Times, Serif;
+      font-family: 'Cabin Condensed', sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 28px;
         text-decoration: none;
         letter-spacing: 2px; }
   .fs-postcontent h4 {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+  font-family: 'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-postcontent h4 a {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
       text-decoration: none;
       letter-spacing: 2px; }
       .fs-postcontent h4 a:link, .fs-postcontent h4 a:visited, .fs-postcontent h4 a:hover {
-        font-family: Georgia, "Times New Roman", Times, Serif;
+      font-family: 'Cabin Condensed', sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 28px;
         text-decoration: none;
         letter-spacing: 2px; }
   .fs-postcontent h5 {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+  font-family: 'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-postcontent h5 a {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
       text-decoration: none;
       letter-spacing: 2px; }
       .fs-postcontent h5 a:link, .fs-postcontent h5 a:visited, .fs-postcontent h5 a:hover {
-        font-family: Georgia, "Times New Roman", Times, Serif;
+      font-family: 'Cabin Condensed', sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 28px;
         text-decoration: none;
         letter-spacing: 2px; }
   .fs-postcontent h6 {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+  font-family: 'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-postcontent h6 a {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
       text-decoration: none;
       letter-spacing: 2px; }
       .fs-postcontent h6 a:link, .fs-postcontent h6 a:visited, .fs-postcontent h6 a:hover {
-        font-family: Georgia, "Times New Roman", Times, Serif;
+      font-family: 'Cabin Condensed', sans-serif;
         font-style: normal;
         font-weight: bold;
         font-size: 28px;
@@ -158,21 +158,21 @@
         letter-spacing: 2px; }
 
 .fs-blockheader .t {
-  font-family: Georgia, "Times New Roman", Times, Serif;
+font-family: 'Cabin Condensed', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 28px;
   text-decoration: none;
   letter-spacing: 2px; }
   .fs-blockheader .t a {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+  font-family: 'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-blockheader .t a:link, .fs-blockheader .t a:visited, .fs-blockheader .t a:hover {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
@@ -180,21 +180,21 @@
       letter-spacing: 2px; }
 
 .fs-vmenublockheader .t {
-  font-family: Georgia, "Times New Roman", Times, Serif;
+font-family: 'Cabin Condensed', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 28px;
   text-decoration: none;
   letter-spacing: 2px; }
   .fs-vmenublockheader .t a {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+  font-family: 'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-vmenublockheader .t a:link, .fs-vmenublockheader .t a:visited, .fs-vmenublockheader .t a:hover {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
@@ -202,21 +202,21 @@
       letter-spacing: 2px; }
 
 .fs-logo-name {
-  font-family: Georgia, "Times New Roman", Times, Serif;
+font-family: 'Cabin Condensed', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 28px;
   text-decoration: none;
   letter-spacing: 2px; }
   .fs-logo-name a {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+  font-family: 'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-logo-name a:link, .fs-logo-name a:visited, .fs-logo-name a:hover {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
@@ -224,21 +224,21 @@
       letter-spacing: 2px; }
 
 .fs-logo-text {
-  font-family: Georgia, "Times New Roman", Times, Serif;
+font-family: 'Cabin Condensed', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 28px;
   text-decoration: none;
   letter-spacing: 2px; }
   .fs-logo-text a {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+  font-family: 'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-logo-text a:link, .fs-logo-text a:visited, .fs-logo-text a:hover {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
@@ -246,21 +246,21 @@
       letter-spacing: 2px; }
 
 .fs-postheader {
-  font-family: Georgia, "Times New Roman", Times, Serif;
+font-family: 'Cabin Condensed', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 28px;
   text-decoration: none;
   letter-spacing: 2px; }
   .fs-postheader a {
-    font-family: Georgia, "Times New Roman", Times, Serif;
+  font-family: 'Cabin Condensed', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 28px;
     text-decoration: none;
     letter-spacing: 2px; }
     .fs-postheader a:link, .fs-postheader a:visited, .fs-postheader a:hover {
-      font-family: Georgia, "Times New Roman", Times, Serif;
+    font-family: 'Cabin Condensed', sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 28px;
@@ -355,9 +355,11 @@
     font-size: 16px; }
 
 .fs-postcontent h5 {
-  color: #756E5C;
-  margin: 10px 0 0;
-  font-size: 14px; }
+  color: #324B8B;
+  margin: 5px 0 0;
+  font-size: 14px; 
+  font-weight: bold; 
+}
 
 .fs-blockcontent h5 {
   margin: 10px 0 0;
@@ -369,28 +371,28 @@
     font-size: 14px; }
 
 .fs-blockcontent h5 a {
-  font-size: 14px; }
+  font-size: 12px; }
   .fs-blockcontent h5 a:link, .fs-blockcontent h5 a:hover, .fs-blockcontent h5 a:visited {
-    font-size: 14px; }
+    font-size: 12px; }
 
 .fs-postcontent h6 {
   color: #A19A87;
   margin: 10px 0 0;
-  font-size: 11px; }
+  font-size: 12px; }
 
 .fs-blockcontent h6 {
   margin: 10px 0 0;
-  font-size: 11px; }
+  font-size: 12px; }
 
 .fs-postcontent h6 a {
-  font-size: 11px; }
+  font-size: 12px; }
   .fs-postcontent h6 a:link, .fs-postcontent h6 a:hover, .fs-postcontent h6 a:visited {
-    font-size: 11px; }
+    font-size: 12px; }
 
 .fs-blockcontent h6 a {
-  font-size: 11px; }
+  font-size: 12px; }
   .fs-blockcontent h6 a:link, .fs-blockcontent h6 a:hover, .fs-blockcontent h6 a:visited {
-    font-size: 11px; }
+    font-size: 12px; }
 
 ul {
   list-style-type: none; }
@@ -570,7 +572,7 @@ div.fs-logo {
 
 .fs-logo-name {
   display: block;
-  text-align: center;
+  text-align: left;
   font-size: 21px;
   text-transform: uppercase;
   padding: 0;
@@ -601,7 +603,7 @@ div.fs-logo {
 .fs-logo-text {
   display: block;
   text-align: left;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 1px;
   text-transform: italic;
                         /*
@@ -610,7 +612,7 @@ text-transform: uppercase; */
   margin: 0;
   color: #ffff99 !important; }
   .fs-logo-text a {
-    font-size: 11px;
+    font-size: 12px;
                  /*
 letter-spacing: 1px;
 text-transform: uppercase;  */
@@ -628,7 +630,7 @@ text-transform: uppercase;  */
 #headline, #slogan {
   display: block;
   min-width: 150px;
-  text-align: center; }
+  text-align: left; }
 
 /* end Logo */
 /* begin Box, Sheet */
@@ -693,17 +695,17 @@ text-transform: uppercase;  */
 /* begin Button */
 span.fs-button-wrapper > a.fs-button {
   text-decoration: none;
-  font-family: Georgia, "Times New Roman", Times, Serif;
+ font-family: 'Lato', sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 1px;
   position: relative;
   top: 0;
   display: inline-block;
   vertical-align: middle;
   white-space: nowrap;
-  text-align: center;
+  text-align: left;
   color: #062A32 !important;
   width: auto;
   outline: none;
@@ -718,17 +720,17 @@ span.fs-button-wrapper > a.fs-button {
   text-indent: 0; }
   span.fs-button-wrapper > a.fs-button:link {
     text-decoration: none;
-    font-family: Georgia, "Times New Roman", Times, Serif;
+   font-family: 'Lato', sans-serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 1px;
     position: relative;
     top: 0;
     display: inline-block;
     vertical-align: middle;
     white-space: nowrap;
-    text-align: center;
+    text-align: left;
     color: #062A32 !important;
     width: auto;
     outline: none;
@@ -743,17 +745,17 @@ span.fs-button-wrapper > a.fs-button {
     text-indent: 0; }
 span.fs-button-wrapper > input.fs-button, span.fs-button-wrapper > button.fs-button {
   text-decoration: none;
-  font-family: Georgia, "Times New Roman", Times, Serif;
+ font-family: 'Lato', sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 1px;
   position: relative;
   top: 0;
   display: inline-block;
   vertical-align: middle;
   white-space: nowrap;
-  text-align: center;
+  text-align: left;
   color: #062A32 !important;
   width: auto;
   outline: none;
@@ -794,10 +796,10 @@ span.fs-button-wrapper {
 
 input, select, textarea {
   vertical-align: middle;
-  font-family: Georgia, "Times New Roman", Times, Serif;
+ font-family: 'Lato', sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 1px; }
 
 #content_riassunto, #content_titolo, #content_testo, #content_titolo_no_format, #content_testo_no_format, #content_riassunto_no_format {
@@ -952,7 +954,7 @@ ul.fs-vmenu {
     font-family: Arial, Helvetica, Sans-Serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 1px;
     margin-left: 0;
     margin-right: 0;
@@ -1177,22 +1179,22 @@ line-height: 26px;  */ }
 .fs-blockcontent-body {
   padding: 5px;
   color: #474338;
-  font-family: Georgia, "Times New Roman", Times, Serif;
+ font-family: 'Lato', sans-serif;
   font-size: 13px;
   letter-spacing: 1px; }
   .fs-blockcontent-body table, .fs-blockcontent-body li {
     color: #474338;
-    font-family: Georgia, "Times New Roman", Times, Serif;
+   font-family: 'Lato', sans-serif;
     font-size: 13px;
     letter-spacing: 1px; }
   .fs-blockcontent-body a {
     color: #474338;
-    font-family: Georgia, "Times New Roman", Times, Serif;
+   font-family: 'Lato', sans-serif;
     font-size: 13px;
     letter-spacing: 1px; }
     .fs-blockcontent-body a:link, .fs-blockcontent-body a:visited, .fs-blockcontent-body a:hover {
       color: #474338;
-      font-family: Georgia, "Times New Roman", Times, Serif;
+     font-family: 'Lato', sans-serif;
       font-size: 13px;
       letter-spacing: 1px; }
   .fs-blockcontent-body p {
@@ -1210,7 +1212,7 @@ line-height: 26px;  */ }
       color: #1BAFD0;
       text-decoration: none; }
   .fs-blockcontent-body ul li {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 125%;
     color: #474338;
     margin: 5px 0 0 10px;
@@ -1255,7 +1257,7 @@ a img {
   vertical-align: top;
   text-align: left; }
 .fs-article th {
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
   padding: 7px; }
 
@@ -1312,20 +1314,20 @@ pre {
 /* end PostHeaderIcon */
 /* begin PostIcons, PostHeaderIcons */
 .fs-postheadericons {
-  font-family: Georgia, "Times New Roman", Times, Serif;
-  font-size: 11px;
+ font-family: 'Lato', sans-serif;
+  font-size: 12px;
   letter-spacing: 1px;
   padding: 1px; }
   .fs-postheadericons a {
-    font-family: Georgia, "Times New Roman", Times, Serif;
-    font-size: 11px;
+   font-family: 'Lato', sans-serif;
+    font-size: 12px;
     letter-spacing: 1px;
     color: #474338;
     text-decoration: none;
     color: #15859E; }
     .fs-postheadericons a:link, .fs-postheadericons a:visited, .fs-postheadericons a:hover {
-      font-family: Georgia, "Times New Roman", Times, Serif;
-      font-size: 11px;
+     font-family: 'Lato', sans-serif;
+      font-size: 12px;
       letter-spacing: 1px;
       color: #474338; }
     .fs-postheadericons a:link {
@@ -1358,7 +1360,7 @@ span.fs-postdateicon, span.fs-postauthoricon, span.fs-postediticon {
   margin: 1em 0 1em 2em;
   padding: 0; }
 .fs-postcontent li {
-  font-size: 11px;
+  font-size: 12px;
   color: #474338;
   margin: 5px 0 0 -15px;
   padding: 0 0 0 10px; }
@@ -1421,21 +1423,21 @@ blockquote {
 /* end PostQuote */
 /* begin PostIcons, PostFooterIcons */
 .fs-postfootericons {
-  font-family: Georgia, "Times New Roman", Times, Serif;
-  font-size: 11px;
+ font-family: 'Lato', sans-serif;
+  font-size: 12px;
   letter-spacing: 1px;
   color: #474338;
   padding: 1px; }
   .fs-postfootericons a {
-    font-family: Georgia, "Times New Roman", Times, Serif;
-    font-size: 11px;
+   font-family: 'Lato', sans-serif;
+    font-size: 12px;
     letter-spacing: 1px;
     color: #474338;
     text-decoration: none;
     color: #15859E; }
     .fs-postfootericons a:link, .fs-postfootericons a:visited, .fs-postfootericons a:hover {
-      font-family: Georgia, "Times New Roman", Times, Serif;
-      font-size: 11px;
+     font-family: 'Lato', sans-serif;
+      font-size: 12px;
       letter-spacing: 1px;
       color: #474338; }
     .fs-postfootericons a:link {
@@ -1474,9 +1476,9 @@ span.fs-postcategoryicon, span.fs-posttagicon, span.fs-postcommentsicon {
   position: relative;
   padding: 10px;
   color: #08313B;
-  font-size: 11px; }
+  font-size: 12px; }
   .fs-footer-body ul li {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 125%;
     color: #36332B;
     margin: 0 0 0 13px;
@@ -1514,23 +1516,23 @@ span.fs-postcategoryicon, span.fs-posttagicon, span.fs-postcommentsicon {
 .fs-footer-text p {
   padding: 0;
   margin: 0;
-  text-align: center; }
+  text-align: left; }
 
 .fs-footer-body a {
   color: #08313B;
-  font-size: 11px; }
+  font-size: 12px; }
   .fs-footer-body a:link, .fs-footer-body a:visited, .fs-footer-body a:hover {
     color: #08313B;
-    font-size: 11px; }
+    font-size: 12px; }
 .fs-footer-body td, .fs-footer-body th, .fs-footer-body caption {
   color: #08313B;
-  font-size: 11px; }
+  font-size: 12px; }
 
 .fs-footer-text {
   min-height: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  text-align: center; }
+  text-align: left; }
 
 .fs-footer-body a {
   color: #7B2218;
@@ -1563,7 +1565,7 @@ div.fs-footer img {
   position: relative;
   z-index: 10;
   padding: 1em;
-  text-align: center;
+  text-align: left;
   text-decoration: none;
   color: #645E4F; }
   .fs-page-footer a {
@@ -1598,11 +1600,11 @@ div.fs-footer img {
   color: #ffffff; }
 
 #x_nome {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold; }
 
 #y_nome {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: normal;
   font-style: italic; }
 
@@ -1753,7 +1755,7 @@ ul.fs-m1hmenu > li > a {
   color: #ffffff;
   padding: 0 17px;
   line-height: 29px;
-  text-align: center; }
+  text-align: left; }
   ul.fs-m1hmenu > li > a:before, ul.fs-m1hmenu > li > a:after {
     position: absolute;
     display: block;
@@ -1994,7 +1996,7 @@ ul.fs-m2hmenu > li > a {
   color: #0F5F71;
   padding: 0 7px;
   line-height: 25px;
-  text-align: center; }
+  text-align: left; }
   ul.fs-m2hmenu > li > a:before, ul.fs-m2hmenu > li > a:after {
     position: absolute;
     display: block;
@@ -2124,3 +2126,7 @@ margin: 20px 0 0 0;
 }
 #fs-top-menu a {color: #fff; margin-right: 8px; font-weight: bold;}
 #fs-top-menu #loggedas { float: right; margin-right: 0.5em; color: #fff; }
+.art-contenitore {
+border: dotted 1px gray;
+    margin-bottom: 10px;
+}
