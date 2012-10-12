@@ -37,7 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   map.ricerca       '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.sezione       '/sezione/:id', :controller => 'editorial', :action => 'sezione'
   #Map menu 
-  map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
+  #map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
 
   map.resources :regions
   #map.resources :provinces
