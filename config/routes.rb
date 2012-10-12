@@ -38,6 +38,11 @@ ActionController::Routing::Routes.draw do |map|
   map.sezione       '/sezione/:id', :controller => 'editorial', :action => 'sezione'
   #Map menu 
   #map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
+  map.lavoro        '/lavoro', :controller => 'editorial', :action => 'lavoro'
+  map.guide         '/guide', :controller => 'editorial', :action => 'guide'
+  map.modulistica   '/modulistica', :controller => 'editorial', :action => 'modulistica'
+  map.altro         '/altro', :controller => 'editorial', :action => 'altro'
+  map.fiscale       '/fiscale', :controller => 'editorial', :action => 'fiscale'
 
   map.resources :regions
   #map.resources :provinces
