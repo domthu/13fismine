@@ -1,0 +1,38 @@
+<p>
+  <b>contract:</b>
+  <%=h @contract_user.contract %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%=h @contract_user.user %>
+</p>
+
+<p>
+  <b>date:</b>
+  <%=h @contract_user.date %>
+</p>
+
+<p>
+  <b>scadenza:</b>
+  <%=h @contract_user.scadenza %>
+</p>
+
+<p>
+  <b>clicks:</b>
+  <%=h @contract_user.clicks %>
+</p>
+
+<p>
+  <b>note:</b>
+  <%=h @contract_user.note %>
+</p>
+
+<p>
+  <b>renewed:</b>
+  <%=h @contract_user.renewed %>
+</p>
+
+
+<%= link_to 'Edit', edit_contract_user_path(@contract_user) %> |
+<%= link_to 'Back', contract_users_path %>

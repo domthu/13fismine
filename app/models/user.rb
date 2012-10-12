@@ -56,12 +56,16 @@ class User < Principal
   belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id'
   #domthu20120516
   belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id'
-  #belongs_to :account, :class_name => 'Account', :foreign_key => 'account_id'
-  belongs_to :asso, :class_name => 'Asso', :foreign_key => 'asso_id'
-  #l'utente può appartenere o non ad una organizzazione (non paga ma è abilitato al servizio)
-  belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
-  #belongs_to :organization, :through => :cross_organization
   
+  #belongs_to :account, :class_name => 'Account', :foreign_key => 'account_id' (non paga ma è abilitato al servizio)
+  belongs_to :asso, :class_name => 'Asso', :foreign_key => 'asso_id'
+  
+  #l'utente può appartenere o non ad una organizzazione
+  #ATTENZIONE i 2 campi Sigla (ex Organismi) e Tipo organizzazione sono raddunati in una foreign_key
+  belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
+  #TODO: verificare ci potrebbe essere che alcuni associazione Sigla - Tipo non appare nella tabella CrossOrganization
+  # idem for Organization
+
   #l'utente può essere il referente di una (o più) organizzazione
   #2.7 Choosing Between belongs_to and has_one. La foreign key si trova sulla tabella che fa belongs_to
   #Puo anche essere il power_user di un organization
@@ -106,15 +110,70 @@ class User < Principal
     { :conditions => ["#{User.table_name}.id NOT IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id] }
   }
 
-  def organization()
-    if self.cross_organization_id.nil? || self.cross_organization_id.nil?
+  #ricerca utente apartenente ad un gruppo
+  named_scope :in_role, lambda {|role|
+    role_id = role.is_a?(Role) ? role.id : role.to_i
+    { :conditions => ["#{User.table_name}.role_id = ?", role_id] }
+  }
+  
+  #Utente è affiliato ad una Sigla-TipoOrganizzazione
+  def sigla_tipo()
+    if self.cross_organization_id.nil? || self.cross_organization.nil?
       nil
     else
-      Organization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", { \
-      :co_id => self.cross_organization_id, \
-      :asso_id => self.asso_id}])  #.to_s
+      self.cross_organization
+#      CrossOrganization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", { \
+#      :co_id => self.cross_organization_id, \
+#      :asso_id => self.asso_id}])  #.to_s
     end
   end
+
+  #Organismo associato: Utente è associato. Non paga. Paga il responsabile power_user
+  #Asso e Organization sono tabelle 1<-->1
+  def organization()
+    if self.asso_id.nil? || self.asso.nil?
+      nil
+    else
+      #Organization.find(self.asso_id)
+      #Couldn't find Organization with ID=43 (Date.parse(final_data) rescue nil)
+      (Organization.find(self.asso_id) rescue nil)
+
+#      Organization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", { \
+#      :co_id => self.cross_organization_id, \
+#      :asso_id => self.asso_id}])  #.to_s
+    end
+  end
+
+
+  def privato?
+    return self.asso.nil?
+  end
+
+  def scadenza
+    if self.asso.nil?
+      # Privato paga lui
+      if self.datascadenza.is_a?(Date)
+        return self.datascadenza.to_date
+      else
+        return nil
+      end
+    else
+      #Associato Non paga --> paga l'organismo associato
+      return self.asso.scadenza
+    end 
+  end 
+
+  def affiliato?
+    return self.cross_organization.nil?
+  end
+  
+  def affiliato_to
+    if self.cross_organization.nil?
+      return ""
+    else
+      return self.cross_organization.name
+    end
+  end   
 
   def set_mail_notification
     self.mail_notification = Setting.default_notification_option if self.mail_notification.blank?

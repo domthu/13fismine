@@ -1,0 +1,68 @@
+<p>
+  <b>Name:</b>
+  <%=h @contract.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @contract.description %>
+</p>
+
+<p>
+  <b>weight:</b>
+  <%=h @contract.weight %>
+</p>
+
+<p>
+  <b>price:</b>
+  <%=h @contract.price %>
+</p>
+
+<p>
+  <b>price_discount:</b>
+  <%=h @contract.price_discount %>
+</p>
+
+<p>
+  <b>promo_price:</b>
+  <%=h @contract.promo_price %>
+</p>
+
+<p>
+  <b>promo_price_discount:</b>
+  <%=h @contract.promo_price_discount %>
+</p>
+
+<p>
+  <b>promote_to_frontpage:</b>
+  <%=h @contract.promote_to_frontpage %>
+</p>
+
+<p>
+  <b>promo_date_start:</b>
+  <%=h @contract.promo_date_start %>
+</p>
+
+<p>
+  <b>promo_date_end:</b>
+  <%=h @contract.promo_date_end %>
+</p>
+
+<p>
+  <b>duration:</b>
+  <%=h @contract.duration %>
+</p>
+
+<p>
+  <b>clicks:</b>
+  <%=h @contract.clicks %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%=h @contract.type %>
+</p>
+
+
+<%= link_to 'Edit', edit_contract_path(@contract) %> |
+<%= link_to 'Back', contracts_path %>

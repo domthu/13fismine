@@ -296,7 +296,7 @@ Redmine::MenuManager.map :application_menu do |menu|
   menu.push :asso, :assos_path, :if => Proc.new { User.current.admin? }
   menu.push :cross_group, :cross_groups_path, :if => Proc.new { User.current.admin? }
   menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
-  menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
+  #menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
   menu.push :fee, :fee_path, :if => Proc.new { User.current.admin? && Setting.fee? }
 end
     
@@ -354,8 +354,30 @@ Redmine::MenuManager.map :menu_fee_fs do |menu|
   menu.push :pagamento, :pagamento_path
   menu.push :invia_fatture, :invia_fatture_path
   menu.push :email_fee, :email_fee_path
+  menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
+  menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
+  menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
 end
+# pagina principale vista
+#pagina lista utenti con relativi azione
+#selettore di ruolo
+#ricerca per utente
+#filtro data scadenza
+#export 
+## admin
+#  ROLE_MANAGER        = 3  #Manager<br />
+#  ROLE_AUTHOR         = 4  #Redattore  <br />
+#  #ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore tutti uguali<br />
+#  ROLE_VIP            = 10 #Invitato Gratuito<br />
 
+#  ROLE_ABBONATO       = 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
+#  ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
+#  ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
+#  ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
+#  ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di 
+
+
+  
 Redmine::Activity.map do |activity|
   activity.register :issues, :class_name => %w(Issue Journal)
   activity.register :changesets

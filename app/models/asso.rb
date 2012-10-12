@@ -1,10 +1,14 @@
 class Asso < ActiveRecord::Base
 
+  include FeesHelper  #ROLE_XXX  gedate
+
   #domthu20120516
   has_many :users, :dependent => :nullify
   #Organismi Associati
   #domthu20120708   has_many :organizations, :dependent => :nullify
+  #ATTENZIONE Organization (Organismi Associati) e Asso (Categoria Utente) hanno una relazione 1 a 1
   has_one :organization, :dependent => :nullify
+  
   #has_one :cross_organization, :through => :organization, :dependent => :delete_all
   #http://guides.rubyonrails.org/v2.3.8/association_basics.html#choosing-between-belongs-to-and-has-one
   #2.8 Choosing Between has_many :through and has_and_belongs_to_many
@@ -41,5 +45,15 @@ class Asso < ActiveRecord::Base
   end
 
   alias :name :to_s
+  
+  def scadenza
+    if (self.organization.nil? || self.organization.data_scadenza.nil?)
+      return nil
+    elsif !self.organization.data_scadenza.is_a?(Date)
+      return nil
+    else
+      self.organization.data_scadenza.to_date
+    end
+  end 
 
 end

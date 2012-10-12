@@ -1,7 +1,8 @@
 class TopSection < ActiveRecord::Base
 
   #domthu20120516
-  has_many :sections, :dependent => :destroy
+  #has_many :sections, :dependent => :destroy
+  has_many :sections, :foreign_key => 'top_section_id', :dependent => :nullify
   has_many :issues, :through => :sections
 
   #string

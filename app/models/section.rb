@@ -2,8 +2,9 @@ class Section < ActiveRecord::Base
 
   #domthu20120516
   belongs_to :top_section, :class_name => 'TopSection', :foreign_key => 'top_section_id'
-  has_many :issues, :dependent => :nullify
-
+  #has_many :issues, :dependent => :nullify
+  has_many :issues, :foreign_key => 'section_id', :dependent => :nullify
+  
   #String
   validates_presence_of :sezione
   validates_uniqueness_of :sezione, :case_sensitive => false

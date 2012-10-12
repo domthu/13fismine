@@ -48,11 +48,24 @@ class EditorialController < ApplicationController
       flash[:notice] = l(:notice_missing_parameters)
       redirect_to :action => 'home'
     else
+      @top_section = TopSection.find(@id)
+      #@issues = @top_section.sections.issues
+      #restituisce un ActiveRecord::Relation.
+      #undefined method `issues' for #<Class:0xb6795b9c>
+      @test = @top_section.sections.class
+      @issues = @top_section.issues
+      
+      @sections = @top_section.sections
+      @issues2 = []
+      for section in @sections
+        @issues2 << section.issues
+      end 
+      
       @sottosezione = Section.find(@id)
       @sezione = @sottosezione.nil? ? TopSection.find(:first, :include => [ :section ], :conditions => ["#{Section.table_name}.id = :secid", {:secid => @id }]) : @sottosezione.top_section
 
       #MariaCristina Condizione per VisibileWeb, ordinamento per 
-      @issues = Issue.find(:all, :conditions => ["section_id =  ?", @id], :limit => 100)  
+      #@issues = Issue.find(:all, :conditions => ["section_id =  ?", @id], :limit => 100)  
       #@issues = Issue.all_by_sezione_fs(@id)
     end 
   end

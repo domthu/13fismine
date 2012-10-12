@@ -1397,8 +1397,22 @@ it:
   control_fee: Gestione abbonamenti --> Pannello di controllo
   stato_utenze: Stato delle utenze FISCOSPORT
   button_verify: Verifica
-  who_pay: Chi paga? (Organismi associati)
+  who_pay: Paganti
   associations: Associazioni
+  affiliati: Affiliati
+  siglatipo: Sigla e Tipi organismi
+  notice_setting_fee_not_allowed: La gestione degli abbonamenti non è abilitata
+  label_person: Persona
+  field_registration_date: Registrazione
+  label_asso: Socio
+  role_manager : Responsabile 
+  role_author : Redattore, collaboratore
+  role_vip : Invitato 
+  role_abbonato : Abbonato 
+  role_registered : Registrato
+  role_renew : Rinnovo, In scadenza  
+  role_expired : Espirato
+  role_archivied : Archiviato
   
 #EDITORIAL
   list_edizioni: Lista edizioni
@@ -1416,3 +1430,6 @@ it:
   results: Risultati
   label_issues_by_section: Lista articoli legati alla sezione
   notice_missing_parameters: La pagina non puo essere caricata per mancanza di informazione
+  
+#notice_email_sent: "Una email è stata spedita a %{value}"
+

@@ -1,0 +1,32 @@
+<h1>Listing contract_users</h1>
+
+<table>
+  <tr>
+    <th>contract</th>
+    <th>User</th>
+    <th>date</th>
+    <th>scadenza</th>
+    <th>clicks</th>
+    <th>note</th>
+    <th>renewed</th>
+  </tr>
+
+<% @contract_users.each do |contract_user| %>
+  <tr>
+    <td><%=h contract_user.contract %></td>
+    <td><%=h contract_user.user %></td>
+    <td><%=h contract_user.date %></td>
+    <td><%=h contract_user.scadenza %></td>
+    <td><%=h contract_user.clicks %></td>
+    <td><%=h contract_user.note %></td>
+    <td><%=h contract_user.renewed %></td>
+    <td><%= link_to 'Show', contract_user %></td>
+    <td><%= link_to 'Edit', edit_contract_user_path(contract_user) %></td>
+    <td><%= link_to 'Destroy', contract_user, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New contract_user', new_contract_user_path %>

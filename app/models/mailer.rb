@@ -322,7 +322,6 @@ class Mailer < ActionMailer::Base
     #'thanks'
     #'asso'
     #'renew'
-    end
   end
 
   # Overrides default deliver! method to prevent from sending an email
