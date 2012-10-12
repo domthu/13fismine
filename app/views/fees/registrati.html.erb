@@ -12,3 +12,52 @@
     <li>Naviga: vai al dettaglio di un utente</li>
   </ul> 
 
+<% form_tag({}, :method => :get) do %>
+<fieldset><legend><%= l(:label_filter_plural) %></legend>
+
+<label for='role_id'><%= l(:label_role) %>:</label>
+<%= select_tag 'role_id', fee_roles_options_for_select(@roleid), :onchange => "this.form.submit(); return false;"  %>
+<br />
+params[:role_id].to_i:  <%= params[:role_id].to_i %>
+<br />
+ @roleid:  <%= @roleid %>
+<br />
+
+<label for='name'><%= l(:label_user) %>:</label>
+<%= text_field_tag 'name', params[:name], :size => 30 %>
+<%= submit_tag l(:button_apply), :class => "small", :name => nil %>
+<%= link_to l(:button_clear), registrati_path, :class => 'icon icon-reload' %>
+</fieldset>
+<% end %>
+&nbsp;
+
+<div class="autoscroll">
+<table class="list">
+  <thead><tr>
+  <%= sort_header_tag('person', :caption => l(:label_person)) %>
+  <%= sort_header_tag('role', :caption => l(:label_role)) %>
+  <%= sort_header_tag('registration', :caption => l(:field_registration_date), :default_order => 'desc') %>
+  <%= sort_header_tag('asso', :caption => l(:label_asso), :default_order => 'desc') %>
+  <%= sort_header_tag('scadenza', :caption => l(:field_due_date), :default_order => 'desc') %>
+    <th></th>
+  </tr></thead>
+  <tbody>
+<% for user in @users -%>
+  <tr class="user <%= cycle("odd", "even") %> <%= %w(anon active registered locked)[user.status] %>">
+  <td class="firstname"><%= avatar(user, :size => "14") %><%= link_to h(user.name), edit_user_path(user) %></td>
+  <td class="<%= user.role %>"><%= get_status_role(user) %></td>
+  <td class="created_on" align="center"><%= format_time(user.created_on) %></td>
+  <td align="center"><%= checked_image user.privato? %></td>
+  <td class="scadenza" align="center"><%= format_date(user.scadenza) unless user.scadenza.nil? %></td>
+    <td class="buttons">
+      <%= change_status_link(user) %>
+      <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-arc') unless User.current == user %>
+    </td>
+  </tr>
+<% end -%>
+  </tbody>
+</table>
+</div>
+<p class="pagination"><%= pagination_links_full @user_pages, @user_count %></p>
+
+<% html_title(l(:list_registrati)) -%>

@@ -1,4 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :contract_users
+
+  map.resources :contracts
+
+  map.resources :contracts
+
   map.resources :templates
 
 #Run rake routes to see all routes

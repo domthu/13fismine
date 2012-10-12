@@ -3,12 +3,16 @@ class FeesController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin, :require_fee
+  #before_filter :find_user, :only => [:registrati, :associati, :privati, :archiviati, :scaduti]
+  before_filter :get_statistics, :only => [:index, :registrati, :associati, :privati, :archiviati, :scaduti]
+     
+  
 
   helper :sort
   include SortHelper
   include FeesHelper  #ROLE_XXX  gedate
   include ActionView::Helpers::DateHelper
-
+  #undefined method `utc?' for Wed, 15 Oct 2008:Date  format_time --> format_date
 
   def index
     #@msg[] << ""
@@ -25,14 +29,12 @@ class FeesController < ApplicationController
       end 
     end
 
-    @num_users = User.all.count
     #Ruoli non sottoposti a controllo di abbonamento
     #  ROLE_MANAGER        = 1
     #BY INTERNAL ROLE
     #  ROLE_AUTHOR         = 2
     #  ROredattoriLE_COLLABORATOR   = 3
     #  ROLE_VIP            = 9
-    @num_users = User.count
     @num_no_role = User.all(:conditions => {:role_id => nil}).count
     @num_admin = User.all(:conditions => {:admin => 1}).count
     @name_admin = User.all(:conditions => {:admin => 1})
@@ -78,7 +80,161 @@ class FeesController < ApplicationController
 
 
   end
+
+
+###########LISTE UTENTI PER RUOLO##############
+  def paganti
+    #  ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
+    #  ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
+    @users = User.find(
+    :all,
+    :conditions => ["role_id = :role_1 OR role_id = :role_2 ", { :role_1 => ROLE_ABBONATO, :role_2 => ROLE_RENEW } ],
+    :include => :role)
+    #:conditions => {:role_id => ROLE_ABBONATO, :role_id => ROLE_RENEW },
+    
+#    workflows.find(:all,
+#        :include => :new_status,
+#        :conditions => ["role_id IN (:role_ids) AND tracker_id = :tracker_id AND (#{conditions})",
+#          {:role_ids => roles.collect(&:id), :tracker_id => tracker.id, :true => true, :false => false}
+#          ]
+#        ).collect{|w| w.new_status}.compact.sort
+        
+  end
+
+  def registrati
+    #  ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
+    #@users = User.all(:conditions => {:role_id => ROLE_REGISTERED}, :include => :role)
+    sort_init 'person', 'asc'
+    sort_update %w(firstname lastname role_id created_on asso_id datascadenza)
+
+    case params[:format]
+    when 'xml', 'json'
+      @offset, @limit = api_offset_and_limit
+    else
+      @limit = per_page_option
+    end
+
+    scope = User
+    scope = scope.in_role(params[:role_id].to_i) if params[:role_id].present?
+    @roleid = params[:role_id].to_i if params[:role_id].present?
+
+    @status = params[:status] ? params[:status].to_i : 1
+    c = ARCondition.new(@status == 0 ? "status <> 0" : ["status = ?", @status])
+
+    unless params[:name].blank?
+      name = "%#{params[:name].strip.downcase}%"
+      c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+    end
+
+    @user_count = scope.count(:conditions => c.conditions)
+    @user_pages = Paginator.new self, @user_count, @limit, params['page']
+    @offset ||= @user_pages.current.offset
+    @users =  scope.find :all,
+                        :order => sort_clause,
+                        :conditions => c.conditions,
+                        :limit  =>  @limit,
+                        :offset =>  @offset
+
+    respond_to do |format|
+      format.html {
+        render :layout => !request.xhr?
+      }
+      format.api
+    end	
+  end
+
+  def scaduti
+    #  ROLE_EXPIRED        = 6  #user.data_scadenza < today
+    @users = User.all(:conditions => {:role_id => ROLE_EXPIRED}, :include => :role)
+  end
+
+  def archiviati
+    #  ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGOISTERED)
+    @users = User.all(:conditions => {:role_id => ROLE_ARCHIVIED}, :include => :role)
+  end
+
+
+  def abbonamenti
+    @username = params[:user] ? params[:user].to_i : ''
+    @users = User.find_by_api_key(@username)
+    @role = params[:role] ? params[:role].to_i : 1
+    @users_role = User.all(:conditions => {:role_id => @role}, :include => :role)
+#    :conditions => "parent_id IS NULL AND status = #{Project::STATUS_ACTIVE}",
+  end
+
+  def privati
+  end
+
+  def associati
+  end
+
+##########GESTIONE PAGAMENTI ABBONAMENTO
+  def pagamento
+  end
+
+  def invia_fatture
+  end
+
+  #Mailer.Deliver_fee  
+  #in models/def fee(user, type, setting_text)
+  #add route /fees/email_fee
+  def email_fee
+    #proposal
+    #thanks
+    #asso
+    #renew
+    @type = params[:type]
+    raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
+    # Force ActionMailer to raise delivery errors so we can catch it
+    ActionMailer::Base.raise_delivery_errors = true
+    begin
+      #lib/tasks/email.rake
+      #app/models/mailer.rb  -> def fee(user, type, setting_text)   fee e fee_url
+      #app/invoice/views/_fee.text.erb
+      #app/invoice/views/_fee.html.erb
+      if @type == 'proposal'
+        @test = Mailer.deliver_fee(User.current, @type, Setting.template_fee_proposal)
+      elsif @type == 'thanks'
+        @test = Mailer.deliver_fee(User.current, @type, Setting.template_fee_thanks)
+      elsif @type == 'asso'
+        @test = Mailer.deliver_fee(User.current, @type, Setting.template_fee_register_asso)
+      elsif @type == 'renew'
+        @test = Mailer.deliver_fee(User.current, @type, Setting.template_fee_renew)
+      end
+      flash[:notice] = l(:notice_email_sent, User.current.mail)
+    rescue Exception => e
+      flash[:error] = l(:notice_email_error, e.message)
+    end
+    ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
+    redirect_to :controller => 'settings', :action => 'edit', :tab => 'fee'
+  end
+
+
+  private
+
+  def get_statistics
+    @num_users = User.count
+    #@num_users = User.all.count  
+  end
   
+  def require_fee
+    if !Setting.fee
+      flash[:notice] = l(:notice_setting_fee_not_allowed)
+      redirect_to editorial_path
+    end
+  end 
+  
+  def find_user
+    if params[:id] == 'current'
+      require_login || return
+      @user = User.current
+    else
+      @user = User.find(params[:id])
+    end
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
+
   #per ogni utente 
   # prendere codice utente e data scadenza
   # --> definire il ruolo
@@ -154,7 +310,7 @@ class FeesController < ApplicationController
 #      today = Date.today
 #      fee_deadline = _usr.created_on + Setting.register_days.to_i.days
 #      if today < fee_deadline
-#        str = ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", "espirato", old_state)
+#        str = ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
 #      else
 #        #l'Utente registrato dispone ancora di alcuni giorni
 #        #ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
@@ -168,7 +324,7 @@ class FeesController < ApplicationController
         _usr.admin = true
         _usr.power_user = false
         _usr.role_id = -1
-        str = ensure_role(_usr, ROLE_AUTHOR, "REDATTORE", "redattore", old_state)
+        str = ensure_role(_usr, ROLE_AUTHOR, "REDATTORE", old_state)
       else
         #set default
         _usr.admin = false
@@ -188,15 +344,15 @@ class FeesController < ApplicationController
           if (_usr.codice == 1959)
             _usr.admin = true
           end
-          str = ensure_role(_usr, ROLE_AUTHOR, "REDATTORE", "redattore", old_state)
+          str = ensure_role(_usr, ROLE_AUTHOR, "REDATTORE", old_state)
 
         #INVITATI (GRATUITI) --> codice 8
         when 8
-          str = ensure_role(_usr, ROLE_VIP, "INVITATO", "vip", old_state)
+          str = ensure_role(_usr, ROLE_VIP, "INVITATO", old_state)
 
         #REGISTRATO --> 3      (il sistema dopo il periodo di prova da in automatico il ruolo SCADUTO)
         when 3
-          str = ensure_role(_usr, ROLE_REGISTERED, "REGISTRATO", "registrato", old_state)
+          str = ensure_role(_usr, ROLE_REGISTERED, "REGISTRATO", old_state)
 
         #ABBONATO_PRIVATO --> 6 e 7
         when 6,7
@@ -218,7 +374,7 @@ class FeesController < ApplicationController
           if org.nil?
             str = "<b style='color:red;'>Codice NON conosciuto " << _usr.codice.to_s << "</b> "
             #SCADUTO  --> 2 e 4 e 5 + Tutti altri casi    (dopo la data di scadenza)  possono ancora ricevere newsletter. possono ancora vedere le cose 
-            str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", "espirato", old_state)
+            str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
           else
             #esiste l'organizzazione pagante
             str << ensure_fee_validity(_usr, org, old_state)
@@ -266,7 +422,7 @@ class FeesController < ApplicationController
 #          #set expired
 #          _usr.data = Date.today.day.to_s << "/" << Date.today.month.to_s << "/" << Date.today.year.to_s
 #          _usr.datascadenza = DateTime.today
-#          str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", "espirato", old_state)
+#          str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
 
 #        #data like 
 #        #2/25/01 64928 PM
@@ -309,7 +465,7 @@ class FeesController < ApplicationController
         str << "/user.data: " << (_usr.data.nil? ? "" : _usr.data.to_s)
         str << "/user.scadenza" << (_usr.datascadenza.nil? ? " " : _usr.datascadenza.to_s)
         str << "]</b>"
-        str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", "espirato", old_state)
+        str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
     else
       #tTODO data
       #Note that Time.zone.parse returns a DateTime, while appending the .utc gives you a Time.
@@ -321,129 +477,31 @@ class FeesController < ApplicationController
       today = Date.today
       renew_deadline = scadenza - Setting.renew_days.to_i.days 
       if (today < renew_deadline)
-        str << ensure_role(_usr, ROLE_ABBONATO, "ABBONATO", "abbonato", old_state)
+        str << ensure_role(_usr, ROLE_ABBONATO, "ABBONATO", old_state)
       elsif (today < scadenza)
         #IN_SCADENZA           (controllo sulla data di scadenza del privato o dell'Organismo Associato)
         #  ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
-        str << ensure_role(_usr, ROLE_RENEW, "ABBONATO in scadenza", "inscadenza", old_state)
+        str << ensure_role(_usr, ROLE_RENEW, "ABBONATO in scadenza", old_state)
       else
         #  ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
-        str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", "espirato", old_state)
+        str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
       end
     end
     return str
   end
-    
-#css
-#.registrato{}
-#.abbonato{}
-#.scadenza{}
-#.espirato{}
-#.archivied{}
-#.registrato{}
-    
-  def ensure_role(_usr, roleid, role_label, role_css, old_state)
+        
+  def ensure_role(_usr, roleid, role_label, old_state)
     str = ""
     if _usr.role_id.nil? || _usr.role_id != roleid
       old_role = _usr.role.nil? ?  "?" : _usr.role.name
       _usr.role_id = roleid
-      str << "<span class='" << role_css << " modified'> " << old_role <<  " --> " << role_label << ". "
+      str << "<span class='" << get_role_css(_usr) << " modified'> " << old_role <<  " --> " << role_label << ". "
       str << old_state << "</span>"
       _usr.save()
     else
-      str << "<span class='" << role_css << " unchanged'> ok: " << old_state << "</span>"
+      str << "<span class='" << get_role_css(_usr) << " unchanged'> ok: " << old_state << "</span>"
     end 
     return str
-  end
-
-###########LISTE UTENTI PER RUOLO##############
-  def paganti
-    #  ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
-    #  ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
-    @users = User.find(
-    :all,
-    :conditions => ["role_id = :role_1 OR role_id = :role_2 ", { :role_1 => ROLE_ABBONATO, :role_2 => ROLE_RENEW } ],
-    :include => :role)
-    #:conditions => {:role_id => ROLE_ABBONATO, :role_id => ROLE_RENEW },
-    
-#    workflows.find(:all,
-#        :include => :new_status,
-#        :conditions => ["role_id IN (:role_ids) AND tracker_id = :tracker_id AND (#{conditions})",
-#          {:role_ids => roles.collect(&:id), :tracker_id => tracker.id, :true => true, :false => false}
-#          ]
-#        ).collect{|w| w.new_status}.compact.sort
-        
-  end
-
-  def registrati
-    #  ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
-    @users = User.all(:conditions => {:role_id => ROLE_REGISTERED}, :include => :role)
-  end
-
-  def scaduti
-    #  ROLE_EXPIRED        = 6  #user.data_scadenza < today
-    @users = User.all(:conditions => {:role_id => ROLE_EXPIRED}, :include => :role)
-  end
-
-  def archiviati
-    #  ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGOISTERED)
-    @users = User.all(:conditions => {:role_id => ROLE_ARCHIVIED}, :include => :role)
-  end
-
-
-  def abbonamenti
-    @username = params[:user] ? params[:user].to_i : ''
-    @users = User.find_by_api_key(@username)
-    @role = params[:role] ? params[:role].to_i : 1
-    @users_role = User.all(:conditions => {:role_id => @role}, :include => :role)
-#    :conditions => "parent_id IS NULL AND status = #{Project::STATUS_ACTIVE}",
-  end
-
-  def privati
-  end
-
-  def associati
-  end
-
-##########GESTIONE PAGAMENTI ABBONAMENTO
-  def pagamento
-  end
-
-  def invia_fatture
-  end
-
-  #Mailer.Deliver_fee  
-  #in models/def fee(user, type, setting_text)
-  #add route /fees/email_fee
-  def email_fee
-    #proposal
-    #thanks
-    #asso
-    #renew
-    @type = params[:type]
-    raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
-    # Force ActionMailer to raise delivery errors so we can catch it
-    ActionMailer::Base.raise_delivery_errors = true
-    begin
-      #lib/tasks/email.rake
-      #app/models/mailer.rb  -> def fee(user, type, setting_text)   fee e fee_url
-      #app/invoice/views/_fee.text.erb
-      #app/invoice/views/_fee.html.erb
-      if @type == 'proposal'
-        @test = Mailer.deliver_fee(User.current, @type, Setting.template_fee_proposal)
-      elsif @type == 'thanks'
-        @test = Mailer.deliver_fee(User.current, @type, Setting.template_fee_thanks)
-      elsif @type == 'asso'
-        @test = Mailer.deliver_fee(User.current, @type, Setting.template_fee_register_asso)
-      elsif @type == 'renew'
-        @test = Mailer.deliver_fee(User.current, @type, Setting.template_fee_renew)
-      end
-      flash[:notice] = l(:notice_email_sent, User.current.mail)
-    rescue Exception => e
-      flash[:error] = l(:notice_email_error, e.message)
-    end
-    ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
-    redirect_to :controller => 'settings', :action => 'edit', :tab => 'fee'
   end
 
 end

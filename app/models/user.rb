@@ -110,6 +110,12 @@ class User < Principal
     { :conditions => ["#{User.table_name}.id NOT IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id] }
   }
 
+  #ricerca utente apartenente ad un gruppo
+  named_scope :in_role, lambda {|role|
+    role_id = role.is_a?(Role) ? role.id : role.to_i
+    { :conditions => ["#{User.table_name}.role_id = ?", role_id] }
+  }
+  
   #Utente è affiliato ad una Sigla-TipoOrganizzazione
   def sigla_tipo()
     if self.cross_organization_id.nil? || self.cross_organization.nil?
@@ -168,7 +174,7 @@ class User < Principal
       return self.cross_organization.name
     end
   end   
-  
+
   def set_mail_notification
     self.mail_notification = Setting.default_notification_option if self.mail_notification.blank?
     true
