@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  description: MyText
+  weight: 1
+  price: 
+  price_discount: 
+  promo_price: 
+  promo_price_discount: 
+  promote_to_frontpage: false
+  promo_date_start: 2012-09-26 18:13:30
+  promo_date_end: 2012-09-26 18:13:30
+
+two:
+  name: MyString
+  description: MyText
+  weight: 1
+  price: 
+  price_discount: 
+  promo_price: 
+  promo_price_discount: 
+  promote_to_frontpage: false
+  promo_date_start: 2012-09-26 18:13:30
+  promo_date_end: 2012-09-26 18:13:30
