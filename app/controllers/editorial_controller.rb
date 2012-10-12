@@ -32,6 +32,18 @@ class EditorialController < ApplicationController
     #</div>
   end
 
+  def top_menu
+    @id = params[:id].to_i
+    if @id.nil?
+      flash[:notice] = l(:notice_missing_parameters)
+      redirect_to :action => 'home'
+    else
+      @top_menu = TopMenu.find(@id)
+      @top_sections = TopSection.find(:all, :conditions => ["top_menu_id =  ?", @id])
+    
+    end
+  end
+  
   def contact
   end
 

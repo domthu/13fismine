@@ -40,11 +40,11 @@ ActionController::Routing::Routes.draw do |map|
   map.sezione       '/sezione/:id', :controller => 'editorial', :action => 'sezione'
   #Map menu 
   #map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
-  map.lavoro        '/lavoro/:id', :controller => 'editorial', :action => 'top_sezioni'
-  map.guide         '/guide/:id', :controller => 'editorial', :action => 'top_sezioni'
-  map.modulistica   '/modulistica/:id', :controller => 'editorial', :action => 'top_sezioni'
-  map.altro         '/altro/:id', :controller => 'editorial', :action => 'top_sezioni'
-  map.fiscale       '/fiscale/:id', :controller => 'editorial', :action => 'top_sezioni'
+  map.lavoro        '/lavoro/:id', :controller => 'editorial', :action => 'top_menu'
+  map.guide         '/guide/:id', :controller => 'editorial', :action => 'top_menu'
+  map.modulistica   '/modulistica/:id', :controller => 'editorial', :action => 'top_menu'
+  map.altro         '/altro/:id', :controller => 'editorial', :action => 'top_menu'
+  map.fiscale       '/fiscale/:id', :controller => 'editorial', :action => 'top_menu'
 
   map.resources :regions
   #map.resources :provinces

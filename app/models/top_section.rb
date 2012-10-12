@@ -4,6 +4,7 @@ class TopSection < ActiveRecord::Base
   #has_many :sections, :dependent => :destroy
   has_many :sections, :foreign_key => 'top_section_id', :dependent => :nullify
   has_many :issues, :through => :sections
+  belongs_to :top_menu, :class_name => 'TopMenu', :foreign_key => 'top_menu_id'
 
   #string
   validates_presence_of :sezione_top

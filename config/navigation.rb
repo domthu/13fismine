@@ -53,43 +53,50 @@ SimpleNavigation::Configuration.run do |navigation|
 
     # Add an item which has a sub navigation (same params, but with block)
 
-    primary.item :home, 'Sommario', home_path , :highlights_on => :subpath do |sub_nav|
-        sub_nav.item :s_1, 'Indice',home_path
-        sub_nav.item :s_2, 'Approfondimenti','/home/2'
-        sub_nav.item :s_5, 'Eventi','/home/eventi'
-        sub_nav.item :s_6, 'Quesiti','/home/quesiti'
-     #   sub_nav.item :v_0, 'Abbonamenti',subscription_home_index_path
-      #  sub_nav.item :special, '' , main_home_index_path , :highlights_on => /home\/(\d)+\/show_article/
-       # sub_nav.item :special, 'Ritorna' , main_home_index_path,    :highlights_on => /home\/[0-9]+\/show_article/
-       #  sub_nav.item :v_1, 'Ritorna' , main_home_index_path, /home\/[0-9]+\/show_article/)
+    @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 1")
+    primary.item :home, 'Sommario', editorial_path , :highlights_on => :subpath do |sub_nav|
+#sub_nav.item :s_1, 'Indice',home_path
+#sub_nav.item :s_2, 'Approfondimenti','/home/2'
+#sub_nav.item :s_5, 'Eventi','/home/eventi'
+#sub_nav.item :s_6, 'Quesiti','/home/quesiti'
+##   sub_nav.item :v_0, 'Abbonamenti',subscription_home_index_path
+##  sub_nav.item :special, '' , main_home_index_path , :highlights_on => /home\/(\d)+\/show_article/
+## sub_nav.item :special, 'Ritorna' , main_home_index_path,    :highlights_on => /home\/[0-9]+\/show_article/
+##  sub_nav.item :v_1, 'Ritorna' , main_home_index_path, /home\/[0-9]+\/show_article/)
+        
+        
+        @top_sections.each do |ts|
+#          sub_nav.item (ts.id, ts.name, { :controller => 'editorial', :action => 'sezione', :id => ts.id })
+          sub_nav.item (ts.id, ts.name, sezione_path(ts))
+        end
+        
+#        sub_nav.item(:top_section, 'TopSection', editorial_path, :highlights_on => /top_section/ ) do |ts|
+#          ts.item :ts, @ts.try(:description), url_for(@ts), :highlights_on => /top_section\/[0-9]/
+#        end
         primary.dom_class = 'fs-m1hmenu'
         sub_nav.dom_class = 'fs-m2hmenu'
     end
 
-     primary.item :home2, 'Vademecum', home_path , :highlights_on => :subpath do |sub_nav|
-        sub_nav.item :s_16, "Vademecum ",'/home/16'
-        sub_nav.item :s_17, 'Guide','/home/17'
+   primary.item :home2, 'Vademecum', home_path , :highlights_on => :subpath do |sub_nav|
+      sub_nav.item :s_16, "Vademecum ",'/home/16'
+      sub_nav.item :s_17, 'Guide','/home/17'
 
 
-        primary.dom_class = 'fs-m1hmenu'
-       sub_nav.dom_class = 'fs-m2hmenu'
-     end
+      primary.dom_class = 'fs-m1hmenu'
+     sub_nav.dom_class = 'fs-m2hmenu'
+   end
 
-      primary.item :home3, 'Modulistica',home_path   , :highlights_on => :subpath do |sub_nav|
-        sub_nav.item :s_4, "Previdenza '",'/home/4'
-        sub_nav.item :s_3, 'Lavoro','/home/3'
+    primary.item :home3, 'Modulistica',home_path   , :highlights_on => :subpath do |sub_nav|
+      sub_nav.item :s_4, "Previdenza '",'/home/4'
+      sub_nav.item :s_3, 'Lavoro','/home/3'
 
-        primary.dom_class = 'fs-m1hmenu'
-       sub_nav.dom_class = 'fs-m2hmenu'
-      end
+      primary.dom_class = 'fs-m1hmenu'
+      sub_nav.dom_class = 'fs-m2hmenu'
+    end
 
+    primary.item :users, 'Vai al Back-End ->', home_path
+    primary.dom_class = 'fs-m1hmenu'
 
-
-        primary.item :users, 'Vai al Back-End ->', home_path
-        primary.dom_class = 'fs-m1hmenu'
-
-
-
-end
+  end
 end
 
