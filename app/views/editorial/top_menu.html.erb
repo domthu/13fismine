@@ -8,8 +8,62 @@
   </ul> 
 <h3> id = <%= @id %> </h3>
 <div id="fs_informa" class="nodata"><p>
-  <%= @top_menu  %><br />
-  <%= @top_sections.count %><br />
+  top_menu:  <%= @top_menu.nil? ? "None" : "<b>" + @top_menu.description + "</b>"  %><br />
+  top_sections count:  <%= @top_sections.count %><br />
+  <% if @sections.any? %>
+    <br />
+    <h2>sections count:  <%= @sections.count %><br />
+    <table>
+      <tr>
+        <th><%=l(:label_sections)%></th>
+      </tr>
+      <% @sections.each do |s| %>
+        <tr>
+          <td class="buttons">
+            <%= link_to(h(s), section_path(s), :class => 'icon icon-summary') if User.current.admin?   %>
+            <%= h(s) if !User.current.admin?   %>
+        </tr>
+      <% end %>
+    </table>
+    <br />
+    <h2>@section_ids:   <%= @section_ids %><br />
+    <table>
+      <tr>
+        <th><%=l(:label_section_ids)%></th>
+      </tr>
+      <% @section_ids.each do |sid| %>
+        <tr>
+          <td class="buttons">
+            <%= h(sid)  %>
+        </tr>
+      <% end %>
+    </table>
+
+  <% else %>
+    <%=l(:label_nodata)%>
+  <% end %>
 </p></div>
 <br />
+
+<% if @contenuti.any? %>
+  <br />
+  <h2>contenuti count:  <%= @contenuti.count %><br />
+  <table>
+    <tr>
+      <th><%=l(:label_issues)%></th>
+    </tr>
+    <% @contenuti.each do |art| %>
+      <tr>
+        <td class="buttons">
+          <%= link_to(h(art.subject), articolo_path(art), :class => 'icon icon-summary') %>
+          <p><%= h(art.description) %></p>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <%=l(:label_nodata_articoli)%>
+<% end %>
+
+
+
 

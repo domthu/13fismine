@@ -39,8 +39,25 @@ class EditorialController < ApplicationController
       redirect_to :action => 'home'
     else
       @top_menu = TopMenu.find(@id)
-      @top_sections = TopSection.find(:all, :conditions => ["top_menu_id =  ?", @id])
-    
+      @top_sections = TopSection.find(:all, :include => [:sections], :conditions => ["top_menu_id =  ?", @id])
+      #@sections = @top_sections.sections Non è un array
+      @sections = []
+      for ts in @top_sections
+        @sections << ts.sections
+      end 
+#      @contenuti = Issue.find(:all, :include => [:section], :conditions=>  ["#{Section.table_name}.id IN (?)", @sections])
+      @section_ids = []
+#      for s in @sections
+#        @section_ids << s.id
+#      end  --> Kappao -618675148-618702148-618703268-618703748
+      for ts in @top_sections
+        for s in ts.sections
+          @section_ids << s.id
+        end 
+      end 
+      #@contenuti = Issue.find(:all, :conditions=>  ["section_id IN (?)", [4]])
+      @contenuti = Issue.find(:all, :conditions=>  ["section_id IN (?)", @section_ids])
+      
     end
   end
   
