@@ -5,4 +5,13 @@
    <%= render :partial => 'blocco_semplice'  %>
 
    <div class="cleared"></div>
+   render_navigation do |primary|
+  primary.item ...
+  primary.item ... do |subnav|
+    subnav.item ...
+  end
+end
+
+   <%# debug @top_sections %>
+
  </div>

@@ -40,7 +40,10 @@ class EditorialController < ApplicationController
     else
       @top_menu = TopMenu.find(@id)
       @top_sections = TopSection.find(:all, :conditions => ["top_menu_id =  ?", @id])
-    
+      # sandro to domthu
+     # @contenuti = Issue.find(:all, :include => [:top_section , :section], :conditions=>  ["#{TopSection.table_name}.top_menu_id = ?", @top_menu])
+
+
     end
   end
   
@@ -98,8 +101,7 @@ class EditorialController < ApplicationController
   def articoli
 
     @issues = Issue.latest_fs
-    #@sezione = @sottosezione.nil? ? TopSection.find(:first, :include => [ :section ], :conditions => ["#{Section.table_name}.id = :secid", {:secid => @id }]) : @sottosezione.top_section
-  end
+     end
 
   def articolo
     @id = params[:id].to_i
