@@ -61,35 +61,30 @@ class EditorialController < ApplicationController
   end
 
   def top_menu
-      @id = params[:id].to_i
+    @id = params[:id].to_i
     if @id.nil?
         flash[:notice] = l(:notice_missing_parameters)
         redirect_to :action => 'home'
     else
+
+        @contenuti = Issue.find(:all, :conditions=>  ["section_id IN (?)", @section_ids])
+
         @top_menu = TopMenu.find(@id)
         @top_sections = TopSection.find(:all, :include => [:sections], :conditions => ["top_menu_id =  ?", @id])
-        #@sections = @top_sections.sections Non è un array
         @sections = []
         for ts in @top_sections
           @sections << ts.sections
         end
-  #      @contenuti = Issue.find(:all, :include => [:section], :conditions=>  ["#{Section.table_name}.id IN (?)", @sections])
         @section_ids = []
-  #      for s in @sections
-  #        @section_ids << s.id
-  #      end  --> Kappao -618675148-618702148-618703268-618703748
-       # metodo alternativo par dominique qui sotto
-       # for ts in @top_sections
-       #   for s in ts.sections
-       #     @section_ids << s.id
-       #   end
-       # end
-       #  @contenuti = Issue.find(:all, :conditions=>  ["section_id IN (?)", @section_ids])
-       #--------------------------------------------------------------------#
-       #  @issues = Issue.find(:all, :include => [:section => :top_section], :conditions=>  ["#{TopSection.table_name}.top_menu_id = ?", @top_menu])
-         @top_section = TopSection.find(@id)
-         @sottosezione = Section.find(@id)
-           # Paginate results
+        for ts in @top_sections
+            for s in ts.sections
+                @section_ids << s.id
+            end 
+        end 
+
+        @top_section = TopSection.find(@id)
+        @sottosezione = Section.find(@id)
+        # Paginate results
         case params[:format]
           when 'xml', 'json'
             @offset, @limit = api_offset_and_limit
@@ -117,9 +112,6 @@ class EditorialController < ApplicationController
               }
               format.api
         end
-
-
-
     end
 
   end
