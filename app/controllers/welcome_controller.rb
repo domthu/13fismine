@@ -35,7 +35,7 @@ class WelcomeController < ApplicationController
   def index
     #domthu redirect
     if (not User.current.logged?) || (not User.current.allowed_to?(:access_back_end, nil, :global => true))
-    redirect_to(editorial_url + '1') && return
+    redirect_to(editorial_url) && return
     end
     @news = News.latest User.current
     @projects = Project.latest User.current
