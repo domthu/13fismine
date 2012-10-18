@@ -113,7 +113,7 @@ SimpleNavigation::Configuration.run do |navigation|
       primary.item :vari, 'Varie', varie_path + '6'  , :highlights_on => /editorial\/top_menu\/6+/ do |sub_nav|
        @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 6")
          @top_sections.each do |ts|
-         sub_nav.item 'modu' + ts.id.to_s, ts.name, sezione_path(ts)
+         sub_nav.item 'vari' + ts.id.to_s, ts.name, sezione_path(ts)
          primary.dom_class = 'fs-m1hmenu'
          sub_nav.dom_class = 'fs-m2hmenu'
        end

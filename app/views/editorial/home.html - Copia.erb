@@ -1,0 +1,40 @@
+<div class="fs-post-inner fs-article">
+    <div class="fs-postcontent">
+        <div class="fs-content-layout-wrapper layout-item-0">
+            <div class="fs-content-layout">
+                <div class="fs-content-layout-row">
+                    <div class="fs-layout-cell layout-item-1">
+                      <h1><%= @issues.count %></h1>
+                      <h2><%= @issues_count%> </h2>
+                        <% @issues.each do |articolo| %>
+                          <div class="art-contenitore">
+
+                        <h5 class="fs-postheader" > <%= articolo.titolo %>  </h5>
+                      <div class="fs-postheadericons ">
+                      <%= articolo.top_section  %> (<%= articolo.section.top_section.id  %>)<br />
+                      <%= articolo.section  %> (<%= articolo.section.id  %>)<br />
+                       <br />
+                      Numero di articoli della sezione <%= articolo.section.issues.count  %> <br />
+                        <%# avatar articolo.author_id, :size => "50" %> <%=h articolo.author %>
+                      </div>
+                        <br />
+                      <div class="fs-postcontent" >   <%= articolo.riassunto %>
+                      </div>
+
+                              <span class="fs-button-wrapper">
+                              <span class="fs-button-l"> </span>
+                              <span class="fs-button-r"> </span>
+                                      <%= link_to "Leggi >>> " ,  { :controller => 'issues', :action => 'show', :id => articolo.id }, :class => "fs-button" %>
+                            </span>
+                            <br /></div>
+                        <% end %>
+                    </div>
+                 </div>
+            </div>
+        </div>
+   </div>
+ <div class="cleared"></div>
+
+ <p class="pagination"><%= pagination_links_full @issues_pages, @issues_count %></p>
+</div>
+

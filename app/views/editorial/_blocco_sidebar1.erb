@@ -1,41 +1,53 @@
-<div class="fs-layout-cell fs-sidebar1">
-  <%#= render :partial => 'blocco_vmenu'  %>
+<div class="fs-layout-cell fs-sidebar1 clearfix">
+  <div class="fs-block clearfix">
+    <div class="fs-blockheader">
+      <h3 class="t">Blocco per vari utilizzi</h3>
+    </div>
+    <div class="fs-blockcontent"><p>contenuti...</p>
+      <br>
+      <h4> posto per pubblicità e banners </h4>
+      <img src="/images/fs-logo2.png" alt="">
+      <hr>
+      <img src="/images/rails.png" alt="">
+      <hr>
+      <img src="/images/fs-logo1.png" alt="">
+      oppure posto per link veloci ecc
+      <%#   <div class="cleared"></div>%>
+      <hr>
+      <h3> id = <%= @id %> </h3>
 
-  <h4> posto per pubblicità e banners </h4>
-    <img src="/images/fs-logo2.png" alt="">
-   <hr>
-  <img src="/images/rails.png" alt="">
-   <hr>
-  <img src="/images/fs-logo1.png" alt="">
-  oppure posto per link veloci ecc
-  <%#   <div class="cleared"></div>%>
-  <hr>
-<h3> id = <%= @id %> </h3>
-<div id="fs_informa" class="nodata"><p>
-  <%= @sezione  %> :: <%= @sottosezione %>
-  <br />
-  TOP SECTION: <%= @top_section  %>
-  <br />
+      <div id="fs_informa" class="nodata"><p>
+        <%= @sezione %> :: <%= @sottosezione %>
+        <br/>
+        TOP SECTION: <%= @top_section %>
+        <br/>
 
-</p></div>
-<br />
-<%= link_to("link alla sessione", sezione_path(@id)) %>
-<br />
-<%= link_to("link alla sessione (bis)", :controller => 'editorial', :action => 'sezione', :id =>@id) %>
-<br />
-<% if @issues && @issues.any? %>
-  <h3><%#l(:label_issues_by_section)%></h3>
-  <h3>Qui una lista degli articoli in evidenza della sezione top?</h3>
-  <div class="issues box">
-    Totale articoli: <b><%= @issues.count %></b>
-    <br />
-    <% for articolo in @issues %>
-      <%= render :partial => 'articolo_teaser', :locals => { :articolo => articolo } %>
-    <% end %>
-    <br />
-    <%= link_to l(:label_issues_view_all), :action => 'articoli' %>
+      </p></div>
+      <br/>
+      <%= link_to("link alla sessione", sezione_path(@id)) %>
+      <br/>
+      <%= link_to("link alla sessione (bis)", :controller => 'editorial', :action => 'sezione', :id => @id) %>
+      <br/>
+      <% if @issues && @issues.any? %>
+          <h3><%#l(:label_issues_by_section)%></h3>
+
+          <h3>Qui una lista degli articoli in evidenza della sezione top?</h3>
+
+          <div class="issues box">
+            Totale articoli: <b><%= @issues.count %></b>
+            <br/>
+            <% for articolo in @issues %>
+                <%= render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
+            <% end %>
+            <br/>
+            <%= link_to l(:label_issues_view_all), :action => 'articoli' %>
+          </div>
+      <% else %>
+          <p class="nodata"><%= l(:label_no_data) %></p>
+      <% end %>
+
+    </div>
+
   </div>
-<% else %>
-  <p class="nodata"><%= l(:label_no_data) %></p>
-<% end %>
 </div>
+

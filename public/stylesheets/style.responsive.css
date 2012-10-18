@@ -1,0 +1,378 @@
+/* Created by Artisteer v4.0.0.58475 */
+
+.responsive body
+{
+   min-width: 240px;
+}
+  
+.responsive .fs-content-layout img,
+.responsive .fs-content-layout video
+{
+   max-width: 100%;
+   height: auto !important;
+}
+
+.responsive.responsive-phone .fs-content-layout img 
+{
+   float: none !important;
+}
+    
+.responsive .fs-content-layout .fs-sidebar0, 
+.responsive .fs-content-layout .fs-sidebar1, 
+.responsive .fs-content-layout .fs-sidebar2 
+{
+   width: auto !important;
+}
+    
+.responsive .fs-content-layout, 
+.responsive .fs-content-layout-row, 
+.responsive .fs-layout-cell 
+{
+   display: block;
+}
+  
+.responsive .fs-slidenavigator 
+{
+   display: none !important;
+}
+    
+.responsive .fs-collage 
+{
+   display: none !important;
+}
+    
+.responsive .image-caption-wrapper 
+{
+   width: auto !important;
+}
+  
+.responsive .fs-textblock 
+{
+   display: none;
+}
+
+.responsive.responsive-tablet .fs-vmenublock,
+.responsive.responsive-tablet .fs-block
+{
+   margin-left: 1%;
+   margin-right: 1%;
+   width: 48%;
+   float: left;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+.responsive .fs-responsive-embed 
+{
+   position: relative;
+   padding-bottom: 56.25%;
+   /* 16:9 */
+	height: 0;
+}
+
+.responsive .fs-responsive-embed iframe,
+.responsive .fs-responsive-embed object,
+.responsive .fs-responsive-embed embed
+{
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+}
+
+.responsive .fs-header 
+{
+   width: auto;
+   height: auto;
+   min-height: 100px;
+   margin-top: 1%;
+   margin-right: 1% !important;
+   margin-left: 1% !important;
+   background-position: center center !important;
+   background-size: cover !important;
+   background-repeat: repeat !important;
+}
+
+.responsive .fs-header .fs-headline, 
+.responsive .fs-header .fs-slogan 
+{
+   display: block !important;
+   top: 0 !important;
+   left: 0 !important;
+   margin: 2% !important;
+}
+    
+.responsive .fs-header .fs-headline a, 
+.responsive .fs-header .fs-slogan 
+{
+   white-space: normal !important;
+}
+    
+.responsive .fs-header .fs-shapes .fs-textblock 
+{
+   padding: 2% !important;
+   margin: 2% !important;
+   line-height: normal;
+   background-image: none;
+   background-color: rgba(127, 127, 127, 0.7);
+   color: #eee !important;
+   display: none;
+   top: auto;
+   left: auto;
+   width: auto;
+   height: auto;
+}
+
+.responsive .fs-header .fs-shapes .fs-textblock *,
+.responsive .fs-header .fs-shapes .fs-textblock a:hover,
+.responsive .fs-header .fs-shapes .fs-textblock a:visited,
+.responsive .fs-header .fs-shapes .fs-textblock a:link 
+{
+   color: #eee !important;
+}
+    
+.responsive .fs-header .fs-shapes .fs-textblock>div 
+{
+   display: none;
+   top: auto;
+   left: auto;
+   width: auto;
+   height: auto;
+   padding: 0 !important;
+}
+
+.responsive .fs-header .fs-shapes,
+.responsive .fs-header .fs-shapes *
+{
+   position: relative;
+   text-align: center;
+   -webkit-transform: none !important;
+   -moz-transform: none !important;
+   -o-transform: none !important;
+   -ms-transform: none !important;
+   transform: none !important;
+}
+
+.responsive .fs-header #fs-flash-area,
+.responsive .fs-header .fs-shapes>*
+{
+   display: none;
+}
+
+.responsive #fs-header-bg 
+{
+   background-position: center center !important;
+   background-size: cover !important;
+   background-repeat: repeat !important;
+}
+
+/* Search */
+.responsive .fs-shapes~.fs-textblock
+{
+   position: relative !important;
+   display: block !important;
+   margin: 1% auto !important;
+   width: 75% !important;
+   top: auto !important;
+   right: auto !important;
+   bottom: auto !important;
+   left: auto !important;
+}
+
+/* dynamic width nav */
+.responsive nav.fs-nav,
+.responsive .fs-nav-inner
+{
+   width: auto !important;
+   position: relative !important;
+   top: auto !important;
+   left: auto !important;
+   right: auto !important;
+   bottom: auto !important;
+   margin-top: 0;
+   margin-bottom: 0;
+}
+
+.responsive .responsive-nav 
+{
+   padding-left: 0;
+   padding-right: 0;
+   margin-top: 20px;
+}
+
+/* full width hmenu, instead of inline-block */
+.responsive .responsive-nav ul.fs-hmenu 
+{
+   display: block;
+   float: none;
+   text-align: center;
+}
+
+/* elements on different lines */
+.responsive .responsive-nav ul.fs-hmenu li
+{
+   float: none;
+}
+  
+/* horizontal margins */
+.responsive .responsive-nav ul.fs-hmenu>li:first-child, 
+.responsive .responsive-nav ul.fs-hmenu>li:last-child, 
+.responsive .responsive-nav ul.fs-hmenu>li
+{
+   margin-left: 0;
+   margin-right: 0;
+}
+ 
+/* separator */ 
+.responsive .responsive-nav ul.fs-hmenu>li:before
+{
+   display: none;
+}
+
+/* vertical distance between items */
+.responsive .responsive-nav ul.fs-hmenu a
+{
+   margin-top: 1px !important;
+   margin-bottom: 1px !important;
+   text-align: center;
+   height: auto;
+   white-space: normal;
+}
+
+.responsive .responsive-nav ul.fs-hmenu>li:first-child>a
+{
+   margin-top: 0 !important;
+}
+
+.responsive .responsive-nav ul.fs-hmenu>li:last-child>a
+{
+   margin-bottom: 0 !important;
+}
+
+/* fixes for extended menu */
+.responsive .responsive-nav .ext, 
+.responsive .responsive-nav ul.fs-hmenu>li>ul, 
+.responsive .responsive-nav ul.fs-hmenu>li>ul>li
+{
+   width: auto !important;
+}
+
+/* submenu position on hover */
+.responsive .responsive-nav ul.fs-hmenu ul
+{
+   left: auto !important;
+   right: auto !important;
+   top: auto !important;
+   bottom: auto !important;
+   display: none !important;
+   position: relative !important;
+   visibility: visible !important;
+}
+
+.responsive .responsive-nav ul.fs-hmenu>li>ul>li:first-child:after 
+{
+   display: none;
+}
+.responsive .responsive-nav ul.fs-hmenu ul a
+{
+   padding-left: 4% !important;
+}
+.responsive .responsive-nav ul.fs-hmenu ul ul a
+{
+   padding-left: 6% !important;
+}
+.responsive .responsive-nav ul.fs-hmenu ul ul ul a
+{
+   padding-left: 8% !important;
+}
+.responsive .responsive-nav ul.fs-hmenu ul ul ul ul a
+{
+   padding-left: 10% !important;
+}
+.responsive .responsive-nav ul.fs-hmenu ul ul ul ul ul a
+{
+   padding-left: 12% !important;
+}
+  
+.responsive .responsive-nav ul.fs-hmenu>li>ul
+{
+   padding: 5px;
+}
+  
+.responsive .responsive-nav ul.fs-hmenu>li>ul:before
+{
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+}
+
+.responsive .fs-sheet
+{
+   width: auto !important;
+   min-width: 240px !important;
+   max-width: none;
+   margin-right: 1% !important;
+   margin-left: 1% !important;
+   margin-top: 1% !important;
+}
+
+#fs-resp {
+   display: none;
+}
+
+@media all and (max-width: 768px)
+{
+    #fs-resp, #fs-resp-t { display: block; }
+    #fs-resp-m { display: none; }
+}
+
+@media all and (max-width: 480px)
+{
+    #fs-resp, #fs-resp-m { display: block; }
+    #fs-resp-t { display: none; }
+}
+
+.responsive .fs-content-layout, 
+.responsive .fs-content-layout-row, 
+.responsive .fs-layout-cell 
+{
+   display: block;
+}
+
+.responsive .fs-layout-cell 
+{
+   width: auto !important;
+   height: auto !important;
+   border-right-width: 0 !important;
+   border-left-width: 0 !important;
+   border-radius: 0 !important;
+}
+
+.responsive .fs-content-layout:after, 
+.responsive .fs-content-layout-row:after, 
+.responsive .fs-layout-cell:after 
+{
+   content: ".";
+   display: block;
+   height: 0;
+   clear: both;
+   visibility: hidden;
+}
+
+.responsive .fs-post
+{
+   border-radius: 0;
+}
+
+.responsive .responsive-tablet-layout-cell 
+{
+   width: 50% !important;
+   float: left;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+

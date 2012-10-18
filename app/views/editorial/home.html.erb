@@ -1,21 +1,94 @@
-<div class="fs-post-inner fs-article">
+<article class="fs-post fs-article">
+
+  <!--   <div class="fs-postmetadataheader">
+
+<h5 class="fs-postheader" ><span class="fs-postheadericon">  </span> </h5>
+</div>
+<div class="fs-postheadericons fs-metadata-icons">
+    <span class="fs-postdateicon"></span>
+    | <span class="fs-postauthoricon"> <a href="#" title="Posts by Admin">Admin</a></span>
+    | <span class="fs-postpdficon"></span>
+    | <span class="fs-postemailicon"></span>
+    | <span class="fs-postediticon"></span>
+</div>  -->
+  <% @issues.each do |articolo| %>
+      <div class="fs-postcontent fs-postcontent-0 clearfix">
+        <div class="fs-content-layout">
+          <div class="fs-content-layout-row">
+            <div class="fs-layout-cell layout-item-0" style="width: 100%">
+              <h3 style="border-bottom: 1px dotted #A8ADB8; padding-bottom: 5px"><span
+              style="color: #245823;"><%= articolo.titolo %></span></h3>
+              Menu:  <%= articolo.top_section %>  (<%= articolo.section.top_section.id %>)<br/>
+              Sezione  <%= articolo.section %> (<%= articolo.section.id %>)<br/>
+              <br/>
+              Numero di articoli della sezione <%= articolo.section.issues.count %> <br/>
+              <span class="fs-postauthoricon">  Autore:<%= h articolo.author %>  </span>
+              <%# avatar articolo.author_id, :size => "50" %>
+
+            <br/>
+
+             <%= articolo.riassunto %>
+
+
+               <span class="fs-button-wrapper">
+                             <span class="fs-button-l"> </span>
+                             <span class="fs-button-r"> </span>
+              <%= link_to "Leggi ancora ", {:controller => 'issues', :action => 'show', :id => articolo.id}, :class => "fs-button" %>
+                           </span>
+              <br/></div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</article>
+<div class="clearfix"> </div>
+
+
+<!--
+                <div class="clearfix">
+                    <div class="image-caption-wrapper" style="width: 50%; float: left"><img
+                            src="images/f2882.jpg" style="width: 100%; max-width: 279px;" alt="an image"
+                            class="fs-lightbox"></div>
+                    <div class="image-caption-wrapper" style="width: 50%; float: left"><img
+                            src="images/c2c5f.jpg" style="width: 100%; max-width: 399px;" alt="an image"
+                            class="fs-lightbox">
+
+                        <p>Image by Flickr/ibm4381</p>
+                    </div>
+                </div>
+
+                <p>Sit sed elit ac tellus non congue nec nullam vitae enim a urna nibh et et sapien risus
+                    vestibulum inceptos. Ipsum et mi ut luctus nunc mi.</p>
+                <ul>
+                    <li><span style="font-weight: bold;">Penatibus metus turpis. Curae scelerisque praesent taciti nisi vel nunc est odio quis venenatis ac.</span><br>
+                        Nisi maecenas velit condimentum id. Pulvinar tellus platea.
+                    </li>
+                    <li><span style="font-weight: bold;">Arcu libero tristique.</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br><a href="Blog Posts/post-2.html">Read more...</a>
+</div>-->
+
+<!--<div class="fs-post-inner fs-article">
     <div class="fs-postcontent">
         <div class="fs-content-layout-wrapper layout-item-0">
             <div class="fs-content-layout">
                 <div class="fs-content-layout-row">
                     <div class="fs-layout-cell layout-item-1">
                       <h1><%= @issues.count %></h1>
-                      <h2><%= @issues_count%> </h2>
+                      <h2><%= @issues_count %> </h2>
                         <% @issues.each do |articolo| %>
                           <div class="art-contenitore">
 
                         <h5 class="fs-postheader" > <%= articolo.titolo %>  </h5>
                       <div class="fs-postheadericons ">
-                      <%= articolo.top_section  %> (<%= articolo.section.top_section.id  %>)<br />
-                      <%= articolo.section  %> (<%= articolo.section.id  %>)<br />
+                      <%= articolo.top_section %> (<%= articolo.section.top_section.id %>)<br />
+                      <%= articolo.section %> (<%= articolo.section.id %>)<br />
                        <br />
-                      Numero di articoli della sezione <%= articolo.section.issues.count  %> <br />
-                        <%# avatar articolo.author_id, :size => "50" %> <%=h articolo.author %>
+                      Numero di articoli della sezione <%= articolo.section.issues.count %> <br />
+                        <%# avatar articolo.author_id, :size => "50" %> <%= h articolo.author %>
                       </div>
                         <br />
                       <div class="fs-postcontent" >   <%= articolo.riassunto %>
@@ -24,7 +97,7 @@
                               <span class="fs-button-wrapper">
                               <span class="fs-button-l"> </span>
                               <span class="fs-button-r"> </span>
-                                      <%= link_to "Leggi >>> " ,  { :controller => 'issues', :action => 'show', :id => articolo.id }, :class => "fs-button" %>
+                                      <%= link_to "Leggi >>> ", {:controller => 'issues', :action => 'show', :id => articolo.id}, :class => "fs-button" %>
                             </span>
                             <br /></div>
                         <% end %>
@@ -37,4 +110,5 @@
 
  <p class="pagination"><%= pagination_links_full @issues_pages, @issues_count %></p>
 </div>
+-->
 

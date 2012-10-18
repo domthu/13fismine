@@ -1,24 +1,91 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title><%=h html_title %></title>
-<meta name="description" content="<%= Redmine::Info.app_name %>" />
-<meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport" />
-<%= csrf_meta_tag %>
-<%= favicon %>
-<%# stylesheet_link_tag 'application', :media => 'all' %>
-  <link href='http://fonts.googleapis.com/css?family=Cabin+Condensed:400,700' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,400italic' rel='stylesheet' type='text/css'>
-<%= stylesheet_link_tag 'application_fs', :media => 'all' %>
-<%= stylesheet_link_tag 'editorial', :media => 'all' %>
-<%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
-<%# javascript_heads %>
+<html dir="ltr" lang="en-EN">
+<head><!-- Created by DomThu & SPecchiaSoft -->
+  <meta charset="utf-8">
+  <title>FiscoSport  <%= h html_title %></title>
+  <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
+  <meta name="description" content="<%= Redmine::Info.app_name %>"/>
+  <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
+  <%= csrf_meta_tag %>
+  <%= favicon %>
+<%# css %>
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <!--[if lte IE 7]><%= stylesheet_link_tag 'style.ie7.css', :media => 'screen' %><![endif]-->
 
+  <style>.fs-content .fs-postcontent-0 .layout-item-0 {
+      border-top-style: dotted;
+      border-right-style: dotted;
+      border-bottom-style: dotted;
+      border-left-style: dotted;
+      border-top-width: 1px;
+      border-right-width: 1px;
+      border-bottom-width: 1px;
+      border-left-width: 1px;
+      border-top-color: #BBBFC8;
+      border-right-color: #BBBFC8;
+      border-bottom-color: #BBBFC8;
+      border-left-color: #BBBFC8;
+      padding-right: 5px;
+      padding-left: 5px;
+  }
+
+  .fs-content .fs-postcontent-0 .layout-item-1 {
+      border-top-style: dotted;
+      border-right-style: dotted;
+      border-bottom-style: dotted;
+      border-left-style: dotted;
+      border-top-width: 1px;
+      border-right-width: 1px;
+      border-bottom-width: 1px;
+      border-left-width: 1px;
+      border-top-color: #BBBFC8;
+      border-right-color: #BBBFC8;
+      border-bottom-color: #BBBFC8;
+      border-left-color: #BBBFC8;
+      border-top: none !important;
+      padding-right: 5px;
+      padding-left: 5px;
+  }
+
+  .ie7 .post .layout-cell {
+      border: none !important;
+      padding: 0 !important;
+  }
+
+  .ie6 .post .layout-cell {
+      border: none !important;
+      padding: 0 !important;
+  }
+
+  .fs-content .fs-postcontent-1 .layout-item-0 {
+      padding-right: 5px;
+      padding-left: 5px;
+  }
+
+  .ie7 .post .layout-cell {
+      border: none !important;
+      padding: 0 !important;
+  }
+
+  .ie6 .post .layout-cell {
+      border: none !important;
+      padding: 0 !important;
+  }
+
+  </style>
+
+  <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
+  <%= stylesheet_link_tag 'application_fs', :media => 'all' %>
+  <%= stylesheet_link_tag 'editorial', :media => 'all' %>
+  <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
+  <%= stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
 <%# jquery %>
-<%= stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
-<%= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
-<%= javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
+  <%= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
+  <%= javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
+  <%= javascript_include_tag "jquery/script.responsive.js" %>
+
+  <!--   <script src="script.js"></script>
+<script src="script.responsive.js"></script>     -->
 <%# superfish %>
 <%# stylesheet_link_tag 'superfish-1.4.8/superfish.css', :media => 'screen' %>
 <%# stylesheet_link_tag 'superfish-1.4.8/superfish-navbar.css', :media => 'all' %>
@@ -26,154 +93,112 @@
 <%# javascript_include_tag "superfish-1.4.8/jquery-1.2.6.min.js" %>
 <%# javascript_include_tag "superfish-1.4.8/hoverIntent.js" %>
 <%#= javascript_include_tag "superfish-1.4.8/superfish.js" %>
-<!--
-<script>
-
-    $(document).ready(function(){
-        $("ul.sf-menu").superfish({
-            pathClass:  'active'  ,
-            hoverClass:    'active'
-        });
-    });
-
-</script>
   <!--
-		<script type="text/javascript">
-			$(function(){
-		    // initialise plugins
-		    $(".fs-m1hmenu").superfish();
-		    $("#main-menu ul").superfish();
-			});
-		</script>
--->
+  <script>
 
-<%= heads_for_theme %>
-<!--[if IE 6]>
+      $(document).ready(function(){
+          $("ul.sf-menu").superfish({
+              pathClass:  'active'  ,
+              hoverClass:    'active'
+          });
+      });
+
+  </script>
+    <!--
+          <script type="text/javascript">
+              $(function(){
+              // initialise plugins
+              $(".fs-m1hmenu").superfish();
+              $("#main-menu ul").superfish();
+              });
+          </script>
+  -->
+
+<%# heads_for_theme %>
+  <!--[if IE 6]><!--
     <style type="text/css">
       * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
       body {behavior: url(<%= stylesheet_path "csshover.htc" %>);}
     </style>
 <![endif]-->
-<%= call_hook :view_layouts_editorial_html_head %>
-<!-- page specific tags -->
-<%= yield :header_tags -%>
+<%#call_hook :view_layouts_editorial_html_head %>
+  <!-- page specific tags -->
+<%# yield :header_tags -%>
 </head>
-<body class="<%=h body_css_classes %>">
-  <div id="fs-main">
+<body>
+<div id="fs-main">
+  <header class="fs-header clearfix">
 
-    <div id="contenitore-top">
-      <div id="fs-top-menu">
-        <%# page_header_title %>
-        <div id="account">
-          <%= render_menu :account_menu %>
+
+    <div class="fs-shapes">
+      <h1 class="fs-headline" data-left="2.62%">
+        <a href="#">Professionisti Esperti in Materie Fiscali Sportive</a>
+      </h1>
+
+      <div class="fs-object588384947" data-left="100%"></div>
+
+    </div>
+    <div class="fs-textblock fs-object227400126" data-left="3.07%">
+      <form class="fs-search" name="Search" action="javascript:void(0)">
+        <input type="text" value="">
+        <input type="submit" value="Search" name="search" class="fs-search-button">
+      </form>
+    </div>
+    <nav class="fs-nav clearfix">
+      <ul class="fs-hmenu">
+        <%# render_navigation(:level => 1) %>
+        <li><a href="home.html">Home</a>
+          <ul>
+            <li><a href="home/new-page.html">Subpage 1</a></li>
+            <li><a href="home/new-page-2.html">Subpage 2</a></li>
+            <li><a href="home/new-page-3.html">Subpage 3</a></li>
+          </ul>
+        </li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+      </ul>
+    </nav>
+    <nav class="fs-2nav clearfix">
+      <ul class="fs-2hmenu">
+        <%# render_navigation  :level => 2  %>
+        <li><a href="home.html">Home</a>
+          <ul>
+            <li><a href="home/new-page.html">Subpage 1</a></li>
+            <li><a href="home/new-page-2.html">Subpage 2</a></li>
+            <li><a href="home/new-page-3.html">Subpage 3</a></li>
+          </ul>
+        </li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="fs-sheet clearfix">
+    <div class="fs-layout-wrapper clearfix">
+      <div class="fs-content-layout">
+        <div class="fs-content-layout-row">
+          <div class="fs-layout-cell fs-content clearfix">
+            <%= yield %>
+            <p class="pagination"><%= pagination_links_full @issues_pages, @issues_count %></p>
+          </div>
+          <%#sidebar a centro destra %>
+          <%= render :partial => 'blocco_sidebar1' %>
+          <%#sidebar a destra %>
+          <%= render :partial => 'blocco_sidebar2' %>
         </div>
       </div>
     </div>
-      
-    <%# header intestazione e menu %>
-    <%#render 'header' %>
-    <div class="fs-header">
-
-      <div class="fs-header-position">
-        <div class="fs-header-wrapper">
-          <div class="cleared reset-box"></div>
-          <div class="fs-header-inner">
-            <div class="fs-logo">
-              <div class="fs-logo-name" >
-                <div class="fs-logo-img"></div>
-              </div>
-              <h4 class="fs-logo-text">professionisti esperti in materie fiscali sportive</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="fs-bar fs-m1nav">
-        <div class="fs-m1nav-outer">
-          <div class="fs-m1nav-wrapper">
-            <div class="fs-m1nav-inner">
-              <%# render_navigation :context => :fe , :level => 1 %>
-              <%= render_navigation(:level => 1) %>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="fs-bar fs-m2nav">
-        <div class="fs-m2nav-wrapper">
-          <%# render_navigation :context => :fe , :level => 2%>
-          <%= render_navigation  :level => 2  %>
-        </div>
-      </div>
-  
-      <div class="cleared reset-box"></div>
-    </div><%#fs-header%>
-    <div class="cleared reset-box"></div>
-
-
-
-    <%# --->>> I CONTENUTI --->>> FRONT END  %>
-    <div class="fs-box fs-sheet">
-      <div class="fs-box-body fs-sheet-body">
-        <div class="fs-layout-wrapper">
-          <div class="fs-content-layout">
-            
-            <div class="fs-content-layout-row">
-              
-              <div class="fs-layout-cell fs-content">
-                <div class="fs-box fs-post">
-                  <div class="fs-box-body fs-post-body">
-                    <div class="fs-post-inner fs-article">
-                      <div class="fs-postcontent">
-                        <div class="fs-content-layout">
-                          <div class="fs-content-layout-row">
-                           <!-- <div class="fs-layout-cell layout-item-0" style="width: 100%;">  -->
-                              <%#>Enter Page content here...%>
-
-                              <%=	yield %>
-
-                           <!-- </div>    -->
-                          </div>
-                        </div>
-
-                      </div><%#fs-postcontent%>
-                      <div class="cleared"></div>
-                    </div>
-                    <div class="cleared"></div>
-                  </div>
-                </div>
-                <div class="cleared"></div>
-              </div><%#fs-layout-cell fs-content%>
-
-              <%#sidebar a centro destra %>
-              <%= render :partial => 'blocco_sidebar1' %>
               <%#sidebar a destra %>
-              <%= render :partial => 'blocco_sidebar2' %>
-
-            </div><%#fs-content-layout-row%>
-          </div>
-        </div>
-        <div class="cleared"></div>
-
-        <%= render :partial => 'footer' %>
-        <div class="cleared"></div>
-
-      </div><%#fs-box-body fs-sheet-body%>
-    
-    </div>
-    <div class="cleared reset-box"></div>
-    <%# fine pagina_dei_contenuti  %>
-  
-  
-  </div> <%#fs-main%>
-  <div id="ajax-indicator" style="display:none;"><span><%= l(:label_loading) %></span></div>
-  <div id="header">
-    <div id="main-menu" class="fs_box_opacity">
-      <%= render_menu :application_menu_fs %>
-      <br />
-      <%= render_menu :footer_menu_fs %>
-    </div>
+          <%= render :partial => 'footer' %>
   </div>
+
+</div> <%#fs-main%>
+<div id="ajax-indicator" style="display:none;"><span><%= l(:label_loading) %></span></div>
+<div id="header">
+  <div id="main-menu" class="fs_box_opacity">
+    <%= render_menu :application_menu_fs %>
+    <br/>
+    <%= render_menu :footer_menu_fs %>
+  </div>
+</div>
 
 </body>
 </html>
