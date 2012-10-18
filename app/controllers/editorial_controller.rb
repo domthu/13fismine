@@ -32,33 +32,66 @@ class EditorialController < ApplicationController
     #</div>
   end
 
-    def top_menu
-    @id = params[:id].to_i
+  def top_menu
+      @id = params[:id].to_i
     if @id.nil?
-      flash[:notice] = l(:notice_missing_parameters)
-      redirect_to :action => 'home'
+        flash[:notice] = l(:notice_missing_parameters)
+        redirect_to :action => 'home'
     else
-      @top_menu = TopMenu.find(@id)
-      @top_sections = TopSection.find(:all, :include => [:sections], :conditions => ["top_menu_id =  ?", @id])
-      #@sections = @top_sections.sections Non è un array
-      @sections = []
-      for ts in @top_sections
-        @sections << ts.sections
-      end
-#      @contenuti = Issue.find(:all, :include => [:section], :conditions=>  ["#{Section.table_name}.id IN (?)", @sections])
-      @section_ids = []
-#      for s in @sections
-#        @section_ids << s.id
-#      end  --> Kappao -618675148-618702148-618703268-618703748
-      for ts in @top_sections
-        for s in ts.sections
-          @section_ids << s.id
+        @top_menu = TopMenu.find(@id)
+        @top_sections = TopSection.find(:all, :include => [:sections], :conditions => ["top_menu_id =  ?", @id])
+        #@sections = @top_sections.sections Non è un array
+        @sections = []
+        for ts in @top_sections
+          @sections << ts.sections
         end
-      end
-       @contenuti = Issue.find(:all, :conditions=>  ["section_id IN (?)", @section_ids])
-       @issues = Issue.find(:all, :include => [:section => :top_section], :conditions=>  ["#{TopSection.table_name}.top_menu_id = ?", @top_menu])
-       @top_section = TopSection.find(@id)
-       @sottosezione = Section.find(@id)
+  #      @contenuti = Issue.find(:all, :include => [:section], :conditions=>  ["#{Section.table_name}.id IN (?)", @sections])
+        @section_ids = []
+  #      for s in @sections
+  #        @section_ids << s.id
+  #      end  --> Kappao -618675148-618702148-618703268-618703748
+       # metodo alternativo par dominique qui sotto
+       # for ts in @top_sections
+       #   for s in ts.sections
+       #     @section_ids << s.id
+       #   end
+       # end
+       #  @contenuti = Issue.find(:all, :conditions=>  ["section_id IN (?)", @section_ids])
+       #--------------------------------------------------------------------#
+       #  @issues = Issue.find(:all, :include => [:section => :top_section], :conditions=>  ["#{TopSection.table_name}.top_menu_id = ?", @top_menu])
+         @top_section = TopSection.find(@id)
+         @sottosezione = Section.find(@id)
+           # Paginate results
+        case params[:format]
+          when 'xml', 'json'
+            @offset, @limit = api_offset_and_limit
+          else
+            @limit = 5
+            @offset= 25
+        end
+        @issues_count =Issue.count(
+            :include => [:section => :top_section] ,
+            :conditions => ["#{TopSection.table_name}.top_menu_id = ?", @top_menu]
+        )
+
+        @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
+            @issues =  Issue.find( :all,
+                                :include => [:section => :top_section],
+                                :order =>  'created_on DESC',
+                                :conditions => ["#{TopSection.table_name}.top_menu_id = ?", @top_menu],
+                                :limit  => @issues_pages.items_per_page ,
+                                :offset =>  @issues_pages.current.offset
+            )
+
+        respond_to do |format|
+              format.html {
+                render :layout => !request.xhr?
+              }
+              format.api
+        end
+
+
+
     end
 
   end
@@ -84,7 +117,7 @@ class EditorialController < ApplicationController
       #restituisce un ActiveRecord::Relation.
       #undefined method `issues' for #<Class:0xb6795b9c>
       @test = @top_section.sections.class
-      @issues = @top_section.issues
+     # @issues = @top_section.issues
       
       @sections = @top_section.sections
       @issues2 = []
@@ -94,7 +127,30 @@ class EditorialController < ApplicationController
       
       @sottosezione = Section.find(@id)
       @sezione = @sottosezione.nil? ? TopSection.find(:first, :include => [ :section ], :conditions => ["#{Section.table_name}.id = :secid", {:secid => @id }]) : @sottosezione.top_section
+          # Paginate results
+      case params[:format]
+        when 'xml', 'json'
+          @offset, @limit = api_offset_and_limit
+        else
+          @limit = 5
+          @offset= 25
+      end
+        @issues_count =@top_section.issues.count
+        @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
+                    @issues =  Issue.find( :all,
+                                :include => [:section => :top_section],
+                                :order =>  'created_on DESC',
+                                :conditions => ["#{TopSection.table_name}.id = ?", @top_section],
+                                :limit  => @issues_pages.items_per_page ,
+                                :offset =>  @issues_pages.current.offset
+            )
 
+        respond_to do |format|
+              format.html {
+                render :layout => !request.xhr?
+              }
+              format.api
+        end
       #MariaCristina Condizione per VisibileWeb, ordinamento per 
       #@issues = Issue.find(:all, :conditions => ["section_id =  ?", @id], :limit => 100)  
       #@issues = Issue.all_by_sezione_fs(@id)

@@ -68,7 +68,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     #   primary.item :home1, 'home(ver1)', editorial_path
 
-    primary.item :home, 'home (nuovi articoli)', editoriale_path + '1'  , :highlights_on => /home\/[0-9]+/ do |sub_nav|
+    primary.item :home, 'home', editorial_path + '1'  , :highlights_on => /editorial\/top_menu\/1+/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 1")
         @top_sections.each do |ts|
         sub_nav.item 'home' + ts.id.to_s, ts.name, sezione_path(ts)
@@ -76,7 +76,7 @@ SimpleNavigation::Configuration.run do |navigation|
         sub_nav.dom_class = 'fs-m2hmenu'
       end
     end
-    primary.item :fisc, 'Area Fiscale', fiscale_path + '2'  , :highlights_on => /fiscale\/[0-9]+/ do |sub_nav|
+    primary.item :fisc, 'Area Fiscale', editorial_path + '2'  , :highlights_on => /editorial\/top_menu\/2+/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 2")
         @top_sections.each do |ts|
         sub_nav.item 'fisc' + ts.id.to_s, ts.name, sezione_path(ts)
@@ -84,7 +84,7 @@ SimpleNavigation::Configuration.run do |navigation|
         sub_nav.dom_class = 'fs-m2hmenu'
       end
     end
-    primary.item :vade, 'Vademecum', vademecum_path + '3'  , :highlights_on => /vademecum\/[0-9]+/ do |sub_nav|
+    primary.item :vade, 'Vademecum', editorial_path + '3'  , :highlights_on => /editorial\/top_menu\/3+/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 3")
         @top_sections.each do |ts|
         sub_nav.item 'home' + ts.id.to_s, ts.name, sezione_path(ts)
@@ -93,7 +93,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
-    primary.item :modu, 'Modulistica', modulistica_path + '4'  , :highlights_on => /modulistica\/[0-9]+/ do |sub_nav|
+    primary.item :modu, 'Modulistica', editorial_path + '4'  , :highlights_on => /editorial\/top_menu\/4+/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 4")
         @top_sections.each do |ts|
         sub_nav.item 'modu' + ts.id.to_s, ts.name, sezione_path(ts)
@@ -102,7 +102,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
-     primary.item :altr, 'Altri Temi', altro_path + '4'  , :highlights_on => /altro\/[0-9]+/ do |sub_nav|
+     primary.item :altr, 'Altri Temi', editorial_path + '5'  , :highlights_on => /editorial\/top_menu\/5+/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 5")
         @top_sections.each do |ts|
         sub_nav.item 'modu' + ts.id.to_s, ts.name, sezione_path(ts)

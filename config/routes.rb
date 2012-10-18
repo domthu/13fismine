@@ -20,10 +20,11 @@ ActionController::Routing::Routes.draw do |map|
 
   # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome'   #REDMINE HOME
+ # map.root :controller => "editorial", :action => 'top_menu', :id => 1 ,  :path => '/home/:id'  #FRONT END
+  #map.root :controller => "editorial", :action => 'home'   #FRONT END
+  # Named Routes for static pages.
 
-  map.root :controller => "editorial", :action => 'home'   #FRONT END
-  # Named Routes for static pages. 
-  map.editorial     '/home',     :controller => 'editorial', :action => 'home'
+  map.editorial     '/editorial/top_menu/:id',     :controller => 'editorial', :action => 'top_menu'
   map.contact       '/contact',  :controller => 'editorial', :action => 'contact'
   map.about         '/about',    :controller => 'editorial', :action => 'about'
   map.help          '/help',     :controller => 'editorial', :action => 'help'
@@ -40,13 +41,12 @@ ActionController::Routing::Routes.draw do |map|
   map.sezione       '/sezione/:id', :controller => 'editorial', :action => 'sezione'
   #Map menu 
   #map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
-  map.editoriale     '/home/:id',     :controller => 'editorial', :action => 'top_menu'
+ # map.editoriale     '/editorial/top_menu/:id',     :controller => 'editorial', :action => 'top_menu'
   map.lavoro        '/lavoro/:id', :controller => 'editorial', :action => 'top_menu'
   map.vademecum     '/vademecum/:id', :controller => 'editorial', :action => 'top_menu'
   map.modulistica   '/modulistica/:id', :controller => 'editorial', :action => 'top_menu'
   map.altro         '/altro/:id', :controller => 'editorial', :action => 'top_menu'
-  map.fiscale       '/fiscale/:id', :controller => 'editorial', :action => 'top_menu'
-
+  map.fiscale       '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
 
 
   map.resources :regions
