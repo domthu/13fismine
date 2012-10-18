@@ -17,7 +17,35 @@ class EditorialController < ApplicationController
 #    @projects = Project.all.compact.uniq
 #    @link_project = Project.find_by_identifier($1) || Project.find_by_name($1)
     @projects = Project.latest_fs
-    @issues = Issue.latest_fs
+   # @issues = Issue.latest_fs
+           # Paginate results
+        case params[:format]
+          when 'xml', 'json'
+            @offset, @limit = api_offset_and_limit
+          else
+            @limit = 5
+            @offset= 25
+        end
+    @issues_count =Issue.count(
+        :include => [:section => :top_section]
+    )
+
+
+        @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
+            @issues =  Issue.find( :all,
+                                :include => [:section => :top_section],
+                                :order =>  'updated_on DESC',
+                              #  :conditions => ["#{TopSection.table_name}.top_menu_id = ?", @top_menu],
+                                :limit  => @issues_pages.items_per_page ,
+                                :offset =>  @issues_pages.current.offset
+            )
+
+        respond_to do |format|
+              format.html {
+                render :layout => !request.xhr?
+              }
+              format.api
+        end
     #MariaCristina Non mostrare i quesiti nella home page
     #@news = News.latest_fs
     #<div class="splitcontentleft">
@@ -77,7 +105,7 @@ class EditorialController < ApplicationController
         @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
             @issues =  Issue.find( :all,
                                 :include => [:section => :top_section],
-                                :order =>  'created_on DESC',
+                                :order =>  'updated_on DESC',
                                 :conditions => ["#{TopSection.table_name}.top_menu_id = ?", @top_menu],
                                 :limit  => @issues_pages.items_per_page ,
                                 :offset =>  @issues_pages.current.offset

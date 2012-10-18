@@ -68,7 +68,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     #   primary.item :home1, 'home(ver1)', editorial_path
 
-    primary.item :home, 'home', editorial_path + '1'  , :highlights_on => /editorial\/top_menu\/1+/ do |sub_nav|
+    primary.item :home, 'home', editorial_path + '1'  , :highlights_on => /editorial\/home\/1+/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 1")
         @top_sections.each do |ts|
         sub_nav.item 'home' + ts.id.to_s, ts.name, sezione_path(ts)
