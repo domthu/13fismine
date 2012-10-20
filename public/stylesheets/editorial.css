@@ -1,4 +1,4 @@
-/* Created by Artisteer v4.0.0.58475 */
+/* Created by ... */
 
 #fs-main {
     background: #000000;
@@ -89,6 +89,20 @@ h1, h2, h3, h4, h5, h6, p, a, ul, ol, li {
     -moz-border-radius: 3px;
     border-radius: 3px;
     padding: 0 21px;
+    margin: 0 auto;
+    height: 24px;
+}
+.fs-sections {
+    border: 0;
+    border-collapse: separate;
+    -webkit-background-origin: border !important;
+    -moz-background-origin: border !important;
+    background-origin: border-box !important;
+    background: #B58304;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 0 15px;
     margin: 0 auto;
     height: 24px;
 }

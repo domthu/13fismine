@@ -18,8 +18,8 @@
             <div class="fs-layout-cell layout-item-0" style="width: 100%">
               <h4 style="border-bottom: 1px dotted #A8ADB8; padding-bottom: 5px">
               <%= articolo.titolo %></h4>
-              Menu:  <%= articolo.top_section %>  (<%= articolo.section.top_section.id %>)<br/>
-              Sezione  <%= articolo.section %> (<%= articolo.section.id %>)<br/>
+               <span style="color:#ffffff;" class="fs-sections"><%= articolo.top_section %> >
+              <%= articolo.section %> </span> <br/>
               <br/>
               Numero di articoli della sezione <%= articolo.section.issues.count %> <br/>
               <span class="fs-postauthoricon">  Autore:<%= h articolo.author %>  </span>
@@ -30,21 +30,23 @@
              <%= articolo.riassunto %>
 
 
-               <span class="fs-button-wrapper">
-                             <span class="fs-button-l"> </span>
-                             <span class="fs-button-r"> </span>
-              <%= link_to "Leggi ancora ", {:controller => 'issues', :action => 'show', :id => articolo.id}, :class => "fs-button" %>
-                           </span>
+
+              <%= link_to "Continua... ", {:controller => 'issues', :action => 'show', :id => articolo.id}%>
+
               <br/></div>
           </div>
         </div>
       </div>
+      <br />
   <% end %>
 </article>
+<br />
+<p class="pagination"><%= pagination_links_full @issues_pages, @issues_count %></p>
 <div class="clearfix"> </div>
 
 
 <!--
+<%# articolo.section.top_section.id %>
                 <div class="clearfix">
                     <div class="image-caption-wrapper" style="width: 50%; float: left"><img
                             src="images/f2882.jpg" style="width: 100%; max-width: 279px;" alt="an image"
