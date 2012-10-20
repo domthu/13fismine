@@ -72,24 +72,24 @@ SimpleNavigation::Configuration.run do |navigation|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 1")
         @top_sections.each do |ts|
         sub_nav.item 'home' + ts.id.to_s, ts.name, sezione_path(ts)
-        primary.dom_class = 'fs-m1hmenu'
-        sub_nav.dom_class = 'fs-m2hmenu'
+        primary.dom_class = 'fs-hmenu'
+        sub_nav.dom_class = 'fs-hmenu'
       end
     end
     primary.item :fisc, 'Area Fiscale', fiscale_path + '2' , :highlights_on => /editorial\/top_menu\/2/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 2")
         @top_sections.each do |ts|
         sub_nav.item 'fisc' + ts.id.to_s, ts.name, sezione_path(ts)
-        primary.dom_class = 'fs-m1hmenu'
-        sub_nav.dom_class = 'fs-m2hmenu'
+        primary.dom_class = 'fs-hmenu'
+        sub_nav.dom_class = 'fs-hmenu'
       end
     end
     primary.item :vade, 'Vademecum', vademecum_path + '3'  , :highlights_on => /editorial\/top_menu\/3+/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 3")
         @top_sections.each do |ts|
         sub_nav.item 'home' + ts.id.to_s, ts.name, sezione_path(ts)
-        primary.dom_class = 'fs-m1hmenu'
-        sub_nav.dom_class = 'fs-m2hmenu'
+        primary.dom_class = 'fs-hmenu'
+        sub_nav.dom_class = 'fs-hmenu'
       end
     end
 
@@ -97,8 +97,8 @@ SimpleNavigation::Configuration.run do |navigation|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 4")
         @top_sections.each do |ts|
         sub_nav.item 'modu' + ts.id.to_s, ts.name, sezione_path(ts)
-        primary.dom_class = 'fs-m1hmenu'
-        sub_nav.dom_class = 'fs-m2hmenu'
+        primary.dom_class = 'fs-hmenu'
+        sub_nav.dom_class = 'fs-hmenu'
       end
     end
 
@@ -106,16 +106,16 @@ SimpleNavigation::Configuration.run do |navigation|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 5")
         @top_sections.each do |ts|
         sub_nav.item 'modu' + ts.id.to_s, ts.name, sezione_path(ts)
-        primary.dom_class = 'fs-m1hmenu'
-        sub_nav.dom_class = 'fs-m2hmenu'
+        primary.dom_class = 'fs-hmenu'
+        sub_nav.dom_class = 'fs-hmenu'
         end
       end
       primary.item :vari, 'Varie', varie_path + '6'  , :highlights_on => /editorial\/top_menu\/6+/ do |sub_nav|
        @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 6")
          @top_sections.each do |ts|
          sub_nav.item 'vari' + ts.id.to_s, ts.name, sezione_path(ts)
-         primary.dom_class = 'fs-m1hmenu'
-         sub_nav.dom_class = 'fs-m2hmenu'
+         primary.dom_class = 'fs-hmenu'
+         sub_nav.dom_class = 'fs-hmenu'
        end
     end
   end

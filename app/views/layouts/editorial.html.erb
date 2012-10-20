@@ -5,47 +5,15 @@
   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
   <meta name="description" content="<%= Redmine::Info.app_name %>"/>
   <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <%= csrf_meta_tag %>
   <%= favicon %>
-<%# css %>
+
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <!--[if lte IE 7]><%= stylesheet_link_tag 'style.ie7.css', :media => 'screen' %><![endif]-->
-
-  <style>.fs-content .fs-postcontent-0 .layout-item-0 {
-      border-top-style: dotted;
-      border-right-style: dotted;
-      border-bottom-style: dotted;
-      border-left-style: dotted;
-      border-top-width: 1px;
-      border-right-width: 1px;
-      border-bottom-width: 1px;
-      border-left-width: 1px;
-      border-top-color: #BBBFC8;
-      border-right-color: #BBBFC8;
-      border-bottom-color: #BBBFC8;
-      border-left-color: #BBBFC8;
-      padding-right: 5px;
-      padding-left: 5px;
-  }
-
-  .fs-content .fs-postcontent-0 .layout-item-1 {
-      border-top-style: dotted;
-      border-right-style: dotted;
-      border-bottom-style: dotted;
-      border-left-style: dotted;
-      border-top-width: 1px;
-      border-right-width: 1px;
-      border-bottom-width: 1px;
-      border-left-width: 1px;
-      border-top-color: #BBBFC8;
-      border-right-color: #BBBFC8;
-      border-bottom-color: #BBBFC8;
-      border-left-color: #BBBFC8;
-      border-top: none !important;
-      padding-right: 5px;
-      padding-left: 5px;
-  }
+<%# css %>
+  <style>
 
   .ie7 .post .layout-cell {
       border: none !important;
@@ -55,11 +23,6 @@
   .ie6 .post .layout-cell {
       border: none !important;
       padding: 0 !important;
-  }
-
-  .fs-content .fs-postcontent-1 .layout-item-0 {
-      padding-right: 5px;
-      padding-left: 5px;
   }
 
   .ie7 .post .layout-cell {
@@ -144,30 +107,10 @@
       </form>
     </div>
     <nav class="fs-nav clearfix">
-      <ul class="fs-hmenu">
-        <%# render_navigation(:level => 1) %>
-        <li><a href="home.html">Home</a>
-          <ul>
-            <li><a href="home/new-page.html">Subpage 1</a></li>
-            <li><a href="home/new-page-2.html">Subpage 2</a></li>
-            <li><a href="home/new-page-3.html">Subpage 3</a></li>
-          </ul>
-        </li>
-        <li><a href="blog.html" class="active">Blog</a></li>
-      </ul>
+      <%= render_navigation(:level => 1) %>
     </nav>
     <nav class="fs-2nav clearfix">
-      <ul class="fs-hmenu">
-        <%# render_navigation  :level => 2  %>
-        <li><a href="home.html">Home</a>
-          <ul>
-            <li><a href="home/new-page.html">Subpage 1</a></li>
-            <li><a href="home/new-page-2.html">Subpage 2</a></li>
-            <li><a href="home/new-page-3.html">Subpage 3</a></li>
-          </ul>
-        </li>
-        <li><a href="blog.html" class="active">Blog</a></li>
-      </ul>
+      <%= render_navigation  :level => 2  %>
     </nav>
   </header>
   <div class="fs-sheet clearfix">

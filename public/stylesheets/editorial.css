@@ -34,6 +34,46 @@ h1, h2, h3, h4, h5, h6, p, a, ul, ol, li {
     margin: 0;
     padding: 0;
 }
+.fs-content .fs-postcontent-1 .layout-item-0 {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+.fs-content .fs-postcontent-0 .layout-item-0 {
+    border-top-style: dotted;
+    border-right-style: dotted;
+    border-bottom-style: dotted;
+    border-left-style: dotted;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: #BBBFC8;
+    border-right-color: #BBBFC8;
+    border-bottom-color: #BBBFC8;
+    border-left-color: #BBBFC8;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-top: 10px;
+
+}
+
+.fs-content .fs-postcontent-0 .layout-item-1 {
+    border-top-style: dotted;
+    border-right-style: dotted;
+    border-bottom-style: dotted;
+    border-left-style: dotted;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: #BBBFC8;
+    border-right-color: #BBBFC8;
+    border-bottom-color: #BBBFC8;
+    border-left-color: #BBBFC8;
+    border-top: none !important;
+    padding-right: 5px;
+    padding-left: 5px;
+}
 
 /* Reset buttons border. It's important for input and button tags. 
  * border-collapse should be separate for shadow in IE. 
@@ -407,7 +447,7 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     -ms-transform: rotate(0deg);
     transform: rotate(0deg);
     overflow: hidden;
-    background-image: url('/images/object227400126.png');
+    background-image: url('/images/cerca.png');
     background-position: 0px 0px;
     background-repeat: no-repeat;
     z-index: 101;
@@ -455,10 +495,11 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     font-size: 0;
     position: absolute;
     margin: 0;
-    bottom: 18px;
+    bottom: 15px;
     width: 100%;
     text-align: left;
-  border:solid 2px yellow;
+    border:dotted 1px yellow;
+
 }
 .fs-2nav {
     -webkit-border-radius: 5px;
@@ -468,10 +509,10 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     font-size: 0;
     position: absolute;
     margin: 0;
-    bottom: -10px;
+    bottom: -5px;
     width: 100%;
     text-align: left;
-  border:solid 2px white;
+
 }
 
 ul.fs-hmenu a, ul.fs-hmenu a:link, ul.fs-hmenu a:visited, ul.fs-hmenu a:hover {
@@ -574,11 +615,11 @@ ul.fs-hmenu>li>a {
     margin: 0 auto;
     position: relative;
     display: block;
-    height: 26px;
+    height: 22px;
     cursor: pointer;
     text-decoration: none;
     color: #FFFFFF;
-    line-height: 26px;
+    line-height: 22px;
     text-align: center;
 }
 
@@ -587,7 +628,7 @@ ul.fs-hmenu>li>a {
 .fs-hmenu a:visited,
 .fs-hmenu a.active,
 .fs-hmenu a:hover {
-    font-size: 13px;
+    font-size: 12px;
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
     font-weight: normal;
     font-style: normal;
@@ -622,7 +663,7 @@ ul.fs-hmenu>li>a:hover,
 }
 
 ul.fs-hmenu>li:before {
-    position: absolute;
+  /*  position: absolute;
     display: block;
     content: ' ';
     top: 0;
@@ -630,6 +671,7 @@ ul.fs-hmenu>li:before {
     width: 1px;
     height: 26px;
     background: url('/images/menuseparator.png') center center no-repeat;
+    */
 }
 
 ul.fs-hmenu>li:first-child:before {
@@ -871,7 +913,7 @@ ul.fs-hmenu ul {
     /* border + shadow */
     bottom: -1px;
     background-color: #F3FAF3;
-    border: 1px Dotted rgba(157, 163, 174, 0.9);
+    border: 1px dotted rgba(157, 163, 174, 0.9);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.8);
@@ -932,7 +974,7 @@ ul.fs-hmenu>li.ext>.ext-off {
     /* border + shadow */
     bottom: -1px;
     background-color: #F3FAF3;
-    border: 1px Dotted rgba(157, 163, 174, 0.9);
+    border: 1px dotted rgba(157, 163, 174, 0.9);
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.8);
 }
 
@@ -1023,7 +1065,7 @@ ul.fs-hmenu>li.ext>.ext-off {
     bottom: -1px;
     /* shadow offset */
     background-color: #F3FAF3;
-    border: 1px Dotted rgba(157, 163, 174, 0.9);
+    border: 1px dotted rgba(157, 163, 174, 0.9);
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.8);
 }
 
