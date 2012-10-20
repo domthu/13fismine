@@ -153,13 +153,13 @@ ul.fs-vmenu a {
 .fs-postcontent a, .fs-postcontent a:link {
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
     text-decoration: none;
-    color: #5DBE5B;
+    color: #503712;
 }
 
 .fs-postcontent a:visited, .fs-postcontent a.visited {
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
     text-decoration: none;
-    color: #818898;
+    color: #5a5f6e;
 }
 
 .fs-postcontent  a:hover, .fs-postcontent a.hover {
@@ -512,7 +512,6 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     bottom: 15px;
     width: 100%;
     text-align: left;
-    border:dotted 1px yellow;
 
 }
 .fs-2nav {

@@ -1,40 +1,44 @@
-<div class="fs-post-inner fs-article">
-    <div class="fs-postcontent">
-        <div class="fs-content-layout-wrapper layout-item-0">
-            <div class="fs-content-layout">
-                <div class="fs-content-layout-row">
-                    <div class="fs-layout-cell layout-item-1">
-                      <h1><%= @issues.count %></h1>
-                      <h2><%= @issues_count%> </h2>
-                        <% @issues.each do |articolo| %>
-                          <div class="art-contenitore">
+% if Setting.info_promoted_fs %>
+  <%= l(:label_info_fs) %>
+  <div id="fs_informa" class="nodata">
+  <%= simple_format(Setting.info_fs) %>
+  </div>
+  <br />
 
-                        <h5 class="fs-postheader" > <%= articolo.titolo %>  </h5>
-                      <div class="fs-postheadericons ">
-                      <%= articolo.top_section  %> (<%= articolo.section.top_section.id  %>)<br />
-                      <%= articolo.section  %> (<%= articolo.section.id  %>)<br />
-                       <br />
-                      Numero di articoli della sezione <%= articolo.section.issues.count  %> <br />
-                        <%# avatar articolo.author_id, :size => "50" %> <%=h articolo.author %>
-                      </div>
-                        <br />
-                      <div class="fs-postcontent" >   <%= articolo.riassunto %>
-                      </div>
 
-                              <span class="fs-button-wrapper">
-                              <span class="fs-button-l"> </span>
-                              <span class="fs-button-r"> </span>
-                                      <%= link_to "Leggi >>> " ,  { :controller => 'issues', :action => 'show', :id => articolo.id }, :class => "fs-button" %>
-                            </span>
-                            <br /></div>
-                        <% end %>
-                    </div>
-                 </div>
-            </div>
-        </div>
-   </div>
- <div class="cleared"></div>
+<%# textilizable Setting.welcome_text_fs %>
+<h2><%= l(:label_home_fs) %></h2>
+<h2>render il nuovo menu </h2>
 
- <p class="pagination"><%= pagination_links_full @issues_pages, @issues_count %></p>
+
+
+
+<div class="splitcontentright fs_box_opacity">
+  <% if @issues.any? %>
+  <div class="issues box">
+  <h3><%=l(:label_issues_latest)%> ss</h3>
+    <%= render :partial => 'issues/list_simple', :locals => { :issues => @issues } %>
+    <%= link_to l(:label_issues_view_all), :action => 'articoli' %>
+  </div>
+  <% end %>
 </div>
 
+<div class="splitcontentleft fs_box_opacity">
+  <% if @projects.any? %>
+  <div class="projects box">
+  <h3><%=l(:label_project_latest)%></h3>
+    <ul>
+    <% for project in @projects %>
+      <% @project = project %>
+      <li>
+      <%= link_to h(project), :action => 'edizione', :id => project.id %> (<%= format_time(project.created_on) %>)
+      <%= textilizable project.short_description, :project => project %>
+      </li>
+    <% end %>
+    <% @project = nil %>
+    </ul>
+    <%= link_to l(:label_projects_view_all), :action => 'edizioni' %>
+  </div>
+  <% end %>
+  <%= call_hook(:view_welcome_index_right, :projects => @projects) %>
+</div>

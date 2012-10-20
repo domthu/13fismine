@@ -1,49 +1,34 @@
-<div class="fs-post-inner fs-article">
-    <div class="fs-postcontent">
-        <div class="fs-content-layout-wrapper layout-item-0">
-            <div class="fs-content-layout">
-                <div class="fs-content-layout-row">
-                    <div class="fs-layout-cell layout-item-1">
-                        <% @issues.each do |articolo| %>
-                          <div class="art-contenitore">
-
-                        <h5 class="fs-postheader" > <%= articolo.titolo %>  </h5>
-                      <div class="fs-postheadericons ">
-                      <%= articolo.top_section  %> (<%= articolo.section.top_section.id  %>)<br />
-                      <%= articolo.section  %> (<%= articolo.section.id  %>)<br />
-                       <br />
-                      Numero di articoli della sezione <%= articolo.section.issues.count  %> <br />
-                        <%# avatar articolo.author_id, :size => "50" %> <%=h articolo.author %>
-                      </div>
-                        <br />
-                      <div class="fs-postcontent" >   <%= articolo.riassunto %>
-                      </div>
-
-                              <span class="fs-button-wrapper">
-                              <span class="fs-button-l"> </span>
-                              <span class="fs-button-r"> </span>
-                                      <%= link_to "Leggi >>> " ,  { :controller => 'issues', :action => 'show', :id => articolo.id }, :class => "fs-button" %>
-                            </span>
-                            <br /></div>
-                        <% end %>
-                    </div>
-                 </div>
+<div class="fs-layout-cell fs-content clearfix">
+<article class="fs-post fs-article">
+  <% @issues.each do |articolo| %>
+      <div class="fs-postcontent fs-postcontent-0 clearfix">
+        <div class="fs-content-layout">
+          <div class="fs-content-layout-row">
+            <div class="fs-layout-cell layout-item-0" style="width: 100%">
+              <h4 style="border-bottom: 1px dotted #A8ADB8; padding-bottom: 5px">
+                <%= link_to h(truncate(articolo.titolo, :length => 200)), :controller => 'sezione/'+ articolo.section.top_section_id.to_s, :action => 'articolo', :id => articolo.id %>
+              </h4>
+                 <span style="color:#ffffff;" class="fs-sections"><%= articolo.top_section %> > <%= articolo.section %>
+                </span>
+                <br/>
+                 <%# articolo.section.issues.count %>
+                <span class="fs-postauthoricon">  Autore:<%= h articolo.author %>
+                </span>
+                <br/>
+                <%= articolo.riassunto %>
+                <%= link_to "Continua... ", {:controller => 'issues', :action => 'show', :id => articolo.id} %>
             </div>
+          </div>
         </div>
-           <!--
-            <div class="fs-content-layout-wrapper layout-item-0">
-                <div class="fs-content-layout">
-                    <div class="fs-content-layout-row">
-                        <div class="fs-layout-cell layout-item-1" style="width: 50%;">
-                <p><br /></p>
-            </div><div class="fs-layout-cell layout-item-1" style="width: 50%;">
-                <p><br /></p>
-            </div>
-            </div>
-        </div>
-        </div> -->
-   </div>
- <div class="cleared"></div>
-
- <p class="pagination"><%= pagination_links_full @issues_pages, @issues_count %></p>
+      </div>
+        <br/>
+  <% end %>
+</article>
+<br/>
+<p class="pagination"><%= pagination_links_full @issues_pages, @issues_count %></p>
+<div class="clearfix"></div>
 </div>
+          <%#sidebar a centro destra %>
+          <%= render :partial => 'blocco_sidebar1' %>
+          <%#sidebar a destra %>
+          <%# render :partial => 'blocco_sidebar2' %>

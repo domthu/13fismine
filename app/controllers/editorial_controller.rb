@@ -205,6 +205,10 @@ class EditorialController < ApplicationController
 
   def articolo
     @id = params[:id].to_i
+    @issue= Issue.find(@id)
+    @section_id = @issue.section_id
+
+
     @comune = Comune.find(params[:id])
   end
 

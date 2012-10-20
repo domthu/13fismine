@@ -71,7 +71,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :home, 'home', editorial_path   , :highlights_on => /editorial\/home/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 1")
         @top_sections.each do |ts|
-        sub_nav.item 'home' + ts.id.to_s, ts.name, sezione_path(ts)
+        sub_nav.item 'home' + ts.id.to_s, ts.name,  sezione_path(ts)
         primary.dom_class = 'fs-hmenu'
         sub_nav.dom_class = 'fs-hmenu'
       end
@@ -79,7 +79,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :fisc, 'Area Fiscale', fiscale_path + '2' , :highlights_on => /editorial\/top_menu\/2/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 2")
         @top_sections.each do |ts|
-        sub_nav.item 'fisc' + ts.id.to_s, ts.name, sezione_path(ts)
+        sub_nav.item 'fisc' + ts.id.to_s, ts.name, sezione_path(ts).
         primary.dom_class = 'fs-hmenu'
         sub_nav.dom_class = 'fs-hmenu'
       end
@@ -87,7 +87,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :vade, 'Vademecum', vademecum_path + '3'  , :highlights_on => /editorial\/top_menu\/3+/ do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 3")
         @top_sections.each do |ts|
-        sub_nav.item 'home' + ts.id.to_s, ts.name, sezione_path(ts)
+        sub_nav.item 'vade' + ts.id.to_s, ts.name, sezione_path(ts)
         primary.dom_class = 'fs-hmenu'
         sub_nav.dom_class = 'fs-hmenu'
       end

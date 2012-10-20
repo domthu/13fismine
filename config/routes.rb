@@ -38,7 +38,7 @@ ActionController::Routing::Routes.draw do |map|
   map.edizioni      '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione      '/edizione/:id', :controller => 'editorial', :action => 'edizione'
   map.articoli      '/articoli', :controller => 'editorial', :action => 'articoli'
-  map.articolo      '/articolo/:id', :controller => 'editorial', :action => 'articolo'
+  map.articolo      'articolo/:id', :controller => 'editorial', :action => 'articolo'
   #map.registrazione '/registrazione', :controller => 'editorial', :action => 'register'
   #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.quesiti       '/quesiti', :controller => 'editorial', :action => 'quesiti'
@@ -54,6 +54,7 @@ ActionController::Routing::Routes.draw do |map|
   map.modulistica   '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
   map.altro         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
   map.fiscale       '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+  map.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
 
 
   map.resources :regions
@@ -61,7 +62,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :provinces, :has_many => :regions
   #map.resources :comunes
   map.resources :comunes, :has_many => :provinces
-  
+
   map.resources :cross_groups
   map.resources :group_banners
   map.resources :assos
