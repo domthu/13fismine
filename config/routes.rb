@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
 
   #end
 
-  map.editorial     '/editorial/home/:id',     :controller => 'editorial', :action => 'home'
+  map.editorial     '/editorial/home/:id',:controller => 'editorial', :action => 'home'
   map.contact       '/contact',  :controller => 'editorial', :action => 'contact'
   map.about         '/about',    :controller => 'editorial', :action => 'about'
   map.help          '/help',     :controller => 'editorial', :action => 'help'
@@ -54,7 +54,29 @@ ActionController::Routing::Routes.draw do |map|
   map.modulistica   '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
   map.altro         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
   map.fiscale       '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+ # map.hmenu          'home/:id', :controller => 'editorial', :action => 'home'
+  #map.sezione       'menu/:top_menu_id/sezione/:id', :controller => 'editorial', :action => 'sezione'
   map.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
+
+  map.with_options :controller => 'editorial' do |articoli_routes|
+      articoli_routes.with_options :conditions => {:method => :get} do |articoli_views|
+      articoli_views.connect  'home', :action => 'home'
+      articoli_views.connect  'home/:id', :action => 'top_menu'
+     # articoli_views.connect  'home/:id/sezione/:id', :action => 'sezione'
+      articoli_views.connect  'area-fiscale/:id', :action => 'top_menu'
+      articoli_views.connect  'area-fiscale/:menu_id/sezione/id', :action => 'sezione'
+      articoli_views.connect  'vademecum/:id', :action => 'top_menu'
+      articoli_views.connect  'modulistica/:id', :action => 'top_menu'
+      articoli_views.connect  'altri-temi/:id', :action => 'top_menu'
+      articoli_views.connect  'varie/:id', :action => 'top_menu'
+
+      articoli_views.connect 'menu/:top_menu_id/sezione/:id', :action => 'sezione'
+      articoli_views.connect 'menu/:top_menu_id/sezione/:top_section_id/articolo/:id', :action => 'articolo'
+      articoli_views.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
+    end
+      articoli_routes.with_options :conditions => {:method => :post} do |board_actions|
+    end
+  end
 
 
   map.resources :regions

@@ -7,7 +7,7 @@ SimpleNavigation::Configuration.run do |navigation|
   # navigation.renderer = Your::Custom::Renderer
 
   # Specify the class that will be applied to active navigation items. Defaults to 'selected'
-   navigation.selected_class = 'active'
+  navigation.selected_class = 'active'
 
   # Specify the class that will be applied to the current leaf of
   # active navigation items. Defaults to 'simple-navigation-active-leaf'
@@ -49,74 +49,73 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>. 
     #
-   # primary.item :key_1, 'name', url, options
+    # primary.item :key_1, 'name', url, options
 
     # Add an item which has a sub navigation (same params, but with block)
 
 
-
-#sub_nav.item :s_1, 'Indice',home_path
-#sub_nav.item :s_2, 'Approfondimenti','/home/2'
-#sub_nav.item :s_5, 'Eventi','/home/eventi'
-#sub_nav.item :s_6, 'Quesiti','/home/quesiti'
-##   sub_nav.item :v_0, 'Abbonamenti',subscription_home_index_path
-##  sub_nav.item :special, '' , main_home_index_path , :highlights_on => /home\/(\d)+\/show_article/
-## sub_nav.item :special, 'Ritorna' , main_home_index_path,    :highlights_on => /home\/[0-9]+\/show_article/
-##  sub_nav.item :v_1, 'Ritorna' , main_home_index_path, /home\/[0-9]+\/show_article/)
-        
+    #sub_nav.item :s_1, 'Indice',home_path
+    #sub_nav.item :s_2, 'Approfondimenti','/home/2'
+    #sub_nav.item :s_5, 'Eventi','/home/eventi'
+    #sub_nav.item :s_6, 'Quesiti','/home/quesiti'
+    ##   sub_nav.item :v_0, 'Abbonamenti',subscription_home_index_path
+    ##  sub_nav.item :special, '' , main_home_index_path , :highlights_on => /home\/(\d)+\/show_article/
+    ## sub_nav.item :special, 'Ritorna' , main_home_index_path,    :highlights_on => /home\/[0-9]+\/show_article/
+    ##  sub_nav.item :v_1, 'Ritorna' , main_home_index_path, /home\/[0-9]+\/show_article/)
 
 
-    #   primary.item :home1, 'home(ver1)', editorial_path
+    #   primary.item :home1, 'home(ver1)', editorial_path  :highlights_on => /(\/events/new)|(\/events)/
 
-    primary.item :home, 'home', editorial_path   , :highlights_on => /editorial\/home/ do |sub_nav|
+    primary.item :home, 'home', '/home/', :highlights_on => %r(/home\/) do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 1")
-        @top_sections.each do |ts|
-        sub_nav.item 'home' + ts.id.to_s, ts.name,  sezione_path(ts)
+      @top_sections.each do |ts|
+        sub_nav.item 'home' + ts.id.to_s, ts.name, sezione_path(ts)
         primary.dom_class = 'fs-hmenu'
         sub_nav.dom_class = 'fs-hmenu'
       end
     end
-    primary.item :fisc, 'Area Fiscale', fiscale_path + '2' , :highlights_on => /editorial\/top_menu\/2/ do |sub_nav|
+
+    primary.item :fisc, 'Area Fiscale', '/area-fiscale/2', :highlights_on => :subpath do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 2")
-        @top_sections.each do |ts|
-        sub_nav.item 'fisc' + ts.id.to_s, ts.name, sezione_path(ts).
+      @top_sections.each do |ts|
+        sub_nav.item 'fisc' + ts.id.to_s, ts.name, sezione_path(ts), :highlights_on => %r(#{sezione_path(ts)})
         primary.dom_class = 'fs-hmenu'
         sub_nav.dom_class = 'fs-hmenu'
       end
     end
-    primary.item :vade, 'Vademecum', vademecum_path + '3'  , :highlights_on => /editorial\/top_menu\/3+/ do |sub_nav|
+    primary.item :vade, 'Vademecum', '/vademecum/3', :highlights_on => :subpath do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 3")
-        @top_sections.each do |ts|
-        sub_nav.item 'vade' + ts.id.to_s, ts.name, sezione_path(ts)
+      @top_sections.each do |ts|
+        sub_nav.item 'vade' + ts.id.to_s, ts.name, sezione_path(ts), :highlights_on => %r(#{sezione_path(ts)})
         primary.dom_class = 'fs-hmenu'
         sub_nav.dom_class = 'fs-hmenu'
       end
     end
 
-    primary.item :modu, 'Modulistica', modulistica_path + '4'  , :highlights_on => /editorial\/top_menu\/4+/ do |sub_nav|
+    primary.item :modu, 'Modulistica', '/modulistica/4', :highlights_on => :subpath do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 4")
-        @top_sections.each do |ts|
-        sub_nav.item 'modu' + ts.id.to_s, ts.name, sezione_path(ts)
+      @top_sections.each do |ts|
+        sub_nav.item 'modu' + ts.id.to_s, ts.name, sezione_path(ts), :highlights_on => %r(#{sezione_path(ts)})
         primary.dom_class = 'fs-hmenu'
         sub_nav.dom_class = 'fs-hmenu'
       end
     end
 
-     primary.item :altr, 'Altri Temi', altro_path + '5'  , :highlights_on => /editorial\/top_menu\/5+/ do |sub_nav|
+    primary.item :altr, 'Altri Temi', '/altri-temi/5', :highlights_on => :subpath do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 5")
-        @top_sections.each do |ts|
-        sub_nav.item 'modu' + ts.id.to_s, ts.name, sezione_path(ts)
+      @top_sections.each do |ts|
+        sub_nav.item 'altr' + ts.id.to_s, ts.name, sezione_path(ts), :highlights_on => %r(#{sezione_path(ts)})
         primary.dom_class = 'fs-hmenu'
         sub_nav.dom_class = 'fs-hmenu'
-        end
       end
-      primary.item :vari, 'Varie', varie_path + '6'  , :highlights_on => /editorial\/top_menu\/6+/ do |sub_nav|
-       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 6")
-         @top_sections.each do |ts|
-         sub_nav.item 'vari' + ts.id.to_s, ts.name, sezione_path(ts)
-         primary.dom_class = 'fs-hmenu'
-         sub_nav.dom_class = 'fs-hmenu'
-       end
+    end
+    primary.item :vari, 'Varie', '/varie/6', :highlights_on => :subpath do |sub_nav|
+      @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 6")
+      @top_sections.each do |ts|
+        sub_nav.item 'vari' + ts.id.to_s, ts.name, sezione_path(ts), :highlights_on => %r(#{sezione_path(ts)})
+        primary.dom_class = 'fs-hmenu'
+        sub_nav.dom_class = 'fs-hmenu'
+      end
     end
   end
 end
