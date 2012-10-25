@@ -69,7 +69,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :home, 'home', '/home/', :highlights_on => %r(/home\/) do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 1")
       @top_sections.each do |ts|
-        sub_nav.item 'home' + ts.id.to_s, ts.name, sezione_path(ts)
+        sub_nav.item 'home' + ts.id.to_s, ts.name, '/home' + sezione_path(ts),:highlights_on => %r(/home\/sezione\/#{ts.id.to_s})
         primary.dom_class = 'fs-hmenu'
         sub_nav.dom_class = 'fs-hmenu'
       end

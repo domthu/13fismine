@@ -62,7 +62,8 @@ ActionController::Routing::Routes.draw do |map|
       articoli_routes.with_options :conditions => {:method => :get} do |articoli_views|
       articoli_views.connect  'home', :action => 'home'
       articoli_views.connect  'home/:id', :action => 'top_menu'
-     # articoli_views.connect  'home/:id/sezione/:id', :action => 'sezione'
+      articoli_views.connect  'home/sezione/:id', :action => 'sezione'
+      articoli_views.connect  'home/sezione/:id/articolo/:id', :action => 'articolo'
       articoli_views.connect  'area-fiscale/:id', :action => 'top_menu'
       articoli_views.connect  'area-fiscale/:menu_id/sezione/id', :action => 'sezione'
       articoli_views.connect  'vademecum/:id', :action => 'top_menu'
