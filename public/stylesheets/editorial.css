@@ -397,7 +397,7 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     top: 0;
     width: 386px;
     height: 97px;
-    background-image: url('/images/logo.png');
+    background-image: url('/images/fe-bk01/logo.png');
     background-position: 0 0;
     background-repeat: no-repeat;
     z-index: 0;
@@ -461,7 +461,7 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     -ms-transform: rotate(0deg);
     transform: rotate(0deg);
     overflow: hidden;
-    background-image: url('/images/cerca.png');
+    background-image: url('/images/fe-bk01/cerca.png');
     background-position: 0px 0px;
     background-repeat: no-repeat;
     z-index: 101;
@@ -475,7 +475,7 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     border-radius: 5px;
     margin: 10px auto 0;
     height: 110px;
-    background-image: url('/images/header.png');
+    background-image: url('/images/fe-bk01/header.png');
     background-position: center top;
     background-repeat: no-repeat;
     position: relative;
@@ -486,7 +486,7 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
 }
 
 .responsive .fs-header {
-    background-image: url('/images/header.png');
+    background-image: url('/images/fe-bk01/header.png');
     background-position: center center;
 }
 
@@ -683,7 +683,7 @@ ul.fs-hmenu>li:before {
     left: -1px;
     width: 1px;
     height: 26px;
-    background: url('/images/menuseparator.png') center center no-repeat;
+    background: url('/images/fe-bk01/menuseparator.png') center center no-repeat;
     */
 }
 
@@ -802,7 +802,7 @@ ul.fs-hmenu ul {
     z-index: 10;
     left: 0;
     top: 0;
-    background-image: url('/images/spacer.gif');
+    background-image: url('/images/fe-bk01/spacer.gif');
 }
 
 .desktop-nav ul.fs-hmenu>li>ul {
@@ -1300,7 +1300,7 @@ form.fs-search input[type="submit"] {
     display: block;
     left: auto;
     border: none;
-    background: url('/images/searchicon.png') center center no-repeat;
+    background: url('/images/fe-bk01/searchicon.png') center center no-repeat;
     width: 24px;
     height: 100%;
     padding: 0;
@@ -1469,7 +1469,7 @@ div.fs-block img {
 }
 
 .fs-block ul>li:before {
-    content: url('/images/blockbullets.png');
+    content: url('/images/fe-bk01/blockbullets.png');
     margin-right: 6px;
     bottom: 2px;
     position: relative;
@@ -1592,7 +1592,7 @@ pre {
 }
 
 .fs-postheadericon:before {
-    content: url('/images/postheadericon.png');
+    content: url('/images/fe-bk01/postheadericon.png');
     margin-right: 6px;
     bottom: 3px;
     position: relative;
@@ -1687,7 +1687,7 @@ pre {
 }
 
 .fs-postdateicon:before {
-    content: url('/images/postdateicon.png');
+    content: url('/images/fe-bk01/postdateicon.png');
     margin-right: 6px;
     position: relative;
     display: inline-block;
@@ -1703,7 +1703,7 @@ pre {
 }
 
 .fs-postauthoricon:before {
-    content: url('/images/postauthoricon.png');
+    content: url('/images/fe-bk01/postauthoricon.png');
     margin-right: 6px;
     position: relative;
     display: inline-block;
@@ -1719,7 +1719,7 @@ pre {
 }
 
 .fs-postpdficon:before {
-    content: url('/images/postpdficon.png');
+    content: url('/images/fe-bk01/postpdficon.png');
     margin-right: 6px;
     position: relative;
     display: inline-block;
@@ -1735,7 +1735,7 @@ pre {
 }
 
 .fs-postemailicon:before {
-    content: url('/images/postemailicon.png');
+    content: url('/images/fe-bk01/postemailicon.png');
     margin-right: 6px;
     position: relative;
     display: inline-block;
@@ -1751,7 +1751,7 @@ pre {
 }
 
 .fs-postediticon:before {
-    content: url('/images/postediticon.png');
+    content: url('/images/fe-bk01/postediticon.png');
     margin-right: 6px;
     position: relative;
     display: inline-block;
@@ -1767,7 +1767,7 @@ pre {
 }
 
 .fs-postcontent ul>li:before, .fs-post ul>li:before, .fs-textblock ul>li:before {
-    content: url('/images/postbullets.png');
+    content: url('/images/fe-bk01/postbullets.png');
     margin-right: 6px;
     bottom: 2px;
     position: relative;
@@ -1824,7 +1824,7 @@ pre {
 }
 
 blockquote {
-    background: #F3FAF3 url('/images/postquote.png') no-repeat scroll;
+    background: #F3FAF3 url('/images/fe-bk01/postquote.png') no-repeat scroll;
     padding: 15px 15px 15px 52px;
     margin: 0 0 0 10px;
     color: #121316;
@@ -1915,7 +1915,7 @@ blockquote p,
 }
 
 .fs-rss-tag-icon {
-    background: url('/images/footerrssicon.png') no-repeat scroll;
+    background: url('/images/fe-bk01/footerrssicon.png') no-repeat scroll;
     margin: 0 auto;
     min-height: 32px;
     min-width: 32px;
@@ -1929,7 +1929,7 @@ blockquote p,
 }
 
 .fs-footer ul>li:before {
-    content: url('/images/footerbullets.png');
+    content: url('/images/fe-bk01/footerbullets.png');
     margin-right: 6px;
     bottom: 2px;
     position: relative;
@@ -2039,7 +2039,7 @@ img.fs-lightbox-image.active {
 
 .loading {
     position: fixed;
-    background: #fff url('/images/preloader-01.gif') center center no-repeat;
+    background: #fff url('/images/fe-bk01/preloader-01.gif') center center no-repeat;
     width: 32px;
     height: 32px;
     z-index: 10100;
