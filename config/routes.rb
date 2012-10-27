@@ -128,6 +128,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.signin 'login', :controller => 'account', :action => 'login'
   map.signout 'logout', :controller => 'account', :action => 'logout'
+  map.signin_fe 'login_fe', :controller => 'account_fe', :action => 'login_fe'
+  map.signout_fe 'logout_fe', :controller => 'account_fe', :action => 'logout_fe'
+
 
   map.connect 'roles/workflow/:id/:role_id/:tracker_id', :controller => 'roles', :action => 'workflow'
   map.connect 'help/:ctrl/:page', :controller => 'help'
