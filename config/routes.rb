@@ -78,6 +78,7 @@ ActionController::Routing::Routes.draw do |map|
       articoli_views.connect  'modulistica/sezione/:id', :action => 'sezione'
       articoli_views.connect  'modulistica/sezione/:id/articolo/:id', :action => 'articolo'
 
+
       articoli_views.connect  'altro/:id', :action => 'top_menu'
       articoli_views.connect  'altro/sezione/:id', :action => 'sezione'
       articoli_views.connect  'altro/sezione/:id/articolo/:id', :action => 'articolo'
@@ -91,7 +92,7 @@ ActionController::Routing::Routes.draw do |map|
       articoli_routes.with_options :conditions => {:method => :post} do |board_actions|
     end
   end
-  map.signin_fe 'login_fe', :controller => 'account_fe', :action => 'login_fe'
+  map.signin_fe '/home-login_fe', :controller => 'account_fe', :action => 'login_fe'
   map.signout_fe 'logout_fe', :controller => 'account_fe', :action => 'logout_fe'
 
   map.resources :regions

@@ -93,7 +93,6 @@
 <div id="fs-main">
   <header class="fs-header clearfix">
     <div class="fs-shapes">
-     <!--
       <div id="top-menu-fe">
         <div id="account-fe">
           <%= render_menu :account_fe_menu -%>
@@ -106,7 +105,7 @@
         <%# render_menu :top_menu if User.current.logged? || !Setting.login_required? -%>
         <%=render_menu :application_menu if !User.current.logged? %>
       </div>
-     -->
+
       <h1 class="fs-headline" >
         <a href="#">Professionisti Esperti in Materie Fiscali Sportive</a>
       </h1>
@@ -114,7 +113,7 @@
       <div class="fs-logo" ></div>
 
 
-    <div class="fs-textblock fs-cerca" data-left="3.07%">
+    <div class="fs-textblock fs-cerca">
       <form class="fs-search" name="Search" action="javascript:void(0)">
         <input type="text" value="">
         <input type="submit" value="Search" name="search" class="fs-search-button">
