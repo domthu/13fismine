@@ -474,7 +474,9 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     -moz-border-radius: 5px;
     border-radius: 5px;
     margin: 10px auto 0;
-    height: 110px;
+    margin-top: 0px;
+    /*height: 110px;*/
+    height: 100px;
     background-image: url('/images/fe-bk01/header.png');
     background-position: center top;
     background-repeat: no-repeat;
@@ -514,13 +516,26 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     text-align: left;
 
 }
+.fs-sheet-nav {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin: 10px auto 0;
+    margin-top: -15px;
+    position: relative;
+    cursor: auto;
+    width: 78%;
+    min-width: 700px;
+    max-width: 1920px;
+    z-index: auto !important;
+}
 .fs-2nav {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
     z-index: 100;
     font-size: 0;
-    position: absolute;
+    /*position: absolute;*/
     margin: 0;
     bottom: -5px;
     width: 100%;
