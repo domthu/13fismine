@@ -78,7 +78,6 @@ ActionController::Routing::Routes.draw do |map|
       articoli_views.connect  'modulistica/sezione/:id', :action => 'sezione'
       articoli_views.connect  'modulistica/sezione/:id/articolo/:id', :action => 'articolo'
 
-
       articoli_views.connect  'altro/:id', :action => 'top_menu'
       articoli_views.connect  'altro/sezione/:id', :action => 'sezione'
       articoli_views.connect  'altro/sezione/:id/articolo/:id', :action => 'articolo'

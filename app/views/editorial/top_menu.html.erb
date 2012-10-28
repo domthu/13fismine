@@ -6,7 +6,7 @@
           <div class="fs-content-layout-row">
             <div class="fs-layout-cell layout-item-0" style="width: 100%">
               <h4 style="border-bottom: 1px dotted #A8ADB8; padding-bottom: 5px">
-                <%=link_to h(truncate(articolo.titolo, :length => 200)), :controller =>  'sezione/'+  articolo.section.top_section_id.to_s  , :action => 'articolo', :id => articolo.id %>
+                <%=link_to h(truncate(articolo.titolo, :length => 200)), :controller =>  articolo.section.top_section.top_menu.key + '/sezione/'+  articolo.section.top_section_id.to_s  , :action => 'articolo', :id => articolo.id %>
               </h4>
                  <span style="color:#ffffff;" class="fs-sections"><%= articolo.top_section %> > <%= articolo.section %>
                 </span>
