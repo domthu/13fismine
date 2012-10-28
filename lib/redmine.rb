@@ -271,6 +271,7 @@ Redmine::MenuManager.map :application_menu_fs do |menu|
   menu.push :comforum, { :controller => 'editorial', :action => 'sezione', :id => 3 }, :if => Proc.new { User.current.logged? }
 end
 # <<< sandro >>>
+
 Redmine::MenuManager.map :account_fe_menu do |menu|
   menu.push :login, :signin_fe_path, :if => Proc.new { !User.current.logged? }
   menu.push :register, { :controller => 'account_fe', :action => 'register_fe' }, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
