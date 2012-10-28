@@ -75,7 +75,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
-    primary.item :fisc, 'Area Fiscale', '/fiscale/', :highlights_on => :subpath do |sub_nav|
+    primary.item :fisc, 'Area Fiscale', '/fiscale/2', :highlights_on => :subpath do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 2")
       @top_sections.each do |ts|
         sub_nav.item 'fisc' + ts.id.to_s, ts.name,'/fiscale' + sezione_path(ts), :highlights_on => %r(/fiscale\/sezione\/#{ts.id.to_s})
@@ -83,7 +83,7 @@ SimpleNavigation::Configuration.run do |navigation|
         sub_nav.dom_class = 'fs-hmenu'
       end
     end
-    primary.item :vade, 'Vademecum', '/guide/', :highlights_on => :subpath do |sub_nav|
+    primary.item :vade, 'Vademecum', '/guide/3', :highlights_on => :subpath do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 3")
       @top_sections.each do |ts|
         sub_nav.item 'vade' + ts.id.to_s, ts.name,'/guide' +sezione_path(ts), :highlights_on => %r(/guide\/sezione\/#{ts.id.to_s})
@@ -92,7 +92,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
-    primary.item :modu, 'Modulistica', '/modulistica/', :highlights_on => :subpath do |sub_nav|
+    primary.item :modu, 'Modulistica', '/modulistica/4', :highlights_on => :subpath do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 4")
       @top_sections.each do |ts|
         sub_nav.item 'modu' + ts.id.to_s, ts.name,'/modulistica' + sezione_path(ts), :highlights_on => %r(/modulistica\/sezione\/#{ts.id.to_s})
@@ -101,7 +101,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
-    primary.item :altr, 'Altri Temi', '/altri-temi/', :highlights_on => :subpath do |sub_nav|
+    primary.item :altr, 'Altri Temi', '/altri-temi/5', :highlights_on => :subpath do |sub_nav|
       @top_sections = TopSection.find(:all, :conditions => "top_menu_id = 5")
       @top_sections.each do |ts|
         sub_nav.item 'altr' + ts.id.to_s, ts.name, sezione_path(ts), :highlights_on => %r(#{sezione_path(ts)})
