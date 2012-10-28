@@ -64,16 +64,28 @@ ActionController::Routing::Routes.draw do |map|
       articoli_views.connect  'home/:id', :action => 'top_menu'
       articoli_views.connect  'home/sezione/:id', :action => 'sezione'
       articoli_views.connect  'home/sezione/:id/articolo/:id', :action => 'articolo'
-      articoli_views.connect  'area-fiscale/:id', :action => 'top_menu'
-      articoli_views.connect  'area-fiscale/:menu_id/sezione/id', :action => 'sezione'
-      articoli_views.connect  'vademecum/:id', :action => 'top_menu'
+
+      articoli_views.connect  'fiscale/:id', :action => 'top_menu'
+      articoli_views.connect  'fiscale/sezione/:id', :action => 'sezione'
+      articoli_views.connect  'fiscale/sezione/:id/articolo/:id', :action => 'articolo'
+
+      articoli_views.connect  'guide/:id', :action => 'top_menu'
+      articoli_views.connect  'guide/sezione/:id', :action => 'sezione'
+      articoli_views.connect  'guide/sezione/:id/articolo/:id', :action => 'articolo'
+
       articoli_views.connect  'modulistica/:id', :action => 'top_menu'
-      articoli_views.connect  'altri-temi/:id', :action => 'top_menu'
+      articoli_views.connect  'modulistica/sezione/:id', :action => 'sezione'
+      articoli_views.connect  'modulistica/sezione/:id/articolo/:id', :action => 'articolo'
+
+      articoli_views.connect  'altro/:id', :action => 'top_menu'
+      articoli_views.connect  'altro/sezione/:id', :action => 'sezione'
+      articoli_views.connect  'altro/sezione/:id/articolo/:id', :action => 'articolo'
+
       articoli_views.connect  'varie/:id', :action => 'top_menu'
 
-      articoli_views.connect 'menu/:top_menu_id/sezione/:id', :action => 'sezione'
-      articoli_views.connect 'menu/:top_menu_id/sezione/:top_section_id/articolo/:id', :action => 'articolo'
-      articoli_views.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
+    #  articoli_views.connect 'menu/:top_menu_id/sezione/:id', :action => 'sezione'
+    #  articoli_views.connect 'menu/:top_menu_id/sezione/:top_section_id/articolo/:id', :action => 'articolo'
+    #  articoli_views.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
     end
       articoli_routes.with_options :conditions => {:method => :post} do |board_actions|
     end
