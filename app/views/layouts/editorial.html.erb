@@ -89,7 +89,18 @@
 </head>
 <body>
 <div id="fs-main">
- <%= render_menu  :account_fe_menu  %>
+  <div id="top-menu-fe">
+      <div id="account-fe">
+          <%= render_menu :account_menu_ -%>
+      </div>
+      <%= content_tag(
+             'div',
+             "#{l(:label_logged_as)} #{link_to_user(User.current, :format => :username)}".html_safe,
+             :id => 'loggedas') if User.current.logged? %>
+      <%= render_menu :top_menu if User.current.logged? || !Setting.login_required? -%>
+      <%# render_menu :application_menu if !User.current.logged? %>
+  </div>
+
   <header class="fs-header clearfix">
     <div class="fs-shapes">
       <h1 class="fs-headline" data-left="2.62%">
