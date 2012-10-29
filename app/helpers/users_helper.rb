@@ -18,6 +18,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 module UsersHelper
+
   def users_status_options_for_select(selected)
     user_count_by_status = User.count(:group => 'status').to_hash
     options_for_select([[l(:label_all), ''],

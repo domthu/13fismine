@@ -13,4 +13,9 @@ class TopMenu < ActiveRecord::Base
   validates_presence_of :order
   validates_numericality_of :order, :allow_nil => false, :default => 1
 
+#  #rewrite url
+#  def to_param
+#    "/session/#{self.id}"
+#    #"#{self.id}-#{self.title.gsub(/[^a-z0-9]+/i, '-').gsub(/-{2}/, '-').gsub(/-$/, '')}"
+#  end
 end

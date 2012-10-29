@@ -16,13 +16,15 @@
       <hr>
       <h3> id = <%= @id %> </h3>
 
-      <div id="fs_informa" class="nodata"><p>
-        <%= @sezione %> :: <%= @sottosezione %>
-        <br/>
-        TOP SECTION: <%= @top_section %>
-        <br/>
-
-      </p></div>
+      <div id="fs_informa" class="nodata">
+        <p>
+          <%= @sezione %> :: <%= @sottosezione %>
+          <br/>
+          TOP SECTION: <%= @top_section %>
+          <br/>
+        </p>
+      </div>
+      
       <br/>
       <%= link_to("link alla sessione", sezione_path(@id)) %>
       <br/>

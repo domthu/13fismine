@@ -6,6 +6,8 @@ class EditorialController < ApplicationController
   include FeesHelper  #ROLE_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
+  before_filter :correct_user, :only => [:articolo, :quesito, :edizione]
+
   helper :messages
   include MessagesHelper
 
@@ -330,6 +332,9 @@ class EditorialController < ApplicationController
     render :layout => false if request.xhr?
   end
 
+  def unauthorized
+  end
+  
 private
   def find_optional_project
     return true unless params[:id]
@@ -337,5 +342,21 @@ private
     check_project_privacy
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+  
+  def correct_user
+    reroute_log() unless User.current.logged?
+    reroute_auth() unless User.current.isfee?(params[:id])
+  end
+
+  def reroute_log()
+    flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
+    redirect_to(signin_path)
+  end
+
+  def reroute_auth()
+    flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
+    flash[:error] = "Abboanmento non valido (%s)...",  
+    redirect_to(unauthorized_path)
   end
 end

@@ -1432,4 +1432,4 @@ it:
   notice_missing_parameters: La pagina non puo essere caricata per mancanza di informazione
   
 #notice_email_sent: "Una email è stata spedita a %{value}"
-
+  unauthorized: Non autorizzato ad accedere al contenuto

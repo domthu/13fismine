@@ -297,6 +297,6 @@ box-shadow: 5px 5px rgba(80,122,170,0.1);
 #fs_informa p {color: blue;}
 /***** Other data ****/
 .hide{display: none;}
-
+.unauthorized{margin:0px; padding:0px; background-color: red; color: yellow; width: 100%;}
 
 

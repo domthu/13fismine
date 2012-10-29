@@ -19,6 +19,7 @@ require "digest/sha1"
 
 class User < Principal
   include Redmine::SafeAttributes
+  include FeesHelper  #Kappao cyclic include detected
 
   # Account statuses
   STATUS_ANONYMOUS  = 0
@@ -144,7 +145,34 @@ class User < Principal
     end
   end
 
-
+  def isfee?(issueid = nil)
+    return false
+    if self.active?
+      if issueid.nil?
+        return self.asso.nil?
+      else
+        #TODO retreive IssueId
+        @article = Issue.find(issueid)
+        #Show if it is public
+        if @article.nil? || !@article.se_visible_web?
+          return false
+        else
+          if Setting.fee?
+            #Control todo 
+            #Retrieve User show RoleId
+            #Verify is ABBO or more. 
+            #Control if scadenza is not expired
+            return true
+          else
+            return true
+          end
+        end
+      end 
+    else
+      return false
+    end 
+  end
+  
   def privato?
     return self.asso.nil?
   end

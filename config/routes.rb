@@ -46,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   map.poniquesito   '/poniquesito', :controller => 'editorial', :action => 'poniquesito'
   map.ricerca       '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.sezione       '/sezione/:id', :controller => 'editorial', :action => 'sezione'
+  map.unauthorized       '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
   #Map menu 
   #map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
   map.editoriale    '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
