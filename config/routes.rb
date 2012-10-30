@@ -49,12 +49,12 @@ ActionController::Routing::Routes.draw do |map|
   map.unauthorized       '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
   #Map menu 
   #map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
-  map.editoriale    '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-  map.varie         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-  map.vademecum     '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-  map.modulistica   '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-  map.altro         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-  map.fiscale       '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+ # map.editoriale    '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+#  map.varie         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+#  map.vademecum     '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+# map.modulistica   '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+#  map.altro         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+#  map.fiscale       '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
  # map.hmenu          'home/:id', :controller => 'editorial', :action => 'home'
   #map.sezione       'menu/:top_menu_id/sezione/:id', :controller => 'editorial', :action => 'sezione'
   map.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
@@ -91,8 +91,6 @@ ActionController::Routing::Routes.draw do |map|
       articoli_routes.with_options :conditions => {:method => :post} do |board_actions|
     end
   end
-  map.signin_fe '/home-login_fe', :controller => 'account_fe', :action => 'login_fe'
-  map.signout_fe 'logout_fe', :controller => 'account_fe', :action => 'logout_fe'
 
   map.resources :regions
   #map.resources :provinces

@@ -2,7 +2,16 @@
 <div id="login-form">
 <% form_tag({:action=> "login"}) do %>
 <%= back_url_hidden_field_tag %>
-      <h1>Sei sul FE!</h1>
+
+<div id="fs_informa" class="nodata">
+  <p>
+    <% flash.each do |key, value| %>
+      <div class="flash <%= key %>"><%= value %></div>
+      <br />
+    <% end %> 
+  </p>
+</div>
+
 <table>
 <tr>
     <td align="right"><label for="username"><%=l(:field_login)%>:</label></td>

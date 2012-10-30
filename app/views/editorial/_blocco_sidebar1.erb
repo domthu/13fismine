@@ -1,35 +1,50 @@
+<!--
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery('#mycarousel').jcarousel({
+            animation:1000,
+            easing:'linear',
+            vertical:true,
+            scroll:1,
+            auto:5, //autoscroll every 5 secs
+            wrap:'circular' //scroll images circularly
+        });
+    });
+</script>
+-->
 <div class="fs-layout-cell fs-sidebar1 clearfix">
   <div class="fs-block clearfix">
     <div class="fs-blockheader">
-      <h3 class="t">Blocco per vari utilizzi</h3>
+      <h3 class="t">Blocco banners</h3>
     </div>
-    <div class="fs-blockcontent"><p>contenuti...</p>
+
+    <div class="fs-blockcontent">
+      <%= render :partial => 'blocco_banners' %>
+
+      <!--
+
+      <p>contenuti...</p>
       <br>
       <h4> posto per pubblicità e banners </h4>
-      <img src="/images/fs-logo2.png" alt="">
-      <hr>
-      <img src="/images/rails.png" alt="">
-      <hr>
-      <img src="/images/fs-logo1.png" alt="">
-      oppure posto per link veloci ecc
-      <%#   <div class="cleared"></div>%>
-      <hr>
-      <h3> id = <%= @id %> </h3>
+      <!--
+      <div id="jcarousel-wrapper">
+        <ul id="mycarousel" class="jcarousel-skin-simple">
+          <li><img src="/images/banners/1.jpg" alt=""></li>
+          <li><img src="/images/banners/2.jpg" alt=""></li>
+          <li><img src="/images/banners/3.jpg" alt=""></li>
+          <li><img src="/images/banners/4.jpg" alt=""></li>
+          <li><img src="/images/banners/5.jpg" alt=""></li>
+          <li><img src="/images/banners/6.jpg" alt=""></li>
+          <li><img src="/images/banners/7.jpg" alt=""></li>
 
-      <div id="fs_informa" class="nodata">
-        <p>
-          <%= @sezione %> :: <%= @sottosezione %>
-          <br/>
-          TOP SECTION: <%= @top_section %>
-          <br/>
-        </p>
+        </ul>
+
       </div>
-      
-      <br/>
-      <%= link_to("link alla sessione", sezione_path(@id)) %>
-      <br/>
-      <%= link_to("link alla sessione (bis)", :controller => 'editorial', :action => 'sezione', :id => @id) %>
-      <br/>
+      -->
+
+      &nbsp; <br/>
+      &nbsp; <br/>&nbsp; <br/>
+
       <% if @issues && @issues.any? %>
           <h3><%#l(:label_issues_by_section)%></h3>
 
@@ -49,7 +64,8 @@
       <% end %>
 
     </div>
-
   </div>
+
 </div>
+
 

@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class AccountController < ApplicationController
+  layout 'editorial'
   helper :custom_fields
   include CustomFieldsHelper
 

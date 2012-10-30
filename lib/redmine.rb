@@ -273,10 +273,10 @@ end
 # <<< sandro >>>
 
 Redmine::MenuManager.map :account_fe_menu do |menu|
-  menu.push :login, :signin_fe_path, :if => Proc.new { !User.current.logged? }
-  menu.push :register, { :controller => 'account_fe', :action => 'register_fe' }, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
-  menu.push :my_account, { :controller => 'my_fe', :action => 'account_fe' }, :if => Proc.new { User.current.logged? }
-  menu.push :logout, :signout_path, :if => Proc.new { User.current.logged? }
+  menu.push :login, :signin_path, :if => Proc.new { !User.current.logged? }
+  menu.push :register, { :controller => 'account', :action => 'register' }, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
+  menu.push :mio_profilo, { :controller => 'mio_profilo', :action => 'account' }, :if => Proc.new { User.current.logged? }
+  menu.push :logout, :signout, :if => Proc.new { User.current.logged? }
 end
 
 # << end sandro >>

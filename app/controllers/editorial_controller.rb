@@ -201,8 +201,6 @@ class EditorialController < ApplicationController
     @id = params[:id].to_i
     @issue= Issue.find(@id)
     @section_id = @issue.section_id
-
-
     @comune = Comune.find(params[:id])
   end
 
@@ -346,7 +344,7 @@ private
   
   def correct_user
     reroute_log() unless User.current.logged?
-    reroute_auth() unless User.current.isfee?(params[:id])
+   # reroute_auth() unless User.current.isfee?(params[:id])
   end
 
   def reroute_log()

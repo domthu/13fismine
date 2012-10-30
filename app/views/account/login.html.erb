@@ -5,6 +5,7 @@
 
 <div id="fs_informa" class="nodata">
   <p>
+     >> id="fs_informa" class="nodata"
     <% flash.each do |key, value| %>
       <div class="flash <%= key %>"><%= value %></div>
       <br />
@@ -13,6 +14,7 @@
 </div>
 
 <table>
+  << table
 <tr>
     <td align="right"><label for="username"><%=l(:field_login)%>:</label></td>
     <td align="left"><%= text_field_tag 'username', nil, :tabindex => '1' %></td>
@@ -46,6 +48,7 @@
     </td>
 </tr>
 </table>
+      << fine table
 <%= javascript_tag "Form.Element.focus('username');" %>
 <% end %>
 </div>

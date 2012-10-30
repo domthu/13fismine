@@ -14,7 +14,38 @@
 
 #account {float:right;}
 /* fine menu dell'utente */
+/* inizio banner con jcarousel */
+.jcarousel-skin-simple .jcarousel-container {
+}
+.jcarousel-skin-simple .jcarousel-direction-rtl {
+direction: rtl;
+}
+.jcarousel-skin-simple .jcarousel-container-vertical {
+    width: 75px;
+    height: 75px;
+    padding: 0px 0px;
+}
+.jcarousel-skin-simple .jcarousel-clip-vertical {
+    width:  75px;
+    height: 350px;  //scroller height
+}
+.jcarousel-skin-simple .jcarousel-item {
+    width: 75px;  // picture width
+    height: 75px;  // picture height
+}
+.jcarousel-skin-simple .jcarousel-direction-rtl .jcarousel-item-horizontal {
+    margin-left: 10px;
+    margin-right: 0;
+}
+.jcarousel-skin-simple .jcarousel-item-vertical {
+    margin-bottom: 10px;
+}
+.jcarousel-skin-simple .jcarousel-item-placeholder {
+    background: #fff;
+    color: #000;
+}
 
+/*        fine banners  */
 #fs-main {
     background: #000000;
     background: linear-gradient(top, #000000 0, #262626 250px) no-repeat;
@@ -2216,3 +2247,18 @@ img.fs-lightbox-image.active {
 /* Begin Additional CSS Styles */
 
 /* End Additional CSS Styles */
+#tickerz {
+    height: 550px;
+    overflow: hidden;
+}
+
+#tickerz div {
+    position: relative;
+    padding: 10px;
+    top: 550px;
+}
+
+#tickerz div img {
+    display: block;
+    padding:20px;
+}​

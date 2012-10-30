@@ -1,4 +1,4 @@
-/* Created by Artisteer v4.0.0.58475 */
+﻿/* Created by Artisteer  */
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, curly:false, browser:true, jquery:false */
 /*global jQuery */
 
