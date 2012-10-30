@@ -49,7 +49,18 @@
   <%= javascript_include_tag "script.responsive.js" %>
   <%= javascript_include_tag "script.js" %>
   <%= javascript_include_tag "jquery.jcarousel.min.js" %>
-
+  <%= javascript_include_tag "jcarousellite_1.0.1c4.js" %>
+  <script type="text/javascript">
+      $(function () {
+          $(".newsticker-jcarousellite").jCarouselLite({
+              vertical:true,
+              hoverPause:true,
+              visible:3,
+              auto:1500,
+              speed:3000
+          });
+      });
+  </script>
   <!--   <script src="script.js"></script>
 <script src="script.responsive.js"></script>     -->
 <%# superfish %>

@@ -1,45 +1,79 @@
 /* Created by ... */
 /* menu per l'itente in cima */
-#top-menu-fe {display:block;  color: #FAFFBD; height:1.8em; font-size: 0.8em; padding: 2px 2px 0 6px;}
-#top-menu-fe ul  {margin: 0;  padding: 0; }
-#top-menu-fe li  {
-  float:right;
-  list-style-type:none;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-  white-space:nowrap;
+#top-menu-fe {
+    display: block;
+    color: #FAFFBD;
+    height: 1.8em;
+    font-size: 0.8em;
+    padding: 2px 2px 0 6px;
 }
-#top-menu-fe a {color: #fff; margin-right: 8px; font-weight: bold; display:block;}
-#top-menu-fe #loggedas { float: right; margin-right: 0.5em; color: #fff; }
 
-#account {float:right;}
+#top-menu-fe ul {
+    margin: 0;
+    padding: 0;
+}
+
+#top-menu-fe li {
+    float: right;
+    list-style-type: none;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    white-space: nowrap;
+}
+
+#top-menu-fe a {
+    color: #fff;
+    margin-right: 8px;
+    font-weight: bold;
+    display: block;
+}
+
+#top-menu-fe #loggedas {
+    float: right;
+    margin-right: 0.5em;
+    color: #fff;
+}
+
+#account {
+    float: right;
+}
+
 /* fine menu dell'utente */
 /* inizio banner con jcarousel */
 .jcarousel-skin-simple .jcarousel-container {
 }
+
 .jcarousel-skin-simple .jcarousel-direction-rtl {
-direction: rtl;
+    direction: rtl;
 }
+
 .jcarousel-skin-simple .jcarousel-container-vertical {
     width: 75px;
     height: 75px;
     padding: 0px 0px;
 }
+
 .jcarousel-skin-simple .jcarousel-clip-vertical {
-    width:  75px;
-    height: 350px;  //scroller height
+    width: 75px;
+    height: 350px;
+/ / scroller height
 }
+
 .jcarousel-skin-simple .jcarousel-item {
-    width: 75px;  // picture width
-    height: 75px;  // picture height
+    width: 75px;
+/ / picture width height : 75 px;
+/ / picture height
 }
+
 .jcarousel-skin-simple .jcarousel-direction-rtl .jcarousel-item-horizontal {
     margin-left: 10px;
     margin-right: 0;
 }
+
 .jcarousel-skin-simple .jcarousel-item-vertical {
     margin-bottom: 10px;
 }
+
 .jcarousel-skin-simple .jcarousel-item-placeholder {
     background: #fff;
     color: #000;
@@ -80,10 +114,12 @@ h1, h2, h3, h4, h5, h6, p, a, ul, ol, li {
     margin: 0;
     padding: 0;
 }
+
 .fs-content .fs-postcontent-1 .layout-item-0 {
     padding-right: 5px;
     padding-left: 5px;
 }
+
 .fs-content .fs-postcontent-0 .layout-item-0 {
     border-top-style: dotted;
     border-right-style: dotted;
@@ -138,6 +174,7 @@ h1, h2, h3, h4, h5, h6, p, a, ul, ol, li {
     margin: 0 auto;
     height: 24px;
 }
+
 .fs-sections {
     border: 0;
     border-collapse: separate;
@@ -437,11 +474,11 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
 
 .fs-logo {
     display: block;
-    float:right;
-   /* right: 100%;
-    margin-left: -386px;
-    position: absolute;
-    top: 0;      */
+    float: right;
+    /* right: 100%;
+margin-left: -386px;
+position: absolute;
+top: 0;      */
     margin-top: -17px;;
     width: 386px;
     height: 97px;
@@ -499,9 +536,9 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
 }
 
 .fs-cerca {
-   /* position: absolute;
-    top: 15px;
-    left: 3.07%;*/
+    /* position: absolute;
+   top: 15px;
+   left: 3.07%;*/
     margin-left: 17px;
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
@@ -558,14 +595,15 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     border-radius: 5px;
     z-index: 100;
     font-size: 0;
-   /* position: relative;
-    margin: 0;
-    bottom: 15px; */
+    /* position: relative;
+  margin: 0;
+  bottom: 15px; */
     margin-top: 75px;;
     width: 100%;
     text-align: left;
 
 }
+
 .fs-sheet-nav {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -579,16 +617,17 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     max-width: 1920px;
     z-index: auto !important;
 }
+
 .fs-2nav {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
     z-index: 100;
     font-size: 0;
-  /*  position: absolute;
-    margin: 0;
-    bottom: -5px;
-    margin-top: 90px;*/
+    /*  position: absolute;
+   margin: 0;
+   bottom: -5px;
+   margin-top: 90px;*/
     width: 100%;
     text-align: left;
 
@@ -742,7 +781,7 @@ ul.fs-hmenu>li>a:hover,
 }
 
 ul.fs-hmenu>li:before {
-  /*  position: absolute;
+    /*  position: absolute;
     display: block;
     content: ' ';
     top: 0;
@@ -2260,5 +2299,63 @@ img.fs-lightbox-image.active {
 
 #tickerz div img {
     display: block;
-    padding:20px;
-}​
+    padding: 20px;
+}
+
+​
+
+/*    altro immage rotator in banner1 */
+
+
+
+
+.newsticker-jcarousellite {
+    width: 300px;
+}
+
+.newsticker-jcarousellite ul li {
+    list-style: none;
+    display: block;
+    padding-bottom: 1px;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+.newsticker-jcarousellite ul li .fs-block ul li {
+    margin:0;
+    padding:0;
+}
+.newsticker-jcarousellite .thumbnail {
+    float: left;
+    width: 100%;
+    height: 110px;
+    text-align: center;
+
+}
+
+.newsticker-jcarousellite .info {
+    width: 190px;
+    display: block;
+}
+
+.newsticker-jcarousellite .info span.cat {
+    display: block;
+    font-size: 10px;
+    color: #808080;
+}
+#newsticker-wrap {
+   width: 182px;
+   background: #EAF4F5;
+   padding: 0;
+   font-size: 12px;
+   margin: 0 auto;
+}
+
+#newsticker-wrap a {
+   text-decoration: none;
+}
+
+#newsticker-wrap img {
+   border: 2px solid #FFFFFF;
+margin: 0 auto;
+
+}
