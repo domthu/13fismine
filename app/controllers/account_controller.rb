@@ -218,8 +218,9 @@ class AccountController < ApplicationController
     #if User.current.allowed_to?(:access_back_end, nil, :global => true)
     #if self.logged_user.allowed_to?(:access_back_end, nil, :global => true)
     if user.allowed_to?(:access_back_end, nil, :global => true)
-      redirect_to(home_url)
+     # redirect_to(home_url)
       #redirect_back_or_default :controller => 'my', :action => 'page'
+      redirect_to(editorial_url)
     else
       redirect_to(editorial_url)
     end

@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
 
   #end
 
-  map.editorial     '/editorial/home/:id',:controller => 'editorial', :action => 'home'
+
   map.contact       '/contact',  :controller => 'editorial', :action => 'contact'
   map.about         '/about',    :controller => 'editorial', :action => 'about'
   map.help          '/help',     :controller => 'editorial', :action => 'help'
@@ -58,10 +58,10 @@ ActionController::Routing::Routes.draw do |map|
  # map.hmenu          'home/:id', :controller => 'editorial', :action => 'home'
   #map.sezione       'menu/:top_menu_id/sezione/:id', :controller => 'editorial', :action => 'sezione'
   map.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
-
+  map.editorial     '/home/prima-pagina',:controller => 'editorial', :action => 'home'
   map.with_options :controller => 'editorial' do |articoli_routes|
       articoli_routes.with_options :conditions => {:method => :get} do |articoli_views|
-      articoli_views.connect  'home', :action => 'home'
+    #  articoli_views.connect  'home', :action => 'home'
       articoli_views.connect  'home/:id', :action => 'top_menu'
       articoli_views.connect  'home/sezione/:id', :action => 'sezione'
       articoli_views.connect  'home/sezione/:id/articolo/:id', :action => 'articolo'
