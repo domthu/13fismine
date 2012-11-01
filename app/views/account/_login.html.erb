@@ -2,9 +2,19 @@
 <div id="login-form">
 <% form_tag({:action=> "login"}) do %>
 <%= back_url_hidden_field_tag %>
-      <h1> LOGIN FE !!!!</h1>
-      <h2> LOGIN FE !!!!</h2>
+
+<div id="fs_informa" class="nodata">
+  <p>
+     >> id="fs_informa" class="nodata"
+    <% flash.each do |key, value| %>
+      <div class="flash <%= key %>"><%= value %></div>
+      <br />
+    <% end %> 
+  </p>
+</div>
+
 <table>
+  << table
 <tr>
     <td align="right"><label for="username"><%=l(:field_login)%>:</label></td>
     <td align="left"><%= text_field_tag 'username', nil, :tabindex => '1' %></td>
@@ -38,8 +48,8 @@
     </td>
 </tr>
 </table>
+      << fine table
 <%= javascript_tag "Form.Element.focus('username');" %>
 <% end %>
 </div>
-<h1> qui sotto c'è il gancio</h1>
 <%= call_hook :view_account_login_bottom %>

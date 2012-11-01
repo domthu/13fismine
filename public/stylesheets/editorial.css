@@ -156,6 +156,19 @@ h1, h2, h3, h4, h5, h6, p, a, ul, ol, li {
     padding-right: 5px;
     padding-left: 5px;
 }
+.due-col {
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 2;
+    -webkit-column-gap : 20px;
+    -moz-column-rule-color:  #ccc;
+    -moz-column-rule-style:  solid;
+    -moz-column-rule-width:  1px;
+    -webkit-column-rule-color:  #ccc;
+    -webkit-column-rule-style: solid ;
+    -webkit-column-rule-width:  1px;
+}
+
 
 /* Reset buttons border. It's important for input and button tags. 
  * border-collapse should be separate for shadow in IE. 
