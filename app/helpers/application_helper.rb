@@ -367,7 +367,7 @@ module ApplicationHelper
     per_page_links = options.delete(:per_page_links)
     url_param = params.dup
 
-    printf 'url_paramurl_param => %s', url_param
+    printf 'url_param =========> %s', url_param
     
     html = ''
     if paginator.current.previous
