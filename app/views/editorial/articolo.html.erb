@@ -14,7 +14,9 @@
                 <span class="fs-postauthoricon">  Autore:<%= h @issue.author %>
                 </span>
                 <br/>
+              <div class="fs-layout-cell layout-item-1">
                 <%= @issue.testo %>
+               </div>
               <%= link_to "Ritorna ...",  @issue.section.top_section.top_menu.key + '/sezione/'+ @issue.section.top_section_id.to_s %>
             </div>
           </div>

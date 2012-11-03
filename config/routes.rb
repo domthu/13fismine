@@ -57,8 +57,10 @@ ActionController::Routing::Routes.draw do |map|
 #  map.fiscale       '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
  # map.hmenu          'home/:id', :controller => 'editorial', :action => 'home'
   #map.sezione       'menu/:top_menu_id/sezione/:id', :controller => 'editorial', :action => 'sezione'
+
   map.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
   map.editorial     '/home/prima-pagina',:controller => 'editorial', :action => 'home'
+
   map.with_options :controller => 'editorial' do |articoli_routes|
       articoli_routes.with_options :conditions => {:method => :get} do |articoli_views|
     #  articoli_views.connect  'home', :action => 'home'
@@ -125,7 +127,7 @@ ActionController::Routing::Routes.draw do |map|
   #in POST not in Get for params[:username]...
   map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
 
-  map.signin 'login', :controller => 'account', :action => 'login'
+  map.signin 'home-login', :controller => 'account', :action => 'login'
   map.signout 'logout', :controller => 'account', :action => 'logout'
 
 
