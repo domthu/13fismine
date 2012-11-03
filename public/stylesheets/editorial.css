@@ -25,10 +25,10 @@
     color: #fff;
     margin-right: 8px;
     font-weight: bold;
-    display: block;
+    display: inline-block;
 }
 
-#top-menu-fe #loggedas {
+#top-menu-fe #loggedas-fe {
     float: right;
     margin-right: 0.5em;
     color: #fff;
@@ -139,7 +139,7 @@ h1, h2, h3, h4, h5, h6, p, a, ul, ol, li {
 
 }
 
-.fs-content .fs-postcontent-0 .layout-item-1 {
+.fs-content-layout .layout-item-1 {
     border-top-style: dotted;
     border-right-style: dotted;
     border-bottom-style: dotted;
@@ -153,19 +153,22 @@ h1, h2, h3, h4, h5, h6, p, a, ul, ol, li {
     border-bottom-color: #BBBFC8;
     border-left-color: #BBBFC8;
     border-top: none !important;
-    padding-right: 5px;
-    padding-left: 5px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
-.due-col {
+.fs-content-layout .layout-item-1 h3 , .fs-content-layout .layout-item-1 h4{
+ text-align: center;
+}
+.fs-content .fs-postcontent-0 .layout-item-1 {
     -moz-column-count: 2;
     -moz-column-gap: 20px;
     -webkit-column-count: 2;
     -webkit-column-gap : 20px;
-    -moz-column-rule-color:  #ccc;
-    -moz-column-rule-style:  solid;
+    -moz-column-rule-color:  #BBBFC8;
+    -moz-column-rule-style:  dotted;
     -moz-column-rule-width:  1px;
-    -webkit-column-rule-color:  #ccc;
-    -webkit-column-rule-style: solid ;
+    -webkit-column-rule-color:  #BBBFC8;
+    -webkit-column-rule-style: dotted ;
     -webkit-column-rule-width:  1px;
 }
 

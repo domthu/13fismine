@@ -1,53 +1,66 @@
-<%= call_hook :view_account_login_top %>
-<div id="login-form">
-<% form_tag({:action=> "login"}) do %>
-<%= back_url_hidden_field_tag %>
+<div class="fs-content-layout">
+  <div class="fs-content-layout-row">
+    <div class="fs-layout-cell layout-item-0" style="width: 100%">
+      <h2 style="text-align:center"> Area Abbonati </h2>
+      <div class="fs-layout-cell layout-item-1" style="width: 50%">
 
-<div id="fs_informa" class="nodata">
-  <p>
-    <% flash.each do |key, value| %>
-      <div class="flash <%= key %>"><%= value %></div>
-      <br />
-    <% end %>
-  </p>
-</div>
+        <h3> Possiedi già un abbonamento ?</h3>
+        <h4> Inserisci i tui dati di login </h4>
 
-<table>
-  <tr>
-      <td align="right"><label for="username"><%=l(:field_login)%>:</label></td>
-      <td align="left"><%= text_field_tag 'username', nil, :tabindex => '1' %></td>
-  </tr>
-  <tr>
-      <td align="right"><label for="password"><%=l(:field_password)%>:</label></td>
-      <td align="left"><%= password_field_tag 'password', nil, :tabindex => '2' %></td>
-  </tr>
-  <% if Setting.openid? %>
-  <tr>
-    <td align="right"><label for="openid_url"><%=l(:field_identity_url)%></label></td>
-    <td align="left"><%= text_field_tag "openid_url", nil, :tabindex => '3' %></td>
-  </tr>
-  <% end %>
-  <tr>
-      <td></td>
-      <td align="left">
-          <% if Setting.autologin? %>
-          <label for="autologin"><%= check_box_tag 'autologin', 1, false, :tabindex => 4 %> <%= l(:label_stay_logged_in) %></label>
+        <%= call_hook :view_account_login_top %>
+        <div id="login-form">
+          <% form_tag({:action => "login"}) do %>
+              <%= back_url_hidden_field_tag %>
+
+              <table>
+                <tr>
+                  <td align="right"><label for="username"><%= l(:field_login) %>:</label></td>
+                  <td align="left"><%= text_field_tag 'username', nil, :tabindex => '1' %></td>
+                </tr>
+                <tr>
+                  <td align="right"><label for="password"><%= l(:field_password) %>:</label></td>
+                  <td align="left"><%= password_field_tag 'password', nil, :tabindex => '2' %></td>
+                </tr>
+                <% if Setting.openid? %>
+                    <tr>
+                      <td align="right"><label for="openid_url"><%= l(:field_identity_url) %></label></td>
+                      <td align="left"><%= text_field_tag "openid_url", nil, :tabindex => '3' %></td>
+                    </tr>
+                <% end %>
+                <tr>
+                  <td></td>
+                  <td align="left">
+                    <% if Setting.autologin? %>
+                        <label for="autologin"><%= check_box_tag 'autologin', 1, false, :tabindex => 4 %> <%= l(:label_stay_logged_in) %></label>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">
+                    <% if Setting.lost_password? %>
+                        <%= link_to l(:label_password_lost), :controller => 'account', :action => 'lost_password' %>
+                    <% end %>
+                  </td>
+                  <td align="right">
+                    <input type="submit" name="login" value="<%= l(:button_login) %> &#187;" tabindex="5"/>
+                  </td>
+                </tr>
+              </table>
+              <%= javascript_tag "Form.Element.focus('username');" %>
           <% end %>
-      </td>
-  </tr>
-  <tr>
-    <td align="left">
-        <% if Setting.lost_password? %>
-            <%= link_to l(:label_password_lost), :controller => 'account', :action => 'lost_password' %>
-        <% end %>
-    </td>
-    <td align="right">
-        <input type="submit" name="login" value="<%=l(:button_login)%> &#187;" tabindex="5"/>
-    </td>
-  </tr>
-</table>
+        </div>
+        <%= call_hook :view_account_login_bottom %>
 
-<%= javascript_tag "Form.Element.focus('username');" %>
-<% end %>
+      </div>
+      <div class="fs-layout-cell layout-item-1" style="width: 50%">
+        <h3> Non sei abbonato?</h3>
+        <h4> Ecco tutte le informazioni per abbonarti </h4>
+        <blockquote style="margin: 10px 0">Nunc a sollicitudin est. Curabitur
+          ullamcorper gravida felis, sit amet scelerisque lorem iaculis sed. Donec vel
+          neque in neque porta venenatis sed sit amet lectus.
+        </blockquote>
+      </div>
+    </div>
+  </div>
+
 </div>
-<%= call_hook :view_account_login_bottom %>

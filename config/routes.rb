@@ -29,6 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   map.ricerca       '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.unauthorized       '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
 
+
 #http://guides.rubyonrails.org/v2.3.11/routing.html
 #map.resources :photos, :path_prefix => '/photographers/:photographer_id'
 #map.resources :users, :path_prefix => '/:locale'
@@ -71,6 +72,7 @@ ActionController::Routing::Routes.draw do |map|
 #              :article_title    => /[^\/]+/  # /\d{1,2}/
 #              :as => 'articolo_page'
 
+
   map.resources :regions
   #map.resources :provinces
   map.resources :provinces, :has_many => :regions
@@ -104,7 +106,7 @@ ActionController::Routing::Routes.draw do |map|
   #in POST not in Get for params[:username]...
   map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
 
-  map.signin 'login', :controller => 'account', :action => 'login'
+  map.signin 'home-login', :controller => 'account', :action => 'login'
   map.signout 'logout', :controller => 'account', :action => 'logout'
 
 
