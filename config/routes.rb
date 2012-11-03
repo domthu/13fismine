@@ -47,50 +47,71 @@ ActionController::Routing::Routes.draw do |map|
   map.ricerca       '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.sezione       '/sezione/:id', :controller => 'editorial', :action => 'sezione'
   map.unauthorized       '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
-  #Map menu 
-  #map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
-  map.editoriale    '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-  map.varie         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-  map.vademecum     '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-  map.modulistica   '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-  map.altro         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-  map.fiscale       '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
- # map.hmenu          'home/:id', :controller => 'editorial', :action => 'home'
-  #map.sezione       'menu/:top_menu_id/sezione/:id', :controller => 'editorial', :action => 'sezione'
-  map.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
+#  #Map menu 
+#  #map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
+#  map.editoriale    '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+#  map.varie         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+#  map.vademecum     '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+#  map.modulistica   '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+#  map.altro         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+#  map.fiscale       '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
+# # map.hmenu          'home/:id', :controller => 'editorial', :action => 'home'
+#  #map.sezione       'menu/:top_menu_id/sezione/:id', :controller => 'editorial', :action => 'sezione'
+#  map.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
+  map.connect 'editorial/home',
+              :controller => 'editorial',
+              :action     => 'home'
+  map.connect 'editorial/:topmenu',
+              :controller => 'editorial',
+              :action     => 'top_menu',
+              :topmenu       => /\d{4}/
+  map.connect 'editorial/:topmenu/:section',
+              :controller => 'editorial',
+              :action     => 'sezione',
+              :topmenu       => /\d{4}/,
+              :section      => /\d{1,2}/
+  map.connect 'editorial/:topmenu/:section/:article',
+              :controller => 'editorial',
+              :action     => 'articolo',
+              :topmenu       => /\d{4}/,
+              :section      => /\d{1,2}/,
+              :article        => /\d{1,2}/
+              
+  #Using the route above, the URL "localhost:3000/articles/2005/11/06" maps to
+  #params = {:year => '2005', :month => '11', :day => '06'}
 
-  map.with_options :controller => 'editorial' do |articoli_routes|
-      articoli_routes.with_options :conditions => {:method => :get} do |articoli_views|
-      articoli_views.connect  'home', :action => 'home'
-      articoli_views.connect  'home/:id', :action => 'top_menu'
-      articoli_views.connect  'home/sezione/:id', :action => 'sezione'
-      articoli_views.connect  'home/sezione/:id/articolo/:id', :action => 'articolo'
+#  map.with_options :controller => 'editorial' do |articoli_routes|
+#      articoli_routes.with_options :conditions => {:method => :get} do |articoli_views|
+#      articoli_views.connect  'home', :action => 'home'
+#      articoli_views.connect  'home/:id', :action => 'top_menu'
+#      articoli_views.connect  'home/sezione/:id', :action => 'sezione'
+#      articoli_views.connect  'home/sezione/:id/articolo/:id', :action => 'articolo'
 
-      articoli_views.connect  'fiscale/:id', :action => 'top_menu'
-      articoli_views.connect  'fiscale/sezione/:id', :action => 'sezione'
-      articoli_views.connect  'fiscale/sezione/:id/articolo/:id', :action => 'articolo'
+#      articoli_views.connect  'fiscale/:id', :action => 'top_menu'
+#      articoli_views.connect  'fiscale/sezione/:id', :action => 'sezione'
+#      articoli_views.connect  'fiscale/sezione/:id/articolo/:id', :action => 'articolo'
 
-      articoli_views.connect  'guide/:id', :action => 'top_menu'
-      articoli_views.connect  'guide/sezione/:id', :action => 'sezione'
-      articoli_views.connect  'guide/sezione/:id/articolo/:id', :action => 'articolo'
+#      articoli_views.connect  'guide/:id', :action => 'top_menu'
+#      articoli_views.connect  'guide/sezione/:id', :action => 'sezione'
+#      articoli_views.connect  'guide/sezione/:id/articolo/:id', :action => 'articolo'
 
-      articoli_views.connect  'modulistica/:id', :action => 'top_menu'
-      articoli_views.connect  'modulistica/sezione/:id', :action => 'sezione'
-      articoli_views.connect  'modulistica/sezione/:id/articolo/:id', :action => 'articolo'
+#      articoli_views.connect  'modulistica/:id', :action => 'top_menu'
+#      articoli_views.connect  'modulistica/sezione/:id', :action => 'sezione'
+#      articoli_views.connect  'modulistica/sezione/:id/articolo/:id', :action => 'articolo'
 
-      articoli_views.connect  'altro/:id', :action => 'top_menu'
-      articoli_views.connect  'altro/sezione/:id', :action => 'sezione'
-      articoli_views.connect  'altro/sezione/:id/articolo/:id', :action => 'articolo'
+#      articoli_views.connect  'altro/:id', :action => 'top_menu'
+#      articoli_views.connect  'altro/sezione/:id', :action => 'sezione'
+#      articoli_views.connect  'altro/sezione/:id/articolo/:id', :action => 'articolo'
 
-      articoli_views.connect  'varie/:id', :action => 'top_menu'
+#      articoli_views.connect  'varie/:id', :action => 'top_menu'
 
-    #  articoli_views.connect 'menu/:top_menu_id/sezione/:id', :action => 'sezione'
-    #  articoli_views.connect 'menu/:top_menu_id/sezione/:top_section_id/articolo/:id', :action => 'articolo'
-    #  articoli_views.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
-    end
-      articoli_routes.with_options :conditions => {:method => :post} do |board_actions|
-    end
-  end
+#    #  articoli_views.connect 'menu/:top_menu_id/sezione/:id', :action => 'sezione'
+#    #  articoli_views.connect 'menu/:top_menu_id/sezione/:top_section_id/articolo/:id', :action => 'articolo'
+#    #  articoli_views.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
+#    end
+#      articoli_routes.with_options :conditions => {:method => :post} do |board_actions|
+#    end
+#  end
 
 
   map.resources :regions
