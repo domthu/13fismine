@@ -1,4 +1,5 @@
-<h2><%=l(:list_articoli)%></h2>
+<div class="fs-layout-cell fs-content clearfix">
+  <h2><%=l(:list_articoli)%></h2>
   In questa pagina:
   <ul> 
     <li>Lista degli articoli</li>
@@ -6,4 +7,25 @@
     <li>LINK: all'edizione di ciascun articoli</li>
     <li>LINK: alla sezione di ciascun articoli</li>
   </ul> 
+  <br/>
+  <p class="pagination"><%= pagination_links(@issues_pages, :link_to_current_page => false, :url => home_path) %></p>
+  <br/>
+  <p class="pagination"><%= pagination_links_full(@issues_pages, @issues_count, :path_prefix => 'ddddddddd') %></p>
   
+  <article class="fs-post fs-article">
+    <% @issues.each do |articolo| %>
+      <%= render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
+      <br/>
+    <% end %>
+  </article>
+  <br/>
+  <p class="pagination"><%= pagination_links(@issues_pages, :link_to_current_page => false, :url => home_path) %></p>
+  <br/>
+  <p class="pagination"><%= pagination_links_full(@issues_pages, @issues_count, :path_prefix => 'ddddddddd') %></p>
+  <div class="clearfix"></div>
+</div>  
+
+
+
+
+

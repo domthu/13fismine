@@ -57,32 +57,60 @@ ActionController::Routing::Routes.draw do |map|
 #map.fiscale       '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
 #map.hmenu          'home/:id', :controller => 'editorial', :action => 'home'
 #map.sezione       'menu/:top_menu_id/sezione/:id', :controller => 'editorial', :action => 'sezione'
-  map.connect 'editorial/home',
-              :controller => 'editorial',
-              :action     => 'home'
-  map.connect 'editorial/:topmenu_key',
-              :controller => 'editorial',
-              :action     => 'top_menu',
-              :topmenu       => /\d{4}/
-  map.connect 'editorial/:topmenu_key/:section',
-              :controller => 'editorial',
-              :action     => 'sezione',
-              :topmenu       => /\d{4}/,
-              :section      => /\d{1,2}/
-  map.connect 'editorial/:topmenu_key/:section/:article',
-              :controller => 'editorial',
-              :action     => 'articolo',
-              :topmenu       => /\d{4}/,
-              :section      => /\d{1,2}/,
-              :article        => /\d{1,2}/
+
+
+#http://guides.rubyonrails.org/v2.3.11/routing.html
+#map.resources :photos, :path_prefix => '/photographers/:photographer_id'
+#map.resources :users, :path_prefix => '/:locale'
+#link_to 'English', url_for( :locale => 'en' )
+#link_to 'Deutch', url_for( :locale => 'de' )
+
+#  map.connect 'editorial/home',
+#              :controller => 'editorial',
+#              :action     => 'home'
+#  map.connect 'editorial/:topmenu_key',
+#              :controller   => 'editorial',
+#              :action       => 'top_menu',
+#              :topmenu_key  => /[^\/]+/  # /\d{4}/
+##  map.connect 'editorial/:topmenu_key/:section_sezione',
+##              :controller   => 'editorial',
+##              :action       => 'section',
+##              :topmenu_key  => /[^\/]+/,  # /\d{4}/,
+##              :section_sezione => /[^\/]+/  # /\d{1,2}/
+#  map.connect 'editorial/:topmenu_key/sezione/:section_id',
+#              :controller   => 'editorial',
+#              :action       => 'section',
+#              :topmenu_key  => /[^\/]+/,  # /\d{4}/,
+#              :section_id       => /\d.+/
+##  map.connect 'editorial/:topmenu_key/:section_sezione/:article_id/:article_title',
+##              :controller       => 'editorial',
+##              :action           => 'articolo',
+##              :topmenu_key      => /[^\/]+/,  # /\d{4}/,
+##              :section_sezione     => /[^\/]+/,  # /\d{1,2}/,
+##              :article_id       => /\d.+/,
+##              :article_title    => /[^\/]+/  # /\d{1,2}/
+#  map.connect 'editorial/:topmenu_key/sezione/:section_id/articolo/:article_id/:article_title',
+#              :controller       => 'editorial',
+#              :action           => 'articolo',
+#              :topmenu_key      => /[^\/]+/,  # /\d{4}/,
+#              :section_id       => /\d.+/,
+#              :article_id       => /\d.+/,
+#              :article_title    => /[^\/]+/  # /\d{1,2}/
 
   #Using the route above, the URL "localhost:3000/articles/2005/11/06" maps to
   #params = {:year => '2005', :month => '11', :day => '06'}
 
-  map.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
-  map.editorial     '/home/prima-pagina',:controller => 'editorial', :action => 'home'
+  #Using Nested ressources
+  #map.resources :top_menus do |top_menu| 
+  #  top_menu.resources :sections do |section| 
+  #    section.resources :issue 
+  #  end 
+  #end
+  
+#  map.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
+  map.editorial '/home/prima-pagina', :controller => 'editorial', :action => 'home'
   map.with_options :controller => 'editorial' do |articoli_routes|
-      articoli_routes.with_options :conditions => {:method => :get} do |articoli_views|
+    articoli_routes.with_options :conditions => {:method => :get} do |articoli_views|
     #  articoli_views.connect  'home', :action => 'home'
       articoli_views.connect  'home/:id', :action => 'top_menu'
       articoli_views.connect  'home/sezione/:id', :action => 'sezione'
@@ -110,7 +138,9 @@ ActionController::Routing::Routes.draw do |map|
     #  articoli_views.connect 'menu/:top_menu_id/sezione/:top_section_id/articolo/:id', :action => 'articolo'
     #  articoli_views.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
     end
-      articoli_routes.with_options :conditions => {:method => :post} do |board_actions|
+    
+    articoli_routes.with_options :conditions => {:method => :post} do |board_actions|
+    
     end
   end
 

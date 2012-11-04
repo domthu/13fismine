@@ -14,6 +14,7 @@ class EditorialController < ApplicationController
   caches_action :robots
 
   def home
+    @base_url = params[:pages]
 #    @last_editorial = Project.visible.find(:all, :order => 'lft')
 #    @p = Project.find(:first, :order => 'created_on DESC')
 #    @projects = Project.all.compact.uniq
@@ -63,6 +64,7 @@ class EditorialController < ApplicationController
   end
 
   def top_menu
+    @base_url = params[:pages]
     @id = params[:id].to_i
     if @id.nil?
         flash[:notice] = l(:notice_missing_parameters)
@@ -129,6 +131,7 @@ class EditorialController < ApplicationController
 
   #dal menu sezione si accede all'insieme degli articoli riferiti alla sezione
   def sezione
+    @base_url = params[:pages]
     @id = params[:id].to_i
     if @id.nil?
       flash[:notice] = l(:notice_missing_parameters)

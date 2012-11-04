@@ -362,35 +362,35 @@ module ApplicationHelper
   end
 
 
-  def pagination_links_full(paginator, count=nil, options={})
+  def pagination_links_full(paginator, count=nil, options={}, path_prefix=nil)
     page_param = options.delete(:page_param) || :page
     per_page_links = options.delete(:per_page_links)
     url_param = params.dup
 
-    printf 'url_param =========> %s', url_param
+    #printf 'url_param =========> %s', url_param
     
     html = ''
     if paginator.current.previous
       # \xc2\xab(utf-8) = &#171;
       html << link_to_content_update(
                    "\xc2\xab " + l(:label_previous),
-                   url_param.merge(page_param => paginator.current.previous)) + ' '
+                   url_param.merge(page_param => paginator.current.previous), :path_prefix => path_prefix) + ' '
     end
 
     html << (pagination_links_each(paginator, options) do |n|
-      link_to_content_update(n.to_s, url_param.merge(page_param => n))
+      link_to_content_update(n.to_s, url_param.merge(page_param => n), :path_prefix => path_prefix)
     end || '')
 
     if paginator.current.next
       # \xc2\xbb(utf-8) = &#187;
       html << ' ' + link_to_content_update(
                       (l(:label_next) + " \xc2\xbb"),
-                      url_param.merge(page_param => paginator.current.next))
+                      url_param.merge(page_param => paginator.current.next), :path_prefix => path_prefix)
     end
 
     unless count.nil?
       html << " (#{paginator.current.first_item}-#{paginator.current.last_item}/#{count})"
-      if per_page_links != false && links = per_page_links(paginator.items_per_page)
+      if per_page_links != false && links = per_page_links(paginator.items_per_page, :path_prefix => path_prefix)
 	      html << " | #{links}"
       end
     end
@@ -398,9 +398,9 @@ module ApplicationHelper
     html.html_safe
   end
 
-  def per_page_links(selected=nil)
+  def per_page_links(selected=nil, path_prefix=nil)
     links = Setting.per_page_options_array.collect do |n|
-      n == selected ? n : link_to_content_update(n, params.merge(:per_page => n))
+      n == selected ? n : link_to_content_update(n, params.merge(:per_page => n), :path_prefix => path_prefix)
     end
     links.size > 1 ? l(:label_display_per_page, links.join(', ')) : nil
   end
@@ -1084,8 +1084,13 @@ module ApplicationHelper
     return self
   end
 
-  def link_to_content_update(text, url_params = {}, html_options = {})
-    link_to(text, url_params, html_options)
+  def link_to_content_update(text, url_params = {}, html_options = {}, path_prefix=nil)
+    if path_prefix.nil?
+      '**' + link_to(text, url_params, html_options)
+    else
+      #'*' + path_prefix + '*' + link_to_articoli(text, path_prefix.merge(url_params), html_options)
+      '*' + path_prefix + '*' + link_to(text, url_for, html_options)
+    end
   end
 
 end
