@@ -1,40 +1,7 @@
-<h2><%=l(:details_sezione)%></h2>
-  In questa pagina:
-  <ul> 
-    <li>Summary e definizione della sezione</li>
-    <li>Lista articoli correlati</li>
-    <li>Filtraggio sul contenuto</li>
-    <li>LINK: all'edizione</li>
-    <li>LINK: al singolo articolo</li>
-  </ul> 
-<h3> id = <%= @id %> </h3>
-<div id="fs_informa" class="nodata"><p>
-  <%= @sezione  %> :: <%= @sottosezione %>
-</p></div>
-<br />
-<%= link_to("link alla sessione", sezione_path(@id)) %>
-<br />
-<%= link_to("link alla sessione (bis)", :controller => 'editorial', :action => 'sezione', :id =>@id) %>
-<br />
-<% if @issues && @issues.any? %>
-  <h3><%=l(:label_issues_by_section)%></h3>
-  <div class="issues box">
-    Totale articoli: <b><%= @issues.count %></b>
-    <br />
-    <% for articolo in @issues %>
-      <%= render :partial => 'articolo_teaser', :locals => { :articolo => articolo } %>
-    <% end %>
-    <br />
-    <%= link_to l(:label_issues_view_all), :action => 'articoli' %>
-  </div>
-<% else %>
-  <p class="nodata"><%= l(:label_no_data) %></p>
-<% end %>
 
-
-autore 
-sezione
-sottosezione
-elipsis descrizione
-avatar
-
+<h1 style="display:none">TOP_SEZIONE<%= @base_url %>TOPMENU</h1>
+<%= render :partial => 'articoli', :locals => {:issues => @issues, :issues_pages => @issues_pages, :issues_count => @issues_count} %>
+<%#sidebar a centro destra %>
+<%= render :partial => 'blocco_sidebar1' %>
+<%#sidebar a destra %>
+<%# render :partial => 'blocco_sidebar2' %>

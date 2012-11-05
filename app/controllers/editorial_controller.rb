@@ -7,7 +7,8 @@ class EditorialController < ApplicationController
 
   before_filter :find_optional_project, :only => [:ricerca]
   before_filter :correct_user, :only => [:articolo, :quesito, :edizione]
-  before_filter :enabled_user, :only => [:articolo, :quesito, :edizione]
+ # -> sandro rem della linea sotto  altrimenti non riesco ad accedere al singolo articolo
+ # before_filter :enabled_user, :only => [:articolo, :quesito, :edizione]
 
   helper :messages
   include MessagesHelper
@@ -31,6 +32,13 @@ class EditorialController < ApplicationController
         @limit = 5
         @offset= 25
     end
+    # --> sandro debug zona
+    @top_menu = TopMenu.find(:first,:conditions=> 'id =1' )
+    @topsection_ids = TopSection.find(:all,
+       :select => 'distinct id',
+       :conditions => ["top_menu_id =  ?", @top_menu.id]
+       )
+    # -->
     @issues_count =Issue.count(
         :include => [:section => :top_section]
     )
@@ -38,7 +46,7 @@ class EditorialController < ApplicationController
     @issues =  Issue.find( :all,
                         :include => [:section => :top_section],
                         :order =>  'updated_on DESC',
-                        :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1"],
+                        :conditions => ["se_visible_web = 1 AND se_visible_newsletter = 1"],
                         :limit  => @issues_pages.items_per_page ,
                         :offset =>  @issues_pages.current.offset)
 
@@ -84,6 +92,7 @@ class EditorialController < ApplicationController
       :select => 'distinct id',
       :conditions => ["top_menu_id =  ?", @top_menu.id]
       )
+
     #@topsection_ids = @top_sections.select(:id).uniq
     # Paginate results
     case params[:format]
@@ -96,14 +105,14 @@ class EditorialController < ApplicationController
 
     @issues_count =Issue.count(
         :include => [:section => :top_section] ,
-        :conditions => ["#{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids]
+        :conditions => ["#{TopSection.table_name}.top_menu_id = ?", @top_menu.id]
     )
 
     @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
     @issues =  Issue.find( :all,
                         :include => [:section => :top_section],
                         :order =>  'updated_on DESC',
-                        :conditions => ["se_visible_web = 1 AND #{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids],
+                        :conditions => ["se_visible_web = 1 AND #{TopSection.table_name}.top_menu_id = ?", @top_menu.id],
                         :limit  => @issues_pages.items_per_page ,
                         :offset =>  @issues_pages.current.offset)
 
@@ -118,7 +127,7 @@ class EditorialController < ApplicationController
   #dal menu sezione si accede all'insieme degli articoli riferiti alla sezione
   #map.sezione_page '/editorial/:topmenu_key/sezione/:topsection_id'
   #link_to sezione_page_url
-  def topsezione
+  def top_sezione
     @base_url = request.path
     @key_url = params[:topmenu_key]
     @topsection_id = params[:topsection_id]
@@ -143,7 +152,13 @@ class EditorialController < ApplicationController
         @limit = 5
         @offset= 25
     end
-
+       # --> sandro debug zona
+    @top_menu = TopMenu.find(:first,:conditions=> 'id =1' )
+    @topsection_ids = TopSection.find(:all,
+       :select => 'distinct id',
+       :conditions => ["top_menu_id =  ?", @top_menu.id]
+       )
+    # -->
     @issues_count =Issue.count(
             :include => [:section => :top_section] ,
             :conditions => ["#{TopSection.table_name}.id = ?", @topsection.id]
@@ -152,7 +167,7 @@ class EditorialController < ApplicationController
     @issues =  Issue.find( :all,
                 :include => [:section => :top_section],
                 :order =>  'created_on DESC',
-                :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1 AND #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
+                :conditions => ["se_visible_web = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
                 :limit  => @issues_pages.items_per_page ,
                 :offset =>  @issues_pages.current.offset)
 
@@ -186,6 +201,9 @@ class EditorialController < ApplicationController
 
   def articoli
     @issues2 = Issue.latest_fs
+
+
+
   end
 
   #map.articolo_page '/editorial/:topmenu_key/sezione/:topsection_id/articolo/:article_id'
@@ -355,6 +373,8 @@ private
   end
 
   def enabled_user
+   # redirect_to(editorial_path)
+    # -> sandro modifica temporanea per accedere al singolo articolo
     reroute_auth() unless User.current.isfee?(params[:id])
   end
 
