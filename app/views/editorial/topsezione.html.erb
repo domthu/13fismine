@@ -1,6 +1,6 @@
-<h1 style="display:none">TOPMENU<%= @base_url %>TOPMENU</h1>
+<h1 style="display:none">SEZIONE<%= @topsection.name %>SEZIONE</h1>
 <%= render :partial => 'articoli', :locals => {:issues => @issues, :issues_pages => @issues_pages, :issues_count => @issues_count} %>
 <%#sidebar a centro destra %>
-<%= render :partial => 'blocco_sidebar1' %>
+<%# render :partial => 'blocco_sidebar1' %>
 <%#sidebar a destra %>
-<%# render :partial => 'blocco_sidebar2' %>
+<%= render :partial => 'blocco_sidebar2' %>

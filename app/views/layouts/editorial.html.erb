@@ -141,6 +141,18 @@
       <%= render_navigation :level => 2 %>
     </nav>
   </div>
+
+  <% if !flash.nil? && flash.count > 0 %>
+    <div id="fs_informa" class="nodata">
+      <p>
+        <% flash.each do |key, value| %>
+          <div class="flash <%= key %>"><%= value %></div>
+          <br />
+        <% end %>
+      </p>
+    </div>
+  <% end %>
+
   <div class="fs-sheet clearfix">
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">

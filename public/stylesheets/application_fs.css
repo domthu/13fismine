@@ -279,8 +279,8 @@ input.error {
     box-shadow:10px 10px 20px #000;
     -webkit-box-shadow:10px 10px 20px #000;
     -moz-box-shadow: 10px 10px 20px #000000;
-    border-radius:25px; 
-    -moz-border-radius:25px; 
+    border-radius:25px;
+    -moz-border-radius:25px;
     -webkit-border-radius:25px;
 }
 #fs_informa { margin:20px;
@@ -299,4 +299,10 @@ box-shadow: 5px 5px rgba(80,122,170,0.1);
 .hide{display: none;}
 .unauthorized{margin:0px; padding:0px; background-color: red; color: yellow; width: 100%;}
 
-
+.subject{margin:5px; padding:5px;
+-moz-box-shadow: 5px 5px rgba(80,122,170,0.1);
+-webkit-box-shadow: 5px 5px rgba(80,122,170,0.1);
+box-shadow: 5px 5px rgba(80,122,170,0.1);
+}
+.articolo{margin:5px; padding:5px; background-color: #EEEEEE;
+}

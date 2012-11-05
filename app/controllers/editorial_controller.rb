@@ -2,17 +2,19 @@ class EditorialController < ApplicationController
   layout 'editorial'
   #before_filter :require_admin
   helper :sort
-  include SortHelper	
+  include SortHelper
   include FeesHelper  #ROLE_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
   before_filter :correct_user, :only => [:articolo, :quesito, :edizione]
+  before_filter :enabled_user, :only => [:articolo, :quesito, :edizione]
 
   helper :messages
   include MessagesHelper
 
   caches_action :robots
 
+  #HOME > TOP_MENU > TOP_SECTION > SECTION > ARTICOLO
   def home
     @base_url = params[:pages]
 #    @last_editorial = Project.visible.find(:all, :order => 'lft')
@@ -20,35 +22,32 @@ class EditorialController < ApplicationController
 #    @projects = Project.all.compact.uniq
 #    @link_project = Project.find_by_identifier($1) || Project.find_by_name($1)
     @projects = Project.latest_fs
-   # @issues = Issue.latest_fs
-           # Paginate results
-        case params[:format]
-          when 'xml', 'json'
-            @offset, @limit = api_offset_and_limit
-          else
-            @limit = 5
-            @offset= 25
-        end
+    # @issues = Issue.latest_fs
+    # Paginate results
+    case params[:format]
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        @limit = 5
+        @offset= 25
+    end
     @issues_count =Issue.count(
         :include => [:section => :top_section]
     )
+    @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
+    @issues =  Issue.find( :all,
+                        :include => [:section => :top_section],
+                        :order =>  'updated_on DESC',
+                        :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1"],
+                        :limit  => @issues_pages.items_per_page ,
+                        :offset =>  @issues_pages.current.offset)
 
-
-        @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
-            @issues =  Issue.find( :all,
-                                :include => [:section => :top_section],
-                                :order =>  'updated_on DESC',
-                              #  :conditions => ["#{TopSection.table_name}.top_menu_id = ?", @top_menu],
-                                :limit  => @issues_pages.items_per_page ,
-                                :offset =>  @issues_pages.current.offset
-            )
-
-        respond_to do |format|
-              format.html {
-                render :layout => !request.xhr?
-              }
-              format.api
-        end
+    respond_to do |format|
+          format.html {
+            render :layout => !request.xhr?
+          }
+          format.api
+    end
     #MariaCristina Non mostrare i quesiti nella home page
     #@news = News.latest_fs
     #<div class="splitcontentleft">
@@ -65,121 +64,111 @@ class EditorialController < ApplicationController
 
   def top_menu
     @base_url = params[:pages]
-    @id = params[:id].to_i
-    if @id.nil?
-        flash[:notice] = l(:notice_missing_parameters)
+    @key_url = params[:topmenu_key]
+    if @key_url.nil?
+        flash[:notice] = l(:notice_missing_parameters) + " --> 1"
         redirect_to :action => 'home'
-    else
-
-        @contenuti = Issue.find(:all, :conditions=>  ["section_id IN (?)", @section_ids])
-
-        @top_menu = TopMenu.find(@id)
-        @top_sections = TopSection.find(:all, :include => [:sections], :conditions => ["top_menu_id =  ?", @id])
-        @sections = []
-        for ts in @top_sections
-          @sections << ts.sections
-        end
-        @section_ids = []
-        for ts in @top_sections
-            for s in ts.sections
-                @section_ids << s.id
-            end 
-        end 
-
-        @top_section = TopSection.find(@id)
-        @sottosezione = Section.find(@id)
-        # Paginate results
-        case params[:format]
-          when 'xml', 'json'
-            @offset, @limit = api_offset_and_limit
-          else
-            @limit = 5
-            @offset= 25
-        end
-        @issues_count =Issue.count(
-            :include => [:section => :top_section] ,
-            :conditions => ["#{TopSection.table_name}.top_menu_id = ?", @top_menu]
-        )
-
-        @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
-            @issues =  Issue.find( :all,
-                                :include => [:section => :top_section],
-                                :order =>  'updated_on DESC',
-                                :conditions => ["#{TopSection.table_name}.top_menu_id = ?", @top_menu],
-                                :limit  => @issues_pages.items_per_page ,
-                                :offset =>  @issues_pages.current.offset
-            )
-
-        respond_to do |format|
-              format.html {
-                render :layout => !request.xhr?
-              }
-              format.api
-        end
+        return
+    elsif @key_url == "home"
+        redirect_to :action => 'home'
+        return
+    end
+    @top_menu = TopMenu.find(:first, :conditions => ["`key` = ?", @key_url])
+    if @top_menu.nil?
+        flash[:notice] = l(:notice_missing_parameters) + " --> 2 @key_url="+ @key_url
+        redirect_to :action => 'home'
+        return
+    end
+    #@top_sections = TopSection.find(:all,
+    @topsection_ids = TopSection.find(:all,
+      :select => 'distinct id',
+      :conditions => ["top_menu_id =  ?", @top_menu.id]
+      )
+    #@topsection_ids = @top_sections.select(:id).uniq
+    # Paginate results
+    case params[:format]
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        @limit = 5
+        @offset= 25
     end
 
-  end
+    @issues_count =Issue.count(
+        :include => [:section => :top_section] ,
+        :conditions => ["#{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids]
+    )
 
-  def contact
-  end
+    @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
+    @issues =  Issue.find( :all,
+                        :include => [:section => :top_section],
+                        :order =>  'updated_on DESC',
+                        :conditions => ["se_visible_web = 1 AND #{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids],
+                        :limit  => @issues_pages.items_per_page ,
+                        :offset =>  @issues_pages.current.offset)
 
-  def help
-  end
-
-  def about
+    respond_to do |format|
+          format.html {
+            render :layout => !request.xhr?
+          }
+          format.api
+    end
   end
 
   #dal menu sezione si accede all'insieme degli articoli riferiti alla sezione
-  def sezione
-    @base_url = params[:pages]
-    @id = params[:id].to_i
-    if @id.nil?
-      flash[:notice] = l(:notice_missing_parameters)
-      redirect_to :action => 'home'
-    else
-      @top_section = TopSection.find(@id)
-      #@issues = @top_section.sections.issues
-      #restituisce un ActiveRecord::Relation.
-      #undefined method `issues' for #<Class:0xb6795b9c>
-      @test = @top_section.sections.class
-     # @issues = @top_section.issues
-      
-      @sections = @top_section.sections
-      @issues2 = []
-      for section in @sections
-        @issues2 << section.issues
-      end 
-      
-      @sottosezione = Section.find(@id)
-      @sezione = @sottosezione.nil? ? TopSection.find(:first, :include => [ :section ], :conditions => ["#{Section.table_name}.id = :secid", {:secid => @id }]) : @sottosezione.top_section
-          # Paginate results
-      case params[:format]
-        when 'xml', 'json'
-          @offset, @limit = api_offset_and_limit
-        else
-          @limit = 5
-          @offset= 25
-      end
-        @issues_count =@top_section.issues.count
-        @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
-                    @issues =  Issue.find( :all,
-                                :include => [:section => :top_section],
-                                :order =>  'created_on DESC',
-                                :conditions => ["#{TopSection.table_name}.id = ?", @top_section],
-                                :limit  => @issues_pages.items_per_page ,
-                                :offset =>  @issues_pages.current.offset
-            )
+  #map.sezione_page '/editorial/:topmenu_key/sezione/:topsection_id'
+  #link_to sezione_page_url
+  def topsezione
+    @base_url = request.path
+    @key_url = params[:topmenu_key]
+    @topsection_id = params[:topsection_id]
+    #@topsection_name = params[:topsection_name]
+    if @topsection_id.nil?
+        flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
+        redirect_to :action => 'home'
+        return
+    end
 
-        respond_to do |format|
-              format.html {
-                render :layout => !request.xhr?
-              }
-              format.api
-        end
-      #MariaCristina Condizione per VisibileWeb, ordinamento per 
-      #@issues = Issue.find(:all, :conditions => ["section_id =  ?", @id], :limit => 100)  
-      #@issues = Issue.all_by_sezione_fs(@id)
-    end 
+    @topsection = TopSection.find(@topsection_id)
+    if @topsection.nil?
+        flash[:notice] = l(:notice_missing_parameters) + " --> 2 @section_id="+ @topsection_id
+        redirect_to :action => 'home'
+        return
+    end
+    # Paginate results
+    case params[:format]
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        @limit = 5
+        @offset= 25
+    end
+
+    @issues_count =Issue.count(
+            :include => [:section => :top_section] ,
+            :conditions => ["#{TopSection.table_name}.id = ?", @topsection.id]
+        )
+    @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
+    @issues =  Issue.find( :all,
+                :include => [:section => :top_section],
+                :order =>  'created_on DESC',
+                :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1 AND #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
+                :limit  => @issues_pages.items_per_page ,
+                :offset =>  @issues_pages.current.offset)
+
+    respond_to do |format|
+          format.html {
+            render :layout => !request.xhr?
+          }
+          format.api
+    end
+    #MariaCristina Condizione per VisibileWeb, ordinamento per
+    #@issues = Issue.find(:all, :conditions => ["section_id =  ?", @id], :limit => 100)
+    #@issues = Issue.all_by_sezione_fs(@id)
+  end
+
+
+  def sezione
   end
 
   def edizioni
@@ -196,23 +185,25 @@ class EditorialController < ApplicationController
   end
 
   def articoli
+    @issues2 = Issue.latest_fs
+  end
 
-    @issues = Issue.latest_fs
-     end
-
+  #map.articolo_page '/editorial/:topmenu_key/sezione/:topsection_id/articolo/:article_id'
+  #map.articolo_page '/editorial/:topmenu_key/articolo/:article_id'
   def articolo
-    @id = params[:id].to_i
-    @issue= Issue.find(@id)
-    @section_id = @issue.section_id
-    @comune = Comune.find(params[:id])
+    @id = params[:article_id].to_i
+    @articolo= Issue.find(@id)
+    @section_id = @articolo.section_id
   end
 
   def quesiti
+    @quesito= New.find(:all, :limit => 20, :order => "created_on DESC")
   end
 
   def quesito
     @id = params[:id].to_i
-    @comune = Comune.find(params[:id])
+    @quesito= New.find(@id)
+    @editorial_id = @quesito.project_id
   end
 
 #domthu permission :front_end_quesito, :editorial => :poniquesito, :require => :loggedin
@@ -231,13 +222,17 @@ class EditorialController < ApplicationController
       redirect_to(login_url) && return
     end
     #DO SOME USRE STUFF HERE
-    
+
   end
 
-  #def register
-  #end
-  #def login
-  #end
+  def contact
+  end
+
+  def help
+  end
+
+  def about
+  end
 
 #{"all_words"=>"1",
 # "submit"=>"Invia",
@@ -252,7 +247,7 @@ class EditorialController < ApplicationController
     @all_words = params[:all_words] ? params[:all_words].present? : true
     @titles_only = params[:titles_only] ? params[:titles_only].present? : false
 
-    projects_to_search = 
+    projects_to_search =
 #      case params[:scope]
 #      when 'all'
 #        nil
@@ -309,11 +304,11 @@ class EditorialController < ApplicationController
         @results += r
         @results_by_type[s] += c
       end
-      
+
       #You have a nil object when you didn't expect it!
       #@results = @results.sort! {|a,b| b.event_datetime <=> a.event_datetime}
       @results = @results.compact.sort{|a,b| b.event_datetime <=> a.event_datetime}
-      
+
       if params[:previous].nil?
         @pagination_previous_date = @results[0].event_datetime if offset && @results[0]
         if @results.size > limit
@@ -335,7 +330,11 @@ class EditorialController < ApplicationController
 
   def unauthorized
   end
-  
+  #def register
+  #end
+  #def login
+  #end
+
 private
   def find_optional_project
     return true unless params[:id]
@@ -344,10 +343,10 @@ private
   rescue ActiveRecord::RecordNotFound
     render_404
   end
-  
+
   def correct_user
     reroute_log() unless User.current.logged?
-   # reroute_auth() unless User.current.isfee?(params[:id])
+    #reroute_auth() unless User.current.isfee?(params[:id])
   end
 
   def reroute_log()
@@ -355,9 +354,13 @@ private
     redirect_to(signin_path)
   end
 
+  def enabled_user
+    reroute_auth() unless User.current.isfee?(params[:id])
+  end
+
   def reroute_auth()
     flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
-    flash[:error] = "Abboanmento non valido (%s)...",  
+    flash[:error] = "Abboanmento non valido (utente)..."
     redirect_to(unauthorized_path)
   end
 end
