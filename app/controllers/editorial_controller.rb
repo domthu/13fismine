@@ -130,15 +130,18 @@ class EditorialController < ApplicationController
   def top_sezione
     @base_url = request.path
     @key_url = params[:topmenu_key]
-    @topsection_id = params[:topsection_id]
-    #@topsection_name = params[:topsection_name]
-    if @topsection_id.nil?
-        flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
+    @topsection_id = params[:id]
+    @topsection = TopSection.find( :all, :conditions=> ["`id`= ?", @topsection_id])
+    @topsection_name = params[:topsection_name]
+    if @topsection_name.nil?
+        flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_name=" + @topsection_name.to_s
         redirect_to :action => 'home'
         return
     end
 
-    @topsection = TopSection.find(@topsection_id)
+            # --> sandro per il friendly url
+    @tsezione = @topsection_name
+    # --
     if @topsection.nil?
         flash[:notice] = l(:notice_missing_parameters) + " --> 2 @section_id="+ @topsection_id
         redirect_to :action => 'home'
@@ -153,7 +156,7 @@ class EditorialController < ApplicationController
         @offset= 25
     end
        # --> sandro debug zona
-    @top_menu = TopMenu.find(:first,:conditions=> 'id =1' )
+    @top_menu = TopMenu.find(:first, :conditions=>  ["`key`=?", @key_url])
     @topsection_ids = TopSection.find(:all,
        :select => 'distinct id',
        :conditions => ["top_menu_id =  ?", @top_menu.id]
@@ -161,13 +164,13 @@ class EditorialController < ApplicationController
     # -->
     @issues_count =Issue.count(
             :include => [:section => :top_section] ,
-            :conditions => ["#{TopSection.table_name}.id = ?", @topsection.id]
+            :conditions => ["#{TopSection.table_name}.id = ?", @topsection_id]
         )
     @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
     @issues =  Issue.find( :all,
                 :include => [:section => :top_section],
                 :order =>  'created_on DESC',
-                :conditions => ["se_visible_web = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
+                :conditions => ["se_visible_web = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection_id}],
                 :limit  => @issues_pages.items_per_page ,
                 :offset =>  @issues_pages.current.offset)
 
@@ -383,4 +386,5 @@ private
     flash[:error] = "Abboanmento non valido (utente)..."
     redirect_to(unauthorized_path)
   end
+
 end
