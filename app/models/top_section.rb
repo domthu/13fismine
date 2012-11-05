@@ -31,4 +31,6 @@ class TopSection < ActiveRecord::Base
 
   alias :name :to_s
 
+
 end
+

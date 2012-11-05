@@ -24,8 +24,8 @@ SimpleNavigation::Configuration.run do |navigation|
             @top_sections.each do |ts|
               sub_nav.item tmn.key + ts.id.to_s,
                   ts.name,
-                  '/editorial/' + tmn.key + '/sezione/' + ts.id.to_s, # + topsection_page(ts),
-                  :highlights_on => %r(/#{tmn.key}\/sezione\/#{ts.id.to_s})
+                  '/editorial/' + tmn.key + '/sezione/' + ts.id.to_s + '/' + ts.name.to_slug, # + topsection_page(ts),
+                  :highlights_on => %r(/#{tmn.key}\/sezione\/#{ts.id.to_s}\/#{ts.name.to_slug})
               primary.dom_class = 'fs-hmenu'
               sub_nav.dom_class = 'fs-hmenu'
             end

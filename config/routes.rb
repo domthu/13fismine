@@ -52,12 +52,13 @@ ActionController::Routing::Routes.draw do |map|
               :topmenu_key  => /[^\/]+/  # /\d{4}/
 #              :as => 'top_menu_page'
 
-  map.topsection_page '/editorial/:topmenu_key/sezione/:topsection_id',
+  map.topsection_page '/editorial/:topmenu_key/sezione/:id/:topsection_name',
               :controller   => 'editorial',
               :action       => 'top_sezione',
               :topmenu_key  => /[^\/]+/,  # /\d{4}/,
                # --> sandro fix problema visulizzazione routing su top section
               :topsection_id   => /[0-9]+/,
+              :topsection_name   => /[^\/]+/,
               :conditions => {:method => [:get, :post]}
 #              :as => 'topsection_page'
 
@@ -74,6 +75,15 @@ ActionController::Routing::Routes.draw do |map|
 #              :as => 'articolo_page'
 
 
+
+#  map.topsection_page '/editorial/:topmenu_key/sezione/:topsection_id',
+#              :controller   => 'editorial',
+#              :action       => 'top_sezione',
+#              :topmenu_key  => /[^\/]+/,  # /\d{4}/,
+               # --> sandro fix problema visulizzazione routing su top section
+#              :topsection_id   => /[0-9]+/,
+#              :conditions => {:method => [:get, :post]}
+#              :as => 'topsection_page'
 
 #  map.articolo_page 'editorial/:top_menu_key/articolo/:article_id',
 #              :controller       => 'editorial',
