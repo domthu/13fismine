@@ -1,10 +1,7 @@
 <h1 style="display:none">__PARTIAL <%= @base_url %>/////<%= @article_id %> ARTICOLI</h1>
 <div class="fs-layout-cell fs-content clearfix">
   <p class="pagination"><%= pagination_links_full(@issues_pages, @issues_count) %></p>
-  <h5 style="background-color: yellow;">Debug: questo è il controller e la vista :top_menu, render parziali:articoli
-    +articolo_teaser .
-    <br/> Questo è menu numero <%= @top_menu.id %> , esso contiene <%= @topsection_ids.count %> sezioni
-    e  <%= @issues_count %> articoli. </h5>
+
 
   <article class="fs-post fs-article">
     <% @issues.each do |articolo| %>
