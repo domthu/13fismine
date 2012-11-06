@@ -362,7 +362,7 @@ module ApplicationHelper
   end
 
 
-  def pagination_links_full(paginator, count=nil, options={}) #, path_prefix=nil)
+  def pagination_links_full(paginator, count=nil, options={})# , path_prefix=nil)
     page_param = options.delete(:page_param) || :page
     per_page_links = options.delete(:per_page_links)
     url_param = params.dup

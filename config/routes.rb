@@ -41,39 +41,37 @@ ActionController::Routing::Routes.draw do |map|
   #            :action     => 'home'
   #map.connect '/editorial/home',
   #map.editorial '/home',
-  map.editorial '/editorial/home',
+  map.editorial '/home',
               :controller => 'editorial',
               :action     => 'home'
 
   #Pretty URLs (http://apidock.com/rails/v2.3.8/ActionController/Routing)
-#  map.connect 'editorial/:topmenu_key',
-  map.top_menu_page '/editorial/:topmenu_key',
+
+  map.top_menu_page '/:topmenu_key',
               :controller   => 'editorial',
               :action       => 'top_menu',
-              :topmenu_key  => /[^\/]+/  # /\d{4}/
-#              :as => 'top_menu_page'
+              :topmenu_key  => /[^\/]+/
 
-  map.topsection_page '/editorial/:topmenu_key/sezione/:id/:topsection_name',
+
+  map.topsection_page '/:topmenu_key/:topsection_key',
+
               :controller   => 'editorial',
-              :action       => 'top_sezione',
-              :topmenu_key  => /[^\/]+/,  # /\d{4}/,
-               # --> sandro fix problema visulizzazione routing su top section
-              :topsection_id   => /[0-9]+/,
-              :topsection_name   => /[^\/]+/,
+              :action       => 'topsezione',
+              :topmenu_key  => /[^\/]+/,
+              :topsection_key   => /[^\/]+/,
               :conditions => {:method => [:get, :post]}
-#              :as => 'topsection_page'
+
 
 #  map.articolo_page 'editorial/:top_menu_key/sezione/:top_section_id/articolo/:article_id',
-    # --> sandro  visulizzazione di tutto il percorso per l'articolo  sia top_menu sia  top_section
-  map.articolo_page 'editorial/:top_menu_key/sezione/:topsection_id/articolo/:article_id',
+
+  map.articolo_page '/:topmenu_key/:topsection_key/:article_id',
               :controller       => 'editorial',
               :action           => 'articolo',
-              :top_menu_key      => /[^\/]+/,  # /\d{4}/,
-              :top_section_id    => /[0-9]+/,
+              :topmenu_key      => /[^\/]+/,
+              :topsection_key   => /[^\/]+/,
               :article_id       => /\d.+/,
               :conditions => {:method => [:get, :post]}
-#              :article_title    => /[^\/]+/  # /\d{1,2}/
-#              :as => 'articolo_page'
+
 
 
 
