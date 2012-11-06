@@ -129,7 +129,7 @@ ActionController::Routing::Routes.draw do |map|
   #in POST not in Get for params[:username]...
   map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
 
-  map.signin 'home-login', :controller => 'account', :action => 'login'
+  map.signin 'login', :controller => 'account', :action => 'login'
   map.signout 'logout', :controller => 'account', :action => 'logout'
 
 
