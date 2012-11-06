@@ -40,19 +40,19 @@ ActionController::Routing::Routes.draw do |map|
   #            :action     => 'home'
   #map.connect '/editorial/home',
   #map.editorial '/home',
-  map.editorial '/home',
+  map.editorial '/editoriale/home',
               :controller => 'editorial',
               :action     => 'home'
 
   #Pretty URLs (http://apidock.com/rails/v2.3.8/ActionController/Routing)
 
-  map.top_menu_page '/:topmenu_key',
+  map.top_menu_page '/editoriale/:topmenu_key',
               :controller   => 'editorial',
               :action       => 'top_menu',
               :topmenu_key  => /[^\/]+/
 
 
-  map.topsection_page '/:topmenu_key/:topsection_key',
+  map.topsection_page '/editoriale/:topmenu_key/:topsection_key',
 
               :controller   => 'editorial',
               :action       => 'top_sezione',
@@ -63,7 +63,7 @@ ActionController::Routing::Routes.draw do |map|
 
 #  map.articolo_page 'editorial/:top_menu_key/sezione/:top_section_id/articolo/:article_id',
 
-  map.articolo_page '/:topmenu_key/:topsection_key/:article_id',
+  map.articolo_page '/editoriale/:topmenu_key/:topsection_key/:article_id',
               :controller       => 'editorial',
               :action           => 'articolo',
               :topmenu_key      => /[^\/]+/,
