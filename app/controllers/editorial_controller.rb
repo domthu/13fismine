@@ -153,11 +153,11 @@ class EditorialController < ApplicationController
         @offset= 25
     end
                                # --> sandro debug zona
-    @top_menu = TopMenu.find(:first, :conditions => ["`key`=?", @key_url])
-    @topsection_ids = TopSection.find(:all,
-                                      :select => 'distinct id',
-                                      :conditions => ["top_menu_id =  ?", @top_menu.id]
-    )
+   # @top_menu = TopMenu.find(:first, :conditions => ["`key`=?", @key_url])
+   # @topsection_ids = TopSection.find(:all,
+   #                                   :select => 'distinct id',
+   #                                   :conditions => ["top_menu_id =  ?", @top_menu.id]
+   # )
                                # -->
     @issues_count =Issue.count(
         :include => [:section => :top_section],
