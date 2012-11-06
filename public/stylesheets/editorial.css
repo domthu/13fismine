@@ -155,6 +155,7 @@ h1, h2, h3, h4, h5, h6, p, a, ul, ol, li {
     border-top: none !important;
     padding-right: 15px;
     padding-left: 15px;
+    height: 480px;
 }
 .fs-content-layout .layout-item-1 h3 , .fs-content-layout .layout-item-1 h4{
  text-align: center;

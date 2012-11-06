@@ -6,21 +6,8 @@
         <div class="fs-content-layout-row">
           <div class="fs-layout-cell layout-item-0" style="width: 100%">
             <%= render :partial => 'articolo_full', :locals => {:articolo => @articolo} %>
-            <!--
 
-              <h4 style="border-bottom: 1px dotted #A8ADB8; padding-bottom: 5px">
-                <%= @issue.titolo %>
-              </h4>
-                 <span style="color:#ffffff;" class="fs-sections"><%= @issue.top_section %> > <%= @issue.section %>
-                </span>
-                <br/>
-                <span class="fs-postauthoricon">  Autore:<%= h @issue.author %>
-                </span>
-                <br/>
-              <div class="fs-layout-cell layout-item-1">
-                <%= @issue.testo %>
-               </div> -->
-            <%= link_to "Ritorna ...", @issue.section.top_section.top_menu.key + '/sezione/'+ @issue.section.top_section_id.to_s %>
+            <%# link_to "Ritorna ...", @issue.section.top_section.top_menu.key + '/'+ @issue.section.top_section.key %>
           </div>
         </div>
       </div>
@@ -35,46 +22,3 @@
 <%= render :partial => 'blocco_sidebar1' %>
 <%#sidebar a destra %>
 <%# render :partial => 'blocco_sidebar2' %>
-
-
-
-<!--
-
-=======
-<h1 style="display:none">ARTICOLO DETTAGLIO DI <b>UNo SOLO</b> ARTICOLO</h1>
-<div class="fs-layout-cell fs-content clearfix">
-  <article class="fs-post fs-article">
-    <div class="fs-postcontent fs-postcontent-0 clearfix">
-      <div class="fs-content-layout">
-        <div class="fs-content-layout-row">
-          <div class="fs-layout-cell layout-item-0" style="width: 100%">
-
-            <%= render :partial => 'articolo_full', :locals => {:articolo => @articolo} %>
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <br/>
-</article>
-  </div>
->>>>>>> fix5master
-
-<h2><%= l(:details_articolo) %></h2>
-  In questa pagina:
-<h3> id= <%= @id %>
-<%= @articolo.riassunto %>
-
-
-</h3>
-  <ul>
-    <li>Presentazione di un articolo</li>
-    <li>PERMESSI sulla vissualizzazione dei contenuti</li>
-    <li>LINK: ritorno a la lista articoli</li>
-    <li>LINK: all'edizione dell'articolo</li>
-    <li>LINK: alla sezione dell'articolo</li>
-    <li>AZIONE: proponi un quesito legato a questo articolo</li>
-futuro</li>
- futuro</li>
-  </ul>
--->
