@@ -3,12 +3,12 @@ class EditorialController < ApplicationController
   #before_filter :require_admin
   helper :sort
   include SortHelper
-  include FeesHelper  #ROLE_XXX
+  include FeesHelper #ROLE_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
   before_filter :correct_user, :only => [:articolo, :quesito, :edizione]
- # -> sandro rem della linea sotto  altrimenti non riesco ad accedere al singolo articolo
- # before_filter :enabled_user, :only => [:articolo, :quesito, :edizione]
+  # -> sandro rem della linea sotto  altrimenti non riesco ad accedere al singolo articolo
+  # before_filter :enabled_user, :only => [:articolo, :quesito, :edizione]
 
   helper :messages
   include MessagesHelper
@@ -23,8 +23,8 @@ class EditorialController < ApplicationController
 #    @projects = Project.all.compact.uniq
 #    @link_project = Project.find_by_identifier($1) || Project.find_by_name($1)
     @projects = Project.latest_fs
-    # @issues = Issue.latest_fs
-    # Paginate results
+# @issues = Issue.latest_fs
+# Paginate results
     case params[:format]
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
@@ -32,29 +32,29 @@ class EditorialController < ApplicationController
         @limit = 5
         @offset= 25
     end
-    # --> sandro debug zona
-    @top_menu = TopMenu.find(:first,:conditions=> 'id =1' )
+# --> sandro debug zona
+    @top_menu = TopMenu.find(:first, :conditions => 'id =1')
     @topsection_ids = TopSection.find(:all,
-       :select => 'distinct id',
-       :conditions => ["top_menu_id =  ?", @top_menu.id]
-       )
-    # -->
+                                      :select => 'distinct id',
+                                      :conditions => ["top_menu_id =  ?", @top_menu.id]
+    )
+# -->
     @issues_count =Issue.count(
         :include => [:section => :top_section]
     )
-    @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
-    @issues =  Issue.find( :all,
-                        :include => [:section => :top_section],
-                        :order =>  'updated_on DESC',
-                        :conditions => ["se_visible_web = 1 AND se_visible_newsletter = 1"],
-                        :limit  => @issues_pages.items_per_page ,
-                        :offset =>  @issues_pages.current.offset)
+    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+    @issues = Issue.find(:all,
+                         :include => [:section => :top_section],
+                         :order => 'updated_on DESC',
+                         :conditions => ["se_visible_web = 1 AND se_visible_newsletter = 1"],
+                         :limit => @issues_pages.items_per_page,
+                         :offset => @issues_pages.current.offset)
 
     respond_to do |format|
-          format.html {
-            render :layout => !request.xhr?
-          }
-          format.api
+      format.html {
+        render :layout => !request.xhr?
+      }
+      format.api
     end
     #MariaCristina Non mostrare i quesiti nella home page
     #@news = News.latest_fs
@@ -74,24 +74,24 @@ class EditorialController < ApplicationController
     @base_url = params[:pages]
     @key_url = params[:topmenu_key]
     if @key_url.nil?
-        flash[:notice] = l(:notice_missing_parameters) + " --> 1"
-        redirect_to :action => 'home'
-        return
+      flash[:notice] = l(:notice_missing_parameters) + " --> 1"
+      redirect_to :action => 'home'
+      return
     elsif @key_url == "home"
-        redirect_to :action => 'home'
-        return
+      redirect_to :action => 'home'
+      return
     end
     @top_menu = TopMenu.find(:first, :conditions => ["`key` = ?", @key_url])
     if @top_menu.nil?
-        flash[:notice] = l(:notice_missing_parameters) + " --> 2 @key_url="+ @key_url
-        redirect_to :action => 'home'
-        return
+      flash[:notice] = l(:notice_missing_parameters) + " --> 2 @key_url="+ @key_url
+      # redirect_to :action => 'home'
+      return
     end
     #@top_sections = TopSection.find(:all,
     @topsection_ids = TopSection.find(:all,
-      :select => 'distinct id',
-      :conditions => ["top_menu_id =  ?", @top_menu.id]
-      )
+                                      :select => 'distinct id',
+                                      :conditions => ["top_menu_id =  ?", @top_menu.id]
+    )
 
     #@topsection_ids = @top_sections.select(:id).uniq
     # Paginate results
@@ -104,50 +104,47 @@ class EditorialController < ApplicationController
     end
 
     @issues_count =Issue.count(
-        :include => [:section => :top_section] ,
+        :include => [:section => :top_section],
         :conditions => ["#{TopSection.table_name}.top_menu_id = ?", @top_menu.id]
     )
 
-    @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
-    @issues =  Issue.find( :all,
-                        :include => [:section => :top_section],
-                        :order =>  'updated_on DESC',
-                        :conditions => ["se_visible_web = 1 AND #{TopSection.table_name}.top_menu_id = ?", @top_menu.id],
-                        :limit  => @issues_pages.items_per_page ,
-                        :offset =>  @issues_pages.current.offset)
+    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+    @issues = Issue.find(:all,
+                         :include => [:section => :top_section],
+                         :order => 'updated_on DESC',
+                         :conditions => ["se_visible_web = 1 AND #{TopSection.table_name}.top_menu_id = ?", @top_menu.id],
+                         :limit => @issues_pages.items_per_page,
+                         :offset => @issues_pages.current.offset)
 
     respond_to do |format|
-          format.html {
-            render :layout => !request.xhr?
-          }
-          format.api
+      format.html {
+        render :layout => !request.xhr?
+      }
+      format.api
     end
   end
 
   #dal menu sezione si accede all'insieme degli articoli riferiti alla sezione
   #map.sezione_page '/editorial/:topmenu_key/sezione/:topsection_id'
   #link_to sezione_page_url
-  def top_sezione
-    @base_url = request.path
+  def topsezione
+    @base_url = params[:pages] #request.path
     @key_url = params[:topmenu_key]
-    @topsection_id = params[:id]
-    @topsection = TopSection.find( :all, :conditions=> ["`id`= ?", @topsection_id])
-    @topsection_name = params[:topsection_name]
-    if @topsection_name.nil?
-        flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_name=" + @topsection_name.to_s
-        redirect_to :action => 'home'
-        return
-    end
-
-            # --> sandro per il friendly url
-    @tsezione = @topsection_name
-    # --
+                               # @topsection_id = params[:topsection_id]
+    @topsection_key = params[:topsection_key]
+    @topsection = TopSection.find(:first, :conditions => ["top_sections.`key` = ?", @topsection_key])
+                               #flash[:notice] = l(:notice_missing_parameters) + " -->  @section_id="+ @topsection.id.to_s   + @topsection_key
+                               # if @topsection_id.nil?
+                               #         flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
+                               #         redirect_to :action => 'home'
+                               #         return
+                               #     end
     if @topsection.nil?
-        flash[:notice] = l(:notice_missing_parameters) + " --> 2 @section_id="+ @topsection_id
-        redirect_to :action => 'home'
-        return
+      flash[:notice] = l(:notice_missing_parameters) + " --> 3 @section_id="+ @topsection.id.to_s
+      redirect_to :action => 'home'
+      return
     end
-    # Paginate results
+                               # Paginate results
     case params[:format]
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
@@ -155,30 +152,30 @@ class EditorialController < ApplicationController
         @limit = 5
         @offset= 25
     end
-       # --> sandro debug zona
-    @top_menu = TopMenu.find(:first, :conditions=>  ["`key`=?", @key_url])
+                               # --> sandro debug zona
+    @top_menu = TopMenu.find(:first, :conditions => ["`key`=?", @key_url])
     @topsection_ids = TopSection.find(:all,
-       :select => 'distinct id',
-       :conditions => ["top_menu_id =  ?", @top_menu.id]
-       )
-    # -->
+                                      :select => 'distinct id',
+                                      :conditions => ["top_menu_id =  ?", @top_menu.id]
+    )
+                               # -->
     @issues_count =Issue.count(
-            :include => [:section => :top_section] ,
-            :conditions => ["#{TopSection.table_name}.id = ?", @topsection_id]
-        )
-    @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
-    @issues =  Issue.find( :all,
-                :include => [:section => :top_section],
-                :order =>  'created_on DESC',
-                :conditions => ["se_visible_web = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection_id}],
-                :limit  => @issues_pages.items_per_page ,
-                :offset =>  @issues_pages.current.offset)
+        :include => [:section => :top_section],
+        :conditions => ["#{TopSection.table_name}.id = ?", @topsection_id]
+    )
+    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+    @issues = Issue.find(:all,
+                         :include => [:section => :top_section],
+                         :order => 'created_on DESC',
+                         :conditions => ["se_visible_web = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection_id}],
+                         :limit => @issues_pages.items_per_page,
+                         :offset => @issues_pages.current.offset)
 
     respond_to do |format|
-          format.html {
-            render :layout => !request.xhr?
-          }
-          format.api
+      format.html {
+        render :layout => !request.xhr?
+      }
+      format.api
     end
     #MariaCristina Condizione per VisibileWeb, ordinamento per
     #@issues = Issue.find(:all, :conditions => ["section_id =  ?", @id], :limit => 100)
@@ -204,7 +201,6 @@ class EditorialController < ApplicationController
 
   def articoli
     @issues2 = Issue.latest_fs
-
 
 
   end
@@ -280,8 +276,11 @@ class EditorialController < ApplicationController
 #        @project
 #      end
 
-    offset = nil
-    begin; offset = params[:offset].to_time if params[:offset]; rescue; end
+        offset = nil
+    begin
+      ; offset = params[:offset].to_time if params[:offset];
+    rescue;
+    end
 
     # quick jump to an issue
     if @question.match(/^#?(\d+)$/) && Issue.visible.find_by_id($1.to_i)
@@ -298,37 +297,37 @@ class EditorialController < ApplicationController
       #@object_types = @object_types.select {|o| User.current.allowed_to?("view_#{o}".to_sym, projects_to_search)}
     end
 
-    @scope = @object_types.select {|t| params[t]}
+    @scope = @object_types.select { |t| params[t] }
     @scope = @object_types if @scope.empty?
 
     # extract tokens from the question
     # eg. hello "bye bye" => ["hello", "bye bye"]
-    @tokens = @question.scan(%r{((\s|^)"[\s\w]+"(\s|$)|\S+)}).collect {|m| m.first.gsub(%r{(^\s*"\s*|\s*"\s*$)}, '')}
+    @tokens = @question.scan(%r{((\s|^)"[\s\w]+"(\s|$)|\S+)}).collect { |m| m.first.gsub(%r{(^\s*"\s*|\s*"\s*$)}, '') }
     # tokens must be at least 2 characters long
-    @tokens = @tokens.uniq.select {|w| w.length > 1 }
+    @tokens = @tokens.uniq.select { |w| w.length > 1 }
 
     if !@tokens.empty?
       # no more than 5 tokens to search for
       @tokens.slice! 5..-1 if @tokens.size > 5
 
       @results = []
-      @results_by_type = Hash.new {|h,k| h[k] = 0}
+      @results_by_type = Hash.new { |h, k| h[k] = 0 }
 
       limit = 10
       @scope.each do |s|
         r, c = s.singularize.camelcase.constantize.search(@tokens, projects_to_search,
-          :all_words => @all_words,
-          :titles_only => @titles_only,
-          :limit => (limit+1),
-          :offset => offset,
-          :before => params[:previous].nil?)
+                                                          :all_words => @all_words,
+                                                          :titles_only => @titles_only,
+                                                          :limit => (limit+1),
+                                                          :offset => offset,
+                                                          :before => params[:previous].nil?)
         @results += r
         @results_by_type[s] += c
       end
 
       #You have a nil object when you didn't expect it!
       #@results = @results.sort! {|a,b| b.event_datetime <=> a.event_datetime}
-      @results = @results.compact.sort{|a,b| b.event_datetime <=> a.event_datetime}
+      @results = @results.compact.sort { |a, b| b.event_datetime <=> a.event_datetime }
 
       if params[:previous].nil?
         @pagination_previous_date = @results[0].event_datetime if offset && @results[0]
@@ -351,12 +350,13 @@ class EditorialController < ApplicationController
 
   def unauthorized
   end
-  #def register
-  #end
-  #def login
-  #end
 
-private
+#def register
+#end
+#def login
+#end
+
+  private
   def find_optional_project
     return true unless params[:id]
     @project = Project.find(params[:id])
@@ -376,7 +376,7 @@ private
   end
 
   def enabled_user
-   # redirect_to(editorial_path)
+    # redirect_to(editorial_path)
     # -> sandro modifica temporanea per accedere al singolo articolo
     reroute_auth() unless User.current.isfee?(params[:id])
   end
