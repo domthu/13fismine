@@ -16,13 +16,13 @@ SimpleNavigation::Configuration.run do |navigation|
       #map.top_menu_page 'editorial/:topmenu_key'
       primary.item tmn.key,
                    tmn.description,
-                   '/' + tmn.key, # + '/' + tmn.id.to_s,
+                   '/editoriale/' + tmn.key, # + '/' + tmn.id.to_s,
                    :highlights_on => :subpath do |sub_nav|
 
         #map.topsection_page '/editorial/:topmenu_key/sezione/:topsection_id',
         @top_sections = TopSection.find(:all, :conditions => ["top_menu_id = ?", tmn.id])
         @top_sections.each do |ts|
-          sub_nav.item tmn.key + ts.id.to_s, ts.name, '/' + tmn.key + '/' + ts.key, # + topsection_page(ts),
+          sub_nav.item tmn.key + ts.id.to_s, ts.name, '/editoriale/' + tmn.key + '/' + ts.key, # + topsection_page(ts),
                        :highlights_on => %r(/#{tmn.key}\/#{ts.key})
 
           primary.dom_class = 'fs-hmenu'
