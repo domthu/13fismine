@@ -56,7 +56,7 @@ ActionController::Routing::Routes.draw do |map|
   map.topsection_page '/:topmenu_key/:topsection_key',
 
               :controller   => 'editorial',
-              :action       => 'topsezione',
+              :action       => 'top_sezione',
               :topmenu_key  => /[^\/]+/,
               :topsection_key   => /[^\/]+/,
               :conditions => {:method => [:get, :post]}

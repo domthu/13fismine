@@ -127,7 +127,7 @@ class EditorialController < ApplicationController
   #dal menu sezione si accede all'insieme degli articoli riferiti alla sezione
   #map.sezione_page '/editorial/:topmenu_key/sezione/:topsection_id'
   #link_to sezione_page_url
-  def topsezione
+  def top_sezione
     @base_url = params[:pages] #request.path
     @key_url = params[:topmenu_key]
                                # @topsection_id = params[:topsection_id]
