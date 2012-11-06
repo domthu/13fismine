@@ -161,13 +161,13 @@ class EditorialController < ApplicationController
                                # -->
     @issues_count =Issue.count(
         :include => [:section => :top_section],
-        :conditions => ["#{TopSection.table_name}.id = ?", @topsection_id]
+        :conditions => ["#{TopSection.table_name}.id = ?", @topsection.id]
     )
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
     @issues = Issue.find(:all,
                          :include => [:section => :top_section],
                          :order => 'created_on DESC',
-                         :conditions => ["se_visible_web = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection_id}],
+                         :conditions => ["se_visible_web = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
                          :limit => @issues_pages.items_per_page,
                          :offset => @issues_pages.current.offset)
 
