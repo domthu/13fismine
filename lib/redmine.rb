@@ -270,7 +270,7 @@ Redmine::MenuManager.map :application_menu_fs do |menu|
 #3, 'Comunicazioni FORUM', 99
   menu.push :comforum, { :controller => 'editorial', :action => 'sezione', :id => 3 }, :if => Proc.new { User.current.logged? }
 end
-# <<< sandro >>>
+# < sandro >
 
 Redmine::MenuManager.map :account_fe_menu do |menu|
   menu.push :login, :signin_path, :if => Proc.new { !User.current.logged? }
@@ -279,7 +279,7 @@ Redmine::MenuManager.map :account_fe_menu do |menu|
   menu.push :logout, :signout_path, :if => Proc.new { User.current.logged? }
 end
 
-# << end sandro >>
+# < end sandro >
 
 
 Redmine::MenuManager.map :account_menu do |menu|
