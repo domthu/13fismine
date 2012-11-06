@@ -44,4 +44,5 @@ module EditorialHelper
     end
     ('<ul>' + links.map {|link| content_tag('li', link)}.join(' ') + '</ul>') unless links.empty?
   end
+
 end

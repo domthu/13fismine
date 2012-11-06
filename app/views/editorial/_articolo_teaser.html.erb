@@ -1,8 +1,28 @@
-<% if !articolo.nil? %>
-  <div class="fs_box_opacity">
-    <%= link_to(h(articolo.id), :controller => 'editorial', :action => 'articolo', :id => articolo) %>
-    <%= link_to(h(articolo.id), :controller => 'editorial', :action => 'edizione', :id => articolo.project) %>
-    <%= h(truncate(articolo.subject, :length => 60)) %>
-    <%=h articolo.status %>
-  </div>
-<% end %>
+<h1 style="display:none">__PARTIAL ARTICOLO TEASER</h1>
+
+    <div class="fs-postcontent fs-postcontent-0 clearfix">
+      <div class="fs-content-layout">
+        <div class="fs-content-layout-row">
+          <div class="fs-layout-cell layout-item-0" style="width: 100%">
+            <h4 style="border-bottom: 1px dotted #A8ADB8; padding-bottom: 5px">
+              <%= link_to (h(truncate(articolo.titolo, :length => 50)),
+                           url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :escape => false))
+              %>
+            </h4>
+            <span style="color:#ffffff;" class="fs-sections">
+            <%= articolo.top_section %> :: <%= articolo.section %>
+          </span>
+            <br/>
+            <%# articolo.section.issues.count %>
+            <span class="fs-postauthoricon">
+            Autore:<%= h articolo.author %>
+          </span>
+            <br/>
+            <%= articolo.riassunto %>
+            <br/>
+            <%= h articolo.status %>
+            <%= link_to "Continua... ", {:controller => 'editorial', :action => 'articolo', :id => articolo.id} %>
+          </div>
+        </div>
+      </div>
+    </div>

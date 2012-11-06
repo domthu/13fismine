@@ -1,0 +1,28 @@
+<h1 style="display:none">__PARTIAL <%= @articolo %> FULL</h1>
+<h2><%= @articolo.titolo %>
+</h2>
+<br/>
+<span style="color:#ffffff;" class="fs-sections">
+  <%= @articolo.top_section %> --> <%= @articolo.section %>
+
+  <h4 style="border-bottom: 1px dotted #A8ADB8; padding-bottom: 5px">
+    <%= link_to h(truncate(@articolo.section.top_section.name)), url_for(:controller => 'editorial', :action => "topsezione", :topmenu_key => @articolo.section.top_section.top_menu.key, :topsection_id => @articolo.section.top_section.id, :escape => false)
+    %>
+  </h4>
+
+</span>
+<br/>
+<%# @articolo.section.issues.count %>
+<span class="fs-postauthoricon">
+  Autore:<%= h @articolo.author %>
+</span>
+<br/>
+
+<div class="subject">
+  <%= @articolo.subject %>
+</div>
+<br/>
+
+<div class="articolo">
+  <%= @articolo.description %>
+</div>

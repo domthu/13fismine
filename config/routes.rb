@@ -9,90 +9,92 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :templates
 
-#Run rake routes to see all routes
-
-  # Add your own custom routes here.
-  # The priority is based upon order of creation: first created -> highest priority.
-
-  # Here's a sample route:
-  # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
   # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome'   #REDMINE HOME
  # map.root :controller => "editorial", :action => 'top_menu', :id => 1 ,  :path => '/home/:id'  #FRONT END
- # map.root :controller => "editorial", :action => 'home'   #FRONT END
+  #map.root :controller => "editorial", :action => 'home'   #FRONT END
+
   # Named Routes for static pages.
-
-  # map.with_options :controller => 'editorial', :action => 'home'  do |editorial|
-  #  editorial.connect 'editorial/home/:id'
-  #  editorial.connect 'editorial'
-  #  #editorial 'projects/:project_id/time_entries/report'
-
-  #end
-
-
   map.contact       '/contact',  :controller => 'editorial', :action => 'contact'
   map.about         '/about',    :controller => 'editorial', :action => 'about'
   map.help          '/help',     :controller => 'editorial', :action => 'help'
   map.edizioni      '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione      '/edizione/:id', :controller => 'editorial', :action => 'edizione'
   map.articoli      '/articoli', :controller => 'editorial', :action => 'articoli'
-  map.articolo      'articolo/:id', :controller => 'editorial', :action => 'articolo'
   #map.registrazione '/registrazione', :controller => 'editorial', :action => 'register'
   #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.quesiti       '/quesiti', :controller => 'editorial', :action => 'quesiti'
   map.quesito       '/quesito/:id', :controller => 'editorial', :action => 'quesito'
   map.poniquesito   '/poniquesito', :controller => 'editorial', :action => 'poniquesito'
   map.ricerca       '/ricerca', :controller => 'editorial', :action => 'ricerca'
-  map.sezione       '/sezione/:id', :controller => 'editorial', :action => 'sezione'
   map.unauthorized       '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
-  #Map menu 
-  #map.connect 'sezione/:id', :controller => 'editorial', :action => 'sezione'
- # map.editoriale    '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-#  map.varie         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-#  map.vademecum     '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-# map.modulistica   '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-#  map.altro         '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
-#  map.fiscale       '/editorial/top_menu/:id', :controller => 'editorial', :action => 'top_menu'
- # map.hmenu          'home/:id', :controller => 'editorial', :action => 'home'
-  #map.sezione       'menu/:top_menu_id/sezione/:id', :controller => 'editorial', :action => 'sezione'
 
-  map.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
-  map.editorial     '/home/prima-pagina',:controller => 'editorial', :action => 'home'
+#http://guides.rubyonrails.org/v2.3.11/routing.html
+#map.resources :photos, :path_prefix => '/photographers/:photographer_id'
+#map.resources :users, :path_prefix => '/:locale'
+#link_to 'English', url_for( :locale => 'en' )
+#link_to 'Deutch', url_for( :locale => 'de' )
+#Map menu
+  #map.editorial '/home/prima-pagina'
+  #            :controller => 'editorial',
+  #            :action     => 'home'
+  #map.connect '/editorial/home',
+  #map.editorial '/home',
+  map.editorial '/editoriale/home',
+              :controller => 'editorial',
+              :action     => 'home'
 
-  map.with_options :controller => 'editorial' do |articoli_routes|
-      articoli_routes.with_options :conditions => {:method => :get} do |articoli_views|
-    #  articoli_views.connect  'home', :action => 'home'
-      articoli_views.connect  'home/:id', :action => 'top_menu'
-      articoli_views.connect  'home/sezione/:id', :action => 'sezione'
-      articoli_views.connect  'home/sezione/:id/articolo/:id', :action => 'articolo'
+  #Pretty URLs (http://apidock.com/rails/v2.3.8/ActionController/Routing)
 
-      articoli_views.connect  'fiscale/:id', :action => 'top_menu'
-      articoli_views.connect  'fiscale/sezione/:id', :action => 'sezione'
-      articoli_views.connect  'fiscale/sezione/:id/articolo/:id', :action => 'articolo'
+  map.top_menu_page '/editoriale/:topmenu_key',
+              :controller   => 'editorial',
+              :action       => 'top_menu',
+              :topmenu_key  => /[^\/]+/
 
-      articoli_views.connect  'guide/:id', :action => 'top_menu'
-      articoli_views.connect  'guide/sezione/:id', :action => 'sezione'
-      articoli_views.connect  'guide/sezione/:id/articolo/:id', :action => 'articolo'
 
-      articoli_views.connect  'modulistica/:id', :action => 'top_menu'
-      articoli_views.connect  'modulistica/sezione/:id', :action => 'sezione'
-      articoli_views.connect  'modulistica/sezione/:id/articolo/:id', :action => 'articolo'
+  map.topsection_page '/editoriale/:topmenu_key/:topsection_key',
 
-      articoli_views.connect  'altro/:id', :action => 'top_menu'
-      articoli_views.connect  'altro/sezione/:id', :action => 'sezione'
-      articoli_views.connect  'altro/sezione/:id/articolo/:id', :action => 'articolo'
+              :controller   => 'editorial',
+              :action       => 'top_sezione',
+              :topmenu_key  => /[^\/]+/,
+              :topsection_key   => /[^\/]+/,
+              :conditions => {:method => [:get, :post]}
 
-      articoli_views.connect  'varie/:id', :action => 'top_menu'
 
-    #  articoli_views.connect 'menu/:top_menu_id/sezione/:id', :action => 'sezione'
-    #  articoli_views.connect 'menu/:top_menu_id/sezione/:top_section_id/articolo/:id', :action => 'articolo'
-    #  articoli_views.connect '/sezione/:section_id/articolo/:id' , :controller => 'editorial', :action => 'articolo'
-    end
-      articoli_routes.with_options :conditions => {:method => :post} do |board_actions|
-    end
-  end
+#  map.articolo_page 'editorial/:top_menu_key/sezione/:top_section_id/articolo/:article_id',
+
+  map.articolo_page '/editoriale/:topmenu_key/:topsection_key/:article_id',
+              :controller       => 'editorial',
+              :action           => 'articolo',
+              :topmenu_key      => /[^\/]+/,
+              :topsection_key   => /[^\/]+/,
+              :article_id       => /\d.+/,
+              :conditions => {:method => [:get, :post]}
+
+
+
+
+#  map.topsection_page '/editorial/:topmenu_key/sezione/:topsection_id',
+#              :controller   => 'editorial',
+#              :action       => 'top_sezione',
+#              :topmenu_key  => /[^\/]+/,  # /\d{4}/,
+               # --> sandro fix problema visulizzazione routing su top section
+#              :topsection_id   => /[0-9]+/,
+#              :conditions => {:method => [:get, :post]}
+#              :as => 'topsection_page'
+
+#  map.articolo_page 'editorial/:top_menu_key/articolo/:article_id',
+#              :controller       => 'editorial',
+#              :action           => 'articolo',
+#              :top_menu_key      => /[^\/]+/,  # /\d{4}/,
+#              :top_section_id    => /\d.+/,
+#              :article_id       => /\d.+/,
+#              :conditions => {:method => [:get, :post]}
+#              :article_title    => /[^\/]+/  # /\d{1,2}/
+#              :as => 'articolo_page'
+
+
+
 
   map.resources :regions
   #map.resources :provinces
@@ -336,7 +338,7 @@ ActionController::Routing::Routes.draw do |map|
 
     repositories.connect 'projects/:id/repository/:action', :conditions => {:method => :post}
   end
-  
+
   map.resources :attachments, :only => [:show, :destroy]
   # additional routes for having the file name at the end of url
   map.connect 'attachments/:id/:filename', :controller => 'attachments', :action => 'show', :id => /\d+/, :filename => /.*/

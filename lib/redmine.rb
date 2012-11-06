@@ -184,7 +184,7 @@ Redmine::MenuManager.map :top_menu_fs do |menu|
 end
 
 Redmine::MenuManager.map :footer_menu_fs do |menu|
-  menu.push :editoriale, :editorial_path
+  #menu.push :editoriale, :editorial_path see custom routes
   menu.push :edizioni, :edizioni_path
   menu.push :articoli, :articoli_path
   menu.push :quesiti, :quesiti_path
@@ -196,18 +196,18 @@ Redmine::MenuManager.map :footer_menu_fs do |menu|
   #menu.push :registrazione, :registrazione_path
   #menu.push :accedi, :accedi_path
   menu.push :edizione, :edizione_path
-  menu.push :articolo, :articolo_path
+  #menu.push :articolo, :articolo_path see custom routes
   menu.push :quesito, :quesito_path
 end
 
 #Lista delle categorie
-Redmine::MenuManager.map :application_menu_fs do |menu|  
+Redmine::MenuManager.map :application_menu_fs do |menu|
 
 #test children menu result unattached menu
   #menu.push :test, { :controlle => 'editorial', :action => 'sezione' }, { :children => Proc.new {[
-  #Redmine::MenuManager::MenuItem.new(:stampa, { :controller => 'editorial', :action => 'sezione', :id => 18 }, {})  
+  #Redmine::MenuManager::MenuItem.new(:stampa, { :controller => 'editorial', :action => 'sezione', :id => 18 }, {})
   #] } }
-  
+
 #test parent menu result subtree attached but css not ok
 
 #18, 'Comunicati stampa', 0
@@ -280,8 +280,8 @@ Redmine::MenuManager.map :account_fe_menu do |menu|
 end
 
 # << end sandro >>
-    
-    
+
+
 Redmine::MenuManager.map :account_menu do |menu|
   menu.push :login, :signin_path, :if => Proc.new { !User.current.logged? }
   menu.push :register, { :controller => 'account', :action => 'register' }, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
@@ -306,12 +306,12 @@ Redmine::MenuManager.map :application_menu do |menu|
   #menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
   menu.push :fee, :fee_path, :if => Proc.new { User.current.admin? && Setting.fee? }
 end
-    
+
 Redmine::MenuManager.map :admin_menu do |menu|
   menu.push :projects, {:controller => 'admin', :action => 'projects'}, :caption => :label_project_plural
   menu.push :users, {:controller => 'users'}, :caption => :label_user_plural
   menu.push :abbo, {:controller => 'fees', :action => 'index'}, :caption => :label_abbo_plural, :if => Proc.new { Setting.fee? }
-  
+
   menu.push :groups, {:controller => 'groups'}, :caption => :label_group_plural
   menu.push :roles, {:controller => 'roles'}, :caption => :label_role_and_permissions
   menu.push :trackers, {:controller => 'trackers'}, :caption => :label_tracker_plural
@@ -370,7 +370,7 @@ end
 #selettore di ruolo
 #ricerca per utente
 #filtro data scadenza
-#export 
+#export
 ## admin
 #  ROLE_MANAGER        = 3  #Manager<br />
 #  ROLE_AUTHOR         = 4  #Redattore  <br />
@@ -381,10 +381,10 @@ end
 #  ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
 #  ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
 #  ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
-#  ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di 
+#  ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di
 
 
-  
+
 Redmine::Activity.map do |activity|
   activity.register :issues, :class_name => %w(Issue Journal)
   activity.register :changesets
