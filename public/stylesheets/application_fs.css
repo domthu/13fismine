@@ -299,13 +299,10 @@ box-shadow: 5px 5px rgba(80,122,170,0.1);
 .hide{display: none;}
 .unauthorized{margin:0px; padding:0px; background-color: red; color: yellow; width: 100%;}
 
-
-
 #login-form {min-height: 480px;}
 #login-form table {margin-top:30px; padding:1em; margin-left: auto; margin-right: auto; border: 1px dotted #65653C; background-color: #F3FAF3; }
 #login-form table td {padding: 6px;}
 #login-form label {font-weight: bold;}
 #login-form input#username, #login-form input#password { width: 300px; }
-
 
 

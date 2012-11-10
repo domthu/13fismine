@@ -29,7 +29,6 @@ ActionController::Routing::Routes.draw do |map|
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
 
-
 #http://guides.rubyonrails.org/v2.3.11/routing.html
 
 
@@ -58,7 +57,6 @@ ActionController::Routing::Routes.draw do |map|
 
 #  map.articolo_page 'editorial/:top_menu_key/sezione/:top_section_id/articolo/:article_id',
 
-
   map.articolo_page '/editoriale/:topmenu_key/:topsection_key/:article_id/:article_slug',
                     :controller => 'editorial',
                     :action => 'articolo',
@@ -67,7 +65,6 @@ ActionController::Routing::Routes.draw do |map|
                     :article_id => /\d.+/,
                     :article_slug => /[^\/]+/,
                     :conditions => {:method => [:get, :post]}
-
 
 
   map.resources :regions
