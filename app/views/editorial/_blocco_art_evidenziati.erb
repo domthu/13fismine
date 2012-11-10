@@ -1,8 +1,9 @@
+<!-- ---- inizio art-evidenziati -->
 <div class="fs-block clearfix">
-  <% if @issues && @issues.any? %>
       <div class="fs-blockheader">
-        <h3 class="t">In Evidenza</h3> <!-- <span style="font-size: 14px; font-weight: bold;">:(<%#@issues.count %>)</span> -->
+        <h3 class="t">Articoli in Evidenza</h3> <!-- <span style="font-size: 14px; font-weight: bold;">:(<%#@issues.count %>)</span> -->
       </div>
+  <% if @issues && @issues.any? %>
       <div class="fs-blockcontent">
         <% for articolo in @issues %>
             <%= render :partial => 'articolo_pinned', :locals => {:articolo => articolo} %>
@@ -13,7 +14,5 @@
   <% else %>
       <p class="nodata"><%= l(:label_no_data) %></p>
   <% end %>
-
-  <div class="cleared"></div>
 
 </div>
