@@ -1,0 +1,179 @@
+<html dir="ltr" lang="en-EN">
+<head><!-- Created by DomThu & SPecchiaSoft -->
+  <meta charset="utf-8">
+  <title>FiscoSport  <%= h html_title %></title>
+  <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
+  <meta name="description" content="<%= Redmine::Info.app_name %>"/>
+  <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <%= csrf_meta_tag %>
+  <%= favicon %>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <!--[if lte IE 7]><%= stylesheet_link_tag 'style.ie7.css', :media => 'screen' %><![endif]-->
+<%# css %>
+  <style>
+
+      .ie7 .post .layout-cell {
+          border: none !important;
+          padding: 0 !important;
+      }
+
+      .ie6 .post .layout-cell {
+          border: none !important;
+          padding: 0 !important;
+      }
+
+      .ie7 .post .layout-cell {
+          border: none !important;
+          padding: 0 !important;
+      }
+
+      .ie6 .post .layout-cell {
+          border: none !important;
+          padding: 0 !important;
+      }
+
+  </style>
+  <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
+  <%= stylesheet_link_tag 'application_fs', :media => 'all' %>
+  <%= stylesheet_link_tag 'editorial', :media => 'all' %>
+  <!-- queste erano di defailt ? si possono  cancellare? non sembrano avere effetto alcuno almeno in FE -->
+  <%# stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
+  <%# stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
+  <!-- fine di: queste erano di defailt ?... -->
+<%# jquery %>
+  <%= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
+  <%= javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
+  <%= javascript_include_tag "script.responsive.js" %>
+  <%= javascript_include_tag "script.js" %>
+  <%= javascript_include_tag "jquery.jcarousel.min.js" %>
+  <%= javascript_include_tag "jcarousellite_1.0.1c4.js" %>
+  <script type="text/javascript">
+      $(function () {
+          $(".newsticker-jcarousellite").jCarouselLite({
+              vertical:true,
+              hoverPause:true,
+              visible:3,
+              auto:1500,
+              speed:3000
+          });
+      });
+  </script>
+  <!--   <script src="script.js"></script>
+<script src="script.responsive.js"></script>     -->
+<%# superfish %>
+<%# stylesheet_link_tag 'superfish-1.4.8/superfish.css', :media => 'screen' %>
+<%# stylesheet_link_tag 'superfish-1.4.8/superfish-navbar.css', :media => 'all' %>
+<%# stylesheet_link_tag 'superfish-1.4.8/superfish-vertical.css', :media => 'all' %>
+<%# javascript_include_tag "superfish-1.4.8/jquery-1.2.6.min.js" %>
+<%# javascript_include_tag "superfish-1.4.8/hoverIntent.js" %>
+<%#= javascript_include_tag "superfish-1.4.8/superfish.js" %>
+  <!--
+  <script>
+
+      $(document).ready(function(){
+          $("ul.sf-menu").superfish({
+              pathClass:  'active'  ,
+              hoverClass:    'active'
+          });
+      });
+
+  </script>
+    <!--
+          <script type="text/javascript">
+              $(function(){
+              // initialise plugins
+              $(".fs-m1hmenu").superfish();
+              $("#main-menu ul").superfish();
+              });
+          </script>
+  -->
+
+<%# heads_for_theme %>
+  <!--[if IE 6]><!--
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(<%= stylesheet_path "csshover.htc" %>);}
+    </style>
+<![endif]-->
+<%#call_hook :view_layouts_editorial_html_head %>
+  <!-- page specific tags -->
+<%# yield :header_tags -%>
+</head>
+<body>
+<div id="fs-main">
+  <header class="fs-header clearfix">
+    <div class="fs-shapes">
+      <div id="top-menu-fe">
+        <div id="account-fe">
+          <%= render_menu :account_fe_menu -%>
+        </div>
+        <%= content_tag(
+                    'div',
+                    "#{l(:label_logged_as)} #{link_to_user(User.current, :format => :username)}".html_safe,
+                    :id => 'loggedas-fe') if User.current.logged? %>
+        <%# render_menu :top_menu if User.current.logged? || !Setting.login_required? -%>
+        <%#render_menu :application_menu if !User.current.logged? %>
+      </div>
+
+      <h1 class="fs-headline">
+        <a href="#">Professionisti Esperti in Materie Fiscali Sportive</a>
+      </h1>
+
+      <div class="fs-logo"></div>
+
+
+      <div class="fs-textblock fs-cerca">
+        <form class="fs-search" name="Search" action="javascript:void(0)">
+          <input type="text" value="">
+          <input type="submit" value="Search" name="search" class="fs-search-button">
+        </form>
+      </div>
+    </div>
+    <nav class="fs-nav clearfix">
+      <%= render_navigation(:level => 1) %>
+    </nav>
+  </header>
+  <div class="fs-sheet-nav clearfix">
+    <nav class="fs-2nav clearfix">
+      <%= render_navigation :level => 2 %>
+    </nav>
+  </div>
+
+  <% if !flash.nil? && flash.count > 0 %>
+      <div id="fs_informa" class="nodata">
+        <p>
+          <% flash.each do |key, value| %>
+            <div class="flash <%= key %>"><%= value %></div>
+            <br/>
+        <% end %>
+        </p>
+      </div>
+  <% end %>
+
+  <div class="fs-sheet clearfix">
+    <div class="fs-layout-wrapper clearfix">
+      <div class="fs-content-layout">
+        <div class="fs-content-layout-row">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    <%#sidebar a destra %>
+    <%# render :partial => 'footer' %>
+  </div>
+
+</div> <%#fs-main%>
+<div id="ajax-indicator" style="display:none;"><span><%= l(:label_loading) %></span></div>
+<div id="header">
+  <div id="main-menu" class="fs_box_opacity">
+    <%= render_menu :application_menu_fs %>
+    <br/>
+    <%# render_menu :footer_menu_fs %>
+  </div>
+</div>
+
+</body>
+</html>

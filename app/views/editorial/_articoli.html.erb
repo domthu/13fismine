@@ -1,5 +1,8 @@
 <h1 style="display:none">__PARTIAL <%= @base_url %>/////<%= @article_id %> ARTICOLI</h1>
 <div class="fs-layout-cell fs-content clearfix">
+  <nav class="fs-nav2 clearfix">
+       <%= render_navigation(:level => 2) %>
+     </nav>
   <article class="fs-post fs-article">
     <% @issues.each do |articolo| %>
         <%= render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
