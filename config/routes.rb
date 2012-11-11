@@ -20,7 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.help '/help', :controller => 'editorial', :action => 'help'
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
-  map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
+  #map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
   #map.registrazione '/registrazione', :controller => 'editorial', :action => 'register'
   #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.quesiti '/quesiti', :controller => 'editorial', :action => 'quesiti'
@@ -72,7 +72,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :provinces, :has_many => :regions
   #map.resources :comunes
   map.resources :comunes, :has_many => :provinces
-  
+
   map.resources :cross_groups
   map.resources :group_banners
   map.resources :assos
@@ -97,7 +97,7 @@ ActionController::Routing::Routes.draw do |map|
   map.email_fee 'email_fee', :controller => 'fees', :action => 'email_fee', :conditions => {:method => :get}
   map.email_fee_goto_settings 'email_fee_settings', :controller => 'settings', :action => 'edit', :tab => 'fee'
   map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
- 
+
   #in POST not in Get for params[:username]...
   #map.signin 'login', :controller => 'account', :action => 'login'
   #map.signout 'logout', :controller => 'account', :action => 'logout'
