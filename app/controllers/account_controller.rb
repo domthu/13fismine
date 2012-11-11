@@ -25,7 +25,10 @@ class AccountController < ApplicationController
 
   # Login request and validation
   def login
+    Rails.logger.info("login PARAMS: #{params.inspect}")
+    flash[:notice] = "==========login============="
     if request.get?
+      flash[:notice] = "request.get --> logout_user"
       logout_user
     else
       authenticate_user
@@ -218,10 +221,13 @@ class AccountController < ApplicationController
     #if User.current.allowed_to?(:access_back_end, nil, :global => true)
     #if self.logged_user.allowed_to?(:access_back_end, nil, :global => true)
     if user.allowed_to?(:access_back_end, nil, :global => true)
-     # redirect_to(home_url)
+      Rails.logger.info("login ok collaboratore")
+      redirect_to(home_url)
       #redirect_back_or_default :controller => 'my', :action => 'page'
-      redirect_to(editorial_url)
+      #redirect_to(editorial_url)
+      #redirect_back_or_default :controller => 'editorial', :action => 'home'
     else
+      Rails.logger.info("login ok membro")
       redirect_to(editorial_url)
     end
   end

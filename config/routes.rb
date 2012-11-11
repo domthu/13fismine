@@ -68,11 +68,11 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.resources :regions
-#map.resources :provinces
+  #map.resources :provinces
   map.resources :provinces, :has_many => :regions
-#map.resources :comunes
+  #map.resources :comunes
   map.resources :comunes, :has_many => :provinces
-
+  
   map.resources :cross_groups
   map.resources :group_banners
   map.resources :assos
@@ -96,18 +96,26 @@ ActionController::Routing::Routes.draw do |map|
   map.associati 'associati', :controller => 'fees', :action => 'associati'
   map.email_fee 'email_fee', :controller => 'fees', :action => 'email_fee', :conditions => {:method => :get}
   map.email_fee_goto_settings 'email_fee_settings', :controller => 'settings', :action => 'edit', :tab => 'fee'
-
-  #in POST not in Get for params[:username]...
   map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
-
-  map.signin 'account/login', :controller => 'account', :action => 'login'
-  map.signout 'logout', :controller => 'account', :action => 'logout'
-
+ 
+  #in POST not in Get for params[:username]...
+  #map.signin 'login', :controller => 'account', :action => 'login'
+  #map.signout 'logout', :controller => 'account', :action => 'logout'
+  map.signin 'login', :controller => 'account', :action => 'login',
+             :conditions => {:method => [:get, :post]}
+  map.signout 'logout', :controller => 'account', :action => 'logout',
+              :conditions => {:method => :get}
+  map.connect 'account/register', :controller => 'account', :action => 'register',
+              :conditions => {:method => [:get, :post]}
+  map.connect 'account/lost_password', :controller => 'account', :action => 'lost_password',
+              :conditions => {:method => [:get, :post]}
+  map.connect 'account/activate', :controller => 'account', :action => 'activate',
+              :conditions => {:method => :get}
 
   map.connect 'roles/workflow/:id/:role_id/:tracker_id', :controller => 'roles', :action => 'workflow'
   map.connect 'help/:ctrl/:page', :controller => 'help'
 
-  map.with_options :controller => 'time_entry_reports', :action => 'report', :conditions => {:method => :get} do |time_report|
+  map.with_options :controller => 'time_entry_reports', :action => 'report',:conditions => {:method => :get} do |time_report|
     time_report.connect 'projects/:project_id/issues/:issue_id/time_entries/report'
     time_report.connect 'projects/:project_id/issues/:issue_id/time_entries/report.:format'
     time_report.connect 'projects/:project_id/time_entries/report'
@@ -117,11 +125,11 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.bulk_edit_time_entry 'time_entries/bulk_edit',
-                           :controller => 'timelog', :action => 'bulk_edit', :conditions => {:method => :get}
+                   :controller => 'timelog', :action => 'bulk_edit', :conditions => { :method => :get }
   map.bulk_update_time_entry 'time_entries/bulk_edit',
-                             :controller => 'timelog', :action => 'bulk_update', :conditions => {:method => :post}
+                   :controller => 'timelog', :action => 'bulk_update', :conditions => { :method => :post }
   map.time_entries_context_menu '/time_entries/context_menu',
-                                :controller => 'context_menus', :action => 'time_entries'
+                   :controller => 'context_menus', :action => 'time_entries'
   # TODO: wasteful since this is also nested under issues, projects, and projects/issues
   map.resources :time_entries, :controller => 'timelog'
 
@@ -173,14 +181,14 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :queries, :except => [:show]
 
   # Misc issue routes. TODO: move into resources
-  map.auto_complete_issues '/issues/auto_complete', :controller => 'auto_completes', :action => 'issues', :conditions => {:method => :get}
+  map.auto_complete_issues '/issues/auto_complete', :controller => 'auto_completes', :action => 'issues', :conditions => { :method => :get }
   map.preview_issue '/issues/preview/:id', :controller => 'previews', :action => 'issue' # TODO: would look nicer as /issues/:id/preview
   map.issues_context_menu '/issues/context_menu', :controller => 'context_menus', :action => 'issues'
   map.issue_changes '/issues/changes', :controller => 'journals', :action => 'index'
-  map.bulk_edit_issue 'issues/bulk_edit', :controller => 'issues', :action => 'bulk_edit', :conditions => {:method => :get}
-  map.bulk_update_issue 'issues/bulk_edit', :controller => 'issues', :action => 'bulk_update', :conditions => {:method => :post}
-  map.quoted_issue '/issues/:id/quoted', :controller => 'journals', :action => 'new', :id => /\d+/, :conditions => {:method => :post}
-  map.connect '/issues/:id/destroy', :controller => 'issues', :action => 'destroy', :conditions => {:method => :post} # legacy
+  map.bulk_edit_issue 'issues/bulk_edit', :controller => 'issues', :action => 'bulk_edit', :conditions => { :method => :get }
+  map.bulk_update_issue 'issues/bulk_edit', :controller => 'issues', :action => 'bulk_update', :conditions => { :method => :post }
+  map.quoted_issue '/issues/:id/quoted', :controller => 'journals', :action => 'new', :id => /\d+/, :conditions => { :method => :post }
+  map.connect '/issues/:id/destroy', :controller => 'issues', :action => 'destroy', :conditions => { :method => :post } # legacy
 
   map.with_options :controller => 'gantts', :action => 'show' do |gantts_routes|
     gantts_routes.connect '/projects/:project_id/issues/gantt'
@@ -199,15 +207,15 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # Following two routes conflict with the resources because #index allows POST
-  map.connect '/issues', :controller => 'issues', :action => 'index', :conditions => {:method => :post}
-  map.connect '/issues/create', :controller => 'issues', :action => 'index', :conditions => {:method => :post}
+  map.connect '/issues', :controller => 'issues', :action => 'index', :conditions => { :method => :post }
+  map.connect '/issues/create', :controller => 'issues', :action => 'index', :conditions => { :method => :post }
 
-  map.resources :issues, :member => {:edit => :post}, :collection => {} do |issues|
+  map.resources :issues, :member => { :edit => :post }, :collection => {} do |issues|
     issues.resources :time_entries, :controller => 'timelog'
     issues.resources :relations, :shallow => true, :controller => 'issue_relations', :only => [:index, :show, :create, :destroy]
   end
 
-  map.resources :issues, :path_prefix => '/projects/:project_id', :collection => {:create => :post} do |issues|
+  map.resources :issues, :path_prefix => '/projects/:project_id', :collection => { :create => :post } do |issues|
     issues.resources :time_entries, :controller => 'timelog'
   end
 
@@ -224,8 +232,8 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :users, :member => {
-      :edit_membership => :post,
-      :destroy_membership => :post
+    :edit_membership => :post,
+    :destroy_membership => :post
   }
 
   # For nice "roadmap" in the url for the index action
@@ -238,11 +246,11 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'news/:id/comments/:comment_id', :controller => 'comments', :action => 'destroy', :conditions => {:method => :delete}
 
   map.resources :projects, :member => {
-      :copy => [:get, :post],
-      :settings => :get,
-      :modules => :post,
-      :archive => :post,
-      :unarchive => :post
+    :copy => [:get, :post],
+    :settings => :get,
+    :modules => :post,
+    :archive => :post,
+    :unarchive => :post
   } do |project|
     project.resource :project_enumerations, :as => 'enumerations', :only => [:update, :destroy]
     project.resources :files, :only => [:index, :new, :create]
@@ -258,14 +266,14 @@ ActionController::Routing::Routes.draw do |map|
     project.wiki_diff 'wiki/:id/diff/:version/vs/:version_from', :controller => 'wiki', :action => 'diff'
     project.wiki_annotate 'wiki/:id/annotate/:version', :controller => 'wiki', :action => 'annotate'
     project.resources :wiki, :except => [:new, :create], :member => {
-        :rename => [:get, :post],
-        :history => :get,
-        :preview => :any,
-        :protect => :post,
-        :add_attachment => :post
+      :rename => [:get, :post],
+      :history => :get,
+      :preview => :any,
+      :protect => :post,
+      :add_attachment => :post
     }, :collection => {
-        :export => :get,
-        :date_index => :get
+      :export => :get,
+      :date_index => :get
     }
 
   end
@@ -298,8 +306,8 @@ ActionController::Routing::Routes.draw do |map|
       repository_views.connect 'projects/:id/repository/revisions/:rev', :action => 'revision'
       repository_views.connect 'projects/:id/repository/revisions/:rev/diff', :action => 'diff'
       repository_views.connect 'projects/:id/repository/revisions/:rev/diff.:format', :action => 'diff'
-      repository_views.connect 'projects/:id/repository/revisions/:rev/raw/*path', :action => 'entry', :format => 'raw', :requirements => {:rev => /[a-z0-9\.\-_]+/}
-      repository_views.connect 'projects/:id/repository/revisions/:rev/:action/*path', :requirements => {:rev => /[a-z0-9\.\-_]+/}
+      repository_views.connect 'projects/:id/repository/revisions/:rev/raw/*path', :action => 'entry', :format => 'raw', :requirements => { :rev => /[a-z0-9\.\-_]+/ }
+      repository_views.connect 'projects/:id/repository/revisions/:rev/:action/*path', :requirements => { :rev => /[a-z0-9\.\-_]+/ }
       repository_views.connect 'projects/:id/repository/raw/*path', :action => 'entry', :format => 'raw'
       # TODO: why the following route is required?
       repository_views.connect 'projects/:id/repository/entry/*path', :action => 'entry'
@@ -316,7 +324,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :groups, :member => {:autocomplete_for_user => :get}
   map.group_users 'groups/:id/users', :controller => 'groups', :action => 'add_users', :id => /\d+/, :conditions => {:method => :post}
-  map.group_user 'groups/:id/users/:user_id', :controller => 'groups', :action => 'remove_user', :id => /\d+/, :conditions => {:method => :delete}
+  map.group_user  'groups/:id/users/:user_id', :controller => 'groups', :action => 'remove_user', :id => /\d+/, :conditions => {:method => :delete}
 
   map.resources :trackers, :except => :show
   map.resources :issue_statuses, :except => :show, :collection => {:update_issue_done_ratio => :post}

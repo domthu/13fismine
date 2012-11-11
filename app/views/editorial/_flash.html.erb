@@ -1,0 +1,10 @@
+<% if !flash.nil? && flash.count > 0 %>
+    <div id="fs_informa" class="nodata">
+      <p>
+        <% flash.each do |key, value| %>
+          <div class="flash <%= key %>"><%= value %></div>
+          <br/>
+        <% end %>
+      </p>
+    </div>
+<% end %>
