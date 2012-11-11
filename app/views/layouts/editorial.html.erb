@@ -36,25 +36,25 @@
       }
 
   </style>
-  <!-- queste erano di defailt ? si possono  cancellare? non sembrano avere effetto alcuno almeno in FE -->
+  <!-- queste erano di default ? si possono  cancellare? non sembrano avere effetto alcuno almeno in FE -->
   <%# stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
-  <%# stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
-  <!-- fine di: queste erano di defailt ?... -->
+  <!-- fine di: queste erano di default ?... -->
 
   <!-- styles comuni  -->
   <%= stylesheet_link_tag 'application_fs', :media => 'all' %>
   <%= stylesheet_link_tag 'editorial', :media => 'all' %>
   <!-- styles per il FE -->
-     <%= stylesheet_link_tag 'fe-blu-02/style.css', :media => 'all' %>
-  <%= stylesheet_link_tag 'fe-blu-02/style.responsive.css', :media => 'all' %>
-  <%= stylesheet_link_tag 'fe-blu-02/style-menu2.css', :media => 'all' %>
+   <%# stylesheet_link_tag 'fe-blu-02/style.css', :media => 'all' %>
+  <%# stylesheet_link_tag 'fe-blu-02/style.responsive.css', :media => 'all' %>
+  <%# stylesheet_link_tag 'fe-blu-02/style-menu2.css', :media => 'all' %>
 
   <!-- jquery comuni -->
   <%= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
   <%= javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
+  <%= stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
   <!-- jquery per il FE -->
-  <%= javascript_include_tag 'fe-blu-02/script.js' %>
-  <%= javascript_include_tag 'fe-blu-02/script.responsive.js' %>
+  <%# javascript_include_tag 'fe-blu-02/script.js' %>
+  <%# javascript_include_tag 'fe-blu-02/script.responsive.js' %>
   <!-- jquery per la rotaziuone banner-->
   <%# javascript_include_tag "jquery.jcarousel.min.js" %>
   <%= javascript_include_tag 'jcarousellite_1.0.1c4.js' %>
@@ -72,6 +72,7 @@
 </head>
 
 <body>
+<%= render :partial => 'flash' %>
 <div id="fs-main">
   <div class="fs-sheet clearfix">
     <nav class="fs-nav clearfix">
@@ -97,6 +98,7 @@
 
 </div> <%#fs-main%>
 <div id="ajax-indicator" style="display:none;"><span><%= l(:label_loading) %></span></div>
+
 <div id="header">
   <div id="main-menu" class="fs_box_opacity">
     <%= render_menu :application_menu_fs %>

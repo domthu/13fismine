@@ -25,7 +25,9 @@ class AccountFeController < ApplicationController
 
   # Login request and validation
   def login
+    flash[:notice] = "==========login fe============="
     if request.get?
+      flash[:notice] = "request.get -fe-> logout_user"
       logout_user
     else
       authenticate_user

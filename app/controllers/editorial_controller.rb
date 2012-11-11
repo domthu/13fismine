@@ -7,8 +7,7 @@ class EditorialController < ApplicationController
 
   before_filter :find_optional_project, :only => [:ricerca]
   before_filter :correct_user, :only => [:articolo, :quesito, :edizione]
-  # -> sandro rem della linea sotto  altrimenti non riesco ad accedere al singolo articolo
-  # before_filter :enabled_user, :only => [:articolo, :quesito, :edizione]
+  before_filter :enabled_user, :only => [:articolo, :quesito, :edizione]
 
   helper :messages
   include MessagesHelper
@@ -42,13 +41,13 @@ class EditorialController < ApplicationController
     @issues_count =Issue.count(
         :include => [:section => :top_section]
     )
-    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @issues = Issue.find(:all,
-                         :include => [:section => :top_section],
-                         :order => 'updated_on DESC',
-                         :conditions => ["se_visible_web = 1 AND se_visible_newsletter = 1"],
-                         :limit => @issues_pages.items_per_page,
-                         :offset => @issues_pages.current.offset)
+    @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
+    @issues =  Issue.find( :all,
+                        :include => [:section => :top_section],
+                        :order =>  'updated_on DESC',
+                        :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1"],
+                        :limit  => @issues_pages.items_per_page ,
+                        :offset =>  @issues_pages.current.offset)
 
     respond_to do |format|
       format.html {
@@ -89,10 +88,9 @@ class EditorialController < ApplicationController
     end
     #@top_sections = TopSection.find(:all,
     @topsection_ids = TopSection.find(:all,
-                                      :select => 'distinct id',
-                                      :conditions => ["top_menu_id =  ?", @top_menu.id]
-    )
-
+      :select => 'distinct id',
+      :conditions => ["top_menu_id =  ?", @top_menu.id]
+      )
     #@topsection_ids = @top_sections.select(:id).uniq
     # Paginate results
     case params[:format]
@@ -104,8 +102,8 @@ class EditorialController < ApplicationController
     end
 
     @issues_count =Issue.count(
-        :include => [:section => :top_section],
-        :conditions => ["#{TopSection.table_name}.top_menu_id = ?", @top_menu.id]
+        :include => [:section => :top_section] ,
+        :conditions => ["#{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids]
     )
 
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
@@ -167,7 +165,7 @@ class EditorialController < ApplicationController
     @issues = Issue.find(:all,
                          :include => [:section => :top_section],
                          :order => 'created_on DESC',
-                         :conditions => ["se_visible_web = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
+                         :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
                          :limit => @issues_pages.items_per_page,
                          :offset => @issues_pages.current.offset)
 
@@ -376,8 +374,6 @@ class EditorialController < ApplicationController
   end
 
   def enabled_user
-    # redirect_to(editorial_path)
-    # -> sandro modifica temporanea per accedere al singolo articolo
     reroute_auth() unless User.current.isfee?(params[:id])
   end
 
