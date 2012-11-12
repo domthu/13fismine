@@ -10,9 +10,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :templates
 
   # If not authorized home_url --> editorial_url
-  map.home '', :controller => 'welcome' #REDMINE HOME
-  # map.root :controller => "editorial", :action => 'top_menu', :id => 1 ,  :path => '/home/:id'  #FRONT END
-  #map.root :controller => "editorial", :action => 'home'   #FRONT END
+ # map.home '', :controller => 'welcome' #REDMINE HOME
+  #map.home '/editoriale/home', :controller => "editorial", :action => 'home' #FRONT END
+  map.home'',  :controller => "editorial", :action => 'top_menu',  :topmenu_key => /#{'approfondimenti'}+/ #FRONT END
 
   # Named Routes for static pages.
   map.contact '/contact', :controller => 'editorial', :action => 'contact'
