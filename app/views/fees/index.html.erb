@@ -3,13 +3,13 @@
     <%= render_menu :menu_fee_fs %>
   </div>
   In questa pagina:
-  <ul> 
+  <ul>
     <li>Pulsante per verificare tutti gli abbonamenti</li>
     <li>Lista numero utenti per ruolo </li>
     <li>Menu per le singole pagine di gestione</li>
     <li>Ricerca di un utente con redirect alla pagina dell'utente</li>
-  </ul> 
-    
+  </ul>
+
 
 <div class="splitcontentleft">
   <fieldset class="box tabular">
@@ -28,20 +28,29 @@
     </h5>
     <%= @name_admin %>
 
-    <ul> 
-      <li>Numero di redattori: <b><%= @num_author %></b></li>      
+    <h5>
+      Numero power_user: <b><%= @num_power_user %></b><br />
+    </h5>
+    <%= @name_power_user %>
+    <h5>
+      Numero manager (=power_user): <b><%= @num_manager %></b><br />
+    </h5>
+    <%= @name_manager %>
+
+    <ul>
+      <li>Numero di redattori: <b><%= @num_author %></b></li>
     </ul>
     <%= @name_author %>
-    <ul> 
+    <ul>
       <li style="display: none;">Numero di collaboratori: <b><%= @num_collaboratori %></b>
         <%= @name_collaboratori %>
-      </li>      
+      </li>
     </ul>
-    <ul> 
+    <ul>
       <li>Numero di invitati: <b><%= @num_invitati %></b></li>
     </ul>
     <%= @name_invitati %>
-    
+
   </fieldset>
 </div>
 
@@ -51,7 +60,7 @@
     <blockquote>
       Organismi al quale si riferiscono: Cross organizations ed utenti
     </blockquote>
-    <ul> 
+    <ul>
       <li>Numero di cross organismi: <b><%= @num_organismi %></b></li>
       <li>Numero di utenti che si riferiscono: <b><%= @num_members %></b></li>
     </ul>
@@ -65,7 +74,7 @@
     <h5>
       Organismi associati e Utenti con affiliazione
     </h5>
-    <ul> 
+    <ul>
       <li>Numero di organismi associati: <b><%= @num_Associations %></b></li>
       <li>Numero di power_user: <b><%= @num_power_user %></b></li>
       <li>Numero di membri (soci) <b>NON PAGANTI: <%= @num_Associated %></b></li>
@@ -79,7 +88,7 @@
     <h5>
       Privati
     </h5>
-    <ul> 
+    <ul>
       <li>Numero di utenti senza affiliazione <b>: <%= @num_maybe_privati %></b></li>
       <li>Numero di PRIVATI: <b><%= @num_privati %></b> (<%= @num_maybe_privati - @num_privati %>)</li>
       <li>Numero di <b>PRIVATI ATTIVI: <%= @num_active %></b></li>
@@ -90,18 +99,18 @@
     </blockquote>
     <% form_tag({:action => 'index', :verify => 1}, :class => "tabular") do %>
       <%= submit_tag l(:button_verify) %>
-    <% end %>   
+    <% end %>
     <% if !@msg.nil? && @msg.any? %>
       <%= l(:results) %>
       <div id="fs_informa" class="nodata">
         <ul style="text-align: left;">
           <% @msg.each_with_index do |say, index| %>
             <li><%= index.to_s + '-' + say%></li>
-          <% end %>  
+          <% end %>
         <ul>
       </div>
       <br />
-    <% end %>  
+    <% end %>
   </fieldset>
 </div>
 
@@ -116,7 +125,7 @@
   ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
   ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
     </blockquote>
-    <ul> 
+    <ul>
       <li>Numero di abbonati: <%= @num_abbonati %></li>
       <li>Numero di abbonati in stato di rinnovamento (Scadenza - <%= Setting.renew_days%> giorni): <%= @num_rinnovamento %></li>
       <li>Numero di registrati: <%= @num_registrati %>. Con periodo di prova (Data di registrazione + <%= Setting.register_days%> giorni)</li>
@@ -126,6 +135,3 @@
   </fieldset>
 
 </div>
-
-        
-

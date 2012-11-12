@@ -3,7 +3,7 @@ class CrossOrganization < ActiveRecord::Base
   #domthu20120516
   #ERROR undefined local variable or method `null' for #<Class:0xb656c5b4>
   has_many :organizations#, :dependent => :nullify
-  
+
   #has_many :assos, :through => :organizations, :dependent => :delete_all
   has_many :users #, :dependent => :nullify
   belongs_to :type_organization, :class_name => 'TypeOrganization', :foreign_key => 'type_organization_id'
@@ -14,7 +14,11 @@ class CrossOrganization < ActiveRecord::Base
 
   ###NON USARE PIU organizzazione
   def to_s
-    type_organization.to_s + ' :: ' + sigla #to_s
+    if (type_organization.nil?)
+      'type(' + type_organization_id.to_s + ')? :: ' + (sigla.nil? ? "sigla?" : sigla) #to_s
+    else
+      type_organization.to_s + ' :: ' + (sigla.nil? ? "sigla?" : sigla) #to_s
+    end
   end
 
   alias :name :to_s
