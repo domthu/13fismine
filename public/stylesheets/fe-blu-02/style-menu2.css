@@ -1,16 +1,28 @@
 #home3 {
     background-image: url('/images/menu2/home3-32.png');
     background-repeat: no-repeat;
+    background-color: #ffed6b;
+    background-clip:content-box;
+    -webkit-background-clip:content-box; /* Safari */
+    background-position: 2px 1px;
 }
 
 #home9 {
     background-image: url('/images/menu2/home9-32.png');
     background-repeat: no-repeat;
+    background-color:#ffed6b;
+    background-clip:content-box;
+    -webkit-background-clip:content-box; /* Safari */
+    background-position: 2px 1px;
 }
 
 #home19 {
     background-image: url('/images/menu2/home19-32.png');
     background-repeat: no-repeat;
+    background-color: #ffed6b;
+    background-clip:content-box;
+    -webkit-background-clip:content-box; /* Safari */
+    background-position: 2px 1px;
 }
 
 .art-nav {
@@ -142,11 +154,13 @@ ul.art-hmenu>li>a {
     -moz-border-radius: 6px;
     border-radius: 6px;
     padding: 0 6px 0 38px;
-    margin: 0 6px 0 auto;
+    margin: 0 auto;
     color: #2A3A4C;
     text-decoration: none;
-    border-bottom: 2px solid #45535d;
+    border-bottom: 3px solid #45535d;
     border-top: 1px solid #cdd4ec;
+    border-right: 2px solid #45535d;
+    border-left: 2px solid #cdd4ec;
 }
 
 .art-hmenu a,
@@ -178,11 +192,13 @@ ul.art-hmenu>li>a.active {
     -moz-border-radius: 6px;
     border-radius: 6px;
     padding: 0 6px 0 38px;
-    margin: 0 6px 0 auto;
+    margin: 0 auto;
     color: #5f0100;
     text-decoration: none;
-    border-bottom: 2px solid #fcc510;
+    border-bottom: 3px solid #fcc510;
     border-top: 1px solid #f4f0a7;
+    border-right: 2px solid #fcc510;
+     border-left: 2px solid #f4f0a7;
 }
 
 ul.art-hmenu>li>a:visited,
@@ -197,11 +213,13 @@ ul.art-hmenu>li>a:hover, .desktop ul.art-hmenu>li:hover>a {
     -moz-border-radius: 6px;
     border-radius: 6px;
     padding: 0 6px 0 38px;
-    margin: 0 6px 0 auto;
+    margin: 0 auto;
     color: #5f0100;
     text-decoration: none;
     border-bottom: 2px solid #45535d;
     border-top: 1px solid #e8ded5;
+    border-left: 1px solid #e8ded5;
+    border-right: 2px solid #45535d;
 }
 
 ul.art-hmenu>li>a:hover,
