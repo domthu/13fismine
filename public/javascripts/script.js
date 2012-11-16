@@ -550,6 +550,36 @@ jQuery(function($) {
     $('form.fs-search input[type="submit"]').attr('value', '');
 });
 
+var artRadioButtonSetup = (function ($) {
+    'use strict';
+    return (function (className) {
+        $.each($('label.' + className), function (i, val) {
+            var label = $(val),
+                ctrl = new Control();
+            ctrl.init(label, 'radio', artRadioButtonProcess);
+
+            function artRadioButtonProcess() {
+                var label = $(this),
+                    radio = label.children('input[type="radio"]');
+                if (radio.length === 0) {
+                    return;
+                }
+                //turn off checked attribute from other radiobuttons and div-s
+                jQuery.each(jQuery(':radio[name=' + radio.attr('name') + ']'), function () {
+                    jQuery(this).removeAttr('checked');
+                    jQuery(this).parent().removeClass('fs-checked');
+                });
+                radio.attr('checked', 'checked');
+                label.addClass('fs-checked');
+            }
+        });
+    });
+})(jQuery);
+jQuery(function () {
+    'use strict';
+    artRadioButtonSetup('fs-radiobutton');
+});
+
 var Control = (function ($) {
     'use strict';
     return (function () {
@@ -582,6 +612,36 @@ var Control = (function ($) {
     });
 })(jQuery);
 
+var artCheckBoxSetup = (function ($) {
+    'use strict';
+    return (function (className) {
+        $.each($('label.' + className), function (i, val) {
+            var label = $(val),
+                ctrl = new Control();
+            ctrl.init(label, 'checkbox', artCheckBoxProcess);
+
+            function artCheckBoxProcess() {
+                var label = $(this),
+                    ch = label.children("input[type='checkbox']");
+                if (ch.length) {
+                  if (label.hasClass('fs-checked')) {
+                    ch.removeAttr('checked');
+                    label.removeClass('fs-checked');
+                  }
+                  else {
+                    ch.attr('checked', 'checked');
+                    label.addClass('fs-checked');
+                  }
+                  ch.click();
+                }
+            }
+        });
+    });
+})(jQuery);
+jQuery(function () {
+    'use strict';
+    artCheckBoxSetup('fs-checkbox');
+});
 
 var fixRssIconLineHeight = (function (className) {
     'use strict';

@@ -1,0 +1,42 @@
+<div class="fs-post-inner fs-article">
+                                <h2 class="fs-postheader">Articoli </h2>
+                                                <div class="fs-postcontent">
+<div class="fs-content-layout-wrapper layout-item-0">
+<div class="fs-content-layout">
+    <div class="fs-content-layout-row">
+    <div class="fs-layout-cell layout-item-1" style="width: 100%;">
+
+        <p><img src=<%= asset_path "rails.png"%> /><span style="font-family: Verdana;">Enter Page content here...</span></p>
+
+        <% @contents.each do |contenuto| %>
+<h3 class="fs-postheader" > <%= contenuto.titolo %>  </h3>
+   <div class="fs-postheadericons "><%# @categoria.categoria  %></div>
+   <div class="fs-postcontent" >   <%= contenuto.testo %> </div>
+   <br />
+
+<div class="fs-postheadericons "> <%# @get_categorie0(contenuto.categorie_id ) %>  </div>
+
+   <% end %>
+
+
+
+        <p><a href="#"><span><span style="font-family: Verdana;">Read more</span></span></a></p>
+    </div>
+    </div>
+</div>
+</div>
+<div class="fs-content-layout-wrapper layout-item-0">
+<div class="fs-content-layout">
+    <div class="fs-content-layout-row">
+    <div class="fs-layout-cell layout-item-1" style="width: 50%;">
+        <p><br /></p>
+    </div><div class="fs-layout-cell layout-item-1" style="width: 50%;">
+        <p><br /></p>
+    </div>
+    </div>
+</div>
+</div>
+
+                </div>
+                <div class="cleared"></div>
+                </div>

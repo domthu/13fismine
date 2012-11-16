@@ -1,0 +1,41 @@
+<script type="text/javascript">
+ $(document).ready(function(){
+  setInterval(
+   function() {
+    $('#tickerz  div').each(function() {
+     $(this).animate({
+      'top': '-=10px'
+     }, 150, function() {
+      var top = parseInt($(this).css('top').replace('px', '')) +
+         parseInt($(this).css('height').replace('px', ''));
+      if (top < 0) {
+       //console.log('removing', this)
+       var clone = $(this).clone();
+       var parent = $(this).parent();
+       clone.css('top', '550px');
+       $(this).remove();
+       parent.append(clone);
+      }
+     })
+    })
+   }
+  , 80)
+ });
+</script>
+
+<div id="tickerz">
+  <div>
+    <img src="/images/banners/1.jpg" alt="">
+    <img src="/images/banners/2.jpg" alt="">
+    <img src="/images/banners/3.jpg" alt="">
+    <img src="/images/banners/4.jpg" alt="">
+    <img src="/images/banners/5.jpg" alt="">
+    <img src="/images/banners/6.jpg" alt="">
+    <img src="/images/banners/7.jpg" alt="">
+  </div>
+
+
+</div>
+
+
+<div class="cleared"></div>

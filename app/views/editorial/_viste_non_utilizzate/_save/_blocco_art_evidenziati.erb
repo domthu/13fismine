@@ -1,0 +1,19 @@
+<div class="fs-block clearfix">
+  <% if @issues && @issues.any? %>
+      <div class="fs-blockheader">
+        <h3 class="t">In Evidenza</h3> <!-- <span style="font-size: 14px; font-weight: bold;">:(<%#@issues.count %>)</span> -->
+      </div>
+      <div class="fs-blockcontent">
+        <% for articolo in @issues %>
+            <%= render :partial => 'articolo_pinned', :locals => {:articolo => articolo} %>
+        <% end %>
+        <br/>
+        <%# link_to l(:label_issues_view_all), :action => 'articoli' %>
+      </div>
+  <% else %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+
+  <div class="cleared"></div>
+
+</div>

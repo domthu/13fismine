@@ -1,0 +1,26 @@
+<%= render :partial => 'blocco_sidebar2' %>
+<h1 style="display:none">ARTICOLO DETTAGLIO DI <b>UNo SOLO</b> ARTICOLO</h1>
+<div class="fs-layout-cell fs-content clearfix">
+  <article class="fs-post fs-article">
+    <div class="fs-postcontent fs-postcontent-0 clearfix">
+      <div class="fs-content-layout">
+        <div class="fs-content-layout-row">
+          <div class="fs-layout-cell layout-item-0" style="width: 100%">
+
+            <%= render :partial => 'articolo_full', :locals => {:articolo => @articolo} %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+  </article>
+
+  <br/>
+
+  <div class="clearfix"></div>
+</div>
+
+<%= render :partial => 'blocco_sidebar1' %>
+<%#sidebar a destra %>
+
