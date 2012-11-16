@@ -216,10 +216,10 @@ ul.art-hmenu>li>a:hover, .desktop ul.art-hmenu>li:hover>a {
     margin: 0 auto;
     color: #5f0100;
     text-decoration: none;
-    border-bottom: 2px solid #45535d;
+    border-bottom: 3px solid #45535d;
     border-top: 1px solid #e8ded5;
-    border-left: 1px solid #e8ded5;
     border-right: 2px solid #45535d;
+    border-left: 1px solid #e8ded5;
 }
 
 ul.art-hmenu>li>a:hover,
