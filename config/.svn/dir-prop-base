@@ -1,8 +1,0 @@
-K 10
-svn:ignore
-V 41
-database.yml
-email.yml
-configuration.yml
-
-END
