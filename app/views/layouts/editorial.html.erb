@@ -1,16 +1,16 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html dir="ltr" lang="en-EN">
 <head><!-- Created by DomThu & SPecchiaSoft -->
-  <meta charset="utf-8">
+  <meta charset="utf-8"/>
   <title>FiscoSport  <%= h html_title %></title>
-  <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
+  <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width"/>
   <meta name="description" content="<%= Redmine::Info.app_name %>"/>
   <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <%= csrf_meta_tag %>
   <%= favicon %>
 
-  <!-- // [if lt IE 9]><%= javascript_include_tag 'html5.js' %><![endif]-->
+  <!-- ///// [if lt IE 9]><%= javascript_include_tag 'html5.js' %><![endif]-->
   <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <!--[if lte IE 7]><%= stylesheet_link_tag 'fe-blu-02/style.ie7.css', :media => 'screen' %><![endif]-->
 
@@ -46,15 +46,15 @@
   <%= stylesheet_link_tag 'application_fs', :media => 'all' %>
   <%= stylesheet_link_tag 'editorial', :media => 'all' %>
   <!-- styles per il FE -->
-     <%= stylesheet_link_tag 'fe-blu-02/style.css', :media => 'all' %>
+  <%= stylesheet_link_tag 'fe-blu-02/style.css', :media => 'all' %>
   <%= stylesheet_link_tag 'fe-blu-02/style.responsive.css', :media => 'all' %>
   <%= stylesheet_link_tag 'fe-blu-02/style-menu2.css', :media => 'all' %>
   <%= stylesheet_link_tag 'fe-blu-02/style-slide.css', :media => 'all' %>
 
 
   <!-- jquery comuni -->
-  <%#javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
-  <%# javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
+  <%=javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
+  <%= javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
   <!-- jquery per il FE -->
   <%= javascript_include_tag "fe-blu-02/jquery.js" %>
   <%= javascript_include_tag 'fe-blu-02/script.js' %>
@@ -73,30 +73,30 @@
           });
       });
   </script>
+  <script>jQuery(function ($) {
+      'use strict';
+      if ($.fn.slider) {
+          $(".fs-slidecontainershutterstock_6228764804").each(function () {
+              var slideContainer = $(this), tmp;
+              var inner = $(".fs-slider-inner", slideContainer);
+              var helper = null;
+
+
+              inner.children().eq(0).addClass("active");
+              slideContainer.slider({
+                  pause:3600,
+                  speed:800,
+                  repeat:true,
+                  animation:"fade",
+                  direction:"next",
+                  navigator:slideContainer.siblings(".fs-slidenavigatorshutterstock_6228764804"),
+                  helper:helper
+              });
+          });
+      }
+  });
+  </script>
 </head>
-<script>jQuery(function($) {
-    'use strict';
-    if ($.fn.slider) {
-        $(".fs-slidecontainershutterstock_6228764804").each(function () {
-            var slideContainer = $(this), tmp;
-            var inner = $(".fs-slider-inner", slideContainer);
-            var helper = null;
-
-
-            inner.children().eq(0).addClass("active");
-            slideContainer.slider({
-                pause: 3600,
-                speed: 800,
-                repeat: true,
-                animation: "fade",
-                direction: "next",
-                navigator: slideContainer.siblings(".fs-slidenavigatorshutterstock_6228764804"),
-                helper: helper
-                            });
-        });
-    }
-});
-</script>
 <body>
 <div id="fs-main">
   <div class="fs-sheet clearfix">
@@ -121,7 +121,8 @@
     <%# render :partial => 'footer' %>
   </div>
 
-</div>  <!--<%#fs-main%>
+</div>
+<!--<%#fs-main%>
 <div id="ajax-indicator" style="display:none;"><span><%= l(:label_loading) %></span></div>
 <div id="header">
   <div id="main-menu" class="fs_box_opacity">
