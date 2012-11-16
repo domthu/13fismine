@@ -1,4 +1,4 @@
-﻿/* Created by Artisteer  */
+/* Created by Artisteer v4.0.0.59100 */
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, curly:false, browser:true, jquery:false */
 /*global jQuery */
 
@@ -202,6 +202,25 @@ jQuery(function ($) {
         }
     });
 });
+jQuery(function ($) {
+    'use strict';
+    if ($('#fs-main').children('header.fs-header').length) {
+        $('#fs-header-bg').insertAfter($('header.fs-header'));
+    }
+});
+
+jQuery(window).bind('resize', function () {
+    'use strict';
+    var headerOffset = jQuery("header.fs-header").offset();
+    var pageOffset = jQuery("#fs-main").offset();
+    if (!headerOffset || !pageOffset) {
+        return;
+    }
+    jQuery("#fs-header-bg").css({
+        "top": (headerOffset.top - pageOffset.top) + "px"
+    });
+});
+
 jQuery(window).bind("resize", function () {
     /*global responsiveDesign */
     'use strict';
@@ -311,6 +330,84 @@ var setHMenuOpenDirection = (function($) {
     });
 })(jQuery);
 
+jQuery(window).load(megaMenuCreate);
+function megaMenuCreate() {
+    'use strict';
+    var sheet = jQuery(".fs-sheet");
+    var sheetLeft = sheet.offset().left;
+    var sheetWidth = sheet.width();
+    sheetWidth -= (parseInt(jQuery(".fs-hmenu").parents("nav").css("padding-left").replace("px", ""), 10) || 0) * 2;
+
+    // reset
+    jQuery(".fs-hmenu .fs-hmenu-mega-menu").removeClass("fs-hmenu-mega-menu").css("width", "").css("left", "").css("right", "")
+        .removeAttr("data-ext-l").removeAttr("data-ext-r").children("li").css("width", "").css("margin-left", "").css("margin-right", "")
+        .siblings("li.cleared").remove();
+
+    jQuery(".fs-hmenu>li>ul").each(function() {
+        var ul = jQuery(this);
+        ul.addClass("fs-hmenu-mega-menu");
+
+        var ltr = !ul.hasClass("fs-hmenu-right-to-left");
+        var widths = [];
+        var horizontalMargin = 1;
+        ul.children("li").each(function() {
+            widths.push(jQuery(this).width());
+        });
+        var maxWidth = Math.max.apply(window, widths);
+
+        var submenusWidth = maxWidth * widths.length;
+        var minMegaMenuWidth = Math.min(sheetWidth, submenusWidth);
+        var colsPerRow = parseInt(minMegaMenuWidth / maxWidth, 10);
+
+        var megaMenuWidth = (maxWidth * colsPerRow) + (horizontalMargin * colsPerRow - 1);
+        var parentWidth = ul.parent("li").children("a").outerWidth();
+
+        if (submenusWidth > ul.parent("li").children("a").outerWidth()) {
+            ul.children("li").css("width", Math.round(parseFloat(maxWidth, 10)) + "px");
+            ul.css("width", Math.round(parseFloat(megaMenuWidth, 10)) + "px");
+        }
+
+        ul.children("li").each(function(index) {
+            if (index % colsPerRow !== 0) 
+                jQuery(this).css("margin-left", horizontalMargin + "px");
+        });
+
+        if (submenusWidth > sheetWidth) {
+            var newlineLis = [];
+            ul.children("li").each(function(index) {
+                if ((index + 1) % colsPerRow === 0) {
+                    newlineLis.push(jQuery(this));
+                }
+            });
+            jQuery(newlineLis).each(function(index, value) {
+                jQuery("<li class=\"cleared\" style=\"padding-top:4px;height:5px;float:none;\"></div>").insertAfter(value);
+            });
+        }
+
+        sheetWidth = sheet.outerWidth();
+        var li = ul.parent("li");
+        var ulLeft = li.offset().left;
+        var ulWidth = ul.outerWidth() - 60;
+        if (ltr) {
+            var leftOffset = 0;
+            if (ulLeft + ulWidth > sheetLeft + sheetWidth) {
+                leftOffset = (ulLeft + ulWidth) - (sheetLeft + sheetWidth);
+                ul.css("left", "-" + Math.round(parseFloat(leftOffset, 10)) + "px");
+                ul.attr("data-ext-l", Math.round(parseFloat(leftOffset, 10)));
+                ul.attr("data-ext-r", Math.round(parseFloat(ulWidth - leftOffset - li.outerWidth(), 10)));
+            }
+        } else {
+            var rightOffset = 0;
+            ulLeft = ulLeft + li.outerWidth() - ulWidth;
+            if (ulLeft < sheetLeft) {
+                rightOffset = sheetLeft - ulLeft;
+                ul.css("right", "-" + Math.round(parseFloat(rightOffset, 10)) + "px");
+                ul.attr("data-ext-r", Math.round(parseFloat(rightOffset, 10)));
+                ul.attr("data-ext-l", Math.round(parseFloat(ulWidth - rightOffset - li.outerWidth(), 10)));
+            }
+        }
+    });
+}
 
 jQuery(window).load(menuExtendedCreate);
 function menuExtendedCreate() {
@@ -318,6 +415,12 @@ function menuExtendedCreate() {
     var sheet = jQuery(".fs-sheet");
     var sheetLeft = sheet.offset().left;
     var sheetWidth = sheet.width();
+    // reset
+    jQuery("#fs-menu-style").remove();
+
+    var styleStr = "";
+    jQuery("<style id=\"fs-menu-style\"></style>").appendTo('head');
+    var style = document.styleSheets[document.styleSheets.length - 1];
 
     jQuery(".fs-hmenu>li").each(function(i, v) {
         var itm = jQuery(this);
@@ -334,20 +437,20 @@ function menuExtendedCreate() {
         var lw = 0, rw = 0;
         
         if (typeof subm.attr("data-ext-l") !== "undefined" && typeof subm.attr("data-ext-r") !== "undefined") {
-            lw = parseInt(subm.attr("data-ext-l"), 10) + 0;
-            rw = parseInt(subm.attr("data-ext-r"), 10) + 0;
+            lw = parseInt(subm.attr("data-ext-l"), 10) + 7;
+            rw = parseInt(subm.attr("data-ext-r"), 10) + 7;
             itm.addClass("ext-r").addClass("ext-l");
         } else {
             var ltr = !subm.hasClass("fs-hmenu-right-to-left");
             itm.addClass(ltr ? "ext-r" : "ext-l");
         }
 
-        var shadow = 0;
+        var shadow = 7;
         if (subm.length > 0) {
             var lnk = itm.children("a");
             var lnkWidth = lnk.outerWidth();
             itm.css("width", Math.round(parseFloat(lnkWidth, 10)) + "px");
-            var menubarMargin = 5 * 2; // margin * 2 sides
+            var menubarMargin = 1 * 2; // margin * 2 sides
             var menubarBorder = 1 * 2; // border 1 side
             var submWidth = subm.width() + shadow + menubarMargin + menubarBorder;
             var w = submWidth - lnkWidth;
@@ -365,18 +468,20 @@ function menuExtendedCreate() {
             jQuery("<div class=\"ext-l\" style=\"width: " + (lw > 0 ? lw : Math.round(parseFloat(w, 10))) + "px;\"></div>").insertBefore(lnk);
             jQuery("<div class=\"ext-r\" style=\"width: " + (rw > 0 ? rw : Math.round(parseFloat(w, 10))) + "px;\"></div>").insertBefore(lnk);
             itm.addClass("ext");
+            if (style !== null && typeof style.insertRule !== "undefined") {
+                var cls = "fs-hmenu-item-" + i;
+                var selector = ".desktop ul.fs-hmenu>li." + cls + ":hover>ul:before";
+                var r = submWidth;
+                var b = subm.height() + (shadow * 2) + menubarBorder + menubarMargin;
+                var rule = "clip: rect(9px, " + Math.round(parseFloat(r, 10)) + "px, " + Math.round(parseFloat(b, 10)) + "px, -" + shadow + "px);";
+                itm.addClass(cls);
+                var rulesLen = typeof style.cssRules === "undefined" || style.cssRules === null ? 0 : style.cssRules.length;
+                style.insertRule(selector + '{' + rule + '}', rulesLen);
+            }
         }
     });
 }
 
-jQuery(function ($) {
-    'use strict';
-    var sidebar1 = $('.fs-sidebar1');
-    var sidebar2 = $('.fs-sidebar2');
-    if (0 !== sidebar1.length && 0 === sidebar2.length) {
-        sidebar1.addClass('fs-sidebar1-fix');
-    }
-});
 jQuery(function ($) {
     'use strict';
 
@@ -394,6 +499,16 @@ jQuery(function ($) {
 
     $(window).trigger('resize');
 });
+
+jQuery(function($) {
+    'use strict';
+    if (!$('html').hasClass('ie7')) {
+        return;
+    }
+    $('ul.fs-vmenu li:not(:first-child),ul.fs-vmenu li li li:first-child,ul.fs-vmenu>li>ul').each(function () { $(this).append('<div class="fs-vmenu-separator"> </div><div class="fs-vmenu-separator-bg"> </div>'); });
+});
+
+
 
 var artButtonSetup = (function ($) {
     'use strict';
@@ -432,7 +547,7 @@ jQuery(function () {
 
 jQuery(function($) {
     'use strict';
-    $('form.fs-search>input[type="submit"]').attr('value', '');
+    $('form.fs-search input[type="submit"]').attr('value', '');
 });
 
 var Control = (function ($) {
@@ -1136,8 +1251,8 @@ jQuery(function ($) {
         path = src.substr(0, src.indexOf("script.js"));
     }
     var header = $(".fs-header");
-    var bgimages = "".split(",");
-    var bgpositions = "".split(",");
+    var bgimages = "url('images/object1688855322.png'), ".split(",");
+    var bgpositions = "12px 0px, ".split(",");
     for (var i = 0; i < bgimages.length; i++) {
         var bgimage = $.trim(bgimages[i]);
         if (bgimage === "")
@@ -1147,6 +1262,6 @@ jQuery(function ($) {
         }
         header.find(".fs-shapes").prepend("<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:" + bgimage + " " + bgpositions[i] + " no-repeat\">");
     }
-    header.css('background-image', "url('images/header.png')".replace(/(url\(['"]?)/i, "$1" + path));
+    header.css('background-image', "url('images/header.jpg')".replace(/(url\(['"]?)/i, "$1" + path));
     header.css('background-position', "center top");
 });

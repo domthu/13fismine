@@ -74,7 +74,6 @@ ul.fs-vmenu a {
 .fs-postcontent a:hover,
 .fs-postcontent a.hovered {
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-    line-height: 175%;
 }
 
 .fs-postcontent p {
@@ -96,7 +95,6 @@ ul.fs-vmenu a {
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
     font-weight: normal;
     font-style: normal;
-    line-height: 120%;
 }
 
 .fs-postcontent a, .fs-postcontent a:link {
@@ -1414,7 +1412,7 @@ div.fs-block img {
 .fs-blockheader .t a:visited,
 .fs-blockheader .t a:hover {
     color: #FFFFFF;
-    font-size: 20px;
+    font-size: 17px;
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
     font-weight: normal;
     font-style: normal;
@@ -1427,7 +1425,6 @@ div.fs-block img {
     color: #005E80;
     font-size: 13px;
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-    line-height: 175%;
 }
 
 .fs-blockcontent table,
@@ -1439,7 +1436,6 @@ div.fs-block img {
     color: #005E80;
     font-size: 13px;
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-    line-height: 175%;
 }
 
 .fs-blockcontent p {
@@ -1483,7 +1479,7 @@ div.fs-block img {
 .fs-block li {
     font-size: 13px;
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-    line-height: 175%;
+
     color: #007BA8;
     margin: 5px 0 0 10px;
 }
@@ -1903,7 +1899,7 @@ pre {
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
     text-decoration: none;
     text-align: left;
-    color: #3DCBFF;
+    color: #005B78;
 }
 
 .fs-postheader a:hover, .fs-postheader a.hovered {
@@ -1938,14 +1934,13 @@ pre {
     font-weight: normal;
     font-style: normal;
     text-decoration: none;
-    color: #29C6FF;
+    color: #005B78;
 }
 
 .fs-postheadericons a:hover, .fs-postheadericons a.hover {
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
     font-weight: normal;
     font-style: normal;
-    text-decoration: underline;
     color: #0083B2;
 }
 
@@ -2124,7 +2119,7 @@ blockquote p,
 .fs-postfootericons a:visited, .fs-postfootericons a.visited {
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
     text-decoration: none;
-    color: #00B4F5;
+    color: #005B78;
 }
 
 .fs-postfootericons a:hover, .fs-postfootericons a.hover {
@@ -2173,7 +2168,7 @@ blockquote p,
     color: #005A7A;
     font-size: 13px;
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-    line-height: 175%;
+
     text-align: center;
 }
 
@@ -2187,7 +2182,6 @@ blockquote p,
     color: #005A7A;
     font-size: 13px;
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-    line-height: 175%;
 }
 
 .fs-footer p {
@@ -2466,7 +2460,7 @@ img.fs-lightbox-image.active {
 .fs-content-layout .fs-sidebar1 {
     border-right: 1px dotted #47CEFF;
     margin: 0 auto;
-    width: 225px;
+    width: 300px;
 }
 
 .fs-content-layout .fs-content {
@@ -2476,7 +2470,7 @@ img.fs-lightbox-image.active {
 .fs-content-layout .fs-sidebar2 {
     border-left: 1px dotted #47CEFF;
     margin: 0 auto;
-    width: 225px;
+    width: 200px;
 }
 
 /* Begin Additional CSS Styles */

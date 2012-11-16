@@ -44,6 +44,7 @@
   <!--   styles per il Front End  -->
   <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.css', :media => 'all' %>
+  <%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
   <!-- jquery di default  -->
   <%= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
   <%= javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
@@ -63,6 +64,29 @@
           });
       });
   </script>
+  <script>jQuery(function($) {
+      'use strict';
+      if ($.fn.slider) {
+          $(".fs-slidecontainerslideshutterstock_1").each(function () {
+              var slideContainer = $(this), tmp;
+              var inner = $(".fs-slider-inner", slideContainer);
+              var helper = null;
+
+
+              inner.children().eq(0).addClass("active");
+              slideContainer.slider({
+                  pause: 2600,
+                  speed: 600,
+                  repeat: true,
+                  animation: "fade",
+                  direction: "next",
+                  navigator: slideContainer.siblings(".fs-slidenavigatorslideshutterstock_1"),
+                  helper: helper
+                              });
+          });
+      }
+  });
+  </script>
 </head>
 <body>
 <div id="fs-main">
@@ -80,7 +104,7 @@
     </header>
 
     <nav class="fs-nav clearfix">
-      <%= render_navigation(:level => 1) %>
+      <%= render_navigation %>
     </nav>
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">

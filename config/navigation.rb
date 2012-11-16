@@ -26,7 +26,7 @@ SimpleNavigation::Configuration.run do |navigation|
                        :highlights_on => %r(/#{tmn.key}\/#{ts.key})
 
           primary.dom_class = 'fs-hmenu'
-          sub_nav.dom_class = 'fs-hmenu'
+          sub_nav.dom_class = 'art-hmenu'
         end
 
       end #primary.item

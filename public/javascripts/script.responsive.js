@@ -1,4 +1,4 @@
-/* Created by Artisteer v4.0.0.58475 */
+/* Created by Artisteer v4.0.0.59100 */
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, curly:false, browser:true, jquery:false */
 /*global jQuery */
 
@@ -277,22 +277,15 @@ function responsiveNavFit(responsiveDesign) {
     jQuery(window).trigger("responsiveNav", {isDesktopNav: isDesktopNav, isResponsiveNav: isResponsiveNav});
 }
 
-jQuery(window).bind("responsive", function (event, responsiveDesign) {
-    'use strict';
-    responsiveNav(responsiveDesign);
-});
 
-function responsiveNav(responsiveDesign) {
+
+jQuery(window).bind("responsiveNav", function (event, options) {
+    /*global megaMenuCreate */
     'use strict';
-    var nav = jQuery("nav.fs-nav"), header, headerMarginTop;
-    if (responsiveDesign.isResponsive && nav.parents(".fs-header").length > 0) {
-        header = jQuery(".fs-header");
-        var otherElement = header.children("*:not(nav.fs-nav):first");
-        if (otherElement.length > 0)
-            nav.appendTo(header);
+    if (options.isDesktopNav && jQuery(".fs-hmenu-mega-menu").length > 0) {
+        megaMenuCreate();
     }
-}
-
+});
 
 jQuery(window).bind("responsiveNav", function (event, options) {
     /*global menuExtendedCreate */
