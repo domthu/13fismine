@@ -1,0 +1,2375 @@
+/* Created by Artisteer v4.0.0.58475 */
+
+#fs-main
+{
+   background: #FFFFFF url('/images/fe-blu-02/page.gif') fixed;
+   margin:0 auto;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   position: relative;
+   width: 100%;
+   min-height: 100%;
+   left: 0;
+   top: 0;
+   cursor:default;
+   overflow:hidden;
+}
+table, ul.fs-hmenu
+{
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, ul, ol, li
+{
+   margin: 0;
+   padding: 0;
+}
+
+/* Reset buttons border. It's important for input and button tags. 
+ * border-collapse should be separate for shadow in IE. 
+ */
+.fs-button
+{
+   border: 0;
+   border-collapse: separate;
+   -webkit-background-origin: border !important;
+   -moz-background-origin: border !important;
+   background-origin: border-box !important;
+   background: #2F4156;
+   background: linear-gradient(top, #2A3A4C 0, #3C536D 85%, #33465C 86%, #33465C 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #2A3A4C 0, #3C536D 85%, #33465C 86%, #33465C 100%) no-repeat;
+   background: -moz-linear-gradient(top, #2A3A4C 0, #3C536D 85%, #33465C 86%, #33465C 100%) no-repeat;
+   background: -o-linear-gradient(top, #2A3A4C 0, #3C536D 85%, #33465C 86%, #33465C 100%) no-repeat;
+   background: -ms-linear-gradient(top, #2A3A4C 0, #3C536D 85%, #33465C 86%, #33465C 100%) no-repeat;
+   background: linear-gradient(top, #2A3A4C 0, #3C536D 85%, #33465C 86%, #33465C 100%) no-repeat;
+   -svg-background: linear-gradient(top, #2A3A4C 0, #3C536D 85%, #33465C 86%, #33465C 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   padding:0 15px;
+   margin:0 auto;
+   height:28px;
+}
+
+.fs-postcontent,
+.fs-postheadericons,
+.fs-postfootericons,
+.fs-blockcontent,
+ul.fs-vmenu a 
+{
+   text-align: left;
+}
+
+.fs-postcontent,
+.fs-postcontent li,
+.fs-postcontent table,
+.fs-postcontent a,
+.fs-postcontent a:link,
+.fs-postcontent a:visited,
+.fs-postcontent a.visited,
+.fs-postcontent a:hover,
+.fs-postcontent a.hovered
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   line-height: 175%;
+}
+
+.fs-postcontent p
+{
+   margin: 13px 0;
+}
+
+.fs-postcontent h1, .fs-postcontent h1 a, .fs-postcontent h1 a:link, .fs-postcontent h1 a:visited, .fs-postcontent h1 a:hover,
+.fs-postcontent h2, .fs-postcontent h2 a, .fs-postcontent h2 a:link, .fs-postcontent h2 a:visited, .fs-postcontent h2 a:hover,
+.fs-postcontent h3, .fs-postcontent h3 a, .fs-postcontent h3 a:link, .fs-postcontent h3 a:visited, .fs-postcontent h3 a:hover,
+.fs-postcontent h4, .fs-postcontent h4 a, .fs-postcontent h4 a:link, .fs-postcontent h4 a:visited, .fs-postcontent h4 a:hover,
+.fs-postcontent h5, .fs-postcontent h5 a, .fs-postcontent h5 a:link, .fs-postcontent h5 a:visited, .fs-postcontent h5 a:hover,
+.fs-postcontent h6, .fs-postcontent h6 a, .fs-postcontent h6 a:link, .fs-postcontent h6 a:visited, .fs-postcontent h6 a:hover,
+.fs-blockheader .t, .fs-blockheader .t a, .fs-blockheader .t a:link, .fs-blockheader .t a:visited, .fs-blockheader .t a:hover,
+.fs-vmenublockheader .t, .fs-vmenublockheader .t a, .fs-vmenublockheader .t a:link, .fs-vmenublockheader .t a:visited, .fs-vmenublockheader .t a:hover,
+.fs-headline, .fs-headline a, .fs-headline a:link, .fs-headline a:visited, .fs-headline a:hover,
+.fs-slogan, .fs-slogan a, .fs-slogan a:link, .fs-slogan a:visited, .fs-slogan a:hover,
+.fs-postheader, .fs-postheader a, .fs-postheader a:link, .fs-postheader a:visited, .fs-postheader a:hover
+{
+   font-size: 22px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   line-height: 120%;
+}
+
+.fs-postcontent a, .fs-postcontent a:link
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   color: #3D5C7F;
+}
+
+.fs-postcontent a:visited, .fs-postcontent a.visited
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   color: #98BA3B;
+}
+
+.fs-postcontent  a:hover, .fs-postcontent a.hover
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: underline;
+   color: #5078A5;
+}
+
+.fs-postcontent h1
+{
+   color: #5078A5;
+   margin: 10px 0 0;
+   font-size: 26px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-blockcontent h1
+{
+   margin: 10px 0 0;
+   font-size: 26px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h1 a, .fs-postcontent h1 a:link, .fs-postcontent h1 a:hover, .fs-postcontent h1 a:visited, .fs-blockcontent h1 a, .fs-blockcontent h1 a:link, .fs-blockcontent h1 a:hover, .fs-blockcontent h1 a:visited 
+{
+   font-size: 26px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h2
+{
+   color: #5078A5;
+   margin: 10px 0 0;
+   font-size: 22px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-blockcontent h2
+{
+   margin: 10px 0 0;
+   font-size: 22px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h2 a, .fs-postcontent h2 a:link, .fs-postcontent h2 a:hover, .fs-postcontent h2 a:visited, .fs-blockcontent h2 a, .fs-blockcontent h2 a:link, .fs-blockcontent h2 a:hover, .fs-blockcontent h2 a:visited 
+{
+   font-size: 22px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h3
+{
+   color: #1937A4;
+   margin: 10px 0 0;
+   font-size: 20px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-blockcontent h3
+{
+   margin: 10px 0 0;
+   font-size: 20px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h3 a, .fs-postcontent h3 a:link, .fs-postcontent h3 a:hover, .fs-postcontent h3 a:visited, .fs-blockcontent h3 a, .fs-blockcontent h3 a:link, .fs-blockcontent h3 a:hover, .fs-blockcontent h3 a:visited 
+{
+   font-size: 20px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h4
+{
+   color: #192534;
+   margin: 10px 0 0;
+   font-size: 18px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-blockcontent h4
+{
+   margin: 10px 0 0;
+   font-size: 18px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h4 a, .fs-postcontent h4 a:link, .fs-postcontent h4 a:hover, .fs-postcontent h4 a:visited, .fs-blockcontent h4 a, .fs-blockcontent h4 a:link, .fs-blockcontent h4 a:hover, .fs-blockcontent h4 a:visited 
+{
+   font-size: 18px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h5
+{
+   color: #192534;
+   margin: 10px 0 0;
+   font-size: 15px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-blockcontent h5
+{
+   margin: 10px 0 0;
+   font-size: 15px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h5 a, .fs-postcontent h5 a:link, .fs-postcontent h5 a:hover, .fs-postcontent h5 a:visited, .fs-blockcontent h5 a, .fs-blockcontent h5 a:link, .fs-blockcontent h5 a:hover, .fs-blockcontent h5 a:visited 
+{
+   font-size: 15px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h6
+{
+   color: #3D5C7F;
+   margin: 10px 0 0;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-blockcontent h6
+{
+   margin: 10px 0 0;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-postcontent h6 a, .fs-postcontent h6 a:link, .fs-postcontent h6 a:hover, .fs-postcontent h6 a:visited, .fs-blockcontent h6 a, .fs-blockcontent h6 a:link, .fs-blockcontent h6 a:hover, .fs-blockcontent h6 a:visited 
+{
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+header, footer, article, nav, #fs-hmenu-bg, .fs-sheet, .fs-hmenu a, .fs-vmenu a, .fs-slidenavigator > a, .fs-checkbox:before, .fs-radiobutton:before
+{
+   -webkit-background-origin: border !important;
+   -moz-background-origin: border !important;
+   background-origin: border-box !important;
+}
+
+header, footer, article, nav, #fs-hmenu-bg, .fs-sheet, .fs-slidenavigator > a, .fs-checkbox:before, .fs-radiobutton:before
+{
+   display: block;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+ul
+{
+   list-style-type: none;
+}
+
+ol
+{
+   list-style-position: inside;
+}
+
+html, body
+{
+   height: 100%;
+}
+
+body
+{
+   padding: 0;
+   margin:0;
+   min-width: 974px;
+   color: #0A1643;
+}
+
+.clearfix:before, .clearfix:after {
+   content: "";
+   display: table;
+}
+
+.clearfix:after {
+   clear: both;
+}
+
+.cleared {
+   font: 0/0 serif;
+   clear: both;
+}
+
+form
+{
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+table.position
+{
+   position: relative;
+   width: 100%;
+   table-layout: fixed;
+}
+
+li h1, .fs-postcontent li h1, .fs-blockcontent li h1 
+{
+   margin:1px;
+} 
+li h2, .fs-postcontent li h2, .fs-blockcontent li h2 
+{
+   margin:1px;
+} 
+li h3, .fs-postcontent li h3, .fs-blockcontent li h3 
+{
+   margin:1px;
+} 
+li h4, .fs-postcontent li h4, .fs-blockcontent li h4 
+{
+   margin:1px;
+} 
+li h5, .fs-postcontent li h5, .fs-blockcontent li h5 
+{
+   margin:1px;
+} 
+li h6, .fs-postcontent li h6, .fs-blockcontent li h6 
+{
+   margin:1px;
+} 
+li p, .fs-postcontent li p, .fs-blockcontent li p 
+{
+   margin:1px;
+}
+
+
+.fs-shapes
+{
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   overflow: hidden;
+   z-index: 0;
+}
+
+.fs-slider-inner {
+   position: relative;
+   overflow: hidden;
+   width: 100%;
+   height: 100%;
+}
+
+.fs-slidenavigator > a {
+   display: inline-block;
+   vertical-align: middle;
+   outline-style: none;
+   font-size: 1px;
+}
+
+.fs-slidenavigator > a:last-child {
+   margin-right: 0 !important;
+}
+
+.fs-headline
+{
+  display: inline-block;
+  position: absolute;
+  min-width: 50px;
+  top: 92px;
+  left: 46.50%;
+  line-height: 100%;
+  margin-left: -163px !important;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+  z-index: 99;
+}
+
+.fs-headline, 
+.fs-headline a, 
+.fs-headline a:link, 
+.fs-headline a:visited, 
+.fs-headline a:hover
+{
+font-size: 20px;
+font-family: 'Palatino Linotype', Georgia, 'Times New Roman', Times, Serif;
+font-weight: normal;
+font-style: normal;
+text-decoration: none;
+text-align: left;
+text-shadow: 0.7px 0.7px 0px rgba(153, 153, 153, 0.8), 1.4px 1.4px 0px rgba(140, 140, 140, 0.8), 2.1px 2.1px 1px rgba(122, 122, 122, 0.5), 2.8px 2.8px 0px rgba(107, 107, 107, 0.5), 3.5px 3.5px 0px rgba(92, 92, 92, 0.49);
+  padding: 0;
+  margin: 0;
+  color: #213245 !important;
+  white-space: nowrap;
+}
+
+
+
+
+
+
+.fs-sheet
+{
+   background: #F7FAEF;
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.25);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.25);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.25);
+   padding:7px;
+   margin:20px auto 0;
+   position:relative;
+   cursor:auto;
+   width: 974px;
+   z-index: auto !important;
+}
+
+.fs-nav
+{
+   background: #2B415A;
+   background: linear-gradient(top, #2B415A 0, #2D435D 40%, #2D435D 85%, #1F2F41 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #2B415A 0, #2D435D 40%, #2D435D 85%, #1F2F41 100%) no-repeat;
+   background: -moz-linear-gradient(top, #2B415A 0, #2D435D 40%, #2D435D 85%, #1F2F41 100%) no-repeat;
+   background: -o-linear-gradient(top, #2B415A 0, #2D435D 40%, #2D435D 85%, #1F2F41 100%) no-repeat;
+   background: -ms-linear-gradient(top, #2B415A 0, #2D435D 40%, #2D435D 85%, #1F2F41 100%) no-repeat;
+   background: linear-gradient(top, #2B415A 0, #2D435D 40%, #2D435D 85%, #1F2F41 100%) no-repeat;
+   -svg-background: linear-gradient(top, #2B415A 0, #2D435D 40%, #2D435D 85%, #1F2F41 100%) no-repeat;
+   padding:4px;
+   margin:0 auto;
+   position: relative;
+   z-index: 100;
+   font-size: 0;
+   text-align: left;
+}
+
+ul.fs-hmenu a, ul.fs-hmenu a:link, ul.fs-hmenu a:visited, ul.fs-hmenu a:hover 
+{
+   outline: none;
+   position: relative;
+   z-index: 11;
+}
+
+ul.fs-hmenu, ul.fs-hmenu ul
+{
+   display: block;
+   margin: 0;
+   padding: 0;
+
+   list-style-type: none;
+}
+
+ul.fs-hmenu li
+{
+   position: relative;
+   z-index: 5;
+   display: block;
+   float: left;
+   background: none;
+   margin: 0;
+   padding: 0;
+   border: 0;
+}
+
+ul.fs-hmenu li:hover
+{
+   z-index: 10000;
+   white-space: normal;
+}
+
+ul.fs-hmenu:after, ul.fs-hmenu ul:after
+{
+   content: ".";
+   height: 0;
+   display: block;
+   visibility: hidden;
+   overflow: hidden;
+   clear: both;
+}
+
+ul.fs-hmenu, ul.fs-hmenu ul 
+{
+   min-height: 0;
+}
+
+ul.fs-hmenu 
+{
+   display: inline-block;
+   vertical-align: middle;
+}
+
+.fs-nav:before 
+{
+   content:' ';
+}
+
+.fs-hmenu-extra1
+{
+   position: relative;
+   display: block;
+   float: left;
+   width: auto;
+   height: auto;
+   background-position: center;
+}
+
+.fs-hmenu-extra2
+{
+   position: relative;
+   display: block;
+   float: right;
+   width: auto;
+   height: auto;
+   background-position: center;
+}
+
+.fs-hmenu
+{
+   float: left;
+}
+
+.fs-menuitemcontainer
+{
+   margin:0 auto;
+}
+ul.fs-hmenu>li {
+   margin-left: 13px;
+}
+ul.fs-hmenu>li:first-child {
+   margin-left: 6px;
+}
+ul.fs-hmenu>li:last-child, ul.fs-hmenu>li.last-child {
+   margin-right: 6px;
+}
+
+ul.fs-hmenu>li>a
+{
+   padding:0 22px;
+   margin:0 auto;
+   position: relative;
+   display: block;
+   height: 28px;
+   cursor: pointer;
+   text-decoration: none;
+   color: #FFFFFF;
+   line-height: 28px;
+   text-align: center;
+}
+
+.fs-hmenu a, 
+.fs-hmenu a:link, 
+.fs-hmenu a:visited, 
+.fs-hmenu a.active, 
+.fs-hmenu a:hover
+{
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   text-transform: uppercase;
+   text-align: left;
+}
+
+ul.fs-hmenu>li>a.active
+{
+   padding:0 22px;
+   margin:0 auto;
+   color: #FDC612;
+   text-decoration: none;
+}
+
+ul.fs-hmenu>li>a:visited, 
+ul.fs-hmenu>li>a:hover, 
+ul.fs-hmenu>li:hover>a {
+   text-decoration: none;
+}
+
+ul.fs-hmenu>li>a:hover, .desktop ul.fs-hmenu>li:hover>a
+{
+   padding:0 22px;
+   margin:0 auto;
+}
+ul.fs-hmenu>li>a:hover, 
+.desktop-nav ul.fs-hmenu>li:hover>a {
+   color: #879DED;
+   text-decoration: none;
+}
+
+ul.fs-hmenu>li:before
+{
+   position:absolute;
+   display: block;
+   content:' ';
+   top:0;
+   left:  -13px;
+   width:13px;
+   height: 28px;
+  background: url('/images/fe-blu-02/menuseparator.png') center center no-repeat;
+}
+ul.fs-hmenu>li:first-child:before{
+   display:none;
+}
+
+ul.fs-hmenu li li a
+{
+   background: #3C60E2;
+   background: transparent;
+   border:1px solid transparent;
+   padding:0 17px;
+   margin:0 auto;
+}
+ul.fs-hmenu li li 
+{
+   float: none;
+   width: auto;
+   margin-top: 1px;
+   margin-bottom: 1px;
+}
+
+.desktop-nav ul.fs-hmenu li li ul>li:first-child 
+{
+   margin-top: 1px;
+}
+
+ul.fs-hmenu li li ul>li:last-child 
+{
+   margin-bottom: 0;
+}
+
+.fs-hmenu ul a
+{
+   display: block;
+   white-space: nowrap;
+   height: 30px;
+   min-width: 7em;
+   border: 1px solid transparent;
+   text-align: left;
+   line-height: 30px;
+   color: #293E56;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   margin:0;
+}
+
+.fs-hmenu ul a:link, 
+.fs-hmenu ul a:visited, 
+.fs-hmenu ul a.active, 
+.fs-hmenu ul a:hover
+{
+   text-align: left;
+   line-height: 30px;
+   color: #293E56;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   margin:0;
+}
+
+.desktop-nav ul.fs-hmenu>li>ul>li
+{
+   margin-top: 0;
+   margin-bottom: 0;
+}
+
+.desktop-nav .fs-hmenu>li>ul>li>a
+{
+   font-weight: bold !important;
+}
+.desktop-nav .fs-hmenu>li>ul>li
+{
+   float: left;
+}
+.desktop-nav .fs-hmenu>li>ul>li>ul
+{
+   position: relative;
+   left: 0 !important;
+   right: auto !important;
+   padding: 0 !important;
+   margin: 0 !important;
+}
+.desktop-nav .fs-hmenu>li:hover>ul>li>ul
+{
+   visibility: visible;
+}
+.desktop-nav .fs-hmenu>li>ul>li>ul:before
+{
+   visibility: hidden;
+}
+
+ul.fs-hmenu ul li a:hover
+{
+   background: #496E97;
+   background: rgba(73, 110, 151, 0.7);
+   border:1px solid rgba(73, 110, 151, 0.3);
+   margin:0 auto;
+}
+.fs-hmenu ul a:hover
+{
+   text-decoration: none;
+}
+
+.fs-hmenu ul li a:hover
+{
+   color: #E3EAF2;
+}
+
+.desktop-nav .fs-hmenu ul li:hover>a
+{
+   color: #E3EAF2;
+}
+
+ul.fs-hmenu ul:before
+{
+   background: #FFFFFF;
+   margin:0 auto;
+   display: block;
+   position: absolute;
+   content: ' ';
+   z-index: 1;
+}
+.desktop-nav ul.fs-hmenu li:hover>ul {
+   visibility: visible;
+   top: 100%;
+}
+.desktop-nav ul.fs-hmenu li li:hover>ul {
+   top: 0;
+   left: 100%;
+}
+
+ul.fs-hmenu ul
+{
+   visibility: hidden;
+   position: absolute;
+   z-index: 10;
+   left: 0;
+   top: 0;
+   background-image: url('/images/fe-blu-02/spacer.gif');
+}
+
+.desktop-nav ul.fs-hmenu>li>ul
+{
+   padding: 15px 34px 34px 34px;
+   margin: -10px 0 0 -30px;
+}
+
+.desktop-nav ul.fs-hmenu ul ul
+{
+   padding: 34px 34px 34px 14px;
+   margin: -34px 0 0 -6px;
+}
+
+.desktop-nav ul.fs-hmenu ul.fs-hmenu-left-to-right 
+{
+   right: auto;
+   left: 0;
+   margin: -10px 0 0 -30px;
+}
+
+.desktop-nav ul.fs-hmenu ul.fs-hmenu-right-to-left 
+{
+   left: auto;
+   right: 0;
+   margin: -10px -30px 0 0;
+}
+
+.desktop-nav ul.fs-hmenu li li:hover>ul.fs-hmenu-left-to-right {
+   right: auto;
+   left: 100%;
+}
+.desktop-nav ul.fs-hmenu li li:hover>ul.fs-hmenu-right-to-left {
+   left: auto;
+   right: 100%;
+}
+
+.desktop-nav ul.fs-hmenu ul ul.fs-hmenu-left-to-right
+{
+   right: auto;
+   left: 0;
+   padding: 34px 34px 34px 14px;
+   margin: -34px 0 0 -6px;
+}
+
+.desktop-nav ul.fs-hmenu ul ul.fs-hmenu-right-to-left
+{
+   left: auto;
+   right: 0;
+   padding: 34px 14px 34px 34px;
+   margin: -34px -6px 0 0;
+}
+
+.desktop-nav ul.fs-hmenu li ul>li:first-child {
+   margin-top: 0;
+}
+.desktop-nav ul.fs-hmenu li ul>li:last-child {
+   margin-bottom: 0;
+}
+
+.desktop-nav ul.fs-hmenu ul ul:before
+{
+   border-radius: 0;
+   top: 30px;
+   bottom: 30px;
+   right: 30px;
+   left: 10px;
+}
+
+.desktop-nav ul.fs-hmenu>li>ul:before
+{
+   top: 11px;
+   right: 30px;
+   bottom: 30px;
+   left: 30px;
+}
+
+.desktop-nav ul.fs-hmenu>li>ul.fs-hmenu-left-to-right:before {
+   right: 30px;
+   left: 30px;
+}
+.desktop-nav ul.fs-hmenu>li>ul.fs-hmenu-right-to-left:before {
+   right: 30px;
+   left: 30px;
+}
+.desktop-nav ul.fs-hmenu ul ul.fs-hmenu-left-to-right:before {
+   right: 30px;
+   left: 10px;
+}
+.desktop-nav ul.fs-hmenu ul ul.fs-hmenu-right-to-left:before {
+   right: 10px;
+   left: 30px;
+}
+
+.fs-header
+{
+   margin:0 auto;
+   height: 125px;
+   background-image: url('/images/fe-blu-02/object2039707546.png'),url('/images/fe-blu-02/object1574042136.png'),url('/images/fe-blu-02/object1693035232.png'), url('/images/fe-blu-02/header.jpg');
+   background-position: 71px 18px,99px 8px,365px 8px, 0 0;
+   background-repeat: no-repeat;
+   position: relative;
+   z-index: auto !important;
+}
+
+.responsive .fs-header 
+{
+   background-image: url('/images/fe-blu-02/header.jpg');
+   background-position: center center;
+}
+
+.fs-header>.widget 
+{
+   position:absolute;
+   z-index:101;
+}
+
+.fs-layout-wrapper
+{
+   position: relative;
+   margin: 0 auto 0 auto;
+   z-index: auto !important;
+}
+
+.fs-content-layout
+{
+   display: table;
+   width: 100%;
+   table-layout: fixed;
+   border-collapse: collapse;
+}
+
+.fs-content-layout-row 
+{
+   display: table-row;
+}
+
+.fs-layout-cell
+{
+   display: table-cell;
+   vertical-align: top;
+}
+
+.fs-vmenublock
+{
+   margin:10px;
+}
+div.fs-vmenublock img
+{
+   margin: 0;
+}
+
+.fs-vmenublockcontent
+{
+   margin:0 auto;
+}
+
+ul.fs-vmenu, ul.fs-vmenu ul
+{
+   list-style: none;
+   display: block;
+}
+
+ul.fs-vmenu, ul.fs-vmenu li
+{
+   display: block;
+   margin: 0;
+   padding: 0;
+   width: auto;
+   line-height: 0;
+}
+
+ul.fs-vmenu
+{
+   margin-top: 0;
+   margin-bottom: 0;
+}
+
+ul.fs-vmenu ul
+{
+   display: none;
+   margin: 0;
+   padding: 0;
+   position: relative;
+}
+
+ul.fs-vmenu ul.active
+{
+   display: block;
+}
+
+ul.fs-vmenu>li>a
+{
+   padding:0 15px;
+   margin:0 auto;
+   color: #2047D5;
+   min-height: 36px;
+   line-height: 36px;
+}
+ul.fs-vmenu a 
+{
+   display: block;
+   cursor: pointer;
+   z-index: 1;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   position:relative;
+}
+
+ul.fs-vmenu li{
+   position:relative;
+}
+
+ul.fs-vmenu>li
+{
+   margin-top: 1px;
+}
+ul.fs-vmenu>li>ul
+{
+   padding: 0;
+   margin-top: 0;
+   margin-bottom: 0;
+}
+ul.fs-vmenu>li:first-child
+{
+   margin-top:0;
+}
+
+ul.fs-vmenu>li>a:hover, ul.fs-vmenu>li>a.active:hover
+{
+   background: #5D84B1;
+   background: linear-gradient(top, #91ABCA 0, #537DAC 60%, #3F5F83 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #91ABCA 0, #537DAC 60%, #3F5F83 100%) no-repeat;
+   background: -moz-linear-gradient(top, #91ABCA 0, #537DAC 60%, #3F5F83 100%) no-repeat;
+   background: -o-linear-gradient(top, #91ABCA 0, #537DAC 60%, #3F5F83 100%) no-repeat;
+   background: -ms-linear-gradient(top, #91ABCA 0, #537DAC 60%, #3F5F83 100%) no-repeat;
+   background: linear-gradient(top, #91ABCA 0, #537DAC 60%, #3F5F83 100%) no-repeat;
+   -svg-background: linear-gradient(top, #91ABCA 0, #537DAC 60%, #3F5F83 100%) no-repeat;
+   padding:0 15px;
+   margin:0 auto;
+}
+ul.fs-vmenu>li>a:hover, ul.fs-vmenu>li>a.active:hover
+{
+   text-decoration: none;
+}
+
+ul.fs-vmenu a:hover, ul.fs-vmenu a.active:hover 
+{
+   color: #D2DDE9;
+}
+
+ul.fs-vmenu>li>a.active:hover>span.border-top, ul.fs-vmenu>li>a.active:hover>span.border-bottom 
+{
+   background-color: transparent;
+}
+
+ul.fs-vmenu>li>a.active
+{
+   padding:0 15px;
+   margin:0 auto;
+   text-decoration: none;
+   color: #91ABCA;
+}
+
+ul.fs-vmenu>li:after, ul.fs-vmenu>li>ul:after{
+   display: block;
+   position: absolute;
+   content: ' ';
+   left: 0;
+   right: 0;
+   top: -1px;
+}
+
+ul.fs-vmenu>li:after, ul.fs-vmenu>li>ul:after{
+   z-index: 1;
+   height: 0;
+   border-bottom: 1px solid #ABBAF2;
+}
+
+ul.fs-vmenu>li:first-child:before, ul.fs-vmenu>li:first-child:after 
+{
+   display:none;
+}
+
+ul.fs-vmenu>li>ul:before
+{
+   background: #718BEA;
+   background: transparent;
+   -webkit-border-radius:1px;
+   -moz-border-radius:1px;
+   border-radius:1px;
+   margin:0 auto;
+   display: block;
+   position: absolute;
+   content: ' ';
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+}
+
+ul.fs-vmenu li li a
+{
+   margin:0 auto;
+   position: relative;
+}
+ul.fs-vmenu ul li
+{
+   margin: 0;
+   padding: 0;
+}
+ul.fs-vmenu li li{
+   position: relative;
+   margin-top: 1px;
+}
+
+ul.fs-vmenu ul a
+{
+   display: block;
+   position: relative;
+   min-height: 26px;
+   overflow: visible;
+   padding: 0;
+   padding-left: 27px;
+   padding-right: 27px;
+   z-index: 0;
+   line-height: 26px;
+   color: #718BEA;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   margin-left: 0;
+   margin-right: 0;
+}
+
+ul.fs-vmenu ul a:visited, ul.fs-vmenu ul a.active:hover, ul.fs-vmenu ul a:hover, ul.fs-vmenu ul a.active
+{
+   line-height: 26px;
+   color: #718BEA;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   margin-left: 0;
+   margin-right: 0;
+}
+
+ul.fs-vmenu ul ul a
+{
+   padding-left: 54px;
+}
+ul.fs-vmenu ul ul ul a
+{
+   padding-left: 81px;
+}
+ul.fs-vmenu ul ul ul ul a
+{
+   padding-left: 108px;
+}
+ul.fs-vmenu ul ul ul ul ul a
+{
+   padding-left: 135px;
+}
+
+ul.fs-vmenu ul>li>a:hover, ul.fs-vmenu ul>li>a.active:hover
+{
+   background: #A9BED6;
+   background: rgba(169, 190, 214, 0.4);
+   margin:0 auto;
+}
+ul.fs-vmenu ul li a:hover, ul.fs-vmenu ul li a.active:hover
+{
+   text-decoration: none;
+   color: #173297;
+}
+
+ul.fs-vmenu ul a:hover:after
+{
+   background-position: center ;
+}
+ul.fs-vmenu ul a.active:hover:after
+{
+   background-position: center ;
+}
+ul.fs-vmenu ul a.active:after
+{
+   background-position: bottom ;
+}
+
+ul.fs-vmenu ul>li>a.active
+{
+   background: #D9E2ED;
+   background: rgba(217, 226, 237, 0.4);
+   margin:0 auto;
+}
+ul.fs-vmenu ul a.active, ul.fs-vmenu ul a:hover, ul.fs-vmenu ul a.active:hover
+{
+   text-decoration: none;
+   color: #8AA6C7;
+}
+
+ul.fs-vmenu li li:after
+{
+   display: block;
+   position: absolute;
+   content: ' ';
+   height: 0;
+   top: -1px;
+   left: 0;
+   right: 0;
+   z-index: 1;
+   border-bottom: 1px solid #ABBAF2;
+}
+
+ul.fs-vmenu li li:before
+{
+   display: block;
+   position: absolute;
+   content: ' ';
+   left: 0;
+   right: 0;
+   top: -1px;
+   z-index: 0;
+   height: 1px;
+}
+ul.fs-vmenu>li>ul>li:first-child:before, ul.fs-vmenu>li>ul>li:first-child:after 
+{
+   display: none;
+}
+
+.fs-block
+{
+   margin:10px;
+}
+div.fs-block img
+{
+   border: none;
+   margin: 0;
+}
+
+.fs-blockheader
+{
+   padding:0 5px;
+   margin:0 auto 2px;
+}
+.fs-blockheader .t,
+.fs-blockheader .t a,
+.fs-blockheader .t a:link,
+.fs-blockheader .t a:visited, 
+.fs-blockheader .t a:hover
+{
+   color: #000000;
+   font-size: 18px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   margin: 0 5px;
+}
+
+.fs-blockcontent
+{
+   padding:5px;
+   margin:0 auto;
+   color: #0A1643;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   line-height: 175%;
+}
+.fs-blockcontent table,
+.fs-blockcontent li, 
+.fs-blockcontent a,
+.fs-blockcontent a:link,
+.fs-blockcontent a:visited,
+.fs-blockcontent a:hover
+{
+   color: #0A1643;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   line-height: 175%;
+}
+
+.fs-blockcontent p
+{
+   margin: 0 5px;
+}
+
+.fs-blockcontent a, .fs-blockcontent a:link
+{
+   color: #5078A5;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+}
+
+.fs-blockcontent a:visited, .fs-blockcontent a.visited
+{
+   color: #C1D883;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+}
+
+.fs-blockcontent a:hover, .fs-blockcontent a.hover
+{
+   color: #7294BB;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+}
+.fs-block ul>li:before
+{
+   content:url('/images/fe-blu-02/blockbullets.png');
+   margin-right:6px;
+   bottom: 2px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   margin-left: -12px;
+}
+.opera .fs-block ul>li:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.fs-block li
+{
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   line-height: 175%;
+   color: #152E8A;
+   margin: 5px 0 0 10px;
+}
+
+.fs-block ul>li, .fs-block ol
+{
+   padding: 0;
+}
+
+.fs-block ul>li
+{
+   padding-left: 12px;
+}
+
+.fs-breadcrumbs
+{
+   margin:0 auto;
+}
+
+a.fs-button,
+a.fs-button:link,
+a:link.fs-button:link,
+body a.fs-button:link,
+a.fs-button:visited,
+body a.fs-button:visited,
+input.fs-button,
+button.fs-button
+{
+   text-decoration: none;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   position:relative;
+   display: inline-block;
+   vertical-align: middle;
+   white-space: nowrap;
+   text-align: center;
+   color: #CBD8E6;
+   margin: 0 !important;
+   overflow: visible;
+   cursor: pointer;
+   text-indent: 0;
+   line-height: 28px;
+   -webkit-box-sizing: content-box;
+   -moz-box-sizing: content-box;
+   box-sizing: content-box;
+}
+
+.fs-button img
+{
+   margin: 0;
+   vertical-align: middle;
+}
+
+.firefox2 .fs-button
+{
+   display: block;
+   float: left;
+}
+
+input, select, textarea
+{
+   vertical-align: middle;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+}
+
+.fs-block select 
+{
+   width:96%;
+}
+
+input.fs-button
+{
+   float: none !important;
+}
+
+.fs-button.active, .fs-button.active:hover
+{
+   background: #1B3BB1;
+   background: linear-gradient(top, #1938A9 0, #2047D5 85%, #1C3EBA 86%, #1C3EBA 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #1938A9 0, #2047D5 85%, #1C3EBA 86%, #1C3EBA 100%) no-repeat;
+   background: -moz-linear-gradient(top, #1938A9 0, #2047D5 85%, #1C3EBA 86%, #1C3EBA 100%) no-repeat;
+   background: -o-linear-gradient(top, #1938A9 0, #2047D5 85%, #1C3EBA 86%, #1C3EBA 100%) no-repeat;
+   background: -ms-linear-gradient(top, #1938A9 0, #2047D5 85%, #1C3EBA 86%, #1C3EBA 100%) no-repeat;
+   background: linear-gradient(top, #1938A9 0, #2047D5 85%, #1C3EBA 86%, #1C3EBA 100%) no-repeat;
+   -svg-background: linear-gradient(top, #1938A9 0, #2047D5 85%, #1C3EBA 86%, #1C3EBA 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   padding:0 15px;
+   margin:0 auto;
+}
+.fs-button.active, .fs-button.active:hover {
+   color: #CAD4F7 !important;
+}
+
+.fs-button.hover, .fs-button:hover
+{
+   background: #FDC612;
+   background: linear-gradient(top, #FCC203 0, #FDD03A 85%, #FDC81C 86%, #FDC81C 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #FCC203 0, #FDD03A 85%, #FDC81C 86%, #FDC81C 100%) no-repeat;
+   background: -moz-linear-gradient(top, #FCC203 0, #FDD03A 85%, #FDC81C 86%, #FDC81C 100%) no-repeat;
+   background: -o-linear-gradient(top, #FCC203 0, #FDD03A 85%, #FDC81C 86%, #FDC81C 100%) no-repeat;
+   background: -ms-linear-gradient(top, #FCC203 0, #FDD03A 85%, #FDC81C 86%, #FDC81C 100%) no-repeat;
+   background: linear-gradient(top, #FCC203 0, #FDD03A 85%, #FDC81C 86%, #FDC81C 100%) no-repeat;
+   -svg-background: linear-gradient(top, #FCC203 0, #FDD03A 85%, #FDC81C 86%, #FDC81C 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   padding:0 15px;
+   margin:0 auto;
+}
+.fs-button.hover, .fs-button:hover {
+   color: #232B0D !important;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
+{
+   background: #F7FAEF;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   border:1px solid #3C60E2;
+   margin:0 auto;
+}
+input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
+{
+   width: 100%;
+   padding: 4px 0;
+   color: #0A1643 !important;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+}
+input.fs-error, textarea.fs-error
+{
+   background: #F7FAEF;
+   border:1px solid #E2341D;
+   margin:0 auto;
+}
+input.fs-error, textarea.fs-error {
+   color: #0A1643 !important;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+}
+form.fs-search input[type="text"]
+{
+   background: #F7FAEF;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   border:1px solid #3C60E2;
+   margin:0 auto;
+   width: 100%;
+   padding: 3px 0;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   color: #0A1643 !important;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+}
+form.fs-search 
+{
+   background-image: none;
+   border: 0;
+   display:block;
+   position:relative;
+   top:0;
+   padding:0;
+   margin:5px;
+   left:0;
+   line-height: 0;
+}
+
+form.fs-search input
+{
+   top:0;
+   right:0;
+}
+
+form.fs-search>input {
+   bottom:0;
+   left:0;
+   vertical-align: middle;
+}
+ 
+form.fs-search input[type="submit"]
+{
+   margin:0 auto;
+   color: #121B26 !important;
+   position:absolute;
+   display:block;
+   left: auto;
+   border:none;
+   background:url('/images/fe-blu-02/searchicon.png') center center no-repeat;
+   width:24px;
+   height: 100%;
+   padding:0;
+}
+
+label.fs-checkbox:before
+{
+   background: #F7FAEF;
+   -webkit-border-radius:1px;
+   -moz-border-radius:1px;
+   border-radius:1px;
+   margin:0 auto;
+   width:16px;
+   height:16px;
+}
+label.fs-checkbox
+{
+   cursor: pointer;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   line-height: 16px;
+   display: inline-block;
+}
+
+.fs-checkbox>input[type="checkbox"]
+{
+   margin: 0 5px 0 0;
+}
+
+label.fs-checkbox.active:before
+{
+   background: #A9BED6;
+   -webkit-border-radius:1px;
+   -moz-border-radius:1px;
+   border-radius:1px;
+   margin:0 auto;
+   width:16px;
+   height:16px;
+   display: inline-block;
+}
+
+label.fs-checkbox.hovered:before
+{
+   background: #D9E2ED;
+   -webkit-border-radius:1px;
+   -moz-border-radius:1px;
+   border-radius:1px;
+   margin:0 auto;
+   width:16px;
+   height:16px;
+   display: inline-block;
+}
+
+label.fs-radiobutton:before
+{
+   background: #F7FAEF;
+   -webkit-border-radius:3px;
+   -moz-border-radius:3px;
+   border-radius:3px;
+   margin:0 auto;
+   width:12px;
+   height:12px;
+}
+label.fs-radiobutton
+{
+   cursor: pointer;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   line-height: 12px;
+   display: inline-block;
+}
+
+.fs-radiobutton>input[type="radio"]
+{
+   vertical-align: baseline;
+   margin: 0 5px 0 0;
+}
+
+label.fs-radiobutton.active:before
+{
+   background: #A9BED6;
+   -webkit-border-radius:3px;
+   -moz-border-radius:3px;
+   border-radius:3px;
+   margin:0 auto;
+   width:12px;
+   height:12px;
+   display: inline-block;
+}
+
+label.fs-radiobutton.hovered:before
+{
+   background: #D9E2ED;
+   -webkit-border-radius:3px;
+   -moz-border-radius:3px;
+   border-radius:3px;
+   margin:0 auto;
+   width:12px;
+   height:12px;
+   display: inline-block;
+}
+
+.fs-post
+{
+ /*  border-left:1px dotted #7C9CC0;
+    border-right:1px dotted #7C9CC0;
+
+   margin:0;
+  padding: 16px;*/
+    border:3px solid rgba(199, 199, 199, 0.34);
+    padding:7px;
+}
+a img
+{
+   border: 0;
+}
+
+.fs-article img, img.fs-article, .fs-block img, .fs-footer img
+{
+   border: 1px dotted #7C9CC0;
+   margin: 5px 5px 5px 5px;
+}
+
+.fs-metadata-icons img
+{
+   border: none;
+   vertical-align: middle;
+   margin: 2px;
+}
+
+.fs-article table, table.fs-article
+{
+   border-collapse: collapse;
+   margin: 1px;
+}
+
+.fs-post .fs-content-layout-br
+{
+   height: 0;
+}
+
+.fs-article th, .fs-article td
+{
+   padding: 2px;
+   border: dashed 1px #718BEA;
+   vertical-align: top;
+   text-align: left;
+}
+
+.fs-article th
+{
+   text-align: center;
+   vertical-align: middle;
+   padding: 7px;
+}
+
+pre
+{
+   overflow: auto;
+   padding: 0.1em;
+}
+
+.preview-cms-logo
+{
+   border: 0;
+   margin: 1em 1em 0 0;
+   float: left;
+}
+
+.image-caption-wrapper
+{
+   padding: 5px 5px 5px 5px;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+.image-caption-wrapper img
+{
+   margin: 0 !important;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+.image-caption-wrapper div.fs-collage
+{
+   margin: 0 !important;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+.image-caption-wrapper p
+{
+   font-size: 80%;
+   text-align: right;
+   margin: 0;
+}
+
+.fs-postheadericon:before
+{
+   content:url('/images/fe-blu-02/postheadericon.png');
+   margin-right:6px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   bottom: auto;
+}
+.opera .fs-postheadericon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.fs-postheader
+{
+   color: #192534;
+   margin: 5px 10px;
+   font-size: 24px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+}
+
+.fs-postheader a, 
+.fs-postheader a:link, 
+.fs-postheader a:visited,
+.fs-postheader a.visited,
+.fs-postheader a:hover,
+.fs-postheader a.hovered
+{
+   font-size: 24px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+}
+
+.fs-postheader a, .fs-postheader a:link
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   text-align: left;
+   color: #375272;
+}
+
+.fs-postheader a:visited, .fs-postheader a.visited
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   text-align: left;
+   color: #1D40BF;
+}
+
+.fs-postheader a:hover,  .fs-postheader a.hovered
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   text-align: left;
+   color: #5078A5;
+}
+
+.fs-postmetadataheader
+{
+ /*  background: #718BEA;
+   background: rgba(113, 139, 234, 0.6);   */
+   margin:0 auto;
+   position:relative;
+   z-index:1;
+   padding: 1px;
+   margin-top: 5px;
+}
+
+.fs-postheadericons,
+.fs-postheadericons a,
+.fs-postheadericons a:link,
+.fs-postheadericons a:visited,
+.fs-postheadericons a:hover
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   color: #46551B;
+}
+
+.fs-postheadericons
+{
+   display:inline-block;
+   padding: 1px;
+   margin: 0 0 0 10px;
+}
+
+.fs-postheadericons a, .fs-postheadericons a:link
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   color: #2B415A;
+}
+
+.fs-postheadericons a:visited, .fs-postheadericons a.visited
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #2B415A;
+}
+
+.fs-postheadericons a:hover, .fs-postheadericons a.hover
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: underline;
+   color: #3A5778;
+}
+
+.fs-postdateicon:before
+{
+   content:url('/images/fe-blu-02/postdateicon.png');
+   margin-right:6px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   bottom: auto;
+}
+.opera .fs-postdateicon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.fs-postauthoricon:before
+{
+   content:url('/images/fe-blu-02/postauthoricon.png');
+   margin-right:6px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   bottom: auto;
+}
+.opera .fs-postauthoricon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.fs-postpdficon:before
+{
+   content:url('/images/fe-blu-02/postpdficon.png');
+   margin-right:6px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   bottom: auto;
+}
+.opera .fs-postpdficon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.fs-postprinticon:before
+{
+   content:url('/images/fe-blu-02/postprinticon.png');
+   margin-right:6px;
+   bottom: 2px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+}
+.opera .fs-postprinticon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.fs-postemailicon:before
+{
+   content:url('/images/fe-blu-02/postemailicon.png');
+   margin-right:6px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   bottom: auto;
+}
+.opera .fs-postemailicon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.fs-postediticon:before
+{
+   content:url('/images/fe-blu-02/postediticon.png');
+   margin-right:6px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   bottom: auto;
+}
+.opera .fs-postediticon:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.fs-postcontent ul>li:before,  .fs-post ul>li:before,  .fs-textblock ul>li:before
+{
+   content:url('/images/fe-blu-02/postbullets.png');
+   margin-right:6px;
+   bottom: 2px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+}
+.opera .fs-postcontent ul>li:before, .opera   .fs-post ul>li:before, .opera   .fs-textblock ul>li:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.fs-postcontent li, .fs-post li, .fs-textblock li
+{
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   color: #152E8A;
+   margin: 3px 0 0 11px;
+}
+
+.fs-postcontent ul>li, .fs-post ul>li, .fs-textblock ul>li, .fs-postcontent ol, .fs-post ol, .fs-textblock ol
+{
+   padding: 0;
+}
+
+.fs-postcontent ul>li, .fs-post ul>li, .fs-textblock ul>li
+{
+   padding-left: 10px;
+}
+
+.fs-postcontent ul>li:before,  .fs-post ul>li:before,  .fs-textblock ul>li:before
+{
+   margin-left: -10px;
+}
+
+.fs-postcontent ol, .fs-post ol, .fs-textblock ol, .fs-postcontent ul, .fs-post ul, .fs-textblock ul
+{
+   margin: 1em 0 1em 11px;
+}
+
+.fs-postcontent li ol, .fs-post li ol, .fs-textblock li ol, .fs-postcontent li ul, .fs-post li ul, .fs-textblock li ul
+{
+   margin: 0.5em 0 0.5em 11px;
+}
+
+.fs-postcontent li, .fs-post li, .fs-textblock li
+{
+   margin: 3px 0 0 0;
+}
+
+.fs-postcontent ol>li, .fs-post ol>li, .fs-textblock ol>li
+{
+   /* overrides overflow for "ul li" and sets the default value */
+  overflow: visible;
+}
+
+.fs-postcontent ul>li, .fs-post ul>li, .fs-textblock ul>li
+{
+   /* makes "ul li" not to align behind the image if they are in the same line */
+  overflow-x: visible;
+   overflow-y: hidden;
+}
+
+blockquote
+{
+   background: #B4CF68 url('/images/fe-blu-02/postquote.png') no-repeat scroll;
+   padding:12px 12px 12px 36px;
+   margin:0 0 0 20px;
+   color: #0A0C04;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: italic;
+   text-align: left;
+   /* makes block not to align behind the image if they are in the same line */
+  overflow: auto;
+   clear:both;
+}
+blockquote a, .fs-postcontent blockquote a, .fs-blockcontent blockquote a, .fs-footer blockquote a,
+blockquote a:link, .fs-postcontent blockquote a:link, .fs-blockcontent blockquote a:link, .fs-footer blockquote a:link,
+blockquote a:visited, .fs-postcontent blockquote a:visited, .fs-blockcontent blockquote a:visited, .fs-footer blockquote a:visited,
+blockquote a:hover, .fs-postcontent blockquote a:hover, .fs-blockcontent blockquote a:hover, .fs-footer blockquote a:hover
+{
+   color: #0A0C04;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-weight: normal;
+   font-style: italic;
+   text-align: left;
+}
+
+/* Override native 'p' margins*/
+blockquote p,
+.fs-postcontent blockquote p,
+.fs-blockcontent blockquote p,
+.fs-footer blockquote p
+{
+   margin: 0;
+   margin: 5px 0;
+}
+
+.fs-footer
+{
+   border-top:1px dotted #3C60E2;
+   padding:25px;
+   margin:20px auto 0;
+   position: relative;
+   color: #0F2266;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   line-height: 175%;
+   text-align: center;
+}
+
+.fs-footer a,
+.fs-footer a:link,
+.fs-footer a:visited,
+.fs-footer a:hover,
+.fs-footer td, 
+.fs-footer th,
+.fs-footer caption
+{
+   color: #0F2266;
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   line-height: 175%;
+}
+
+.fs-footer p 
+{
+   padding:0;
+   text-align: center;
+}
+
+.fs-footer a,
+.fs-footer a:link
+{
+   color: #3D5C7F;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+}
+
+.fs-footer a:visited
+{
+   color: #2047D5;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+}
+
+.fs-footer a:hover
+{
+   color: #5078A5;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: underline;
+}
+
+.fs-footer img
+{
+   border: none;
+   margin: 0;
+}
+
+.fs-rss-tag-icon
+{
+   background:  url('/images/fe-blu-02/footerrssicon.png') no-repeat scroll;
+   margin:0 auto;
+   min-height:25px;
+   min-width:25px;
+   display: inline-block;
+   text-indent: 28px;
+   background-position: left center;
+}
+
+.fs-rss-tag-icon:empty
+{
+   vertical-align: middle;
+}
+
+.fs-footer ul>li:before
+{
+   content:url('/images/fe-blu-02/footerbullets.png');
+   margin-right:6px;
+   bottom: 2px;
+   position:relative;
+   display:inline-block;
+   vertical-align:middle;
+   font-size:0;
+   line-height:0;
+   margin-left: -13px;
+}
+.opera .fs-footer ul>li:before
+{
+   /* Vertical-align:middle in Opera doesn't need additional offset */
+    bottom: 0;
+}
+
+.fs-footer li
+{
+   font-size: 13px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   color: #152E8A;
+}
+
+.fs-footer ul>li, .fs-footer ol
+{
+   padding: 0;
+}
+
+.fs-footer ul>li
+{
+   padding-left: 13px;
+}
+
+.fs-page-footer, 
+.fs-page-footer a,
+.fs-page-footer a:link,
+.fs-page-footer a:visited,
+.fs-page-footer a:hover
+{
+   font-family: Arial;
+   font-size: 10px;
+   letter-spacing: normal;
+   word-spacing: normal;
+   font-style: normal;
+   font-weight: normal;
+   text-decoration: underline;
+   color: #385575;
+}
+
+.fs-page-footer
+{
+   position: relative;
+   z-index: auto !important;
+   padding: 1em;
+   text-align: center !important;
+   text-decoration: none;
+   color: #173297;
+}
+
+img.fs-lightbox
+{
+   cursor: pointer;
+}
+
+#fs-lightbox-bg *
+{
+   padding: 0;
+   margin: 0;
+}
+
+div#fs-lightbox-bg
+{
+   top: 0;
+   left: 0;
+   width: 100%;
+   position: absolute;
+   height: 100%;
+   background-color: #000;
+   opacity: 0.8;
+   filter: alpha(opacity=80);
+   z-index: 9999;
+}
+
+img.fs-lightbox-image
+{
+   -webkit-transition: opacity 350ms ease-in-out;
+   -moz-transition: opacity 350ms ease-in-out;
+   -o-transition: opacity 350ms ease-in-out;
+   -ms-transition: opacity 350ms ease-in-out;
+   transition: opacity 350ms ease-in-out;
+   cursor: pointer;
+   z-index: 10000;
+   position: fixed;
+   border: 6px solid #fff;
+   border-radius: 3px;
+   opacity: 0;
+   filter: alpha(opacity=0);
+}
+
+img.fs-lightbox-image.active
+{
+   opacity: 1;
+   filter: alpha(opacity=100);
+}
+
+.lightbox-error
+{
+   position: fixed;
+   background: #fff;
+   z-index: 100;
+   opacity: 0.95;
+   padding: 20px;
+   border: 1px solid #b4b4b4;
+   border-radius: 10px;
+   box-shadow: 0 2px 5px #333;
+   width: 300px;
+   height: 80px;
+}
+
+.loading
+{
+   position: fixed;
+   background: #fff url('/images/fe-blu-02/preloader-01.gif') center center no-repeat;
+   width: 32px;
+   height: 32px;
+   z-index: 10100;
+   opacity: 0.5;
+   padding: 10px;
+   border: 1px solid #b4b4b4;
+   border-radius: 10px;
+   box-shadow: 0 2px 5px #333;
+}
+
+.arrow
+{
+   height: 100px;
+   width: 82px;
+   z-index: 10003;
+   position: fixed;
+   cursor: pointer;
+   opacity: 0.5;
+   filter: alpha(opacity=50);
+}
+
+.arrow.left
+{
+   left: 9px;
+}
+.arrow.right
+{
+   right: 9px;
+}
+
+.arrow:hover
+{
+   opacity: 1;
+   filter: alpha(opacity=100);
+}
+
+.arrow.disabled 
+{
+   display: none;
+}
+
+.arrow-t, .arrow-b
+{
+   height: 6px;
+   width: 30px;
+   left: 26px;
+   background-color: #fff;
+   position: relative;
+   border-radius: 3px;
+}
+
+.arrow-t
+{
+   top: 38px;
+}
+
+.arrow-b
+{
+   top: 50px;
+}
+
+.close
+{
+   width: 22px;
+   height: 22px;
+   position: fixed;
+   top: 30px;
+   right: 39px;
+   cursor: pointer;
+   opacity: 0.5;
+   filter: alpha(opacity=50);
+}
+
+.close:hover 
+{
+   opacity: 1;
+   filter: alpha(opacity=100);
+}
+
+.close .cw, .close .ccw
+{
+   position: absolute;
+   top: 8px;
+   left: -4px;
+   width: 30px;
+   height: 6px;
+   background-color: #fff;
+   border-radius: 3px;
+}
+
+.cw
+{
+   transform: rotate(45deg);
+   -ms-transform: rotate(45deg);
+   /* IE 9 */
+    -webkit-transform: rotate(45deg);
+   /* Safari and Chrome */
+    -o-transform: rotate(45deg);
+   /* Opera */
+    -moz-transform: rotate(45deg);
+/* Firefox */}
+
+.ccw
+{
+   transform: rotate(-45deg);
+   -ms-transform: rotate(-45deg);
+   /* IE 9 */
+    -webkit-transform: rotate(-45deg);
+   /* Safari and Chrome */
+    -o-transform: rotate(-45deg);
+   /* Opera */
+    -moz-transform: rotate(-45deg);
+/* Firefox */}
+
+.close-alt, .arrow-right-alt, .arrow-left-alt 
+{
+   display: none;
+   color: #fff;
+   font-size: 2.5em;
+}
+
+.ie8 .close-alt, .ie8 .arrow-right-alt, .ie8 .arrow-left-alt {
+   display: block;
+}
+.ie8 .cw, .ie8 .ccw {
+   display: none;
+}
+
+.fs-content-layout .fs-sidebar1
+{
+   border-right:1px dotted #3C60E2;
+   margin:-36px  auto 0;
+   width: 300px;
+
+}
+
+.fs-content-layout .fs-content
+{
+   margin:0 auto;
+}
+
+.fs-content-layout .fs-sidebar2
+{
+   border-left:1px dotted #3C60E2;
+   margin:0 auto;
+   width: 225px;
+}
+.fs-content-layout .fs-sidebar3
+{
+   border-left:1px dotted #3C60E2;
+   margin:0 auto;
+   width: 225px;
+}
+/* Begin Additional CSS Styles */
+
+/* End Additional CSS Styles */
