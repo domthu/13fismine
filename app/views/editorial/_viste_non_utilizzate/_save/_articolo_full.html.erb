@@ -2,8 +2,7 @@
   <%= @articolo.titolo %>
 </h4>
  <span style="color:#ffffff;" class="fs-sections">
-  <%= link_to(h(truncate(@articolo.section.top_section.name)), url_for(:controller => 'editorial', :action => "topsezione", :topmenu_key => @articolo.section.top_section.top_menu.key, :topsection_key => @articolo.section.top_section.key, :escape => false))
-  %>
+  <%= link_to h(truncate(@articolo.section.top_section.name)), url_for(:controller => 'editorial', :action => "topsezione", :topmenu_key => @articolo.section.top_section.top_menu.key, :topsection_key => @articolo.section.top_section.key, :escape => false) %>
   <%= @articolo.section.sezione %>
   </span>
 <br/>

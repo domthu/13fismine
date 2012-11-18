@@ -14,7 +14,7 @@ var responsiveDesign = {
         this.windowWidth = jQuery(window).width();
         var triggerEvent = false;
 
-        var isRespVisible = jQuery("#fs-resp").is(":visible");
+        var isRespVisible = jQuery("#art-resp").is(":visible");
         if (isRespVisible && !this.isResponsive) {
             html.addClass("responsive").removeClass("desktop");
             this.isResponsive = true;
@@ -28,12 +28,12 @@ var responsiveDesign = {
         }
 
         if (this.isResponsive) {
-            if (jQuery("#fs-resp-t").is(":visible") && !this.isTablet) {
+            if (jQuery("#art-resp-t").is(":visible") && !this.isTablet) {
                 html.addClass("responsive-tablet").removeClass("responsive-phone");
                 this.isTablet = true;
                 this.isPhone = false;
                 triggerEvent = true;
-            } else if (jQuery("#fs-resp-m").is(":visible") && !this.isPhone) {
+            } else if (jQuery("#art-resp-m").is(":visible") && !this.isPhone) {
                 html.addClass("responsive-phone").removeClass("responsive-tablet");
                 this.isTablet = false;
                 this.isPhone = true;
@@ -49,7 +49,7 @@ var responsiveDesign = {
     },
     initialize: function () {
         "use strict";
-        jQuery("<div id=\"fs-resp\"><div id=\"fs-resp-m\"></div><div id=\"fs-resp-t\"></div></div>").appendTo("body");
+        jQuery("<div id=\"art-resp\"><div id=\"art-resp-m\"></div><div id=\"art-resp-t\"></div></div>").appendTo("body");
         jQuery(window).resize(function () {
             responsiveDesign.responsive();
         });
@@ -103,7 +103,7 @@ function responsiveImages(responsiveDesign) {
             if (widthAttr !== null && typeof(widthAttr) === "string" && widthAttr.indexOf("%") === -1) {
                 newWidth = "100%";
                 newMaxWidth = parseInt(jQuery.trim(widthAttr), 10) + "px";
-            }
+            } 
         }
         img.css("width", newWidth).css("max-width", newMaxWidth).css("height", newHeight);
     });
@@ -112,22 +112,22 @@ function responsiveImages(responsiveDesign) {
 function responsiveCollages(responsiveDesign) {
     'use strict';
     if (jQuery.browser.msie && jQuery.browser.version <= 8) return;
-    jQuery(".fs-collage").each(function () {
+    jQuery(".art-collage").each(function () {
         var collage = jQuery(this);
-        var sliderObject = collage.find(".fs-slider").data("slider");
+        var sliderObject = collage.find(".art-slider").data("slider");
         var responsiveImage = jQuery("img#" + collage.attr("id"));
 
         if (responsiveDesign.isResponsive) {
             if (responsiveImage.length) { return true; }
             if (jQuery.support.transition) {
-                collage.find(".fs-slider").trigger(jQuery.support.transition.event);
+                collage.find(".art-slider").trigger(jQuery.support.transition.event);
             }
             if (sliderObject) {
                 sliderObject.stop();
             }
-            var activeSlide = collage.find(".fs-slide-item.active");
+            var activeSlide = collage.find(".art-slide-item.active");
             if (!activeSlide.length) {
-                var slides = collage.find(".fs-slide-item");
+                var slides = collage.find(".art-slide-item");
                 if (slides.length) {
                     activeSlide = jQuery(slides.get(0));
                 }
@@ -142,7 +142,7 @@ function responsiveCollages(responsiveDesign) {
             responsiveImage.remove();
             if (sliderObject) {
                 if (sliderObject.settings.animation !== "fade") {
-                    collage.find(".fs-slide-item").css("background-image", "none");
+                    collage.find(".art-slide-item").css("background-image", "none");
                 }
                 sliderObject.start();
             }
@@ -154,11 +154,11 @@ function responsiveVideos(responsiveDesign) {
     "use strict";
     jQuery("iframe,object,embed").each(function () {
         var obj = jQuery(this);
-        var container = obj.parent(".fs-responsive-embed");
+        var container = obj.parent(".art-responsive-embed");
         if (responsiveDesign.isResponsive) {
             if (container.length !== 0)
                 return;
-            container = jQuery("<div class=\"fs-responsive-embed\">").insertBefore(obj);
+            container = jQuery("<div class=\"art-responsive-embed\">").insertBefore(obj);
             obj.appendTo(container);
         } else if (container.length > 0) {
             obj.insertBefore(container);
@@ -169,7 +169,7 @@ function responsiveVideos(responsiveDesign) {
 
 jQuery(window).bind("responsiveResize", function (event, responsiveDesign) {
     "use strict";
-    responsiveAbsBg(responsiveDesign, jQuery(".fs-header"), jQuery("#fs-header-bg"));
+    responsiveAbsBg(responsiveDesign, jQuery(".art-header"), jQuery("#art-header-bg"));
 });
 jQuery(window).bind("responsive", function (event, responsiveDesign) {
     "use strict";
@@ -179,22 +179,22 @@ jQuery(window).bind("responsive", function (event, responsiveDesign) {
 
 function responsiveHeader(responsiveDesign) {
     "use strict";
-    var header = jQuery("header.fs-header");
-    var headerShapes = header.find(".fs-shapes");
-    var headerSlider = header.find(".fs-slider");
-
+    var header = jQuery("header.art-header");
+    var headerShapes = header.find(".art-shapes");
+    var headerSlider = header.find(".art-slider");
+    
     if (headerSlider.length) {
         var sliderObject = headerSlider.data("slider");
-
-        var activeSlide = headerSlider.find(".fs-slide-item.active");
+        
+        var activeSlide = headerSlider.find(".art-slide-item.active");
         if (!activeSlide.length) {
-            var slides = headerSlider.find(".fs-slide-item");
+            var slides = headerSlider.find(".art-slide-item");
             if (slides.length) {
                  activeSlide = jQuery(slides.get(0));
             }
         }
 
-        var textblock = headerSlider.find(".fs-textblock").eq(0);
+        var textblock = headerSlider.find(".art-textblock").eq(0);
 
         if (responsiveDesign.isResponsive) {
             if (header.attr("data-responsive")) return true;
@@ -207,7 +207,7 @@ function responsiveHeader(responsiveDesign) {
             if (sliderObject) {
                 sliderObject.stop();
             }
-            if (header.find(".fs-slogan, .fs-headline").length === 0) {
+            if (header.find(".art-slogan, .art-headline").length === 0) {
                 var tb = textblock.clone();
                 tb.css("display", "block");
                 tb.children("div").css("display", "block");
@@ -221,15 +221,15 @@ function responsiveHeader(responsiveDesign) {
             header.css("background-image", "");
             if (sliderObject) {
                 if (sliderObject.settings.animation !== "fade") {
-                    headerSlider.find(".fs-slide-item").css("background-image", "none");
+                    headerSlider.find(".art-slide-item").css("background-image", "none");
                 }
-                headerShapes.find(".fs-textblock").remove();
+                headerShapes.find(".art-textblock").remove();
                 headerSlider.fadeIn(0);
                 sliderObject.start();
             }
         }
-    } else if (header.find(".fs-slogan, .fs-headline").length === 0) {
-        header.find(".fs-textblock").each(function () {
+    } else if (header.find(".art-slogan, .art-headline").length === 0) {
+        header.find(".art-textblock").each(function () {
             jQuery(this).add(jQuery(this).children("div")).css("display", responsiveDesign.isResponsive ? "inline-block" : "");
             return false; // break
         });
@@ -239,23 +239,23 @@ function responsiveHeader(responsiveDesign) {
 
 jQuery(window).bind("responsiveResize", function (event, responsiveDesign) {
     "use strict";
-    responsiveAbsBg(responsiveDesign, jQuery("nav.fs-nav"), jQuery("#fs-hmenu-bg"));
+    responsiveAbsBg(responsiveDesign, jQuery("nav.art-nav"), jQuery("#art-hmenu-bg"));
     responsiveNavFit(responsiveDesign);
 });
 
 function responsiveNavFit(responsiveDesign) {
     'use strict';
-    var nav = jQuery("nav.fs-nav");
+    var nav = jQuery("nav.art-nav");
     var isDesktopNav = true;
     var isResponsiveNav = false;
     if (responsiveDesign.isResponsive) {
         if (!nav.hasClass("responsive-nav")) {
             var itemsWidth = 0;
-            var menu = nav.find(".fs-hmenu");
+            var menu = nav.find(".art-hmenu");
             menu.children("li").each(function() {
                 itemsWidth += jQuery(this).outerWidth(true);
             });
-
+            
             if (menu.width() < itemsWidth || responsiveDesign.isPhone) {
                 nav.attr("data-restore-width", responsiveDesign.windowWidth).addClass("responsive-nav").removeClass("desktop-nav");
                 isResponsiveNav = true;
@@ -268,7 +268,7 @@ function responsiveNavFit(responsiveDesign) {
                 isDesktopNav = false;
             }
         }
-    }
+    } 
 
     if (isDesktopNav) {
         nav.removeClass("responsive-nav").addClass("desktop-nav").removeAttr("data-restore-width");
@@ -282,7 +282,7 @@ function responsiveNavFit(responsiveDesign) {
 jQuery(window).bind("responsiveNav", function (event, options) {
     /*global megaMenuCreate */
     'use strict';
-    if (options.isDesktopNav && jQuery(".fs-hmenu-mega-menu").length > 0) {
+    if (options.isDesktopNav && jQuery(".art-hmenu-mega-menu").length > 0) {
         megaMenuCreate();
     }
 });
@@ -302,9 +302,9 @@ jQuery(window).bind("responsive", function (event, responsiveDesign) {
 
 function responsiveLayoutCell(responsiveDesign) {
     "use strict";
-    jQuery(".fs-content .fs-content-layout-row,.fs-footer .fs-content-layout-row").each(function () {
+    jQuery(".art-content .art-content-layout-row,.art-footer .art-content-layout-row").each(function () {
         var row = jQuery(this);
-        var rowChildren = row.children(".fs-layout-cell");
+        var rowChildren = row.children(".art-layout-cell");
         if (rowChildren.length > 1) {
             if (responsiveDesign.isTablet) {
                 rowChildren.addClass("responsive-tablet-layout-cell").each(function (i) {
@@ -327,9 +327,9 @@ jQuery(window).bind("responsive", function (event, responsiveDesign) {
 
 function responsiveLayoutCell(responsiveDesign) {
     "use strict";
-    jQuery(".fs-content .fs-content-layout-row,.fs-footer .fs-content-layout-row").each(function () {
+    jQuery(".art-content .art-content-layout-row,.art-footer .art-content-layout-row").each(function () {
         var row = jQuery(this);
-        var rowChildren = row.children(".fs-layout-cell");
+        var rowChildren = row.children(".art-layout-cell");
         if (rowChildren.length > 1) {
             if (responsiveDesign.isTablet) {
                 rowChildren.addClass("responsive-tablet-layout-cell").each(function (i) {
@@ -352,9 +352,9 @@ jQuery(window).bind("responsive", function (event, responsiveDesign) {
 
 function responsiveLayoutCell(responsiveDesign) {
     "use strict";
-    jQuery(".fs-content .fs-content-layout-row,.fs-footer .fs-content-layout-row").each(function () {
+    jQuery(".art-content .art-content-layout-row,.art-footer .art-content-layout-row").each(function () {
         var row = jQuery(this);
-        var rowChildren = row.children(".fs-layout-cell");
+        var rowChildren = row.children(".art-layout-cell");
         if (rowChildren.length > 1) {
             if (responsiveDesign.isTablet) {
                 rowChildren.addClass("responsive-tablet-layout-cell").each(function (i) {

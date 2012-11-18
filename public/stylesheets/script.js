@@ -188,13 +188,13 @@ jQuery(function ($) {
     'use strict';
     // ie < 9 slider multiple background fix
     if (!jQuery.browser.msie || jQuery.browser.version > 8) return;
-
+    
     function split(str) {
         str = str.replace(/"/g, '').replace(/%20/g, '');
         return  str.split(/\s*,\s*/);
     }
 
-    $('.fs-slider .fs-slide-item').each(function () {
+    $('.art-slider .art-slide-item').each(function () {
         var bgs = split($(this).css('background-image'));
         // needs to use the last image
         if (bgs.length > 1) {
@@ -204,19 +204,19 @@ jQuery(function ($) {
 });
 jQuery(function ($) {
     'use strict';
-    if ($('#fs-main').children('header.fs-header').length) {
-        $('#fs-header-bg').insertAfter($('header.fs-header'));
+    if ($('#art-main').children('header.art-header').length) {
+        $('#art-header-bg').insertAfter($('header.art-header'));
     }
 });
 
 jQuery(window).bind('resize', function () {
     'use strict';
-    var headerOffset = jQuery("header.fs-header").offset();
-    var pageOffset = jQuery("#fs-main").offset();
+    var headerOffset = jQuery("header.art-header").offset();
+    var pageOffset = jQuery("#art-main").offset();
     if (!headerOffset || !pageOffset) {
         return;
     }
-    jQuery("#fs-header-bg").css({
+    jQuery("#art-header-bg").css({
         "top": (headerOffset.top - pageOffset.top) + "px"
     });
 });
@@ -226,8 +226,8 @@ jQuery(window).bind("resize", function () {
     'use strict';
     if (typeof responsiveDesign !== "undefined" && responsiveDesign.isResponsive)
         return;
-    var sheetLeft = jQuery(".fs-sheet").offset().left;
-    jQuery("header.fs-header #fs-flash-area").each(function () {
+    var sheetLeft = jQuery(".art-sheet").offset().left;
+    jQuery("header.art-header #art-flash-area").each(function () {
         var object = jQuery(this);
         object.css("left", sheetLeft + "px");
     });
@@ -235,7 +235,7 @@ jQuery(window).bind("resize", function () {
 
 jQuery(function($) {
     'use strict';
-    $('nav.fs-nav').addClass("desktop-nav");
+    $('nav.art-nav').addClass("desktop-nav");
 });
 
 
@@ -244,12 +244,12 @@ jQuery(function ($) {
     if (!$.browser.msie || parseInt($.browser.version, 10) > 7) {
         return;
     }
-    $('ul.fs-hmenu>li:not(:first-child)').each(function () { $(this).prepend('<span class="fs-hmenu-separator"> </span>'); });
+    $('ul.art-hmenu>li:not(:first-child)').each(function () { $(this).prepend('<span class="art-hmenu-separator"> </span>'); });
 });
 
 jQuery(function ($) {
     'use strict';
-    $("ul.fs-hmenu a:not([href])").attr('href', '#').click(function (e) { e.preventDefault(); });
+    $("ul.art-hmenu a:not([href])").attr('href', '#').click(function (e) { e.preventDefault(); });
 });
 
 
@@ -266,7 +266,7 @@ jQuery(function ($) {
     /* Fix width of submenu items.
     * The width of submenu item calculated incorrectly in IE6-7. IE6 has wider items, IE7 display items like stairs.
     */
-    $.each($("ul.fs-hmenu ul"), function () {
+    $.each($("ul.art-hmenu ul"), function () {
         var maxSubitemWidth = 0;
         var submenu = $(this);
         var subitem = null;
@@ -290,11 +290,11 @@ jQuery(function ($) {
 jQuery(function () {
     'use strict';
     setHMenuOpenDirection({
-        container: "div.fs-sheet",
-        defaultContainer: "#fs-main",
-        menuClass: "fs-hmenu",
-        leftToRightClass: "fs-hmenu-left-to-right",
-        rightToLeftClass: "fs-hmenu-right-to-left"
+        container: "div.art-sheet",
+        defaultContainer: "#art-main",
+        menuClass: "art-hmenu",
+        leftToRightClass: "art-hmenu-left-to-right",
+        rightToLeftClass: "art-hmenu-right-to-left"
     });
 });
 
@@ -333,21 +333,21 @@ var setHMenuOpenDirection = (function($) {
 jQuery(window).load(megaMenuCreate);
 function megaMenuCreate() {
     'use strict';
-    var sheet = jQuery(".fs-sheet");
+    var sheet = jQuery(".art-sheet");
     var sheetLeft = sheet.offset().left;
     var sheetWidth = sheet.width();
-    sheetWidth -= (parseInt(jQuery(".fs-hmenu").parents("nav").css("padding-left").replace("px", ""), 10) || 0) * 2;
+    sheetWidth -= (parseInt(jQuery(".art-hmenu").parents("nav").css("padding-left").replace("px", ""), 10) || 0) * 2;
 
     // reset
-    jQuery(".fs-hmenu .fs-hmenu-mega-menu").removeClass("fs-hmenu-mega-menu").css("width", "").css("left", "").css("right", "")
+    jQuery(".art-hmenu .art-hmenu-mega-menu").removeClass("art-hmenu-mega-menu").css("width", "").css("left", "").css("right", "")
         .removeAttr("data-ext-l").removeAttr("data-ext-r").children("li").css("width", "").css("margin-left", "").css("margin-right", "")
         .siblings("li.cleared").remove();
 
-    jQuery(".fs-hmenu>li>ul").each(function() {
+    jQuery(".art-hmenu>li>ul").each(function() {
         var ul = jQuery(this);
-        ul.addClass("fs-hmenu-mega-menu");
+        ul.addClass("art-hmenu-mega-menu");
 
-        var ltr = !ul.hasClass("fs-hmenu-right-to-left");
+        var ltr = !ul.hasClass("art-hmenu-right-to-left");
         var widths = [];
         var horizontalMargin = 1;
         ul.children("li").each(function() {
@@ -368,7 +368,7 @@ function megaMenuCreate() {
         }
 
         ul.children("li").each(function(index) {
-            if (index % colsPerRow !== 0)
+            if (index % colsPerRow !== 0) 
                 jQuery(this).css("margin-left", horizontalMargin + "px");
         });
 
@@ -412,41 +412,36 @@ function megaMenuCreate() {
 jQuery(window).load(menuExtendedCreate);
 function menuExtendedCreate() {
     'use strict';
-    var sheet = jQuery(".fs-sheet");
+    var sheet = jQuery(".art-sheet");
     var sheetLeft = sheet.offset().left;
     var sheetWidth = sheet.width();
     // reset
-    jQuery("#fs-menu-style").remove();
+    jQuery("#art-menu-style").remove();
 
     var styleStr = "";
-    jQuery("<style id=\"fs-menu-style\"></style>").appendTo('head');
+    jQuery("<style id=\"art-menu-style\"></style>").appendTo('head');
     var style = document.styleSheets[document.styleSheets.length - 1];
 
-        var submenusWidth = maxWidth * widths.length;
-        var minMegaMenuWidth = Math.min(sheetWidth, submenusWidth);
-        var colsPerRow = parseInt(minMegaMenuWidth / maxWidth, 10);
-
-        var megaMenuWidth = (maxWidth * colsPerRow) + (horizontalMargin * colsPerRow - 1);
-        var parentWidth = ul.parent("li").children("a").outerWidth();
-
-        if (submenusWidth > ul.parent("li").children("a").outerWidth()) {
-            ul.children("li").css("width", Math.round(parseFloat(maxWidth, 10)) + "px");
-            ul.css("width", Math.round(parseFloat(megaMenuWidth, 10)) + "px");
+    jQuery(".art-hmenu>li").each(function(i, v) {
+        var itm = jQuery(this);
+        var subm = itm.children("ul");
+        if (subm.length === 0) {
+            return;
         }
 
-        ul.children("li").each(function(index) {
-            if (index % colsPerRow !== 0)
-                jQuery(this).css("margin-left", horizontalMargin + "px");
-        });
+        // reset
+        itm.removeClass("ext ext-r ext-l");
+        itm.css("width", "").find(".ext-off,.ext-m,.ext-l,.ext-r").remove();
+        subm.children("li").children("a").css("width", "");
 
         var lw = 0, rw = 0;
-
+        
         if (typeof subm.attr("data-ext-l") !== "undefined" && typeof subm.attr("data-ext-r") !== "undefined") {
             lw = parseInt(subm.attr("data-ext-l"), 10) + 7;
             rw = parseInt(subm.attr("data-ext-r"), 10) + 7;
             itm.addClass("ext-r").addClass("ext-l");
         } else {
-            var ltr = !subm.hasClass("fs-hmenu-right-to-left");
+            var ltr = !subm.hasClass("art-hmenu-right-to-left");
             itm.addClass(ltr ? "ext-r" : "ext-l");
         }
 
@@ -474,8 +469,8 @@ function menuExtendedCreate() {
             jQuery("<div class=\"ext-r\" style=\"width: " + (rw > 0 ? rw : Math.round(parseFloat(w, 10))) + "px;\"></div>").insertBefore(lnk);
             itm.addClass("ext");
             if (style !== null && typeof style.insertRule !== "undefined") {
-                var cls = "fs-hmenu-item-" + i;
-                var selector = ".desktop ul.fs-hmenu>li." + cls + ":hover>ul:before";
+                var cls = "art-hmenu-item-" + i;
+                var selector = ".desktop ul.art-hmenu>li." + cls + ":hover>ul:before";
                 var r = submWidth;
                 var b = subm.height() + (shadow * 2) + menubarBorder + menubarMargin;
                 var rule = "clip: rect(9px, " + Math.round(parseFloat(r, 10)) + "px, " + Math.round(parseFloat(b, 10)) + "px, -" + shadow + "px);";
@@ -487,14 +482,13 @@ function menuExtendedCreate() {
     });
 }
 
-jQuery(window).bind("resize", function () {
-    /*global responsiveDesign */
+jQuery(function ($) {
     'use strict';
 
     if ($.browser.msie && parseInt($.browser.version, 10) < 8) {
         $(window).bind('resize', function() {
-            var c = $('div.fs-content');
-            var s = c.parent().children('.fs-layout-cell:not(.fs-content)');
+            var c = $('div.art-content');
+            var s = c.parent().children('.art-layout-cell:not(.art-content)');
             var w = 0;
             c.hide();
             s.each(function() { w += $(this).outerWidth(true); });
@@ -511,7 +505,7 @@ jQuery(function($) {
     if (!$('html').hasClass('ie7')) {
         return;
     }
-    $('ul.fs-vmenu li:not(:first-child),ul.fs-vmenu li li li:first-child,ul.fs-vmenu>li>ul').each(function () { $(this).append('<div class="fs-vmenu-separator"> </div><div class="fs-vmenu-separator-bg"> </div>'); });
+    $('ul.art-vmenu li:not(:first-child),ul.art-vmenu li li li:first-child,ul.art-vmenu>li>ul').each(function () { $(this).append('<div class="art-vmenu-separator"> </div><div class="art-vmenu-separator-bg"> </div>'); });
 });
 
 
@@ -521,8 +515,8 @@ var artButtonSetup = (function ($) {
     return (function (className) {
         $.each($("a." + className + ", button." + className + ", input." + className), function (i, val) {
             var b = $(val);
-            if (!b.hasClass('fs-button')) {
-                b.addClass('fs-button');
+            if (!b.hasClass('art-button')) {
+                b.addClass('art-button');
             }
             if (b.is('input')) {
                 b.val(b.val().replace(/^\s*/, '')).css('zoom', '1');
@@ -548,42 +542,12 @@ var artButtonSetup = (function ($) {
 })(jQuery);
 jQuery(function () {
     'use strict';
-    artButtonSetup("fs-button");
+    artButtonSetup("art-button");
 });
 
 jQuery(function($) {
     'use strict';
-    $('form.fs-search input[type="submit"]').attr('value', '');
-});
-
-var artRadioButtonSetup = (function ($) {
-    'use strict';
-    return (function (className) {
-        $.each($('label.' + className), function (i, val) {
-            var label = $(val),
-                ctrl = new Control();
-            ctrl.init(label, 'radio', artRadioButtonProcess);
-
-            function artRadioButtonProcess() {
-                var label = $(this),
-                    radio = label.children('input[type="radio"]');
-                if (radio.length === 0) {
-                    return;
-                }
-                //turn off checked attribute from other radiobuttons and div-s
-                jQuery.each(jQuery(':radio[name=' + radio.attr('name') + ']'), function () {
-                    jQuery(this).removeAttr('checked');
-                    jQuery(this).parent().removeClass('fs-checked');
-                });
-                radio.attr('checked', 'checked');
-                label.addClass('fs-checked');
-            }
-        });
-    });
-})(jQuery);
-jQuery(function () {
-    'use strict';
-    artRadioButtonSetup('fs-radiobutton');
+    $('form.art-search input[type="submit"]').attr('value', '');
 });
 
 var Control = (function ($) {
@@ -592,7 +556,7 @@ var Control = (function ($) {
         this.init = function(label, type, callback) {
             var chAttr = label.find('input[type="' +type + '"]').attr('checked');
             if (chAttr === 'checked') {
-              label.addClass('fs-checked');
+              label.addClass('art-checked');
             }
 
             label.mouseleave(function () {
@@ -618,36 +582,6 @@ var Control = (function ($) {
     });
 })(jQuery);
 
-var artCheckBoxSetup = (function ($) {
-    'use strict';
-    return (function (className) {
-        $.each($('label.' + className), function (i, val) {
-            var label = $(val),
-                ctrl = new Control();
-            ctrl.init(label, 'checkbox', artCheckBoxProcess);
-
-            function artCheckBoxProcess() {
-                var label = $(this),
-                    ch = label.children("input[type='checkbox']");
-                if (ch.length) {
-                  if (label.hasClass('fs-checked')) {
-                    ch.removeAttr('checked');
-                    label.removeClass('fs-checked');
-                  }
-                  else {
-                    ch.attr('checked', 'checked');
-                    label.addClass('fs-checked');
-                  }
-                  ch.click();
-                }
-            }
-        });
-    });
-})(jQuery);
-jQuery(function () {
-    'use strict';
-    artCheckBoxSetup('fs-checkbox');
-});
 
 var fixRssIconLineHeight = (function (className) {
     'use strict';
@@ -656,9 +590,9 @@ var fixRssIconLineHeight = (function (className) {
 
 jQuery(function ($) {
     'use strict';
-    var rssIcons = $(".fs-rss-tag-icon");
+    var rssIcons = $(".art-rss-tag-icon");
     if (rssIcons.length){
-        fixRssIconLineHeight("fs-rss-tag-icon");
+        fixRssIconLineHeight("art-rss-tag-icon");
         if ($.browser.msie && parseInt($.browser.version, 10) < 9) {
             rssIcons.each(function () {
                 if ($.trim($(this).html()) === "") {
@@ -669,19 +603,19 @@ jQuery(function ($) {
     }
 });
 /**
-* @license
+* @license 
 * jQuery Tools 1.2.6 Mousewheel
-*
+* 
 * NO COPYRIGHTS OR LICENSES. DO WHAT YOU LIKE.
-*
+* 
 * http://flowplayer.org/tools/toolbox/mousewheel.html
-*
-* based on jquery.event.wheel.js ~ rev 1 ~
+* 
+* based on jquery.event.wheel.js ~ rev 1 ~ 
 * Copyright (c) 2008, Three Dub Media
-* http://threedubmedia.com
+* http://threedubmedia.com 
 *
 * Since: Mar 2010
-* Date:
+* Date:  
 */
 (function ($) {
     'use strict';
@@ -706,7 +640,7 @@ jQuery(function ($) {
     // shared event handler
     function wheelHandler(event) {
         /*jshint validthis:true*/
-
+        
         switch (event.type) {
 
             // FF2 has incorrect event positions
@@ -739,12 +673,12 @@ var ThemeLightbox = (function ($) {
     'use strict';
     return (function () {
         var current;
-        var images = $("img.fs-lightbox");
+        var images = $("img.art-lightbox");
 
         var b = $("body");
 
         this.init = function (ctrl) {
-            $("img.fs-lightbox").live("click", { _ctrl: ctrl }, function (e) {
+            $("img.art-lightbox").live("click", { _ctrl: ctrl }, function (e) {
 
                 if (e.data._ctrl === true && !e.ctrlKey) {
                     return;
@@ -773,9 +707,9 @@ var ThemeLightbox = (function ($) {
         };
 
         function show(src) {
-            var d = $('<div id="fs-lightbox-bg"><div class="close"><div class="cw"> </div><div class="ccw"> </div><div class="close-alt">&#10007;</div></div></div>');
+            var d = $('<div id="art-lightbox-bg"><div class="close"><div class="cw"> </div><div class="ccw"> </div><div class="close-alt">&#10007;</div></div></div>');
 
-            var img = $('<img class="fs-lightbox-image active" alt="" src="' + getFullImgSrc($(src).attr("src")) + '" />');
+            var img = $('<img class="art-lightbox-image active" alt="" src="' + getFullImgSrc($(src).attr("src")) + '" />');
 
             resizeOnLoad(img);
             img.appendTo(b);
@@ -800,7 +734,7 @@ var ThemeLightbox = (function ($) {
         }
 
         function reload() {
-            images = $("img.fs-lightbox");
+            images = $("img.art-lightbox");
         }
 
         function move(index) {
@@ -812,11 +746,11 @@ var ThemeLightbox = (function ($) {
 
             current = index;
 
-            $("img.fs-lightbox-image:not(.active)").remove();
+            $("img.art-lightbox-image:not(.active)").remove();
 
             var active = $("img.active");
 
-            var target = $('<img class="fs-lightbox-image" alt="" src="' + getFullImgSrc($(images[current]).attr("src")) + '" />');
+            var target = $('<img class="art-lightbox-image" alt="" src="' + getFullImgSrc($(images[current]).attr("src")) + '" />');
 
             resizeOnLoad(target);
             active.after(target);
@@ -824,7 +758,7 @@ var ThemeLightbox = (function ($) {
             showArrows();
             showLoader(true);
 
-            bindMouse($("#fs-lightbox-bg").add(target));
+            bindMouse($("#art-lightbox-bg").add(target));
 
             target.load(function () {
                 showLoader(false);
@@ -882,7 +816,7 @@ var ThemeLightbox = (function ($) {
         }
 
         var close = function () {
-            $("#fs-lightbox-bg, .fs-lightbox-image, .arrow, .lightbox-error").remove();
+            $("#art-lightbox-bg, .art-lightbox-image, .arrow, .lightbox-error").remove();
         };
 
         function resizeOnLoad(img) {
@@ -1093,7 +1027,7 @@ jQuery(function () {
             if (!!next) {
                 result.push({ images: next.images, positions: getCssPositions(next.positions, nextItem) });
             }
-
+            
             if (direction === "next") {
                 result.reverse();
             }
@@ -1104,7 +1038,7 @@ jQuery(function () {
         this.transition = function(container, on) {
             container.css($.support.transition.prefix + "transition", on ? transitionDuration + " ease-in-out background-position" : "");
         };
-
+        
         function getCssPositions(positions, offset) {
             var result = [];
             if (positions === undefined) {
@@ -1154,19 +1088,19 @@ jQuery(function () {
             if (moving) { this.stop(true); }
 
             if (!nextItem.length) {
-                nextItem = element.find(".fs-slide-item")[reset]();
+                nextItem = element.find(".art-slide-item")[reset]();
                 if (!this.settings.repeat) { last = true; active = false; return; }
             }
 
             if ($.support.transition) {
                 nextItem.addClass(this.settings.direction);
                 tmp = nextItem.get(0).offsetHeight;
-
+                
                 activeItem.addClass(innerDirection);
                 nextItem.addClass(innerDirection);
-
+                
                 element.trigger("beforeSlide", children.length);
-
+                
                 element.one($.support.transition.event, function () {
                     nextItem.removeClass(slider.settings.direction)
                         .removeClass(innerDirection)
@@ -1180,11 +1114,11 @@ jQuery(function () {
                 });
             } else {
                 element.trigger("beforeSlide", children.length);
-
+                
                 activeItem.removeClass("active");
                 nextItem.addClass("active");
                 active = false;
-
+                
                 element.trigger("afterSlide", children.length);
             }
 
@@ -1213,7 +1147,7 @@ jQuery(function () {
                     slider.to(index);
                 });
             }
-
+            
             if (activeIndex === index) {
                 return;
             }
@@ -1257,7 +1191,7 @@ jQuery(function () {
         this.moving = function () {
             return active;
         };
-
+        
         this.navigate(children.filter(".active"));
 
         if (this.settings.clickevents) {
@@ -1270,11 +1204,11 @@ jQuery(function () {
                 event.preventDefault();
             });
         }
-
+        
         if (this.settings.hover) {
             var slider = this;
             element.add(this.settings.navigator)
-                   .add(element.siblings(".fs-shapes")).hover(function () {
+                   .add(element.siblings(".art-shapes")).hover(function () {
                 if (element.is(":visible") && !last) { slider.stop(true); }
             }, function () {
                 if (element.is(":visible") && !last) { slider.start(); }
@@ -1292,7 +1226,7 @@ jQuery(function () {
                 data = new Slider(element, options);
                 element.data("slider", data);
             }
-
+            
             if (typeof arg === "string" && data[arg]) {
                 data[arg]();
             } else if (data.settings.auto && element.is(":visible")) {
@@ -1316,7 +1250,7 @@ jQuery(function ($) {
         var src = scripts.get(0).src;
         path = src.substr(0, src.indexOf("script.js"));
     }
-    var header = $(".fs-header");
+    var header = $(".art-header");
     var bgimages = "url('images/object1688855322.png'), ".split(",");
     var bgpositions = "12px 0px, ".split(",");
     for (var i = 0; i < bgimages.length; i++) {
@@ -1326,7 +1260,7 @@ jQuery(function ($) {
         if (path !== "") {
             bgimage = bgimage.replace(/(url\(['"]?)/i, "$1" + path);
         }
-        header.find(".fs-shapes").prepend("<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:" + bgimage + " " + bgpositions[i] + " no-repeat\">");
+        header.find(".art-shapes").prepend("<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:" + bgimage + " " + bgpositions[i] + " no-repeat\">");
     }
     header.css('background-image', "url('images/header.jpg')".replace(/(url\(['"]?)/i, "$1" + path));
     header.css('background-position', "center top");
