@@ -10,45 +10,13 @@
   <%= csrf_meta_tag %>
   <%= favicon %>
 
-  <!--[if lt IE 9]>
+  <!--[if lt IE 9]>  uuuuuuuuuuuuuuuuuuuuuuuu
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <!--[if lte IE 7]><%= stylesheet_link_tag 'style.ie7.css', :media => 'screen' %><![endif]-->
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Quattrocento+Sans&amp;subset=latin">
-  <style>
 
-
-
-  .ie7 .post .layout-cell {
-      border: none !important;
-      padding: 0 !important;
-  }
-
-  .ie6 .post .layout-cell {
-      border: none !important;
-      padding: 0 !important;
-  }
-  .ie7 .post .layout-cell {
-      border: none !important;
-      padding: 0 !important;
-  }
-
-  .ie6 .post .layout-cell {
-      border: none !important;
-      padding: 0 !important;
-  }
-
-  .ie7 .post .layout-cell {
-      border: none !important;
-      padding: 0 !important;
-  }
-
-  .ie6 .post .layout-cell {
-      border: none !important;
-      padding: 0 !important;
-  }
-
-  </style>
   <!--   styles comuni  -->
+  <%# stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
   <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
   <%= stylesheet_link_tag 'application_fs', :media => 'all' %>
   <%= stylesheet_link_tag 'editorial', :media => 'all' %>
@@ -56,37 +24,37 @@
   <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
-  <!-- jquery  -->
-  <%# javascript_include_tag "jquery.js" %>
-  <%= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
+  <!-- jquery di default  -->
+  <%=javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
   <%= javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
-  <%= stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
+  <!-- jquery di per il Front End  -->
+  <%=javascript_include_tag "jquery.js" %>
   <%= javascript_include_tag "script.js" %>
   <%= javascript_include_tag "script.responsive.js" %>
   <%# javascript_include_tag "jquery.jcarousel.min.js" %>
   <%= javascript_include_tag "jcarousellite_1.0.1c4.js" %>
 
-  <script type="text/javascript" >
-      $(function (){
-      'use strict';
-      if ($.fn.slider) {
-          $(".fs-slidecontainerslideshutterstock_1").each(function () {
-              var slideContainer = $(this), tmp;
-              var inner = $(".fs-slider-inner", slideContainer);
-              var helper = null;
-              inner.children().eq(0).addClass("active");
-              slideContainer.slider({
-                  pause:2600,
-                  speed:600,
-                  repeat:true,
-                  animation:"fade",
-                  direction:"next",
-                  navigator:slideContainer.siblings(".fs-slidenavigatorslideshutterstock_1"),
-                  helper:helper
+  <script type="text/javascript">
+      $(function () {
+          'use strict';
+          if ($.fn.slider) {
+              $(".fs-slidecontainerslideshutterstock_1").each(function () {
+                  var slideContainer = $(this), tmp;
+                  var inner = $(".fs-slider-inner", slideContainer);
+                  var helper = null;
+                  inner.children().eq(0).addClass("active");
+                  slideContainer.slider({
+                      pause:2600,
+                      speed:600,
+                      repeat:true,
+                      animation:"fade",
+                      direction:"next",
+                      navigator:slideContainer.siblings(".fs-slidenavigatorslideshutterstock_1"),
+                      helper:helper
+                  });
               });
-          });
-      }
-  });
+          }
+      });
   </script>
   <script type="text/javascript">
       $(function () {
@@ -101,33 +69,32 @@
   </script>
 </head>
 <body>
-<%= render :partial => 'flash' %>
 <div id="fs-main">
-    <div id="fs-header-bg" class="clearfix">
-            </div>
-    <div class="fs-sheet clearfix">
-<header class="fs-header clearfix">
+  <div id="fs-header-bg" class="clearfix">
+  </div>
+  <div class="fs-sheet clearfix">
+    <header class="fs-header clearfix">
 
 
-    <div class="fs-shapes">
-<h1 class="fs-headline" data-left="58%">
-    <a href="#">I migliori esperti italiani in materie fiscali sportive</a>
-</h1>
+      <div class="fs-shapes">
+        <h1 class="fs-headline" data-left="58%">
+          <a href="#">I migliori esperti italiani in materie fiscali sportive</a>
+        </h1>
 
 
-            </div>
-<div class="fs-textblock fs-object375974515" data-left="80%">
-    <form class="fs-search" name="Search" action="javascript:void(0)">
-    <input type="text" value="">
-    <input type="submit" value="Search" name="search" class="fs-search-button">
-</form>
-</div>
+      </div>
+      <div class="fs-textblock fs-object375974515" data-left="80%">
+        <form class="fs-search" name="Search" action="javascript:void(0)">
+          <input type="text" value="">
+          <input type="submit" value="Search" name="search" class="fs-search-button">
+        </form>
+      </div>
 
-</header>
+    </header>
 
-      <nav class="fs-nav clearfix">
-       <%= render_navigation %>
-     </nav>
+    <nav class="fs-nav clearfix">
+      <%= render_navigation %>
+    </nav>
 
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">
@@ -135,16 +102,19 @@
           <%= yield %>
         </div>
       </div>
-             </div><footer class="fs-footer clearfix">
- <p><a href="#">Link1</a> | <a href="#">Link2</a> | <a href="#">Link3</a></p>
- <p>Copyright © 2012. All Rights Reserved.</p>
- </footer>
+    </div>
+    <footer class="fs-footer clearfix">
+      <p><a href="#">Link1</a> | <a href="#">Link2</a> | <a href="#">Link3</a></p>
 
-     </div>
-     <p class="fs-page-footer">
-         <span id="fs-footnote-links"><a href="http://www.artisteer.com/" target="_blank">Web Template</a> created with Artisteer.</span>
-     </p>
- </div>
+      <p>Copyright © 2012. All Rights Reserved.</p>
+    </footer>
+
+  </div>
+  <p class="fs-page-footer">
+    <span id="fs-footnote-links"><a href="http://www.artisteer.com/" target="_blank">Web Template</a> created with Artisteer.</span>
+  </p>
+</div>
 
 
- </body></html>
+</body>
+</html>

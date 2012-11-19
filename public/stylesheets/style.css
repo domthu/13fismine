@@ -510,6 +510,7 @@ text-align: center;
    cursor:auto;
    width: 974px;
    z-index: auto !important;
+
 }
 
 .fs-header
@@ -2059,6 +2060,7 @@ label.fs-checkbox.fs-checked:after
 
 .fs-post
 {
+
    background: #FFFFFF;
    -webkit-border-radius:4px;
    -moz-border-radius:4px;
@@ -2066,8 +2068,15 @@ label.fs-checkbox.fs-checked:after
    -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);
    -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);
    box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);
+    border-collapse: separate;
    padding:7px;
+    margin-right: 10px;
+/* For IE 8 */
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+/* For IE 5.5 - 7 */
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
+
 a img
 {
    border: 0;

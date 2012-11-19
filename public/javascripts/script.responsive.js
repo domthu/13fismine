@@ -103,7 +103,7 @@ function responsiveImages(responsiveDesign) {
             if (widthAttr !== null && typeof(widthAttr) === "string" && widthAttr.indexOf("%") === -1) {
                 newWidth = "100%";
                 newMaxWidth = parseInt(jQuery.trim(widthAttr), 10) + "px";
-            }
+            } 
         }
         img.css("width", newWidth).css("max-width", newMaxWidth).css("height", newHeight);
     });
@@ -182,10 +182,10 @@ function responsiveHeader(responsiveDesign) {
     var header = jQuery("header.fs-header");
     var headerShapes = header.find(".fs-shapes");
     var headerSlider = header.find(".fs-slider");
-
+    
     if (headerSlider.length) {
         var sliderObject = headerSlider.data("slider");
-
+        
         var activeSlide = headerSlider.find(".fs-slide-item.active");
         if (!activeSlide.length) {
             var slides = headerSlider.find(".fs-slide-item");
@@ -255,7 +255,7 @@ function responsiveNavFit(responsiveDesign) {
             menu.children("li").each(function() {
                 itemsWidth += jQuery(this).outerWidth(true);
             });
-
+            
             if (menu.width() < itemsWidth || responsiveDesign.isPhone) {
                 nav.attr("data-restore-width", responsiveDesign.windowWidth).addClass("responsive-nav").removeClass("desktop-nav");
                 isResponsiveNav = true;
@@ -268,7 +268,7 @@ function responsiveNavFit(responsiveDesign) {
                 isDesktopNav = false;
             }
         }
-    }
+    } 
 
     if (isDesktopNav) {
         nav.removeClass("responsive-nav").addClass("desktop-nav").removeAttr("data-restore-width");
