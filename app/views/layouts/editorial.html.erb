@@ -1,8 +1,7 @@
- <!DOCTYPE html>
 <html dir="ltr" lang="en-EN">
-<head><!-- Created by DomThu & SPecchiaSoft  (versione2) blu -->
+<head><!-- Created by DomThu & SPecchiaSoft -->
   <meta charset="utf-8"/>
-  <title>FiscoSport (Blue version)  <%= h html_title %></title>
+  <title>FiscoSport (fartist version) <%= h html_title %></title>
   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width"/>
   <meta name="description" content="<%= Redmine::Info.app_name %>"/>
   <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
@@ -10,21 +9,12 @@
   <%= csrf_meta_tag %>
   <%= favicon %>
 
-
-  <!-- // [if lt IE 9]><%= javascript_include_tag 'html5.js' %><![endif]-->
-  <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  <!--[if lte IE 7]><%= stylesheet_link_tag 'fe-blu-02/style.ie7.css', :media => 'screen' %><![endif]-->
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <!--[if lte IE 7]><%= stylesheet_link_tag 'style.ie7.css', :media => 'screen' %><![endif]-->
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Quattrocento+Sans&amp;subset=latin">
   <style>
 
-      .ie7 .post .layout-cell {
-          border: none !important;
-          padding: 0 !important;
-      }
-
-      .ie6 .post .layout-cell {
-          border: none !important;
-          padding: 0 !important;
-      }
 
       .ie7 .post .layout-cell {
           border: none !important;
@@ -32,36 +22,57 @@
       }
 
       .ie6 .post .layout-cell {
+          border: none !important;
+          padding: 0 !important;
+      }
+
+      .ie7 .post .layout-cell {
           border: none !important;
           padding: 0 !important;
       }
 
   </style>
-  <!-- queste erano di defailt ? si possono  cancellare? non sembrano avere effetto alcuno almeno in FE -->
-  <%# stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
+  <!--   styles comuni  -->
   <%# stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
-  <!-- fine di: queste erano di defailt ?... -->
-
-  <!-- styles comuni  -->
+  <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
   <%= stylesheet_link_tag 'application_fs', :media => 'all' %>
   <%= stylesheet_link_tag 'editorial', :media => 'all' %>
-  <!-- styles per il FE -->
-     <%= stylesheet_link_tag 'fe-blu-02/style.css', :media => 'all' %>
-  <%= stylesheet_link_tag 'fe-blu-02/style.responsive.css', :media => 'all' %>
-  <%= stylesheet_link_tag 'fe-blu-02/style-menu2.css', :media => 'all' %>
-  <%= stylesheet_link_tag 'fe-blu-02/style-slide.css', :media => 'all' %>
-
-
-  <!-- jquery comuni -->
-  <%#javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
+  <!--   styles per il Front End  -->
+  <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
+  <%= stylesheet_link_tag 'style.css', :media => 'all' %>
+  <%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
+  <!-- jquery di default  -->
+  <%# javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
   <%# javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
-  <!-- jquery per il FE -->
-  <%= javascript_include_tag "fe-blu-02/jquery.js" %>
-  <%= javascript_include_tag 'fe-blu-02/script.js' %>
-  <%= javascript_include_tag 'fe-blu-02/script.responsive.js' %>
-  <!-- jquery per la rotaziuone banner-->
+  <!-- jquery di per il Front End  -->
+  <%= javascript_include_tag "jquery.js" %>
+  <%= javascript_include_tag "script.js" %>
+  <%= javascript_include_tag "script.responsive.js" %>
   <%# javascript_include_tag "jquery.jcarousel.min.js" %>
-  <%= javascript_include_tag 'jcarousellite_1.0.1c4.js' %>
+  <%= javascript_include_tag "jcarousellite_1.0.1c4.js" %>
+
+  <script type="text/javascript">
+      $(function () {
+          'use strict';
+          if ($.fn.slider) {
+              $(".fs-slidecontainerslideshutterstock_1").each(function () {
+                  var slideContainer = $(this), tmp;
+                  var inner = $(".fs-slider-inner", slideContainer);
+                  var helper = null;
+                  inner.children().eq(0).addClass("active");
+                  slideContainer.slider({
+                      pause:2600,
+                      speed:600,
+                      repeat:true,
+                      animation:"fade",
+                      direction:"next",
+                      navigator:slideContainer.siblings(".fs-slidenavigatorslideshutterstock_1"),
+                      helper:helper
+                  });
+              });
+          }
+      });
+  </script>
   <script type="text/javascript">
       $(function () {
           $(".newsticker-jcarousellite").jCarouselLite({
@@ -73,43 +84,33 @@
           });
       });
   </script>
-<script>jQuery(function($) {
-    'use strict';
-    if ($.fn.slider) {
-        $(".fs-slidecontainershutterstock_6228764804").each(function () {
-            var slideContainer = $(this), tmp;
-            var inner = $(".fs-slider-inner", slideContainer);
-            var helper = null;
-
-
-            inner.children().eq(0).addClass("active");
-            slideContainer.slider({
-                pause: 3600,
-                speed: 800,
-                repeat: true,
-                animation: "fade",
-                direction: "next",
-                navigator: slideContainer.siblings(".fs-slidenavigatorshutterstock_6228764804"),
-                helper: helper
-                            });
-        });
-    }
-});
-</script>
 </head>
 <body>
 <div id="fs-main">
-  <div class="fs-sheet clearfix">
-    <nav class="fs-nav clearfix">
-      <%= render_navigation(:level => 1) %>
+
+
+  <div id="fs-header-bg" class="clearfix">
+  </div>
+  <div class="fs-sheet clearfix"> <nav class="fs-nav-top clearfix">
+      <%= render_navigation(:context => :editorial) %>
     </nav>
-    <header class="fs-header">
+    <header class="fs-header clearfix">
+
+
       <div class="fs-shapes">
-        <h1 class="fs-headline">
-          <a href="#">Professionisti in Materie Fiscali Sportive</a>
+        <h1 class="fs-headline" data-left="58%">
+          <a href="#">I migliori esperti italiani in materie fiscali sportive</a>
         </h1>
+
+
       </div>
+
     </header>
+
+    <nav class="fs-nav clearfix">
+      <%= render_navigation %>
+    </nav>
+
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">
@@ -117,19 +118,18 @@
         </div>
       </div>
     </div>
-    <%#sidebar a destra %>
-    <%# render :partial => 'footer' %>
-  </div>
+    <footer class="fs-footer clearfix">
+      <p><a href="#">Link1</a> | <a href="#">Link2</a> | <a href="#">Link3</a></p>
 
-</div>  <!--<%#fs-main%>
-<div id="ajax-indicator" style="display:none;"><span><%= l(:label_loading) %></span></div>
-<div id="header">
-  <div id="main-menu" class="fs_box_opacity">
-    <%# render_menu :application_menu_fs %>
-    <br/>
-    <%# render_menu :footer_menu_fs %>
+      <p>Copyright © 2012. All Rights Reserved.</p>
+    </footer>
+
   </div>
+  <p class="fs-page-footer">
+    <span id="fs-footnote-links"><a href="http://www.artisteer.com/" target="_blank">Web Template</a> created with Artisteer.</span>
+  </p>
 </div>
- -->
+
+
 </body>
 </html>

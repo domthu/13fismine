@@ -12,12 +12,16 @@ ActionController::Routing::Routes.draw do |map|
   # If not authorized home_url --> editorial_url
  # map.home '', :controller => 'welcome' #REDMINE HOME
   #map.home '/editoriale/home', :controller => "editorial", :action => 'home' #FRONT END
-  map.home'',  :controller => "editorial", :action => 'top_menu',  :topmenu_key => /#{'approfondimenti'}+/ #FRONT END
+  map.home'',  :controller => "editorial", :action => 'home'
+  # menu sopra
+  map.chisiamo '/chi-siamo', :controller => 'editorial', :action => 'chi-siamo'
+  map.servizi '/servizi', :controller => 'editorial', :action => 'servizi'
+  map.contatti '/lavora-con-noi', :controller => 'editorial', :action => 'lavora-con-noi'
+  map.convegni '/convegni-eventi', :controller => 'editorial', :action => 'convegni'
+  map.abbonamenti  '/abbonamenti', :controller => 'editorial', :action => 'abbonamenti'
+  map.enti  '/enti-federazioni', :controller => 'editorial', :action => 'enti-federazioni'
+  map.contatti '/contatti', :controller => 'editorial', :action => 'contatti'
 
-  # Named Routes for static pages.
-  map.contact '/contact', :controller => 'editorial', :action => 'contact'
-  map.about '/about', :controller => 'editorial', :action => 'about'
-  map.help '/help', :controller => 'editorial', :action => 'help'
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
   map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
