@@ -15,14 +15,6 @@
    z-index: 1;
 }
 
-.fs-sheet
-{
-/* For IE 8 */
--ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
-/* For IE 5.5 - 7 */
-filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
-}
-
 .fs-hmenu>li, .fs-hmenu>li>a
 {
    display: inline !important;
@@ -37,7 +29,7 @@ ul.fs-hmenu>li:first-child {
    padding-right:1px;
 }
 ul.fs-hmenu>li{
-  zoom:expression(runtimeStyle.zoom=1,insertBefore(document.createElement('span'),firstChild).className='fs-hmenu-separator');
+   zoom:expression(runtimeStyle.zoom=1,insertBefore(document.createElement('span'),firstChild).className='fs-hmenu-separator');
 }
 ul.fs-hmenu>li>span.fs-hmenu-separator
 {
@@ -47,7 +39,7 @@ ul.fs-hmenu>li>span.fs-hmenu-separator
    left:  -1px;
    width: 1px;
    height: 38px;
-   background: url('/images/template/menuseparator.png') center center no-repeat;
+   background: url('images/menuseparator.png') center center no-repeat;
 }
 ul.fs-hmenu>li:first-child>span.fs-hmenu-separator
 {
