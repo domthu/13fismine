@@ -1,4 +1,6 @@
 module EditorialHelper
+  include FeesHelper
+
   def highlight_tokens(text, tokens)
     return text unless text && tokens && !tokens.empty?
     re_tokens = tokens.collect {|t| Regexp.escape(t)}

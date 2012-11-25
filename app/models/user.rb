@@ -194,7 +194,7 @@ class User < Principal
       #TODO retreive another Object like Project(Newsletter) or News(Quesiti)
       @article = Issue.find(issueid)
       #Show if it is public content
-      if @article.nil? || !@article.se_visible_web
+      if @article.nil? || !@article.se_visible_web?
         return false
       end
     end
@@ -217,6 +217,22 @@ class User < Principal
       Rails.logger.info("isfee OK MUST RENEW  #{self}")
       return true
     end
+  end
+
+  def canbackend?
+    #FEE INSTALLATION
+    if Setting.fee?
+      if (self.ismanager? || self.isauthor? )
+        #Rails.logger.info("fee canbackend OK is staff #{self}")
+        return true
+      end
+    else
+      if self.admin?
+        #Rails.logger.info("redmine canbackend OK is admin #{self}")
+        return true
+      end
+    end
+    return false
   end
 
   def privato?
@@ -248,6 +264,16 @@ class User < Principal
       return self.cross_organization.name
     end
   end
+
+
+  def responsable?
+    return self.references.nil?
+  end
+  #List of Organization the user is power user
+  def responsable_of
+    self.references
+  end
+
 
   #region ROLE * USER
   def ismanager?

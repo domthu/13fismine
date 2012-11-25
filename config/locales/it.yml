@@ -327,6 +327,7 @@ it:
   label_please_login: Entra
   label_register: Registrati
   label_password_lost: Password dimenticata
+  label_username_lost: Username dimenticata
   label_home: Pannello di controllo
   label_my_page: Pagina personale
   label_my_account: Il mio account
