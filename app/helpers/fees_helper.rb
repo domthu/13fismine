@@ -1,10 +1,10 @@
 module FeesHelper
 
   #include ApplicationHelper   NO utc? in format_time
-  include UsersHelper #def change_status_link(user)
+  #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
 
   #ruoli che non sono sottoposti ad controllo di scadenza
-  #NOTA BENE usare i permissi per quesi casi 
+  #NOTA BENE usare i permissi per quesi casi
   ROLE_MANAGER        = 3  #Manager<br />
   ROLE_AUTHOR         = 4  #Redattore  <br />
   #ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore tutti uguali<br />
@@ -25,17 +25,17 @@ module FeesHelper
 #  map.permission :access_back_end, :welcome => :index, :require => :loggedin
 #  map.permission :front_end_quesito, :editorial => :poniquesito, :require => :loggedin
 
-  #generate a string 
+  #generate a string
   def getdate(data)
-    if data.nil? 
+    if data.nil?
       return "?"
     elsif !data.is_a?(Date)
       return "?.." << data.to_s
     else
       #return data.to_date.strftime("%y%m%d%H%M ")
       return data.to_date.strftime("%Y %b(%m) %d")
-    end 
-  end 
+    end
+  end
 
   def fee_roles_options_for_select(selected)
     options_for_select([[l(:label_all), ''],
@@ -101,6 +101,6 @@ module FeesHelper
       else
         return ""
     end
-  end 
-  
+  end
+
 end

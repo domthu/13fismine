@@ -342,7 +342,7 @@ it:
   label_registered_on: Registrato il
   label_activity: Attività
   label_new: Nuovo
-  label_logged_as: Benvenuto 
+  label_logged_as: Benvenuto
   label_environment: Ambiente
   label_authentication: Autenticazione
   label_auth_source: Modalità di autenticazione
@@ -360,7 +360,7 @@ it:
   label_attribute_plural: Attributi
   label_download: "%{count} Download"
   label_download_plural: "%{count} Download"
-  label_no_data: Nessun dato disponibile
+  label_no_data: Non ci sono informazioni disponibili
   label_change_status: Cambia stato
   label_history: Cronologia
   label_attachment: File
@@ -528,7 +528,7 @@ it:
   label_month: Mese
   label_week: Settimana
   label_date_from: Data da
-  label_date_to: fino a 
+  label_date_to: fino a
   label_language_based: Basato sul linguaggio
   label_sort_by: "Ordina per %{value}"
   label_send_test_email: Invia una email di prova
@@ -1013,20 +1013,20 @@ it:
   label_export_options: "%{export_format} opzioni per l'export"
   error_attachment_too_big: Questo file non può essere caricato in quanto la sua dimensione supera la massima consentita (%{max_size})
 
-#Add to project 
+#Add to project
   field_search_key: Chiave di ricerca
   label_search_key: tags
-  
+
   field_riassunto: Sommario
   field_cross_group: AssoGRPO
   field_Invoice: Fattura
-  field_Date_from: Valido dal 
-  field_Date_to: fino al 
+  field_Date_from: Valido dal
+  field_Date_to: fino al
 
   label_invoice: Fattura
   label_invoice_plural: Fatture
   label_invoice_new: Nuova fattura
-  
+
   label_numero_fattura: Numero fattura
   label_data_fattura: Data fattura
   label_sezione: Sezione
@@ -1059,35 +1059,35 @@ it:
   label_group_banner_new: Nuovo banner
 
 # asso (Categoria utente) ha tanti organismi
-#Organismo associato collegato a type_organization, asso, e sigla 
+#Organismo associato collegato a type_organization, asso, e sigla
   label_organization: Org. associato
   label_organization_plural: Org. asso.
   label_organization_new: Nuova organismo associato
   label_organization_plural_long: Organismo associato
-  
+
   label_type_organization: Org. tipo
   label_type_organization_plural: Org. tipi
   label_type_organization_new: Nuovo tipo di organismo
   label_type_organization_plural_long: Tipi di organismo
-  
+
   label_cross_organization: Sigla
   label_cross_organization_plural: Sigle
   label_cross_organization_new: Nuova sigla
   label_other_cross_organization_sametype: Altre sigle correlate
   label_other_organization_sametype: Altre organismi associati correlati
   label_other_organization_noone: Nessun organismo associato
-  
+
   label_tipo: "Tipo dell'organismo"
   label_descrizione: Descrizione
-  label_organizzazione: Organizzazione 
-  label_sigla: Sigla 
+  label_organizzazione: Organizzazione
+  label_sigla: Sigla
   label_type_organization: Tipo organizzazione
 
   field_tipo: "Tipo dell'organismo"
   field_descrizione: Descrizione
   field_organizzazione: Organizzazione
   field_sigla: Sigla
-  field_type_organization: Tipo organizzazione 
+  field_type_organization: Tipo organizzazione
 
   label_cross_organization: Sigla
   label_richiedinumeroregistrazione: Richiedi N° di Registrazione
@@ -1096,7 +1096,7 @@ it:
   label_region: Regione
   label_province: Provincia
   label_comune: Comune
-  label_testo2: Testo 2 
+  label_testo2: Testo 2
   label_testo3: Testo 3
   label_numero1: Numero 1
   label_numero2: Numero 2
@@ -1107,19 +1107,19 @@ it:
   label_flag1: Flag 1
   label_flag2: Flag 2
   label_flag3: Flag 3
-  
-  field_cross_organization: Sigla 
+
+  field_cross_organization: Sigla
   field_richiedinumeroregistrazione: Richiedi N° Reg.
   field_data_scadenza: Data scadenza
   field_nota: Note
   field_region: Regione
   field_province: Provincia
-  field_comune: Comune 
+  field_comune: Comune
   field_nota: Note
   field_region: Regione
   field_province: Provincia
   field_comune: Comune
-  field_testo2: Testo 2 
+  field_testo2: Testo 2
   field_testo3: Testo 3
   field_numero1: Numero 1
   field_numero2: Numero 2
@@ -1140,7 +1140,7 @@ it:
   label_immagine: immagine
   label_style: style
   field_sezione_top: Descrizione Sezione
-  field_ordinamento: Ordinamento			
+  field_ordinamento: Ordinamento
   field_se_visibile: Visibile
   field_immagine: Immagine
   field_style: Foglio di stile
@@ -1151,7 +1151,7 @@ it:
   label_section_plural: Categorie
   label_section_new: Nuova categoria
   label_protetto: Privato
-  field_top_section: Sezione 
+  field_top_section: Sezione
 
 # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
 # asso (Categoria utente) ha tanti utenti
@@ -1176,79 +1176,79 @@ it:
   label_group_banner_associated_asso_noone: Nessuna categoria utente associata
 
   label_ragione_sociale: Ragione sociale
-  label_email: Email 
-  label_indirizzo: Indirizzo 
-  label_presidente: Presidente 
-  label_referente: Referente 
-  label_consulente: Consulente 
-  label_logo: Logo 
-  label_telefono: Telefono 
-  label_telefono_alt: Telefono alternativo 
-  label_fax: Fax 
-  label_comunicazioni: Comunicazioni 
-  label_email_alt: Email alternativo 
+  label_email: Email
+  label_indirizzo: Indirizzo
+  label_presidente: Presidente
+  label_referente: Referente
+  label_consulente: Consulente
+  label_logo: Logo
+  label_telefono: Telefono
+  label_telefono_alt: Telefono alternativo
+  label_fax: Fax
+  label_comunicazioni: Comunicazioni
+  label_email_alt: Email alternativo
 
   field_ragione_sociale: Ragione sociale
-  field_email: Email 
-  field_indirizzo: Indirizzo 
-  field_presidente: Presidente 
-  field_referente: Referente 
-  field_consulente: Consulente 
-  field_logo: Logo 
-  field_telefono: Telefono 
-  field_telefono_alt: Telefono alternativo 
-  field_fax: Fax 
-  field_comunicazioni: Comunicazioni 
-  field_email_alt: Email alternativo 
+  field_email: Email
+  field_indirizzo: Indirizzo
+  field_presidente: Presidente
+  field_referente: Referente
+  field_consulente: Consulente
+  field_logo: Logo
+  field_telefono: Telefono
+  field_telefono_alt: Telefono alternativo
+  field_fax: Fax
+  field_comunicazioni: Comunicazioni
+  field_email_alt: Email alternativo
 
   label_espositore: Espositore
-  label_url: Url 
-  label_priorita: Priorita 
-  label_posizione: Posizione 
-  label_se_visibile: Visibile? 
-  label_banner: Banner 
-  label_impressions: Impressions 
-  label_clicks: Clicks 
-  label_didascalia: Didascalia 
-  label_se_prima_pagina: promosso in prima pagina 
+  label_url: Url
+  label_priorita: Priorita
+  label_posizione: Posizione
+  label_se_visibile: Visibile?
+  label_banner: Banner
+  label_impressions: Impressions
+  label_clicks: Clicks
+  label_didascalia: Didascalia
+  label_se_prima_pagina: promosso in prima pagina
   label_impressions_history: Storico impressione
-  
+
   field_espositore: Espositore
-  field_url: Url 
-  field_priorita: Priorita 
-  field_posizione: Posizione 
-  field_se_visibile: Visibile? 
-  field_banner: Banner 
-  field_impressions: Impressions 
-  field_clicks: Clicks 
-  field_didascalia: Didascalia 
-  field_se_prima_pagina: promosso in prima pagina 
-  field_impressions_history: Storico impressione 
-  
+  field_url: Url
+  field_priorita: Priorita
+  field_posizione: Posizione
+  field_se_visibile: Visibile?
+  field_banner: Banner
+  field_impressions: Impressions
+  field_clicks: Clicks
+  field_didascalia: Didascalia
+  field_se_prima_pagina: promosso in prima pagina
+  field_impressions_history: Storico impressione
+
 #ISSUE --> ATTIVITA
-  label_se_visible_web: Visibile Web? 
+  label_se_visible_web: Visibile Web?
   label_se_visible_data: Visibile Data?
-  label_se_visible_newsletter: Visibile Mail? 
-  label_se_protetto: Protetto? 
-  
-  field_se_visible_web: Visibile Web? 
+  label_se_visible_newsletter: Visibile Mail?
+  label_se_protetto: Protetto?
+
+  field_se_visible_web: Visibile Web?
   field_se_visible_data: Visibile Data?
-  field_se_visible_newsletter: Visibile Mail? 
-  field_se_protetto: Protetto? 
+  field_se_visible_newsletter: Visibile Mail?
+  field_se_protetto: Protetto?
 
 #User
   label_power_user: Resp. Asso.
-  label_users: Utenti  
+  label_users: Utenti
   label_user_invoices: "Altre fatture legate all'utente"
-  label_organization_user_asso: Referenti org. asso correlati 
+  label_organization_user_asso: Referenti org. asso correlati
   label_cross_organization_user_asso: Sigla utente
   label_asso_organization: Organismo associato
   label_asso_organization_noone: Nessun organismo associato
-    
+
   field_power_user:  Responsabile organismo associato
-  field_users: Utenti 
-  field_: 
-  
+  field_users: Utenti
+  field_:
+
 #Permission
   permission_access_back_end: Accedi al backEnd?
   permission_front_end_quesito: Poni quesito in FrontEnd?
@@ -1257,7 +1257,7 @@ it:
   label_aboutus: Chi siamo
   label_poniquesito: Richiedi
   label_home_fs: Prima pagina
-  
+
 #Fee
   label_fee: Abbonamento
   label_fee_plural: Abbonamenti
@@ -1267,7 +1267,7 @@ it:
   setting_renew_days: Giorni prima del rilancio
   label_renew_days: "Numero di giorni prima dello scadere dell'abbonamento. Passato questo momento il motore inviera un email all'abbonato per invitarlo a rinnovare il suo abbonamento in scadenza."
   setting_fee_bcc_recipients: Emails in ascolto
-  label_fee_bcc_recipients: Lista delle email da mettere in bcc per le persone in ascolto degli email inviati (ruolo amministratore ed segretaria). Serve principalmente per seguire quello che invia il motore in automatico. 
+  label_fee_bcc_recipients: Lista delle email da mettere in bcc per le persone in ascolto degli email inviati (ruolo amministratore ed segretaria). Serve principalmente per seguire quello che invia il motore in automatico.
   setting_emails_fee_proposal: Email di proposta abbonamenti
   label_emails_fee_proposal: "Template di composizione email per propore ad uno o più utenti i possibili abbonamenti in corso. Segue un link alla pagina degli abbonamenti."
   setting_emails_fee_renew: Email di rinovo abbonamento
@@ -1282,7 +1282,7 @@ it:
   label_send_test_email_fee_renew: Invia email di prova Rilancio
   setting_info_fs: Fiscosport informa
   label_info_fs: "Fiscosport informa"
-  setting_info_promoted_fs: Promosso in front page 
+  setting_info_promoted_fs: Promosso in front page
   label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporranea "
 
 #Deliver_fee  type
@@ -1379,7 +1379,7 @@ it:
 ###3, 'Comunicazioni FORUM', 99
   label_comforum: Forum
   field_comforum: Comunicazioni FORUM
-  
+
 #ABBONAMENTI
   label_abbo_plural: Abbonamenti
   label_abbo: Abbonamento
@@ -1405,15 +1405,15 @@ it:
   label_person: Persona
   field_registration_date: Registrazione
   label_asso: Socio
-  role_manager : Responsabile 
+  role_manager : Responsabile
   role_author : Redattore, collaboratore
-  role_vip : Invitato 
-  role_abbonato : Abbonato 
+  role_vip : Invitato
+  role_abbonato : Abbonato
   role_registered : Registrato
-  role_renew : Rinnovo, In scadenza  
+  role_renew : Rinnovo, In scadenza
   role_expired : Espirato
   role_archivied : Archiviato
-  
+
 #EDITORIAL
   list_edizioni: Lista edizioni
   details_edizione: Dettaglio di un edizione => NEWSLETTER
@@ -1430,6 +1430,6 @@ it:
   results: Risultati
   label_issues_by_section: Lista articoli legati alla sezione
   notice_missing_parameters: La pagina non puo essere caricata per mancanza di informazione
-  
+
 #notice_email_sent: "Una email è stata spedita a %{value}"
   unauthorized: Non autorizzato ad accedere al contenuto

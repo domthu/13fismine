@@ -1,16 +1,23 @@
 <h1 style="display:none">__PARTIAL <%= @base_url %>/////<%= @article_id %> ARTICOLI</h1>
 <div class="fs-layout-cell fs-content clearfix">
-  <nav class="art-nav clearfix">
-       <%= render_navigation(:level => 2) %>
-     </nav>
+  <% if @issues && @issues.any? %>
+    <nav class="art-nav clearfix">
+      <%= render_navigation(:level => 2) %>
+    </nav>
 
     <% @issues.each do |articolo| %>
-        <%= render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
-        <br/>
+      <%= render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
+      <br/>
     <% end %>
-  <br/>
-  <p class="pagination"><%= pagination_links_full(@issues_pages, @issues_count) %></p>
-  <br/>
+    <br/>
+    <p class="pagination"><%= pagination_links_full(@issues_pages, @issues_count) %></p>
+    <br/>
+
+  <% else %>
+    <br/>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+    <br/>
+  <% end %>
 </div>
 <%#sidebar a  destra %>
 <%= render :partial => 'blocco_sidebar1' %>

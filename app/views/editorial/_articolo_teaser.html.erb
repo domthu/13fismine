@@ -1,5 +1,7 @@
 <h1 style="display:none">__PARTIAL ARTICOLO TEASER</h1>
 <article class="fs-post fs-article">
+  <% if articolo %>
+
   <div class="fs-postmetadataheader">
     <h5 class="fs-postheader">
       <%= link_to (h(truncate(articolo.titolo, :length => 75)),
@@ -44,5 +46,9 @@
     </div>
   </div>
 
-
+  <% else %>
+    <br/>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+    <br/>
+  <% end %>
 </article>

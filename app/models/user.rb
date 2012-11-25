@@ -57,10 +57,10 @@ class User < Principal
   belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id'
   #domthu20120516
   belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id'
-  
+
   #belongs_to :account, :class_name => 'Account', :foreign_key => 'account_id' (non paga ma è abilitato al servizio)
   belongs_to :asso, :class_name => 'Asso', :foreign_key => 'asso_id'
-  
+
   #l'utente può appartenere o non ad una organizzazione
   #ATTENZIONE i 2 campi Sigla (ex Organismi) e Tipo organizzazione sono raddunati in una foreign_key
   belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
@@ -75,6 +75,8 @@ class User < Principal
 
   has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
 
+#  scope :logged, :conditions => "#{User.table_name}.status <> #{STATUS_ANONYMOUS}"
+#  scope :status, lambda {|arg| arg.blank? ? {} : {:conditions => {:status => arg.to_i}} }
   # Active non-anonymous users scope
   named_scope :active, :conditions => "#{User.table_name}.status = #{STATUS_ACTIVE}"
 
@@ -84,7 +86,7 @@ class User < Principal
   attr_accessor :last_before_login_on
   # Prevents unauthorized assignments
   attr_protected :login, :admin, :password, :password_confirmation, :hashed_password
-	
+
   validates_presence_of :login, :firstname, :lastname, :mail, :if => Proc.new { |user| !user.is_a?(AnonymousUser) }
   validates_uniqueness_of :login, :if => Proc.new { |user| !user.login.blank? }, :case_sensitive => false
   validates_uniqueness_of :mail, :if => Proc.new { |user| !user.mail.blank? }, :case_sensitive => false
@@ -116,7 +118,7 @@ class User < Principal
     role_id = role.is_a?(Role) ? role.id : role.to_i
     { :conditions => ["#{User.table_name}.role_id = ?", role_id] }
   }
-  
+
   #Utente è affiliato ad una Sigla-TipoOrganizzazione
   def sigla_tipo()
     if self.cross_organization_id.nil? || self.cross_organization.nil?
@@ -145,34 +147,78 @@ class User < Principal
     end
   end
 
+  #CALL this procedure from Frontend only
   def isfee?(issueid = nil)
-    return false
-    if self.active?
-      if issueid.nil?
-        return self.asso.nil?
-      else
-        #TODO retreive IssueId
-        @article = Issue.find(issueid)
-        #Show if it is public
-        if @article.nil? || !@article.se_visible_web?
-          return false
-        else
-          if Setting.fee?
-            #Control todo 
-            #Retrieve User show RoleId
-            #Verify is ABBO or more. 
-            #Control if scadenza is not expired
-            return true
-          else
-            return true
-          end
-        end
-      end 
-    else
+    #return false
+    #Control user status
+    if self.locked?
+      Rails.logger.info("isfee False is LOCKED  #{self}")
       return false
-    end 
+    end
+    if self.registered?
+      #USER Must be confirmed by administrator
+      Rails.logger.info("isfee False is registered  #{self}")
+      return false
+    end
+    if !self.active?
+      Rails.logger.info("isfee False not active  #{self}")
+      return false
+    end
+    #PUBLIC INSTALLATION
+    if !Setting.fee?
+      #Rails.logger.info("isfee OK fee not operated in this installation  #{self}")
+      return true  #PUBLIC AREA
+    end
+    #Control Always abilitated User RoleId
+    if self.ismanager? || self.isauthor? || self.isvip?
+      #Rails.logger.info("isfee OK is staff member  #{self}")
+      return true
+    end
+    #Control Always Undesired User RoleId
+    if !self.isarchivied?
+      Rails.logger.info("isfee False ARCHIVIED  #{self}")
+      return false
+    end
+    if !self.isexpired?
+      Rails.logger.info("isfee False EXPIRED  #{self}")
+      return false
+    end
+    if !self.active?
+      Rails.logger.info("isfee False not active  #{self}")
+      return false
+    end
+
+    #Control content if public
+    if issueid #!issueid.nil?
+      #return self.asso.nil?
+      #TODO retreive another Object like Project(Newsletter) or News(Quesiti)
+      @article = Issue.find(issueid)
+      #Show if it is public content
+      if @article.nil? || !@article.se_visible_web
+        return false
+      end
+    end
+
+    if self.isabbonato?
+      #TODO Elabore date from scadenza compared with today
+      #TODO Elabore date from scadenza compared with today - Settings.renew_days
+      #Control if must be set as  ROLE_RENEW or ROLE_EXPIRED
+      Rails.logger.info("isfee OK ABBONATO  #{self}")
+      return true
+    end
+    if self.isrenewing?
+      #TODO Elabore date from scadenza compared with today
+      #Control if must be set as ROLE_EXPIRED
+      Rails.logger.info("isfee OK MUST RENEW  #{self}")
+      return true
+    end
+    if self.isregistered?
+      #TODO Elabore date from elapsed time from registration compared with today + Settings.register_days
+      Rails.logger.info("isfee OK MUST RENEW  #{self}")
+      return true
+    end
   end
-  
+
   def privato?
     return self.asso.nil?
   end
@@ -188,20 +234,48 @@ class User < Principal
     else
       #Associato Non paga --> paga l'organismo associato
       return self.asso.scadenza
-    end 
-  end 
+    end
+  end
 
   def affiliato?
     return self.cross_organization.nil?
   end
-  
+
   def affiliato_to
     if self.cross_organization.nil?
       return ""
     else
       return self.cross_organization.name
     end
-  end   
+  end
+
+  #region ROLE * USER
+  def ismanager?
+    self.role_id == ROLE_MANAGER  #= 3  #Manager<br />
+  end
+  def isauthor?
+    self.role_id == ROLE_AUTHOR #= 4  #Redattore  <br />
+    #ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore   tutti uguali<br />
+  end
+  def isvip?
+    self.role_id == ROLE_VIP #= 10 #Invitato Gratuito<br />
+  end
+  def isabbonato?
+    self.role_id == ROLE_ABBONATO #= 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
+  end
+  def isregistered?
+    self.role_id == ROLE_REGISTERED #= 9  #Ospite periodo di prova durante Setting.register_days<br />
+  end
+  def isrenewing?
+    self.role_id == ROLE_RENEW #= 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
+  end
+  def isexpired?
+    self.role_id == ROLE_EXPIRED #= 7  #Scaduto: user.data_scadenza < today<br />
+  end
+  def isarchivied?
+    self.role_id == ROLE_ARCHIVIED #= 8  #Ar
+  end
+  #endregion ROLE * USER
 
   def set_mail_notification
     self.mail_notification = Setting.default_notification_option if self.mail_notification.blank?

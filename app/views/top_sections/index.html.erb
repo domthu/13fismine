@@ -4,7 +4,8 @@
 
 <h2><%= l(:label_top_section_plural) %></h2>
 
-<% if @top_sections.any? %>
+<%# if !@top_sections.nil? && @top_sections.any? %>
+<% if @top_sections && @top_sections.any? %>
 <table class="list top_sections">
   <thead><tr>
   <%= sort_header_tag('sezione_top', :title => l(:label_top_section), :style => 'width: 40%;text-align:left;')%>

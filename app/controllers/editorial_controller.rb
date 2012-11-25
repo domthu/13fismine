@@ -199,8 +199,6 @@ class EditorialController < ApplicationController
 
   def articoli
     @issues2 = Issue.latest_fs
-
-
   end
 
   #map.articolo_page '/editorial/:topmenu_key/sezione/:topsection_id/articolo/:article_id'
@@ -379,7 +377,7 @@ class EditorialController < ApplicationController
 
   def reroute_auth()
     flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
-    flash[:error] = "Abboanmento non valido (utente)..."
+    flash[:error] = "Abbonamento non valido (utente)..."
     redirect_to(unauthorized_path)
   end
 

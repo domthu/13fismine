@@ -221,7 +221,7 @@ class AccountController < ApplicationController
     #if User.current.allowed_to?(:access_back_end, nil, :global => true)
     #if self.logged_user.allowed_to?(:access_back_end, nil, :global => true)
     if user.allowed_to?(:access_back_end, nil, :global => true)
-      Rails.logger.info("login ok collaboratore")
+      Rails.logger.info("login ok collaboratore  #{home_url}  <-Home  editorial-> #{editorial_url}")
       redirect_to(home_url)
       #redirect_back_or_default :controller => 'my', :action => 'page'
       #redirect_to(editorial_url)
