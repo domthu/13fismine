@@ -1,7 +1,60 @@
+<script type="text/javascript">
+ $(document).ready(function() {
+    //alert('obj $(#titolo)' + $("#titolo"))
+    $("#titolo").autocomplete({
+            minLength: 2,
+            delay: 600,
+            source: '<%= usertitle_path %>',
+            focus: function(event, ui) {
+                $('#titolo').val(ui.item.user.titolo);
+                return false;
+            },
+            select: function(event, ui) {
+                $('#titolo').val(ui.item.user.titolo);
+                //$('#titolo_id').val(ui.item.user.id);
+                //        return false;
+                //}
+        })
+        .data( "autocomplete" )._renderItem = function( ul, item ) {
+            return $( "<li></li>" )
+                .data( "item.autocomplete", item )
+                .append( "<a>" + item.user.titolo + "</a>" )
+                .appendTo( ul );
+        };
+    });
+</script>
 <h2><%=l(:label_register)%> <%=link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
 
 <% form_tag({:action => 'register'}, :class => "tabular") do %>
 <%= error_messages_for 'user' %>
+
+<b>Modulo di registrazione gratuita</b>
+
+<p style="color: #FFCB49; background-color: #026086;">
+I campi contrassegnati da * sono obbligatori<br />
+La corretta indicazione del campo “affiliato a” permette di usufruire dell’eventuale periodo gratuito concesso per effetto dell’adesione del CONI o della Fsn/Dsa/Eps al progetto globale (il sistema riconoscerà l’utente affiliato anche in caso di successiva adesione dell’organismo).
+</p>
+
+<div class="box">
+<p><label for="user_firstname"><%=l(:field_firstname)%> <span class="required">*</span></label>
+<%= text_field 'user', 'firstname'  %></p>
+
+<p><label for="user_lastname"><%=l(:field_lastname)%> <span class="required">*</span></label>
+<%= text_field 'user', 'lastname'  %></p>
+
+<p><label for="user_mail"><%=l(:field_mail)%> <span class="required">*</span></label>
+<%= text_field 'user', 'mail'  %></p>
+
+</div>
+
+<div class="box">
+<p><label for="user_titolo" title="Presidente, Tesoriere, Professionista, Consigliere, Segretario, Delegato, Altro, Segretaria, Dirigente, Amministratore unico, Operatore, Libero professionista, Amministratore, Tecnico/Dirigente, Professionista-consigliere, Socio, Associato, Studente, Vice-presidente, Responsabile Amministrativo, Vice Presidente Regionale, Impiegata, Avvocato, Consulente, Responsabile" ><%=l(:field_titolo)%> <span class="required">*</span></label>
+<%= text_field 'user', 'titolo'  %></p>
+
+<p><label for="user_lastname"><%=l(:field_lastname)%> <span class="required">*</span></label>
+<%= text_field 'user', 'lastname'  %></p>
+
+</div>
 
 <div class="box">
 <!--[form:user]-->
@@ -16,15 +69,6 @@
 <p><label for="password_confirmation"><%=l(:field_password_confirmation)%> <span class="required">*</span></label>
 <%= password_field_tag 'password_confirmation', nil, :size => 25  %></p>
 <% end %>
-
-<p><label for="user_firstname"><%=l(:field_firstname)%> <span class="required">*</span></label>
-<%= text_field 'user', 'firstname'  %></p>
-
-<p><label for="user_lastname"><%=l(:field_lastname)%> <span class="required">*</span></label>
-<%= text_field 'user', 'lastname'  %></p>
-
-<p><label for="user_mail"><%=l(:field_mail)%> <span class="required">*</span></label>
-<%= text_field 'user', 'mail'  %></p>
 
 <p><label for="user_language"><%=l(:field_language)%></label>
 <%= select("user", "language", lang_options_for_select) %></p>

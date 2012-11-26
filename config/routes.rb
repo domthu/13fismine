@@ -5,8 +5,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :contracts
 
-  map.resources :contracts
-
   map.resources :templates
 
   # If not authorized home_url --> editorial_url
@@ -30,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
 
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-
+#rake routes | grep -r "title"
 
 #Map menu
 
@@ -97,6 +95,12 @@ ActionController::Routing::Routes.draw do |map|
   map.email_fee 'email_fee', :controller => 'fees', :action => 'email_fee', :conditions => {:method => :get}
   map.email_fee_goto_settings 'email_fee_settings', :controller => 'settings', :action => 'edit', :tab => 'fee'
   map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
+
+
+  #Web Service
+  map.usertitle 'usertitle', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:json]}
+  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:json]}
+  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:json]}
 
   #in POST not in Get for params[:username]...
   #map.signin 'login', :controller => 'account', :action => 'login'
