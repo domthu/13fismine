@@ -1,0 +1,165 @@
+/* Created by Artisteer v4.0.0.59100 */
+
+.clearfix {
+   zoom: expression(this.runtimeStyle.zoom="1", this.appendChild(document.createElement("br")).className="cleared");
+}
+
+.fs-textblock > div {
+   display: block;
+   line-height: normal;
+   zoom: 1;
+}
+
+.fs-header
+{
+   z-index: 1;
+}
+
+.fs-hmenu>li, .fs-hmenu>li>a
+{
+   display: inline !important;
+   zoom: 1;
+   float: none !important;
+   vertical-align: top;
+}
+ul.fs-hmenu, ul.fs-hmenu ul {
+   zoom: expression(this.runtimeStyle.zoom="1", this.appendChild(document.createElement("br")).className="cleared");
+}
+ul.fs-hmenu>li:first-child {
+   padding-right:1px;
+}
+ul.fs-hmenu>li{
+   zoom:expression(runtimeStyle.zoom=1,insertBefore(document.createElement('span'),firstChild).className='fs-hmenu-separator');
+}
+ul.fs-hmenu>li>span.fs-hmenu-separator
+{
+   position:absolute;
+   display: block;
+   top:0;
+   left:  -1px;
+   width: 1px;
+   height: 38px;
+   background: url('images/menuseparator.png') center center no-repeat;
+}
+ul.fs-hmenu>li:first-child>span.fs-hmenu-separator
+{
+   display:none;
+}
+
+ul.fs-hmenu ul, .desktop-nav ul.fs-hmenu>li.ext:hover>a{
+   background-color: #FFDC84 !important;
+}
+
+.fs-content-layout, .fs-content-layout-row, .fs-layout-cell 
+{
+   display: block;
+   zoom: 1;
+}
+.fs-layout-cell
+{
+   position:relative;
+   float: left;
+   clear: right;
+}
+
+ul.fs-vmenu, ul.fs-vmenu ul, ul.fs-vmenu li{
+   zoom: 1;
+}
+
+ul.fs-vmenu ul 
+{
+   background-color: transparent;
+}
+
+input[type="text"]
+{
+   margin:0 0 0 -3px;
+   zoom:expression(runtimeStyle.zoom = 1, parentNode.insertBefore(document.createElement('div'), this).appendChild(this));
+}
+
+* html input[type="text"]
+{
+   margin :0;
+}
+
+form.fs-search>input[type="text"]
+{
+   margin:0 0 0 -3px;
+   zoom:expression(runtimeStyle.zoom = 1, parentNode.insertBefore(document.createElement('div'), this).appendChild(this));
+}
+
+form.fs-search div>input[type="text"]
+{
+   width: 100%;
+}
+
+* html form.fs-search>input[type="text"] 
+{
+   margin :0;
+}
+
+.fs-postheadericons span{
+   zoom: 1;
+}
+.fs-postcontent {
+   height: 1%;
+}
+
+.fs-postmetadatafooter{
+   zoom:1;
+}
+
+.fs-postfootericons span{
+   zoom: 1;
+}
+.close-alt, .arrow-right-alt, .arrow-left-alt {
+   display: block !important;
+}
+.cw, .ccw {
+   display: none !important;
+}
+
+.fs-sidebar1
+{
+   background: none !important;
+   border: none !important;
+   zoom:expression(runtimeStyle.zoom=1, parentNode.parentNode.insertBefore(document.createElement('div'),parentNode.parentNode.firstChild).className='fs-sidebar1-bg' + (className.indexOf('fs-sidebar1-fix') == -1 ? '' : ' fs-sidebar1-bg-fix' ));
+}
+
+.fs-sidebar1-bg 
+{
+   border-right:1px dotted #68D7FF;
+   position:absolute;
+   z-index:-2;
+   direction: ltr;
+   left:  0;
+   bottom:0;
+   top:0;
+   width: 300px;
+   overflow:hidden;
+   display:block;
+}
+
+.fs-sidebar2 
+{
+   width: auto;
+   float:none;
+   background: none !important;
+   border: none !important;
+   zoom:expression(runtimeStyle.zoom=1, parentNode.parentNode.insertBefore(document.createElement('div'),parentNode.parentNode.firstChild).className='fs-sidebar2-bg' + (className.indexOf('fs-sidebar2-fix') == -1 ? '' : ' fs-sidebar2-bg-fix' ));
+}
+
+.fs-sidebar2-bg 
+{
+   border-left:1px dotted #68D7FF;
+   position:absolute;
+   z-index:-2;
+   direction: ltr;
+   right:  0;
+   bottom:0;
+   top:0;
+   width: 200px;
+   overflow:hidden;
+   display:block;
+}
+
