@@ -137,16 +137,16 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 26px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h1 a, .fs-postcontent h1 a:link, .fs-postcontent h1 a:hover, .fs-postcontent h1 a:visited, .fs-blockcontent h1 a, .fs-blockcontent h1 a:link, .fs-blockcontent h1 a:hover, .fs-blockcontent h1 a:visited 
 {
    font-size: 26px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h2
@@ -155,8 +155,8 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 22px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-blockcontent h2
@@ -164,16 +164,16 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 22px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h2 a, .fs-postcontent h2 a:link, .fs-postcontent h2 a:hover, .fs-postcontent h2 a:visited, .fs-blockcontent h2 a, .fs-blockcontent h2 a:link, .fs-blockcontent h2 a:hover, .fs-blockcontent h2 a:visited 
 {
    font-size: 22px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h3
@@ -182,8 +182,8 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 18px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-blockcontent h3
@@ -191,16 +191,16 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 18px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h3 a, .fs-postcontent h3 a:link, .fs-postcontent h3 a:hover, .fs-postcontent h3 a:visited, .fs-blockcontent h3 a, .fs-blockcontent h3 a:link, .fs-blockcontent h3 a:hover, .fs-blockcontent h3 a:visited 
 {
    font-size: 18px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h4
@@ -209,8 +209,8 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 16px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-blockcontent h4
@@ -218,16 +218,16 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 16px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h4 a, .fs-postcontent h4 a:link, .fs-postcontent h4 a:hover, .fs-postcontent h4 a:visited, .fs-blockcontent h4 a, .fs-blockcontent h4 a:link, .fs-blockcontent h4 a:hover, .fs-blockcontent h4 a:visited 
 {
    font-size: 16px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h5
@@ -236,8 +236,8 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 14px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-blockcontent h5
@@ -245,16 +245,16 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 14px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h5 a, .fs-postcontent h5 a:link, .fs-postcontent h5 a:hover, .fs-postcontent h5 a:visited, .fs-blockcontent h5 a, .fs-blockcontent h5 a:link, .fs-blockcontent h5 a:hover, .fs-blockcontent h5 a:visited 
 {
    font-size: 14px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h6
@@ -263,8 +263,8 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 13px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-blockcontent h6
@@ -272,16 +272,16 @@ ul.fs-vmenu a
    margin: 10px 0 0;
    font-size: 13px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postcontent h6 a, .fs-postcontent h6 a:link, .fs-postcontent h6 a:hover, .fs-postcontent h6 a:visited, .fs-blockcontent h6 a, .fs-blockcontent h6 a:link, .fs-blockcontent h6 a:hover, .fs-blockcontent h6 a:visited 
 {
    font-size: 13px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;    */
 }
 
 header, footer, article, nav, #fs-hmenu-bg, .fs-sheet, .fs-hmenu a, .fs-vmenu a, .fs-slidenavigator > a, .fs-checkbox:before, .fs-radiobutton:before
@@ -472,16 +472,10 @@ text-align: center;
   -ms-transform: rotate(0deg);
   transform: rotate(0deg);
   overflow: hidden;
-    z-index: 10001;
+  z-index: 10001;
   width: 160px;
   height: 24px;
 }
-
-
-
-
-
-
 
 #fs-header-bg
 {
@@ -993,7 +987,7 @@ ul.fs-hmenu ul
    /* border + shadow */
   bottom: -8px;
    background-color: #FFDC84;
-   border: 1px Solid #B9B9B9;
+   border: 1px solid #B9B9B9;
    border-top-left-radius: 0;
    border-top-right-radius: 0;
    box-shadow: 0 0 7px rgba(0, 0, 0, 0.8);
@@ -1059,7 +1053,7 @@ ul.fs-hmenu>li.ext>.ext-off
    /* border + shadow */
   bottom: -8px;
    background-color: #FFDC84;
-   border: 1px Solid #B9B9B9;
+   border: 1px solid #B9B9B9;
    box-shadow: 0 0 7px rgba(0, 0, 0, 0.8);
 }
 
@@ -1158,7 +1152,7 @@ ul.fs-hmenu>li.ext>.ext-off
    bottom: -8px;
    /* shadow offset */
   background-color: #FFDC84;
-   border: 1px Solid #B9B9B9;
+   border: 1px solid #B9B9B9;
    box-shadow: 0 0 7px rgba(0, 0, 0, 0.8);
 }
 
@@ -1575,7 +1569,7 @@ div.fs-block img
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
-   font-variant: small-caps;
+   /*font-variant: small-caps;*/
    text-align: center;
    margin: 0 10px;
 }
@@ -2160,12 +2154,12 @@ pre
 {
    color: #00678C;
    margin: 5px 0;
-   font-size: 24px;
+   font-size: 18px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
-   font-variant: small-caps;
-   text-align: center;
+  /* font-variant: small-caps;
+   text-align: center;*/
 }
 
 .fs-postheader a, 
@@ -2175,12 +2169,12 @@ pre
 .fs-postheader a:hover,
 .fs-postheader a.hovered
 {
-   font-size: 24px;
+    font-size: 20px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    font-weight: normal;
-   font-style: normal;
-   font-variant: small-caps;
-   text-align: center;
+   font-style: normal; /*
+  font-variant: small-caps;
+   text-align: center;    */
 }
 
 .fs-postheader a, .fs-postheader a:link
@@ -2188,21 +2182,21 @@ pre
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    text-decoration: none;
    text-align: left;
-   color: #00B9FC;
+   color: #007092;
 }
 
 .fs-postheader a:visited, .fs-postheader a.visited
 {
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    text-decoration: none;
-   color: #5DD4FF;
+   color: #007092;
 }
 
 .fs-postheader a:hover,  .fs-postheader a.hovered
 {
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    text-decoration: underline;
-   color: #006B92;
+   color: #0088B9;
 }
 
 .fs-postheadericons,
@@ -2237,7 +2231,7 @@ pre
    font-weight: normal;
    font-style: italic;
    text-decoration: none;
-   color: #46CEFF;
+   color: #0088B9;
 }
 
 .fs-postheadericons a:hover, .fs-postheadericons a.hover
@@ -2246,7 +2240,7 @@ pre
    font-weight: normal;
    font-style: italic;
    text-decoration: underline;
-   color: #0090C4;
+   color: #0088B9;
 }
 
 .fs-postdateicon:before
