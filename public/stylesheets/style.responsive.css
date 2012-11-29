@@ -289,45 +289,12 @@
    top: auto !important;
    bottom: auto !important;
    position: relative !important;
-   visibility: visible !important;
+
 }
 
 .responsive .responsive-nav ul.fs-hmenu>li>ul>li:first-child:after 
 {
    display: none;
-}
-.responsive .responsive-nav ul.fs-hmenu ul a
-{
-   padding-left: 4% !important;
-}
-.responsive .responsive-nav ul.fs-hmenu ul ul a
-{
-   padding-left: 6% !important;
-}
-.responsive .responsive-nav ul.fs-hmenu ul ul ul a
-{
-   padding-left: 8% !important;
-}
-.responsive .responsive-nav ul.fs-hmenu ul ul ul ul a
-{
-   padding-left: 10% !important;
-}
-.responsive .responsive-nav ul.fs-hmenu ul ul ul ul ul a
-{
-   padding-left: 12% !important;
-}
-  
-.responsive .responsive-nav ul.fs-hmenu>li>ul
-{
-   padding: 1px;
-}
-  
-.responsive .responsive-nav ul.fs-hmenu>li>ul:before
-{
-   top: 0;
-   right: 0;
-   bottom: 0;
-   left: 0;
 }
 
 .responsive .fs-content-layout, 

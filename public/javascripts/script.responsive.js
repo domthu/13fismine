@@ -279,22 +279,6 @@ function responsiveNavFit(responsiveDesign) {
 
 
 
-jQuery(window).bind("responsiveNav", function (event, options) {
-    /*global megaMenuCreate */
-    'use strict';
-    if (options.isDesktopNav && jQuery(".fs-hmenu-mega-menu").length > 0) {
-        megaMenuCreate();
-    }
-});
-
-jQuery(window).bind("responsiveNav", function (event, options) {
-    /*global menuExtendedCreate */
-    'use strict';
-    if (options.isDesktopNav && jQuery("li.ext").length > 0) {
-        menuExtendedCreate();
-    }
-});
-
 jQuery(window).bind("responsive", function (event, responsiveDesign) {
     "use strict";
     responsiveLayoutCell(responsiveDesign);
