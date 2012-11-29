@@ -222,8 +222,8 @@
 
 /*  fine slide */
 
-#home3 {
-    background-image: url('/images/commons/home3-32.png');
+#approfondimenti3 {
+    background-image: url('/images/commons/3-32.png');
     background-repeat: no-repeat;
     background-color: #EAF4F5;
     background-clip: content-box;
@@ -231,8 +231,8 @@
     background-position: 2px 1px;
 }
 
-#home9 {
-    background-image: url('/images/commons/home9-32.png');
+#approfondimenti9 {
+    background-image: url('/images/commons/9-32.png');
     background-repeat: no-repeat;
     background-color: #EAF4F5;
     background-clip: content-box;
@@ -240,8 +240,8 @@
     background-position: 2px 1px;
 }
 
-#home19 {
-    background-image: url('/images/commons/home19-32.png');
+#approfondimenti19 {
+    background-image: url('/images/commons/19-32.png');
     background-repeat: no-repeat;
     background-color: #EAF4F5;
     background-clip: content-box;
@@ -586,5 +586,5 @@ ul.art-hmenu ul {
     z-index: 10;
     left: 0;
     top: 0;
-    background-image: url('/images/spacer2.gif');
+    background-image: url('/images/template/spacer.gif');
 }
