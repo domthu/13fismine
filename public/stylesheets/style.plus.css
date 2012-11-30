@@ -1,4 +1,39 @@
+/* personalizzazioni */
+.fs-prova-gratis-txt{
+display:inline-block;
+width:130px;
+margin-left: 7px;
+}
+.fs-prova-gratis{
+    height: 40px;
+    padding-top: 7px;
+}
+#fs-prova-gratis-btn{
+margin-left:7px;
+    width:130px;
+}
+#fs-prova-gratis-info{
+    border-top:solid 2px white;
+        font-size: 11px;
+    color: #5f0100;
+    position: relative;
+    margin-top: 7px;
+    background-color: #FFDA47;
+   padding-left:7px;
+  height: 38px;
+}
+.fs-prova-gratis-info{
+
+}
+.fs-prova-gratis-info span , .fs-prova-gratis-info a{
+font-size: 12px;
+color: #45535d;
+    font-weight: bold;
+    line-height: 18px;
+}
 /* Post regole comuni */
+
+
 .fs-content .fs-postcontent-1 .layout-item-0 {
     color: #000000;
     padding-right: 3px;
@@ -62,6 +97,7 @@
     padding-right: 3px;
     padding-left: 3px;
     border-radius: 15px;
+    background-color: #8b0000;
 }
 
 /* fine post comuni */
@@ -249,6 +285,8 @@
     background-position: 2px 1px;
 }
 
+
+/*     menudi navigazione    */
 .art-nav {
     /*
    background: #FBC737;

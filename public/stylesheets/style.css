@@ -1235,7 +1235,7 @@ button.fs-button
    white-space: nowrap;
    text-align: center;
    color: #423000;
-   margin: 0 5px 0 0 !important;
+   margin: 0 5px 0 0;
    overflow: visible;
    cursor: pointer;
    text-indent: 0;

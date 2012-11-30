@@ -1,28 +1,35 @@
-<h2><%=l(:about)%></h2>
+<div class="fs-layout-cell fs-content clearfix">
+<%= render :partial => 'blocco_prova_gratis' %>
+<div style="width: 100%;">
+  <div style="float:right;"><%= render :partial => 'blocco_sidebar1' %>  </div>
+
+<article class="fs-post fs-article">
+
+  <h2><%= l(:about) %></h2>
   In questa pagina:
-  <ul> 
+  <ul>
     <li>Carta d'intenti della linea editoriale</li>
     <li>Presentazione Merce dolci</li>
-  </ul> 
-  <div class="prodotti_scheda_cont">
+  </ul>
 
-                <div class="testo_static_container">
-                    <div style="width: 653px; height: 40px; float: left; background-image: url('images/contatti_head.png')">
-                        <div style="margin: 10px 0 0 20px; line-height: 19px;" class="Helvetica_Roman_24">
-                            CHI SIAMO
-                        </div>
-                    </div>
-                    <div style="width: 623px; height: auto; float: left; margin: 10px 0 0 20px">
-                        
-                        <div style="text-align: left">
+
+
+      <div style="height: 40px; float: left; background-image: url('/images/contatti_head.png')">
+        <div style="margin: 10px 0 0 20px; line-height: 19px;" class="Helvetica_Roman_24">
+          CHI SIAMO
+        </div>
+      </div>
+
+
+        <div style="text-align: left">
                             <span style="font-size: 20px;" class="Georgia16">
                                 Quattro i soci (Gabriella Canova, Simone Canova, Maria Cristina Dalbosco e Jacopo Fo) e un progetto ambizioso: divulgare l'insegnamento del padre comboniano Alex Zanotelli "Voti ogni volta che fai la spesa, voti ogni volta che schiacci il telecomando, ogni volta che vai in banca, sono voti che dai al sistema."
                             </span>
-                        </div>
+        </div>
 
-                        <div style=" width: 613px; height: 3px; float: left; margin: 10px 0 10px 0; background-image: url('images/lister_auto_bk.png')"></div>
+        <div style="height: 3px; float: left; margin: 10px 0 10px 0; background-image: url('/images/lister_auto_bk.png')"></div>
 
-                        <div style="text-align: left">
+        <div style="text-align: left">
                             <span style="font-size: 20px; color: #7c7c7c" class="Georgia16">
                                 Merci Dolci s.r.l. nasce alla fine del 2002 con lo scopo di proseguire la gestione e ampliare 
                                 i contenuti del Catalogo delle Merci Dolci, nato da un'idea di consociazione degli acquisti di 
@@ -36,13 +43,17 @@
                                 indipendente, alla diffusione e divulgazione di forme di utilizzazione di energie alternative, di sistemi 
                                 di risparmio energetico e di prodotti tecnologici eco-compatibili.
                             </span>
-                        </div>
+        </div>
 
-                        <div style=" width: 613px; height: 3px; float: left; margin: 10px 0 5px 0; background-image: url('images/lister_auto_bk.png')"></div>
+        <div style="height: 3px; float: left; margin: 10px 0 5px 0; background-image: url('/images/lister_auto_bk.png')"></div>
                             <span style="color: #eb5d19; font-size: 24px;" class="Georgia26">
                                 Per maggiori informazioni <a style="color: #eb5d19; font-size: 24px; font-weight: bold" class="Georgia26" target="_blank" href="http://www.mercidolci.it">www.mercidolci.it</a>
                             </span>
-                    </div>
-                </div>
 
-            </div>
+
+
+</article>
+  </div>
+</div>
+
+<%# render :partial => 'blocco_sidebar1' %>
