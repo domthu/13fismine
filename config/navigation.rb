@@ -31,9 +31,9 @@ SimpleNavigation::Configuration.run do |navigation|
             #sub_nav1.dom_class = 'art-hmenu'
 
           end
-          sub_nav1.dom_class='art-hmenu'
+          sub_nav1.dom_class='fs-menu3-hmenu'
         end #primary.item
-        primary.dom_class = 'fs-hmenu'
+        primary.dom_class = 'fs-menu2-hmenu'
       end #top_menus
 
     end
