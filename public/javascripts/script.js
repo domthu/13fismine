@@ -188,7 +188,7 @@ jQuery(function ($) {
     'use strict';
     // ie < 9 slider multiple background fix
     if (!jQuery.browser.msie || jQuery.browser.version > 8) return;
-    
+
     function split(str) {
         str = str.replace(/"/g, '').replace(/%20/g, '');
         return  str.split(/\s*,\s*/);
@@ -368,7 +368,7 @@ function megaMenuCreate() {
         }
 
         ul.children("li").each(function(index) {
-            if (index % colsPerRow !== 0) 
+            if (index % colsPerRow !== 0)
                 jQuery(this).css("margin-left", horizontalMargin + "px");
         });
 
@@ -435,7 +435,7 @@ function menuExtendedCreate() {
         subm.children("li").children("a").css("width", "");
 
         var lw = 0, rw = 0;
-        
+
         if (typeof subm.attr("data-ext-l") !== "undefined" && typeof subm.attr("data-ext-r") !== "undefined") {
             lw = parseInt(subm.attr("data-ext-l"), 10) + 7;
             rw = parseInt(subm.attr("data-ext-r"), 10) + 7;
@@ -663,19 +663,19 @@ jQuery(function ($) {
     }
 });
 /**
-* @license 
+* @license
 * jQuery Tools 1.2.6 Mousewheel
-* 
+*
 * NO COPYRIGHTS OR LICENSES. DO WHAT YOU LIKE.
-* 
+*
 * http://flowplayer.org/tools/toolbox/mousewheel.html
-* 
-* based on jquery.event.wheel.js ~ rev 1 ~ 
+*
+* based on jquery.event.wheel.js ~ rev 1 ~
 * Copyright (c) 2008, Three Dub Media
-* http://threedubmedia.com 
+* http://threedubmedia.com
 *
 * Since: Mar 2010
-* Date:  
+* Date:
 */
 (function ($) {
     'use strict';
@@ -700,7 +700,7 @@ jQuery(function ($) {
     // shared event handler
     function wheelHandler(event) {
         /*jshint validthis:true*/
-        
+
         switch (event.type) {
 
             // FF2 has incorrect event positions
@@ -1087,7 +1087,7 @@ jQuery(function () {
             if (!!next) {
                 result.push({ images: next.images, positions: getCssPositions(next.positions, nextItem) });
             }
-            
+
             if (direction === "next") {
                 result.reverse();
             }
@@ -1098,7 +1098,7 @@ jQuery(function () {
         this.transition = function(container, on) {
             container.css($.support.transition.prefix + "transition", on ? transitionDuration + " ease-in-out background-position" : "");
         };
-        
+
         function getCssPositions(positions, offset) {
             var result = [];
             if (positions === undefined) {
@@ -1155,12 +1155,12 @@ jQuery(function () {
             if ($.support.transition) {
                 nextItem.addClass(this.settings.direction);
                 tmp = nextItem.get(0).offsetHeight;
-                
+
                 activeItem.addClass(innerDirection);
                 nextItem.addClass(innerDirection);
-                
+
                 element.trigger("beforeSlide", children.length);
-                
+
                 element.one($.support.transition.event, function () {
                     nextItem.removeClass(slider.settings.direction)
                         .removeClass(innerDirection)
@@ -1174,11 +1174,11 @@ jQuery(function () {
                 });
             } else {
                 element.trigger("beforeSlide", children.length);
-                
+
                 activeItem.removeClass("active");
                 nextItem.addClass("active");
                 active = false;
-                
+
                 element.trigger("afterSlide", children.length);
             }
 
@@ -1207,7 +1207,7 @@ jQuery(function () {
                     slider.to(index);
                 });
             }
-            
+
             if (activeIndex === index) {
                 return;
             }
@@ -1251,7 +1251,7 @@ jQuery(function () {
         this.moving = function () {
             return active;
         };
-        
+
         this.navigate(children.filter(".active"));
 
         if (this.settings.clickevents) {
@@ -1264,7 +1264,7 @@ jQuery(function () {
                 event.preventDefault();
             });
         }
-        
+
         if (this.settings.hover) {
             var slider = this;
             element.add(this.settings.navigator)
@@ -1286,7 +1286,7 @@ jQuery(function () {
                 data = new Slider(element, options);
                 element.data("slider", data);
             }
-            
+
             if (typeof arg === "string" && data[arg]) {
                 data[arg]();
             } else if (data.settings.auto && element.is(":visible")) {
