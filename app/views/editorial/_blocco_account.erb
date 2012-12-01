@@ -5,7 +5,7 @@ logged? (<%= User.current.logged? % >)<br />
 %>
 <% if User.current && User.current.logged? %>
   <div class="fs-blockheader">
-    <h3 class="t"><b><%= User.name() + " (" + get_status_role(User.current) + ")"  %></b></h3>
+    <h3 class="t"><b><%= User.current.name() + " (" + get_status_role(User.current) + ")"  %></b></h3>
   </div>
   <div class="fs-blockcontent">
     <ul>
@@ -75,7 +75,7 @@ logged? (<%= User.current.logged? % >)<br />
             Me
           </label>
         </p>
-        <input type="submit" value="Login" name="Submit" class="fs-button"/>
+        <input type="submit" value="Login" name="Submit"/>
       </fieldset>
     <% end %>
     <%= javascript_tag "$('#username').focus();" %>
