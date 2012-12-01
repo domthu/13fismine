@@ -1,36 +1,70 @@
 /* personalizzazioni */
 .fs-prova-gratis-txt{
 display:inline-block;
-width:130px;
+width:127px;
 margin-left: 7px;
+    float:left;
+}
+.fs-prova-gratis-txt2{
+
+width:110px;
+font-size: 9px;
+  color:#FFDA47;
+  font-weight: bold;
+    text-align: center;
+    float:left;
+    margin: 0 5px;
+
 }
 .fs-prova-gratis{
     height: 40px;
     padding-top: 7px;
 }
 #fs-prova-gratis-btn{
-margin-left:7px;
-    width:130px;
+margin-left:14px;
+    width:110px;
 }
 #fs-prova-gratis-info{
     border-top:solid 2px white;
         font-size: 11px;
     color: #5f0100;
     position: relative;
-    margin-top: 7px;
+    margin: 7px auto ;
     background-color: #FFDA47;
    padding-left:7px;
-  height: 38px;
+   height: 38px;
+    text-align: center;
 }
-.fs-prova-gratis-info{
-
+#fs-prova-gratis-wrapper{
+ width:100%;
+ height: 84px;
 }
 .fs-prova-gratis-info span , .fs-prova-gratis-info a{
-font-size: 12px;
+font-size: 11px;
 color: #45535d;
     font-weight: bold;
     line-height: 18px;
 }
+/* pagina chi siamo */
+h3.fs-postheader{
+color: #45535d;
+    text-align: center;
+}
+.fs-chisiamo-item{
+  width:100%;
+    height:115px;
+    display:table;
+  float:left;
+
+}
+.fs-chisiamo-item img{
+ float:left
+}
+.fs-chisiamo-item p{
+    display:table-cell;
+    vertical-align:middle;
+}
+
 /* Post regole comuni */
 
 
@@ -79,7 +113,8 @@ color: #45535d;
     border-collapse: separate;
 }
 
-.fs-content .post-layout-item-3 {
+ .post-layout-item-3 {
+     /*
     border-top-style: dotted;
     border-right-style: dotted;
     border-bottom-style: dotted;
@@ -91,13 +126,13 @@ color: #45535d;
     border-top-color: #68D7FF;
     border-right-color: #68D7FF;
     border-bottom-color: #68D7FF;
-    border-left-color: #68D7FF;
+    border-left-color: #68D7FF; */
     color: #00131A;
     background: #F0F0F0;
     padding-right: 3px;
     padding-left: 3px;
     border-radius: 15px;
-    background-color: #8b0000;
+    margin:5px;
 }
 
 /* fine post comuni */
