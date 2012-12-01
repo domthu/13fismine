@@ -239,6 +239,9 @@ class User < Principal
     return self.asso.nil?
   end
 
+  def scadenza_fra
+    return self.scadenza.nil? "" : (today - self.scadenza).to_s
+  end
   def scadenza
     if self.asso.nil?
       # Privato paga lui

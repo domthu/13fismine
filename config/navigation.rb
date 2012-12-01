@@ -8,8 +8,8 @@ SimpleNavigation::Configuration.run do |navigation|
 
   # Define the primary navigation
   navigation.items do |menu_generale|
-    menu_generale.item :key_home, 'Home', home_path do |primary|
-      primary.item :editoriale, 'Editoriale', home_path
+    menu_generale.item :key_home, 'Home', editorial_path do |primary|
+      primary.item :editoriale, 'Editoriale', editorial_path
       @top_menus = TopMenu.find(:all)
 
       @top_menus.each do |tmn|
@@ -51,4 +51,3 @@ SimpleNavigation::Configuration.run do |navigation|
 
   end
 end
-
