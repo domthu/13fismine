@@ -2,7 +2,7 @@
 <html dir="ltr" lang="en-EN">
 <head><!-- Created by DomThu & SPecchiaSoft -->
   <meta charset="utf-8"/>
-  <title>FiscoSport (fartist version) <%= h html_title %></title>
+  <title>FiscoSport (tartist version 2) <%= h html_title %></title>
   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width"/>
   <meta name="description" content="<%= Redmine::Info.app_name %>"/>
   <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
@@ -98,7 +98,10 @@
     </header>
 
     <nav class="fs-nav clearfix">
-      <%= render_navigation %>
+      <%= render_navigation(:level => 1) %>
+    </nav>
+    <nav class="fs-menu2-nav clearfix">
+      <%= render_navigation(:level => 2) %>
     </nav>
 
     <div class="fs-layout-wrapper clearfix">
@@ -116,7 +119,7 @@
 
   </div>
   <p class="fs-page-footer">
-    <span id="fs-footnote-links"><a href="http://www.artisteer.com/" target="_blank">Web Template</a> created with Artisteer.</span>
+    <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank">Privacy </a> | site created by collaborations.</span>
   </p>
 </div>
 

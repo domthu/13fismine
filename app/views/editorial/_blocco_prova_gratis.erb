@@ -1,0 +1,26 @@
+<div id="fs-prova-gratis-wrapper">
+
+<div class="fs-menu2-nav fs-prova-gratis">
+  <div class="fs-prova-gratis-txt2">Prova la newsletter gratis per 30 giorni!</div>
+  <% form_tag({:controller => 'editorial', :action => 'prova_gratis_ok'}, :method => :post) do %>
+      <span class="fs-prova-gratis-txt"><input type="text" value="Nome..."></span>
+      <span class="fs-prova-gratis-txt"><input type="text" value="Cognome..."></span>
+      <span class="fs-prova-gratis-txt"><input type="text" value="Telefono..."></span>
+      <span class="fs-prova-gratis-txt"><input type="text" value="Email..."></span>
+      <span class="fs-prova-gratis-txt"><input type="text" value="Nome Associazione"></span>
+      <input type="submit" value="Leggi Gratis!" name="leggi_gratis" class="fs-button" id="fs-prova-gratis-btn"/>
+
+      <div id="fs-prova-gratis-info">
+        <div class="fs-prova-gratis-info">
+          <input type="checkbox" id="modlgn_remember" name="team_artist" value="yes" alt="Team Artist" checked="true"/>Prova
+          anche la demo di <span>Team Artist</span> il software creato per le nostre associazioni.
+          <a href="http://teamartist.com" target="_blank">Scopri di più...</a>
+        </div>
+        <div class="fs-prova-gratis-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Attenzione: cliccando su < Leggi Gratis >
+          acconsenti esplicitamente al trattamento dei dati personali ai sensi del D.Lgs. 196/2003, leggi l' <a href="">informativa</a> della privacy
+        </div>
+
+      </div>
+  <% end %>
+</div>
+</div>

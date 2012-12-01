@@ -39,16 +39,14 @@ ul.fs-hmenu>li>span.fs-hmenu-separator
    left:  -1px;
    width: 1px;
    height: 38px;
-   background: url('images/menuseparator.png') center center no-repeat;
+   background: url('/images/template/menuseparator.png') center center no-repeat;
 }
 ul.fs-hmenu>li:first-child>span.fs-hmenu-separator
 {
    display:none;
 }
 
-ul.fs-hmenu ul, .desktop-nav ul.fs-hmenu>li.ext:hover>a{
-   background-color: #FFDC84 !important;
-}
+
 
 .fs-content-layout, .fs-content-layout-row, .fs-layout-cell 
 {

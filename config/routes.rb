@@ -20,12 +20,16 @@ ActionController::Routing::Routes.draw do |map|
   #map.home'',  :controller => "editorial", :action => 'top_menu',  :topmenu_key =>  "fiscale" #"approfondimenti -->non c'è questa voce in TopMenu?" #FRONT END
 
   # Named Routes for static pages.
-  map.contact '/contact', :controller => 'editorial', :action => 'contact'
-  map.about '/about', :controller => 'editorial', :action => 'about'
-  map.help '/help', :controller => 'editorial', :action => 'help'
+  map.chisiamo '/chi_siamo', :controller => 'editorial', :action => 'chisiamo'
+  map.servizi '/servizi', :controller => 'editorial', :action => 'servizi'
+  map.contatti '/contatti', :controller => 'editorial', :action => 'contatti'
+  map.convegni '/convegni-eventi', :controller => 'editorial', :action => 'convegni'
+  map.abbonamenti  '/abbonamenti', :controller => 'editorial', :action => 'abbonamenti'
+  map.enti  '/enti_federazioni', :controller => 'editorial', :action => 'enti'
+  map.lavora '/lavora_con_noi', :controller => 'editorial', :action => 'lavora'
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
-  #map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
+  map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
   #map.registrazione '/registrazione', :controller => 'editorial', :action => 'register'
   #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.quesiti '/quesiti', :controller => 'editorial', :action => 'quesiti'

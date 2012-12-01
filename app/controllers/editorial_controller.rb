@@ -210,7 +210,7 @@ class EditorialController < ApplicationController
   end
 
   def quesiti
-    @quesito= New.find(:all, :limit => 20, :order => "created_on DESC")
+   # @quesito= New.find(:all, :limit => 20, :order => "created_on DESC")
   end
 
   def quesito

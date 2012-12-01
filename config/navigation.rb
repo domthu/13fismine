@@ -7,31 +7,48 @@ SimpleNavigation::Configuration.run do |navigation|
 
 
   # Define the primary navigation
-  navigation.items do |primary|
+  navigation.items do |menu_generale|
+    menu_generale.item :key_home, 'Home', home_path do |primary|
+      primary.item :editoriale, 'Editoriale', home_path
+      @top_menus = TopMenu.find(:all)
 
-    @top_menus = TopMenu.find(:all)
+      @top_menus.each do |tmn|
 
-    @top_menus.each do |tmn|
+        #map.top_menu_page 'editorial/:topmenu_key'
 
-      #map.top_menu_page 'editorial/:topmenu_key'
-      primary.item tmn.key,
-                   tmn.description,
-                   '/editoriale/' + tmn.key, # + '/' + tmn.id.to_s,
-                   :highlights_on => :subpath do |sub_nav|
+        primary.item tmn.key,
+                     tmn.description,
+                     '/editoriale/' + tmn.key, # + '/' + tmn.id.to_s,
+                     :highlights_on => :subpath do |sub_nav1|
 
-        #map.topsection_page '/editorial/:topmenu_key/sezione/:topsection_id',
-        @top_sections = TopSection.find(:all, :conditions => ["top_menu_id = ?", tmn.id])
-        @top_sections.each do |ts|
-          sub_nav.item tmn.key + ts.id.to_s, ts.name, '/editoriale/' + tmn.key + '/' + ts.key, # + topsection_page(ts),
-                       :highlights_on => %r(/#{tmn.key}\/#{ts.key})
+          #map.topsection_page '/editorial/:topmenu_key/sezione/:topsection_id',
+          @top_sections = TopSection.find(:all, :conditions => ["top_menu_id = ?", tmn.id])
+          @top_sections.each do |ts|
+            sub_nav1.item tmn.key + ts.id.to_s, ts.name, '/editoriale/' + tmn.key + '/' + ts.key, # + topsection_page(ts),
+                          :highlights_on => %r(/#{tmn.key}\/#{ts.key})
 
-          primary.dom_class = 'fs-hmenu'
-          sub_nav.dom_class = 'art-hmenu'
-        end
 
-      end #primary.item
+            #sub_nav1.dom_class = 'art-hmenu'
 
-    end #top_menus
+          end
+          sub_nav1.dom_class='fs-menu3-hmenu'
+        end #primary.item
+        primary.dom_class = 'fs-menu2-hmenu'
+      end #top_menus
+
+    end
+    menu_generale.item :key_2, 'Chi Siamo', chisiamo_path
+    menu_generale.item :key_3, 'Servizi alle Associazioni', servizi_path
+    menu_generale.item :key_5, 'Lavora con Noi', lavora_path
+    menu_generale.item :key_6, 'Convegni', convegni_path
+    menu_generale.item :key_7, 'Enti e Federazioni', enti_path
+    menu_generale.item :key_8, 'Abbonamenti', abbonamenti_path
+    menu_generale.item :key_9, 'Quesiti', quesiti_path
+    menu_generale.item :key_10, 'Contatti', contatti_path
+
+    menu_generale.dom_class = 'fs-hmenu'
+
 
   end
 end
+
