@@ -39,39 +39,41 @@
   <%# javascript_include_tag "jquery.jcarousel.min.js" %>
   <%= javascript_include_tag "jcarousellite_1.0.1c4.js" %>
 
-  <script type="text/javascript">
-      $(function () {
-          'use strict';
-          if ($.fn.slider) {
-              $(".fs-slidecontainerslideshutterstock_1").each(function () {
-                  var slideContainer = $(this), tmp;
-                  var inner = $(".fs-slider-inner", slideContainer);
-                  var helper = null;
-                  inner.children().eq(0).addClass("active");
-                  slideContainer.slider({
-                      pause:2600,
-                      speed:600,
-                      repeat:true,
-                      animation:"fade",
-                      direction:"next",
-                      navigator:slideContainer.siblings(".fs-slidenavigatorslideshutterstock_1"),
-                      helper:helper
-                  });
-              });
-          }
-      });
-  </script>
-  <script type="text/javascript">
-      $(function () {
-          $(".newsticker-jcarousellite").jCarouselLite({
-              vertical:true,
-              hoverPause:true,
-              visible:3,
-              auto:1500,
-              speed:3000
-          });
-      });
-  </script>
+<script type="text/javascript">
+   //$(function () {
+   $(document).ready(function() {
+        'use strict';
+        if ($.fn.slider) {
+            $(".fs-slidecontainerslideshutterstock_1").each(function () {
+                var slideContainer = $(this), tmp;
+                var inner = $(".fs-slider-inner", slideContainer);
+                var helper = null;
+                inner.children().eq(0).addClass("active");
+                slideContainer.slider({
+                    pause:2600,
+                    speed:600,
+                    repeat:true,
+                    animation:"fade",
+                    direction:"next",
+                    navigator:slideContainer.siblings(".fs-slidenavigatorslideshutterstock_1"),
+                    helper:helper
+                });
+            });
+        };
+
+        //pubblicità
+        $(".newsticker-jcarousellite").jCarouselLite({
+            vertical:true,
+            hoverPause:true,
+            visible:3,
+            auto:1500,
+            speed:3000
+        });
+
+        $("input[type=submit]").button();
+
+    });
+</script>
 </head>
 <body>
 <div id="fs-main">

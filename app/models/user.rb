@@ -201,7 +201,7 @@ class User < Principal
 
     if self.isabbonato?
       #TODO Elabore date from scadenza compared with today
-      #TODO Elabore date from scadenza compared with today - Settings.renew_days
+      #TODO Elabore date from scadenza compared with today - Setting.renew_days
       #Control if must be set as  ROLE_RENEW or ROLE_EXPIRED
       Rails.logger.info("isfee OK ABBONATO  #{self}")
       return true
@@ -213,7 +213,7 @@ class User < Principal
       return true
     end
     if self.isregistered?
-      #TODO Elabore date from elapsed time from registration compared with today + Settings.register_days
+      #TODO Elabore date from elapsed time from registration compared with today + Setting.register_days
       Rails.logger.info("isfee OK MUST RENEW  #{self}")
       return true
     end
@@ -239,20 +239,46 @@ class User < Principal
     return self.asso.nil?
   end
 
+  #Return friendly String
   def scadenza_fra
-    return self.scadenza.nil? "" : (today - self.scadenza).to_s
-  end
-  def scadenza
-    if self.asso.nil?
-      # Privato paga lui
-      if self.datascadenza.is_a?(Date)
-        return self.datascadenza.to_date
+    scadeil = self.scadenza
+    if scadeil.nil?
+      "Nessuna data di scadenza trovata"
+    else
+      today = Date.today
+      #renew_deadline = scadeil.ago(Setting.renew_days.to_i.days)
+      renew_deadline = scadeil - Setting.renew_days.to_i.days
+      if (today < renew_deadline)
+        #ABBONATO
+        #str << ensure_role(_usr, ROLE_ABBONATO, "ABBONATO", old_state)
+        "valido fino al" << getdate(scadeil)
+      elsif (today < self.scadenza)
+        #IN_SCADENZA
+        #str << ensure_role(_usr, ROLE_RENEW, "ABBONATO in scadenza", old_state)
+        "scade fra " << distance_of_time_in_words(scadeil.time, Time.now)
       else
-        return nil
+        #  ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
+        #str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
+        "espirato da " << distance_of_date_in_words(today, scadeil)
+      end
+    end
+  end
+  #Return Date
+  def scadenza
+    if Setting.fee?
+      if (self.asso.nil? || self.asso.scadenza.nil? || self.asso.scadenza.year == 0)
+        # Privato paga lui
+        if self.datascadenza.is_a?(Date)
+          return self.datascadenza.to_date
+        else
+          return nil
+        end
+      else
+        #Associato Non paga --> paga l'organismo associato
+        return self.asso.scadenza.to_date
       end
     else
-      #Associato Non paga --> paga l'organismo associato
-      return self.asso.scadenza
+      nil
     end
   end
 

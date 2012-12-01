@@ -19,6 +19,7 @@ class AccountController < ApplicationController
   layout 'editorial'
   helper :custom_fields
   include CustomFieldsHelper
+  include FeesHelper  #ROLE_XXX  gedate
 
   # prevents login action to be filtered by check_if_login_required application scope filter
   skip_before_filter :check_if_login_required
@@ -227,8 +228,11 @@ class AccountController < ApplicationController
       redirect_to(editorial_url)
       #redirect_back_or_default :controller => 'editorial', :action => 'home'
     else
-      #TODO Controllare la scadenza se è di RUOLO
-
+      if (Setting.fee?)
+        #TODO Controllare la scadenza se è di RUOLO
+        str = control_assign_role(user)
+        Rails.logger.info("Loggin controllo ruolo: " + str)
+      end
       Rails.logger.info("login ok membro")
       redirect_to(editorial_url)
     end
