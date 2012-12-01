@@ -5,7 +5,7 @@ logged? (<%= User.current.logged? % >)<br />
 %>
 <% if User.current && User.current.logged? %>
   <div class="fs-blockheader">
-    <h3 class="t"><b><%= get_status_role(User.current) %></b></h3>
+    <h3 class="t"><b><%= User.name() + " (" + get_status_role(User.current) + ")"  %></b></h3>
   </div>
   <div class="fs-blockcontent">
     <ul>

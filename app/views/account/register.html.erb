@@ -1,19 +1,39 @@
 <script type="text/javascript">
  $(document).ready(function() {
-    //alert('obj $(#titolo)' + $("#titolo"))
-    $("#titolo").autocomplete({
+    //alert('obj $(#user_titolo)' + $("#user_titolo"))
+    $("input[type=submit]").button();
+     var Titoli = [
+     "pippo", "Presidente", "Tesoriere", "Professionista", "Consigliere", "Segretario", "Delegato", "Altro", "Segretaria", "Dirigente", "Amministratore unico", "Operatore", "Libero professionista", "Amministratore", "Tecnico/Dirigente", "Professionista-consigliere", "Socio", "Associato", "Studente", "Vice-presidente", "Responsabile Amministrativo", "Vice Presidente Regionale", "Impiegata", "Avvocato", "Consulente", "Responsabile"
+        ];
+    $( "#user_titolo" ).autocomplete({
+            source: Titoli
+        });
+    jQuery.ajaxSetup({
+    'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
+    });
+    //var urldata = '< %= usertitle_path %>',
+    //var urldata = '< %= formatted_usertitle_path(:js) %>',
+    //var urldata = '< %= formatted_usertitle(:js) %>';
+    var urldata = '/services/usertitle';
+    //$().get({ url: urldata, type: 'post', dataType:'script',});
+    //type: 'post',
+    //dataType:'script',
+    $("#user_role_id").autocomplete({
             minLength: 2,
-            delay: 600,
-            source: '<%= usertitle_path %>',
+            source: urldata,
             focus: function(event, ui) {
-                $('#titolo').val(ui.item.user.titolo);
+                $('#user_role_id').val(ui.item.user.titolo);
                 return false;
             },
             select: function(event, ui) {
-                $('#titolo').val(ui.item.user.titolo);
-                //$('#titolo_id').val(ui.item.user.id);
+                $('#info').val(ui.item ?
+                    "Selected: " + ui.item.value + " aka " + ui.item.id :
+                    "Nothing selected, input was " + this.value);
+                $('#user_role_id').val(ui.item.user.titolo);
+                //$('#user_titolo_id').val(ui.item.user.id);
                 //        return false;
                 //}
+            },
         })
         .data( "autocomplete" )._renderItem = function( ul, item ) {
             return $( "<li></li>" )
@@ -21,21 +41,29 @@
                 .append( "<a>" + item.user.titolo + "</a>" )
                 .appendTo( ul );
         };
+
+        //$("#user_titolo").autocomplete('result', function(event, data, formatted) {
+        //  if (data)
+        //    document.location.href = '/usertitle/' + data[1];
+        //  });
+        //});
+
     });
 </script>
 <h2><%=l(:label_register)%> <%=link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
 
 <% form_tag({:action => 'register'}, :class => "tabular") do %>
 <%= error_messages_for 'user' %>
-
+<br/>
 <b>Modulo di registrazione gratuita</b>
-
+<br/>
 <p style="color: #FFCB49; background-color: #026086;">
 I campi contrassegnati da * sono obbligatori<br />
 La corretta indicazione del campo “affiliato a” permette di usufruire dell’eventuale periodo gratuito concesso per effetto dell’adesione del CONI o della Fsn/Dsa/Eps al progetto globale (il sistema riconoscerà l’utente affiliato anche in caso di successiva adesione dell’organismo).
 </p>
 
 <div class="box">
+<p><label><%=l(:field_nome)%></label>
 <p><label for="user_firstname"><%=l(:field_firstname)%> <span class="required">*</span></label>
 <%= text_field 'user', 'firstname'  %></p>
 
@@ -51,14 +79,15 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
 <p><label for="user_titolo" title="Presidente, Tesoriere, Professionista, Consigliere, Segretario, Delegato, Altro, Segretaria, Dirigente, Amministratore unico, Operatore, Libero professionista, Amministratore, Tecnico/Dirigente, Professionista-consigliere, Socio, Associato, Studente, Vice-presidente, Responsabile Amministrativo, Vice Presidente Regionale, Impiegata, Avvocato, Consulente, Responsabile" ><%=l(:field_titolo)%> <span class="required">*</span></label>
 <%= text_field 'user', 'titolo'  %></p>
 
-<p><label for="user_lastname"><%=l(:field_lastname)%> <span class="required">*</span></label>
-<%= text_field 'user', 'lastname'  %></p>
+<p><label for="user_role_id"><%=l(:field_role)%> <span class="required">*</span></label>
+<%= text_field 'user', 'role_id'  %></p>
 
 </div>
 
 <div class="box">
 <!--[form:user]-->
 <% if @user.auth_source_id.nil? %>
+<p><label for=""><%=l(:field_username_as_email)%></label>
 <p><label for="user_login"><%=l(:field_login)%> <span class="required">*</span></label>
 <%= text_field 'user', 'login', :size => 25 %></p>
 
@@ -82,6 +111,24 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
   <p><%= custom_field_tag_with_label :user, value %></p>
 <% end %>
 <!--[eoform:user]-->
+</div>
+
+<div class="box">
+TODO
+<p><label for=""><%=l(:field_asso)%> <span class="required">*</span></label>
+<p><label for=""><%=l(:field_asso_title)%> <span class="required">*</span></label>
+<p><label for=""><%=l(:field_affiliato)%> <span class="required">*</span></label>
+<p><label for=""><%=l(:field_sigla_organismo)%> <span class="required">*</span></label>
+<p><label for=""><%=l(:field_sigla_sede)%> <span class="required">*</span></label>
+<p><label for=""><%=l(:field_coni_number)%> <span class="required">*</span></label>
+<p><label for=""><%=l(:field_codice_segnalatore)%> <span class="required">*</span></label>
+<p><label for=""><%=l(:field_com)%> <span class="required">*</span></label>
+</div>
+
+<div class="box">
+<p><label for=""><%=l(:field_privacy)%> <span class="required">*</span></label>
+<p><label for=""><%=l(:field_privacy_accept)%> <span class="required">*</span></label>
+<p><label for=""><%=l(:field_condition)%> <span class="required">*</span></label>
 </div>
 
 <%= submit_tag l(:button_submit) %>

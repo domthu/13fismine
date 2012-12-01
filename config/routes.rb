@@ -7,10 +7,17 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :templates
 
+  #Web Service
+  #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
+  #map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle'#, :conditions => {:method => [:json]}
+  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:json]}
+  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:json]}
+  map.resources :services, :only => [:usertitle], :as => 'usertitle'
+
   # If not authorized home_url --> editorial_url
- # map.home '', :controller => 'welcome' #REDMINE HOME
+  map.home '', :controller => 'welcome' #REDMINE HOME
   #map.home '/editoriale/home', :controller => "editorial", :action => 'home' #FRONT END
-  map.home'',  :controller => "editorial", :action => 'top_menu',  :topmenu_key =>  "fiscale" #"approfondimenti -->non c'è questa voce in TopMenu?" #FRONT END
+  #map.home'',  :controller => "editorial", :action => 'top_menu',  :topmenu_key =>  "fiscale" #"approfondimenti -->non c'è questa voce in TopMenu?" #FRONT END
 
   # Named Routes for static pages.
   map.contact '/contact', :controller => 'editorial', :action => 'contact'
@@ -95,12 +102,6 @@ ActionController::Routing::Routes.draw do |map|
   map.email_fee 'email_fee', :controller => 'fees', :action => 'email_fee', :conditions => {:method => :get}
   map.email_fee_goto_settings 'email_fee_settings', :controller => 'settings', :action => 'edit', :tab => 'fee'
   map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
-
-
-  #Web Service
-  map.usertitle 'usertitle', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:json]}
-  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:json]}
-  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:json]}
 
   #in POST not in Get for params[:username]...
   #map.signin 'login', :controller => 'account', :action => 'login'
