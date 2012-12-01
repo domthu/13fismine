@@ -227,6 +227,8 @@ class AccountController < ApplicationController
       redirect_to(editorial_url)
       #redirect_back_or_default :controller => 'editorial', :action => 'home'
     else
+      #TODO Controllare la scadenza se è di RUOLO
+
       Rails.logger.info("login ok membro")
       redirect_to(editorial_url)
     end
