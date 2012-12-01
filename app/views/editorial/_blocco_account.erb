@@ -22,7 +22,6 @@ logged? (<%= User.current.logged? % >)<br />
     <% else %>
       <li>
         <%= link_to "==Pagina principale (FE)==", editorial_path %>
-
       </li>
       <li>
         <%= link_to l(:label_my_page), :controller => 'mio_profilo', :action => 'account' %>
@@ -49,6 +48,7 @@ logged? (<%= User.current.logged? % >)<br />
         <%= link_to l(:label_logout), :signout %>
       </li>
     </ul>
+	  <%= gravatar_for(User.current) unless !User.current %>
   </div>
 <% else %>
   <div class="fs-blockheader">
