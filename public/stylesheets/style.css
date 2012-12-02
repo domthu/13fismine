@@ -62,7 +62,7 @@ ul.fs-vmenu a
 {
    text-align: left;
 }
-
+.fs-article,
 .fs-postcontent,
 .fs-postcontent li,
 .fs-postcontent table,
@@ -74,7 +74,9 @@ ul.fs-vmenu a
 .fs-postcontent a.hovered
 {
     font-family: 'Droid Sans Mono', Helvetica, sans-serif;
+    font-size: 12px;
 }
+
 
 .fs-postcontent p
 {
