@@ -311,12 +311,7 @@ class EditorialController < ApplicationController
 
       limit = 10
       @scope.each do |s|
-        r, c = s.singularize.camelcase.constantize.search(@tokens, projects_to_search,
-                                                          :all_words => @all_words,
-                                                          :titles_only => @titles_only,
-                                                          :limit => (limit+1),
-                                                          :offset => offset,
-                                                          :before => params[:previous].nil?)
+        r, c = s.singularize.camelcase.constantize.search(@tokens, projects_to_search, :all_words => @all_words, :titles_only => @titles_only, :limit => (limit+1), :offset => offset, :before => params[:previous].nil?)
         @results += r
         @results_by_type[s] += c
       end
@@ -347,9 +342,9 @@ class EditorialController < ApplicationController
   def unauthorized
   end
 
-#def register
+#def register  --> Move to Account
 #end
-#def login
+#def login  --> Move to Account
 #end
 
   private

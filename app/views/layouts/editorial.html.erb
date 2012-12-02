@@ -72,6 +72,9 @@
 
         $("input[type=submit]").button();
 
+        //Focus
+        //< %= javascript_tag "$('#username').focus();" %>
+        $('#username').focus();
     });
 </script>
 </head>
@@ -91,10 +94,10 @@
 
       </div>
       <div class="fs-textblock fs-object375974515" data-left="80%">
-        <form class="fs-search" name="Search" action="javascript:void(0)">
-          <input type="text" value="">
-          <input type="submit" value="Search" name="search" class="fs-search-button">
-        </form>
+        <% form_tag({:controller => 'editorial', :action => 'ricerca'}, :method => :get, :class => "fs-search") do %>
+          <%= text_field_tag 'q', @question, :accesskey => accesskey(:quick_search) %>
+          <input type="submit" value="ricerca" class="fs-search-button"/>
+        <% end %>
       </div>
 
     </header>
