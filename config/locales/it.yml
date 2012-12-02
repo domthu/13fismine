@@ -1248,7 +1248,6 @@ it:
 
   field_power_user:  Responsabile organismo associato
   field_users: Utenti
-  field_:
 
 #Permission
   permission_access_back_end: Accedi al backEnd?
