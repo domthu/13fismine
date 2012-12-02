@@ -305,3 +305,4 @@ box-shadow: 5px 5px rgba(80,122,170,0.1);
 #login-form label {font-weight: bold;}
 #login-form input#username, #login-form input#password { width: 300px; }
 .abbosepsup{border-top: dotted 2px #DE4518; display: inline-block; width: 100%;}
+.raccomendazione{margin: 10px; padding: 10px; color: #FFCB49; background-color: #026086;}
