@@ -54,7 +54,7 @@ class ServicesController < ApplicationController
     end
 
     #ATTENZIONE Gestire la risposta vuota dal JQuery Autocomplete
-    if (!@users.nil? or @users > 0)
+    if (!@users.nil? and @users > 0)
       return render :json => {
         :success => true,
         :unavailable => true,
