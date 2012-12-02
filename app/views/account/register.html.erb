@@ -39,14 +39,26 @@
 
         //email
         HideAvaibility("user_mail");
-        $("#user_mail").change(function () {
-            if (($(this).val() + "").length > 0) {
+        HideAvaibility("user_login");
+        $("#user_mail").keyup(function () {
+            if ((($(this).val() + "").length > 0) && ( isValidEmailAddress( $(this).val() ))) {
                 controlfield($("#user_mail").attr("id"), $(this).val());
             }
             else
                 HideAvaibility("user_mail");
         });
+        $("#user_login").keyup(function () {
+            if (($(this).val() + "").length > 0) {
+                controlfield($("#user_login").attr("id"), $(this).val());
+            }
+            else
+                HideAvaibility("user_login");
+        });
     });
+    function isValidEmailAddress(emailAddress) {
+      var pattern = new RegExp(/^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i);
+        return pattern.test(emailAddress);
+    };
     function HideAvaibility(id){
         $("#no_" + id).hide();
         $("#si_" + id).hide();
@@ -98,9 +110,9 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
 
 <p><label for="user_mail"><%=l(:field_mail)%> <span class="required">*</span></label>
 <%= text_field 'user', 'mail'  %>
-<img id="si_user_mail" src="/images/NO.jpg" alt="Anagrafica disponibile" title="Anagrafica disponibile" />
+<img id="si_user_mail" src="/images/SI.jpg" alt="Anagrafica disponibile" title="Anagrafica disponibile" />
 <div id="no_user_mail">
-    <img src="/images/SI.jpg" alt="Anagrafica non disponibile. Ci risulta già una registrazione con questa Anagrafica!"  title="Anagrafica non disponibile. Ci risuta già una registrazione con questa Anagrafica!"/><br />
+    <img src="/images/NO.jpg" alt="Anagrafica non disponibile. Ci risulta già una registrazione con questa Anagrafica!"  title="Anagrafica non disponibile. Ci risuta già una registrazione con questa Anagrafica!"/><br />
 Informazione già presente nel server: Sei già registrato? Usi il <%= link_to l(:label_login), :signin %> per accedere di nuovo. Se hai problemi <%= link_to 'Contattaci', contatti_path %>.
 </div>
 </p>
@@ -122,7 +134,9 @@ Informazione già presente nel server: Sei già registrato? Usi il <%= link_to l
 <% if @user.auth_source_id.nil? %>
 <p><label for=""><%=l(:field_username_as_email)%></label>
 <p><label for="user_login"><%=l(:field_login)%> <span class="required">*</span></label>
-<%= text_field 'user', 'login', :size => 25 %></p>
+<%= text_field 'user', 'login', :size => 60 %>
+<img id="si_user_login" src="/images/true.png" alt="login disponibile" title="login disponibile" /><img id="no_user_login" src="/images/false.png" title="login non disponibile. Ci risulta già una registrazione con questo login!"/>
+</p>
 
 <p><label for="password"><%=l(:field_password)%> <span class="required">*</span></label>
 <%= password_field_tag 'password', nil, :size => 25  %><br />
