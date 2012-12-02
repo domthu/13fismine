@@ -1,4 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+#http://guides.rubyonrails.org/v2.3.11/routing.html
+#rake routes | grep -r "title"
+
   map.resources :top_menus
 
   map.resources :contract_users
@@ -9,10 +12,17 @@ ActionController::Routing::Routes.draw do |map|
 
   #Web Service
   #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
-  #map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle'#, :conditions => {:method => [:json]}
-  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:json]}
-  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:json]}
-  map.resources :services, :only => [:usertitle], :as => 'usertitle'
+  map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle', :conditions => {:method => [:get]}
+  #:conditions => {:method => [:json]} --> Invalid HTTP method specified in route conditions: {:method=>[:json]}
+
+  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:js]}
+  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:js]}
+  #map.resources :services, :only => [:usertitle], :as => 'usertitle'
+  #resources :services do    rails 3
+  #    collection do
+  #        get 'usertitle'
+  #    end
+  #end
 
   # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome' #REDMINE HOME
@@ -37,9 +47,6 @@ ActionController::Routing::Routes.draw do |map|
   map.poniquesito '/poniquesito', :controller => 'editorial', :action => 'poniquesito'
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
-
-#http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "title"
 
 #Map menu
 

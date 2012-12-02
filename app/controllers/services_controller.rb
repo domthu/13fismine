@@ -1,7 +1,5 @@
 class ServicesController < ApplicationController
 
-#http://andrewcox.org/post/507032751/rails-3-0-unobtrusive-ajax-in-rails-2-3-x
-  #http://rwldesign.com/journals/1-solutions/posts/32-using-jquery-ui-autocomplete-with-rails
   def Usertitle
     Rails.logger.info("json Usertitle")
     @users = User.all(:limit => 5)
@@ -17,24 +15,34 @@ class ServicesController < ApplicationController
 #          :field_weights => { :name => 20, :description => 10, :reviews_content => 5 }
     end
 
+    #ATTENZIONE Gestire la risposta vuota dal JQuery Autocomplete
     if (@users.nil? or @users.count < 1)
-      #@users = User.find(:all, :limit => 5)
-      @users = User.all(:limit => 5)
+      return render :json => [{
+        :label => "0",
+        :value => "Non è stato trovato niente che corrisponde a -#{params[:term]}-"
+      }]
     end
 
     #Rails.logger.info("json Usertitle (%s)" % @users)
-    #printf 'users =========> %s', @users
-    Rails.logger.debug('users =========> ')
 
-    respond_to do |format|
-      #format.html # index.html.erb
-      #format.xml  { render :xml => @users }
-      format.js{
-        render :text => "alert('hello')"
-      } # usertitle.js.erb
-      format.json { render :json => @users, :layout => false }
-      #format.json { render :json => @users.to_json }
-    end
+#    render :json =>
+#      @user.to_json(:only => [:email], :include => [:addresses])
+    @json_users = @users.collect { |e|  {:value => "#{e.name}, #{e.mail}" , :label => "#{e.codice}"} }
+    #@json_users = @users.collect { |e| e.name, e.login }
+    render :json => @json_users.to_json
+    #respond_to do |format|
+    #  format.js{
+    #    #render :text => "alert('hello')"
+    #    render :json => @json_users.to_json
+    #  }
+    #end
   end
 
 end
+
+#<% for usr in @users -%>
+#  <%= usr.firstname %>, <%= usr.lastname %> | <%= usr.codice %>
+#<% end -%>
+#<% @users.each do |usr| %>
+#  <%= usr.firstname %>, <%= usr.lastname %> | <%= usr.codice %>
+#<% end %>
