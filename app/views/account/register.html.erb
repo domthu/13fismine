@@ -1,9 +1,31 @@
+<%= javascript_include_tag "jquery/jquery.validate.min.js"%>
+<%= javascript_include_tag "jquery/jquery.validate.unobtrusive.min.js"%>
+<%= javascript_include_tag "jquery/jquery.stepy.min.js"%>
+<%= stylesheet_link_tag 'jquery/jquery.stepy.css', :media => 'all' %>
 <script type="text/javascript">
  $(document).ready(function() {
-    //alert('obj $(#user_titolo)' + $("#user_titolo"))
-    //http://stackoverflow.com/questions/9771724/rails-jquery-autocomplete-with-json-fails
-     var Titoli = [
-     "pippo", "Presidente", "Tesoriere", "Professionista", "Consigliere", "Segretario", "Delegato", "Altro", "Segretaria", "Dirigente", "Amministratore unico", "Operatore", "Libero professionista", "Amministratore", "Tecnico/Dirigente", "Professionista-consigliere", "Socio", "Associato", "Studente", "Vice-presidente", "Responsabile Amministrativo", "Vice Presidente Regionale", "Impiegata", "Avvocato", "Consulente", "Responsabile"
+    HideAvaibility("user_mail");
+    HideAvaibility("user_login");
+
+    $('#steps').stepy({
+        back:           undefined
+        ,backLabel:      '< Indietro'
+        ,block:          false
+        ,description:    true
+        ,errorImage:     true
+        ,finish:         undefined
+        ,finishButton:   true
+        ,ignore:         ''
+        ,legend:         true
+        ,nextLabel:      'Prossimo >'
+        ,next:           undefined
+        ,titleClick:     true
+        ,titleTarget:    undefined
+        , select: undefined
+        , validate: false  //Kappao manca alcuni script? jquery validate TypeError: a is undefined
+    });
+
+    var Titoli = ["pippo", "Presidente", "Tesoriere", "Professionista", "Consigliere", "Segretario", "Delegato", "Altro", "Segretaria", "Dirigente", "Amministratore unico", "Operatore", "Libero professionista", "Amministratore", "Tecnico/Dirigente", "Professionista-consigliere", "Socio", "Associato", "Studente", "Vice-presidente", "Responsabile Amministrativo", "Vice Presidente Regionale", "Impiegata", "Avvocato", "Consulente", "Responsabile"
         ];
     $( "#user_titolo" ).autocomplete({
             source: Titoli
@@ -37,9 +59,7 @@
                 .appendTo( ul );
         };
 
-        //email
-        HideAvaibility("user_mail");
-        HideAvaibility("user_login");
+        //control uniqueness of email and login
         $("#user_mail").keyup(function () {
             if ((($(this).val() + "").length > 0) && ( isValidEmailAddress( $(this).val() ))) {
                 controlfield($("#user_mail").attr("id"), $(this).val());
@@ -48,7 +68,7 @@
                 HideAvaibility("user_mail");
         });
         $("#user_login").keyup(function () {
-            if (($(this).val() + "").length > 0) {
+            if (($(this).val() + "").length > 1) {
                 controlfield($("#user_login").attr("id"), $(this).val());
             }
             else
@@ -89,94 +109,97 @@
     }
 </script>
 <h2><%=l(:label_register)%> <%=link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
-
-<% form_tag({:action => 'register'}, :class => "tabular") do %>
-<%= error_messages_for 'user' %>
 <br/>
 <b>Modulo di registrazione gratuita</b>
 <br/>
-<p style="color: #FFCB49; background-color: #026086;">
-I campi contrassegnati da * sono obbligatori<br />
-La corretta indicazione del campo “affiliato a” permette di usufruire dell’eventuale periodo gratuito concesso per effetto dell’adesione del CONI o della Fsn/Dsa/Eps al progetto globale (il sistema riconoscerà l’utente affiliato anche in caso di successiva adesione dell’organismo).
+<p class="raccomendazione">
+I campi contrassegnati da <b style="color: red;">* sono obbligatori</b><br />
+La corretta indicazione del campo “affiliato a” permette di usufruire dell’eventuale periodo gratuito concesso per effetto dell’adesione del CONI o della Fsn/Dsa/Eps al progetto globale. >br /> Il sistema riconoscerà l’utente affiliato anche in caso di successiva adesione dell’organismo.
 </p>
 
-<div class="box">
-<p><label><%=l(:field_nome)%></label>
-<p><label for="user_firstname"><%=l(:field_firstname)%> <span class="required">*</span></label>
-<%= text_field 'user', 'firstname'  %></p>
+<% form_tag({:action => 'register'}, :class => "tabular", :id => "steps") do %>
+<%= error_messages_for 'user' %>
 
-<p><label for="user_lastname"><%=l(:field_lastname)%> <span class="required">*</span></label>
-<%= text_field 'user', 'lastname'  %></p>
+<fieldset class="" title="Anagrafica">
+  <legend>Step1: Dati personali</legend>
+  <div class="box">
+    <p><label><%=l(:field_nome)%></label>
+    <p><label for="user_firstname"><%=l(:field_firstname)%> <span class="required">*</span></label>
+    <%= text_field 'user', 'firstname'  %></p>
 
-<p><label for="user_mail"><%=l(:field_mail)%> <span class="required">*</span></label>
-<%= text_field 'user', 'mail'  %>
-<img id="si_user_mail" src="/images/SI.jpg" alt="Anagrafica disponibile" title="Anagrafica disponibile" />
-<div id="no_user_mail">
-    <img src="/images/NO.jpg" alt="Anagrafica non disponibile. Ci risulta già una registrazione con questa Anagrafica!"  title="Anagrafica non disponibile. Ci risuta già una registrazione con questa Anagrafica!"/><br />
-Informazione già presente nel server: Sei già registrato? Usi il <%= link_to l(:label_login), :signin %> per accedere di nuovo. Se hai problemi <%= link_to 'Contattaci', contatti_path %>.
-</div>
-</p>
+    <p><label for="user_lastname"><%=l(:field_lastname)%> <span class="required">*</span></label>
+    <%= text_field 'user', 'lastname'  %></p>
 
-</div>
+    <p><label for="user_mail"><%=l(:field_mail)%> <span class="required">*</span></label>
+    <%= text_field 'user', 'mail'  %>
+    <img id="si_user_mail" src="/images/SI.jpg" alt="Anagrafica disponibile" title="Anagrafica disponibile" />
+    <div id="no_user_mail">
+        <img src="/images/NO.jpg" alt="Anagrafica non disponibile. Ci risulta già una registrazione con questa Anagrafica!"  title="Anagrafica non disponibile. Ci risuta già una registrazione con questa Anagrafica!"/><br />
+    Informazione già presente nel server: Sei già registrato? Usi il <%= link_to l(:label_login), :signin %> per accedere di nuovo. Se hai problemi <%= link_to 'Contattaci', contatti_path %>.
+    </div></p>
+    <p><label for="user_titolo" title="Presidente, Tesoriere, Professionista, Consigliere, Segretario, Delegato, Altro, Segretaria, Dirigente, Amministratore unico, Operatore, Libero professionista, Amministratore, Tecnico/Dirigente, Professionista-consigliere, Socio, Associato, Studente, Vice-presidente, Responsabile Amministrativo, Vice Presidente Regionale, Impiegata, Avvocato, Consulente, Responsabile" ><%=l(:field_titolo)%> <span class="required">*</span></label>
+    <%= text_field 'user', 'titolo'  %></p>
 
-<div class="box">
-<p><label for="user_titolo" title="Presidente, Tesoriere, Professionista, Consigliere, Segretario, Delegato, Altro, Segretaria, Dirigente, Amministratore unico, Operatore, Libero professionista, Amministratore, Tecnico/Dirigente, Professionista-consigliere, Socio, Associato, Studente, Vice-presidente, Responsabile Amministrativo, Vice Presidente Regionale, Impiegata, Avvocato, Consulente, Responsabile" ><%=l(:field_titolo)%> <span class="required">*</span></label>
-<%= text_field 'user', 'titolo'  %></p>
+    <p><label for="user_role_id"><%=l(:field_role)%> <span class="required">*</span></label>
+    <%= hidden_field :user, :role_id %></p>
+    <%= text_field_tag('userrole')  %></p>
+  </div>
+</fieldset>
 
-<p><label for="user_role_id"><%=l(:field_role)%> <span class="required">*</span></label>
-<%= hidden_field :user, :role_id %></p>
-<%= text_field_tag('userrole')  %></p>
+<fieldset class="" title="Credenziali" style="display: none;">
+  <legend>Step2: SìDati di accesso</legend>
+  <div class="box">
+  <!--[form:user]-->
+  <% if @user.auth_source_id.nil? %>
+  <p><label for=""><%=l(:field_username_as_email)%></label>
+  <p><label for="user_login"><%=l(:field_login)%> <span class="required">*</span></label>
+  <%= text_field 'user', 'login', :size => 60 %>
+  <img id="si_user_login" src="/images/true.png" alt="login disponibile" title="login disponibile" /><img id="no_user_login" src="/images/false.png" title="login non disponibile. Ci risulta già una registrazione con questo login!"/>
+  </p>
 
-</div>
+  <p><label for="password"><%=l(:field_password)%> <span class="required">*</span></label>
+  <%= password_field_tag 'password', nil, :size => 25  %><br />
+  <em><%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></em></p>
 
-<div class="box">
-<!--[form:user]-->
-<% if @user.auth_source_id.nil? %>
-<p><label for=""><%=l(:field_username_as_email)%></label>
-<p><label for="user_login"><%=l(:field_login)%> <span class="required">*</span></label>
-<%= text_field 'user', 'login', :size => 60 %>
-<img id="si_user_login" src="/images/true.png" alt="login disponibile" title="login disponibile" /><img id="no_user_login" src="/images/false.png" title="login non disponibile. Ci risulta già una registrazione con questo login!"/>
-</p>
+  <p><label for="password_confirmation"><%=l(:field_password_confirmation)%> <span class="required">*</span></label>
+  <%= password_field_tag 'password_confirmation', nil, :size => 25  %></p>
+  <% end %>
 
-<p><label for="password"><%=l(:field_password)%> <span class="required">*</span></label>
-<%= password_field_tag 'password', nil, :size => 25  %><br />
-<em><%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></em></p>
+  <p><label for="user_language"><%=l(:field_language)%></label>
+  <%= select("user", "language", lang_options_for_select) %></p>
 
-<p><label for="password_confirmation"><%=l(:field_password_confirmation)%> <span class="required">*</span></label>
-<%= password_field_tag 'password_confirmation', nil, :size => 25  %></p>
-<% end %>
+  <% if Setting.openid? %>
+  <p><label for="user_identity_url"><%=l(:field_identity_url)%></label>
+  <%= text_field 'user', 'identity_url'  %></p>
+  <% end %>
 
-<p><label for="user_language"><%=l(:field_language)%></label>
-<%= select("user", "language", lang_options_for_select) %></p>
+  <% @user.custom_field_values.select {|v| v.editable? || v.required?}.each do |value| %>
+    <p><%= custom_field_tag_with_label :user, value %></p>
+  <% end %>
+  <!--[eoform:user]-->
+  </div>
 
-<% if Setting.openid? %>
-<p><label for="user_identity_url"><%=l(:field_identity_url)%></label>
-<%= text_field 'user', 'identity_url'  %></p>
-<% end %>
+  <div class="box">
+    <p><label for=""><%=l(:field_privacy)%> <span class="required">*</span></label>
+    <p><label for=""><%=l(:field_privacy_accept)%> <span class="required">*</span></label>
+    <p><label for=""><%=l(:field_condition)%> <span class="required">*</span></label>
+  </div>
 
-<% @user.custom_field_values.select {|v| v.editable? || v.required?}.each do |value| %>
-  <p><%= custom_field_tag_with_label :user, value %></p>
-<% end %>
-<!--[eoform:user]-->
-</div>
+</fieldset>
 
-<div class="box">
-TODO
-<p><label for=""><%=l(:field_asso)%> <span class="required">*</span></label>
-<p><label for=""><%=l(:field_asso_title)%> <span class="required">*</span></label>
-<p><label for=""><%=l(:field_affiliato)%> <span class="required">*</span></label>
-<p><label for=""><%=l(:field_sigla_organismo)%> <span class="required">*</span></label>
-<p><label for=""><%=l(:field_sigla_sede)%> <span class="required">*</span></label>
-<p><label for=""><%=l(:field_coni_number)%> <span class="required">*</span></label>
-<p><label for=""><%=l(:field_codice_segnalatore)%> <span class="required">*</span></label>
-<p><label for=""><%=l(:field_com)%> <span class="required">*</span></label>
-</div>
+<fieldset class="" title="Affiliazione" style="display: none;">
+  <legend>Step3: Associato</legend>
+  <div class="box">
+    <p><label for=""><%=l(:field_asso)%> <span class="required">*</span></label>
+    <p><label for=""><%=l(:field_asso_title)%> <span class="required">*</span></label>
+    <p><label for=""><%=l(:field_affiliato)%> <span class="required">*</span></label>
+    <p><label for=""><%=l(:field_sigla_organismo)%> <span class="required">*</span></label>
+    <p><label for=""><%=l(:field_sigla_sede)%> <span class="required">*</span></label>
+    <p><label for=""><%=l(:field_coni_number)%> <span class="required">*</span></label>
+    <p><label for=""><%=l(:field_codice_segnalatore)%> <span class="required">*</span></label>
+    <p><label for=""><%=l(:field_com)%> <span class="required">*</span></label>
+  </div>
+</fieldset>
 
-<div class="box">
-<p><label for=""><%=l(:field_privacy)%> <span class="required">*</span></label>
-<p><label for=""><%=l(:field_privacy_accept)%> <span class="required">*</span></label>
-<p><label for=""><%=l(:field_condition)%> <span class="required">*</span></label>
-</div>
-
-<%= submit_tag l(:button_submit) %>
+<%= submit_tag l(:button_submit), :class => "finish" %>
 <% end %>

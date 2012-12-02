@@ -1,35 +1,48 @@
 <h2><%= l(:contact) %></h2>
-In questa pagina:
-<ul>
-  <li>Contatti per Merce dolci</li>
-</ul>
+<script type="text/javascript">
+    $(function () {
+        $("#accordion").accordion();
+    });
+</script>
 <div class="prodotti_scheda_cont">
+<div id="accordion">
+  <h3>
+    <a href="#"></a>TUTTI I NOSTRI CONTATTI</h3>
+  <div>
+    <p>
+      <span style="color: #7c7c7c" class="Georgia26">
+          <b>CommercioEtico.it / Merci Dolci srl </b><br>
+      </span>
+      <span style="font-size: 20px" class="Georgia16">
+          località Santa Cristina, 14 <br>
+          06020 Gubbio (PG) - tel/fax 075 9229776 <br>
+          PI. 02635810548 <br>
+      </span>
+    </p>
+  </div>
 
-  <div class="testo_static_container">
-    <div style="width: 653px; height: 40px; float: left; background-image: url('/images/contatti_head.png')">
-      <div style="margin: 10px 0 0 20px; line-height: 19px;" class="Helvetica_Roman_24">
-        TUTTI I NOSTRI CONTATTI
-      </div>
-    </div>
-    <div style="width: 623px; height: auto; float: left; margin: 10px 0 0 20px">
-                        <span style="color: #7c7c7c" class="Georgia26">
-                            <b>CommercioEtico.it / Merci Dolci srl </b><br>
-                        </span>
-                        <span style="font-size: 20px" class="Georgia16">
-                            località Santa Cristina, 14 <br>
-                            06020 Gubbio (PG) - tel/fax 075 9229776 <br>
-                            PI. 02635810548 <br>
-                        </span>
+  <h3>
+    <a href="#"></a>INFO COMMERCIALI</h3>
+  <div>
+    <p>
 
       <div style=" width: 613px; height: 3px; float: left; margin: 5px 0 5px 0; background-image: url('images/lister_auto_bk.png')"></div>
-                        <span class="Georgia16_Gray">
-                            Capitale sociale € 27.000 i.v. - Reg. Imprese di Perugia n. 02635810548<br>
-                        </span>
+      <span class="Georgia16_Gray">
+          Capitale sociale € 27.000 i.v. - Reg. Imprese di Perugia n. 02635810548<br>
+      </span>
 
       <div style=" width: 613px; height: 3px; float: left; margin: 5px 0 5px 0; background-image: url('images/lister_auto_bk.png')"></div>
-                        <span style="color: #eb5d19; font-size: 24px" class="Georgia26">
-                        <img src="images/mail.png"> info@commercioetico.it
-                        </span>
+      <span style="color: #eb5d19; font-size: 24px" class="Georgia26">
+      <img src="images/mail.png"> info@commercioetico.it
+      </span>
+
+    </p>
+  </div>
+
+  <h3>
+    <a href="#"></a>DOVE SIAMO</h3>
+  <div>
+    <p>
 
       <!-- /MAP -->
       <div style="height: 1px; width: 613px; background-color: #d7d7d7; float: left; margin-top: 10px"></div>
@@ -177,7 +190,9 @@ In questa pagina:
         </div>
       </div>
       <div style="height: 1px; width: 613px; background-color: #d7d7d7; float: left"></div>
-    </div>
+
+    </p>
   </div>
 
+</div>
 </div>
