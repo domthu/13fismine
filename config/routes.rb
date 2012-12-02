@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "title"
+#rake routes | grep -r "emailctrl"
 
   map.resources :top_menus
 
@@ -12,17 +12,10 @@ ActionController::Routing::Routes.draw do |map|
 
   #Web Service
   #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
+  #AJAX get usando JQuery UI autocomplete
   map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle', :conditions => {:method => [:get]}
-  #:conditions => {:method => [:json]} --> Invalid HTTP method specified in route conditions: {:method=>[:json]}
-
-  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:js]}
-  #map.connect '/services/usertitle/:term', :controller => 'service', :action => 'Usertitle'#, :conditions => {:method => [:js]}
-  #map.resources :services, :only => [:usertitle], :as => 'usertitle'
-  #resources :services do    rails 3
-  #    collection do
-  #        get 'usertitle'
-  #    end
-  #end
+  #AJAX post usando JQuery
+  map.emailctrl 'emailctrl', :controller => 'services', :action => 'emailctrl', :conditions => {:method => [:post]}
 
   # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome' #REDMINE HOME
