@@ -1,10 +1,10 @@
 class ServicesController < ApplicationController
 
   def Usertitle
-    Rails.logger.info("json Usertitle")
+    #Rails.logger.info("json Usertitle")
     @users = User.all(:limit => 5)
     if params[:term]
-      Rails.logger.info("json Usertitle #{params[:term]}")
+      #Rails.logger.info("json Usertitle #{params[:term]}")
       #sanitize string for only
       #, :distinct => 'titolo'    ArgumentError --> Unknown key(s): distinct
       @users = User.find(:all, :limit => 5, :conditions => ['titolo LIKE ?', "%#{params[:term]}%"])
@@ -38,6 +38,32 @@ class ServicesController < ApplicationController
     #end
   end
 
+  def emailctrl
+    Rails.logger.info("json emailctrl")
+    if params[:term] && params[:field]
+      Rails.logger.info("json emailctrl #{params[:term]} per field #{params[:field]}")
+      case params[:field]
+        when 'user_mail'
+          @users = User.count(:conditions => ['mail = ?', "#{params[:term]}"])
+        when 'user_login'
+          @users = User.count(:conditions => ['login = ?', "#{params[:term]}"])
+        else
+          @users = nil
+      end
+
+    end
+
+    #ATTENZIONE Gestire la risposta vuota dal JQuery Autocomplete
+    if (!@users.nil? or @users > 0)
+      return render :json => {
+        :success => true,
+        :unavailable => true,
+        :msg => "è presente nel database (#{@users.to_s}) informazione che corrisponde a -#{params[:term]}-"
+      }
+    end
+
+    render :json => { :success => true, :available => true }
+  end
 end
 
 #<% for usr in @users -%>

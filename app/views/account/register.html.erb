@@ -36,7 +36,45 @@
                 .append( "<a>" + item.value + "</a>" )
                 .appendTo( ul );
         };
+
+        //email
+        HideAvaibility("user_mail");
+        $("#user_mail").change(function () {
+            if (($(this).val() + "").length > 0) {
+                controlfield($("#user_mail").attr("id"), $(this).val());
+            }
+            else
+                HideAvaibility("user_mail");
+        });
     });
+    function HideAvaibility(id){
+        $("#no_" + id).hide();
+        $("#si_" + id).hide();
+    }
+    var urlctrl = '<%= emailctrl_path %>';
+    function controlfield(id, val){
+      $.post(urlctrl, { field: id, term: val },
+        function (data) {
+          data = data || {};
+          if (data.success) {
+              //OnSuccess
+              if (data.available) {
+                  $("#no_" + id).hide('explode', {}, 450);
+                  var obj = $("#si_" + id);
+                  setTimeout(function () { obj.show('fade', {}, 'slow');}, 500);
+              }
+              if (data.unavailable) {
+                  $("#si_" + id).hide('puff', {}, 450);  //'fast'
+                  var obj = $("#no_" + id);
+                  setTimeout(function () { obj.show('fade', {}, 'slow'); }, 500);
+              }
+
+          } else if (data.errors) {
+              showerrmsg(data.errors);
+          }
+        }
+      );
+    }
 </script>
 <h2><%=l(:label_register)%> <%=link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
 
@@ -59,7 +97,13 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
 <%= text_field 'user', 'lastname'  %></p>
 
 <p><label for="user_mail"><%=l(:field_mail)%> <span class="required">*</span></label>
-<%= text_field 'user', 'mail'  %></p>
+<%= text_field 'user', 'mail'  %>
+<img id="si_user_mail" src="/images/NO.jpg" alt="Anagrafica disponibile" title="Anagrafica disponibile" />
+<div id="no_user_mail">
+    <img src="/images/SI.jpg" alt="Anagrafica non disponibile. Ci risulta già una registrazione con questa Anagrafica!"  title="Anagrafica non disponibile. Ci risuta già una registrazione con questa Anagrafica!"/><br />
+Informazione già presente nel server: Sei già registrato? Usi il <%= link_to l(:label_login), :signin %> per accedere di nuovo. Se hai problemi <%= link_to 'Contattaci', contatti_path %>.
+</div>
+</p>
 
 </div>
 
