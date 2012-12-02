@@ -304,5 +304,4 @@ box-shadow: 5px 5px rgba(80,122,170,0.1);
 #login-form table td {padding: 6px;}
 #login-form label {font-weight: bold;}
 #login-form input#username, #login-form input#password { width: 300px; }
-
-
+.abbosepsup{border-top: dotted 2px #DE4518; display: inline-block; width: 100%;}

@@ -39,11 +39,17 @@ ActionController::Routing::Routes.draw do |map|
   map.lavora '/lavora_con_noi', :controller => 'editorial', :action => 'lavora'
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
+  #to match override act_as_event after search
+  map.edizioneid '/editoriale/newsletter/:id', :controller => 'editorial', :action => 'edizione'
   map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
+  #to match override act_as_event after search
+  map.articoloid '/editoriale/articolo/:id', :controller => 'editorial', :action => 'articolo'
   #map.registrazione '/registrazione', :controller => 'editorial', :action => 'register'
   #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.quesiti '/quesiti', :controller => 'editorial', :action => 'quesiti'
   map.quesito '/quesito/:id', :controller => 'editorial', :action => 'quesito'
+  #to match override act_as_event after search
+  map.quesitoid '/editoriale/quesito/:id', :controller => 'editorial', :action => 'quesito'
   map.poniquesito '/poniquesito', :controller => 'editorial', :action => 'poniquesito'
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'

@@ -47,4 +47,26 @@ module EditorialHelper
     ('<ul>' + links.map {|link| content_tag('li', link)}.join(' ') + '</ul>') unless links.empty?
   end
 
+  #Override plugin act_as_event to change url from BE to FE
+  def event_url_fs(e = nil,  options = {})
+    evturl = e.event_url(options)
+    #puts evturl
+    #puts "#####################"
+    #printf("evturl    --->   %s", evturl[:controller])
+    if (evturl[:controller] == "news")
+        evturl[:controller] = "editoriale"
+        evturl[:action] = "quesito"
+    end
+    if (evturl[:controller] == "issues")
+        evturl[:controller] = "editoriale"
+        evturl[:action] = "articolo"
+    end
+    if (evturl[:controller] == "projects")
+        evturl[:controller] = "editoriale"
+        evturl[:action] = "newsletter"
+    end
+    #url = url.gsub(/\/news\//, '/editoriale/quesito/').gsub(/\/issues\//, '/editoriale/articolo/').gsub(/\/projects\//, '/editoriale/newsletter/')
+    return evturl
+  end
+
 end

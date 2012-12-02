@@ -4,15 +4,15 @@
   </div>
   <div class="fs-blockcontent">
     <div>
-      <form action="#" class="fs-search" method="get" name="searchform">
-        <input type="text" value="" name="s"/>
-        <input type="submit" value="Search" name="search" class="fs-search-button"/>
+      <form action="ricerca" class="fs-search" method="get" name="searchform">
+        <%= text_field_tag 'q', @question, :accesskey => accesskey(:quick_search) %>
+        <input type="submit" value="ricerca" class="fs-search-button"/>
       </form>
     </div>
   </div>
 </div>
 <!--
-      
+
         <form method="get" name="searchform" action="#">
           <input type="text" value="" name="s" style="width: 95%;" />
                       <span class="fs-button-wrapper">
@@ -35,5 +35,3 @@
         </div>
         <% end %>
 -->
-
-

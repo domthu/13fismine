@@ -1,9 +1,9 @@
 <h2><%= l(:label_search) %></h2>
   In questa pagina:
-  <ul> 
+  <ul>
     <li>Ricerca generale sullo storico</li>
     <li>Presentazione risultati per tipo ricerca</li>
-  </ul> 
+  </ul>
 <div class="box">
 <% form_tag({}, :method => :get) do %>
 <%= label_tag "search-input", l(:description_search), :class => "hidden-for-sighted" %>
@@ -33,9 +33,10 @@
     <h3><%= l(:label_result_plural) %> (<%= @results_by_type.values.sum %>)</h3>
     <dl id="search-results">
       <% @results.each do |e| %>
-        <dt class="<%= e.event_type %>"><%= content_tag('span', h(e.project), :class => 'project') unless @project == e.project %> <%= link_to highlight_tokens(truncate(h(e.event_title), :length => 255), @tokens), e.event_url %></dt>
+        <dt class="<%= e.event_type %>"><%= content_tag('span', h(e.project), :class => 'project') unless @project == e.project %> <%= link_to highlight_tokens(truncate(h(e.event_title), :length => 255), @tokens), event_url_fs(e) %></dt>
         <dd><span class="description"><%= highlight_tokens(h(e.event_description), @tokens) %></span>
         <span class="author"><%= format_time(e.event_datetime) %></span></dd>
+        <hr class="abbosepsup" />
       <% end %>
     </dl>
 <% end %>
