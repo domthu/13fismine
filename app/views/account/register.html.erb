@@ -1,6 +1,7 @@
 <script type="text/javascript">
  $(document).ready(function() {
     //alert('obj $(#user_titolo)' + $("#user_titolo"))
+    //http://stackoverflow.com/questions/9771724/rails-jquery-autocomplete-with-json-fails
      var Titoli = [
      "pippo", "Presidente", "Tesoriere", "Professionista", "Consigliere", "Segretario", "Delegato", "Altro", "Segretaria", "Dirigente", "Amministratore unico", "Operatore", "Libero professionista", "Amministratore", "Tecnico/Dirigente", "Professionista-consigliere", "Socio", "Associato", "Studente", "Vice-presidente", "Responsabile Amministrativo", "Vice Presidente Regionale", "Impiegata", "Avvocato", "Consulente", "Responsabile"
         ];
@@ -10,43 +11,31 @@
     jQuery.ajaxSetup({
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
     });
-    //var urldata = '< %= usertitle_path %>',
-    //var urldata = '< %= formatted_usertitle_path(:js) %>',
-    //var urldata = '< %= formatted_usertitle(:js) %>';
-    var urldata = '/services/usertitle';
-    //$().get({ url: urldata, type: 'post', dataType:'script',});
-    //type: 'post',
-    //dataType:'script',
-    $("#user_role_id").autocomplete({
+    var urldata = '<%= usertitle_path %>';
+    $("#userrole").autocomplete({
             minLength: 2,
             source: urldata,
             focus: function(event, ui) {
-                $('#user_role_id').val(ui.item.user.titolo);
+                $('#userrole').val(ui.value);
                 return false;
             },
             select: function(event, ui) {
                 $('#info').val(ui.item ?
-                    "Selected: " + ui.item.value + " aka " + ui.item.id :
-                    "Nothing selected, input was " + this.value);
-                $('#user_role_id').val(ui.item.user.titolo);
-                //$('#user_titolo_id').val(ui.item.user.id);
-                //        return false;
-                //}
+                    "Selected: " + ui.item.value + " aka " + ui.item.label :
+                    "Nessuna selezione, la ricerca era -" + this.value + "-");
+                if (ui.item && ui.item.value == "0") {
+                  //$("#userrole").val(this.value);
+                  $('#user_role_id').val("");
+                  return false;
+                }
             },
         })
         .data( "autocomplete" )._renderItem = function( ul, item ) {
             return $( "<li></li>" )
                 .data( "item.autocomplete", item )
-                .append( "<a>" + item.user.titolo + "</a>" )
+                .append( "<a>" + item.value + "</a>" )
                 .appendTo( ul );
         };
-
-        //$("#user_titolo").autocomplete('result', function(event, data, formatted) {
-        //  if (data)
-        //    document.location.href = '/usertitle/' + data[1];
-        //  });
-        //});
-
     });
 </script>
 <h2><%=l(:label_register)%> <%=link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
@@ -79,7 +68,8 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
 <%= text_field 'user', 'titolo'  %></p>
 
 <p><label for="user_role_id"><%=l(:field_role)%> <span class="required">*</span></label>
-<%= text_field 'user', 'role_id'  %></p>
+<%= hidden_field :user, :role_id %></p>
+<%= text_field_tag('userrole')  %></p>
 
 </div>
 

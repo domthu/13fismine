@@ -1,0 +1,6 @@
+[
+<% @json.each do |re| %>
+  {"value":"<%= re.firstname + ' ' + re.lastname %>","id":<%= re.codice %><% if re == @json.last %>}<% else %>},<% end %>
+<% end #js.erb
+ %>
+]
