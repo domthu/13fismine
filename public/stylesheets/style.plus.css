@@ -37,7 +37,8 @@ margin-left:14px;
 }
 #fs-prova-gratis-wrapper{
  width:100%;
- height: 84px;
+ height: 82px;
+ display: block;
 }
 .fs-prova-gratis-info span , .fs-prova-gratis-info a{
 font-size: 11px;

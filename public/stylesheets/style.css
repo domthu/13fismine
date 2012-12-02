@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6, p, a, ul, ol, li
 .fs-blockcontent,
 ul.fs-vmenu a 
 {
-   text-align: justify;
+   text-align: left;
 }
 
 .fs-postcontent,
@@ -73,7 +73,7 @@ ul.fs-vmenu a
 .fs-postcontent a:hover,
 .fs-postcontent a.hovered
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+    font-family: 'Droid Sans Mono', Helvetica, sans-serif;
 }
 
 .fs-postcontent p
@@ -1622,8 +1622,7 @@ a img
 
 .fs-article img, img.fs-article, .fs-block img, .fs-footer img
 {
-   border: 1px dotted #FFF4D8;
-   margin: 10px 10px 10px 10px;
+
 }
 
 .fs-metadata-icons img
@@ -1866,7 +1865,7 @@ pre
 
 .fs-postcontent li, .fs-post li, .fs-textblock li
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+    font-family: 'Droid Sans Mono', Helvetica, sans-serif;
    text-align: justify;
    color: #161616;
    margin: 5px 0 5px 11px;
