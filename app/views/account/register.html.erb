@@ -189,10 +189,12 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
 <div id="condizioni" title="Condizioni di utilizzo" class="hidden" style="overflow: hidden;">
 </div>
 <script type="text/javascript" language="javascript">
+    var that;
     function Leggi() {
         //clean it
         //$("#condizioni").dialog("destroy")
         //set new
+
         $('#condizioni').dialog({
             autoOpen: true,
             width: 700,
@@ -201,19 +203,40 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
             draggable: true,
             title: 'Condizioni di utilizzo',
             bgiframe: true,
-            modal: true,
+            modal: false,
             open: function (event, ui) {
                 var url = '<%= condition_path %>';
                 $(this).load(url);
+                $('.ui-widget-overlay').bind('click', function() {
+                  $('#condizioni').dialog('close');
+                })
             },
             buttons: {
-                "Ho letto": function () {
-                    $('#user_condition').prop('checked', true);
-                    //$('#condizioni').dialog("close");
-                    //$(this).dialog("close");
-                }
+              //close: function(ev, ui) {
+              //  //$(this).remove();
+              //  $('#condizioni').dialog("close");
+              //},
+              "Ho letto": function (ev, ui) {
+                  $('#user_condition').prop('checked', true);
+                  //$('#condizioni').dialog("close");
+                  //$(this).dialog("close");
+                  //$(this).dialog('close').remove();
+                  //$(that).dialog("close");
+                  //if ($( this ).is( ":ui-dialog" ) || $( this ).is( ":data(dialog)" ))
+                  //   $(this).dialog("close");
+                  //$(".ui-dialog-page").dialog("close");
+                  //$('#pops').dialog("close");
+                  //$("#condizioni").dialog().remove();
+                  //if( $("#condizioni").dialog("isOpen")===true ) {
+                  //  $("#condizioni").dialog("close");
+                  //}
+                  //$(this).dialog('destroy').remove()
+                  //that.hide();
+              }
             }
         });
+
+        that = $("#condizioni").dialog();
     }
 </script>
   </div>
@@ -231,6 +254,8 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
 </div>
 <script type="text/javascript" language="javascript">
     function Inform() {
+        //$("#informativa").dialog("open");
+
         //clean it
         //$("#informativa").dialog("destroy")
         //set new
@@ -250,13 +275,17 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
                 $(this).load(url);
             },
             buttons: {
-                "Acconsento": function () {
-                    var that = this;
-                    //$('input[name=subAna.Consensus]').attr('checked', true);
-                    $('#user_Consensus').prop('checked', true);
-                    //$('#informativa').dialog("close");
-                    //$(this).dialog("close");
-                    $(that).dialog("close");
+              "Acconsento": function () {
+                  //var that = this;
+                  //$('input[name=subAna.Consensus]').attr('checked', true);
+                  $('#user_Consensus').prop('checked', true);
+                  //$('#informativa').dialog("close");
+                  //$(this).dialog("close");
+                  //$(that).dialog("close");
+                  //if( $("#informativa").dialog("isOpen")===true ) {
+                  //  $("#informativa").dialog("close");
+                  //}
+                  $(this).dialog('destroy').remove()
                 }
             }
         });
@@ -280,5 +309,6 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
   </div>
 </fieldset>
 
+<div id="pops" title="" class="hidden" style="overflow: hidden;"></div>
 <%= submit_tag l(:button_submit), :class => "finish" %>
 <% end %>

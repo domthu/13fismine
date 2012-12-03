@@ -18,6 +18,10 @@
         $( "#button" ).click(function(){
             $( ".newClass" ).switchClass( "newClass", "anotherNewClass", 1000 );
             $( ".anotherNewClass" ).switchClass( "anotherNewClass", "newClass", 1000 );
+            if (($("#button").text()) == "Si legge male?")
+              $("#button").text("Forse meglio prima?")
+            else
+              $("#button").text("Si legge male?")
             return false;
         });
     });
