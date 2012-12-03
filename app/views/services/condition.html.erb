@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-EN">
+<head><!-- Created by DomThu & SPecchiaSoft -->
+  <meta charset="utf-8"/>
+  <title>FiscoSport condizioni di utiliso</title>
+  <%= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
+  <%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
+  <%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
+  <style>
+    .toggler { width: 90%; height: 200px; position: relative; }
+    #button { padding: .5em 1em; text-decoration: none; }
+    #effect { position: relative; }
+    .newClass { width: 50%;  padding: 1em; letter-spacing: 0; font-size: 1.0em; margin: 0; }
+    .anotherNewClass { text-indent: 40px; letter-spacing: .4em; width: 100%; height: 350px; padding: 30px; margin: 10px; font-size: 1.6em; overflow: scroll; }
+    </style>
+    <script>
+    $(function() {
+        $( "#button" ).click(function(){
+            $( ".newClass" ).switchClass( "newClass", "anotherNewClass", 1000 );
+            $( ".anotherNewClass" ).switchClass( "anotherNewClass", "newClass", 1000 );
+            return false;
+        });
+    });
+    </script>
+</head>
+<body>
+<div>
+  <table cellspacing="0" cellpadding="0" border="0" width="100%" style="height: 100%">
+    <tbody>
+      <tr>
+        <td>
+          <a href="#" id="button" class="ui-state-default ui-corner-all">Si legge male?</a>
+        </td>
+        <td style="text-align: right;">
+          E-mail: <a class="pri" title="Manda una e-mail" href="mailto:segreteria@fiscosport.it"><b>segreteria@fiscosport.it</b></a><br />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="left" valign="top" class="privacy">
+          <div class="toggler">
+            <div id="effect" class="newClass ui-corner-all">
+<p>
+A seguito della registrazione, l'utente usufruisce del libero accesso ad ogni partizione del sito www.fiscosport.it  per un periodo di prova gratuita di 40 giorni (che si riduce a 10 giorni se il sistema riconosce l'utente già registrato con altro codice e che si azzera se lo stesso utente effettua la registrazione con tre diversi codici per usufruire più volte della registrazione gratuita).
+</p> <br />
+<p>
+Il periodo gratuito aumenta di 60 giorni se l’utente utilizza un codice promozione/segnalatore (se ne è in possesso) oppure se viene segnalato da un collaboratore o da un utente Fiscosport abilitato. Per maggiori informazioni contattare la Segreteria Fiscosport (dal lunedì al venerdì: tel. 0183/76.72.06 – e-mail: segreteria@fiscosport.it). Il periodo è maggiore se abilitato da CONI/FSN/DSA/EPS aderente al progetto 2007-2010 (es. 31/12/2010 per i C.R. e C.P. CONI o Fsn/Dsa/Eps aderenti).
+</p> <br />
+<p>
+La registrazione gratuita dell'utente, in ogni caso, non impegna lo stesso per il futuro, in quanto al termine del periodo gratuito verranno automaticamente disattivate le chiavi di accesso alla partizione riservata (>>), mentre potrà sempre mantenere la posizione per consultare la partizione gratuita (>>) e ricevere le e-mail di segnalazione degli aggiornamenti e delle novità.
+</p> <br />
+<p>
+L’utente autorizza fin d'ora FISCOSPORT srl all'invio tramite e-mail delle NEWSLETTERS all'indirizzo di posta elettronica indicato sopra, e-mail che potranno contenere oltre alle informazioni di natura fiscale, eventuali banner pubblicitari
+</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
