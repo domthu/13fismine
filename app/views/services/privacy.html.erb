@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-EN">
+<head><!-- Created by DomThu & SPecchiaSoft -->
+  <meta charset="utf-8"/>
+  <title>FiscoSport privacy</title>
+  <%= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
+  <%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
+  <%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
+  <style>
+    .toggler { width: 90%; height: 200px; position: relative; }
+    #button { padding: .5em 1em; text-decoration: none; }
+    #effect { position: relative; }
+    .newClass { width: 50%;  padding: 1em; letter-spacing: 0; font-size: 1.0em; margin: 0; }
+    .anotherNewClass { text-indent: 40px; letter-spacing: .4em; width: 100%; height: 350px; padding: 30px; margin: 10px; font-size: 1.6em; overflow: scroll; }
+    </style>
+    <script>
+    $(function() {
+        $( "#button" ).click(function(){
+            $( ".newClass" ).switchClass( "newClass", "anotherNewClass", 1000 );
+            $( ".anotherNewClass" ).switchClass( "anotherNewClass", "newClass", 1000 );
+            return false;
+        });
+    });
+    </script>
+</head>
+<body>
+<div>
+  <table cellspacing="0" cellpadding="0" border="0" width="100%" style="height: 100%">
+    <tbody>
+      <tr>
+        <td>
+          <a href="#" id="button" class="ui-state-default ui-corner-all">Non vedo bene</a>
+        </td>
+        <td style="text-align: right;">
+          E-mail: <a class="pri" title="Manda una e-mail" href="mailto:info@commercioetico.it"><b>info@commercioetico.it</b></a><br />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="left" valign="top" class="privacy">
+          <div class="toggler">
+            <div id="effect" class="newClass ui-corner-all">
+INFORMATIVA D.Lgs. 30/6/2003 n. 196 - "Riservatezza dei dati personali":<br /> FISCOSPORT srl, editore e titolare del sito, La informano che i Suoi dati verranno trattati in versione informatica o cartacea, secondo modalità strettamente strumentali ai SERVIZI FISCOSPORT.<br /> Essi saranno trattati direttamente dalle nostre aziende, da ns. dipendenti e/o collaboratori, dai nostri Consulenti FISCOSPORT.<br /> I Suoi dati non potranno essere da noi comunicati ad altri.<br /> La informiamo inoltre, che ai sensi del citato decreto, Lei ha il diritto di conoscere, aggiornare, cancellare, rettificare i Suoi dati o opporsi all'utilizzo degli stessi, se trattati in violazione della legge.<br /> Onde permettere al nostro server il riconoscimento automatico dell'utente ed evitare così ogni volta la digitazione di login e password, le Sue informazioni saranno registrate in un cookie sul Suo computer e saranno utilizzate automaticamente quando Lei visiterà il sito www.fiscosport.it
+
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
