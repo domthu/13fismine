@@ -64,6 +64,15 @@ class ServicesController < ApplicationController
 
     render :json => { :success => true, :available => true }
   end
+
+  def privacy
+    render :template => "services/privacy", :layout => false
+  end
+
+  def condition
+    #puts "condition"
+    render :template => "services/condition", :layout => false
+  end
 end
 
 #<% for usr in @users -%>

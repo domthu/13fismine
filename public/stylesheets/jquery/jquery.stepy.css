@@ -12,7 +12,7 @@
 
 a:link, a:visited, a:active, a:hover {/*color: #FFF;*/}
 .step {
-	border: 1px solid #DDD; clear: left; font: 10px verdana; width: 100%; padding:5px;
+	border: 1px solid #DDD; clear: left; font: 10px verdana; width: 97%; padding:5px;
 	-khtml-border-radius: 3px; -moz-border-radius: 3px; -opera-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
 }
 .step label { /*color: #55A616;*/ display: block; font: bold 12px verdana; margin: 10px 0 3px 7px; }

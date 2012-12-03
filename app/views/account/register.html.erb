@@ -180,9 +180,88 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
   </div>
 
   <div class="box">
+    <p><label for="user_condition"><%=l(:field_condition)%> <span class="required">*</span></label>
+    <p><label><%= check_box_tag 'user_condition', 1, false %> <%=l(:field_condition_readed)%></label></p>
+    <p>
+    Leggo le <a href='#' id='acondizioni'
+        class='pri' onclick='Leggi(); return false;'><b>condizioni di utilizzo</b></a>
+    </p>
+<div id="condizioni" title="Condizioni di utilizzo" class="hidden" style="overflow: hidden;">
+</div>
+<script type="text/javascript" language="javascript">
+    function Leggi() {
+        //clean it
+        //$("#condizioni").dialog("destroy")
+        //set new
+        $('#condizioni').dialog({
+            autoOpen: true,
+            width: 700,
+            height: 550,
+            resizable: true,
+            draggable: true,
+            title: 'Condizioni di utilizzo',
+            bgiframe: true,
+            modal: true,
+            open: function (event, ui) {
+                var url = '<%= condition_path %>';
+                $(this).load(url);
+            },
+            buttons: {
+                "Ho letto": function () {
+                    $('#user_condition').prop('checked', true);
+                    //$('#condizioni').dialog("close");
+                    //$(this).dialog("close");
+                }
+            }
+        });
+    }
+</script>
+  </div>
+
+
+  <div class="box">
     <p><label for=""><%=l(:field_privacy)%> <span class="required">*</span></label>
-    <p><label for=""><%=l(:field_privacy_accept)%> <span class="required">*</span></label>
-    <p><label for=""><%=l(:field_condition)%> <span class="required">*</span></label>
+    <p><label><%= check_box_tag 'user_Consensus', 1, false %> <%=l(:field_privacy_accept)%></label></p>
+    <p>
+    Acconsento al <a href='#' id='ainformativa'
+        class='pri' onclick='Inform(); return false;'><b>trattamento dei dati</b></a>
+    </p>
+
+<div id="informativa" title="Informativa" class="hidden" style="overflow: hidden;">
+</div>
+<script type="text/javascript" language="javascript">
+    function Inform() {
+        //clean it
+        //$("#informativa").dialog("destroy")
+        //set new
+        $('#informativa').dialog({
+            autoOpen: true,
+            width: 700,
+            show: "blind",
+            hide: "explode",
+            height: 550,
+            resizable: true,
+            draggable: true,
+            title: 'Informativa',
+            bgiframe: true,
+            modal: true,
+            open: function (event, ui) {
+                var url = '<%= privacy_path %>';
+                $(this).load(url);
+            },
+            buttons: {
+                "Acconsento": function () {
+                    var that = this;
+                    //$('input[name=subAna.Consensus]').attr('checked', true);
+                    $('#user_Consensus').prop('checked', true);
+                    //$('#informativa').dialog("close");
+                    //$(this).dialog("close");
+                    $(that).dialog("close");
+                }
+            }
+        });
+    }
+</script>
   </div>
 
 </fieldset>

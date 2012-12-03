@@ -16,6 +16,8 @@ ActionController::Routing::Routes.draw do |map|
   map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle', :conditions => {:method => [:get]}
   #AJAX post usando JQuery
   map.emailctrl 'emailctrl', :controller => 'services', :action => 'emailctrl', :conditions => {:method => [:post]}
+  map.privacy 'privacy', :controller => 'services', :action => 'privacy', :conditions => {:method => [:get]}
+  map.condition 'condition', :controller => 'services', :action => 'condition', :conditions => {:method => [:get]}
 
   # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome' #REDMINE HOME
