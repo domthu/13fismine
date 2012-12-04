@@ -2,6 +2,8 @@
 <%= javascript_include_tag "jquery/jquery.validate.unobtrusive.min.js"%>
 <%= javascript_include_tag "jquery/jquery.stepy.min.js"%>
 <%= stylesheet_link_tag 'jquery/jquery.stepy.css', :media => 'all' %>
+<%= javascript_include_tag "jquery/select2.min.js"%>
+<%= stylesheet_link_tag 'jquery/select2.css' %>
 <script type="text/javascript">
  $(document).ready(function() {
     HideAvaibility("user_mail");
@@ -66,6 +68,7 @@
             }
             else
                 HideAvaibility("user_mail");
+            $("#user_login").val(this.val());
         });
         $("#user_login").keyup(function () {
             if (($(this).val() + "").length > 1) {
@@ -74,6 +77,25 @@
             else
                 HideAvaibility("user_login");
         });
+        var urlzone = '<%= zone_path %>';
+        $('#user_Town').autocomplete({
+            source: urlzone,
+            select: function (event, ui) {
+                if (ui.item) {
+                    //$('#user_Town').val(ui.item.Text);
+                    //$('#user_comune_id').val(ui.item.Value);
+                    $('#user_comune_id').val(ui.item.hiddenvalue);
+                }
+                return true;
+            },
+            minLength: 2
+        }).data("autocomplete")._renderItem = function (ul, item) {
+            return $("<li></li>")
+				    .data("item.autocomplete", item)
+				    //.append("<a id='" + item.Value + "'>" + item.Text + "</a>")
+				    .append("<a>" + item.label + "</a>")
+				    .appendTo(ul);
+        };
     });
     function isValidEmailAddress(emailAddress) {
       var pattern = new RegExp(/^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i);
@@ -116,9 +138,8 @@
 I campi contrassegnati da <b style="color: red;">* sono obbligatori</b><br />
 La corretta indicazione del campo “affiliato a” permette di usufruire dell’eventuale periodo gratuito concesso per effetto dell’adesione del CONI o della Fsn/Dsa/Eps al progetto globale. >br /> Il sistema riconoscerà l’utente affiliato anche in caso di successiva adesione dell’organismo.
 </p>
-
-<% form_tag({:action => 'register'}, :class => "tabular", :id => "steps") do %>
 <%= error_messages_for 'user' %>
+<% form_tag({:action => 'register'}, :class => "tabular", :id => "steps") do %>
 
 <fieldset class="" title="Anagrafica">
   <legend>Step1: Dati personali</legend>
@@ -141,9 +162,25 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
     <%= text_field 'user', 'titolo'  %></p>
 
     <p><label for="user_role_id"><%=l(:field_role)%> <span class="required">*</span></label>
-    <%= hidden_field :user, :role_id %></p>
+    <%= hidden_field :user, :role_id %>
     <%= text_field_tag('userrole')  %></p>
-  </div>
+
+    <p><label for="user_comune_id"><%=l(:field_comune)%><span class="required">*</span></label>
+    <%= hidden_field :user, :comune_id %>
+    <%= text_field_tag('user_Town')  %>
+    <small>Digitare almeno 2 caratteri per iniziare la ricerca</small></p>
+
+  <p><label for="user_indirizzo"><%=l(:field_indirizzo)%></label>
+  <%= text_field_tag('user_indirizzo')  %></p>
+
+  <p><label for="user_telefono"><%=l(:field_telefono)%></label>
+  <%= text_field_tag('user_telefono')  %></p>
+
+  <p><label for="user_fax"><%=l(:field_fax)%></label>
+  <%= text_field_tag('user_fax')  %></p>
+
+    </div>
+
 </fieldset>
 
 <fieldset class="" title="Credenziali" style="display: none;">
@@ -277,7 +314,6 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
             buttons: {
               "Acconsento": function () {
                   //var that = this;
-                  //$('input[name=subAna.Consensus]').attr('checked', true);
                   $('#user_Consensus').prop('checked', true);
                   //$('#informativa').dialog("close");
                   //$(this).dialog("close");

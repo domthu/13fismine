@@ -18,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   map.emailctrl 'emailctrl', :controller => 'services', :action => 'emailctrl', :conditions => {:method => [:post]}
   map.privacy 'privacy', :controller => 'services', :action => 'privacy', :conditions => {:method => [:get]}
   map.condition 'condition', :controller => 'services', :action => 'condition', :conditions => {:method => [:get]}
+  map.zone 'zone', :controller => 'services', :action => 'zone', :conditions => {:method => [:get]}
 
   # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome' #REDMINE HOME

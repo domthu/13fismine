@@ -73,6 +73,42 @@ class ServicesController < ApplicationController
     #puts "condition"
     render :template => "services/condition", :layout => false
   end
+
+  def zone
+    s =  params[:term] ? params[:term].to_s : ""
+    @towns = Comune.find(
+      :all,
+      :limit => 10,
+      :include => [{:province => :region}],
+      :select => "comunes.id as id, comunes.name as c_name, comunes.cap as c_cap, comunes.cod_fisco as c_cod_fisco, provinces.name as p_name, provinces.sigla as p_sigla, regions.name as r_name",
+      :conditions => ['comunes.name LIKE ? or provinces.sigla LIKE ? or provinces.name LIKE ? or regions.name LIKE ?', "%#{s}%", "%#{s}%", "%#{s}%", "%#{s}%"],
+      :order => 'comunes.name'
+    )
+    #:joins => [{:province => :region}],   --> INNER JOIN
+    #:include --> LEFT OUTER JOIN
+    #:select => "distinct Comune
+    #:conditions => {:a => {:a1 => Time.now.midnight. ... Time.now}},
+    #:group_users => "b.b2, c.c2"
+
+    #ATTENZIONE Gestire la risposta vuota dal JQuery Autocomplete
+    if (@towns.nil? or @towns.count < 1)
+      return render :json => [{
+        :label => "0",
+        :value => "Nessuna città per la riceca -#{s}-",
+        :hiddenvalue => "0"
+      }]
+    end
+    @json_towns = @towns.collect { |e|  {
+      :label => "#{e.cap} #{e.name} (#{e.province.sigla}) [#{e.province.region.name}]",
+      :value => "#{e.name}",
+      :hiddenvalue => "#{e.id}"
+      }
+    }
+      #:value => "#{e.c_cap} #{e.c_name} (#{e.p_sigla}) [#{e.r_name}]",
+      #:label => "#{e.c_name}",
+      #:hiddenvalue => "#{e.id}"
+    render :json => @json_towns.to_json
+  end
 end
 
 #<% for usr in @users -%>

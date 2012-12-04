@@ -92,6 +92,23 @@ class AccountController < ApplicationController
     else
       @user = User.new(params[:user])
       @user.admin = false
+      #Collect fs custom data
+
+      #Region Province Comune
+      if (params[:user][:comune_id])
+        #puts "CCCCCCCCCCCCCCCCC #{params[:user][:comune_id]} CCCCCCCCCCC"
+        @user.comune_id = params[:user][:comune_id].to_i
+        #INUTILE basta usare comune_id
+        #retreive CAP, Città, ProvinceID
+        @Town = Comune.find(params[:user][:comune_id])
+        if @Town #province_id region_id	cap
+          @user.cap = @Town.cap
+          @user.prov = @Town.province_id
+          @user.prov = @Town.province.sigla
+        end
+      end
+      #CONI FSN
+
       @user.register
       if session[:auth_source_registration]
         @user.activate
