@@ -1723,9 +1723,9 @@ pre
 .fs-postheader a:hover,
 .fs-postheader a.hovered
 {
-    font-size: 20px;
+    font-size: 16px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
-   font-weight: normal;
+   font-weight: bold;
    font-style: normal; /*
   font-variant: small-caps;
    text-align: center;    */
@@ -1736,14 +1736,14 @@ pre
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    text-decoration: none;
    text-align: left;
-   color: #007092;
+   color: #004977;
 }
 
 .fs-postheader a:visited, .fs-postheader a.visited
 {
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    text-decoration: none;
-   color: #007092;
+   color: #004977;
 }
 
 .fs-postheader a:hover,  .fs-postheader a.hovered
@@ -1953,8 +1953,8 @@ blockquote p,
 
 .fs-postmetadatafooter
 {
-   background: #B1EAFF;
-   background: rgba(177, 234, 255, 0.6);
+   background: #ffffff;
+   background: rgba(255, 255, 255, 0.60);
    -webkit-border-radius:10px;
    -moz-border-radius:10px;
    border-radius:10px;
