@@ -6,7 +6,7 @@
       <div class="fs-postmetadataheader">
         <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %> &nbsp;::&nbsp; <%= articolo.section %></span>
         <h5 class="fs-postheader">
-          <%= link_to(h(smart_truncate(articolo.titolo, 80)),
+          <%= link_to(h(smart_truncate(articolo.titolo, 110)),
                        url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false))
           %>
         </h5>
