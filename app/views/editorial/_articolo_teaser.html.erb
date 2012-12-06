@@ -1,54 +1,64 @@
 <h1 style="display:none">__PARTIAL ARTICOLO TEASER</h1>
+
 <article class="fs-post fs-article">
   <% if articolo %>
 
-  <div class="fs-postmetadataheader">
-    <h5 class="fs-postheader">
-      <%= link_to (h(truncate(articolo.titolo, :length => 75)),
-                   url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false))
-      %>
-    </h5>
+      <div class="fs-postmetadataheader">
+        <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %> &nbsp;::&nbsp; <%= articolo.section %></span>
+        <h5 class="fs-postheader">
+          <%= link_to(h(smart_truncate(articolo.titolo, 110)),
+                       url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false))
+          %>
+        </h5>
+      </div>
+      <div class="fs-postcontent fs-postcontent-0 clearfix">
+        <div class="fs-content-layout-wrapper layout-item-0">
+          <div class="fs-content-layout">
+            <div class="fs-content-layout-row">
+              <div class="fs-layout-cell layout-item-1" style="width: 35%;">
+
+                <div class="image-caption-wrapper" style="float:left;">
+
+                  <%= if articolo.immagine_url.nil?
+                        '<h3>no image</h3>'
+                      else
+                        image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 12)), :style => "width:200px", :class => "fs-lightbox")
+                      end
+                  %>
+                </div>
 
 
-  </div>
-  <div class="fs-postcontent fs-postcontent-0 clearfix">
-    <div class="fs-content-layout-wrapper layout-item-0">
-      <div class="fs-content-layout">
-        <div class="fs-content-layout-row">
-          <div class="fs-layout-cell layout-item-1" style="width: 35%;">
+              </div>
 
-            <div class="image-caption-wrapper" style="float:left;">
-              <%= if articolo.immagine_url.nil?
-                    '<h3>no image</h3>'
-                  else
-                    image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 12)), :style => "width:200px", :class => "fs-lightbox")
-                  end
-              %>
+              <div class="fs-layout-cell layout-item-1" style="float:left;">
+                <%= articolo.riassunto %>
+                <br/>
+                <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false) %>
+              </div>
+
+
             </div>
 
+            <span class="fs-postauthoricon"><%= h articolo.author %></span> &nbsp;
+          </div>
+          <div class="fs-postmetadatafooter">
+            <div class="fs-postheadericons fs-metadata-icons">
+              <span class="fs-postdateicon"><%= articolo.due_date %> </span> &nbsp;
 
+              <%= articolo.se_protetto ? '<span class="fs-post-access-ok">Articolo consultabile liberamente</span>' : '<span class="fs-post-access-no">Articolo riservato agli abbonati</span>' %>
+              &nbsp;
+              <span class="fs-postcommentsicon"><a href="#" title="Comments">Commenta »</a></span> &nbsp;
+
+            </div>
           </div>
 
-        <div class="fs-layout-cell layout-item-1" style="float:left;">
-          <%= articolo.riassunto %>
-          <br/>
-          <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false) %>
         </div>
-          <div class="fs-postheadericons fs-metadata-icons">
-                  <span class="fs-postdateicon"><%= articolo.due_date %> </span>  &nbsp;
-                  <span class="fs-postauthoricon"><%= h articolo.author %></span>  &nbsp;
-                  <span class="fs-postcategoryicon"><%= articolo.top_section %> :: <%= articolo.section %></span> &nbsp;
-                  <span class="fs-postcommentsicon"><a href="#" title="Comments">Commenta »</a></span>    &nbsp;
-
-                </div>
       </div>
-      </div>
-    </div>
-  </div>
 
   <% else %>
-    <br/>
-    <p class="nodata"><%= l(:label_no_data) %></p>
-    <br/>
+      <br/>
+
+      <p class="nodata"><%= l(:label_no_data) %></p>
+      <br/>
   <% end %>
 </article>
