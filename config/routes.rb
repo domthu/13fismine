@@ -19,6 +19,9 @@ ActionController::Routing::Routes.draw do |map|
   map.privacy 'privacy', :controller => 'services', :action => 'privacy', :conditions => {:method => [:get]}
   map.condition 'condition', :controller => 'services', :action => 'condition', :conditions => {:method => [:get]}
   map.zone 'zone', :controller => 'services', :action => 'zone', :conditions => {:method => [:get]}
+  map.organismi 'organismi', :controller => 'services', :action => 'organismi', :conditions => {:method => [:get]}
+  map.asso 'asso', :controller => 'services', :action => 'asso', :conditions => {:method => [:get]}
+  map.tiposigla 'tiposigla', :controller => 'services', :action => 'tiposigla', :conditions => {:method => [:get]}
 
   # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome' #REDMINE HOME
