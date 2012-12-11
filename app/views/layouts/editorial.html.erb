@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en-EN">
+<html dir="ltr" lang="en-EN" xmlns="http://www.w3.org/1999/html">
 <head><!-- Created by DomThu & SPecchiaSoft -->
   <meta charset="utf-8"/>
   <title>FiscoSport (tartist version 3) <%= h html_title %></title>
@@ -24,20 +24,20 @@
   <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
-
-  <%= javascript_include_tag "jquery.js"%>
+  <%= javascript_include_tag "jquery/jquery-1.8.2.min.js"%>
+  <%#javascript_include_tag "jquery.js"%>
   <%#= javascript_include_tag "jquery/jquery-1.7.1.min.js" %>
   <%#= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
   <%# javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
-  <%# stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
-  <%#= javascript_include_tag "jquery/jquery-1.8.3.js" %>
+  <%#stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
   <%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
   <%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
 
   <%= javascript_include_tag "script.js" %>
   <%= javascript_include_tag "script.responsive.js" %>
-  <%# javascript_include_tag "jquery.jcarousel.min.js" %>
-  <%= javascript_include_tag "jcarousellite_1.0.1c4.js" %>
+  <%= javascript_include_tag "jquery.carouFredSel-6.1.0.js" %>
+
+  <%# javascript_include_tag "jcarousellite_1.0.1c4.js" %>
 
 <script type="text/javascript">
    //$(function () {
@@ -61,22 +61,23 @@
             });
         };
 
-        //pubblicità
-        $(".newsticker-jcarousellite").jCarouselLite({
-            vertical:true,
-            hoverPause:true,
-            visible:3,
-            auto:1500,
-            speed:3000
-        });
-
-        $("input[type=submit]").button();
+       $("#carousel_assos_js").carouFredSel({
+      		items				: 3,
+      		scroll : {
+      			items			: 3,
+      			easing			: "elastic",
+      			duration		: 2000,
+      			pauseOnHover	: true
+      		}
+      	});
+       // $("input[type=submit]").button();
 
         //Focus
         //< %= javascript_tag "$('#username').focus();" %>
         $('#username').focus();
     });
-</script>
+  </script>
+
 </head>
 <body>
 <div id="fs-main">
@@ -105,6 +106,9 @@
     <nav class="fs-nav clearfix">
       <%= render_navigation(:level => 1) %>
     </nav>
+    <div id="fs-tramenu-wrapper">
+    <%= render :partial => 'tramenu_block' %>
+    </div>
     <nav class="fs-menu2-nav clearfix">
       <%= render_navigation(:level => 2) %>
     </nav>

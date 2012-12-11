@@ -1131,7 +1131,7 @@ div.fs-block img
 
 .fs-blockcontent
 {
-   padding:3px;
+   padding: 0;
    margin:0 auto;
    color: #00212D;
    font-size: 13px;
@@ -1237,7 +1237,7 @@ button.fs-button
    vertical-align: middle;
    white-space: nowrap;
    text-align: center;
-   color: #423000;
+   color: #d20401;
    margin: 0 5px 0 0;
    overflow: visible;
    cursor: pointer;
@@ -1281,7 +1281,7 @@ input.fs-button
 
 .fs-button.active, .fs-button.active:hover
 {
-   background: #818181;
+   background: #006184;
    -webkit-border-radius:3px;
    -moz-border-radius:3px;
    border-radius:3px;
@@ -1292,12 +1292,12 @@ input.fs-button
    margin:0 auto;
 }
 .fs-button.active, .fs-button.active:hover {
-   color: #3E2C00 !important;
+   color: #f8da00 !important;
 }
 
 .fs-button.hover, .fs-button:hover
 {
-   background: #9D9D9D;
+   background: #006184;
    -webkit-border-radius:3px;
    -moz-border-radius:3px;
    border-radius:3px;
@@ -1308,7 +1308,7 @@ input.fs-button
    margin:0 auto;
 }
 .fs-button.hover, .fs-button:hover {
-   color: #002D3E !important;
+   color: #f8da00 !important;
 }
 
 input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
@@ -2376,7 +2376,7 @@ img.fs-lightbox-image.active
 {
    border-right:1px dotted #68D7FF;
    margin:0 auto;
-   width: 300px;
+   width: 260px;
 }
 
 .fs-content-layout .fs-content
