@@ -16,6 +16,7 @@ class EditorialController < ApplicationController
 
   #HOME > TOP_MENU > TOP_SECTION > SECTION > ARTICOLO
   def home
+    @xbanner = GroupBanner.find(:all,  :order => 'priorita DESC', :conditions => ["se_visibile = 1"] )
     @base_url = params[:pages]
 #    @last_editorial = Project.visible.find(:all, :order => 'lft')
 #    @p = Project.find(:first, :order => 'created_on DESC')
@@ -244,7 +245,8 @@ class EditorialController < ApplicationController
   def help
   end
 
-  def about
+  def banners
+    @xbanner = GroupBanner.find(:all,  :order => 'priorita DESC', :conditions => ["se_visible = 1"] )
   end
 
 #{"all_words"=>"1",

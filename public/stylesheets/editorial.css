@@ -39,7 +39,9 @@
 }
 
 /* fine menu dell'utente */
-/*    immage rotator in banner1 */
+
+
+/*
 
 .newsticker-jcarousellite {
     width: 100%;
@@ -61,8 +63,35 @@
 }
 
 .newsticker-jcarousellite .info {
-    width: 100%;
+
+ width: 100%;
     display: block;
+    margin-bottom: 10px;
+}
+
+.newsticker-jcarousellite {
+    width: 100%;
+}
+
+.newsticker-jcarousellite ul li {
+    list-style: none;
+    display: block;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center;
+}
+
+.newsticker-jcarousellite .thumbnail {
+    float: left;
+    width: 100%;
+    height: 110px;
+
+}
+
+.newsticker-jcarousellite .info {
+ width: 100%;
+    display: block;
+
     margin-bottom: 10px;
 }
 
@@ -93,3 +122,4 @@
 .newsticker-jcarousellite ul li:before {
     content: none !important;
 }
+*/

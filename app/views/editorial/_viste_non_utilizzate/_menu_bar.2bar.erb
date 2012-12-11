@@ -1,0 +1,35 @@
+ <div class="fs-bar fs-nav">
+<div class="fs-nav-outer">
+  <div class="fs-nav-wrapper">
+
+	<ul class="fs-hmenu">
+		<li>
+			<a href="./1" class="active">sezione 1</a>
+           <%= render_navigation :level => 1 %>
+
+		</li>
+		<li>
+			<a href="./2">sezione 2 (sono da fare)</a>
+		</li>
+	</ul>
+   </div>
+</div>
+</div>
+
+
+  <div class="fs-nav-wrapper">
+    <div class="fs-bar fs-snav">
+	<ul class="fs-hmenus">
+		<li>
+          <%= render_navigation :level =>2 %>
+			<a href="./" class="active">Categoria 1</a>
+</li>
+
+
+		<li>
+			<a href="./">Categoria 2</a>
+		</li>
+	</ul>
+    </div>
+
+</div>
