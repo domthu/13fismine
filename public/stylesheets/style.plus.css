@@ -26,7 +26,6 @@
     text-align: center;
     margin-bottom: 3px ;
 
-
 }
  /*  inizio  -  -  -  -  -  -   tramenu   primo blocco a sx -  -  -  -  -  -  */
 
@@ -35,20 +34,20 @@
     height: 125px;
     display: block;
     float: left;
+    /*
+    background: url('/images/commons/offerta30.png') no-repeat center top;;   */
     border-right: dotted 1px #ffffbb;
 }
 /*prova gratis */
 #fs-prova-gratis-fields {
     overflow: hidden;
-   margin-left:17px;
+    margin:-2px 0 0 17px;
 }
-
 .fs-prova-gratis-txt {
     display: inline-block;
-    margin-left: 7px;
+    margin: 0 0 2px 4px;
     float: left;
 }
-
 
 .fs-prova-gratis {
     height: 40px;
@@ -56,26 +55,53 @@
 }
 
 #fs-prova-gratis-btn {
-    margin-left: 7px;
+    margin-left: 4px;
     width: 107px;
 }
 
 #fs-prova-gratis-info {
-    border-top: solid 2px white;
-    font-size: 11px;
+    font-family: 'Droid Sans',Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
     color: #5f0100;
     position: relative;
     margin: 7px auto;
     padding-left: 7px;
 }
 
-.fs-prova-gratis-info span, .fs-prova-gratis-info a {
+.fs-prova-gratis-info span  {
+    display:block;
+    font-size: 10px;
+    color: #45535d;
+    font-weight: normal;
+    margin:5px 0 0 -10px;
+    text-align: center;
+    width:98%;
+
+}
+.fs-prova-gratis-info span a{
+    font-size: 10px;
+    color: #23282f;
+    font-weight: normal;
+    text-decoration: underline;
+}
+.fs-prova-gratis-info a {
     font-size: 11px;
     color: #45535d;
     font-weight: bold;
 }
+#fs-prova-gratis-info label {
+ float:left;
+   margin-top:-3px;
+}
 
- /*  fine 1  -  -  -  -  -  -   tramenu   primo blocco a sx -  -  -  -  -  -  */
+.fs-prova-gratis-righe{
+display:block;
+float:left;
+    margin-left: 5px;
+
+}
+/*  fine 1  -  -  -  -  -  -   tramenu   primo blocco a sx -  -  -  -  -  -  */
  /*  inizio 2 -  -  -  -  -  -   tramenu   secondo blocco a sx -  -  -  -  -  -  */
 
 #fs-tramenu-blocco2 {
@@ -94,6 +120,7 @@
     padding: 0 15px;
     height: 125px;
     width: 300px;
+    margin-top: -7px;
 }
 
 .list_assos_carousel ul {
@@ -165,7 +192,7 @@ width:100%;
     padding: 4px 0;
     color: #00678C !important;
     font-size: 11px;
-    font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+    font-family: 'Droid Sans', Helvetica, Sans-Serif;
     font-weight: bold;
     font-style: normal;
     text-shadow: none;
@@ -179,12 +206,14 @@ width:100%;
     width:126px;
     float:left;
 }
-.fs-form-login-remember{
+.gravatar{
+    position: absolute;
+    top:21px;
+    right:7px;
 
 }
 .fs-form-login-remember label.fs-checkbox{
     width:100px;
-    border:dotted 1px #696969;
     float:left;
     font-size: 11px;
     font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
@@ -194,7 +223,12 @@ width:100%;
 #fs-form-login-btn{
     width:105px;
 }
-
+.fs-pass a:link{
+    font-family: 'Droid Sans',Arial, sans-serif;
+    font-size: 11px;
+    color: #5f0100;
+    position: relative;
+}
 
  /*  fine  3 -  -  -  -  -  -   tramenu   terzo blocco   -  -  -  -  -  -  */
 
@@ -247,6 +281,8 @@ h3.fs-postheader {
 .fs-art-sezione {
     background: #016284;
     color: #fff;
+    font-size: 12px;
+    font-family: 'Droid Sans Mono', Helvetica, Sans-Serif;
     /*
     background: linear-gradient(top, #FFFFFF 0, #80DDFF 100%) no-repeat;
     background: -webkit-linear-gradient(top,#80DDFF 0, #d0e6e8 50%, #80DDFF 100%) no-repeat;

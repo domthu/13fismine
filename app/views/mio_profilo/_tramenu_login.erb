@@ -1,12 +1,13 @@
 <% if User.current && User.current.logged? %>
-    <p class="fs-tramenu-blockheader x-granata">Utente:&nbsp; <%= User.current.name() %></p>
-    <%= gravatar_for(User.current) unless !User.current %>
+    <p class="fs-tramenu-blockheader x-granata">Utente:&nbsp; <%= User.current.name()%></p>
+     <%= gravatar_for(User.current) unless !User.current %>
     <p>
     <div class="fs-blockcontent">
       <ul>
         <% if User.current && User.current.canbackend? %>
             <li>
-              <%= link_to "==Panello di controllo (BE)==", root_path %>
+
+              <%= link_to "Lavora con FISMINE",:controller=> 'mio_profilo', :action=>'page', :class=> 'fs-button'  %>
             </li>
             <li>
               <%= link_to l(:label_my_page), :controller => 'my', :action => 'page' %>
@@ -52,31 +53,39 @@
     <div class="fs-blockcontent">
       <% form_tag({:controller => 'account', :action => 'login'}, :method => 'post') do %>
           <%= back_url_hidden_field_tag %>
-          <fieldset class="input" style="border:none; margin-top:-7px; ">
+          <fieldset>
             <div id="fs-form-login">
               <span><%= l(:field_login)+ ':' %></span>
               <%= text_field_tag 'username', nil, :tabindex => '1' %>
 
               <span><%= l(:field_password)+ ':' %></span>
-              <%= password_field_tag 'password', nil, :tabindex => '2' %>
-              <br/>
+              <%= password_field_tag 'password', nil, :tabindex => '2' %><br/>
             </div>
 
             <div class="fs-form-login-remember">
               <label class="fs-checkbox">
-                <input type="checkbox" name="remember" value="yes" alt="Remember Me"/>Memorizza!
+                <input type="checkbox"  name="remember" value="yes" alt="Remember Me"/>Memorizza!
               </label>
             </div>
             <input type="submit" value="Accedi" name="login" id="fs-form-login-btn" class="fs-button"/>
           </fieldset>
       <% end %>
       <%= javascript_tag "$('#username').focus();" %>
-      <% if Setting.lost_password? %>
-          <div class='fs-pass'>
-            <%= link_to l(:label_password_lost), :controller => 'account', :action => 'password_recovery' %> &nbsp;||&nbsp;
-            <%= link_to l(:label_username_lost), :controller => 'account', :action => 'lost_password' %>
-          </div>
-      <% end %>
+
+      <ul>
+        <% if Setting.lost_password? %>
+            <li>
+              <%= link_to l(:label_password_lost), :controller => 'account', :action => 'password_recovery' %>
+            </li>
+            <li>
+              <%= link_to l(:label_username_lost), :controller => 'account', :action => 'lost_password' %>
+              <a href="#"></a>
+            </li>
+        <% end %>
+        <li>
+          <%= link_to l(:label_register), :controller => 'account', :action => 'register' %>
+        </li>
+      </ul>
     </div>
 <% end %>
 
