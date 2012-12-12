@@ -16,6 +16,7 @@
   <!--[if lt IE 9]>  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <!--[if lte IE 7]><%= stylesheet_link_tag 'style.ie7.css', :media => 'screen' %><![endif]-->
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Quattrocento+Sans&amp;subset=latin">
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
   <%= stylesheet_link_tag 'application_fs', :media => 'all' %>
@@ -24,20 +25,25 @@
   <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
-  <%= javascript_include_tag "jquery/jquery-1.8.2.min.js"%>
-  <%#javascript_include_tag "jquery.js"%>
+  <%# javascript_include_tag "jquery/jquery-1.8.2.min.js"%>
+  <%=javascript_include_tag "jquery.js"%>
   <%#= javascript_include_tag "jquery/jquery-1.7.1.min.js" %>
   <%#= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
   <%# javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
   <%#stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
+  <%#javascript_include_tag "src/jquery-1.3.2.js" %>
+  <%= javascript_include_tag "src/jquery.color.js" %>
+  <%=javascript_include_tag "src/jquery-glowing.js" %>
+  <%=javascript_include_tag "src/text_ticker.js" %>
+
+
+
   <%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
   <%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
 
   <%= javascript_include_tag "script.js" %>
   <%= javascript_include_tag "script.responsive.js" %>
   <%= javascript_include_tag "jquery.carouFredSel-6.1.0.js" %>
-
-  <%# javascript_include_tag "jcarousellite_1.0.1c4.js" %>
 
 <script type="text/javascript">
    //$(function () {
@@ -77,6 +83,21 @@
         $('#username').focus();
     });
   </script>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      $('.x-white').addGlow({ textColor: 'white', haloColor: '#aaa', radius: 100 });
+      $('.x-blue').addGlow({ textColor: '#00f', haloColor: '#00f', radius: 100 });
+      $('.x-yellow').addGlow({ textColor: '#F8DA00', haloColor: '#F8DA00', radius: 100 });
+      $('.x-red').addGlow({ textColor: '#f00', haloColor: '#f00', radius: 100 });
+      $('.x-granata').addGlow({ textColor: '#a03823', haloColor: '#a03823', radius: 100 });
+      $('*').bind('glow:started', console.info);
+      $('*').bind('glow:canceled', console.info);
+       // effetto sul testo di fade o slide
+      $('#fade').list_ticker({speed:3000,effect:'fade'})
+
+    });
+
+  </script>
 
 </head>
 <body>
@@ -108,6 +129,7 @@
     </nav>
     <div id="fs-tramenu-wrapper">
     <%= render :partial => 'tramenu_block' %>
+
     </div>
     <nav class="fs-menu2-nav clearfix">
       <%= render_navigation(:level => 2) %>
@@ -132,6 +154,13 @@
   </p>
 </div>
 
+<div>
+  <p>Here are some examples:</p>
+  <p><a href="http://github.com/nakajima/jquery-glow" class="white">Hover over me.</a></p>
+  <p><a class="green" href="http://github.com/nakajima/jquery-glow">Me too.</a></p>
+  <p><a class="blue" href="http://github.com/nakajima/jquery-glow">I'm blue.</a></p>
+  <p><a class="red" href="http://github.com/nakajima/jquery-glow">Redified.</a></p>
+</div>
 
 </body>
 </html>
