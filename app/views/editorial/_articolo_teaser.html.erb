@@ -1,5 +1,4 @@
 <h1 style="display:none">__PARTIAL ARTICOLO TEASER</h1>
-
 <article class="fs-post fs-article">
   <% if articolo %>
 
@@ -15,22 +14,17 @@
         <div class="fs-content-layout-wrapper layout-item-0">
           <div class="fs-content-layout">
             <div class="fs-content-layout-row">
-              <div class="fs-layout-cell layout-item-1" style="width: 35%;">
+              <div class="fs-layout-cell layout-item-1">
 
-                <div class="image-caption-wrapper" style="float:left;">
+
 
                   <%= if articolo.immagine_url.nil?
                         '<h3>no image</h3>'
                       else
-                        image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 12)), :style => "width:200px", :class => "fs-lightbox")
+                        image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 12)), :style => "width:200px", :class => "image-caption-wrapper")
                       end
                   %>
-                </div>
 
-
-              </div>
-
-              <div class="fs-layout-cell layout-item-1" style="float:left;">
                 <%= articolo.riassunto %>
                 <br/>
                 <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false) %>
