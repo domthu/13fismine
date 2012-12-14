@@ -94,13 +94,13 @@ class ServicesController < ApplicationController
     if (@towns.nil? or @towns.count < 1)
       return render :json => [{
         :label => "0",
-        :value => "Nessuna città per la riceca -#{s}-",
+        :value => "Nessuna città per la ricerca -#{s}-",
         :hiddenvalue => "0"
       }]
     end
     @json_towns = @towns.collect { |e|  {
       :label => "#{e.cap} #{e.name} (#{e.province.sigla}) [#{e.province.region.name}]",
-      :value => "#{e.name}",
+      :value => "#{e.name} #{e.cap} (#{e.province.sigla})",
       :hiddenvalue => "#{e.id}"
       }
     }
@@ -109,6 +109,81 @@ class ServicesController < ApplicationController
       #:hiddenvalue => "#{e.id}"
     render :json => @json_towns.to_json
   end
+
+  #TypeOrganization(tipo) :: CrossOrganization(sigla) :: organizations (id <--> id e user_id)
+  #Asso(ragione_sociale) :: organizations
+  # User -->  	asso_id 	cross_organization_id
+  def organismi
+    s =  params[:term] ? params[:term].to_s : ""
+    @towns = Organization.find(
+      :all,
+      :limit => 10,
+      :include => [:asso, {:cross_organization => :type_organization}],
+      :conditions => ['type_organizations.tipo LIKE ? or cross_organizations.sigla LIKE ? or assos.ragione_sociale LIKE ?', "%#{s}%", "%#{s}%", "%#{s}%"],
+      :order => 'type_organizations.tipo, cross_organizations.sigla, assos.ragione_sociale'
+    )
+    if (@towns.nil? or @towns.count < 1)
+      return render :json => [{
+        :label => "0",
+        :value => "Nessun organismo associato per la ricerca -#{s}-",
+        :hiddenvalue => "0"
+      }]
+    end
+    @json_towns = @towns.collect { |e|  {
+      :label => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: (#{e.asso.ragione_sociale})",
+      :value => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: (#{e.asso.ragione_sociale})",
+      :hiddenvalue => "#{e.id}"
+      }
+    }
+    render :json => @json_towns.to_json
+  end
+
+  #TypeOrganization :: CrossOrganization :: organizations
+  def tiposigla
+    @tmp = CrossOrganization.all(:limit => 5)
+    if params[:term]
+      @tmp = CrossOrganization.find(
+        :all,
+        :joins => [:type_organization],
+        :limit => 10,
+        :conditions => ['sigla LIKE ? or type_organizations.tipo LIKE ?', "%#{params[:term]}%", "%#{params[:term]}%"],
+        :order => 'type_organizations.tipo, sigla'
+        )
+    end
+    if (@tmp.nil? or @tmp.count < 1)
+      return render :json => [{
+        :label => "0",
+        :value => "Nessun organismo per -#{params[:term]}-"
+      }]
+    end
+    @json_tmp = @tmp.collect { |e|  {:value => "#{e.type_organization.tipo} :: #{e.sigla}" , :label => "#{e.id}"} }
+    render :json => @json_tmp.to_json
+  end
+
+  #Asso(ragione_sociale) :: organizations
+  def asso
+    @tmp = Asso.all(:limit => 5)
+    if params[:term]
+      @tmp = Asso.find(
+        :all,
+        :include => [:users, {:organization => {:cross_organization => :type_organization}}],
+        :limit => 10,
+        :conditions => ['ragione_sociale LIKE ? or users.firstname LIKE ? or users.lastname LIKE ?', "%#{params[:term]}%", "%#{params[:term]}%", "%#{params[:term]}%"],
+        :order => 'ragione_sociale'
+        )
+
+#        :conditions => ['ragione_sociale LIKE ? or user.firstname LIKE ? or user.lastname LIKE ?', "%#{params[:term]}%", "%#{params[:term]}%", "%#{params[:term]}%"],
+    end
+    if (@tmp.nil? or @tmp.count < 1)
+      return render :json => [{
+        :label => "0",
+        :value => "Nessuna associazione per -#{params[:term]}-"
+      }]
+    end
+    @json_tmp = @tmp.collect { |e|  {:value => "Organismo #{e.ragione_sociale} (#{e.users.count()}) #{e.organization.cross_organization.type_organization.tipo} :: #{e.organization.cross_organization.sigla}" , :label => "#{e.id}"} }
+    render :json => @json_tmp.to_json
+  end
+
 end
 
 #<% for usr in @users -%>

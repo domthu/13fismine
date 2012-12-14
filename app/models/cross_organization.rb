@@ -30,6 +30,11 @@ class CrossOrganization < ActiveRecord::Base
 
   def organization_for_user(user)
     asso_id = user.nil? ? -1 : user.asso_id
+    #? non sense to filter by self.id. filter only by asso_id
+    #Organization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", {
+    #:co_id => self.id,
+    #:asso_id => asso_id}]
+    #)
     Organization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", {
     :co_id => self.id,
     :asso_id => asso_id}]

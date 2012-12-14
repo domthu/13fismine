@@ -107,7 +107,12 @@ class AccountController < ApplicationController
           @user.prov = @Town.province.sigla
         end
       end
-      #CONI FSN
+      #STEP3 CONI FSN
+      if (params[:user][:asso_id])
+        params[:user][:organismo_id]
+        params[:user][:tiposigla_id]
+        params[:user][:asso_id]
+      end
 
       @user.register
       if session[:auth_source_registration]
