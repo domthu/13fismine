@@ -1,5 +1,6 @@
 <div id="fs-tramenu-blocco1">
 <% if User.current && User.current.logged? %>
+      <h4> In caso di utente loggato in questo spazio si puo' visulizzare la scadenza dell'abbonamento la proposta di rinnovo o altro contenuto ...</h4>
   <% if User.current.canbackend? %>
     <%= link_to '====Accesso al backend====', home_path %>
   <% else %>

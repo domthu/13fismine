@@ -19,16 +19,19 @@ a:link, a:visited, a:active, a:hover {/*color: #FFF;*/}
 .step legend { color: #9FC898; font: bold 12px verdana; padding: 0 2px 3px 2px; }
 .step input, .step textarea, .step select { border: 1px solid #AAA; font: 10px verdana; margin-left: 7px; }
 
-.error-image { background: url('../Images/error.png') no-repeat right top; }
+.error-image { background: url('/images/false.png') no-repeat right top; }
 
 .stepy-titles { list-style: none; margin: 0; padding: 0; width: 100%; }
-.stepy-titles li { color: #DDD; cursor: pointer; font: bold 14px verdana; float: left; padding: 10px; }
+
+.stepy-titles li { color: #9F0100; cursor: pointer; font: bold 14px verdana; float: left; padding: 10px; border:solid 1px #d3d3d3; }
 .stepy-titles li span { font: 11px verdana; display: block; }
 .stepy-titles .current-step { color: #369; cursor: auto; }
-
+#stepy-titles-0, #stepy-titles-1 , #stepy-titles-2 {
+    border: 2px dotted red;
+}
 /*** Optionaly (jQuery Validate) ***/
 
 .error { background-color: #FAF4F4; }
 
-label.error { background: url('../Images/alert.png') no-repeat; color: #DE5130; display: block; float: left; font: 10px verdana; height: 13px; margin: 3px 3px 0 10px; padding-left: 21px; padding-top: 2px; }
+label.error { background: url('/images/exclamation.png') no-repeat; color: #DE5130; display: block; float: left; font: 10px verdana; height: 13px; margin: 3px 3px 0 10px; padding-left: 21px; padding-top: 2px; }
 /*.validation-summary-errors{float: left;}*/

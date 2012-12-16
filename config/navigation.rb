@@ -31,20 +31,21 @@ SimpleNavigation::Configuration.run do |navigation|
             #sub_nav1.dom_class = 'art-hmenu'
 
           end
+
           sub_nav1.dom_class='fs-menu3-hmenu'
         end #primary.item
         primary.dom_class = 'fs-menu2-hmenu'
-      end #top_menus
 
+      end #top_menus
+      primary.item :key_9, 'Quesiti', quesiti_path
     end
     menu_generale.item :key_2, 'Chi Siamo', chisiamo_path
     menu_generale.item :key_3, 'Servizi alle Associazioni', servizi_path
     menu_generale.item :key_5, 'Lavora con Noi', lavora_path
     menu_generale.item :key_6, 'Convegni', convegni_path
     menu_generale.item :key_7, 'Enti e Federazioni', enti_path
-    menu_generale.item :key_8, 'Abbonamenti', abbonamenti_path
-    menu_generale.item :key_9, 'Quesiti', quesiti_path
-    menu_generale.item :key_10, 'Contatti', contatti_path
+    menu_generale.item :key_8, 'Abbonamenti', 'account/register'
+    menu_generale.item :key_10, 'News & Sport', newsport_path
 
     menu_generale.dom_class = 'fs-hmenu'
 
