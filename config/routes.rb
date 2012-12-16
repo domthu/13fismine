@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contracts
 
   map.resources :templates
-
+  map.resources :example
   #Web Service
   #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
   #AJAX get usando JQuery UI autocomplete

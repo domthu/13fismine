@@ -15,6 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+#remove by domthu 20121215 caus evil installation!  gems dependencies
 require 'tree' # gem install rubytree
 
 # Monkey patch the TreeNode to add on a few more methods :nodoc:

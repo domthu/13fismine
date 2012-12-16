@@ -1,0 +1,92 @@
+<% if User.current && User.current.logged? %>
+    <p class="fs-tramenu-blockheader x-granata">Utente:&nbsp; <%= User.current.name()%></p>
+     <%= gravatar_for(User.current) unless !User.current %>
+    <p>
+    <div class="fs-blockcontent">
+      <ul>
+        <% if User.current && User.current.canbackend? %>
+            <li>
+
+              <%= link_to "Lavora con FISMINE",:controller=> 'mio_profilo', :action=>'page', :class=> 'fs-button'  %>
+            </li>
+            <li>
+              <%= link_to l(:label_my_page), :controller => 'my', :action => 'page' %>
+            </li>
+            <li>
+              <%= link_to l(:label_my_account), :controller => 'my', :action => 'account' %>
+            </li>
+        <% else %>
+            <li>
+              <%= link_to "==Pagina principale (FE)==", editorial_path %>
+            </li>
+            <li>
+              <%= link_to l(:label_my_page), :controller => 'mio_profilo', :action => 'account' %>
+            </li>
+        <% end %>
+        <% if User.current && User.current.sigla_tipo() %>
+            <li>
+              AFFILIATO: <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()) %>
+            </li>
+        <% end %>
+        <% if User.current && User.current.organization() %>
+            <li>
+              CROSS
+              ORGANIZATION: <%= link_to h(User.current.organization()), cross_organization_path(User.current.organization()) %>
+            </li>
+        <% end %>
+        <% if User.current && User.current.responsable? && User.current.responsable_of
+             User.current.responsable_of.each do |organismo| %>
+                <li>
+                  <%= link_to h(organismo), organismo_path(organismo) %>
+                </li>
+            <% end
+               end %>
+        <li>
+          <%= link_to l(:label_logout), :signout %>
+        </li>
+      </ul>
+
+    </div>
+<% else %>
+    <p class="fs-tramenu-blockheader x-granata">Accesso Utenti Abbonati</p>
+
+    <div class="fs-blockcontent">
+      <% form_tag({:controller => 'account', :action => 'login'}, :method => 'post') do %>
+          <%= back_url_hidden_field_tag %>
+          <fieldset>
+            <div id="fs-form-login">
+              <span><%= l(:field_login)+ ':' %></span>
+              <%= text_field_tag 'username', nil, :tabindex => '1' %>
+
+              <span><%= l(:field_password)+ ':' %></span>
+              <%= password_field_tag 'password', nil, :tabindex => '2' %><br/>
+            </div>
+
+            <div class="fs-form-login-remember">
+              <label class="fs-checkbox">
+                <input type="checkbox"  name="remember" value="yes" alt="Remember Me"/>Memorizza!
+              </label>
+            </div>
+            <input type="submit" value="Accedi" name="login" id="fs-form-login-btn" class="fs-button"/>
+          </fieldset>
+      <% end %>
+      <%= javascript_tag "$('#username').focus();" %>
+
+      <ul>
+        <% if Setting.lost_password? %>
+            <li>
+              <%= link_to l(:label_password_lost), :controller => 'account', :action => 'password_recovery' %>
+            </li>
+            <li>
+              <%= link_to l(:label_username_lost), :controller => 'account', :action => 'lost_password' %>
+              <a href="#"></a>
+            </li>
+        <% end %>
+        <li>
+          <%= link_to l(:label_register), :controller => 'account', :action => 'register' %>
+        </li>
+      </ul>
+    </div>
+<% end %>
+
+

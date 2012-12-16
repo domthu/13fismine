@@ -16,12 +16,12 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class MioProfiloController < ApplicationController
-  layout 'editorial'
   before_filter :require_login
-
+  layout 'editorial'
   helper :issues
   helper :users
   helper :custom_fields
+  include FeesHelper
 
   BLOCKS = { 'issuesassignedtome' => :label_assigned_to_me_issues,
              'issuesreportedbyme' => :label_reported_issues,

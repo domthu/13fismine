@@ -8,7 +8,7 @@
    font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
-   text-align: justify;
+  /* text-align: justify;      */
    position: relative;
    width: 100%;
    min-height: 100%;
@@ -74,7 +74,7 @@ ul.fs-vmenu a
 .fs-postcontent a.hovered
 {
     font-family: 'Droid Sans Mono', Helvetica, sans-serif;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 
@@ -143,7 +143,7 @@ ul.fs-vmenu a
    text-align: center;    */
 }
 
-.fs-postcontent h1 a, .fs-postcontent h1 a:link, .fs-postcontent h1 a:hover, .fs-postcontent h1 a:visited, .fs-blockcontent h1 a, .fs-blockcontent h1 a:link, .fs-blockcontent h1 a:hover, .fs-blockcontent h1 a:visited 
+.fs-postcontent h1 a, .fs-postcontent h1 a:link, .fs-postcontent h1 a:hover, .fs-postcontent h1 a:visited, .fs-blockcontent h1 a, .fs-blockcontent h1 a:link, .fs-blockcontent h1 a:hover, .fs-blockcontent h1 a:visited
 {
    font-size: 26px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
@@ -170,7 +170,7 @@ ul.fs-vmenu a
    text-align: center;    */
 }
 
-.fs-postcontent h2 a, .fs-postcontent h2 a:link, .fs-postcontent h2 a:hover, .fs-postcontent h2 a:visited, .fs-blockcontent h2 a, .fs-blockcontent h2 a:link, .fs-blockcontent h2 a:hover, .fs-blockcontent h2 a:visited 
+.fs-postcontent h2 a, .fs-postcontent h2 a:link, .fs-postcontent h2 a:hover, .fs-postcontent h2 a:visited, .fs-blockcontent h2 a, .fs-blockcontent h2 a:link, .fs-blockcontent h2 a:hover, .fs-blockcontent h2 a:visited
 {
    font-size: 22px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
@@ -197,7 +197,7 @@ ul.fs-vmenu a
    text-align: center;    */
 }
 
-.fs-postcontent h3 a, .fs-postcontent h3 a:link, .fs-postcontent h3 a:hover, .fs-postcontent h3 a:visited, .fs-blockcontent h3 a, .fs-blockcontent h3 a:link, .fs-blockcontent h3 a:hover, .fs-blockcontent h3 a:visited 
+.fs-postcontent h3 a, .fs-postcontent h3 a:link, .fs-postcontent h3 a:hover, .fs-postcontent h3 a:visited, .fs-blockcontent h3 a, .fs-blockcontent h3 a:link, .fs-blockcontent h3 a:hover, .fs-blockcontent h3 a:visited
 {
    font-size: 18px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
@@ -224,7 +224,7 @@ ul.fs-vmenu a
    text-align: center;    */
 }
 
-.fs-postcontent h4 a, .fs-postcontent h4 a:link, .fs-postcontent h4 a:hover, .fs-postcontent h4 a:visited, .fs-blockcontent h4 a, .fs-blockcontent h4 a:link, .fs-blockcontent h4 a:hover, .fs-blockcontent h4 a:visited 
+.fs-postcontent h4 a, .fs-postcontent h4 a:link, .fs-postcontent h4 a:hover, .fs-postcontent h4 a:visited, .fs-blockcontent h4 a, .fs-blockcontent h4 a:link, .fs-blockcontent h4 a:hover, .fs-blockcontent h4 a:visited
 {
    font-size: 16px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
@@ -251,7 +251,7 @@ ul.fs-vmenu a
    text-align: center;    */
 }
 
-.fs-postcontent h5 a, .fs-postcontent h5 a:link, .fs-postcontent h5 a:hover, .fs-postcontent h5 a:visited, .fs-blockcontent h5 a, .fs-blockcontent h5 a:link, .fs-blockcontent h5 a:hover, .fs-blockcontent h5 a:visited 
+.fs-postcontent h5 a, .fs-postcontent h5 a:link, .fs-postcontent h5 a:hover, .fs-postcontent h5 a:visited, .fs-blockcontent h5 a, .fs-blockcontent h5 a:link, .fs-blockcontent h5 a:hover, .fs-blockcontent h5 a:visited
 {
    font-size: 14px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
@@ -271,6 +271,7 @@ ul.fs-vmenu a
 
 .fs-blockcontent h6
 {
+
    margin: 10px 0 0;
    font-size: 13px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
@@ -278,7 +279,7 @@ ul.fs-vmenu a
    text-align: center;    */
 }
 
-.fs-postcontent h6 a, .fs-postcontent h6 a:link, .fs-postcontent h6 a:hover, .fs-postcontent h6 a:visited, .fs-blockcontent h6 a, .fs-blockcontent h6 a:link, .fs-blockcontent h6 a:hover, .fs-blockcontent h6 a:visited 
+.fs-postcontent h6 a, .fs-postcontent h6 a:link, .fs-postcontent h6 a:hover, .fs-postcontent h6 a:visited, .fs-blockcontent h6 a, .fs-blockcontent h6 a:link, .fs-blockcontent h6 a:hover, .fs-blockcontent h6 a:visited
 {
    font-size: 13px;
    font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
@@ -351,31 +352,31 @@ table.position
    table-layout: fixed;
 }
 
-li h1, .fs-postcontent li h1, .fs-blockcontent li h1 
+li h1, .fs-postcontent li h1, .fs-blockcontent li h1
 {
    margin:1px;
-} 
-li h2, .fs-postcontent li h2, .fs-blockcontent li h2 
+}
+li h2, .fs-postcontent li h2, .fs-blockcontent li h2
 {
    margin:1px;
-} 
-li h3, .fs-postcontent li h3, .fs-blockcontent li h3 
+}
+li h3, .fs-postcontent li h3, .fs-blockcontent li h3
 {
    margin:1px;
-} 
-li h4, .fs-postcontent li h4, .fs-blockcontent li h4 
+}
+li h4, .fs-postcontent li h4, .fs-blockcontent li h4
 {
    margin:1px;
-} 
-li h5, .fs-postcontent li h5, .fs-blockcontent li h5 
+}
+li h5, .fs-postcontent li h5, .fs-blockcontent li h5
 {
    margin:1px;
-} 
-li h6, .fs-postcontent li h6, .fs-blockcontent li h6 
+}
+li h6, .fs-postcontent li h6, .fs-blockcontent li h6
 {
    margin:1px;
-} 
-li p, .fs-postcontent li p, .fs-blockcontent li p 
+}
+li p, .fs-postcontent li p, .fs-blockcontent li p
 {
    margin:1px;
 }
@@ -428,10 +429,10 @@ li p, .fs-postcontent li p, .fs-blockcontent li p
   width:186px;
 }
 
-.fs-headline, 
-.fs-headline a, 
-.fs-headline a:link, 
-.fs-headline a:visited, 
+.fs-headline,
+.fs-headline a,
+.fs-headline a:link,
+.fs-headline a:visited,
 .fs-headline a:hover
 {
     font-size: 15px;
@@ -447,23 +448,23 @@ text-align: center;
   color: #00435C !important;
  /* white-space: nowrap;       */
 }
-.fs-object375974515 h1, 
-.fs-object375974515 h2, 
-.fs-object375974515 h3, 
-.fs-object375974515 h4, 
-.fs-object375974515 h5, 
-.fs-object375974515 h6, 
-.fs-object375974515 p, 
-.fs-object375974515 a, 
-.fs-object375974515 ul, 
-.fs-object375974515 ol, 
+.fs-object375974515 h1,
+.fs-object375974515 h2,
+.fs-object375974515 h3,
+.fs-object375974515 h4,
+.fs-object375974515 h5,
+.fs-object375974515 h6,
+.fs-object375974515 p,
+.fs-object375974515 a,
+.fs-object375974515 ul,
+.fs-object375974515 ol,
 .fs-object375974515 li
 {
   line-height: 125%;
 }
 
 .fs-object375974515
-{  
+{
   position: absolute;
   top: 38px;
   left: 80%;
@@ -519,13 +520,13 @@ text-align: center;
    z-index: auto !important;
 }
 
-.responsive .fs-header 
+.responsive .fs-header
 {
    background-image: url('/images/template/header.jpg');
    background-position: center center;
 }
 
-.fs-header>.widget 
+.fs-header>.widget
 {
    position:absolute;
    z-index:101;
@@ -547,7 +548,7 @@ text-align: center;
    text-align: left;
 }
 
-ul.fs-hmenu a, ul.fs-hmenu a:link, ul.fs-hmenu a:visited, ul.fs-hmenu a:hover 
+ul.fs-hmenu a, ul.fs-hmenu a:link, ul.fs-hmenu a:visited, ul.fs-hmenu a:hover
 {
    outline: none;
    position: relative;
@@ -591,18 +592,18 @@ ul.fs-hmenu:after, ul.fs-hmenu ul:after
    clear: both;
 }
 
-ul.fs-hmenu, ul.fs-hmenu ul 
+ul.fs-hmenu, ul.fs-hmenu ul
 {
    min-height: 0;
 }
 
-ul.fs-hmenu 
+ul.fs-hmenu
 {
    display: inline-block;
    vertical-align: bottom;
 }
 
-.fs-nav:before 
+.fs-nav:before
 {
    content:' ';
 }
@@ -662,10 +663,10 @@ ul.fs-hmenu>li>a
    text-align: center;
 }
 
-.fs-hmenu a, 
-.fs-hmenu a:link, 
-.fs-hmenu a:visited, 
-.fs-hmenu a.active, 
+.fs-hmenu a,
+.fs-hmenu a:link,
+.fs-hmenu a:visited,
+.fs-hmenu a.active,
 .fs-hmenu a:hover
 {
    font-size: 13px;
@@ -692,8 +693,8 @@ ul.fs-hmenu>li>a.active
     text-decoration: none;
 }
 
-ul.fs-hmenu>li>a:visited, 
-ul.fs-hmenu>li>a:hover, 
+ul.fs-hmenu>li>a:visited,
+ul.fs-hmenu>li>a:hover,
 ul.fs-hmenu>li:hover>a {
    text-decoration: none;
 }
@@ -704,7 +705,7 @@ ul.fs-hmenu>li>a:hover, .desktop ul.fs-hmenu>li:hover>a
    padding:0 16px;
    margin:0 auto;
 }
-ul.fs-hmenu>li>a:hover, 
+ul.fs-hmenu>li>a:hover,
 .desktop-nav ul.fs-hmenu>li:hover>a {
    color: #002938;
    text-decoration: none;
@@ -744,7 +745,7 @@ ul.fs-hmenu ul
    border-collapse: collapse;
 }
 
-.fs-content-layout-row 
+.fs-content-layout-row
 {
    display: table-row;
 }
@@ -785,7 +786,7 @@ div.fs-vmenublock img
 .fs-vmenublockheader .t,
 .fs-vmenublockheader .t a,
 .fs-vmenublockheader .t a:link,
-.fs-vmenublockheader .t a:visited, 
+.fs-vmenublockheader .t a:visited,
 .fs-vmenublockheader .t a:hover
 {
    color: #FFFFFF;
@@ -845,7 +846,7 @@ ul.fs-vmenu>li>a
    min-height: 30px;
    line-height: 30px;
 }
-ul.fs-vmenu a 
+ul.fs-vmenu a
 {
    display: block;
    cursor: pointer;
@@ -889,12 +890,12 @@ ul.fs-vmenu>li>a:hover, ul.fs-vmenu>li>a.active:hover
    text-decoration: none;
 }
 
-ul.fs-vmenu a:hover, ul.fs-vmenu a.active:hover 
+ul.fs-vmenu a:hover, ul.fs-vmenu a.active:hover
 {
    color: #0088B9;
 }
 
-ul.fs-vmenu>li>a.active:hover>span.border-top, ul.fs-vmenu>li>a.active:hover>span.border-bottom 
+ul.fs-vmenu>li>a.active:hover>span.border-top, ul.fs-vmenu>li>a.active:hover>span.border-bottom
 {
    background-color: transparent;
 }
@@ -1116,7 +1117,7 @@ div.fs-block img
 .fs-blockheader .t,
 .fs-blockheader .t a,
 .fs-blockheader .t a:link,
-.fs-blockheader .t a:visited, 
+.fs-blockheader .t a:visited,
 .fs-blockheader .t a:hover
 {
    color: #FFFFFF;
@@ -1131,15 +1132,15 @@ div.fs-block img
 
 .fs-blockcontent
 {
-   padding:3px;
+   padding: 0;
    margin:0 auto;
    color: #00212D;
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Helvetica, Sans-Serif;
    text-align: justify;
 }
 .fs-blockcontent table,
-.fs-blockcontent li, 
+.fs-blockcontent li,
 .fs-blockcontent a,
 .fs-blockcontent a:link,
 .fs-blockcontent a:visited,
@@ -1147,7 +1148,7 @@ div.fs-block img
 {
    color: #00212D;
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Helvetica, Sans-Serif;
    text-align: justify;
 }
 
@@ -1159,21 +1160,21 @@ div.fs-block img
 .fs-blockcontent a, .fs-blockcontent a:link
 {
    color: #006B92;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Helvetica, Sans-Serif;
    text-decoration: none;
 }
 
 .fs-blockcontent a:visited, .fs-blockcontent a.visited
 {
    color: #006B92;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Helvetica, Sans-Serif;
    text-decoration: none;
 }
 
 .fs-blockcontent a:hover, .fs-blockcontent a.hover
 {
    color: #FFBE1A;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Helvetica, Sans-Serif;
    text-decoration: underline;
 }
 .fs-block ul>li:before
@@ -1197,7 +1198,7 @@ div.fs-block img
 .fs-block li
 {
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Helvetica, Sans-Serif;
    line-height: 125%;
    color: #0088B9;
    margin: 5px 0 0 10px;
@@ -1229,7 +1230,7 @@ button.fs-button
 {
    text-decoration: none;
    font-size: 11px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Helvetica, Sans-Serif;
    font-weight: bold;
    font-style: normal;
    position:relative;
@@ -1237,7 +1238,7 @@ button.fs-button
    vertical-align: middle;
    white-space: nowrap;
    text-align: center;
-   color: #423000;
+   color: #d20401;
    margin: 0 5px 0 0;
    overflow: visible;
    cursor: pointer;
@@ -1269,7 +1270,7 @@ input, select, textarea
    font-style: normal;
 }
 
-.fs-block select 
+.fs-block select
 {
    width:96%;
 }
@@ -1281,7 +1282,7 @@ input.fs-button
 
 .fs-button.active, .fs-button.active:hover
 {
-   background: #818181;
+   background: #006184;
    -webkit-border-radius:3px;
    -moz-border-radius:3px;
    border-radius:3px;
@@ -1292,12 +1293,12 @@ input.fs-button
    margin:0 auto;
 }
 .fs-button.active, .fs-button.active:hover {
-   color: #3E2C00 !important;
+   color: #f8da00 !important;
 }
 
 .fs-button.hover, .fs-button:hover
 {
-   background: #9D9D9D;
+   background: #006184;
    -webkit-border-radius:3px;
    -moz-border-radius:3px;
    border-radius:3px;
@@ -1308,7 +1309,7 @@ input.fs-button
    margin:0 auto;
 }
 .fs-button.hover, .fs-button:hover {
-   color: #002D3E !important;
+   color: #f8da00 !important;
 }
 
 input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
@@ -1363,7 +1364,7 @@ form.fs-search input[type="text"]
    font-weight: normal;
    font-style: normal;
 }
-form.fs-search 
+form.fs-search
 {
    background-image: none;
    border: 0;
@@ -1387,7 +1388,7 @@ form.fs-search>input {
    left:0;
    vertical-align: middle;
 }
- 
+
 form.fs-search input[type="submit"]
 {
    margin:0 auto;
@@ -1706,25 +1707,25 @@ pre
 
 .fs-postheader
 {
-   color: #00678C;
+   color: #003548;
    margin: 5px 0;
    font-size: 18px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
   /* font-variant: small-caps;
    text-align: center;*/
 }
 
-.fs-postheader a, 
-.fs-postheader a:link, 
+.fs-postheader a,
+.fs-postheader a:link,
 .fs-postheader a:visited,
 .fs-postheader a.visited,
 .fs-postheader a:hover,
 .fs-postheader a.hovered
 {
-    font-size: 16px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+    font-size: 15px;
+   font-family: 'Droid Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    font-weight: bold;
    font-style: normal; /*
   font-variant: small-caps;
@@ -1733,7 +1734,7 @@ pre
 
 .fs-postheader a, .fs-postheader a:link
 {
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    text-decoration: none;
    text-align: left;
    color: #004977;
@@ -1741,14 +1742,14 @@ pre
 
 .fs-postheader a:visited, .fs-postheader a.visited
 {
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    text-decoration: none;
    color: #004977;
 }
 
 .fs-postheader a:hover,  .fs-postheader a.hovered
 {
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: 'Droid Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
    text-decoration: underline;
    color: #0088B9;
 }
@@ -2376,7 +2377,7 @@ img.fs-lightbox-image.active
 {
    border-right:1px dotted #68D7FF;
    margin:0 auto;
-   width: 300px;
+   width: 260px;
 }
 
 .fs-content-layout .fs-content

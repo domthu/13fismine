@@ -41,3 +41,6 @@ doc/
 config/database.yml
 /.idea
 /config/.config.www
+
+.rvmrc
+
