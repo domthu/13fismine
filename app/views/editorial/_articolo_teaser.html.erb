@@ -1,5 +1,5 @@
-<h1 style="display:block">__PARTIAL ARTICOLO TEASER</h1>
-<article class="fs-post fs-article">
+<h1 style="display:none">__PARTIAL ARTICOLO TEASER</h1>
+<div class="fs-post fs-article">
   <% if articolo %>
       <div class="fs-postmetadataheader">
         <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
@@ -14,7 +14,6 @@
           <div class="fs-content-layout">
             <div class="fs-content-layout-row">
               <div class="fs-layout-cell layout-item-1">
-                <h1>test</h1>
                  <%= if articolo.immagine_url.nil?
                         '<h3>no image</h3>'
                       else
@@ -49,4 +48,4 @@
       <p class="nodata"><%= l(:label_no_data) %></p>
       <br/>
   <% end %>
-</article>
+</div>

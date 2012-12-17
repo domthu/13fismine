@@ -1,4 +1,4 @@
-# Be sure to restart your web server when you modify this file.
+﻿# Be sure to restart your web server when you modify this file.
 
 # Uncomment below to force Rails into production mode when
 # you don't control web/app server and can't set it the proper way
@@ -34,7 +34,8 @@ Rails::Initializer.run do |config|
   # (by default production uses :info, the others :debug)
   #cambiato sandro
   config.log_level = :debug
-
+#sandro	per i test su kim	
+  config.action_controller.session = { :key => "_myapp_session", :secret => "lamiabellapassworddialmeno30caratteri" } 
   # Enable page/fragment caching by setting a file-based store
   # (remember to create the caching directory and make it readable to the application)
   # config.action_controller.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
