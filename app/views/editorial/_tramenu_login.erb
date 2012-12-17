@@ -74,8 +74,7 @@
       <%= javascript_tag "$('#username').focus();" %>
       <% if Setting.lost_password? %>
           <div class='fs-pass'>
-            <%= link_to l(:label_password_lost), :controller => 'account', :action => 'password_recovery' %> &nbsp;||&nbsp;
-            <%= link_to l(:label_username_lost), :controller => 'account', :action => 'lost_password' %>
+            <%= link_to l(:label_password_lost), :controller => 'account', :action => 'lost_password' %>
           </div>
       <% end %>
     </div>

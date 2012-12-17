@@ -44,7 +44,7 @@ SimpleNavigation::Configuration.run do |navigation|
     menu_generale.item :key_5, 'Lavora con Noi', lavora_path
     menu_generale.item :key_6, 'Convegni', convegni_path
     menu_generale.item :key_7, 'Enti e Federazioni', enti_path
-    menu_generale.item :key_8, 'Abbonamenti', 'account/register'
+    menu_generale.item :key_8, 'Abbonamenti', abbonamenti_path
     menu_generale.item :key_10, 'News & Sport', newsport_path
 
     menu_generale.dom_class = 'fs-hmenu'

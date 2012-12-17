@@ -43,7 +43,7 @@ ActionController::Routing::Routes.draw do |map|
   map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
   #to match override act_as_event after search
   map.articoloid '/editoriale/articolo/:id', :controller => 'editorial', :action => 'articolo'
-  #map.registrazione '/registrazione', :controller => 'editorial', :action => 'register'
+  map.abbonamenti 'account/register', :controller => 'account', :action => 'register'
   #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.quesiti '/quesiti', :controller => 'editorial', :action => 'quesiti'
   map.quesito '/quesito/:id', :controller => 'editorial', :action => 'quesito'
@@ -117,7 +117,7 @@ ActionController::Routing::Routes.draw do |map|
   map.associati 'associati', :controller => 'fees', :action => 'associati'
   map.email_fee 'email_fee', :controller => 'fees', :action => 'email_fee', :conditions => {:method => :get}
   map.email_fee_goto_settings 'email_fee_settings', :controller => 'settings', :action => 'edit', :tab => 'fee'
-  map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
+  #map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
 
   #in POST not in Get for params[:username]...
   #map.signin 'login', :controller => 'account', :action => 'login'
