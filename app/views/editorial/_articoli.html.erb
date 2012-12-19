@@ -1,23 +1,74 @@
-<h1 style="display:none">__PARTIAL <%= @base_url %>/////<%= @article_id %> ARTICOLI</h1>
-
 <div class="fs-layout-cell fs-content clearfix">
   <% if @issues && @issues.any? %>
-    <nav class="art-nav clearfix">
-      <%= render_navigation(:level => 3) %>
-    </nav>
+      <nav class="art-nav clearfix">
+        <%= render_navigation(:level => 3) %>
+      </nav>
+      <% @issues.each do |articolo| %>
+          <!-- qui è l'inserimento dell'articolo -->
+          <ARTICLE class="fs-post fs-article">
+            <% if articolo %>
+                <div class="fs-postmetadataheader">
+                  <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
+                  <span class="fs-postdateicon" style="float:right;"><%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
+                  <h5 class="fs-postheader">
+                    <%= link_to(h(smart_truncate(articolo.titolo, 110)),
+                                url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false))
+                    %>
+                  </h5>
+                </div>
+                <div class="fs-postcontent fs-postcontent-0 clearfix">
+                  <div class="fs-content-layout-wrapper layout-item-0">
+                    <div class="fs-content-layout">
+                      <div class="fs-content-layout-row">
+                        <div class="fs-layout-cell layout-item-1">
+                          <%= if articolo.immagine_url.nil?
+                                '<h3>no image</h3>'
+                              else
+                                image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 12)), :style => "width:200px", :class => "image-caption-wrapper")
+                              end
+                          %>
+                          <%= articolo.riassunto %>
+                          <br/>
+                          <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false) %>
+                        </div>
+                      </div>
 
-    <% @issues.each do |articolo| %>
-      <%= render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
+                      <span class="fs-postauthoricon"><%= h articolo.author %></span> &nbsp;
+                    </div>
+                    <div class="fs-postmetadatafooter">
+                      <div class="fs-postheadericons fs-metadata-icons">
+
+
+                        <%= articolo.se_protetto ? '<span class="fs-post-access-ok">Articolo consultabile liberamente</span>' : '<span class="fs-post-access-no">Articolo riservato agli abbonati</span>' %>
+                        &nbsp;
+                        <span class="fs-postcommentsicon"><a href="#" title="Comments">Commenta »</a></span> &nbsp;
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+            <% else %>
+                <br/>
+
+                <p class="nodata"><%= l(:label_no_data) %></p>
+                <br/>
+            <% end %>
+          </ARTICLE>
+          <%# render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
+          <br/>
+      <% end %>
       <br/>
-    <% end %>
-    <br/>
-    <p class="pagination"><%= pagination_links_full(@issues_pages, @issues_count) %></p>
-    <br/>
+
+      <p class="pagination"><%= pagination_links_full(@issues_pages, @issues_count) %></p>
+      <br/>
 
   <% else %>
-    <br/>
-    <p class="nodata"><%= l(:label_no_data) %></p>
-    <br/>
+      <br/>
+
+      <p class="nodata"><%= l(:label_no_data) %></p>
+      <br/>
   <% end %>
 </div>
 <%#sidebar a  destra %>

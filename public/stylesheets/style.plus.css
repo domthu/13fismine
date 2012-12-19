@@ -278,6 +278,27 @@ h3.fs-postheader {
 
 }
 */
+.fs-postdateicon
+{
+    font-family: 'Droid Sans Mono', Helvetica, Sans-Serif;
+   font-size:10px;
+   font-weight: bold;
+    background: #016284;
+    color: #fff;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    border: 1px solid #fff;
+    margin: 0 auto;
+    display: inline-block;
+    position: relative;
+
+}
+
+
 .fs-art-sezione {
     background: #016284;
     color: #fff;
