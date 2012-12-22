@@ -1454,7 +1454,6 @@ ul.fs-menu2-hmenu ul ul:before
    right: 30px;
    left: 10px;
 }
-
 ul.fs-menu2-hmenu>li>ul:before
 {
    top: 10px;
@@ -1699,7 +1698,6 @@ ul.fs-menu2-hmenu>li.ext.ext-l:hover>.ext-m:before
 ul.fs-menu2-hmenu>li.ext.ext-l.ext-r:hover>.ext-m:before
 {
    left: -8px;
-   right: -8px
-;
+   right: -8px;
 }
 
