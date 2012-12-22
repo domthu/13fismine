@@ -347,3 +347,169 @@
    box-sizing: border-box;
 }
 
+
+/*    menu a discesa  */
+/* dynamic width nav */
+.responsive nav.fs-menu2-nav,
+.responsive .fs-menu2-nav-inner
+{
+   width: auto !important;
+   position: relative !important;
+   top: auto !important;
+   left: auto !important;
+   right: auto !important;
+   bottom: auto !important;
+   margin-top: 0;
+   margin-bottom: 0;
+}
+
+.responsive .responsive-nav
+{
+   padding-left: 0;
+   padding-right: 0;
+}
+
+/* full width hmenu, instead of inline-block */
+.responsive .responsive-nav ul.fs-menu2-hmenu
+{
+   display: block;
+   float: none;
+   text-align: center;
+}
+
+/* elements on different lines */
+.responsive .responsive-nav ul.fs-menu2-hmenu li
+{
+   float: none;
+}
+
+/* horizontal margins */
+.responsive .responsive-nav ul.fs-menu2-hmenu>li:first-child,
+.responsive .responsive-nav ul.fs-menu2-hmenu>li:last-child,
+.responsive .responsive-nav ul.fs-menu2-hmenu>li
+{
+   margin-left: 0;
+   margin-right: 0;
+}
+
+/* separator */
+.responsive .responsive-nav ul.fs-menu2-hmenu>li:before
+{
+   display: none;
+}
+
+/* vertical distance between items */
+.responsive .responsive-nav ul.fs-menu2-hmenu a
+{
+   margin-top: 1px !important;
+   margin-bottom: 1px !important;
+   height: auto;
+   white-space: normal;
+}
+
+.responsive .responsive-nav ul.fs-menu2-hmenu>li:first-child>a
+{
+   margin-top: 0 !important;
+}
+
+.responsive .responsive-nav ul.fs-menu2-hmenu>li:last-child>a
+{
+   margin-bottom: 0 !important;
+}
+
+/* fixes for extended menu */
+.responsive .responsive-nav .ext,
+.responsive .responsive-nav ul.fs-menu2-hmenu>li>ul,
+.responsive .responsive-nav ul.fs-menu2-hmenu>li>ul>li
+{
+   width: auto !important;
+}
+
+/* submenu position on hover */
+.responsive .responsive-nav ul.fs-menu2-hmenu ul
+{
+   left: auto !important;
+   right: auto !important;
+   top: auto !important;
+   bottom: auto !important;
+   display: none !important;
+   position: relative !important;
+   visibility: visible !important;
+}
+
+.responsive .responsive-nav ul.fs-menu2-hmenu li.active>ul
+{
+   display: block !important;
+}
+.responsive .responsive-nav ul.fs-menu2-hmenu ul li.active>a
+{
+   font-weight: bold;
+}
+
+.responsive .responsive-nav ul.fs-menu2-hmenu>li>ul>li:first-child:after
+{
+   display: none;
+}
+.responsive .responsive-nav ul.fs-menu2-hmenu ul a
+{
+   padding-left: 4% !important;
+}
+.responsive .responsive-nav ul.fs-menu2-hmenu ul ul a
+{
+   padding-left: 6% !important;
+}
+.responsive .responsive-nav ul.fs-menu2-hmenu ul ul ul a
+{
+   padding-left: 8% !important;
+}
+.responsive .responsive-nav ul.fs-menu2-hmenu ul ul ul ul a
+{
+   padding-left: 10% !important;
+}
+.responsive .responsive-nav ul.fs-menu2-hmenu ul ul ul ul ul a
+{
+   padding-left: 12% !important;
+}
+
+.responsive .responsive-nav ul.fs-menu2-hmenu>li>ul
+{
+   padding: 1px;
+}
+
+.responsive .responsive-nav ul.fs-menu2-hmenu>li>ul:before
+{
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+}
+
+.responsive .fs-menu2-content-layout,
+.responsive .fs-menu2-content-layout-row,
+.responsive .fs-menu2-layout-cell
+{
+   display: block;
+}
+
+.responsive .fs-menu2-layout-cell
+{
+   width: auto !important;
+   height: auto !important;
+   border-right-width: 0 !important;
+   border-left-width: 0 !important;
+   border-radius: 0 !important;
+}
+
+.responsive .fs-menu2-content-layout:after,
+.responsive .fs-menu2-content-layout-row:after,
+.responsive .fs-menu2-layout-cell:after
+{
+   content: ".";
+   display: block;
+   height: 0;
+   clear: both;
+   visibility: hidden;
+}
+.responsive #fs-tramenu-wrapper {
+    display: none;
+}

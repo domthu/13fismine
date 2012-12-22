@@ -32,7 +32,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
           end
 
-          sub_nav1.dom_class='fs-menu3-hmenu'
+          sub_nav1.dom_class='fs-menu2-hmenu'
         end #primary.item
         primary.dom_class = 'fs-menu2-hmenu'
 

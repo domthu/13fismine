@@ -278,6 +278,25 @@ function responsiveNavFit(responsiveDesign) {
 }
 
 
+jQuery(function($) {
+    "use strict";
+    $(".fs-menu2-hmenu a").each(function() {
+        var link = $(this);
+        if (link.get(0).href === location.href) {
+            link.addClass("active").parents("li").addClass("active");
+            return false;
+        }
+    });
+});
+
+jQuery(window).bind("responsiveNav", function (event, options) {
+    /*global menuExtendedCreate */
+    'use strict';
+    if (options.isDesktopNav && jQuery("li.ext").length > 0) {
+        menuExtendedCreate();
+    }
+});
+
 
 jQuery(window).bind("responsive", function (event, responsiveDesign) {
     "use strict";
