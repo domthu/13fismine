@@ -9,13 +9,13 @@
     /* IE9 SVG, needs conditional override of 'filter' to 'none'
     background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZjVkOSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZGNmNmQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
     */
-    background: -moz-linear-gradient(top, #fff5d9 0%, #fdcf6d 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff5d9), color-stop(100%, #fdcf6d)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #fff5d9 0%, #fdcf6d 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #fff5d9 0%, #fdcf6d 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #fff5d9 0%, #fdcf6d 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #fff5d9 0%, #fdcf6d 100%); /* W3C */
-    -svg-background: linear-gradient(to bottom, #fff5d9 0%, #fdcf6d 100%); /*IE9 */
+    background: -moz-linear-gradient(top, #ffe375 0%, #f2e6d0 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffe375), color-stop(100%, #f1e6d0)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffe375 0%, #f1e6d0 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffe375 0%, #f1e6d0 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #ffe375 0%, #f1e6d0 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #ffe375 0%, #f1e6d0 100%); /* W3C */
+    -svg-background: linear-gradient(to bottom, #ffe375 0%, #f1e6d0 100%); /*IE9 */
 
 }
 .fs-tramenu-blockheader {
@@ -827,7 +827,7 @@ ul.fs-menu3-hmenu>li>a:hover, .desktop ul.fs-menu3-hmenu>li:hover>a {
 }
 
 ul.fs-menu3-hmenu>li>a:hover,
-.desktop-nav ul.fs-menu3-hmenu>li:hover>a {
+ul.fs-menu3-hmenu>li:hover>a {
     color: #fcc510;
     text-decoration: none;
 }
@@ -865,7 +865,7 @@ ul.fs-menu3-hmenu li li {
     margin-bottom: 5px;
 }
 
-.desktop-nav ul.fs-menu3-hmenu li li ul>li:first-child {
+ul.fs-menu3-hmenu li li ul>li:first-child {
     margin-top: 0;
 }
 
@@ -913,8 +913,8 @@ ul.fs-menu3-hmenu li li:after {
     border-bottom: 1px solid #FCD569;
 }
 
-.desktop-nav ul.fs-menu3-hmenu li li:first-child:before,
-.desktop-nav ul.fs-menu3-hmenu li li:first-child:after {
+ul.fs-menu3-hmenu li li:first-child:before,
+ul.fs-menu3-hmenu li li:first-child:after {
     display: none;
 }
 
@@ -934,7 +934,7 @@ ul.fs-menu3-hmenu ul li a:hover, .desktop ul.fs-menu3-hmenu ul li:hover>a {
     color: #000000;
 }
 
-.desktop-nav .fs-menu3-hmenu ul li:hover>a {
+.fs-menu3-hmenu ul li:hover>a {
     color: #000000;
 }
 
@@ -950,12 +950,12 @@ ul.fs-menu3-hmenu ul:before {
     z-index: 1;
 }
 
-.desktop-nav ul.fs-menu3-hmenu li:hover>ul {
+ul.fs-menu3-hmenu li:hover>ul {
     visibility: visible;
     top: 100%;
 }
 
-.desktop-nav ul.fs-menu3-hmenu li li:hover>ul {
+ul.fs-menu3-hmenu li li:hover>ul {
     top: 0;
     left: 100%;
 }
@@ -1127,13 +1127,13 @@ ul.fs-menu2-hmenu>li:hover>a {
 }
 
 ul.fs-menu2-hmenu>li>a:hover, .desktop ul.fs-menu2-hmenu>li:hover>a {
-    background: #FFDC84;
+    background: #ffe375;
     padding: 0 18px;
     margin: 0 auto;
 }
 
 ul.fs-menu2-hmenu>li>a:hover,
-.desktop-nav ul.fs-menu2-hmenu>li:hover>a {
+ul.fs-menu2-hmenu>li:hover>a {
     color: #002938;
     text-decoration: none;
 }
@@ -1149,10 +1149,428 @@ ul.fs-menu2-hmenu>li:before {
     background: url('/images/template/menuseparator2.png') center center no-repeat;
 }
 
-ul.fs-menu2-hmenu>li:first-child:before {
-    display: none;
+
+
+/* ------------------ menu 2 a discesa   */
+
+
+ul.fs-menu2-hmenu li li a
+{
+   background: #fffcc2;
+   padding:0 17px;
+   margin:0 auto;
+}
+ul.fs-menu2-hmenu li li
+{
+   float: none;
+   width: auto;
+   margin-top: 4px;
+   margin-bottom: 4px;
 }
 
-ul.fs-menu2-hmenu ul {
-    display: none;
+ul.fs-menu2-hmenu li li ul>li:first-child
+{
+   margin-top: 0;
+}
+
+ul.fs-menu2-hmenu li li ul>li:last-child
+{
+   margin-bottom: 0;
+}
+
+.fs-menu2-hmenu ul a
+{
+   display: block;
+   white-space: nowrap;
+   height: 29px;
+   min-width: 7em;
+   border: 0 solid transparent;
+   text-align: left;
+   line-height: 29px;
+   color: #000000;
+   font-size: 12px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   margin:0;
+}
+
+.fs-menu2-hmenu ul a:link,
+.fs-menu2-hmenu ul a:visited,
+.fs-menu2-hmenu ul a.active,
+.fs-menu2-hmenu ul a:hover
+{
+   text-align: left;
+   line-height: 29px;
+   color: #000000;
+   font-size: 12px;
+   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   text-decoration: none;
+   margin:0;
+}
+
+ul.fs-menu2-hmenu ul li a:hover, .desktop ul.fs-menu2-hmenu ul li:hover>a
+{
+   background: #FFF4D8;
+   margin:0 auto;
+}
+.fs-menu2-hmenu ul a:hover
+{
+   text-decoration: none;
+}
+
+.fs-menu2-hmenu ul li a:hover
+{
+   color: #000000;
+}
+
+.fs-menu2-hmenu ul li:hover>a
+{
+   color: #000000;
+}
+
+ul.fs-menu2-hmenu ul:before
+{
+   background: #FFDC84;
+   -webkit-box-shadow:0 0 7px 4px rgba(0, 0, 0, 0.4);
+   -moz-box-shadow:0 0 7px 4px rgba(0, 0, 0, 0.4);
+   box-shadow:0 0 7px 4px rgba(0, 0, 0, 0.4);
+   border:1px solid #B9B9B9;
+   margin:0 auto;
+   display: block;
+   position: absolute;
+   content: ' ';
+   z-index: 1;
+}
+ul.fs-menu2-hmenu li:hover>ul {
+   visibility: visible;
+   top: 100%;
+}
+ul.fs-menu2-hmenu li li:hover>ul {
+   top: 0;
+   left: 100%;
+}
+
+ul.fs-menu2-hmenu ul
+{
+   visibility: hidden;
+   position: absolute;
+   z-index: 10;
+   left: 0;
+   top: 0;
+   background-image: url('/images/template/spacer.gif');
+}
+
+ul.fs-menu2-hmenu>li>ul
+{
+   padding: 12px 32px 32px 32px;
+   margin: -10px 0 0 -30px;
+}
+
+ul.fs-menu2-hmenu ul ul
+{
+   padding: 32px 32px 32px 12px;
+   margin: -32px 0 0 -9px;
+}
+
+ul.fs-menu2-hmenu ul.fs-menu2-hmenu-left-to-right
+{
+   right: auto;
+   left: 0;
+   margin: -10px 0 0 -30px;
+}
+
+ul.fs-menu2-hmenu ul.fs-menu2-hmenu-right-to-left
+{
+   left: auto;
+   right: 0;
+   margin: -10px -30px 0 0;
+}
+
+ul.fs-menu2-hmenu li li:hover>ul.fs-menu2-hmenu-left-to-right {
+   right: auto;
+   left: 100%;
+}
+ul.fs-menu2-hmenu li li:hover>ul.fs-menu2-hmenu-right-to-left {
+   left: auto;
+   right: 100%;
+}
+
+ul.fs-menu2-hmenu ul ul.fs-menu2-hmenu-left-to-right
+{
+   right: auto;
+   left: 0;
+   padding: 32px 32px 32px 12px;
+   margin: -32px 0 0 -9px;
+}
+
+ul.fs-menu2-hmenu ul ul.fs-menu2-hmenu-right-to-left
+{
+   left: auto;
+   right: 0;
+   padding: 32px 12px 32px 32px;
+   margin: -32px -9px 0 0;
+}
+
+ul.fs-menu2-hmenu li ul>li:first-child {
+   margin-top: 0;
+}
+ul.fs-menu2-hmenu li ul>li:last-child {
+   margin-bottom: 0;
+}
+
+ul.fs-menu2-hmenu ul ul:before
+{
+   border-radius: 0;
+   top: 30px;
+   bottom: 30px;
+   right: 30px;
+   left: 10px;
+}
+
+ul.fs-menu2-hmenu>li>ul:before
+{
+   top: 10px;
+   right: 30px;
+   bottom: 30px;
+   left: 30px;
+}
+
+ul.fs-menu2-hmenu>li>ul.fs-menu2-hmenu-left-to-right:before {
+   right: 30px;
+   left: 30px;
+}
+ul.fs-menu2-hmenu>li>ul.fs-menu2-hmenu-right-to-left:before {
+   right: 30px;
+   left: 30px;
+}
+ul.fs-menu2-hmenu ul ul.fs-menu2-hmenu-left-to-right:before {
+   right: 30px;
+   left: 10px;
+}
+ul.fs-menu2-hmenu ul ul.fs-menu2-hmenu-right-to-left:before {
+   right: 10px;
+   left: 30px;
+}
+
+ul.fs-menu2-hmenu>li.ext>a
+{
+   white-space: nowrap;
+}
+
+ul.fs-menu2-hmenu>li.ext>a:hover,
+ul.fs-menu2-hmenu>li.ext:hover>a,
+ul.fs-menu2-hmenu>li.ext:hover>a.active
+{
+   background: none;
+   /* default padding + border size */
+  padding: 7px 25px 0 25px;
+   /* margin for shadow */
+  margin: -7px -7px 0 -7px;
+   overflow: hidden;
+   position: relative;
+   border: none;
+   border-radius: 0;
+   box-shadow: none;
+   color: #000000;
+}
+
+ul.fs-menu2-hmenu>li.ext>a:hover:before,
+ul.fs-menu2-hmenu>li.ext:hover>a:before,
+ul.fs-menu2-hmenu>li.ext:hover>a.active:before
+{
+   position: absolute;
+   content: ' ';
+   /* top, right, left - for shadow */
+  top: 7px;
+   right: 7px;
+   left: 7px;
+   /* border + shadow */
+  bottom: -8px;
+   background-color: #FFDC84;
+   border: 1px solid #B9B9B9;
+   border-top-left-radius: 0;
+   border-top-right-radius: 0;
+   box-shadow: 0 0 7px rgba(0, 0, 0, 0.8);
+   z-index: -1;
+}
+
+ul.fs-menu2-hmenu>li.ext:hover>ul
+{
+   padding-top: 1px;
+   /* menu bar padding */
+  margin-top: 0;
+}
+
+ul.fs-menu2-hmenu>li.ext:hover>ul:before
+{
+   /* border + shadow */
+  top: -8px;
+   clip: rect(9px, auto, auto, auto);
+   border-top-left-radius: 0;
+   border-top-right-radius: 0;
+   box-shadow: 0 0 7px rgba(0, 0, 0, 0.8);
+}
+
+ul.fs-menu2-hmenu>li.ext>.ext-r,
+ul.fs-menu2-hmenu>li.ext>.ext-l,
+ul.fs-menu2-hmenu>li.ext>.ext-m,
+ul.fs-menu2-hmenu>li.ext>.ext-off
+{
+   display: none;
+   z-index: 12;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+ul.fs-menu2-hmenu>li.ext>ul
+{
+   z-index: 13;
+}
+
+ul.fs-menu2-hmenu>li.ext.ext-r:hover>.ext-r,
+ul.fs-menu2-hmenu>li.ext.ext-l:hover>.ext-l
+{
+   position: absolute;
+   display: block;
+   overflow: hidden;
+   /* size of radius
+   * if size if 0 we should now generate script
+   * that adds ext-r and ext-m divs
+   */
+  height: 9px;
+   top: 100%;
+   padding-top: 8px;
+   margin-top: -8px;
+/* border width + shadow */}
+
+ul.fs-menu2-hmenu>li.ext:hover>.ext-r:before,
+ul.fs-menu2-hmenu>li.ext:hover>.ext-l:before
+{
+   position: absolute;
+   content: ' ';
+   top: 7px;
+   /* border + shadow */
+  bottom: -8px;
+   background-color: #FFDC84;
+   border: 1px solid #B9B9B9;
+   box-shadow: 0 0 7px rgba(0, 0, 0, 0.8);
+}
+
+ul.fs-menu2-hmenu>li.ext.ext-r:hover>.ext-r
+{
+   left: 100%;
+   right: auto;
+   padding-left: 0;
+   margin-left: 0;
+   padding-right: 8px;
+   margin-right: -8px;
+/* only shadow */}
+
+ul.fs-menu2-hmenu>li.ext.ext-r:hover>.ext-r:before
+{
+   right: 7px;
+   left: -8px;
+   border-top-left-radius: 0;
+   border-top-right-radius: 0;
+}
+
+ul.fs-menu2-hmenu>li.ext.ext-l:hover>.ext-l
+{
+   right: 100%;
+   left: auto;
+   padding-right: 0;
+   margin-right: 0;
+   padding-left: 8px;
+   margin-left: -8px;
+/* only shadow */}
+
+ul.fs-menu2-hmenu>li.ext.ext-l:hover>.ext-l:before
+{
+   right: -8px;
+   left: 7px;
+   border-top-right-radius: 0;
+   border-top-left-radius: 0;
+}
+
+ul.fs-menu2-hmenu>li.ext:hover>.ext-m,
+ul.fs-menu2-hmenu>li.ext:hover>.ext-off
+{
+   position: absolute;
+   display: block;
+   overflow: hidden;
+   height: 1px;
+   top: 100%;
+}
+
+ul.fs-menu2-hmenu>li.ext.ext-r:hover>.ext-m
+{
+   /* shadow offset */
+  left: -7px;
+   right: 0;
+   /* shadow offset */
+  padding-right: 0;
+   padding-left: 7px;
+}
+
+ul.fs-menu2-hmenu>li.ext:hover>.ext-off
+{
+   /* shadow offset */
+  left: -7px;
+   right: -7px;
+   /* shadow offset */
+  padding-left: 7px;
+   padding-right: 7px;
+}
+
+ul.fs-menu2-hmenu>li.ext.ext-l:hover>.ext-m
+{
+   /* shadow offset */
+  right: -7px;
+   left: 0;
+   /* shadow offset */
+  padding-left: 0;
+   padding-right: 7px;
+}
+
+ul.fs-menu2-hmenu>li.ext.ext-l.ext-r:hover>.ext-m
+{
+   /* shadow offset */
+  right: -7px;
+   left: -7px;
+   /* shadow offset */
+  padding-left: 7px;
+   padding-right: 7px;
+}
+
+ul.fs-menu2-hmenu>li.ext:hover>.ext-m:before,
+ul.fs-menu2-hmenu>li.ext:hover>.ext-off:before
+{
+   position: absolute;
+   content: ' ';
+   top: -8px;
+   bottom: -8px;
+   /* shadow offset */
+  background-color: #FFDC84;
+   border: 1px solid #B9B9B9;
+   box-shadow: 0 0 7px rgba(0, 0, 0, 0.8);
+}
+
+ul.fs-menu2-hmenu>li.ext.ext-r:hover>.ext-m:before
+{
+   right: -8px;
+   left: 7px;
+}
+
+ul.fs-menu2-hmenu>li.ext.ext-l:hover>.ext-m:before
+{
+   left: -8px;
+   right: 7px;
+}
+
+ul.fs-menu2-hmenu>li.ext.ext-l.ext-r:hover>.ext-m:before
+{
+   left: -8px;
+   right: -8px
+;
 }
