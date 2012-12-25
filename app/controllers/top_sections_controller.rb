@@ -36,7 +36,7 @@ class TopSectionsController < ApplicationController
     sort_init 'sezione_top'
     sort_update 'sezione_top' => 'sezione_top',
                 'ordinamento' => 'ordinamento',
-                'style' => 'style',
+                'key' => 'key',
                 'se_visible' => 'se_visible'
 
 #    @top_sections = TopSection.all
@@ -111,7 +111,7 @@ class TopSectionsController < ApplicationController
         #  Mailer.deliver_attachments_added(attachments[:files])
         #end
 
-        format.html { 
+        format.html {
             render_attachment_warning_if_needed(@top_section)
             flash[:notice] = l(:notice_top_section_successful_create, :id => "<a href='#{top_section_path(@top_section)}'>##{@top_section.id}</a>")
             redirect_to(@top_section) }

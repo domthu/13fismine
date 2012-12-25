@@ -1141,11 +1141,13 @@ it:
   label_se_visibile: Visibile?
   label_immagine: immagine
   label_style: style
+  label_key: sezione
   field_sezione_top: Descrizione Sezione
   field_ordinamento: Ordinamento
   field_se_visibile: Visibile
   field_immagine: Immagine
   field_style: Foglio di stile
+  field_key: sezione
   notice_top_section_successful_create: Sezione %{id} creata
 
 #section

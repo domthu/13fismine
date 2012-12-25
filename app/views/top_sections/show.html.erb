@@ -24,16 +24,16 @@
         <%=h @top_section.immagine %>
     </p>
     <div class="html">
-      <% unless @top_section.style.nil? %>
-        <%= @top_section.style.html_safe %>
+      <% unless @top_section.key.nil? %>
+        <%= @top_section.key.html_safe %>
       <% end %>
     </div>
-<--html safe----------------------------------------------------------------------textilizable--> 
+<--html safe----------------------------------------------------------------------textilizable-->
     <div class="wiki">
-        <%= textilizable(@top_section.style) %>
+        <%= textilizable(@top_section.key) %>
     </div>
     <p>
-        <%= check_box_tag l(:label_se_visibile), 1, @top_section.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %> 
+        <%= check_box_tag l(:label_se_visibile), 1, @top_section.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>
     </p>
   </fieldset>
 </div>
@@ -53,4 +53,3 @@
         <% end %>
     </fieldset>
 </div>
-
