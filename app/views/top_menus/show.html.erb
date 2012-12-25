@@ -1,13 +1,41 @@
-<p>
-  <b>Description:</b>
-  <%=h @top_menu.description %>
-</p>
+<div class="contextual">
+<%= link_to(l(:button_edit), edit_top_menu_path(@top_menu), :class => 'icon icon-edit') if User.current.admin? %>
+<%= link_to(l(:button_delete),
+      top_menu_path(@top_menu),
+      :confirm => l(:text_are_you_sure),
+      :method => :delete,
+      :class => 'icon icon-del') if User.current.admin? %>
+</div>
+<h2><%= link_to l(:label_top_menu_plural), top_menus_path %> &#187; <%=h @top_menu %></h2>
 
-<p>
-  <b>order:</b>
-  <%=h @top_menu.order %>
-</p>
+<div class="splitcontentleft">
+  <fieldset class="box tabular">
+    <legend><%=l(:label_top_menu)%></legend>
+    <p>
+      <% unless @top_menu.description.blank? %>
+          <b><em><%=h @top_menu.description %></em></b>
+          <br />
+      <% end %>
+    </p>
+    <p>
+        <%= l(:label_ordinamento) %>: <%=h @top_menu.order %>
+    </p>
 
+  </fieldset>
+</div>
 
-<%= link_to 'Edit', edit_top_menu_path(@top_menu) %> |
-<%= link_to 'Back', top_menus_path %>
+<div class="splitcontentright">
+  <fieldset class="box tabular">
+    <legend><%=l(:label_top_section_plural_from_menu)%></legend>
+    <% if @top_menu.top_sections.any? %>
+      <%= l(:label_total) %>: <%= h @top_menu.top_sections.count %>
+      <ul>
+        <% @top_menu.top_sections.each do |top_section| %>
+          <li><%= link_to top_section, top_section %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+    <% end %>
+  </fieldset>
+</div>

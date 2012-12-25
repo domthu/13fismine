@@ -1,22 +1,30 @@
-<h1>Listing top_menus</h1>
+<div class="contextual">
+<%= link_to l(:label_top_menu_new), new_top_menu_path, :class => 'icon icon-add' %>
+</div>
 
-<table>
-  <tr>
-    <th>Description</th>
-    <th>order</th>
-  </tr>
+<h2><%= l(:label_top_menu_plural) %></h2>
 
+<% if @top_menus.any? %>
+<table class="list top_menus">
+  <thead><tr>
+  <%= sort_header_tag('descrizione', :title => l(:label_top_menu), :style => 'width: 80%;text-align:left;')%>
+  <%= sort_header_tag('ordinamento', :title => l(:label_ordinamento), :style => 'color:red; width: 10%;')%>
+  <th style='width: 5%;'></th>
+  <th style='width: 5%;'></th>
+  </tr></thead>
+  <tbody>
 <% @top_menus.each do |top_menu| %>
-  <tr>
-    <td><%=h top_menu.description %></td>
-    <td><%=h top_menu.order %></td>
-    <td><%= link_to 'Show', top_menu %></td>
-    <td><%= link_to 'Edit', edit_top_menu_path(top_menu) %></td>
-    <td><%= link_to 'Destroy', top_menu, :confirm => 'Are you sure?', :method => :delete %></td>
+  <tr class="<%= cycle 'odd', 'even' %>">
+    <td><%= link_to h(top_menu), top_menu_path(top_menu) %></td>
+    <td align="center"><%=h top_menu.order %></td>
+    <td class="buttons"><%= link_to('', edit_top_menu_path(top_menu), :class => 'icon icon-edit') if User.current.admin? %></td>
+    <td class="buttons"><%= link_to ('', top_menu, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
+<p class="pagination"><%= pagination_links_full @top_menu_pages, @top_menu_count %></p>
 
-<%= link_to 'New top_menu', new_top_menu_path %>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

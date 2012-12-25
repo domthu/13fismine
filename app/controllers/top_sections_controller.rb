@@ -36,7 +36,8 @@ class TopSectionsController < ApplicationController
     sort_init 'sezione_top'
     sort_update 'sezione_top' => 'sezione_top',
                 'ordinamento' => 'ordinamento',
-                'key' => 'key',
+                'chiave' => 'top_sections.key',
+                'menu' => "top_menus.description",
                 'se_visible' => 'se_visible'
 
 #    @top_sections = TopSection.all
@@ -52,6 +53,7 @@ class TopSectionsController < ApplicationController
         @top_section_count = TopSection.all.count
         @top_section_pages = Paginator.new self, @top_section_count, per_page_option, params['page']
         @top_sections = TopSection.find(:all,
+                                  :include => [:top_menu],
                                   :order => sort_clause,
                                   :limit  =>  @top_section_pages.items_per_page,
                                   :offset =>  @top_section_pages.current.offset)

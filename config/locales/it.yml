@@ -1136,19 +1136,26 @@ it:
 #top_section
   label_top_section: Sezione
   label_top_section_plural: Sezioni
+  label_top_section_plural_from_menu: Sezioni che dipendono del menu
   label_top_section_new: Nuova Sezione
   label_ordinamento: Ord.
   label_se_visibile: Visibile?
   label_immagine: immagine
   label_style: style
-  label_key: sezione
+  label_key: chiave
   field_sezione_top: Descrizione Sezione
   field_ordinamento: Ordinamento
   field_se_visibile: Visibile
   field_immagine: Immagine
   field_style: Foglio di stile
-  field_key: sezione
+  field_key: chiave
   notice_top_section_successful_create: Sezione %{id} creata
+#top_menu
+  label_top_menu: menu
+  label_top_menu_plural: lista dei menu
+  label_top_menu_new: Nuovo menu
+  field_top_menu: menu
+  error_can_not_delete_top_menu_unless_sections: "Non è possibile eliminare un menu finchè è assiociato ad sezioni..."
 
 #section
   label_section: Categoria
@@ -1156,7 +1163,8 @@ it:
   label_section_new: Nuova categoria
   label_protetto: Privato
   field_top_section: Sezione
-
+  error_can_not_delete_section_unless_issues: "Non è possibile eliminare una categoria finchè è legata a degli articoli..."
+  label_sections_from_top_section: "Categorie legate alla sezione "
 # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
 # asso (Categoria utente) ha tanti utenti
 # asso ha uno (o più) Organismi Associati NON ha asso.organization_id?
@@ -1234,11 +1242,11 @@ it:
   label_se_visible_data: Visibile Data?
   label_se_visible_newsletter: Visibile Mail?
   label_se_protetto: Protetto?
-
   field_se_visible_web: Visibile Web?
   field_se_visible_data: Visibile Data?
   field_se_visible_newsletter: Visibile Mail?
   field_se_protetto: Protetto?
+  label_issue_plural_from_section: "Articoli legati alla sezione"
 
 #User
   label_power_user: Resp. Asso.

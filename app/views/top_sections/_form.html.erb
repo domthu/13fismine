@@ -6,4 +6,5 @@
   <p><%= f.text_field :immagine, :label => :field_immagine %></p>
   <p><%= f.text_field :key, :label => :field_key %></p>
   <p><%= f.check_box :se_visibile, :label => :field_se_visibile %></p>
+  <p><%= f.select :top_menu_id, (TopMenu.all.collect {|c| [c.description, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_top_menu) %></p>
 </div>
