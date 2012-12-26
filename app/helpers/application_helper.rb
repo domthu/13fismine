@@ -1049,6 +1049,31 @@ module ApplicationHelper
     "<link rel='shortcut icon' href='#{image_path('/favicon.ico')}' />".html_safe
   end
 
+  require 'uri'
+
+  def url_valid?(uri)
+    !!URI.parse(uri)
+    rescue URI::InvalidURIError
+      false
+  end
+#<% if defined?(group_banner.url) and !(group_banner.url.nil?) %>
+#<a href="<%= get_url(group_banner.url) %>" target="_blank"><%=truncate_lines(truncate_single_line(group_banner.url), :lenght => 50) %></a>
+#<% else %>
+#<%=h group_banner.url %>
+#<% end %>
+  def url_get_external(uri)
+    if !defined?(uri) or (uri.nil?) or !url_valid?(uri)
+      (uri.nil? ? "~" : "<p>" + h(uri) + "</p>")
+    else
+      unless uri[/^https?:\/\//]
+        okuri = 'http://' + uri
+      else
+        okuri = uri
+      end
+      "<a href='" + okuri + "' target='_blank'>" + truncate_lines(truncate_single_line(uri), :lenght => 50) + "</a>".html_safe
+    end
+  end
+
   def robot_exclusion_tag
     '<meta name="robots" content="noindex,follow,noarchive" />'.html_safe
   end

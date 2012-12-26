@@ -8,8 +8,8 @@
 <table class="list cross_groups">
   <thead><tr>
   <%# sort_header_tag('id', :title => l(:label_cross_group), :style => 'width: 10%;text-align:left;')%>
-  <%= sort_header_tag('asso_name', :title => l(:label_asso), :style => 'width: 40%;text-align:left;')%>
-  <%= sort_header_tag('group_banner_name', :title => l(:label_group_banner), :style => 'width: 40%;text-align:left;')%>
+  <%= sort_header_tag('asso', :title => l(:label_asso), :style => 'width: 40%;text-align:left;')%>
+  <%= sort_header_tag('group banner', :title => l(:label_group_banner), :style => 'width: 40%;text-align:left;')%>
   <%= sort_header_tag('se_visibile', :title => l(:label_se_visibile_abrv), :style => 'width: 10%;text-align:right;')%>
   <th style='width: 5%;'></th>
   <th style='width: 5%;'></th>
@@ -18,8 +18,11 @@
 <% @cross_groups.each do |cross_group| %>
   <tr class="<%= cycle 'odd', 'even' %>">
     <%#<td><%= link_to h(cross_group), cross_group_path(cross_group) % ></td> %>
-    <td><%= link_to(h(cross_group.asso.to_s), asso_path(cross_group.asso)) if !User.current.admin? %>
-    <%= link_to(h(cross_group.asso), edit_asso_path(cross_group.asso, :id => cross_group.asso_id)) if User.current.admin? %></td>
+    <td>
+      <% if defined?(cross_group.asso) and !(cross_group.asso.nil?) %>
+        <%= link_to(cross_group.asso, asso_path(cross_group.asso)) if !User.current.admin? %>
+        <%= link_to(cross_group.asso, edit_asso_path(cross_group.asso, :id => cross_group.asso_id)) if User.current.admin? %></td>
+      <% end %>
     <td><%= link_to(h(cross_group.group_banner), group_banner_path(cross_group.group_banner, :id => cross_group.group_banner_id))  if !User.current.admin? %>
     <%= link_to(h(cross_group.group_banner), edit_group_banner_path(cross_group.group_banner, :id => cross_group.group_banner_id))  if User.current.admin? %></td>
     <td align="center"><%= check_box_tag '', 1, cross_group.se_visibile, :disabled => 'disabled' %></td>

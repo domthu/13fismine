@@ -24,7 +24,9 @@
 <% @group_banners.each do |group_banner| %>
   <tr class="<%= cycle 'odd', 'even' %>">
     <td><%= link_to h(group_banner), group_banner_path(group_banner) %></td>
-    <td><%=h group_banner.url %></td>
+    <td>
+        <%= url_get_external group_banner.url %>
+    </td>
     <td style="text-align: right;"><%=h group_banner.priorita %></td>
     <td><%=h group_banner.posizione %></td>
     <td align="center"><%= check_box_tag '', 1, group_banner.se_visibile, :disabled => 'disabled' %></td>
@@ -44,4 +46,3 @@
 <% else %>
 <p class="nodata"><%= l(:label_no_data) %></p>
 <% end %>
-

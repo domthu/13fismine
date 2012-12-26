@@ -1049,22 +1049,31 @@ it:
 
 # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
 # asso (Categoria utente) ha tanti utenti
+  #label_asso: Socio
   label_asso: Cat. Utente
   label_asso_full: Categoria Utente
   label_asso_plural: Cat. Utenti
   label_asso_new: Nuova categoria utente
-  label_cross_group: Banner utente
+
+  field_cross_group: Banner utente
+  #label_cross_group: Banner utente
+  label_cross_group: <- Cat.-Banner ->
   label_cross_group_plural: Banner Utenti
   label_cross_group_new: Nuovo banner per utente
+
+  field_group_banner: Banner
   label_group_banner: Banner
   label_group_banner_plural: Banners
   label_group_banner_new: Nuovo banner
+  label_group_banner_associated_asso: Categorie utenti associate
+  label_group_banner_associated_asso_none: Nessuna categoria utente associata
+  label_cross_groups_from_group_banner: "Associazione Banner Utente (Banner <--> Categoria) per questo banner"
 
 # asso (Categoria utente) ha tanti organismi
 #Organismo associato collegato a type_organization, asso, e sigla
   label_organization: Org. associato
   label_organization_plural: Org. asso.
-  label_organization_new: Nuova organismo associato
+  label_organization_new: Nuovo organismo associato
   label_organization_plural_long: Organismo associato
 
   label_type_organization: Org. tipo
@@ -1072,12 +1081,13 @@ it:
   label_type_organization_new: Nuovo tipo di organismo
   label_type_organization_plural_long: Tipi di organismo
 
-  label_cross_organization: Sigla
+  #label_cross_organization: Sigla
+  label_cross_organization: <- Sigla ->
   label_cross_organization_plural: Sigle
   label_cross_organization_new: Nuova sigla
   label_other_cross_organization_sametype: Altre sigle correlate
   label_other_organization_sametype: Altre organismi associati correlati
-  label_other_organization_noone: Nessun organismo associato
+  label_other_organization_none: Nessun organismo associato
 
   label_tipo: "Tipo dell'organismo"
   label_descrizione: Descrizione
@@ -1091,7 +1101,6 @@ it:
   field_sigla: Sigla
   field_type_organization: Tipo organizzazione
 
-  label_cross_organization: Sigla
   label_richiedinumeroregistrazione: Richiedi N° di Registrazione
   label_data_scadenza: Data scadenza
   label_nota: Note
@@ -1158,13 +1167,13 @@ it:
   error_can_not_delete_top_menu_unless_sections: "Non è possibile eliminare un menu finchè è assiociato ad sezioni..."
 
 #section
-  label_section: Categoria
-  label_section_plural: Categorie
-  label_section_new: Nuova categoria
+  label_section: Sotto sezione
+  label_section_plural: Sotto sezioni
+  label_section_new: Nuova sotto sezione
   label_protetto: Privato
   field_top_section: Sezione
-  error_can_not_delete_section_unless_issues: "Non è possibile eliminare una categoria finchè è legata a degli articoli..."
-  label_sections_from_top_section: "Categorie legate alla sezione "
+  error_can_not_delete_section_unless_issues: "Non è possibile eliminare una sotto sezione finchè è legata a degli articoli..."
+  label_sections_from_top_section: "Sotto sezioni legate alla sezione "
 # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
 # asso (Categoria utente) ha tanti utenti
 # asso ha uno (o più) Organismi Associati NON ha asso.organization_id?
@@ -1173,19 +1182,7 @@ it:
   label_asso_plural: Categorie utenti
   label_asso_new: Nuova categoria utente
   label_asso_associated_group_banner: Banner associati
-  label_asso_associated_group_banner_noone: Nessun banner associato
-
-  field_cross_group: Banner utente
-  label_cross_group: Banner utente
-  label_cross_group_plural: Banner Utenti
-  label_cross_group_new: Nuovo banner per utente
-
-  field_group_banner: Banner
-  label_group_banner: Banner
-  label_group_banner_plural: Banners
-  label_group_banner_new: Nuovo banner
-  label_group_banner_associated_asso: Categorie utenti associate
-  label_group_banner_associated_asso_noone: Nessuna categoria utente associata
+  label_asso_associated_group_banner_none: Nessun banner associato
 
   label_ragione_sociale: Ragione sociale
   label_email: Email
@@ -1255,7 +1252,7 @@ it:
   label_organization_user_asso: Referenti org. asso correlati
   label_cross_organization_user_asso: Sigla utente
   label_asso_organization: Organismo associato
-  label_asso_organization_noone: Nessun organismo associato
+  label_asso_organization_none: Nessun organismo associato
 
   field_power_user:  Responsabile organismo associato
   field_users: Utenti
@@ -1416,15 +1413,14 @@ it:
   notice_setting_fee_not_allowed: La gestione degli abbonamenti non è abilitata
   label_person: Persona
   field_registration_date: Registrazione
-  label_asso: Socio
-  role_manager : Responsabile
-  role_author : Redattore, collaboratore
-  role_vip : Invitato
-  role_abbonato : Abbonato
-  role_registered : Registrato
-  role_renew : Rinnovo, In scadenza
-  role_expired : Espirato
-  role_archivied : Archiviato
+  role_manager: Responsabile
+  role_author: Redattore, collaboratore
+  role_vip: Invitato
+  role_abbonato: Abbonato
+  role_registered: Registrato
+  role_renew: Rinnovo, In scadenza
+  role_expired: Espirato
+  role_archivied: Archiviato
 
 #EDITORIAL
   list_edizioni: Lista edizioni

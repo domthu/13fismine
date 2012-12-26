@@ -13,12 +13,13 @@
     <legend><%=l(:label_group_banner)%></legend>
     <p>
     <% unless @group_banner.espositore.blank? %>
-        <em><%=h @group_banner.espositore %></em>
+        <b><em><%=h @group_banner.espositore %></em></b>
         <br />
     <% end %>
     </p>
-    <p>
-        <%= l(:label_url) %>: <%=h @group_banner.url %>
+    <p><%= l(:label_url) %>:
+       <%= url_get_external @group_banner.url %><br />
+       <%=h @group_banner.url %>
     </p>
     <p>
         <%= l(:label_priorita) %>: <%=h @group_banner.priorita %>
@@ -27,7 +28,7 @@
         <%= l(:label_posizione) %>: <%=h @group_banner.posizione %>
     </p>
     <p>
-        <%= check_box_tag '', 1, @group_banner.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>  
+        <%= check_box_tag '', 1, @group_banner.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>
     </p>
     <p>
         <%= l(:label_banner) %>: <%=h @group_banner.banner %>
@@ -39,23 +40,39 @@
         <%= l(:label_clicks) %>: <%=h @group_banner.clicks %>
     </p>
     <p>
-      <%= l(:label_didascalia) %>: 
+      <%= l(:label_didascalia) %>:
       <div class="html">
         <% unless @group_banner.didascalia.nil? %>
           <%= @group_banner.didascalia.html_safe %>
         <% end %>
       </div>
-<--html safe----------------------------------------------------------------------textilizable-->      
+<--html safe----------------------------------------------------------------------textilizable-->
       <div class="wiki">
         <%= textilizable(@group_banner.didascalia) %>
       </div>
     </p>
     <p>
-        <%= check_box_tag '', 1, @group_banner.se_prima_pagina, :disabled => 'disabled'  %> <%= l(:label_se_prima_pagina) %>  
+        <%= check_box_tag '', 1, @group_banner.se_prima_pagina, :disabled => 'disabled'  %> <%= l(:label_se_prima_pagina) %>
     </p>
     <p>
         <%= l(:label_impressions_history) %>: <%=h @group_banner.impressions_history %>
     </p>
+  </fieldset>
+</div>
+
+<div class="splitcontentright">
+  <fieldset class="box tabular">
+    <legend><%=l(:label_cross_groups_from_group_banner)%></legend>
+    <% if @group_banner.cross_groups.any? %>
+      <%= l(:label_total) %>: <%= h @group_banner.cross_groups.count %>
+      <ul>
+        <% @group_banner.cross_groups.each do |cross_group| %>
+          <li><%= link_to cross_group, cross_group %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+    <% end %>
   </fieldset>
 </div>
 
@@ -76,7 +93,7 @@
           <% end %>
         </table>
         <% else %>
-          <%=l(:label_group_banner_associated_asso_noone)%>
+          <%=l(:label_group_banner_associated_asso_none)%>
         <% end %>
     </fieldset>
 </div>

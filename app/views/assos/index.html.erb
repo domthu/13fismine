@@ -22,7 +22,7 @@
   <tbody>
 <% @assos.each do |asso| %>
   <tr class="<%= cycle 'odd', 'even' %>">
-    <td><%= link_to h(asso), asso_path(asso) %></td>
+    <td><%= link_to asso, asso_path(asso) %></td>
     <td><%=h asso.email %></td>
     <td><%=h asso.indirizzo %></td>
     <td><%=h asso.presidente %></td>

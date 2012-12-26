@@ -102,7 +102,7 @@
         };
     $("#user_asso").autocomplete({
             minLength: 2,
-            source: '<%= asso_path %>',
+            source: '<%= assosvc_path %>',
             focus: function(event, ui) {
                 $('user_asso').val(ui.value);
                 return false;

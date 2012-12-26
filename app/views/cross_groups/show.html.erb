@@ -17,12 +17,12 @@
         <p>
             <%= l(:label_asso) %>: <%= link_to(h(@cross_group.asso), asso_path(@cross_group.asso, :id => @cross_group.asso_id)) %>
         </p>
-        
+
         <p>
             <%= l(:label_group_banner) %>: <%= link_to(h(@cross_group.group_banner), group_banner_path(@cross_group.group_banner, :id => @cross_group.group_banner_id)) %>
         </p>
         <p>
-            <%= check_box_tag '', 1, @cross_group.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>  
+            <%= check_box_tag '', 1, @cross_group.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>
 
         </p>
 </fieldset>
@@ -36,7 +36,7 @@
           <tr>
             <th><%=l(:label_group_banner)%></th>
           </tr>
-          <% @cross_group.asso.group_banners.each do |related_banner| 
+          <% @cross_group.asso.group_banners.each do |related_banner|
                 if (related_banner != @cross_group.group_banner) %>
                   <tr>
                     <td class="buttons">
@@ -46,8 +46,8 @@
           end %>
         </table>
         <% else %>
-          <%=l(:label_asso_associated_group_banner_noone)%>
-        <% end %>        
+          <%=l(:label_asso_associated_group_banner_none)%>
+        <% end %>
     </fieldset>
 </div>
 
@@ -59,7 +59,7 @@
           <tr>
             <th><%=l(:label_asso)%></th>
           </tr>
-          <% @cross_group.group_banner.assos.each do |related_asso| 
+          <% @cross_group.group_banner.assos.each do |related_asso|
                 if (related_asso != @cross_group.asso) %>
                   <tr>
                     <td class="buttons">
@@ -69,10 +69,7 @@
           end %>
         </table>
         <% else %>
-          <%=l(:label_group_banner_associated_asso_noone)%>
-        <% end %>        
+          <%=l(:label_group_banner_associated_asso_none)%>
+        <% end %>
     </fieldset>
 </div>
-
-
-
