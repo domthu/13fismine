@@ -5,7 +5,7 @@
    background: #FFFFFF;
    margin:0 auto;
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
   /* text-align: justify;      */
@@ -20,7 +20,7 @@
 table, ul.fs-hmenu
 {
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
    text-align: justify;
@@ -73,8 +73,9 @@ ul.fs-vmenu a
 .fs-postcontent a:hover,
 .fs-postcontent a.hovered
 {
-    font-family: 'Droid Sans Mono', Helvetica, sans-serif;
-    font-size: 13px;
+    font-family:  Arial ,Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 19px;
 }
 
 
@@ -96,7 +97,7 @@ ul.fs-vmenu a
 .fs-postheader, .fs-postheader a, .fs-postheader a:link, .fs-postheader a:visited, .fs-postheader a:hover
 {
    font-size: 30px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
  /*  font-variant: small-caps;*/
@@ -105,21 +106,21 @@ ul.fs-vmenu a
 
 .fs-postcontent a, .fs-postcontent a:link
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
    color: #494949;
 }
 
 .fs-postcontent a:visited, .fs-postcontent a.visited
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
    color: #006B92;
 }
 
 .fs-postcontent  a:hover, .fs-postcontent a.hover
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: underline;
    color: #926900;
 }
@@ -129,7 +130,7 @@ ul.fs-vmenu a
    color: #494949;
    margin: 10px 0 0;
    font-size: 26px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
    font-variant: small-caps;
    text-align: center;
 }
@@ -138,7 +139,7 @@ ul.fs-vmenu a
 {
    margin: 10px 0 0;
    font-size: 26px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -146,7 +147,7 @@ ul.fs-vmenu a
 .fs-postcontent h1 a, .fs-postcontent h1 a:link, .fs-postcontent h1 a:hover, .fs-postcontent h1 a:visited, .fs-blockcontent h1 a, .fs-blockcontent h1 a:link, .fs-blockcontent h1 a:hover, .fs-blockcontent h1 a:visited
 {
    font-size: 26px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -156,7 +157,7 @@ ul.fs-vmenu a
    color: #000000;
    margin: 10px 0 0;
    font-size: 22px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -165,7 +166,7 @@ ul.fs-vmenu a
 {
    margin: 10px 0 0;
    font-size: 22px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -173,7 +174,7 @@ ul.fs-vmenu a
 .fs-postcontent h2 a, .fs-postcontent h2 a:link, .fs-postcontent h2 a:hover, .fs-postcontent h2 a:visited, .fs-blockcontent h2 a, .fs-blockcontent h2 a:link, .fs-blockcontent h2 a:hover, .fs-blockcontent h2 a:visited
 {
    font-size: 22px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -183,7 +184,7 @@ ul.fs-vmenu a
    color: #494949;
    margin: 10px 0 0;
    font-size: 18px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -192,7 +193,7 @@ ul.fs-vmenu a
 {
    margin: 10px 0 0;
    font-size: 18px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -200,7 +201,7 @@ ul.fs-vmenu a
 .fs-postcontent h3 a, .fs-postcontent h3 a:link, .fs-postcontent h3 a:hover, .fs-postcontent h3 a:visited, .fs-blockcontent h3 a, .fs-blockcontent h3 a:link, .fs-blockcontent h3 a:hover, .fs-blockcontent h3 a:visited
 {
    font-size: 18px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -210,7 +211,7 @@ ul.fs-vmenu a
    color: #00678C;
    margin: 10px 0 0;
    font-size: 16px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -219,7 +220,7 @@ ul.fs-vmenu a
 {
    margin: 10px 0 0;
    font-size: 16px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -227,7 +228,7 @@ ul.fs-vmenu a
 .fs-postcontent h4 a, .fs-postcontent h4 a:link, .fs-postcontent h4 a:hover, .fs-postcontent h4 a:visited, .fs-blockcontent h4 a, .fs-blockcontent h4 a:link, .fs-blockcontent h4 a:hover, .fs-blockcontent h4 a:visited
 {
    font-size: 16px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -237,7 +238,7 @@ ul.fs-vmenu a
    color: #00678C;
    margin: 10px 0 0;
    font-size: 14px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -246,7 +247,7 @@ ul.fs-vmenu a
 {
    margin: 10px 0 0;
    font-size: 14px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -254,7 +255,7 @@ ul.fs-vmenu a
 .fs-postcontent h5 a, .fs-postcontent h5 a:link, .fs-postcontent h5 a:hover, .fs-postcontent h5 a:visited, .fs-blockcontent h5 a, .fs-blockcontent h5 a:link, .fs-blockcontent h5 a:hover, .fs-blockcontent h5 a:visited
 {
    font-size: 14px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -264,7 +265,7 @@ ul.fs-vmenu a
    color: #006B92;
    margin: 10px 0 0;
    font-size: 13px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -274,7 +275,7 @@ ul.fs-vmenu a
 
    margin: 10px 0 0;
    font-size: 13px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -282,7 +283,7 @@ ul.fs-vmenu a
 .fs-postcontent h6 a, .fs-postcontent h6 a:link, .fs-postcontent h6 a:hover, .fs-postcontent h6 a:visited, .fs-blockcontent h6 a, .fs-blockcontent h6 a:link, .fs-blockcontent h6 a:hover, .fs-blockcontent h6 a:visited
 {
    font-size: 13px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
 }
@@ -670,7 +671,7 @@ ul.fs-hmenu>li>a
 .fs-hmenu a:hover
 {
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
    text-decoration: none;
@@ -791,7 +792,7 @@ div.fs-vmenublock img
 {
    color: #FFFFFF;
    font-size: 16px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
    font-variant: small-caps;
@@ -852,7 +853,7 @@ ul.fs-vmenu a
    cursor: pointer;
    z-index: 1;
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
    text-decoration: none;
@@ -956,7 +957,7 @@ ul.fs-vmenu ul a
    line-height: 28px;
    color: #006B92;
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
    text-decoration: none;
@@ -969,7 +970,7 @@ ul.fs-vmenu ul a:visited, ul.fs-vmenu ul a.active:hover, ul.fs-vmenu ul a:hover,
    line-height: 28px;
    color: #006B92;
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
    text-decoration: none;
@@ -1122,7 +1123,7 @@ div.fs-block img
 {
    color: #FFFFFF;
    font-size: 16px;
-   font-family: 'Quattrocento Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family:  Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
    /*font-variant: small-caps;*/
@@ -1136,7 +1137,7 @@ div.fs-block img
    margin:0 auto;
    color: #00212D;
    font-size: 13px;
-   font-family: 'Droid Sans', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-align: justify;
 }
 .fs-blockcontent table,
@@ -1148,7 +1149,7 @@ div.fs-block img
 {
    color: #00212D;
    font-size: 13px;
-   font-family: 'Droid Sans', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-align: justify;
 }
 
@@ -1160,21 +1161,21 @@ div.fs-block img
 .fs-blockcontent a, .fs-blockcontent a:link
 {
    color: #006B92;
-   font-family: 'Droid Sans', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
 }
 
 .fs-blockcontent a:visited, .fs-blockcontent a.visited
 {
    color: #006B92;
-   font-family: 'Droid Sans', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
 }
 
 .fs-blockcontent a:hover, .fs-blockcontent a.hover
 {
    color: #FFBE1A;
-   font-family: 'Droid Sans', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: underline;
 }
 .fs-block ul>li:before
@@ -1198,7 +1199,7 @@ div.fs-block img
 .fs-block li
 {
    font-size: 13px;
-   font-family: 'Droid Sans', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    line-height: 125%;
    color: #0088B9;
    margin: 5px 0 0 10px;
@@ -1230,7 +1231,7 @@ button.fs-button
 {
    text-decoration: none;
    font-size: 11px;
-   font-family: 'Droid Sans', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: bold;
    font-style: normal;
    position:relative;
@@ -1265,7 +1266,7 @@ input, select, textarea
 {
    vertical-align: middle;
    font-size: 11px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: bold;
    font-style: normal;
 }
@@ -1327,7 +1328,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
    padding: 4px 0;
    color: #00678C !important;
    font-size: 11px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: bold;
    font-style: normal;
    text-shadow: none;
@@ -1341,7 +1342,7 @@ input.fs-error, textarea.fs-error
 input.fs-error, textarea.fs-error {
    color: #00678C !important;
    font-size: 11px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: bold;
    font-style: normal;
 }
@@ -1360,7 +1361,7 @@ form.fs-search input[type="text"]
    box-sizing: border-box;
    color: #00678C !important;
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
 }
@@ -1431,7 +1432,7 @@ label.fs-checkbox
 {
    cursor: pointer;
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
    line-height: 16px;
@@ -1519,7 +1520,7 @@ label.fs-radiobutton
 {
    cursor: pointer;
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
    line-height: 12px;
@@ -1711,7 +1712,7 @@ pre
    color: #003548;
    margin: 5px 0;
    font-size: 18px;
-   font-family: 'Droid Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
   /* font-variant: small-caps;
@@ -1726,7 +1727,7 @@ pre
 .fs-postheader a.hovered
 {
     font-size: 15px;
-   font-family: 'Droid Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: bold;
    font-style: normal; /*
   font-variant: small-caps;
@@ -1735,7 +1736,7 @@ pre
 
 .fs-postheader a, .fs-postheader a:link
 {
-   font-family: 'Droid Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
    text-align: left;
    color: #004977;
@@ -1743,14 +1744,14 @@ pre
 
 .fs-postheader a:visited, .fs-postheader a.visited
 {
-   font-family: 'Droid Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
    color: #004977;
 }
 
 .fs-postheader a:hover,  .fs-postheader a.hovered
 {
-   font-family: 'Droid Sans', Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: underline;
    color: #0088B9;
 }
@@ -1762,7 +1763,7 @@ pre
 .fs-postheadericons a:hover
 {
    font-size: 11px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-align: center;
    color: #0088B9;
 }
@@ -1774,7 +1775,7 @@ pre
 
 .fs-postheadericons a, .fs-postheadericons a:link
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: italic;
    text-decoration: none;
@@ -1783,7 +1784,7 @@ pre
 
 .fs-postheadericons a:visited, .fs-postheadericons a.visited
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: italic;
    text-decoration: none;
@@ -1792,7 +1793,7 @@ pre
 
 .fs-postheadericons a:hover, .fs-postheadericons a.hover
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: italic;
    text-decoration: underline;
@@ -1869,7 +1870,7 @@ pre
 
 .fs-postcontent li, .fs-post li, .fs-textblock li
 {
-    font-family: 'Droid Sans Mono', Helvetica, sans-serif;
+    font-family: Helvetica, Arial , sans-serif;
    text-align: justify;
    color: #161616;
    margin: 5px 0 5px 11px;
@@ -1924,7 +1925,7 @@ blockquote
    padding:10px 10px 10px 44px;
    margin:10px 0 0 25px;
    color: #005676;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: italic;
    text-align: justify;
@@ -1938,7 +1939,7 @@ blockquote a:visited, .fs-postcontent blockquote a:visited, .fs-blockcontent blo
 blockquote a:hover, .fs-postcontent blockquote a:hover, .fs-blockcontent blockquote a:hover, .fs-footer blockquote a:hover
 {
    color: #005676;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: italic;
    text-align: justify;
@@ -1974,7 +1975,7 @@ blockquote p,
 .fs-postfootericons a:hover
 {
    font-size: 11px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-align: center;
    color: #0090C4;
 }
@@ -1986,7 +1987,7 @@ blockquote p,
 
 .fs-postfootericons a, .fs-postfootericons a:link
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: italic;
    text-decoration: none;
@@ -1995,7 +1996,7 @@ blockquote p,
 
 .fs-postfootericons a:visited, .fs-postfootericons a.visited
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: italic;
    text-decoration: none;
@@ -2004,7 +2005,7 @@ blockquote p,
 
 .fs-postfootericons a:hover, .fs-postfootericons a.hover
 {
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: italic;
    text-decoration: underline;
@@ -2053,7 +2054,7 @@ blockquote p,
    position: relative;
    color: #00678C;
    font-size: 11px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-align: center;
 }
 
@@ -2067,7 +2068,7 @@ blockquote p,
 {
    color: #00678C;
    font-size: 11px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
 }
 
 .fs-footer p 
@@ -2080,21 +2081,21 @@ blockquote p,
 .fs-footer a:link
 {
    color: #1AC2FF;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
 }
 
 .fs-footer a:visited
 {
    color: #1AC2FF;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
 }
 
 .fs-footer a:hover
 {
    color: #8C8C8C;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: underline;
 }
 
@@ -2141,7 +2142,7 @@ blockquote p,
 .fs-footer li
 {
    font-size: 13px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    line-height: 125%;
    color: #0088B9;
 }
