@@ -381,6 +381,14 @@ margin-left:-1px;*/
     padding-right: 3px;
     padding-left: 3px;
     vertical-align: middle;
+
+}
+.fs-layout-cell .layout-item-0{
+    color: #000000;
+    padding-right: 10px;
+    padding-left: 10px;
+    vertical-align: middle;
+
 }
 
 .fs-content .fs-postcontent-2 .layout-item-1 {

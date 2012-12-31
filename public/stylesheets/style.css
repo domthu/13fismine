@@ -74,7 +74,7 @@ ul.fs-vmenu a
 .fs-postcontent a.hovered
 {
     font-family:  Arial ,Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 19px;
 }
 
@@ -1727,6 +1727,7 @@ pre
 .fs-postheader a.hovered
 {
     font-size: 15px;
+    line-height: 17px;
    font-family: Arial, Helvetica, Sans-Serif;
    font-weight: bold;
    font-style: normal; /*
