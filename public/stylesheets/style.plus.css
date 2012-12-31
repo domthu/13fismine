@@ -60,7 +60,7 @@
 }
 
 #fs-prova-gratis-info {
-    font-family: 'Droid Sans',Arial, sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 12px;
     font-weight: bold;
     color: #5f0100;
@@ -192,7 +192,7 @@ width:100%;
     padding: 4px 0;
     color: #00678C !important;
     font-size: 11px;
-    font-family: 'Droid Sans', Helvetica, Sans-Serif;
+    font-family: Arial, Helvetica, Sans-Serif;
     font-weight: bold;
     font-style: normal;
     text-shadow: none;
@@ -216,7 +216,7 @@ width:100%;
     width:100px;
     float:left;
     font-size: 11px;
-    font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+    font-family: Arial,  Helvetica, Sans-Serif;
     font-weight: bold;
     font-style: normal;
 }
@@ -224,7 +224,7 @@ width:100%;
     width:105px;
 }
 .fs-pass a:link{
-    font-family: 'Droid Sans',Arial, sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 11px;
     color: #5f0100;
     position: relative;
@@ -280,7 +280,7 @@ h3.fs-postheader {
 */
 .fs-postdateicon
 {
-    font-family: 'Droid Sans Mono', Helvetica, Sans-Serif;
+    font-family: Arial, Helvetica, Sans-Serif;
    font-size:10px;
    font-weight: bold;
     background: #016284;
@@ -303,7 +303,7 @@ h3.fs-postheader {
     background: #016284;
     color: #fff;
     font-size: 12px;
-    font-family: 'Droid Sans Mono', Helvetica, Sans-Serif;
+    font-family: Arial, Helvetica, Sans-Serif;
     /*
     background: linear-gradient(top, #FFFFFF 0, #80DDFF 100%) no-repeat;
     background: -webkit-linear-gradient(top,#80DDFF 0, #d0e6e8 50%, #80DDFF 100%) no-repeat;
@@ -896,7 +896,7 @@ ul.fs-menu3-hmenu li li ul>li:last-child {
     line-height: 30px;
     color: #5f0100;
     font-size: 13px;
-    font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+    font-family: Arial, Helvetica, Sans-Serif;
     text-decoration: none;
     margin: 0;
 }
@@ -1098,7 +1098,7 @@ ul.fs-menu2-hmenu>li>a {
 .fs-menu2-hmenu a.active,
 .fs-menu2-hmenu a:hover {
     font-size: 13px;
-    font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+    font-family: Arial, Helvetica, Sans-Serif;
     font-weight: normal;
     font-style: normal;
     text-decoration: none;
@@ -1189,7 +1189,7 @@ ul.fs-menu2-hmenu li li ul>li:last-child
    line-height: 29px;
    color: #000000;
    font-size: 12px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
    margin:0;
 }
@@ -1203,7 +1203,7 @@ ul.fs-menu2-hmenu li li ul>li:last-child
    line-height: 29px;
    color: #000000;
    font-size: 12px;
-   font-family: Arial, 'Arial Unicode MS', Helvetica, Sans-Serif;
+   font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
    margin:0;
 }
