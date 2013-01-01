@@ -736,6 +736,7 @@ ul.fs-hmenu ul
    position: relative;
    margin: 0 auto 0 auto;
    z-index: auto !important;
+
 }
 
 .fs-content-layout
@@ -1618,6 +1619,7 @@ label.fs-checkbox.fs-checked:after
    -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);
    box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);
    padding:7px;
+    width:98%;
 }
 a img
 {
@@ -1673,38 +1675,6 @@ pre
    border: 0;
    margin: 1em 1em 0 0;
    float: left;
-}
-
-.image-caption-wrapper
-{
-   padding: 10px 10px 10px 10px;
-   -webkit-box-sizing: border-box;
-   -moz-box-sizing: border-box;
-   box-sizing: border-box;
-    float:left;
-}
-
-.image-caption-wrapper img
-{
-   margin: 0 !important;
-   -webkit-box-sizing: border-box;
-   -moz-box-sizing: border-box;
-   box-sizing: border-box;
-}
-
-.image-caption-wrapper div.fs-collage
-{
-   margin: 0 !important;
-   -webkit-box-sizing: border-box;
-   -moz-box-sizing: border-box;
-   box-sizing: border-box;
-}
-
-.image-caption-wrapper p
-{
-   font-size: 80%;
-   text-align: right;
-   margin: 0;
 }
 
 .fs-postheader
@@ -1954,7 +1924,9 @@ blockquote p,
 {
    margin: 0;
 }
-
+.fs-postmetadataheader .fs-postheader {
+ padding: 0 10px;
+}
 .fs-postmetadatafooter
 {
    background: #ffffff;

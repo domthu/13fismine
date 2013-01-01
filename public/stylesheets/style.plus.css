@@ -388,6 +388,7 @@ margin-left:-1px;*/
     padding-right: 10px;
     padding-left: 10px;
     vertical-align: middle;
+    text-align: justify;
 
 }
 
@@ -450,7 +451,39 @@ margin-left:-1px;*/
     border-radius: 15px;
     margin: 5px;
 }
+.fs-image-caption-wrapper
+{
+    padding: 5px 5px 5px 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float:left;
+    width:210px;
+}
 
+.fs-image-caption-wrapper img
+{
+    margin: 0 !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width:200px;
+}
+
+.fs-image-caption-wrapper div.fs-collage
+{
+    margin: 0 !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.fs-image-caption-wrapper p
+{
+    font-size: 80%;
+    text-align: right;
+    margin: 0;
+}
 /* fine post comuni */
 
 /* inizio slide */
@@ -1582,3 +1615,4 @@ ul.fs-menu2-hmenu>li.ext.ext-l.ext-r:hover>.ext-m:before
    right: -8px
 ;
 }
+

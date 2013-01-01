@@ -15,34 +15,28 @@
                 </div>
                 <div class="fs-postcontent fs-postcontent-0 clearfix">
                   <div class="fs-content-layout-wrapper layout-item-0">
-                    <div class="fs-content-layout">
-                      <div class="fs-content-layout-row">
-                        <div class="fs-layout-cell layout-item-1">
-                          <%= if articolo.immagine_url.nil?
-                                '<h3>no image</h3>'
-                              else
-                                image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 12)), :style => "width:200px", :class => "image-caption-wrapper")
-                              end
-                          %>
-                          <%= articolo.riassunto %>
-                          <br/>
-                          <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false) %>
+
+                    <div class="fs-image-caption-wrapper">
+                      <%= if articolo.immagine_url.nil?
+                            '<h3>no image</h3>'
+                          else
+                            image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 12)))
+                          end
+                      %>
+                      <div class="fs-postmetadatafooter">
+                        <div class="fs-postheadericons fs-metadata-icons">
+                          <span class="fs-postauthoricon"><%= h articolo.author %></span> &nbsp;
+
+                          <%= articolo.se_protetto ? '<span class="fs-post-access-ok">Articolo consultabile liberamente</span>' : '<span class="fs-post-access-no">Articolo riservato agli abbonati</span>' %>
+
                         </div>
                       </div>
 
-                      <span class="fs-postauthoricon"><%= h articolo.author %></span> &nbsp;
+
                     </div>
-                    <div class="fs-postmetadatafooter">
-                      <div class="fs-postheadericons fs-metadata-icons">
-
-
-                        <%= articolo.se_protetto ? '<span class="fs-post-access-ok">Articolo consultabile liberamente</span>' : '<span class="fs-post-access-no">Articolo riservato agli abbonati</span>' %>
-                        &nbsp;
-                        <span class="fs-postcommentsicon"><a href="#" title="Comments">Commenta »</a></span> &nbsp;
-
-                      </div>
-                    </div>
-
+                    <%= articolo.riassunto %>
+                    <br/>
+                    <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false) %>
                   </div>
                 </div>
 
