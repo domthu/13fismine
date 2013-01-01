@@ -1,5 +1,8 @@
 <div class="fs-layout-cell fs-content clearfix">
   <% if @issues && @issues.any? %>
+      <nav class="art-nav clearfix">
+        <%= render_navigation(:level => 3) %>
+      </nav>
       <% @issues.each do |articolo| %>
           <!-- qui è l'inserimento dell'articolo -->
           <ARTICLE class="fs-post fs-article">
@@ -23,15 +26,23 @@
                             image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 12)))
                           end
                       %>
-                      <div class="fs-postmetadatafooter">
-                        <div class="fs-postheadericons fs-metadata-icons">
-                          <span class="fs-postauthoricon"><%= h articolo.author %></span> &nbsp;
+                      <% if articolo.se_protetto %>
+                          <div class="fs-postmetadatafooter-ko">
+                            <div class="fs-postheadericons fs-metadata-icons">
+                              <p class="fs-postauthoricon"><%= h articolo.author %></p>
 
-                          <%= articolo.se_protetto ? '<span class="fs-post-access-ok">Articolo consultabile liberamente</span>' : '<span class="fs-post-access-no">Articolo riservato agli abbonati</span>' %>
+                              <p class="fs-post-access-no">Articolo riservato agli abbonati</p>
+                            </div>
+                          </div>
+                      <% else %>
+                          <div class="fs-postmetadatafooter-ok">
+                            <div class="fs-postheadericons fs-metadata-icons">
+                              <p class="fs-postauthoricon"><%= h articolo.author %></p>
 
-                        </div>
-                      </div>
-
+                              <p class="fs-post-access-ok">Articolo consultabile liberamente</p>
+                            </div>
+                          </div>
+                      <% end %>
 
                     </div>
                     <%= articolo.riassunto %>

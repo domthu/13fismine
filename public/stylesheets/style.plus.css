@@ -480,9 +480,96 @@ margin-left:-1px;*/
 
 .fs-image-caption-wrapper p
 {
-    font-size: 80%;
-    text-align: right;
+    font-size: 90%;
+    text-align: center;
     margin: 0;
+}
+
+.fs-postmetadatafooter-ok
+{
+    background: #ffffff;
+    background: rgba(255, 255, 255, 0.60);
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+    border:1px solid rgba(104, 215, 255, 0.3);
+    margin-left:-5px;
+    position:relative;
+    z-index:1;
+    padding: 1px;
+}
+.fs-postmetadatafooter-ko
+  {
+      background: #ffffff;
+      background: rgba(255, 255, 255, 0.60);
+      -webkit-border-radius:10px;
+      -moz-border-radius:10px;
+      border-radius:10px;
+      border:1px solid rgb(255, 162, 56);
+      margin-left:-5px;
+      position:relative;
+      z-index:1;
+      padding: 1px;
+  }
+.fs-comments{
+    border-bottom: 1px  solid #d3d3d3;
+    display: block;
+}
+.fs-riassunto-full{
+ font-size: 17px;
+    line-height: 22px;
+}
+.fs-postmetadata-full
+{
+    background: #ffffff;
+    border-bottom: 1px  solid #d3d3d3;
+    border-top: 3px  solid #afafaf;
+    margin:0 0 10px 20px;
+    position:relative;
+    float: left;
+    padding:10px ;
+    width: 285px;
+    display: block;
+}
+.fs-image-caption-wrapper-full
+{
+    padding: 7px 8px 7px 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float:left;
+    width:315px;
+    border: solid 1px #afafaf;
+}
+
+.fs-image-caption-wrapper-full img
+{
+    margin: 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width:300px;
+}
+.fs-postheader-full
+{
+    color: #000000;
+    margin-bottom: 10px;
+    font-size: 20px;
+    line-height: 24px;
+    font-family: Arial, Helvetica, Sans-Serif;
+    font-weight: normal;
+    font-style: normal;
+    text-align: left;
+}
+.fs-art-sezione-full {
+    color: #0512a1;
+    font-size: 12px;
+    line-height: 22px;
+    font-family: Arial, Helvetica, Sans-Serif;
+    margin: 0 auto;
+    display: inline-block;
+    text-transform: uppercase;
+
 }
 /* fine post comuni */
 
