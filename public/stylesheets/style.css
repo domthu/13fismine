@@ -1620,6 +1620,7 @@ label.fs-checkbox.fs-checked:after
    box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);
    padding:7px;
     width:98%;
+    margin-top: 7px;
 }
 a img
 {
@@ -1927,20 +1928,6 @@ blockquote p,
 .fs-postmetadataheader .fs-postheader {
  padding: 0 10px;
 }
-.fs-postmetadatafooter
-{
-   background: #ffffff;
-   background: rgba(255, 255, 255, 0.60);
-   -webkit-border-radius:10px;
-   -moz-border-radius:10px;
-   border-radius:10px;
-   border:1px solid rgba(104, 215, 255, 0.3);
-   margin:0 auto;
-   position:relative;
-   z-index:1;
-   padding: 1px;
-}
-
 .fs-postfootericons,
 .fs-postfootericons a,
 .fs-postfootericons a:link,

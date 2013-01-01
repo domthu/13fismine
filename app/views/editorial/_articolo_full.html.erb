@@ -1,33 +1,47 @@
 <% if articolo %>
+    <% if User.current && User.current.logged? && User.current.isfee?(articolo.id) %>
+        <div class="fs-postmetadataheader">
+          <div class="fs-art-sezione-full">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></div>
+          <div class="fs-postheader-full">      <%= @articolo.titolo %>  </div>
+        </div>
+        <div style="width:100%; overflow:auto;">
+          <div class="fs-image-caption-wrapper-full">
+            <%= if articolo.immagine_url.nil?
+                  '<h3>no image</h3>'
+                else
+                  image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 12)))
+                end
+            %>
+          </div>
 
-  <h4  class="separticle">
-    <%= @articolo.titolo %>
-  </h4>
+          <div class="fs-postmetadata-full">
+            <div class="fs-postauthorico"><%= h articolo.author %></div>
+            <div class="fs-comments">
+              <%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %>
+            </div>
+            <div class="fs-comments">
+              <span class="fs-postcommentsicon"> Scrivi un commento </span>::<span class="fs-postcommentsicon"> Leggi i commenti </span>
+            </div>
+            <div class="fs-comments">
+              <span class="fs-postcommentsicon"> Condividi su Facebook </span>::<span class="fs-postcommentsicon">  Condividi su twitter </span>
+            </div>
+          </div> <p class="fs-riassunto-full">
+          <%= articolo.riassunto %></p>
 
-  <% if User.current && User.current.logged? && User.current.isfee?(articolo.id) %>
+        </div>
+        <br/>
+        <div class="fs-layout-cell layout-item-1">
+          <%= @articolo.testo %>
+        </div>
+        <%= link_to "Ritorna ...", '/editoriale/' + @articolo.section.top_section.top_menu.key + '/'+ @articolo.section.top_section.key %>
+    <% else %>
+        <br/>
+        <p class="nodata"><%= l(:label_no_data) %></p>
+        <br/>
+    <% end %>
 
-    <span style="color:#ffffff;" class="fs-sections">
-      <%= link_to(h(truncate(@articolo.section.top_section.name)), url_for(:controller => 'editorial', :action => "topsezione", :topmenu_key => @articolo.section.top_section.top_menu.key, :topsection_key => @articolo.section.top_section.key, :escape => false))
-      %>
-      <%= @articolo.section.sezione %>
-    </span>
-    <br/>
-    <span class="fs-postauthoricon">
-      Autore:<%= h @articolo.author %>
-    </span>
-    <br/>
-    <div class="fs-layout-cell layout-item-1">
-      <%= @articolo.testo %>
-    </div>
-    <%= link_to "Ritorna ...", '/editoriale/' + @articolo.section.top_section.top_menu.key + '/'+ @articolo.section.top_section.key %>
-  <% else %>
+<% else %>
     <br/>
     <p class="nodata"><%= l(:label_no_data) %></p>
     <br/>
-  <% end %>
-
-<% else %>
-  <br/>
-  <p class="nodata"><%= l(:label_no_data) %></p>
-  <br/>
 <% end %>
