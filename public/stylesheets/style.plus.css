@@ -221,9 +221,9 @@
 }
 
 .gravatar {
-    position: absolute;
-    top: 21px;
-    right: 7px;
+    position: relative;
+float: left;
+    margin: 0 4px;
 
 }
 
@@ -1292,13 +1292,12 @@ ul.fs-menu2-hmenu>li:before {
     background: url('/images/template/menuseparator2.png') center center no-repeat;
 }
 
-
 /* ------------------ menu 2 a discesa   */
 
 ul.fs-menu2-hmenu li li a {
     background: #ffffff;
- /*   padding: 0 17px;
-    margin: 0 auto;  */
+    /*   padding: 0 17px;
+margin: 0 auto;  */
 }
 
 ul.fs-menu2-hmenu li li {
@@ -1686,3 +1685,32 @@ ul.fs-menu2-hmenu>li.ext.ext-l.ext-r:hover>.ext-m:before {
 
 }
 
+/* personalizzazioni varie */
+.fs-social {
+margin: 10px auto;
+    height:18px;
+    width:296px;
+}
+
+.fs-social-fb {
+    width: 100px;
+    display: block;
+    float: left;
+}
+
+.fs-social-tw{
+    width: 96px;
+    display: block;
+    float: left;
+}
+
+.fs-social-gp {
+                    display: block;
+    float: left;
+}
+ .ZPISQ{
+     display: none;
+ }
+ #widget_bounds{
+     display: none;
+ }

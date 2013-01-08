@@ -15,7 +15,7 @@
           </div>
 
           <div class="fs-postmetadata-full">
-            <div class="fs-postauthorico"><%= h articolo.author %></div>
+            <div class="fs-postauthorico">  <%= gravatar_for(articolo.author) unless !articolo.author %><%= h articolo.author %> </div>
             <div class="fs-comments">
               <%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %>
             </div>
@@ -23,11 +23,24 @@
               <span class="fs-postcommentsicon"> Scrivi un commento </span>::<span class="fs-postcommentsicon"> Leggi i commenti </span>
             </div>
             <div class="fs-comments">
-              <%= link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
-              <%= link_to image_tag('/images/ico/twitter64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
-              <a href="https://twitter.com/share" class="twitter-share-button" data-via="FicoSportit" data-lang="it" data-size="large" data-count="none">Tweet</a>
-              <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+              <div class='fs-social'>
+                <div class='fs-social-fb '>
+                <script src="http://connect.facebook.net/it_IT/all.js#xfbml=1"></script><fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like>
+                </div>
+                <div class='fs-social-tw '>
+                  <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                </div>
 
+                <div class='fs-social-gp '>
+                  <!-- Place this tag where you want the +1 button to render. -->
+                <div class="g-plusone" data-size="medium" data-recommendations="false"></div>
+                 </div>
+              </div>
+              <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
+              <%# link_to image_tag('/images/ico/twitter64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
+             <!-- <a href="https://twitter.com/share" class="twitter-share-button" data-via="FicoSportit" data-lang="it" data-size="large" data-count="none">Tweet</a>
+              <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+             -->
             </div>
           </div> <p class="fs-riassunto-full">
           <%= articolo.riassunto %></p>
@@ -38,6 +51,16 @@
           <%= @articolo.testo %>
         </div>
         <%= link_to "Ritorna ...", '/editoriale/' + @articolo.section.top_section.top_menu.key + '/'+ @articolo.section.top_section.key %>
+        <!-- Place this tag after the last +1 button tag. -->
+        <script type="text/javascript">
+          window.___gcfg = {lang: 'it'};
+
+          (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+          })();
+        </script>
     <% else %>
         <br/>
         <p class="nodata"><%= l(:label_no_data) %></p>
