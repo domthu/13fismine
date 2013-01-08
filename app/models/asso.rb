@@ -8,7 +8,7 @@ class Asso < ActiveRecord::Base
   #domthu20120708   has_many :organizations, :dependent => :nullify
   #ATTENZIONE Organization (Organismi Associati) e Asso (Categoria Utente) hanno una relazione 1 a 1
   has_one :organization, :dependent => :nullify
-  
+
   #has_one :cross_organization, :through => :organization, :dependent => :delete_all
   #http://guides.rubyonrails.org/v2.3.8/association_basics.html#choosing-between-belongs-to-and-has-one
   #2.8 Choosing Between has_many :through and has_and_belongs_to_many
@@ -40,12 +40,21 @@ class Asso < ActiveRecord::Base
   #text-area? CSS? HTML area
   validates_length_of :comunicazioni, :maximum => 4000
 
+#  def asso_symbols
+#    [asso.to_sym]
+#  end
+
   def to_s
-    ragione_sociale #.to_s
+#    if defined?(ragione_sociale) and !(ragione_sociale.nil?)
+#      ragione_sociale #.to_s
+#    else
+#      "jean"
+#    end
+    ragione_sociale
   end
 
   alias :name :to_s
-  
+
   def scadenza
     if (self.organization.nil? || self.organization.data_scadenza.nil?)
       return nil
@@ -54,6 +63,6 @@ class Asso < ActiveRecord::Base
     else
       self.organization.data_scadenza.to_date
     end
-  end 
+  end
 
 end

@@ -1,8 +1,5 @@
 <div class="fs-layout-cell fs-content clearfix">
   <% if @issues && @issues.any? %>
-      <nav class="art-nav clearfix">
-        <%= render_navigation(:level => 3) %>
-      </nav>
       <% @issues.each do |articolo| %>
           <!-- qui è l'inserimento dell'articolo -->
           <ARTICLE class="fs-post fs-article">
@@ -21,11 +18,16 @@
 
                     <div class="fs-image-caption-wrapper">
                       <%= if articolo.immagine_url.nil?
-                             image_tag('/images/commons/sections/'+ articolo.top_section.immagine )
-
+                            if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
+                              image_tag("/images/commons/sections/#{articolo.top_section.immagine}")
+                            else
+                              image_tag("/images/commons/sections/no-img.jpg")
+                            end
                           else
-                            image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 12)))
+                            image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 25)))
                           end
+                          #   image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 25)))
+                          # end
                       %>
                       <% if articolo.se_protetto %>
                           <div class="fs-postmetadatafooter-ko">
@@ -44,6 +46,7 @@
                             </div>
                           </div>
                       <% end %>
+
 
                     </div>
                     <%= articolo.riassunto %>

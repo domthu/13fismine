@@ -2,7 +2,7 @@ class CrossGroupsController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin
-                
+
   helper :sort
   include SortHelper
 
@@ -12,11 +12,11 @@ class CrossGroupsController < ApplicationController
     #@cross_groups = CrossGroup.all
 
     #Sorting
-    sort_init 'asso_name'
+    sort_init 'asso'
     sort_update 'id' => 'id',
-                'asso_name' => "assos.ragione_sociale",   #related table.Field
-                'group_banner_name' => "group_banners.espositore",   #related table.Field
-                'se_visibile' => 'se_visibile'
+                'asso' => "assos.ragione_sociale",   #related table.Field
+                'group banner' => "group_banners.espositore",   #related table.Field
+                'se_visibile' => 'cross_groups.se_visibile'
 
 
     respond_to do |format|

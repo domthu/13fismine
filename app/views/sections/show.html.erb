@@ -12,10 +12,10 @@
   <fieldset class="box tabular">
     <legend><%=l(:label_section)%></legend>
     <p>
-    <% unless @section.sezione.blank? %>
-        <em><%=h @section.sezione %></em>
-        <br />
-    <% end %>
+      <% unless @section.sezione.blank? %>
+          <b><em><%=h @section.sezione %></em></b>
+          <br />
+      <% end %>
     </p>
     <p>
         <%= l(:label_top_section) %>: <%= link_to h(@section.top_section), top_section_path(@section.top_section, :id => @section.top_section_id) %>
@@ -24,7 +24,24 @@
         <%= l(:label_ordinamento) %>: <%=h @section.ordinamento %>
     </p>
     <p>
-        <%= check_box_tag l(:label_protetto), 1, @section.protetto, :disabled => 'disabled'  %> <%= l(:label_protetto) %>  
+        <%= check_box_tag l(:label_protetto), 1, @section.protetto, :disabled => 'disabled'  %> <%= l(:label_protetto) %>
     </p>
+  </fieldset>
+</div>
+
+
+<div class="splitcontentright">
+  <fieldset class="box tabular">
+    <legend><%=l(:label_issue_plural_from_section)%></legend>
+    <% if @section.issues.any? %>
+      <%= l(:label_total) %>: <%= h @section.issues.count %>
+      <ul>
+        <% @section.issues.each do |issue| %>
+          <li><%= link_to truncate_lines(truncate_single_line(issue), :lenght => 50), issue %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+    <% end %>
   </fieldset>
 </div>

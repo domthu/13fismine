@@ -47,13 +47,13 @@
         <%= l(:label_fax) %>: <%=h @asso.fax %>
     </p>
     <p>
-      <%= l(:label_comunicazioni) %>: 
+      <%= l(:label_comunicazioni) %>:
       <div class="html">
         <% unless @asso.comunicazioni.nil? %>
           <%= @asso.comunicazioni.html_safe %>
         <% end %>
       </div>
-<--html safe----------------------------------------------------------------------textilizable--> 
+<--html safe----------------------------------------------------------------------textilizable-->
       <div class="wiki">
         <%= textilizable(@asso.comunicazioni) %>
       </div>
@@ -81,7 +81,7 @@
           <% end %>
         </table>
         <% else %>
-          <%=l(:label_asso_associated_group_banner_noone)%>
+          <%=l(:label_asso_associated_group_banner_none)%>
         <% end %>
     </fieldset>
 </div>
@@ -93,8 +93,7 @@
           <%= link_to(h(@asso.organization.name), organization_path(@asso.organization), :class => 'icon icon-summary') if User.current.admin?   %>
           <%= h(@asso.organization.to_s) if !User.current.admin?   %>
         <% else %>
-          <%=l(:label_asso_organization_noone)%>
+          <%=l(:label_asso_organization_none)%>
         <% end %>
     </fieldset>
 </div>
-

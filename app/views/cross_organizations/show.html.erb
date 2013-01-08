@@ -26,7 +26,7 @@
             <%= l(:label_sigla) %>: <%=h @cross_organization.sigla %>
         </p>
         <p>
-            <%= check_box_tag '', 1, @cross_organization.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>  
+            <%= check_box_tag '', 1, @cross_organization.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>
 
         </p>
 </fieldset>
@@ -69,7 +69,7 @@
               <th><%= l(:label_asso) %></th>
               <th><%= l(:label_power_user) %>?</th>
             </tr>
-           
+
             <% @cross_organization.organizations.each do |org| %>
               <tr>
                 <td class="buttons">
@@ -88,10 +88,10 @@
                 </td>
               </tr>
             <% end %>
-          
+
           </table>
         <% else %>
-          <%=l(:label_other_organization_noone)%>
+          <%=l(:label_other_organization_none)%>
         <% end %>
     </fieldset>
 </div>
@@ -105,7 +105,7 @@
             <th><%= l(:label_sigla) %></th>
             <th></th>
           </tr>
-          <% @cross_organization.type_organization.cross_organizations.each do |type_related_cross| 
+          <% @cross_organization.type_organization.cross_organizations.each do |type_related_cross|
                 if (type_related_cross != @cross_organization) %>
                   <tr>
                     <td><%=h type_related_cross.type_organization %></td>
@@ -119,5 +119,3 @@
         </table>
     </fieldset>
 </div>
-
-

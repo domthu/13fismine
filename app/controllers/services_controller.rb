@@ -161,7 +161,7 @@ class ServicesController < ApplicationController
   end
 
   #Asso(ragione_sociale) :: organizations
-  def asso
+  def assosvc
     @tmp = Asso.all(:limit => 5)
     if params[:term]
       @tmp = Asso.find(

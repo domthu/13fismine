@@ -37,11 +37,8 @@
   <%=javascript_include_tag "src/jquery-glowing.js" %>
   <%=javascript_include_tag "src/text_ticker.js" %>
 
-
-
   <%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
   <%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
-
   <%= javascript_include_tag "script.js" %>
   <%= javascript_include_tag "script.responsive.js" %>
   <%= javascript_include_tag "jquery.carouFredSel-6.1.0.js" %>
@@ -133,7 +130,7 @@
 
     </div>
     <nav class="fs-menu2-nav clearfix">
-      <%= render_navigation(:level => 2) %>
+      <%= render_navigation(:level => 2..3, :expand_all => true) %>
     </nav>
 
     <div class="fs-layout-wrapper clearfix">

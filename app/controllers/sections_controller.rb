@@ -12,11 +12,11 @@ class SectionsController < ApplicationController
     #@sections = Section.all
 
     #Sorting
-    sort_init 'sezione'
-    sort_update 'sezione' => 'sezione',
-                'top_sezione' => 'sezione_top_id',
-                'top_sezione_name' => "top_sections.sezione_top",   #related table.Field
-                'ordinamento' => 'sections.ordinamento',
+    sort_init 'categoria'
+    sort_update 'categoria' => 'sezione',
+                #'sezione' => 'sezione_top_id',
+                'sezione' => "top_sections.sezione_top",   #related table.Field
+                'ord.' => 'sections.ordinamento',
                 'protetto' => 'protetto'
 
 
@@ -100,8 +100,12 @@ class SectionsController < ApplicationController
   # DELETE /sections/1.xml
   def destroy
     @section = Section.find(params[:id])
-    @section.destroy
-
+    if @section.issues.count > 0
+      flash[:error] = l(:error_can_not_delete_section_unless_issues)
+      return redirect_to :action => 'index'
+    else
+      @section.destroy
+    end
     respond_to do |format|
       format.html { redirect_to(sections_url) }
       format.xml  { head :ok }

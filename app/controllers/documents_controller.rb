@@ -49,7 +49,7 @@ class DocumentsController < ApplicationController
   def new
     @document = @project.documents.build
     @document.safe_attributes = params[:document]
-    if request.post? and @document.save	
+    if request.post? and @document.save
       attachments = Attachment.attach_files(@document, params[:attachments])
       render_attachment_warning_if_needed(@document)
       flash[:notice] = l(:notice_successful_create)

@@ -22,8 +22,8 @@ class TopSection < ActiveRecord::Base
   #validates_presence_of :immagine
 
   #text-area? CSS? HTML area
-  #validates_presence_of :style
-  validates_length_of :style, :maximum => 4000
+  #validates_presence_of :key
+  validates_length_of :key, :maximum => 4000
 
   def to_s
     sezione_top.to_s
@@ -33,4 +33,3 @@ class TopSection < ActiveRecord::Base
 
 
 end
-

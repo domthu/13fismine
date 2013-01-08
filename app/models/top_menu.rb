@@ -18,4 +18,11 @@ class TopMenu < ActiveRecord::Base
 #    "/session/#{self.id}"
 #    #"#{self.id}-#{self.title.gsub(/[^a-z0-9]+/i, '-').gsub(/-{2}/, '-').gsub(/-$/, '')}"
 #  end
+
+  def to_s
+    self.description
+  end
+
+  alias :name :to_s
+
 end
