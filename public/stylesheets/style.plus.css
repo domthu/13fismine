@@ -1292,12 +1292,13 @@ ul.fs-menu2-hmenu>li:before {
     background: url('/images/template/menuseparator2.png') center center no-repeat;
 }
 
+
 /* ------------------ menu 2 a discesa   */
 
 ul.fs-menu2-hmenu li li a {
-    background: #fffcc2;
-    padding: 0 17px;
-    margin: 0 auto;
+    background: #ffffff;
+ /*   padding: 0 17px;
+    margin: 0 auto;  */
 }
 
 ul.fs-menu2-hmenu li li {
@@ -1344,7 +1345,7 @@ ul.fs-menu2-hmenu li li ul>li:last-child {
 }
 
 ul.fs-menu2-hmenu ul li a:hover, .desktop ul.fs-menu2-hmenu ul li:hover>a {
-    background: #FFF4D8;
+    background: #f8edd1;
     margin: 0 auto;
 }
 
