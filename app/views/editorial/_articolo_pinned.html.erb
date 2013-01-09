@@ -1,10 +1,10 @@
-<h1 style="display:none">__PARTIAL ARTICOLO TEASER</h1>
+<h1 style="display:none">__PARTIAL ARTICOLO PINNED chiamato da _blocco articoli evidenziati</h1>
 
 <div class="fs-postcontent fs-postcontent-0 clearfix">
   <div class="fs-content-layout">
     <div class="fs-content-layout-row">
       <div class="fs-layout-cell layout-item-0" style="width: 100%">
-        <h6 style="font-size:12px; ">
+        <h6 class="fs-postheader">
           <%= link_to(h(truncate(articolo.titolo, :length => 50)),
                        url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false))
           %>
@@ -15,12 +15,12 @@
           </span>
         <br/>
 
-        <div class="fs-postcontent" style="line-height:11px; font-size:11px;">
-
-          <%= link_to(h(truncate(articolo.riassunto, :length => 125)),
+        <div class="fs-postcontent">
+          <div class="fs-box-link">
+          <%= link_to(h(smart_truncate(articolo.riassunto, 130)),
               url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false))
           %>
-          <br/></div>
+          <br/></div>  </div>
         <%# link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false) %>
         <p class="separticle"></p>
       </div>

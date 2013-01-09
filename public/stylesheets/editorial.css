@@ -1,18 +1,22 @@
 /* Utilizzare solo per media  media PRINT  */
 
-
-
 #fs-tramenu-wrapper, #navbar-container {
     display: none;
 }
 
-.fs-sidebar1, .fs-menu2-nav, .fs-nav, .fs-header, .fs-menu2-hmenu, .fs-shapes,.fs-comments,.fs-footer,.fs-back,.fs-social,.fs-accessibility {
+.fs-sidebar1, .fs-menu2-nav, .fs-nav, .fs-header, .fs-menu2-hmenu, .fs-shapes, .fs-comments, .fs-footer {
     display: none;
 }
 
-.fs-content-layout .fs-sidebar1{ display: none !important;}
-.fs-riassunto-full,{
-    float: none;
-    display: block;
+.fs-social, .fs-back {
+    display: none !important;
 }
-.fs-postmetadata-full{float: right;}
+
+.fs-content-layout .fs-sidebar1 {
+    display: none !important;
+}
+
+.fs-postmetadata-full {
+    border:0 !important;
+    width: 60%!important;
+}

@@ -37,7 +37,14 @@ SimpleNavigation::Configuration.run do |navigation|
         primary.dom_class = 'fs-menu2-hmenu'
 
       end #top_menus
-      primary.item :key_9, 'Quesiti', quesiti_path
+      primary.item :q1, 'Quesiti', quesiti_path do |sub_q|
+        sub_q.item :q2 , 'Cerca tra i quesiti',quesito_cerca_path
+        sub_q.item :q3 , 'Sfoglia i quesiti',quesiti_path
+        sub_q.item :q4 , 'Poni un quesito',quesito_nuovo_path
+
+      end
+
+
     end
     menu_generale.item :key_2, 'Chi Siamo', chisiamo_path
     menu_generale.item :key_3, 'Servizi alle Associazioni', servizi_path

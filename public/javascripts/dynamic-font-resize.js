@@ -52,7 +52,7 @@ function loadCss(x){
 }
 
 function increaseFontSize() {
-	if(incdec < 3){
+	if(incdec < 4){
 		incdec++;
 		loadCss(incdec);
 		createCookie('textsize',incdec,1); 

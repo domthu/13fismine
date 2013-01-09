@@ -6,8 +6,8 @@ class EditorialController < ApplicationController
   include FeesHelper #ROLE_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
-  before_filter :correct_user, :only => [:articolo, :quesito, :edizione]
-  before_filter :enabled_user, :only => [:articolo, :quesito, :edizione]
+  before_filter :correct_user, :only => [:articolo, :quesito_full, :edizione]
+  before_filter :enabled_user, :only => [:articolo, :quesito_full, :edizione]
 
   helper :messages
   include MessagesHelper
@@ -90,7 +90,7 @@ class EditorialController < ApplicationController
     #@top_sections = TopSection.find(:all,
     @topsection_ids = TopSection.find(:all,
       :select => 'distinct id',
-      :conditions => ["top_menu_id =  ?", @top_menu.id]
+      :conditions => ["se_visibile = 1 AND se_home_menu = 0 AND top_menu_id =  ?", @top_menu.id]
       )
     #@topsection_ids = @top_sections.select(:id).uniq
     # Paginate results
@@ -111,7 +111,7 @@ class EditorialController < ApplicationController
     @issues = Issue.find(:all,
                          :include => [:section => :top_section],
                          :order => 'updated_on DESC',
-                         :conditions => ["se_visible_web = 1 AND #{TopSection.table_name}.top_menu_id = ?", @top_menu.id],
+                         :conditions => ["se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{TopSection.table_name}.se_home_menu = 0 AND #{TopSection.table_name}.top_menu_id = ?", @top_menu.id],
                          :limit => @issues_pages.items_per_page,
                          :offset => @issues_pages.current.offset)
 
@@ -211,16 +211,64 @@ class EditorialController < ApplicationController
   end
 
   def quesiti
-   # @quesito= New.find(:all, :limit => 20, :order => "created_on DESC")
+    @base_url = params[:pages] #request.path
+    @key_url = params[:topmenu_key]
+                               # @topsection_id = params[:topsection_id]
+    @topsection_key = params[:topsection_key]
+    @topsection = TopSection.find(:first, :conditions => ["top_sections.`key` = ?", @topsection_key])
+                               #flash[:notice] = l(:notice_missing_parameters) + " -->  @section_id="+ @topsection.id.to_s   + @topsection_key
+                               # if @topsection_id.nil?
+                               #         flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
+                               #         redirect_to :action => 'home'
+                               #         return
+                               #     end
+    if @topsection.nil?
+      flash[:notice] = l(:notice_missing_parameters) + " --> 3 @section_id="+ @topsection.id.to_s
+      redirect_to :action => 'home'
+      return
+    end
+                               # Paginate results
+    case params[:format]
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        @limit = 5
+        @offset= 25
+    end
+                               # --> sandro debug zona
+   # @top_menu = TopMenu.find(:first, :conditions => ["`key`=?", @key_url])
+   # @topsection_ids = TopSection.find(:all,
+   #                                   :select => 'distinct id',
+   #                                   :conditions => ["top_menu_id =  ?", @top_menu.id]
+   # )
+                               # -->
+    @issues_count =Issue.count(
+        :include => [:section => :top_section],
+        :conditions => ["#{TopSection.table_name}.id = ?", @topsection.id]
+    )
+    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+    @issues = Issue.find(:all,
+                         :include => [:section => :top_section],
+                         :order => 'created_on DESC',
+                         :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
+                         :limit => @issues_pages.items_per_page,
+                         :offset => @issues_pages.current.offset)
+
+    respond_to do |format|
+      format.html {
+        render :layout => !request.xhr?
+      }
+      format.api
+    end
   end
 
-  def quesito
+  def quesito_full
     @id = params[:id].to_i
     @quesito= New.find(@id)
     @editorial_id = @quesito.project_id
   end
 
-#domthu permission :front_end_quesito, :editorial => :poniquesito, :require => :loggedin
+#domthu permission :front_end_quesito, :editorial => :quesito_nuovo, :require => :loggedin
 #add permission to control permission action
 #Admin e power_user sono definiti da campi della tabella User
 #RUOLI
@@ -231,7 +279,7 @@ class EditorialController < ApplicationController
 #GUEST --> KAPPAO
 #SCADUTI --> KAPPAO
 #ARCHIVIATI --> KAPPAO
-  def poniquesito
+  def quesito_nuovo
     if not User.current.allowed_to?(:front_end_quesito, nil, :global => true)
       redirect_to(login_url) && return
     end

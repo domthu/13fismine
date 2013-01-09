@@ -46,10 +46,11 @@ ActionController::Routing::Routes.draw do |map|
   map.abbonamenti 'account/register', :controller => 'account', :action => 'register'
   #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.quesiti '/quesiti', :controller => 'editorial', :action => 'quesiti'
-  map.quesito '/quesito/:id', :controller => 'editorial', :action => 'quesito'
+  map.quesito '/quesito_full/:id', :controller => 'editorial', :action => 'quesito_full'
   #to match override act_as_event after search
-  map.quesitoid '/editoriale/quesito/:id', :controller => 'editorial', :action => 'quesito'
-  map.poniquesito '/poniquesito', :controller => 'editorial', :action => 'poniquesito'
+  map.quesito_full '/editoriale/quesito_full/:id', :controller => 'editorial', :action => 'quesito_full'
+  map.quesito_nuovo '/quesito_nuovo', :controller => 'editorial', :action => 'quesito_nuovo'
+  map.quesito_cerca '/quesito_cerca', :controller => 'editorial', :action => 'quesito_cerca'
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
 

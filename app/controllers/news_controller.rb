@@ -58,7 +58,7 @@ class NewsController < ApplicationController
 
   def show
     if not User.current.allowed_to?(:access_back_end, nil, :global => true)
-      redirect_to(url_for(:controller => 'editorial', :action => 'quesito', :id => params[:id]))
+      redirect_to(url_for(:controller => 'editorial', :action => 'quesito_full', :id => params[:id]))
       return
     end
 

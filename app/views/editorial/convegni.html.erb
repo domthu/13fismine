@@ -3,6 +3,90 @@
 
 <p class="fs-postcontent">questa pagina conterrà una lista di eventi passati e futuri, <br /> sotto gli eventi ci sarà un pulsante - PRENOTATI - che permette all'utente collegato una rapida riservazione .
   <br /> &nbsp; <br /> Per dare evidenza al nuovo (prossimo) evento/convegno apparirà oltre in questa pagina anche in un blocco in prima pagina </p>
+ <hr>
+<div class="fs-layout-cell fs-content clearfix">
+  <% if @issues && @issues.any? %>
+      <% @issues.each do |articolo| %>
+          <!-- qui è l'inserimento dell'articolo -->
+          <ARTICLE class="fs-post fs-article">
+            <% if articolo %>
+                <div class="fs-postmetadataheader">
+                  <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
+                  <span class="fs-postdateicon" style="float:right;"><%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
+                  <h5 class="fs-postheader">
+                    <%= link_to(h(smart_truncate(articolo.titolo, 110)),
+                                url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false))
+                    %>
+                  </h5>
+                </div>
+                <div class="fs-postcontent fs-postcontent-0 clearfix">
+                  <div class="fs-content-layout-wrapper layout-item-0">
+
+                    <div class="fs-image-caption-wrapper">
+                      <%= if articolo.immagine_url.nil?
+                            if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
+                              image_tag("/images/commons/sections/#{articolo.top_section.immagine}")
+                            else
+                              image_tag("/images/commons/sections/no-img.jpg")
+                            end
+                          else
+                            image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 25)))
+                          end
+                          #   image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 25)))
+                          # end
+                      %>
+                      <% if articolo.se_protetto %>
+                          <div class="fs-postmetadatafooter-ko">
+                            <div class="fs-postheadericons fs-metadata-icons">
+                              <p class="fs-postauthoricon"><%= h articolo.author %></p>
+
+                              <p class="fs-post-access-no">Articolo riservato agli abbonati</p>
+                            </div>
+                          </div>
+                      <% else %>
+                          <div class="fs-postmetadatafooter-ok">
+                            <div class="fs-postheadericons fs-metadata-icons">
+                              <p class="fs-postauthoricon"><%= h articolo.author %></p>
+
+                              <p class="fs-post-access-ok">Articolo consultabile liberamente</p>
+                            </div>
+                          </div>
+                      <% end %>
+
+
+                    </div>
+                    <%= articolo.riassunto %>
+                    <br/>
+                    <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false) %>
+                  </div>
+                </div>
+
+            <% else %>
+                <br/>
+
+                <p class="nodata"><%= l(:label_no_data) %></p>
+                <br/>
+            <% end %>
+          </ARTICLE>
+          <%# render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
+          <br/>
+      <% end %>
+      <br/>
+
+      <p class="pagination"><%= pagination_links_full(@issues_pages, @issues_count) %></p>
+      <br/>
+
+  <% else %>
+      <br/>
+
+      <p class="nodata"><%= l(:label_no_data) %></p>
+      <br/>
+  <% end %>
+</div>
+<%#sidebar a  destra %>
+<%= render :partial => 'blocco_sidebar1' %>
+<%#sidebar a destra %>
+<%# render :partial => 'blocco_sidebar2' %>
 
 <%#render :partial => 'articoli', :locals => {:issues => @issues, :issues_pages => @issues_pages, :issues_count => @issues_count} %>
 <%#sidebar a centro destra %>

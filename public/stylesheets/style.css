@@ -1175,7 +1175,7 @@ div.fs-block img
 
 .fs-blockcontent a:hover, .fs-blockcontent a.hover
 {
-   color: #FFBE1A;
+   color: #913421;
    font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: underline;
 }
@@ -1700,11 +1700,13 @@ pre
     font-size: 15px;
     line-height: 17px;
    font-family: Arial, Helvetica, Sans-Serif;
+    color: #004977;
    font-weight: bold;
-   font-style: normal; /*
-  font-variant: small-caps;
-   text-align: center;    */
+   font-style: normal;
+    text-decoration: none;
+    text-align: left;
 }
+/*
 
 .fs-postheader a, .fs-postheader a:link
 {
@@ -1724,10 +1726,10 @@ pre
 .fs-postheader a:hover,  .fs-postheader a.hovered
 {
    font-family: Arial, Helvetica, Sans-Serif;
-   text-decoration: underline;
-   color: #0088B9;
+   text-decoration: none;
+    color: #004977;
 }
-
+*/
 .fs-postheadericons,
 .fs-postheadericons a,
 .fs-postheadericons a:link,
@@ -1792,7 +1794,7 @@ pre
 .fs-postauthoricon:before
 {
    content:url('/images/template/postauthoricon.png');
-   margin-right:6px;
+   margin:4px 0 4px 6px;
    position:relative;
    display:inline-block;
    vertical-align:middle;

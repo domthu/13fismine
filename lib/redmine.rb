@@ -51,7 +51,7 @@ Redmine::AccessControl.map do |map|
   #This permissions are at role level and not at project level
   map.permission :fee_control, :welcome => :index, :require => :loggedin, :public => true
   map.permission :access_back_end, :welcome => :index, :require => :loggedin
-  map.permission :front_end_quesito, :editorial => :poniquesito, :require => :loggedin
+  map.permission :front_end_quesito, :editorial => :quesito_nuovo, :require => :loggedin
   map.permission :view_project, {:projects => [:show], :activities => [:index]}, :public => true
   map.permission :search_project, {:search => :index}, :public => true
   map.permission :add_project, {:projects => [:new, :create]}, :require => :loggedin
@@ -176,7 +176,7 @@ Redmine::MenuManager.map :top_menu_fs do |menu|
   menu.push :projects, { :controller => 'editorial', :action => 'edizioni' }, :caption => :label_project_plural
   #menu.push :issues, { :controller => 'editorial', :action => 'articoli' }, :caption => :label_issue_plural
   #menu.push :news, { :controller => 'editorial', :action => 'quesiti' }, :caption => :label_news_plural
-  menu.push :poniquesito, { :controller => 'editorial', :action => 'poniquesito' }, :if => Proc.new { User.current.logged? && User.current.allowed_to?(:front_end_quesito, nil, :global => true) }
+  menu.push :quesito_nuovo, { :controller => 'editorial', :action => 'quesito_nuovo' }, :if => Proc.new { User.current.logged? && User.current.allowed_to?(:front_end_quesito, nil, :global => true) }
   menu.push :aboutus, :about_path
   menu.push :faq, :help_path
   menu.push :contact, :contact_path
@@ -192,7 +192,7 @@ Redmine::MenuManager.map :footer_menu_fs do |menu|
   menu.push :edizioni, :edizioni_path
   menu.push :articoli, :articoli_path
   menu.push :quesiti, :quesiti_path
-  menu.push :poniquesito, :poniquesito_path
+  menu.push :quesito_nuovo, :poniquesito_path
   menu.push :contact, :contact_path
   menu.push :about, :about_path
   menu.push :help, :help_path
@@ -201,7 +201,7 @@ Redmine::MenuManager.map :footer_menu_fs do |menu|
   #menu.push :accedi, :accedi_path
   menu.push :edizione, :edizione_path
   #menu.push :articolo, :articolo_path see custom routes
-  menu.push :quesito, :quesito_path
+  menu.push :quesito_full, :quesito_path
 end
 
 #Lista delle categorie

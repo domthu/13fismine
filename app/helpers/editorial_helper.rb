@@ -65,7 +65,7 @@ def event_url_fs(e = nil, options = {})
   #printf("evturl    --->   %s", evturl[:controller])
   if (evturl[:controller] == "news")
     evturl[:controller] = "editoriale"
-    evturl[:action] = "quesito"
+    evturl[:action] = "quesito_full"
   end
   if (evturl[:controller] == "issues")
     evturl[:controller] = "editoriale"
@@ -75,7 +75,7 @@ def event_url_fs(e = nil, options = {})
     evturl[:controller] = "editoriale"
     evturl[:action] = "newsletter"
   end
-  #url = url.gsub(/\/news\//, '/editoriale/quesito/').gsub(/\/issues\//, '/editoriale/articolo/').gsub(/\/projects\//, '/editoriale/newsletter/')
+  #url = url.gsub(/\/news\//, '/editoriale/quesito_full/').gsub(/\/issues\//, '/editoriale/articolo/').gsub(/\/projects\//, '/editoriale/newsletter/')
   return evturl
 end
 

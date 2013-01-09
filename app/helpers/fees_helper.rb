@@ -23,7 +23,7 @@ module FeesHelper
 
 #Altre permissione per chi dipende della gestione del ruolo/abboanmento
 #  map.permission :access_back_end, :welcome => :index, :require => :loggedin
-#  map.permission :front_end_quesito, :editorial => :poniquesito, :require => :loggedin
+#  map.permission :front_end_quesito, :editorial => :quesito_nuovo, :require => :loggedin
 
   #generate a string
   def getdate(data)
