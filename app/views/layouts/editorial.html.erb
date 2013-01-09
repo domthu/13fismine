@@ -21,7 +21,7 @@
   -->
   <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
   <%= stylesheet_link_tag 'application_fs', :media => 'all' %>
-  <%= stylesheet_link_tag 'editorial', :media => 'all' %>
+  <%= stylesheet_link_tag 'editorial', :media => 'print' %>
   <!--   styles per il Front End  -->
   <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.css', :media => 'all' %>
@@ -36,7 +36,7 @@
   <%= javascript_include_tag "src/jquery.color.js" %>
   <%=javascript_include_tag "src/jquery-glowing.js" %>
   <%=javascript_include_tag "src/text_ticker.js" %>
-
+  <%= javascript_include_tag "dynamic-font-resize.js" %>
   <%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
   <%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
   <%= javascript_include_tag "script.js" %>
