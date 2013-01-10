@@ -13,7 +13,7 @@ class AddSeHomeMenuToTopSection < ActiveRecord::Migration
     #news.status_id = 0 RIFIUTATO
     #news.status_id = 1 IN ATTESA
     #news.status_id = 2 ACCETTATO
-    add_column :news, :causale, :limit => 255, :string, :null => true
+    add_column :news, :causale, :string, :limit => 255, :null => true
 
 
     #Eventi
@@ -42,7 +42,12 @@ class AddSeHomeMenuToTopSection < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :top_sections, :se_home_menu
+    drop_table :profiles
     drop_table :reservations
+    remove_column :issues, :se_prenotazione
+    remove_column :news, :causale
+    remove_column :news, :status_id
+    remove_column :issues, :news_id
+    remove_column :top_sections, :se_home_menu
   end
 end
