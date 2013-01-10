@@ -19,12 +19,12 @@
   </tr></thead>
   <tbody>
 <% @top_sections.each do |top_section| %>
-  <tr class="<%= cycle 'odd', 'even' %>">
+      <tr class="<%= cycle 'odd', 'even' %>">
     <td><%= link_to h(top_section), top_section_path(top_section) %></td>
     <td align="center"><%=h top_section.ordinamento %></td>
     <td><%=h top_section.immagine %></td>
-    <td align="left"><%=h top_section.key %></td>
-    <td align="left"><%= link_to h(top_section.top_menu), top_menu_path(top_section.top_menu) %></td>
+     <td align="left"><%=h top_section.key %></td>
+    <td align="left"><%= link_to h(top_section.top_menu), top_menu_path(top_section.top_menu_id) %></td>
     <td align="center"><%= check_box_tag l(:label_private), 1, top_section.se_visibile, :disabled => 'disabled' %></td>
     <td class="buttons"><%= link_to('', edit_top_section_path(top_section), :class => 'icon icon-edit') if User.current.admin? %></td>
     <td class="buttons"><%= link_to ('', top_section, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
