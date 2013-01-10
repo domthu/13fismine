@@ -211,55 +211,6 @@ class EditorialController < ApplicationController
   end
 
   def quesiti
-    @base_url = params[:pages] #request.path
-    @key_url = params[:topmenu_key]
-                               # @topsection_id = params[:topsection_id]
-    @topsection_key = params[:topsection_key]
-    @topsection = TopSection.find(:first, :conditions => ["top_sections.`key` = ?", @topsection_key])
-                               #flash[:notice] = l(:notice_missing_parameters) + " -->  @section_id="+ @topsection.id.to_s   + @topsection_key
-                               # if @topsection_id.nil?
-                               #         flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
-                               #         redirect_to :action => 'home'
-                               #         return
-                               #     end
-    if @topsection.nil?
-      flash[:notice] = l(:notice_missing_parameters) + " --> 3 @section_id="+ @topsection.id.to_s
-      redirect_to :action => 'home'
-      return
-    end
-                               # Paginate results
-    case params[:format]
-      when 'xml', 'json'
-        @offset, @limit = api_offset_and_limit
-      else
-        @limit = 5
-        @offset= 25
-    end
-                               # --> sandro debug zona
-   # @top_menu = TopMenu.find(:first, :conditions => ["`key`=?", @key_url])
-   # @topsection_ids = TopSection.find(:all,
-   #                                   :select => 'distinct id',
-   #                                   :conditions => ["top_menu_id =  ?", @top_menu.id]
-   # )
-                               # -->
-    @issues_count =Issue.count(
-        :include => [:section => :top_section],
-        :conditions => ["#{TopSection.table_name}.id = ?", @topsection.id]
-    )
-    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @issues = Issue.find(:all,
-                         :include => [:section => :top_section],
-                         :order => 'created_on DESC',
-                         :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
-                         :limit => @issues_pages.items_per_page,
-                         :offset => @issues_pages.current.offset)
-
-    respond_to do |format|
-      format.html {
-        render :layout => !request.xhr?
-      }
-      format.api
-    end
   end
 
   def quesito_full
@@ -279,8 +230,8 @@ class EditorialController < ApplicationController
 #GUEST --> KAPPAO
 #SCADUTI --> KAPPAO
 #ARCHIVIATI --> KAPPAO
-  def quesito_nuovo
-    if not User.current.allowed_to?(:front_end_quesito, nil, :global => true)
+  def quesito_new
+    if User.current  = nil
       redirect_to(login_url) && return
     end
     #DO SOME USRE STUFF HERE

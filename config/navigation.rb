@@ -38,9 +38,10 @@ SimpleNavigation::Configuration.run do |navigation|
 
       end #top_menus
       primary.item :q1, 'Quesiti', quesiti_path do |sub_q|
-        sub_q.item :q2 , 'Cerca tra i quesiti',quesito_cerca_path
-        sub_q.item :q3 , 'Sfoglia i quesiti',quesiti_path
-        sub_q.item :q4 , 'Poni un quesito',quesito_nuovo_path
+        sub_q.item :q2, 'Le Risposte ai quesiti', quesiti_path
+        sub_q.item :q3, 'Poni un quesito', quesito_new_path
+        sub_q.item :q4, 'I miei quesiti', quesiti_my_path
+
 
       end
 

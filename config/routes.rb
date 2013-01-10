@@ -49,8 +49,8 @@ ActionController::Routing::Routes.draw do |map|
   map.quesito '/quesito_full/:id', :controller => 'editorial', :action => 'quesito_full'
   #to match override act_as_event after search
   map.quesito_full '/editoriale/quesito_full/:id', :controller => 'editorial', :action => 'quesito_full'
-  map.quesito_nuovo '/quesito_nuovo', :controller => 'editorial', :action => 'quesito_nuovo'
-  map.quesito_cerca '/quesito_cerca', :controller => 'editorial', :action => 'quesito_cerca'
+  map.quesito_new '/quesito_nuovo', :controller => 'editorial', :action => 'quesito_new'
+  map.quesiti_my '/quesiti_miei', :controller => 'editorial', :action => 'quesiti_my'
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
 
