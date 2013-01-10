@@ -3,14 +3,14 @@
     <%= render_menu :menu_fee_fs %>
   </div>
   In questa pagina:
-  <ul> 
+  <ul>
     <li>List utenti in stato di registrazione: username, data registrazione, manca x giorni al periodo di prova, data ultimo pagamento</li>
     <li>Azione: Rilancia</li>
-    <li>Azione: Ha pagato</li>    
+    <li>Azione: Ha pagato</li>
     <li>Azione: ROLE_SCADUTO cambia ruolo per renderlo scaduto</li>
     <li>Azione: ROLE_ARCHIVIA cambia ruolo per archiviare</li>
     <li>Naviga: vai al dettaglio di un utente</li>
-  </ul> 
+  </ul>
 
 <% form_tag({}, :method => :get) do %>
 <fieldset><legend><%= l(:label_filter_plural) %></legend>
@@ -50,7 +50,7 @@ params[:role_id].to_i:  <%= params[:role_id].to_i %>
   <td align="center"><%= checked_image user.privato? %></td>
   <td class="scadenza" align="center"><%= format_date(user.scadenza) unless user.scadenza.nil? %></td>
     <td class="buttons">
-      <%= change_status_link(user) %>
+      <%= change_role_status_link(user) %>
       <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-arc') unless User.current == user %>
     </td>
   </tr>

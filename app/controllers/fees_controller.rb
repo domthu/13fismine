@@ -8,6 +8,8 @@ class FeesController < ApplicationController
 
   helper :sort
   include SortHelper
+
+  #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
   include FeesHelper  #ROLE_XXX  gedate
   #ROLE_MANAGER        = 3  #Manager<br />
   #ROLE_AUTHOR         = 4  #Redattore  <br />
@@ -219,7 +221,51 @@ class FeesController < ApplicationController
     redirect_to :controller => 'settings', :action => 'edit', :tab => 'fee'
   end
 
+  verify :method => :put, :only => :update, :render => {:nothing => true, :status => :method_not_allowed }
+  def update_role
+    @user.admin = params[:user][:admin] if params[:user][:admin]
+    @user.login = params[:user][:login] if params[:user][:login]
+    if params[:user][:password].present? && (@user.auth_source_id.nil? || params[:user][:auth_source_id].blank?)
+      @user.password, @user.password_confirmation = params[:user][:password], params[:user][:password_confirmation]
+    end
+    @user.safe_attributes = params[:user]
+    # Was the account actived ? (do it before User#save clears the change)
+    was_activated = (@user.status_change == [User::STATUS_REGISTERED, User::STATUS_ACTIVE])
+    # old role
+    was_role_id = User.find(@user).role_id
 
+    if @user.save
+
+      if was_activated
+        Mailer.deliver_account_activated(@user)
+      elsif @user.active? && params[:send_information] && !params[:user][:password].blank? && @user.auth_source_id.nil?
+        Mailer.deliver_account_information(@user, params[:user][:password])
+      end
+
+      respond_to do |format|
+        format.html {
+          flash[:notice] = l(:notice_successful_update)
+          redirect_to :back
+        }
+        format.api  { head :ok }
+      end
+    else
+      @auth_sources = AuthSource.find(:all)
+      @membership ||= Member.new
+      # Clear password input
+      @user.password = @user.password_confirmation = nil
+
+      respond_to do |format|
+        format.html { render :action => :edit }
+        format.api  { render_validation_errors(@user) }
+      end
+    end
+  rescue ::ActionController::RedirectBackError
+    redirect_to :controller => 'users', :action => 'edit', :id => @user
+  end
+
+
+################################
   private
 
     def get_statistics
