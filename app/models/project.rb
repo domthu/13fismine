@@ -154,9 +154,17 @@ class Project < ActiveRecord::Base
     #@edizione = Project.find(params[:id]) 
     #Project.find(:first, :conditions
     #Project.find_by_id(id)
-    find(id,:conditions => "#{table_name}.is_public = 1 AND #{table_name}.status IN ( #{STATUS_ARCHIVED}, #{STATUS_FS} )", :include => :role)
+    #search(id,:conditions => "#{table_name}.is_public = 1 AND #{table_name}.status IN ( #{STATUS_ARCHIVED}, #{STATUS_FS} )", :include => :role)
+    find(id)
   end
 
+  def newsletter(user = User.current)
+    str = "<h1>" + self.name + "</h1>"
+    str += "<h3>" + self.description + "</h3>"
+    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
+    #loop trovi codice fee
+    return str
+  end
   #TODO
   def is_public_fs?
     self.is_public == true #&& self.promoted_to_front_page == true

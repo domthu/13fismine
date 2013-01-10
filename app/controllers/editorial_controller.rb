@@ -196,6 +196,8 @@ class EditorialController < ApplicationController
     #project.id --> 23
     @id = params[:id].to_i
     @project = Project.find_public(@id)
+    @newsletter = @project.newsletter(User.current)
+
   end
 
   def articoli
