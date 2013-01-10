@@ -50,6 +50,55 @@ module FeesHelper
                         ], selected)
   end
   #  def change_status_link(user)
+  def change_role_status_link(user)
+    url = {:controller => 'fees', :action => 'update_role', :id => user, :page => params[:page], :role_id => params[:role_id]}
+
+    if user.locked?
+    elsif user.registered?
+      link_to l(:button_activate), url.merge(:user => {:status => User::STATUS_ACTIVE}), :method => :put, :class => 'icon icon-unlock'
+    elsif user != User.current
+      link_to l(:button_lock), url.merge(:user => {:status => User::STATUS_LOCKED}), :method => :put, :class => 'icon icon-lock'
+    end
+#    ROLE_MANAGER        = 3  #Manager<br />
+#    ROLE_AUTHOR         = 4  #Redattore  <br />
+#    ROLE_VIP            = 10 #Invitato Gratuito<br />
+#    ROLE_ABBONATO       = 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
+#    ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
+#    ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
+#    ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
+#    ROLE_ARCHIVIED
+
+    case user.role_id
+      #ROLE_MANAGER  --> Admin
+      when 3
+        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-man'
+      #ROLE_AUTHOR  -->
+      when 4
+        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-auth'
+      #ROLE_VIP  -->
+      when 10
+        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-vip'
+      #ROLE_ABBONATO  --> ROLE_RENEW
+      when 6
+        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-abbo'
+      #ROLE_REGISTERED  -->
+      when 9
+        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-reg'
+      #ROLE_RENEW  -->
+      when 11
+        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-renew'
+      #ROLE_EXPIRED  --> ROLE_ABBONATO
+      when 7
+        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-exp'
+      #ROLE_ARCHIVIED  --> ?ROLE_EXPIRED
+
+      when 8
+        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-arc'
+      else
+        return ""
+    end
+  end
+
 
 #/*Fee Roles*/
 #.icon-man { background-image: url(../images/delete.png); }
