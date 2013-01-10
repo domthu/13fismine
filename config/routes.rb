@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "emailctrl"
+#rake routes | grep -r "top_menus"
 
   map.resources :top_menus
 
