@@ -1131,3 +1131,11 @@ class String
     ActiveSupport::Inflector.transliterate(self.downcase).gsub(/[^a-zA-Z0-9]+/, '-').gsub(/-{2,}/, '-').gsub(/^-|-$/, '')
   end
 end
+def smart_truncate(text, char_limit)
+  text = text.squish
+  size = 0
+  text.mb_chars.split().reject do |token|
+    size+=token.size()
+    size>char_limit
+  end.join(" ") +(text.size()>char_limit ? " "+ "..." : "" )
+end

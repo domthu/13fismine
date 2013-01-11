@@ -19,10 +19,10 @@ class Project < ActiveRecord::Base
   include Redmine::SafeAttributes
 
   # Project statuses
-  STATUS_ACTIVE     = 1
-  STATUS_ARCHIVED   = 9
+  STATUS_ACTIVE = 1
+  STATUS_ARCHIVED = 9
   #domthu verificare i status possibily dentro la gestione amministrazione
-  STATUS_FS         = 99
+  STATUS_FS = 99
 
   # Maximum length for project identifiers
   IDENTIFIER_MAX_LENGTH = 100
@@ -32,14 +32,14 @@ class Project < ActiveRecord::Base
   has_many :members, :include => [:user, :roles], :conditions => "#{User.table_name}.type='User' AND #{User.table_name}.status=#{User::STATUS_ACTIVE}"
   has_many :memberships, :class_name => 'Member'
   has_many :member_principals, :class_name => 'Member',
-                               :include => :principal,
-                               :conditions => "#{Principal.table_name}.type='Group' OR (#{Principal.table_name}.type='User' AND #{Principal.table_name}.status=#{User::STATUS_ACTIVE})"
+           :include => :principal,
+           :conditions => "#{Principal.table_name}.type='Group' OR (#{Principal.table_name}.type='User' AND #{Principal.table_name}.status=#{User::STATUS_ACTIVE})"
   has_many :users, :through => :members
   has_many :principals, :through => :member_principals, :source => :principal
 
   has_many :enabled_modules, :dependent => :delete_all
   has_and_belongs_to_many :trackers, :order => "#{Tracker.table_name}.position"
-  has_many :issues, :dependent => :destroy, :order => "#{Issue.table_name}.created_on DESC", :include => [:status, :tracker]
+  has_many :issues, :dependent => :destroy, :order => "#{Issue.table_name}.created_on DESC", :include => [:status, :tracker, {:section => :top_section} ]
   has_many :issue_changes, :through => :issues, :source => :journals
   has_many :versions, :dependent => :destroy, :order => "#{Version.table_name}.effective_date DESC, #{Version.table_name}.name DESC"
   has_many :time_entries, :dependent => :delete_all
@@ -67,8 +67,8 @@ class Project < ActiveRecord::Base
 
   acts_as_customizable
   acts_as_searchable :columns => ['name', 'identifier', 'description'], :project_key => 'id', :permission => nil
-  acts_as_event :title => Proc.new {|o| "#{l(:label_project)}: #{o.name}"},
-                :url => Proc.new {|o| {:controller => 'projects', :action => 'show', :id => o}},
+  acts_as_event :title => Proc.new { |o| "#{l(:label_project)}: #{o.name}" },
+                :url => Proc.new { |o| {:controller => 'projects', :action => 'show', :id => o} },
                 :author => nil
 
   attr_protected :status
@@ -86,10 +86,60 @@ class Project < ActiveRecord::Base
 
   before_destroy :delete_all_members
 
-  named_scope :has_module, lambda { |mod| { :conditions => ["#{Project.table_name}.id IN (SELECT em.project_id FROM #{EnabledModule.table_name} em WHERE em.name=?)", mod.to_s] } }
-  named_scope :active, { :conditions => "#{Project.table_name}.status = #{STATUS_ACTIVE}"}
-  named_scope :all_public, { :conditions => { :is_public => true } }
-  named_scope :visible, lambda {|*args| {:conditions => Project.visible_condition(args.shift || User.current, *args) }}
+  named_scope :has_module, lambda { |mod| {:conditions => ["#{Project.table_name}.id IN (SELECT em.project_id FROM #{EnabledModule.table_name} em WHERE em.name=?)", mod.to_s]} }
+  named_scope :active, {:conditions => "#{Project.table_name}.status = #{STATUS_ACTIVE}"}
+  named_scope :all_public, {:conditions => {:is_public => true}}
+  named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift || User.current, *args)} }
+
+  def newsletter(user = User.current)
+    str = "<h1>" + self.name + "</h1>"
+    str += "<h3>" + self.description + "</h3>"
+    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
+    #loop trovi codice fee
+    #has_many :news_issues, :dependent => :destroy, :order => "#{Issue.table_name}.#{Section.table_name}.top_section_id DESC" , :include => [:status,{:section => :top_section} ]
+    indice =""
+    sommerio =""
+    last_top_section=0
+   # for art in self.issues.sort_by &:section_id do
+    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC" ) do
+
+#SELECT `issues`.`id` AS t0_r0, `issues`.`tracker_id` AS t0_r1, `issues`.`project_id` AS t0_r2, `issues`.`subject` AS t0_r3, `issues`.`description` AS t0_r4, `issues`.`due_date` AS t0_r5, `issues`.`category_id` AS t0_r6, `issues`.`status_id` AS t0_r7, `issues`.`assigned_to_id` AS t0_r8, `issues`.`priority_id` AS t0_r9, `issues`.`fixed_version_id` AS t0_r10, `issues`.`author_id` AS t0_r11, `issues`.`lock_version` AS t0_r12, `issues`.`created_on` AS t0_r13, `issues`.`updated_on` AS t0_r14, `issues`.`start_date` AS t0_r15, `issues`.`done_ratio` AS t0_r16, `issues`.`estimated_hours` AS t0_r17, `issues`.`parent_id` AS t0_r18, `issues`.`root_id` AS t0_r19, `issues`.`lft` AS t0_r20, `issues`.`rgt` AS t0_r21, `issues`.`is_private` AS t0_r22, `issues`.`section_id` AS t0_r23, `issues`.`ordinamento` AS t0_r24, `issues`.`se_sommario` AS t0_r25, `issues`.`riassunto` AS t0_r26, `issues`.`titolo` AS t0_r27, `issues`.`testo` AS t0_r28, `issues`.`riferimento` AS t0_r29, `issues`.`se_visible_web` AS t0_r30, `issues`.`data_scadenza` AS t0_r31, `issues`.`se_visible_data` AS t0_r32, `issues`.`se_visible_newsletter` AS t0_r33, `issues`.`se_protetto` AS t0_r34, `issues`.`immagine_url` AS t0_r35, `issues`.`titolo_no_format` AS t0_r36, `issues`.`testo_no_format` AS t0_r37, `issues`.`riassunto_no_format` AS t0_r38, `issues`.`tag_link` AS t0_r39, `issue_statuses`.`id` AS t1_r0, `issue_statuses`.`name` AS t1_r1, `issue_statuses`.`is_closed` AS t1_r2, `issue_statuses`.`is_default` AS t1_r3, `issue_statuses`.`position` AS t1_r4, `issue_statuses`.`default_done_ratio` AS t1_r5, `trackers`.`id` AS t2_r0, `trackers`.`name` AS t2_r1, `trackers`.`is_in_chlog` AS t2_r2, `trackers`.`position` AS t2_r3, `trackers`.`is_in_roadmap` AS t2_r4, `sections`.`id` AS t3_r0, `sections`.`sezione` AS t3_r1, `sections`.`protetto` AS t3_r2, `sections`.`ordinamento` AS t3_r3, `sections`.`top_section_id` AS t3_r4, `sections`.`created_at` AS t3_r5, `sections`.`updated_at` AS t3_r6, `top_sections`.`id` AS t4_r0, `top_sections`.`sezione_top` AS t4_r1, `top_sections`.`ordinamento` AS t4_r2, `top_sections`.`se_visibile` AS t4_r3, `top_sections`.`immagine` AS t4_r4, `top_sections`.`key` AS t4_r5, `top_sections`.`created_at` AS t4_r6, `top_sections`.`updated_at` AS t4_r7, `top_sections`.`top_menu_id` AS t4_r8, `top_sections`.`se_home_menu` AS t4_r9 FROM `issues`  LEFT OUTER JOIN `issue_statuses` ON `issue_statuses`.id = `issues`.status_id  LEFT OUTER JOIN `trackers` ON `trackers`.id = `issues`.tracker_id  LEFT OUTER JOIN `sections` ON `sections`.id = `issues`.section_id  LEFT OUTER JOIN `top_sections` ON `top_sections`.id = `sections`.top_section_id WHERE (`issues`.project_id = 329)  ORDER BY issues.sections.top_section_id DESC, issues.created_on DESC
+        if last_top_section != art.section.top_section_id
+          indice += "<h3>" + art.section_id.to_s + " - "
+          indice += art.section.to_s + " - "
+          indice += (art.section.nil? ? "?" : art.section.top_section.to_s) + "</h3>"
+          last_top_section = art.section.top_section_id
+        end
+        indice += smart_truncate(art.titolo, 30) + "<br />"
+        sommario += indice.nil? ? "?" : art.section.top_section.to_s
+        sommario +=      smart_truncate(art.riassunto, 100) + "<br />"
+            if art.riassunto.nil?
+        @msg << str
+      end
+    end
+    str += "<h2> user corrente:" + user.name + "</h2>"
+    str += "<br /><h1> INDICE </h1>"
+    str += indice
+    str += "<hr>"
+    str += "<br /><h1> SOMMARIO </h1>"
+    str += sommario
+
+
+
+
+    return str
+  end
+
+  #TODO
+  def is_public_fs?
+    self.is_public == true #&& self.promoted_to_front_page == true
+  end
+
+  # Returns true if the project is visible to +user+ or to the current user.
+  def visible?(user=User.current)
+    user.allowed_to?(:view_project, self)
+  end
+
 
   def initialize(attributes = nil)
     super
@@ -120,19 +170,19 @@ class Project < ActiveRecord::Base
   # returns latest created projects
   # non public projects will be returned only if user is a member of those
   def self.latest(user=nil, count=5)
-    visible(user).find(:all, :limit => count, :order => "created_on DESC")	
-  end	
+    visible(user).find(:all, :limit => count, :order => "created_on DESC")
+  end
 
   # returns all projects for public area 
   def self.all_fs(user = User.current)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
-    find(:all, :conditions => "#{table_name}.is_public = 1", :order => "#{table_name}.created_on DESC")	
+    find(:all, :conditions => "#{table_name}.is_public = 1", :order => "#{table_name}.created_on DESC")
   end
 
   # returns limited latest projects for homepage in public area 
   # MariaCristina creare flag .promoted_to_front_page, per il momento usiamo .is_public combinato con .status 
   def self.latest_fs(user = User.current, count = 5)
-    find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1 AND #{table_name}.status = #{STATUS_FS}"], :order => "#{table_name}.created_on DESC")	
+    find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1 AND #{table_name}.status = #{STATUS_FS}"], :order => "#{table_name}.created_on DESC")
     #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in home page
     #Il STATUS_FS dovrebbe essere presso quando la newsletter viene inviata
   end
@@ -142,37 +192,20 @@ class Project < ActiveRecord::Base
     #creare tabella di invio
     #reccuperare l'html da un template senza la personalizzazione per utente
     #salvare su una tabella di invio (con destinatari?)
-    
+
     # MOTORE Gestisce gli invi
-        
+
     self.promoted_to_front_page = true
     self.status = STATUS_FS #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in home page
     save
   end
-  
+
   def self.find_public(id = 0, user = User.current)
     #@edizione = Project.find(params[:id]) 
     #Project.find(:first, :conditions
     #Project.find_by_id(id)
     #search(id,:conditions => "#{table_name}.is_public = 1 AND #{table_name}.status IN ( #{STATUS_ARCHIVED}, #{STATUS_FS} )", :include => :role)
     find(id)
-  end
-
-  def newsletter(user = User.current)
-    str = "<h1>" + self.name + "</h1>"
-    str += "<h3>" + self.description + "</h3>"
-    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
-    #loop trovi codice fee
-    return str
-  end
-  #TODO
-  def is_public_fs?
-    self.is_public == true #&& self.promoted_to_front_page == true
-  end
-
-  # Returns true if the project is visible to +user+ or to the current user.
-  def visible?(user=User.current)
-    user.allowed_to?(:view_project, self)
   end
 
   # Returns a SQL conditions string used to find all projects visible by the specified user.
@@ -315,7 +348,7 @@ class Project < ActiveRecord::Base
   #TODO
   def promoted_to_front_page?
     #quando si pubblica la newsletter il sistema dovrà impostare status == STATUS_FS e is_public == true
-    self.status ==   STATUS_FS
+    self.status == STATUS_FS
   end
 
   def archived?
@@ -326,10 +359,10 @@ class Project < ActiveRecord::Base
   def archive
     # Check that there is no issue of a non descendant project that is assigned
     # to one of the project or descendant versions
-    v_ids = self_and_descendants.collect {|p| p.version_ids}.flatten
+    v_ids = self_and_descendants.collect { |p| p.version_ids }.flatten
     if v_ids.any? && Issue.find(:first, :include => :project,
-                                        :conditions => ["(#{Project.table_name}.lft < ? OR #{Project.table_name}.rgt > ?)" +
-                                                        " AND #{Issue.table_name}.fixed_version_id IN (?)", lft, rgt, v_ids])
+                                :conditions => ["(#{Project.table_name}.lft < ? OR #{Project.table_name}.rgt > ?)" +
+                                                    " AND #{Issue.table_name}.fixed_version_id IN (?)", lft, rgt, v_ids])
       return false
     end
     Project.transaction do
@@ -341,7 +374,7 @@ class Project < ActiveRecord::Base
   # Unarchives the project
   # All its ancestors must be active
   def unarchive
-    return false if ancestors.detect {|a| !a.active?}
+    return false if ancestors.detect { |a| !a.active? }
     update_attribute :status, STATUS_ACTIVE
   end
 
@@ -397,7 +430,7 @@ class Project < ActiveRecord::Base
     elsif p.nil? || (p.active? && move_possible?(p))
       # Insert the project so that target's children or root projects stay alphabetically sorted
       sibs = (p.nil? ? self.class.roots : p.children)
-      to_be_inserted_before = sibs.detect {|c| c.name.to_s.downcase > name.to_s.downcase }
+      to_be_inserted_before = sibs.detect { |c| c.name.to_s.downcase > name.to_s.downcase }
       if to_be_inserted_before
         move_to_left_of(to_be_inserted_before)
       elsif p.nil?
@@ -422,10 +455,10 @@ class Project < ActiveRecord::Base
   # Returns an array of the trackers used by the project and its active sub projects
   def rolled_up_trackers
     @rolled_up_trackers ||=
-      Tracker.find(:all, :joins => :projects,
-                         :select => "DISTINCT #{Tracker.table_name}.*",
-                         :conditions => ["#{Project.table_name}.lft >= ? AND #{Project.table_name}.rgt <= ? AND #{Project.table_name}.status = #{STATUS_ACTIVE}", lft, rgt],
-                         :order => "#{Tracker.table_name}.position")
+        Tracker.find(:all, :joins => :projects,
+                     :select => "DISTINCT #{Tracker.table_name}.*",
+                     :conditions => ["#{Project.table_name}.lft >= ? AND #{Project.table_name}.rgt <= ? AND #{Project.table_name}.status = #{STATUS_ACTIVE}", lft, rgt],
+                     :order => "#{Tracker.table_name}.position")
   end
 
   # Closes open and locked project versions that are completed
@@ -442,8 +475,8 @@ class Project < ActiveRecord::Base
   # Returns a scope of the Versions on subprojects
   def rolled_up_versions
     @rolled_up_versions ||=
-      Version.scoped(:include => :project,
-                     :conditions => ["#{Project.table_name}.lft >= ? AND #{Project.table_name}.rgt <= ? AND #{Project.table_name}.status = #{STATUS_ACTIVE}", lft, rgt])
+        Version.scoped(:include => :project,
+                       :conditions => ["#{Project.table_name}.lft >= ? AND #{Project.table_name}.rgt <= ? AND #{Project.table_name}.status = #{STATUS_ACTIVE}", lft, rgt])
   end
 
   # Returns a scope of the Versions used by the project
@@ -456,12 +489,12 @@ class Project < ActiveRecord::Base
         r = root? ? self : root
         Version.scoped(:include => :project,
                        :conditions => "#{Project.table_name}.id = #{id}" +
-                                      " OR (#{Project.table_name}.status = #{Project::STATUS_ACTIVE} AND (" +
-                                          " #{Version.table_name}.sharing = 'system'" +
-                                          " OR (#{Project.table_name}.lft >= #{r.lft} AND #{Project.table_name}.rgt <= #{r.rgt} AND #{Version.table_name}.sharing = 'tree')" +
-                                          " OR (#{Project.table_name}.lft < #{lft} AND #{Project.table_name}.rgt > #{rgt} AND #{Version.table_name}.sharing IN ('hierarchy', 'descendants'))" +
-                                          " OR (#{Project.table_name}.lft > #{lft} AND #{Project.table_name}.rgt < #{rgt} AND #{Version.table_name}.sharing = 'hierarchy')" +
-                                          "))")
+                           " OR (#{Project.table_name}.status = #{Project::STATUS_ACTIVE} AND (" +
+                           " #{Version.table_name}.sharing = 'system'" +
+                           " OR (#{Project.table_name}.lft >= #{r.lft} AND #{Project.table_name}.rgt <= #{r.rgt} AND #{Version.table_name}.sharing = 'tree')" +
+                           " OR (#{Project.table_name}.lft < #{lft} AND #{Project.table_name}.rgt > #{rgt} AND #{Version.table_name}.sharing IN ('hierarchy', 'descendants'))" +
+                           " OR (#{Project.table_name}.lft > #{lft} AND #{Project.table_name}.rgt < #{rgt} AND #{Version.table_name}.sharing = 'hierarchy')" +
+                           "))")
       end
     end
   end
@@ -487,18 +520,18 @@ class Project < ActiveRecord::Base
   # Users/groups issues can be assigned to
   def assignable_users
     assignable = Setting.issue_group_assignment? ? member_principals : members
-    assignable.select {|m| m.roles.detect {|role| role.assignable?}}.collect {|m| m.principal}.sort
+    assignable.select { |m| m.roles.detect { |role| role.assignable? } }.collect { |m| m.principal }.sort
   end
 
   # Returns the mail adresses of users that should be always notified on project events
   def recipients
-    notified_users.collect {|user| user.mail}
+    notified_users.collect { |user| user.mail }
   end
 
   # Returns the users that should be notified on project events
   def notified_users
     # TODO: User part should be extracted to User#notify_about?
-    members.select {|m| m.mail_notification? || m.user.mail_notification == 'all'}.collect {|m| m.user}
+    members.select { |m| m.mail_notification? || m.user.mail_notification == 'all' }.collect { |m| m.user }
   end
 
   # Returns an array of all custom fields enabled for project issues
@@ -541,18 +574,18 @@ class Project < ActiveRecord::Base
   # The earliest start date of a project, based on it's issues and versions
   def start_date
     [
-     issues.minimum('start_date'),
-     shared_versions.collect(&:effective_date),
-     shared_versions.collect(&:start_date)
+        issues.minimum('start_date'),
+        shared_versions.collect(&:effective_date),
+        shared_versions.collect(&:start_date)
     ].flatten.compact.min
   end
 
   # The latest due date of an issue or version
   def due_date
     [
-     issues.maximum('due_date'),
-     shared_versions.collect(&:effective_date),
-     shared_versions.collect {|v| v.fixed_issues.maximum('due_date')}
+        issues.maximum('due_date'),
+        shared_versions.collect(&:effective_date),
+        shared_versions.collect { |v| v.fixed_issues.maximum('due_date') }
     ].flatten.compact.max
   end
 
@@ -592,13 +625,13 @@ class Project < ActiveRecord::Base
 
   def module_enabled?(module_name)
     module_name = module_name.to_s
-    enabled_modules.detect {|m| m.name == module_name}
+    enabled_modules.detect { |m| m.name == module_name }
   end
 
   def enabled_module_names=(module_names)
     if module_names && module_names.is_a?(Array)
       module_names = module_names.collect(&:to_s).reject(&:blank?)
-      self.enabled_modules = module_names.collect {|name| enabled_modules.detect {|mod| mod.name == name} || EnabledModule.new(:name => name)}
+      self.enabled_modules = module_names.collect { |name| enabled_modules.detect { |mod| mod.name == name } || EnabledModule.new(:name => name) }
     else
       enabled_modules.clear
     end
@@ -625,26 +658,26 @@ class Project < ActiveRecord::Base
   #   project.disable_module!("issue_tracking")
   #   project.disable_module!(project.enabled_modules.first)
   def disable_module!(target)
-    target = enabled_modules.detect{|mod| target.to_s == mod.name} unless enabled_modules.include?(target)
+    target = enabled_modules.detect { |mod| target.to_s == mod.name } unless enabled_modules.include?(target)
     target.destroy unless target.blank?
   end
 
   safe_attributes 'name',
-    'description',
-    'homepage',
-    'is_public',
-    'identifier',
-    'custom_field_values',
-    'custom_fields',
-    'tracker_ids',
-    'issue_custom_field_ids',
-    'data_dal',
-    'data_da',
-    'titolo',
-    'search_key'
+                  'description',
+                  'homepage',
+                  'is_public',
+                  'identifier',
+                  'custom_field_values',
+                  'custom_fields',
+                  'tracker_ids',
+                  'issue_custom_field_ids',
+                  'data_dal',
+                  'data_da',
+                  'titolo',
+                  'search_key'
 
   safe_attributes 'enabled_module_names',
-    :if => lambda {|project, user| project.new_record? || user.allowed_to?(:select_project_modules, project) }
+                  :if => lambda { |project, user| project.new_record? || user.allowed_to?(:select_project_modules, project) }
 
   # Returns an array of projects that are in this project's hierarchy
   #
@@ -706,7 +739,7 @@ class Project < ActiveRecord::Base
         copy = Project.new(attributes)
         copy.enabled_modules = project.enabled_modules
         copy.trackers = project.trackers
-        copy.custom_values = project.custom_values.collect {|v| v.clone}
+        copy.custom_values = project.custom_values.collect { |v| v.clone }
         copy.issue_custom_fields = project.issue_custom_fields
         return copy
       else
@@ -792,12 +825,12 @@ class Project < ActiveRecord::Base
       # Reassign fixed_versions by name, since names are unique per
       # project and the versions for self are not yet saved
       if issue.fixed_version
-        new_issue.fixed_version = self.versions.select {|v| v.name == issue.fixed_version.name}.first
+        new_issue.fixed_version = self.versions.select { |v| v.name == issue.fixed_version.name }.first
       end
       # Reassign the category by name, since names are unique per
       # project and the categories for self are not yet saved
       if issue.category
-        new_issue.category = self.issue_categories.select {|c| c.name == issue.category.name}.first
+        new_issue.category = self.issue_categories.select { |c| c.name == issue.category.name }.first
       end
       # Parent issue
       if issue.parent_id
@@ -849,8 +882,8 @@ class Project < ActiveRecord::Base
   def copy_members(project)
     # Copy users first, then groups to handle members with inherited and given roles
     members_to_copy = []
-    members_to_copy += project.memberships.select {|m| m.principal.is_a?(User)}
-    members_to_copy += project.memberships.select {|m| !m.principal.is_a?(User)}
+    members_to_copy += project.memberships.select { |m| m.principal.is_a?(User) }
+    members_to_copy += project.memberships.select { |m| !m.principal.is_a?(User) }
 
     members_to_copy.each do |member|
       new_member = Member.new
@@ -889,8 +922,8 @@ class Project < ActiveRecord::Base
 
   def allowed_permissions
     @allowed_permissions ||= begin
-      module_names = enabled_modules.all(:select => :name).collect {|m| m.name}
-      Redmine::AccessControl.modules_permissions(module_names).collect {|p| p.name}
+      module_names = enabled_modules.all(:select => :name).collect { |m| m.name }
+      Redmine::AccessControl.modules_permissions(module_names).collect { |p| p.name }
     end
   end
 
@@ -925,14 +958,14 @@ class Project < ActiveRecord::Base
   def system_activities_and_project_overrides(include_inactive=false)
     if include_inactive
       return TimeEntryActivity.shared.
-        find(:all,
-             :conditions => ["id NOT IN (?)", self.time_entry_activities.collect(&:parent_id)]) +
-        self.time_entry_activities
+          find(:all,
+               :conditions => ["id NOT IN (?)", self.time_entry_activities.collect(&:parent_id)]) +
+          self.time_entry_activities
     else
       return TimeEntryActivity.shared.active.
-        find(:all,
-             :conditions => ["id NOT IN (?)", self.time_entry_activities.collect(&:parent_id)]) +
-        self.time_entry_activities.active
+          find(:all,
+               :conditions => ["id NOT IN (?)", self.time_entry_activities.collect(&:parent_id)]) +
+          self.time_entry_activities.active
     end
   end
 
