@@ -2,14 +2,6 @@ module EditorialHelper
   include FeesHelper
 
 
-  def smart_truncate(text, char_limit)
-    text = text.squish
-    size = 0
-    text.mb_chars.split().reject do |token|
-      size+=token.size()
-      size>char_limit
-    end.join(" ") +(text.size()>char_limit ? " "+ "..." : "" )
-  end
 
 def highlight_tokens(text, tokens)
   return text unless text && tokens && !tokens.empty?

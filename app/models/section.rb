@@ -10,10 +10,7 @@ class Section < ActiveRecord::Base
   validates_uniqueness_of :sezione, :case_sensitive => false
   validates_length_of :sezione, :maximum => 100
 
-  #FK foreign key
-  #validates_presence_of :sezione_top_id
-
-  #integer
+   #integer
   validates_presence_of :ordinamento
   validates_numericality_of :ordinamento, :allow_nil => true
 
