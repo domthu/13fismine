@@ -70,14 +70,20 @@
 
 <div class="splitcontentright">
   <fieldset class="box tabular">
-    <legend><%=l(:affiliati)%></legend>
+    <legend><%=l(:affiliati)%>&nbsp;<b>Totali: <%= @num_associated_TOTAL %></b></legend>
     <h5>
-      Organismi associati e Utenti con affiliazione
+      Organismi associati
     </h5>
     <ul>
       <li>Numero di organismi associati: <b><%= @num_Associations %></b></li>
-      <li>Numero di power_user: <b><%= @num_power_user %></b></li>
       <li>Numero di membri (soci) <b>NON PAGANTI: <%= @num_Associated %></b></li>
+    </ul>
+    Dettaglio degli Utenti Non paganti
+    <ul>
+      <li>utenti con abbonamento valido: <b><%= @num_Associated_ABBONATO %></b></li>
+      <li>utenti in rinnovo: <b><%= @num_Associated_Scadenza_RENEW %></b></li>
+      <li>utenti con abbonamento scaduto <b><%= @num_Associated_EXPIRED %></b></li>
+      <li>utenti archiviati <b>NON PAGANTI: <%= @num_Associated_ARCHIVIED %></b></li>
     </ul>
   </fieldset>
 </div>

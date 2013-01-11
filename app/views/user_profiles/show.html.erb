@@ -1,0 +1,28 @@
+<p>
+  <b>User:</b>
+  <%=h @user_profile.user_id %>
+</p>
+
+<p>
+  <b>titoli:</b>
+  <%=h @user_profile.titoli %>
+</p>
+
+<p>
+  <b>curriculum:</b>
+  <%=h @user_profile.curriculum %>
+</p>
+
+<p>
+  <b>immagine_url:</b>
+  <%=h @user_profile.immagine_url %>
+</p>
+
+<p>
+  <b>external_url:</b>
+  <%=h @user_profile.external_url %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_profile_path(@user_profile) %> |
+<%= link_to 'Back', user_profiles_path %>

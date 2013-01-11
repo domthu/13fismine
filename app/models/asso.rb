@@ -55,6 +55,8 @@ class Asso < ActiveRecord::Base
 
   alias :name :to_s
 
+  #Tutti utenti che dipendono di un Associazione == Organization
+  #NON PAGANO. vale la data di scadenza dell'associazione
   def scadenza
     if (self.organization.nil? || self.organization.data_scadenza.nil?)
       return nil

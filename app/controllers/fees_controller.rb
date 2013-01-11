@@ -11,15 +11,15 @@ class FeesController < ApplicationController
 
   #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
   include FeesHelper  #ROLE_XXX  gedate
-  #ROLE_MANAGER        = 3  #Manager<br />
-  #ROLE_AUTHOR         = 4  #Redattore  <br />
+  #FeeConst::ROLE_MANAGER        = 3  #Manager<br />
+  #FeeConst::ROLE_AUTHOR         = 4  #Redattore  <br />
   ##ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore
-  #ROLE_VIP            = 10 #Invitato Gratuito<br />
-  #ROLE_ABBONATO       = 6  #Abbonato user.data_scade
-  #ROLE_REGISTERED     = 9  #Ospite periodo di prova durante
-  #ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza
-  #ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
-  #ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo
+  #FeeConst::ROLE_VIP            = 10 #Invitato Gratuito<br />
+  #FeeConst::ROLE_ABBONATO       = 6  #Abbonato user.data_scade
+  #FeeConst::ROLE_REGISTERED     = 9  #Ospite periodo di prova durante
+  #FeeConst::ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza
+  #FeeConst::ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
+  #FeeConst::ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo
   include ActionView::Helpers::DateHelper
   #undefined method `utc?' for Wed, 15 Oct 2008:Date  format_time --> format_date
 
@@ -27,63 +27,75 @@ class FeesController < ApplicationController
     #@msg[] << ""
     if params['verify'].to_i == 1
       @msg = ["---Verificazione degli utenti---"]
+      #_ArrStr = Array.new
+      #_ArrStr.push "---Init---"
       #User.each do |user|
       #    existing_regions = Region.all()
-      #for usr in User.all(:limit => 20) do
-      for usr in User.all() do
+      for usr in User.all(:limit => 20) do
+      #for usr in User.all() do
         str = control_assign_role(usr)
         if !str.nil?
           @msg << str
         end
       end
+      #@msg << "dasjkdashdjkas==" + FeeConst::ROLE_MANAGER.to_s + "=="
     end
 
     #Ruoli non sottoposti a controllo di abbonamento
-    #ROLE_MANAGER        = 3  #Manager<br />
+    #FeeConst::ROLE_MANAGER        = 3  #Manager<br />
     #BY INTERNAL ROLE
-    #ROLE_AUTHOR         = 4 = ROLE_COLLABORATOR
-    #  ROLE_VIP            = 9
+    #FeeConst::ROLE_AUTHOR         = 4 = ROLE_COLLABORATOR
+    #  FeeConst::ROLE_VIP            = 9
     @num_no_role = User.all(:conditions => {:role_id => nil}).count
     @num_admin = User.all(:conditions => {:admin => 1}).count
     @name_admin = User.all(:conditions => {:admin => 1})
     @num_power_user = User.all(:conditions => {:power_user => 1}).count
     @name_power_user = User.all(:conditions => {:power_user => 1})
-    @num_manager = User.all(:conditions => {:role_id => ROLE_MANAGER}).count
-    @name_manager = User.all(:conditions => {:role_id => ROLE_MANAGER})
+    @num_manager = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER}).count
+    @name_manager = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER})
 
-    @num_author = User.all(:conditions => {:role_id => ROLE_AUTHOR}).count
-    @name_author = User.all(:conditions => {:role_id => ROLE_AUTHOR})
+    @num_author = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR}).count
+    @name_author = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR})
     #@num_collaboratori = User.all(:conditions => {:role_id => ROLE_COLLABORATOR}).count
     #@name_collaboratori = User.all(:conditions => {:role_id => ROLE_COLLABORATOR})
-    @num_invitati = User.all(:conditions => {:role_id => ROLE_VIP}).count
-    @name_invitati = User.all(:conditions => {:role_id => ROLE_VIP})
+    @num_invitati = User.all(:conditions => {:role_id => FeeConst::ROLE_VIP}).count
+    @name_invitati = User.all(:conditions => {:role_id => FeeConst::ROLE_VIP})
     #BY CLIENT ROLE
-    #  ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
-    #  ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
-    #  ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
-    #  ROLE_EXPIRED        = 6  #user.data_scadenza < today
-    #  ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED)
-    @num_abbonati = User.all(:conditions => {:role_id => ROLE_ABBONATO}).count
-    @num_rinnovamento = User.all(:conditions => {:role_id => ROLE_RENEW}).count
-    @num_registrati = User.all(:conditions => {:role_id => ROLE_REGISTERED}).count
-    @num_scaduti = User.all(:conditions => {:role_id => ROLE_EXPIRED}).count
-    @num_archiviati = User.all(:conditions => {:role_id => ROLE_ARCHIVIED}).count
+    #  FeeConst::ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
+    #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
+    #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
+    #  FeeConst::ROLE_EXPIRED        = 6  #user.data_scadenza < today
+    #  FeeConst::ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED)
+    @num_abbonati = User.all(:conditions => {:role_id => FeeConst::ROLE_ABBONATO}).count
+    @num_rinnovamento = User.all(:conditions => {:role_id => FeeConst::ROLE_RENEW}).count
+    @num_registrati = User.all(:conditions => {:role_id => FeeConst::ROLE_REGISTERED}).count
+    @num_scaduti = User.all(:conditions => {:role_id => FeeConst::ROLE_EXPIRED}).count
+    @num_archiviati = User.all(:conditions => {:role_id => FeeConst::ROLE_ARCHIVIED}).count
 
     #Who pay?
     #BY PAYMENTS PRIVATE or CROSS ORGANIZATION
     #@num_power_user = User.all(:conditions => {:power_user => 1}).count
     #User member of ASSOCIATION
     @num_Associations =  Asso.all.count
+    #questi utenti non pagano. Paga l'associazione (organismo associato)
     @num_Associated =  User.all(:conditions => {:asso_id => !nil}).count
+    @num_Associated_ABBONATO =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_ABBONATO}).count
+    @num_Associated_RENEW =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_RENEW}).count
+    @num_Associated_EXPIRED =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_EXPIRED}).count
+    @num_Associated_ARCHIVIED =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_ARCHIVIED}).count
+    @num_associated_TOTAL = @num_Associated_ABBONATO + @num_Associated_RENEW + @num_Associated_EXPIRED + @num_Associated_ARCHIVIED
+
+
+
     @num_power_user = User.all(:conditions => {:power_user => true}).count
     #Utenti che non dipendono di un associazione PAGANTI
     @num_maybe_privati = User.all(:conditions => {:asso_id => nil}).count
     #@num_privati = User.all(:conditions => {:asso_id => nil, :role_id => nil}).count
     @roles = []
-    @roles << ROLE_ABBONATO << ROLE_RENEW << ROLE_REGISTERED << ROLE_EXPIRED << ROLE_ARCHIVIED
+    @roles << FeeConst::ROLE_ABBONATO << FeeConst::ROLE_RENEW << FeeConst::ROLE_REGISTERED << FeeConst::ROLE_EXPIRED << FeeConst::ROLE_ARCHIVIED
     @num_privati = User.all(:conditions => ['asso_id is null AND role_id IN (?)', @roles]).count
     @active = []
-    @active << ROLE_ABBONATO << ROLE_RENEW << ROLE_REGISTERED
+    @active << FeeConst::ROLE_ABBONATO << FeeConst::ROLE_RENEW << FeeConst::ROLE_REGISTERED
     @num_active = User.all(:conditions => ['asso_id is null AND role_id IN (?)', @active]).count
 
     #AFFILIATI
@@ -96,13 +108,13 @@ class FeesController < ApplicationController
 
 ###########LISTE UTENTI PER RUOLO##############
   def paganti
-    #  ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
-    #  ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
+    #  FeeConst::ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
+    #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
     @users = User.find(
     :all,
-    :conditions => ["role_id = :role_1 OR role_id = :role_2 ", { :role_1 => ROLE_ABBONATO, :role_2 => ROLE_RENEW } ],
+    :conditions => ["role_id = :role_1 OR role_id = :role_2 ", { :role_1 => FeeConst::ROLE_ABBONATO, :role_2 => FeeConst::ROLE_RENEW } ],
     :include => :role)
-    #:conditions => {:role_id => ROLE_ABBONATO, :role_id => ROLE_RENEW },
+    #:conditions => {:role_id => FeeConst::ROLE_ABBONATO, :role_id => FeeConst::ROLE_RENEW },
 
 #    workflows.find(:all,
 #        :include => :new_status,
@@ -114,8 +126,8 @@ class FeesController < ApplicationController
   end
 
   def registrati
-    #  ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
-    #@users = User.all(:conditions => {:role_id => ROLE_REGISTERED}, :include => :role)
+    #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
+    #@users = User.all(:conditions => {:role_id => FeeConst::ROLE_REGISTERED}, :include => :role)
     sort_init 'person', 'asc'
     sort_update %w(firstname lastname role_id created_on asso_id datascadenza)
 
@@ -156,13 +168,13 @@ class FeesController < ApplicationController
   end
 
   def scaduti
-    #  ROLE_EXPIRED        = 6  #user.data_scadenza < today
-    @users = User.all(:conditions => {:role_id => ROLE_EXPIRED}, :include => :role)
+    #  FeeConst::ROLE_EXPIRED        = 6  #user.data_scadenza < today
+    @users = User.all(:conditions => {:role_id => FeeConst::ROLE_EXPIRED}, :include => :role)
   end
 
   def archiviati
-    #  ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGOISTERED)
-    @users = User.all(:conditions => {:role_id => ROLE_ARCHIVIED}, :include => :role)
+    #  FeeConst::ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGOISTERED)
+    @users = User.all(:conditions => {:role_id => FeeConst::ROLE_ARCHIVIED}, :include => :role)
   end
 
 

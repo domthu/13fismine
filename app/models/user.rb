@@ -263,18 +263,24 @@ class User < Principal
       end
     end
   end
-  #Return Date
+
+  #Tutti utenti che dipendono di un Associazione == Organization
+  #NON PAGANO. vale la data di scadenza dell'associazione
+  #Altrimenti prendiamo la data di scadenza dell'utente
   def scadenza
     if Setting.fee?
+      #se l'utente non fa parte di un associazione o l'associazione non ha data di scadenza valida
       if (self.asso.nil? || self.asso.scadenza.nil? || self.asso.scadenza.year == 0)
-        # Privato paga lui
+        # Lo cionsideriamo un Privato. Il privato paga lui
         if self.datascadenza.is_a?(Date)
           return self.datascadenza.to_date
         else
           return nil
         end
       else
-        #Associato Non paga --> paga l'organismo associato
+        #Altrimenti l'utente è associato (ad un organismo associato)
+        #L'associazione paga per l'utente. La data di scadenza è
+        #quella di asso.organization.data_scadenza (cf modello asso.scadenza())
         return self.asso.scadenza.to_date
       end
     else

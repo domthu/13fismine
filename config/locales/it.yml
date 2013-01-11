@@ -1408,7 +1408,7 @@ it:
   button_verify: Verifica
   who_pay: Paganti
   associations: Associazioni
-  affiliati: Affiliati
+  affiliati: Affiliati (Non paganti)
   siglatipo: Sigla e Tipi organismi
   notice_setting_fee_not_allowed: La gestione degli abbonamenti non è abilitata
   label_person: Persona

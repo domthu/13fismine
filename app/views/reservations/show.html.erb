@@ -1,0 +1,28 @@
+<p>
+  <b>User:</b>
+  <%=h @reservation.user_id %>
+</p>
+
+<p>
+  <b>Issue:</b>
+  <%=h @reservation.issue_id %>
+</p>
+
+<p>
+  <b>num_persone:</b>
+  <%=h @reservation.num_persone %>
+</p>
+
+<p>
+  <b>prezzo:</b>
+  <%=h @reservation.prezzo %>
+</p>
+
+<p>
+  <b>msg:</b>
+  <%=h @reservation.msg %>
+</p>
+
+
+<%= link_to 'Edit', edit_reservation_path(@reservation) %> |
+<%= link_to 'Back', reservations_path %>

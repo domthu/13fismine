@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user_id: 1
+  titoli: MyText
+  curriculum: MyText
+  immagine_url: MyString
+  external_url: MyString
+
+two:
+  user_id: 1
+  titoli: MyText
+  curriculum: MyText
+  immagine_url: MyString
+  external_url: MyString

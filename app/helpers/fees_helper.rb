@@ -1,8 +1,6 @@
-module FeesHelper
-  include ActionView::Helpers::DateHelper
-  #include ApplicationHelper   NO utc? in format_time
-  #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
+module FeeConst
 
+  TESTCONSTANT = 3
   #ruoli che non sono sottoposti ad controllo di scadenza
   #NOTA BENE usare i permissi per quesi casi
   ROLE_MANAGER        = 3  #Manager<br />
@@ -12,9 +10,20 @@ module FeesHelper
 
   ROLE_ABBONATO       = 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
   ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
-  ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
-  ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
-  ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
+  ROLE_RENEW=11
+  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
+  ROLE_EXPIRED=7
+  #Scaduto: user.data_scadenza < today<br />
+  ROLE_ARCHIVIED=8
+  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
+
+end
+
+module FeesHelper
+  include ActionView::Helpers::DateHelper
+
+  #include ApplicationHelper   NO utc? in format_time
+  #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
 
 #La gestione dipende del ruolo
 # Se sottoposto a controllo abbonamento
@@ -39,14 +48,14 @@ module FeesHelper
 
   def fee_roles_options_for_select(selected)
     options_for_select([[l(:label_all), ''],
-                        ["#{l(:role_manager)}", "#{ROLE_MANAGER.to_i}"],
-                        ["#{l(:role_author)}", "#{ROLE_AUTHOR.to_i}"],
-                        ["#{l(:role_vip)}", "#{ROLE_VIP.to_i}"],
-                        ["#{l(:role_abbonato)}", "#{ROLE_ABBONATO.to_i}"],
-                        ["#{l(:role_registered)}", "#{ROLE_REGISTERED.to_i}"],
-                        ["#{l(:role_renew)}", "#{ROLE_RENEW.to_i}"],
-                        ["#{l(:role_expired)}", "#{ROLE_EXPIRED.to_i}"],
-                        ["#{l(:role_archivied)}", "#{ROLE_ARCHIVIED.to_i}"]
+                        ["#{l(:role_manager)}", "#{FeeConst::ROLE_MANAGER.to_i}"],
+                        ["#{l(:role_author)}", "#{FeeConst::ROLE_AUTHOR.to_i}"],
+                        ["#{l(:role_vip)}", "#{FeeConst::ROLE_VIP.to_i}"],
+                        ["#{l(:role_abbonato)}", "#{FeeConst::ROLE_ABBONATO.to_i}"],
+                        ["#{l(:role_registered)}", "#{FeeConst::ROLE_REGISTERED.to_i}"],
+                        ["#{l(:role_renew)}", "#{FeeConst::ROLE_RENEW.to_i}"],
+                        ["#{l(:role_expired)}", "#{FeeConst::ROLE_EXPIRED.to_i}"],
+                        ["#{l(:role_archivied)}", "#{FeeConst::ROLE_ARCHIVIED.to_i}"]
                         ], selected)
   end
   #  def change_status_link(user)
@@ -59,41 +68,41 @@ module FeesHelper
     elsif user != User.current
       link_to l(:button_lock), url.merge(:user => {:status => User::STATUS_LOCKED}), :method => :put, :class => 'icon icon-lock'
     end
-#    ROLE_MANAGER        = 3  #Manager<br />
-#    ROLE_AUTHOR         = 4  #Redattore  <br />
-#    ROLE_VIP            = 10 #Invitato Gratuito<br />
-#    ROLE_ABBONATO       = 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
-#    ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
-#    ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
-#    ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
-#    ROLE_ARCHIVIED
+#    FeeConst::ROLE_MANAGER        = 3  #Manager<br />
+#    FeeConst::ROLE_AUTHOR         = 4  #Redattore  <br />
+#    FeeConst::ROLE_VIP            = 10 #Invitato Gratuito<br />
+#    FeeConst::ROLE_ABBONATO       = 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
+#    FeeConst::ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
+#    FeeConst::ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
+#    FeeConst::ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
+#    FeeConst::ROLE_ARCHIVIED
 
     case user.role_id
-      #ROLE_MANAGER  --> Admin
+      #FeeConst::ROLE_MANAGER  --> Admin
       when 3
-        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-man'
-      #ROLE_AUTHOR  -->
+        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-man'
+      #FeeConst::ROLE_AUTHOR  -->
       when 4
-        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-auth'
-      #ROLE_VIP  -->
+        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-auth'
+      #FeeConst::ROLE_VIP  -->
       when 10
-        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-vip'
-      #ROLE_ABBONATO  --> ROLE_RENEW
+        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-vip'
+      #FeeConst::ROLE_ABBONATO  --> FeeConst::ROLE_RENEW
       when 6
-        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-abbo'
-      #ROLE_REGISTERED  -->
+        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-abbo'
+      #FeeConst::ROLE_REGISTERED  -->
       when 9
-        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-reg'
-      #ROLE_RENEW  -->
+        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-reg'
+      #FeeConst::ROLE_RENEW  -->
       when 11
-        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-renew'
-      #ROLE_EXPIRED  --> ROLE_ABBONATO
+        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-renew'
+      #FeeConst::ROLE_EXPIRED  --> FeeConst::ROLE_ABBONATO
       when 7
-        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-exp'
-      #ROLE_ARCHIVIED  --> ?ROLE_EXPIRED
+        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-exp'
+      #FeeConst::ROLE_ARCHIVIED  --> ?FeeConst::ROLE_EXPIRED
 
       when 8
-        link_to l(:button_unlock), url.merge(:user => {:role_id => ROLE_MANAGER}), :method => :put, :class => 'icon icon-arc'
+        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-arc'
       else
         return ""
     end
@@ -123,28 +132,28 @@ module FeesHelper
 
   def get_role_css(user)
     case user.role_id
-      #ROLE_MANAGER
+      #FeeConst::ROLE_MANAGER
       when 3
         return "icon icon-man"
-      #ROLE_AUTHOR
+      #FeeConst::ROLE_AUTHOR
       when 4
         return "icon icon-auth"
-      #ROLE_VIP
+      #FeeConst::ROLE_VIP
       when 10
         return "icon icon-vip"
-      #ROLE_ABBONATO
+      #FeeConst::ROLE_ABBONATO
       when 6
         return "icon icon-abbo"
-      #ROLE_REGISTERED
+      #FeeConst::ROLE_REGISTERED
       when 9
         return "icon icon-reg"
-      #ROLE_RENEW
+      #FeeConst::ROLE_RENEW
       when 11
         return "icon icon-renew"
-      #ROLE_EXPIRED
+      #FeeConst::ROLE_EXPIRED
       when 7
         return "icon icon-exp"
-      #ROLE_ARCHIVIED
+      #FeeConst::ROLE_ARCHIVIED
       when 8
         return "icon icon-arc"
       else
@@ -159,21 +168,17 @@ module FeesHelper
   #  è un pagante o un privato
   def control_assign_role(_usr)
 
+    #str = "DDDDDDD==" + FeeConst::ROLE_MANAGER.to_s + "=="
+    #return str
+
     if _usr.nil?
       return nil
     end
     #SELECT `firstname`, `lastname`,`mail`,`id`,`codice`,`nome`,`asso_id`,`cross_organization_id`,`data`,`datascadenza` FROM `_usrs` where nome like '%PERUFFO MARCO%'
-    old_state = "<b>(" <<  _usr.id.to_s << ")"
-    old_state << _usr.name << "</b>, "
-    old_state << "code: " << _usr.codice.to_s
-    old_state << (_usr.datascadenza.nil? ?  "" : ", data: " <<  _usr.datascadenza.to_s)
-    old_state << ", role: " <<  _usr.role_id.to_s
-    #Association
-    if (_usr.asso_id.nil?)
-      old_state << ", <b>&euro; PAGANTE &euro;</b> NON ASSOCIATO utente scade " << getdate(_usr.datascadenza)
-    else
-      old_state << ", Asso(" << _usr.asso_id.to_s << "): " << (_usr.asso.nil? ? "?Asso?" : _usr.asso.name) << " org. scade " << getdate(_usr.asso.scadenza)
-    end
+    old_state = "<b>(id: " +  _usr.id.to_s + ")" +
+      _usr.name + "</b>, " + "code: " + _usr.codice.to_s +
+      (_usr.datascadenza.nil? ?  "" : ", data: " +  _usr.datascadenza.to_s) +
+      ", role: " +  _usr.role_id.to_s
     #control helper
     if _usr.scadenza.nil?
       old_state << ", --NO scad--"
@@ -181,61 +186,26 @@ module FeesHelper
       old_state << ", scad[" << _usr.scadenza.to_s << "]"
     end
 
-    #Cross Organization
-    if (_usr.cross_organization_id.nil?)
-      old_state << ", senza affiliazione"
-    else
-      old_state << ", AFFILIATO CrossOrg(" << _usr.cross_organization_id.to_s << "): " << (_usr.cross_organization.nil?  ? "?cross_organization?" : (_usr.cross_organization.name))
-      #control helper
-      #  _usr.affiliato?
-      #  _usr.affiliato_to
-      old_state << ", Aff(" << _usr.affiliato?.to_s << ")[" << _usr.affiliato_to << "]"
-      #Organization
-      if (!_usr.cross_organization.nil?)
-        org = _usr.cross_organization.organization_for_user(_usr)
-      end
-      org2 = _usr.organization
-      if org.nil?
-        if org2.nil?
-          old_state << ", !NO ORGANIZATION!"
-        else
-          old_state << ", organization(user): " << org2.name
-        end
-      else
-        if org2.nil?
-          old_state << ", organization(cross): " << org.name
-        else
-          #ok abbiamo trovato tutti due
-          #verifichiamo solo che sono uguali
-          if org.id != org2.id
-            old_state << ", organization(cross<-PROBLEM->user): " << org.name << "(" << org.id << ")<-->"  << org2.name << "(" << org2.id << ")"
-          else
-            old_state << ", organization(user&Cross): " << org.name
-          end
-        end
-      end
-      old_state << ((_usr.power_user.nil? || !_usr.power_user) ? "" : "<span class='power_user'>[POWER]</span>")
-    end
-
     str = "" #nil
     #ARCHIVIATO --> 0 NON riceve nulla e non accede al sito Non si interragisce più. Non ricevono newsletter
-    if !_usr.role_id.nil? && _usr.role_id == ROLE_ARCHIVIED
+    #if !_usr.role_id.nil? && _usr.role_id == FeeConst::ROLE_ARCHIVIED
+    if 1 == 0
       #Utente con questo ruolo ne possono uscire solo MANUALMENTE quindi non trattare
       str = "<span class='archivied'>" << old_state << "</span>"
 #    #control if not yet registered and waiting for approvment
-#    elsif !_usr.role_id.nil? && _usr.role_id == ROLE_REGISTERED
-#      #  ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
+#    elsif !_usr.role_id.nil? && _usr.role_id == FeeConst::ROLE_REGISTERED
+#      #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
 #      #TODO EXPIRALO se ha superato il numero di giorni previsti
 #      today = Date.today
 #      fee_deadline = _usr.created_on + Setting.register_days.to_i.days
 #      if today < fee_deadline
-#        str = ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
+#        str = ensure_role(_usr, FeeConst::ROLE_EXPIRED, "EXPIRED", old_state)
 #      else
 #        #l'Utente registrato dispone ancora di alcuni giorni
-#        #ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
+#        #FeeConst::ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
 #        str = "<span class='registrato'>" << old_state << "</span>"
 #      end
-#    elsif !_usr.role_id.nil? && _usr.role_id == ROLE_ARCHIVIED
+#    elsif !_usr.role_id.nil? && _usr.role_id == FeeConst::ROLE_ARCHIVIED
 #        str = "<b class='modified'>Codice utente non presente?=</b>"
     else
       #user.admin solo utente 1 e 1959
@@ -244,11 +214,11 @@ module FeesHelper
         _usr.admin = true
         _usr.power_user = false
         _usr.role_id = -1
-        str = ensure_role(_usr, ROLE_MANAGER, "MANAGER", old_state)
+        str = ensure_role(_usr, FeeConst::ROLE_MANAGER, "MANAGER", old_state)
       else
         #set default
         _usr.admin = false
-        _usr.role_id = ROLE_EXPIRED
+        _usr.role_id = FeeConst::ROLE_EXPIRED
         #Controllo per Codice
         #TODO: La verifica per data scadenza ed altri verrà fatta altrove
         case _usr.codice
@@ -263,7 +233,7 @@ module FeesHelper
             _usr.power_user = true
             #_usr.save()
           end
-          str << ensure_role(_usr, ROLE_MANAGER, "MANAGER", old_state)
+          str << ensure_role(_usr, FeeConst::ROLE_MANAGER, "MANAGER", old_state)
 
         when 1959 #codice anniversaire
           if (_usr.admin == false)
@@ -271,19 +241,19 @@ module FeesHelper
             _usr.admin = true
             #_usr.save()
           end
-          str << ensure_role(_usr, ROLE_MANAGER, "MANAGER", old_state)
+          str << ensure_role(_usr, FeeConst::ROLE_MANAGER, "MANAGER", old_state)
 
         when 9
           str = "author-collab"
-          str  << ensure_role(_usr, ROLE_AUTHOR, "REDATTORE", old_state)
+          str  << ensure_role(_usr, FeeConst::ROLE_AUTHOR, "REDATTORE", old_state)
 
         #INVITATI (GRATUITI) --> codice 8
         when 8
-          str = ensure_role(_usr, ROLE_VIP, "INVITATO", old_state)
+          str = ensure_role(_usr, FeeConst::ROLE_VIP, "INVITATO", old_state)
 
         #REGISTRATO --> 3      (il sistema dopo il periodo di prova da in automatico il ruolo SCADUTO)
         when 3
-          str = ensure_role(_usr, ROLE_REGISTERED, "REGISTRATO", old_state)
+          str = ensure_role(_usr, FeeConst::ROLE_REGISTERED, "REGISTRATO", old_state)
 
         #ABBONATO_PRIVATO --> 6 e 7
         #IN_SCADENZA (controllo sulla data di scadenza del privato)
@@ -297,26 +267,25 @@ module FeesHelper
 
         #SCADUTO  --> 2 e 4 e 5 + Tutti altri casi    (dopo la data di scadenza)  possono ancora ricevere newsletter. possono ancora vedere le cose
         when 2,4,5
-          str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
+          str << ensure_role(_usr, FeeConst::ROLE_EXPIRED, "EXPIRED", old_state)
           #str = ensure_fee_validity(_usr, nil, old_state)
 
           #ARCHIVIATO --> 0 NON riceve nulla e non accede al sito Non si interragisce più. Non ricevono newsletter
         when 0
-          str << ensure_role(_usr, ROLE_ARCHIVIED, "ARCHIVIED", old_state)
+          str << ensure_role(_usr, FeeConst::ROLE_ARCHIVIED, "ARCHIVIED", old_state)
 
         #ABBONATO_AFFILIATO --> codice di un organismo
         #IN_SCADENZA? (controllo sulla data di scadenza dell'Organismo Associato)
         else
-          #ABBONATO_AFFILIATO --> codice di un organismo
+          #ABBONATO_AFFILIATO --> codice di un organismo associato
           #organismo_associato = Asso.find(_usr.codice);
-          org = _usr.organization
-          if org.nil?
+          if _usr.asso.nil?
             str = "<b style='color:red;'>Codice NON conosciuto " << _usr.codice.to_s << "</b> "
             #SCADUTO  --> 2 e 4 e 5 + Tutti altri casi    (dopo la data di scadenza)  possono ancora ricevere newsletter. possono ancora vedere le cose
-            str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
+            str << ensure_role(_usr, FeeConst::ROLE_EXPIRED, "EXPIRED", old_state)
           else
-            #esiste l'organizzazione pagante
-            str << ensure_fee_validity(_usr, org, old_state)
+            #esiste l'organismo associato pagante per questo utente
+            str << ensure_fee_validity(_usr, _usr.asso, old_state)
           end
         end
       end
@@ -333,110 +302,73 @@ module FeesHelper
 
   def ensure_fee_validity(_usr, org_asso, old_state)
     str = ""
-#    #3/1/01 105624 AM
-#    clean__usr_data = _usr.data
-#    #0000-00-00 00:00:00
-#    final_data = _usr.datascadenza
-#    if final_data.is_a?(Date)
-#      final_data = final_data.to_date
-#    else
-#      (Date.parse(final_data) rescue nil)
-#    end
-
-#    if ((final_data.nil?) || (final_data.is_a?(Date) && (final_data.to_date.year == 0)))
-#      #@date_from = Date.civil(@date_from.year, @date_from.month, 1)
-#      #clean date?
-#      docleaner = false;
-#      begin
-#        data_scadenza = clean_user_data.to_date
-#      rescue
-#        docleaner = true;
-#        data_scadenza = nil
+    str = "<div style='color: blue;'> -" << FeeConst::TESTCONSTANT << "/"
+    if org_asso.nil?
+      data_scadenza = _usr.datascadenza
+      str << "<b>&euro; PAGANTE &euro;</b> "
+    else
+      #Association
+      str << "<b>NON PAGANTE</b> Asso(" << _usr.asso_id.to_s << "): " << _usr.asso.name
+      #data_scadenza = _usr.asso.organization.data_scadenza
+      data_scadenza = _usr.asso.scadenza
+#      if data_scadenza.nil?
+#        data_scadenza = _usr.datascadenza #esamina questa stringa
 #      end
-#
-#      if docleaner
-#        #need to clean the date
-#
-#        if (_usr.data.nil?)
-#          #set expired
-#          _usr.data = Date.today.day.to_s << "/" << Date.today.month.to_s << "/" << Date.today.year.to_s
-#          _usr.datascadenza = DateTime.today
-#          str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
-
-#        #data like
-#        #2/25/01 64928 PM
-#        #3/1/01 105624 AM
-#        #3/11/01 121909 AM
-#        #SELECT `firstname`, `lastname`,`mail`,`id`,`codice`,`nome`,`asso_id`,`cross_organization_id`,`data`,`datascadenza`
-#        #FROM `users` where data is not null and data like '%m%'
-#        #order by data
-#	      elsif _usr.data.indexof("m") > 0
-#          y =
-#          m =
-#          d =
-#          _usr.data = Date.Civil(y,m,d)
-#          _usr.datascadenza = Date.Civil(y,m,d)
-#        #01/02/2006
-#        elsif
-#          _usr.data = Date.parse(_usr.data)
-#          _usr.datascadenza = _usr.data.to_date
-#        end
-#        #togliere PM ed altri
-#      end
-#    end
-    data_scadenza = _usr.scadenza
-
-    if data_scadenza.nil?
-      data_scadenza = _usr.datascadenza #esamina questa stringa
     end
 
+
     if data_scadenza.nil? || !data_scadenza.is_a?(Date)
-        #  ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
-        str = ", <b style='color:orange'>Scadenza "
+        #  FeeConst::ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
+        str << ", <b style='color:orange'>Scadenza "
         if (data_scadenza.nil?)
-          str = " NULL["
+          str << " NULL["
         else
-          str = " DATA?" << data_scadenza << "["
+          str << " DATA?" << data_scadenza << "["
         end
-        str << "asso.id: " << (_usr.asso_id.nil? ? "" : ("(" << _usr.asso_id.to_s << ")--> " << ((_usr.asso.nil? || _usr.asso.scadenza.nil?) ? "No scadenza?" : _usr.asso.scadenza.to_s)))
-        str << "/cross.id: " << (_usr.cross_organization_id.nil? ? "" : _usr.cross_organization_id.to_s)
+        str << "asso.id: " << (_usr.asso_id.nil? ? "" : ("(" << _usr.asso_id.to_s << ")--> " << ((_usr.asso.nil? || _usr.asso.scadenza.nil?) ? "/user.scadenza" : _usr.asso.scadenza.to_s)))
+        #str << "/cross.id: " << (_usr.cross_organization_id.nil? ? "" : _usr.cross_organization_id.to_s)
         str << "/user.data: " << (_usr.data.nil? ? "" : _usr.data.to_s)
-        str << "/user.scadenza" << (_usr.datascadenza.nil? ? " " : _usr.datascadenza.to_s)
+        str << "/user.datascadenza" << (_usr.datascadenza.nil? ? " " : _usr.datascadenza.to_s)
         str << "]</b>"
-        str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
+        str << ensure_role(_usr, FeeConst::ROLE_EXPIRED, "EXPIRED", old_state)
     else
       #TODO data
       #Note that Time.zone.parse returns a DateTime, while appending the .utc gives you a Time.
       #scadenza = Time.zone.parse(data_scadenza)
       #undefined method `parse' for nil:NilClass
       scadenza = data_scadenza.to_date
-      str = ", Scadenza: " << getdate(scadenza)
+      if org_asso.nil?
+        str << "<br /> Scadenza usr: " << getdate(scadenza)
+      else
+        str << "<br /> Scadenza ASSO: " << getdate(scadenza)
+      end
       today = Date.today
       renew_deadline = scadenza - Setting.renew_days.to_i.days
       if (today < renew_deadline)
-        str << ensure_role(_usr, ROLE_ABBONATO, "ABBONATO", old_state)
+        str << ensure_role(_usr, FeeConst::ROLE_ABBONATO, "ABBONATO", old_state)
       elsif (today < scadenza)
         #IN_SCADENZA           (controllo sulla data di scadenza del privato o dell'Organismo Associato)
-        #  ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
-        str << ensure_role(_usr, ROLE_RENEW, "ABBONATO in scadenza", old_state)
+        #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
+        str << ensure_role(_usr, FeeConst::ROLE_RENEW, "ABBONATO in scadenza", old_state)
       else
-        #  ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
-        str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
+        #  FeeConst::ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
+        str << ensure_role(_usr, FeeConst::ROLE_EXPIRED, "EXPIRED", old_state)
       end
     end
+    str << "</div>"
     return str
   end
 
   def ensure_role(_usr, roleid, role_label, old_state)
-    str = ""
-    if _usr.role_id.nil? || _usr.role_id != roleid
+    str = "roleid = [old " + _usr.role_id.to_s + "/ new" + roleid.to_s + "-->" + role_label + "] "
+    if _usr.role_id.nil? || ( _usr.role_id != roleid )
       old_role = _usr.role.nil? ?  "?" : _usr.role.name
       _usr.role_id = roleid
-      str << "<span class='" << get_role_css(_usr) << " modified'> " << old_role <<  " --> " << role_label << ". "
+      str << "<span class='" << get_role_css(_usr) << " modificato ruolo " << old_role <<  " --> " << role_label << ". "
       str << old_state << "</span>"
       _usr.save()
     else
-      str << "<span class='" << get_role_css(_usr) << " unchanged'> ok: " << old_state << "</span>"
+      str << "<span class='" << get_role_css(_usr) << " unchanged'> ok ruolo non cambiato: " << old_state << "</span>"
     end
     return str
   end
