@@ -19,7 +19,8 @@ require "digest/sha1"
 
 class User < Principal
   include Redmine::SafeAttributes
-  include FeesHelper  #Kappao cyclic include detected
+  #include FeesHelper  #Kappao cyclic include detected
+  #include FeeConst
 
   # Account statuses
   STATUS_ANONYMOUS  = 0
@@ -202,13 +203,13 @@ class User < Principal
     if self.isabbonato?
       #TODO Elabore date from scadenza compared with today
       #TODO Elabore date from scadenza compared with today - Setting.renew_days
-      #Control if must be set as  ROLE_RENEW or ROLE_EXPIRED
+      #Control if must be set as  FeeConst::ROLE_RENEW or FeeConst::ROLE_EXPIRED
       Rails.logger.info("isfee OK ABBONATO  #{self}")
       return true
     end
     if self.isrenewing?
       #TODO Elabore date from scadenza compared with today
-      #Control if must be set as ROLE_EXPIRED
+      #Control if must be set as FeeConst::ROLE_EXPIRED
       Rails.logger.info("isfee OK MUST RENEW  #{self}")
       return true
     end
@@ -250,15 +251,15 @@ class User < Principal
       renew_deadline = scadeil - Setting.renew_days.to_i.days
       if (today < renew_deadline)
         #ABBONATO
-        #str << ensure_role(_usr, ROLE_ABBONATO, "ABBONATO", old_state)
+        #str << ensure_role(_usr, FeeConst::ROLE_ABBONATO, "ABBONATO", old_state)
         "valido fino al" << getdate(scadeil)
       elsif (today < self.scadenza)
         #IN_SCADENZA
-        #str << ensure_role(_usr, ROLE_RENEW, "ABBONATO in scadenza", old_state)
+        #str << ensure_role(_usr, FeeConst::ROLE_RENEW, "ABBONATO in scadenza", old_state)
         "scade fra " << distance_of_time_in_words(scadeil.time, Time.now)
       else
-        #  ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
-        #str << ensure_role(_usr, ROLE_EXPIRED, "EXPIRED", old_state)
+        #  FeeConst::ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
+        #str << ensure_role(_usr, FeeConst::ROLE_EXPIRED, "EXPIRED", old_state)
         "espirato da " << distance_of_date_in_words(today, scadeil)
       end
     end
@@ -312,29 +313,29 @@ class User < Principal
 
   #region ROLE * USER
   def ismanager?
-    self.role_id == ROLE_MANAGER  #= 3  #Manager<br />
+    self.role_id == FeeConst::ROLE_MANAGER  #= 3  #Manager<br />
   end
   def isauthor?
-    self.role_id == ROLE_AUTHOR #= 4  #Redattore  <br />
-    #ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore   tutti uguali<br />
+    self.role_id == FeeConst::ROLE_AUTHOR #= 4  #Redattore  <br />
+    #FeeConst::ROLE_COLLABORATOR   = 4  #FeeConst::ROLE_REDATTORE   autore, redattore e collaboratore   tutti uguali<br />
   end
   def isvip?
-    self.role_id == ROLE_VIP #= 10 #Invitato Gratuito<br />
+    self.role_id == FeeConst::ROLE_VIP #= 10 #Invitato Gratuito<br />
   end
   def isabbonato?
-    self.role_id == ROLE_ABBONATO #= 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
+    self.role_id == FeeConst::ROLE_ABBONATO #= 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
   end
   def isregistered?
-    self.role_id == ROLE_REGISTERED #= 9  #Ospite periodo di prova durante Setting.register_days<br />
+    self.role_id == FeeConst::ROLE_REGISTERED #= 9  #Ospite periodo di prova durante Setting.register_days<br />
   end
   def isrenewing?
-    self.role_id == ROLE_RENEW #= 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
+    self.role_id == FeeConst::ROLE_RENEW #= 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
   end
   def isexpired?
-    self.role_id == ROLE_EXPIRED #= 7  #Scaduto: user.data_scadenza < today<br />
+    self.role_id == FeeConst::ROLE_EXPIRED #= 7  #Scaduto: user.data_scadenza < today<br />
   end
   def isarchivied?
-    self.role_id == ROLE_ARCHIVIED #= 8  #Ar
+    self.role_id == FeeConst::ROLE_ARCHIVIED #= 8  #Ar
   end
   #endregion ROLE * USER
 
