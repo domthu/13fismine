@@ -1421,6 +1421,15 @@ it:
   role_renew: Rinnovo, In scadenza
   role_expired: Espirato
   role_archivied: Archiviato
+  button_admin: --> Admin
+  button_manager: --> Responsabile
+  button_author: --> Redattore
+  button_vip: --> Invitato
+  button_abbonato: --> Abbonato
+  button_registered: --> Registrato
+  button_renew: --> Rinnovo
+  button_expired: --> Espirato
+  button_archivied: --> Archiviato
 
 #EDITORIAL
   list_edizioni: Lista edizioni

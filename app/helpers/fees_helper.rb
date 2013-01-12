@@ -60,13 +60,14 @@ module FeesHelper
   end
   #  def change_status_link(user)
   def change_role_status_link(user)
+    str = ""
     url = {:controller => 'fees', :action => 'update_role', :id => user, :page => params[:page], :role_id => params[:role_id]}
 
     if user.locked?
     elsif user.registered?
-      link_to l(:button_activate), url.merge(:user => {:status => User::STATUS_ACTIVE}), :method => :put, :class => 'icon icon-unlock'
+      str += link_to l(:button_activate), url.merge(:user => {:status => User::STATUS_ACTIVE}), :method => :put, :class => 'icon icon-unlock'
     elsif user != User.current
-      link_to l(:button_lock), url.merge(:user => {:status => User::STATUS_LOCKED}), :method => :put, :class => 'icon icon-lock'
+      str += link_to l(:button_lock), url.merge(:user => {:status => User::STATUS_LOCKED}), :method => :put, :class => 'icon icon-lock'
     end
 #    FeeConst::ROLE_MANAGER        = 3  #Manager<br />
 #    FeeConst::ROLE_AUTHOR         = 4  #Redattore  <br />
@@ -76,40 +77,55 @@ module FeesHelper
 #    FeeConst::ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
 #    FeeConst::ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
 #    FeeConst::ROLE_ARCHIVIED
-
     case user.role_id
+
       #FeeConst::ROLE_MANAGER  --> Admin
       when 3
-        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-man'
-      #FeeConst::ROLE_AUTHOR  -->
-      when 4
-        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-auth'
-      #FeeConst::ROLE_VIP  -->
-      when 10
-        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-vip'
-      #FeeConst::ROLE_ABBONATO  --> FeeConst::ROLE_RENEW
-      when 6
-        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-abbo'
-      #FeeConst::ROLE_REGISTERED  -->
-      when 9
-        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-reg'
-      #FeeConst::ROLE_RENEW  -->
-      when 11
-        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-renew'
-      #FeeConst::ROLE_EXPIRED  --> FeeConst::ROLE_ABBONATO
-      when 7
-        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-exp'
-      #FeeConst::ROLE_ARCHIVIED  --> ?FeeConst::ROLE_EXPIRED
+        str += link_to l(:button_admin), url.merge(:user => {:admin => 1}), :method => :put, :class => 'icon icon-admin'
 
+      #FeeConst::ROLE_AUTHOR  --> FeeConst::ROLE_MANAGER
+      when 4
+        str += link_to l(:button_manager), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-man'
+
+      #FeeConst::ROLE_VIP  --> FeeConst::ROLE_AUTHOR
+      #FeeConst::ROLE_VIP  --> FeeConst::ROLE_ABBONATO
+      when 10
+        str += link_to( l(:button_author), url.merge(:user => {:role_id => FeeConst::ROLE_AUTHOR}), :method => :put, :class => 'icon icon-auth') + link_to( l(:button_abbonato), url.merge(:user => {:role_id => FeeConst::ROLE_ABBONATO}), :method => :put, :class => 'icon icon-abbo')
+
+      #FeeConst::ROLE_ABBONATO  --> FeeConst::ROLE_RENEW
+      #FeeConst::ROLE_ABBONATO  --> FeeConst::ROLE_EXPIRED
+      #FeeConst::ROLE_ABBONATO  --> FeeConst::ROLE_VIP
+      when 6
+        str += link_to( l(:button_renew), url.merge(:user => {:role_id => FeeConst::ROLE_RENEW}), :method => :put, :class => 'icon icon-renew') + link_to( l(:button_expired), url.merge(:user => {:role_id => FeeConst::ROLE_EXPIRED}), :method => :put, :class => 'icon icon-exp') + link_to( l(:button_vip), url.merge(:user => {:role_id => FeeConst::ROLE_VIP}), :method => :put, :class => 'icon icon-vip')
+
+      #FeeConst::ROLE_REGISTERED  --> FeeConst::ROLE_ABBONATO
+      #FeeConst::ROLE_REGISTERED  --> FeeConst::ROLE_EXPIRED
+      #link_to( l(:button_registered), url.merge(:user => {:role_id => FeeConst::ROLE_REGISTERED}), :method => :put, :class => 'icon icon-reg')
+      when 9
+        str += link_to( l(:button_abbonato), url.merge(:user => {:role_id => FeeConst::ROLE_ABBONATO}), :method => :put, :class => 'icon icon-abbo') + link_to( l(:button_expired), url.merge(:user => {:role_id => FeeConst::ROLE_EXPIRED}), :method => :put, :class => 'icon icon-exp')
+
+      #FeeConst::ROLE_RENEW  --> FeeConst::ROLE_ABBONATO
+      #FeeConst::ROLE_RENEW  --> FeeConst::ROLE_EXPIRED
+      when 11
+        str += link_to( l(:button_abbonato), url.merge(:user => {:role_id => FeeConst::ROLE_ABBONATO}), :method => :put, :class => 'icon icon-abbo') + link_to( l(:button_expired), url.merge(:user => {:role_id => FeeConst::ROLE_EXPIRED}), :method => :put, :class => 'icon icon-exp')
+
+      #FeeConst::ROLE_EXPIRED  --> FeeConst::ROLE_ABBONATO
+      #FeeConst::ROLE_EXPIRED  --> FeeConst::ROLE_ARCHIVIED
+      when 7
+        str += link_to( l(:button_abbonato), url.merge(:user => {:role_id => FeeConst::ROLE_ABBONATO}), :method => :put, :class => 'icon icon-abbo') + link_to( l(:button_archivied), url.merge(:user => {:role_id => FeeConst::ROLE_ARCHIVIED}), :method => :put, :class => 'icon icon-arc')
+
+      #FeeConst::ROLE_ARCHIVIED  --> ?FeeConst::ROLE_EXPIRED
       when 8
-        link_to l(:button_unlock), url.merge(:user => {:role_id => FeeConst::ROLE_MANAGER}), :method => :put, :class => 'icon icon-arc'
+        str += link_to( l(:button_expired), url.merge(:user => {:role_id => FeeConst::ROLE_EXPIRED}), :method => :put, :class => 'icon icon-exp')
       else
-        return ""
+        str += "Ruolo non conosciuto (" + user.role_id.to_s + ")"
     end
+    return str
   end
 
 
 #/*Fee Roles*/
+#.icon-admin { background-image: url(../images/delete.png); }
 #.icon-man { background-image: url(../images/delete.png); }
 #.icon-auth { background-image: url(../images/delete.png); }
 #.icon-vip { background-image: url(../images/delete.png); }
