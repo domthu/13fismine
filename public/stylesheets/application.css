@@ -1043,15 +1043,15 @@ h2 img { vertical-align:middle; }
 }
 
 /*State Fee Roles*/
-.admin{background: url(../images/role/admin.jpg) no-repeat 0% 50%; padding-left: 50px; }
-.power_user{background: url(../images/role/man.jpg) no-repeat 0% 50%; padding-left: 45px; }
-.redattore{background: url(../images/role/auth.jpg) no-repeat 0% 50%; padding-left: 48px; }
-.invitato{background: url(../images/role/vip.jpg) no-repeat 0% 50%; padding-left: 48px; }
-.abbonato{background: url(../images/role/abbo.jpg) no-repeat 0% 50%; padding-left: 32px;}
-.registrato{background: url(../images/role/reg.jpg) no-repeat 0% 50%; padding-left: 40px;}
-.inscadenza{background: url(../images/role/renew.jpg) no-repeat 0% 50%; padding-left: 64px; }
-.espirato{background: url(../images/role/exp.jpg) no-repeat 0% 50%; padding-left: 26px; font-style: italic; }
-.archivied{background: url(../images/role/arc.jpg) no-repeat 0% 50%; padding-left: 16px; font-style: italic; }
+.admin{background: url(../images/role/admin.jpg) no-repeat 0% 50%; padding-left: 50px; min-height:55px;}
+.power_user{background: url(../images/role/man.jpg) no-repeat 0% 50%; padding-left: 45px; min-height:50px; }
+.redattore{background: url(../images/role/auth.jpg) no-repeat 0% 50%; padding-left: 48px; min-height:53px; }
+.invitato{background: url(../images/role/vip.jpg) no-repeat 0% 50%; padding-left: 48px; min-height:53px; }
+.abbonato{background: url(../images/role/abbo.jpg) no-repeat 0% 50%; padding-left: 32px; min-height:37px;}
+.registrato{background: url(../images/role/reg.jpg) no-repeat 0% 50%; padding-left: 40px; min-height:45px;}
+.inscadenza{background: url(../images/role/renew.jpg) no-repeat 0% 50%; padding-left: 64px; min-height:69px; }
+.espirato{background: url(../images/role/exp.jpg) no-repeat 0% 50%; padding-left: 26px; font-style: italic; min-height:31px; }
+.archivied{background: url(../images/role/arc.jpg) no-repeat 0% 50%; padding-left: 16px; font-style: italic; min-height:21px; }
 .modified{
     box-shadow: 0 0 5px 0 red;
     -webkit-box-shadow: 0 0 5px 0 red;
@@ -1059,12 +1059,12 @@ h2 img { vertical-align:middle; }
 }
 .unchanged{font-size: 50%;}
 /*Action Fee Roles*/
-.icon-admin { background-image: url(../images/role/min_admin.jpg); padding-left: 40px; }
-.icon-man { background-image: url(../images/role/min_man.jpg); padding-left: 40px; }
-.icon-auth { background-image: url(../images/role/min_auth.jpg); padding-left: 40px;}
-.icon-vip { background-image: url(../images/role/min_vip.jpg); padding-left: 30px;}
-.icon-abbo { background-image: url(../images/role/min_abbo.jpg); padding-left: 30px;}
-.icon-reg { background-image: url(../images/role/min_reg.jpg); padding-left: 30px;}
-.icon-renew { background-image: url(../images/role/min_renew.jpg); padding-left: 30px;}
-.icon-exp { background-image: url(../images/role/min_exp.jpg); padding-left: 26px;font-style: italic;}
-.icon-arc { background-image: url(../images/role/min_arc.jpg); padding-left: 16px; font-style: italic;}
+.icon-admin { background-image: url(../images/role/min_admin.jpg); padding-left: 40px; min-height:21px;}
+.icon-man { background-image: url(../images/role/min_man.jpg); padding-left: 40px; min-height:21px;}
+.icon-auth { background-image: url(../images/role/min_auth.jpg); padding-left: 40px; min-height:21px;}
+.icon-vip { background-image: url(../images/role/min_vip.jpg); padding-left: 30px; min-height:21px;}
+.icon-abbo { background-image: url(../images/role/min_abbo.jpg); padding-left: 30px; min-height:21px;}
+.icon-reg { background-image: url(../images/role/min_reg.jpg); padding-left: 30px; min-height:21px;}
+.icon-renew { background-image: url(../images/role/min_renew.jpg); padding-left: 30px; min-height:21px;}
+.icon-exp { background-image: url(../images/role/min_exp.jpg); padding-left: 26px;font-style: italic; min-height:21px;}
+.icon-arc { background-image: url(../images/role/min_arc.jpg); padding-left: 16px; font-style: italic; min-height:21px;}
