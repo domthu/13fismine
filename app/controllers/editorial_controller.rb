@@ -6,8 +6,8 @@ class EditorialController < ApplicationController
   include FeesHelper #ROLE_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
-  before_filter :correct_user, :only => [:articolo, :quesito_full, :edizione]
-  before_filter :enabled_user, :only => [:articolo, :quesito_full, :edizione]
+  before_filter :correct_user, :only => [:articolo, :quesito_full]
+  before_filter :enabled_user, :only => [:articolo, :quesito_full]
 
   helper :messages
   include MessagesHelper
@@ -196,7 +196,8 @@ class EditorialController < ApplicationController
     #project.id --> 23
     @id = params[:id].to_i
     @project = Project.find_public(@id)
-    @newsletter = @project.newsletter(User.current)
+    @art =@project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    #@newsletter = @project.newsletter(User.current)
 
   end
 
