@@ -18,7 +18,11 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :templates
   map.resources :example
-  #Web Service
+  # 3 under are only for testing
+  map.connect 'ediz_indice/:id', :controller => 'editorial', :action => 'ediz_indice'
+  map.connect 'ediz_noc/:id', :controller => 'editorial', :action => 'ediz_nocontents'
+  map.connect 'ediz_sic/:id', :controller => 'editorial', :action => 'ediz_sicontents'
+
   #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
   #AJAX get usando JQuery UI autocomplete
   map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle', :conditions => {:method => [:get]}
