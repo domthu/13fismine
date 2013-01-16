@@ -1,0 +1,95 @@
+<%# @newsletter%>
+<h2><%= l(:details_edizione) %></h2>
+In questa pagina:
+<ul>
+  <li>La newsletter vera e propria</li>
+  <li>AZIONE: ritorno a la lista edizioni</li>
+  <li>LINK: ai articoli</li>
+  <li>LINK: alle sezioni</li>
+</ul>
+<div style=" border: dotted 2px #add8e6 ; ">
+  ID: <%= @id %>
+  PROJECT: <%= @project %>
+  NUM.ART:<%= @art.count %>
+</div>
+
+<!--
+<style type="text/css">
+  table, table tr td {
+      border-collapse: collapse!important;
+      border-spacing: 0!important;
+      border-color: #ffffff;
+      border: 0!important;
+      margin: 0!important;
+  }
+
+</style>
+ -->
+<% ancora ="" %>
+<% @art.each do |articolo| %>
+    <% ancora = h(truncate(articolo.titolo, :length => 20).to_slug) %>
+
+
+    <table width="612" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="612" align="right" valign="top" bgcolor="#f4f4f4" style="border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;">
+
+          <table width="600" border="0" cellpadding="0" cellspacing="8">
+            <tr>
+              <td width="120" align="left" valign="top" colspan="2">
+                <%= if articolo.immagine_url.nil?
+                      if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
+                        image_tag("/images/commons/sections/#{articolo.top_section.immagine}", :width => 120)
+                      else
+                        image_tag("/images/commons/sections/no-img.jpg", :width => 120)
+                      end
+                    else
+                      image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 25)))
+                    end
+                %>
+              </td>
+
+              <!-- titolo -->
+              <td width="480" align="left" valign="top">
+                <table width="474" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="474" align="left" valign="top">
+                      <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;">
+                        <strong> <%= articolo.titolo %> <a id="<%= ancora %>">&nbsp;</a>
+                        </strong> </font><br/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="474" align="right" valign="middle">
+                      <font style="font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#333333; line-height:1em;">
+                        <strong> <%= articolo.author %> </strong> </font>
+                    </td>
+                  </tr>
+                </table>
+                <table width="600" border="0" cellpadding="0">
+                  <tr>
+                    <td width="600" bgcolor="#bc8f8f" border="0" cellpadding="0" cellspacing="0" colspan="2">
+                      <br/>
+                      <font style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#333333;">
+                        <%= articolo.riassunto %>
+                      </font><br/><br/>
+                    </td>
+                  </tr>
+                </table>
+                <table width="380" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="380" align="right" valign="top">
+                      <a target="_blank" href="http://news.groupon.it/c/r?EMID=09A030C73VJ1A1T1U5804PCVH007HNNIB&RED=http%3A%2F%2Fwww.groupon.it%2Flp%2FPK9%2Findex.php%3Fdealid%3D15949601%26nlp%3D%26CID%3DIT_CRM_1_0_0_11%26a%3D1669" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#ffffff; text-decoration:none;"><font style="font-family:Arial, Helvetica, sans-serif; font-size:13px; font-weight:bold; color:#317ca6;"><strong><img src="http://static.it.groupon-content.net/newsletter_ums/basic/btn_view_it_IT.gif" width="107" height="29" border="0" style="display:block;" alt="Vedi &raquo;"/></strong></font></a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td width="612" height="13"></td>
+      </tr>
+    </table>
+<% end %>
