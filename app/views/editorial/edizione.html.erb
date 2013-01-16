@@ -18,16 +18,14 @@
   <td align="center">
     <table border="0" cellpadding="0" cellspacing="0">
       <tr>
-        <td align="center" valign="top">
+        <td align="center" valign="center" height="33">
 
-          <font style="font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#333333;">la newsletter
+          <font style="font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#333333;">
+            la newsletter
             di
             Fiscosport &nbsp;|&nbsp;
-            <a target="_blank" href="<%= @project %>" style="color:#333333; text-decoration:underline;"><font style="color:#333333;">L'edizione
-              num. <%= @project %> <%# @project.description %>
-              è online!</font></a></font>
-
-
+            <a target="_blank" href="<%= @project.id %>" style="color:#333333; text-decoration:underline;">
+              L'edizione  <%= @project %> <%# @project.description %> è online!</a>  </font>
         </td>
       </tr>
     </table>
@@ -44,8 +42,7 @@
           <table width="656" border="0" cellpadding="0" cellspacing="0" style=" border-collapse: collapse!important; border:0; border-spacing: 0; font-size: 0; ">
             <tr>
               <td width="100%" align="left" valign="bottom">
-                <%= image_tag("/images/commons/per-news.png") %>
-
+                <%= image_tag("/images/commons/newsletter.jpg") %>
               </td>
             </tr>
           </table>
@@ -124,7 +121,7 @@
                 <% last_tops=0
                    ancora =""%>
                 <% @art.each do |nart| %>
-                    <% ancora = h(truncate(nart.titolo, :length => 20).to_slug) %>
+                    <% ancora = h(truncate(nart.titolo, :length => 30).to_slug) %>
 
                 <table width="612" border="0" cellpadding="0" cellspacing="0">
                 <% if (last_tops != nart.section.top_section_id) %><br />
@@ -173,6 +170,70 @@
                 <% end %>
                 <!-- fine loop sezione indice -->
 
+                <!-- inizio sezione loop articoli -->
+                <% @art.each do |articolo| %>
+                    <% ancora = h(truncate(articolo.titolo, :length => 30).to_slug) %>
+                    <table width="612" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="612" align="center" valign="top" bgcolor="#f4f4f4" style="border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;">
+                          <!-- inizio tabella contenuti -->
+                          <table width="594" border="0" cellpadding="0" cellspacing="9">
+                            <tr>
+                              <!-- sotto: immagine sx -->
+                              <td width="120" align="left" valign="top" rowspan="2">
+                                <%= if articolo.immagine_url.nil?
+                                      if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
+                                        image_tag("/images/commons/sections/#{articolo.top_section.immagine}", :width => 120 , :id => ancora)
+                                      else
+                                        image_tag("/images/commons/sections/no-img.jpg", :width => 120 , :id => ancora)
+                                      end
+                                    else
+                                      image_tag(articolo.immagine_url, :id => ancora, :alt => h(truncate(articolo.titolo, :length => 25)))
+                                    end
+                                %>
+                              </td>
+                              <!-- titolo  -->
+                              <td width="470" align="left" valign="top">
+                                <font style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#003548; text-align: justify;">
+                                  <strong> <%= articolo.titolo %>
+                                  </strong> </font><br/>
+                              </td>
+                            </tr>
+                            <tr>
+                              <!--  riga autore  -->
+                              <td width="470" align="right" valign="top">
+                                <font style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:15px; text-decoration: underline; font-style: italic;">
+                                  <strong> <%= image_tag("/images/ico/pen24.png", :border => 0) %> <%= articolo.author %> </strong>
+                                </font>
+                              </td>
+                            </tr>
+                            <tr>
+                              <!-- riga riassunto -->
+                              <td width="580" colspan="2">
+                                <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#000000; line-height:18px; ">
+                                  <%= articolo.riassunto %>
+                                </font><br/>
+                              </td>
+                            </tr>
+                          </table>
+                          <!--fine tabella contenuti -->
+                          <!-- pulsante vedi -->
+                          <table width="580" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td width="580" height="33" align="right" valign="top">
+                                <%= image_tag("/images/commons/btn_news_y.gif", :width => 107, :height => 29, :alt => 'vedi articolo') %>
+
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="612" height="13"></td>
+                      </tr>
+                    </table>
+                <% end %>
+                <!-- fine sezione loop articoli -->
 
                 <!-- BOTTOM --->
 
