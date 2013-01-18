@@ -19,9 +19,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :templates
   map.resources :example
   # 3 under are only for testing
-  map.connect 'ediz_indice/:id', :controller => 'editorial', :action => 'ediz_indice'
-  map.connect 'ediz_noc/:id', :controller => 'editorial', :action => 'ediz_nocontents'
-  map.connect 'ediz_sic/:id', :controller => 'editorial', :action => 'ediz_sicontents'
+  map.connect 'edizionex/:id', :controller => 'editorial', :action => 'edizionex'
 
   #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
   #AJAX get usando JQuery UI autocomplete

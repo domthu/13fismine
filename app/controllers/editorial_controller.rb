@@ -200,39 +200,17 @@ class EditorialController < ApplicationController
     #@newsletter = @project.newsletter(User.current)
 
   end
-  def ediz_nocontents
+  def edizionex
     #Newsletter
-    #project --> 'e000259'
-    #@id = params[:id] # attenzione è una stringa .to_i
-    #project.id --> 23
+
     @id = params[:id].to_i
     @project = Project.find_public(@id)
     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-    #@newsletter = @project.newsletter(User.current)
+    @news = @project.newsletter(User.current)
+    @test = Project.test(:id)
 
   end
-  def ediz_indice
-    #Newsletter
-    #project --> 'e000259'
-    #@id = params[:id] # attenzione è una stringa .to_i
-    #project.id --> 23
-    @id = params[:id].to_i
-    @project = Project.find_public(@id)
-    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-    #@newsletter = @project.newsletter(User.current)
 
-  end
-  def ediz_sicontents
-    #Newsletter
-    #project --> 'e000259'
-    #@id = params[:id] # attenzione è una stringa .to_i
-    #project.id --> 23
-    @id = params[:id].to_i
-    @project = Project.find_public(@id)
-    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-    #@newsletter = @project.newsletter(User.current)
-
-  end
   def articoli
     @issues2 = Issue.latest_fs
   end

@@ -1,0 +1,17 @@
+
+<h2><%= l(:details_edizione) %></h2>
+In questa pagina:
+<ul>
+  <li>La newsletter vera e propria</li>
+  <li>AZIONE: ritorno a la lista edizioni</li>
+  <li>LINK: ai articoli</li>
+  <li>LINK: alle sezioni</li>
+</ul>
+<div style=" border: dotted 2px #add8e6 ; ">
+  ID: <%= @id %>
+  PROJECT: <%= @project %>
+  NUM.ART:<%= @art.count %>
+  <br />
+  starting newsletter for smtp
+</div>
+<%= @news %>
