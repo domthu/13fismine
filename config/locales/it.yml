@@ -343,6 +343,7 @@ it:
   label_last_login: Ultimo collegamento
   label_registered_on: Registrato il
   label_activity: Attività
+  label_activity_plural: Attività
   label_new: Nuovo
   label_logged_as: Benvenuto
   label_environment: Ambiente
