@@ -99,7 +99,6 @@ class Project < ActiveRecord::Base
   #
 
 
-  # END --------------------------------NEWSLETTER-----------------------------------
   #TODO
   def is_public_fs?
     self.is_public == true #&& self.promoted_to_front_page == true
@@ -950,28 +949,26 @@ class Project < ActiveRecord::Base
 
   # --------------------------------NEWSLETTER-----------------------------------
   #
-  def newsletter3(user = User.current)
+  def newsletter(user = User.current)
     str = "<h1>" + self.name + "</h1>"
     str += "<h3>" + self.description + "</h3>"
     str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
-
-    $testa ="bla!!!"
+    #loop trovi codice fee
+    #has_many :news_issues, :dependent => :destroy, :order => "#{Issue.table_name}.#{Section.table_name}.top_section_id DESC" , :include => [:status,{:section => :top_section} ]
     indice =""
     sommario =""
-    last_tops=0
-
-    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC",:include => [:section => :top_section] ) do
-
-      if last_tops != art.section.top_section_id
-      indice += '<h4 style="color:blue"><span style="font-size:70%"> ID Sez. TopSez: </span>' + art.section_id.to_s + " :: "
-      indice += art.section.to_s + " :: "
-      indice += (art.section.nil? ? "? non trovata la sezione ?" : art.section.top_section.to_s) + "</h3>"
-
-      last_tops = art.section.top_section_id
+    last_top_section=0
+    # for art in self.issues.sort_by &:section_id do
+    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC") do
+      if last_top_section != art.section.top_section_id
+        indice += "<h3>" + art.section_id.to_s + " - "
+        indice += art.section.to_s + " - "
+        indice += (art.section.nil? ? "?" : art.section.top_section.to_s) + "</h3>"
+        last_top_section = art.section.top_section_id
       end
-      indice +="<h3>" + smart_truncate(art.titolo, 75) + "</h3><br />"
-      sommario += indice
-      sommario += smart_truncate(art.riassunto, 200) + "<br /> &nbsp;<br /> &nbsp;"
+      indice += smart_truncate(art.titolo, 30) + "<br />"
+      sommario += indice.nil? ? "?" : art.section.top_section.to_s
+      sommario += smart_truncate(art.riassunto, 100) + "<br />"
 
     end
     str += "<h2> user corrente:" + user.name + "</h2>"
@@ -984,81 +981,6 @@ class Project < ActiveRecord::Base
 
     return str
   end
-  def newsletter(user=User.current)
-    s1="",s2="",s3="",s4=""
-    s1='<style type="text/css">
-            /* Backgrounds */
-        .email_background {
-            width: 640px;
-            background: url("http://es.pecchia.info/images/commons/email_bg.jpg") repeat-y;
-        }
-    </style>
-
-    <!-- Contenitore -->
-    <table cellpadding="0" cellspacing="0" border="0" width="99%" bgcolor="#0f6da1">
-    <tr>
-    <td align="center">
-    <table cellpadding="0" cellspacing="0" border="0" width="640">
-    <tr>
-    <td>
-    <!-- Pre Email -->
-    <table cellpadding="0" cellspacing="0" border="0" width="640">
-    <tr>
-      <td valign="bottom" height="40" align="center">
-        <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
-          la newsletter di Fiscosport &nbsp;|&nbsp; L\'edizione
-          <a target="_blank" href="http://fiscosport/edizione/'+  self.id  + '" style="color:#ffffff; text-decoration:underline;">
-            num. '+ self.id + " " + self.description + '"</a> è online!</font>
-      </td>
-    </tr>
-    <tr>
-      <td><img src="http://es.pecchia.info/images/commons/top_fade.jpg" width="640" height="20" border="0"/></td>
-    </tr>
-    <tr>
-      <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
-      </td>
-    </tr>
-    <tr>
-    <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
-    <!-- inizio contenuto -->
-    <!------------------------------------------------------------------------->'
-    #<!-- Inizio sezione con logo e nomeutente -->
-    #<table width="560" border="0" cellpadding="0" cellspacing="0">
-    #  <tr>
-    #    <td width="242" height="110" align="left" valign="top">
-    #      <!-- logo -->
-    #     <a href="http://es.pecchia.info/editoriale/home" target="_blank" ><img src="http://es.pecchia.info//images/commons/fiscosport_news.jpg" alt="Fiscosport specialisti fiscali sportivi" border="0"></a>
 
 
-
-
-
-   s4=' <!------------------------------------------------------------------------->
-    <!-- !IMPORTANTE! fine   contenuto  email-->
-    </table>
-    </td>
-    </tr>
-    <tr>
-      <td>
-        <img src="http://es.pecchia.info/images/commons/bottom_fade.jpg" width="640" border="0" height="28"/>
-      </td>
-    </tr>
-    <tr>
-      <td valign="top" height="80" align="center">
-        <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
-          footer
-        </font>
-      </td>
-    </table>
-    </td>
-    </tr>
-    </table> '
-
-   # return s1+s2+s3+s4
-    return "bllalaa"
-
-  end
-  def test(id)
-    return "bllalaa" + id
-  end
 end
