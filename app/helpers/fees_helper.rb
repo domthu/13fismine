@@ -16,6 +16,8 @@ module FeeConst
   ROLE_ARCHIVIED=8
   #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
 
+  EDIZIONE_ID = "e-"
+  QUESITO_ID = "e-quesiti"
 end
 
 module FeesHelper

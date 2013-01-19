@@ -259,7 +259,7 @@ it:
 
   setting_app_title: Titolo applicazione
   setting_app_subtitle: Sottotitolo applicazione
-  setting_welcome_text: "Test'o di benvenuto sulla HOME della redazione: Area Riservata"
+  setting_welcome_text: "Testo di benvenuto sulla HOME della redazione: Area Riservata"
   setting_welcome_text_fs: "Testo di benvenuto lato abbonati: sul sito pubblico"
   setting_default_language: Lingua predefinita
   setting_login_required: Autenticazione richiesta
