@@ -767,6 +767,144 @@ class Project < ActiveRecord::Base
     return str
   end
 
+  def newsletter_smtp(user = User.current)
+
+    str = "<h1>" + self.name + "</h1>"
+    str += "<h3>" + self.description + "</h3>"
+    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
+
+    indice =""
+    sommario =""
+    last_tops=0
+
+    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC",:include => [:section => :top_section] ) do
+
+      if last_tops != art.section.top_section_id
+      indice += '<h4 style="color:blue"><span style="font-size:70%"> ID Sez. TopSez: </span>' + art.section_id.to_s + " :: "
+      indice += art.section.to_s + " :: "
+      indice += (art.section.nil? ? "? non trovata la sezione ?" : art.section.top_section.to_s) + "</h3>"
+
+      last_tops = art.section.top_section_id
+      end
+      indice +="<h3>" + smart_truncate(art.titolo, 75) + "</h3><br />"
+      sommario += indice
+      sommario += smart_truncate(art.riassunto, 200) + "<br /> &nbsp;<br /> &nbsp;"
+
+    end
+    str += "<h2> user corrente:" + user.name + "</h2>"
+    str += "<br /><h1> INDICE </h1>"
+    str += indice
+    str += "<hr>"
+    str += "<br /><h1> SOMMARIO </h1>"
+    str += sommario
+
+
+    return str
+  end
+  def newsletterx(user=User.current)
+    s1="",s2="",s3="",s4=""
+    s1='<style type="text/css">
+            /* Backgrounds */
+        .email_background {
+            width: 640px;
+            background: url("http://es.pecchia.info/images/commons/email_bg.jpg") repeat-y;
+        }
+    </style>
+
+    <!-- Contenitore -->
+    <table cellpadding="0" cellspacing="0" border="0" width="99%" bgcolor="#0f6da1">
+    <tr>
+    <td align="center">
+    <table cellpadding="0" cellspacing="0" border="0" width="640">
+    <tr>
+    <td>
+    <!-- Pre Email -->
+    <table cellpadding="0" cellspacing="0" border="0" width="640">
+    <tr>
+      <td valign="bottom" height="40" align="center">
+        <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
+          la newsletter di Fiscosport &nbsp;|&nbsp; L\'edizione
+          <a target="_blank" href="http://fiscosport/edizione/' +  self.id.to_s  + ' style="color:#ffffff; text-decoration:underline;">
+            num. '+ self.id.to_s + ' ' + self.description + '"</a> è online!</font>
+      </td>
+    </tr>
+    <tr  style="font-size=0;">
+
+      <td valign="bottom"> <img  src="http://es.pecchia.info/images/commons/top_fade.jpg" width="640" height="20" border="0"/>
+
+      </td>
+    </tr>
+    <tr>
+      <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
+      </td>
+    </tr>
+    <tr>
+    <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
+    <!-- inizio contenuto -->
+    <!------------------------------------------------------------------------->'
+    s2='<!-- Inizio sezione con logo e nomeutente -->
+      <table width="560" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="242" height="110" align="left" valign="top">
+            <!-- logo -->
+           <a href="http://es.pecchia.info/editoriale/home" target="_blank" ><img src="http://es.pecchia.info//images/commons/fiscosport_news.jpg" alt="Fiscosport specialisti fiscali sportivi" border="0"></a>
+       <td align="left" valign="top">
+        <!-- tabella di 2 righe per il testo -->
+        <table width="318" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="50" align="left" valign="center" style="border-bottom:1px solid #1C6693;">
+              <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:14px; color:#333333; line-height: 18px; ">
+                Newsletter riservata a :<span style="font-size: 18px;">
+                 ' + User.current.firstname + '&nbsp;'+ User.current.lastname + '</span>
+              </font></td>
+          </tr>
+          <tr>
+            <td width="318" height="50" align="left" valign="center" style="border-bottom:1px solid #cccccc;">
+              <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:13px; color:#333333; line-height:18px; font-weight: bold;">
+              ' + User.current.soc + ' </font>
+            </td>
+          </tr>
+        </table>
+        <!-- fine tabella di 2 righe per il testo -->
+      </td>
+    </tr>
+  </table>
+  <!-- fine sezione con logo e nomeutente -->
+
+
+
+
+
+
+
+
+     '
+   s4=' <!------------------------------------------------------------------------->
+    <!-- !IMPORTANTE! fine   contenuto  email-->
+    </table>
+    </td>
+    </tr>
+    <tr>
+      <td>
+        <img src="http://es.pecchia.info/images/commons/bottom_fade.jpg" width="640" border="0" height="28"/>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" height="80" align="center">
+        <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
+          footer
+        </font>
+      </td>
+    </table>
+    </td>
+    </tr>
+    </table> '
+
+    return s1+s2+s3+s4
+
+
+  end
+
 
   # --------------------------------PRIVATE AREA-----------------------------------
   #
