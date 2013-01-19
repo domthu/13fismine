@@ -731,6 +731,45 @@ class Project < ActiveRecord::Base
     end
   end
 
+
+  # --------------------------------NEWSLETTER-----------------------------------
+  #
+  def newsletter(user = User.current)
+    str = "<h1>" + self.name + "</h1>"
+    str += "<h3>" + self.description + "</h3>"
+    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
+    #loop trovi codice fee
+    #has_many :news_issues, :dependent => :destroy, :order => "#{Issue.table_name}.#{Section.table_name}.top_section_id DESC" , :include => [:status,{:section => :top_section} ]
+    indice =""
+    sommario =""
+    last_top_section=0
+    # for art in self.issues.sort_by &:section_id do
+    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC") do
+      if last_top_section != art.section.top_section_id
+        indice += "<h3>" + art.section_id.to_s + " - "
+        indice += art.section.to_s + " - "
+        indice += (art.section.nil? ? "?" : art.section.top_section.to_s) + "</h3>"
+        last_top_section = art.section.top_section_id
+      end
+      indice += smart_truncate(art.titolo, 30) + "<br />"
+      sommario += indice.nil? ? "?" : art.section.top_section.to_s
+      sommario += smart_truncate(art.riassunto, 100) + "<br />"
+
+    end
+    str += "<h2> user corrente:" + user.name + "</h2>"
+    str += "<br /><h1> INDICE </h1>"
+    str += indice
+    str += "<hr>"
+    str += "<br /><h1> SOMMARIO </h1>"
+    str += sommario
+
+
+    return str
+  end
+
+
+  # --------------------------------PRIVATE AREA-----------------------------------
+  #
   private
 
   # Copies wiki from +project+
@@ -945,42 +984,5 @@ class Project < ActiveRecord::Base
     end
     update_attribute :status, STATUS_ARCHIVED
   end
-
-
-  # --------------------------------NEWSLETTER-----------------------------------
-  #
-  def newsletter(user = User.current)
-    str = "<h1>" + self.name + "</h1>"
-    str += "<h3>" + self.description + "</h3>"
-    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
-    #loop trovi codice fee
-    #has_many :news_issues, :dependent => :destroy, :order => "#{Issue.table_name}.#{Section.table_name}.top_section_id DESC" , :include => [:status,{:section => :top_section} ]
-    indice =""
-    sommario =""
-    last_top_section=0
-    # for art in self.issues.sort_by &:section_id do
-    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC") do
-      if last_top_section != art.section.top_section_id
-        indice += "<h3>" + art.section_id.to_s + " - "
-        indice += art.section.to_s + " - "
-        indice += (art.section.nil? ? "?" : art.section.top_section.to_s) + "</h3>"
-        last_top_section = art.section.top_section_id
-      end
-      indice += smart_truncate(art.titolo, 30) + "<br />"
-      sommario += indice.nil? ? "?" : art.section.top_section.to_s
-      sommario += smart_truncate(art.riassunto, 100) + "<br />"
-
-    end
-    str += "<h2> user corrente:" + user.name + "</h2>"
-    str += "<br /><h1> INDICE </h1>"
-    str += indice
-    str += "<hr>"
-    str += "<br /><h1> SOMMARIO </h1>"
-    str += sommario
-
-
-    return str
-  end
-
 
 end
