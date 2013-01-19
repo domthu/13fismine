@@ -38,7 +38,11 @@ class News < ActiveRecord::Base
     :conditions => Project.allowed_to_condition(args.shift || User.current, :view_news, *args)
   }}
 
-  safe_attributes 'title', 'summary', 'description'
+  safe_attributes 'title',
+     'summary',
+     'description',
+     'status_id',
+     'causale'
 
   def visible?(user=User.current)
     !user.nil? && user.allowed_to?(:view_news, project)
@@ -46,16 +50,16 @@ class News < ActiveRecord::Base
 
   # returns latest news for projects visible by user
   def self.latest(user = User.current, count = 5)
-    find(:all, :limit => count, :conditions => Project.allowed_to_condition(user, :view_news), :include => [ :author, :project ], :order => "#{News.table_name}.created_on DESC")	
+    find(:all, :limit => count, :conditions => Project.allowed_to_condition(user, :view_news), :include => [ :author, :project ], :order => "#{News.table_name}.created_on DESC")
   end
 
-  # returns latest news for public area 
+  # returns latest news for public area
   def self.latest_fs(user = User.current, count = 5)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
     #:conditions => Project.is_public == true  -->  method missing
     #:conditions => projects.is_public = 1
     #:conditions => Project.is_public = 1
-    find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [ :author, :project ], :order => "#{News.table_name}.created_on DESC")	
+    find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [ :author, :project ], :order => "#{News.table_name}.created_on DESC")
   end
 
   private

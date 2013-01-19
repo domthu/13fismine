@@ -296,25 +296,21 @@ class Issue < ActiveRecord::Base
     'se_visible_newsletter',
     'se_protetto',
     'ordinamento',
+    'immagine_url',
+    'tag_link',
+    'news_id',
+    'se_prenotazione',
+    'section_id',
     :if => lambda {|issue, user| issue.new_record? || user.allowed_to?(:edit_issues, issue.project) }
 
-#    add_column :issues, :section_id, :integer, :null => true
-#    add_column :issues, :ordinamento, :integer
 #    add_column :issues, :se_sommario, :boolean, :default => 1
-#    add_column :issues, :riassunto, :text
 #    add_column :issues, :titolo, :text
 #    add_column :issues, :testo, :text
 #    add_column :issues, :riferimento, :string
-#    add_column :issues, :se_visible_web, :boolean, :default => 0
 #    add_column :issues, :data_scadenza, :datetime
-#    add_column :issues, :se_visible_data, :boolean, :default => 0
-#    add_column :issues, :se_visible_newsletter, :boolean, :default => 0
-#    add_column :issues, :se_protetto, :boolean, :default => 1
-#    add_column :issues, :immagine_url, :string
 #    add_column :issues, :titolo_no_format, :text
 #    add_column :issues, :testo_no_format, :text
 #    add_column :issues, :riassunto_no_format, :text
-#    add_column :issues, :tag_link, :string
 
   safe_attributes 'status_id',
     'assigned_to_id',

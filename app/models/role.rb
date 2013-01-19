@@ -26,7 +26,9 @@ class Role < ActiveRecord::Base
     ['own', :label_issues_visibility_own]
   ]
 
-  named_scope :givable, { :conditions => "builtin = 0", :order => 'position' }
+  #named_scope :givable, { :conditions => "builtin = 0", :order => 'position' }
+  #Domthu
+  named_scope :givable, { :conditions => "builtin = 0 or builtin IN [3,4]", :order => 'position' }
   named_scope :builtin, lambda { |*args|
     compare = 'not' if args.first == true
     { :conditions => "#{compare} builtin = 0" }

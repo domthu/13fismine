@@ -17,6 +17,7 @@ class TopSection < ActiveRecord::Base
 
   #boolean
   #validates_presence_of :se_visibile
+  #validates_presence_of :se_home_menu
 
   #file
   #validates_presence_of :immagine

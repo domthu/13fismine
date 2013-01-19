@@ -157,6 +157,8 @@ class ProjectsController < ApplicationController
         m = Member.new(:user => User.current, :roles => [r])
         @project.members << m
       end
+
+      #begin
       #Domthu Add all collaboratori as a project members
       #user.role_id = Redattore
       @managers = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER, :admin => false })
@@ -166,25 +168,28 @@ class ProjectsController < ApplicationController
       for usr in @managers
         member = Member.new
         member.user = usr
-        member.project = @project
         #3 	Manager
         #member.roles = [Role.find_by_name('Manager')]
         member.roles = [Role.find_by_id(FeeConst::ROLE_MANAGER)]
         #ActiveRecord::RecordInvalid (Validation failed: Ruolo non è valido):
-        member.save
+        #member.project = @project
+        #member.save
+        @project.members << member
       end
       #puts "***********AUTHORS*****************************"
       #puts @authors
       for usr in @authors
         member = Member.new
         member.user = usr
-        member.project = @project
         #4 	Redattore
         #member.roles = [Role.find_by_name('Redattore')]
         member.roles = [Role.find_by_id(FeeConst::ROLE_AUTHOR)]
-        member.save
+        #member.project = @project
+        #member.save
+        @project.members << member
       end
       #puts "***********************************************"
+      #rescue
 
       respond_to do |format|
         format.html {
