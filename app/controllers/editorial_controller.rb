@@ -16,7 +16,7 @@ class EditorialController < ApplicationController
 
   #HOME > TOP_MENU > TOP_SECTION > SECTION > ARTICOLO
   def home
-    @xbanner = GroupBanner.find(:all,  :order => 'priorita DESC', :conditions => ["se_visibile = 1"] )
+    @xbanner = GroupBanner.find(:all, :order => 'priorita DESC', :conditions => ["se_visibile = 1"])
     @base_url = params[:pages]
 #    @last_editorial = Project.visible.find(:all, :order => 'lft')
 #    @p = Project.find(:first, :order => 'created_on DESC')
@@ -42,13 +42,13 @@ class EditorialController < ApplicationController
     @issues_count =Issue.count(
         :include => [:section => :top_section]
     )
-    @issues_pages = Paginator.new self, @issues_count,@limit, params['page']
-    @issues =  Issue.find( :all,
-                        :include => [:section => :top_section],
-                        :order =>  'updated_on DESC',
-                        :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1"],
-                        :limit  => @issues_pages.items_per_page ,
-                        :offset =>  @issues_pages.current.offset)
+    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+    @issues = Issue.find(:all,
+                         :include => [:section => :top_section],
+                         :order => 'updated_on DESC',
+                         :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1"],
+                         :limit => @issues_pages.items_per_page,
+                         :offset => @issues_pages.current.offset)
 
     respond_to do |format|
       format.html {
@@ -89,9 +89,9 @@ class EditorialController < ApplicationController
     end
     #@top_sections = TopSection.find(:all,
     @topsection_ids = TopSection.find(:all,
-      :select => 'distinct id',
-      :conditions => ["se_visibile = 1 AND se_home_menu = 0 AND top_menu_id =  ?", @top_menu.id]
-      )
+                                      :select => 'distinct id',
+                                      :conditions => ["se_visibile = 1 AND se_home_menu = 0 AND top_menu_id =  ?", @top_menu.id]
+    )
     #@topsection_ids = @top_sections.select(:id).uniq
     # Paginate results
     case params[:format]
@@ -103,7 +103,7 @@ class EditorialController < ApplicationController
     end
 
     @issues_count =Issue.count(
-        :include => [:section => :top_section] ,
+        :include => [:section => :top_section],
         :conditions => ["#{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids]
     )
 
@@ -152,11 +152,11 @@ class EditorialController < ApplicationController
         @offset= 25
     end
                                # --> sandro debug zona
-   # @top_menu = TopMenu.find(:first, :conditions => ["`key`=?", @key_url])
-   # @topsection_ids = TopSection.find(:all,
-   #                                   :select => 'distinct id',
-   #                                   :conditions => ["top_menu_id =  ?", @top_menu.id]
-   # )
+                               # @top_menu = TopMenu.find(:first, :conditions => ["`key`=?", @key_url])
+                               # @topsection_ids = TopSection.find(:all,
+                               #                                   :select => 'distinct id',
+                               #                                   :conditions => ["top_menu_id =  ?", @top_menu.id]
+                               # )
                                # -->
     @issues_count =Issue.count(
         :include => [:section => :top_section],
@@ -200,6 +200,7 @@ class EditorialController < ApplicationController
     #@newsletter = @project.newsletter(User.current)
 
   end
+
   def edizionex
     #Newsletter
 
@@ -207,7 +208,7 @@ class EditorialController < ApplicationController
     @project = Project.find_public(@id)
     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
     @news = @project.newsletter(User.current)
-    @test = Project.test(:id)
+
 
   end
 
@@ -244,7 +245,7 @@ class EditorialController < ApplicationController
 #SCADUTI --> KAPPAO
 #ARCHIVIATI --> KAPPAO
   def quesito_new
-    if User.current  = nil
+    if User.current = nil
       redirect_to(login_url) && return
     end
     #DO SOME USRE STUFF HERE
@@ -258,7 +259,7 @@ class EditorialController < ApplicationController
   end
 
   def banners
-    @xbanner = GroupBanner.find(:all,  :order => 'priorita DESC', :conditions => ["se_visible = 1"] )
+    @xbanner = GroupBanner.find(:all, :order => 'priorita DESC', :conditions => ["se_visible = 1"])
   end
 
 #{"all_words"=>"1",
