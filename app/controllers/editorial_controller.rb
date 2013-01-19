@@ -107,7 +107,7 @@ class EditorialController < ApplicationController
 
     @issues_count =Issue.count(
         :include => [:section => :top_section],
-        :conditions => ["#{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids," AND se_visible_web = 1"]
+        :conditions => ["#{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids, " AND se_visible_web = 1"]
     )
 
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
@@ -183,6 +183,7 @@ class EditorialController < ApplicationController
     #@issues = Issue.find(:all, :conditions => ["section_id =  ?", @id], :limit => 100)
     #@issues = Issue.all_by_sezione_fs(@id)
   end
+
   # -----------------  ARTICOLO  (inizio)   ------------------
   def articolo
     #singolo articolo
@@ -208,8 +209,8 @@ non usata?
     @id = params[:id].to_i
     @project = Project.find_public(@id)
     if @project.nil?
-        flash[:notice] = l(:notice_not_authorized)
-        return redirect_to({:action => 'home'})
+      flash[:notice] = l(:notice_not_authorized)
+      return redirect_to({:action => 'home'})
     else
       @issues = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
       @block_projects = Project.latest_fs
@@ -232,15 +233,17 @@ non usata?
     @news = @project.newsletter_smtp(User.current)
     @prj= Project.find_by_id params[:id].to_i
   end
+
   # -----------------  EDIZIONI /NEWSLETTER  (fine)  ------------------
   # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------
   def convegni
 
 
   end
+
   # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------
 
- # -----------------       QUESITI    (inizio)        ------------------
+  # -----------------       QUESITI    (inizio)        ------------------
 
   def quesiti
   end
@@ -269,7 +272,8 @@ non usata?
     #DO SOME USRE STUFF HERE
 
   end
-  # -----------------       QUESITI    (fine)        ------------------
+
+# -----------------       QUESITI    (fine)        ------------------
   def contact
   end
 

@@ -753,7 +753,10 @@ class Project < ActiveRecord::Base
 
   # --------------------------------NEWSLETTER-----------------------------------
   #
+
 =begin
+=======
+>>>>>>> Move newsletter proc in public area from project model
   def newsletter(user = User.current)
     str = "<h1>" + self.name + "</h1>"
     str += "<h3>" + self.description + "</h3>"
@@ -786,6 +789,7 @@ class Project < ActiveRecord::Base
 
     return str
   end
+<<<<<<< HEAD
 =end
 
 
@@ -1202,6 +1206,8 @@ class Project < ActiveRecord::Base
     self.description += "*Redazione Fiscosport*"
   end
 
+  #Move newsletter proc in public area from project model
+
   # --------------------------------PRIVATE AREA-----------------------------------
   #
   private
@@ -1420,3 +1426,4 @@ class Project < ActiveRecord::Base
   end
 
 end
+
