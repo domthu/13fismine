@@ -207,6 +207,7 @@ class EditorialController < ApplicationController
     @id = params[:id].to_i
     @project = Project.find_public(@id)
     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    #@news = News.all(:limit => 10)
     @news = @project.newsletter(User.current)
 
 

@@ -59,7 +59,7 @@ class Project < ActiveRecord::Base
                           :association_foreign_key => 'custom_field_id'
 
   #domthu20120516
-  #migration AddFieldsToProject titolo:string data_dal:datetime data_al:datetime search_key:string 
+  #migration AddFieldsToProject titolo:string data_dal:datetime data_al:datetime search_key:string
 
   acts_as_nested_set :order => 'name', :dependent => :destroy
   acts_as_attachable :view_permission => :view_files,
@@ -142,21 +142,21 @@ class Project < ActiveRecord::Base
     visible(user).find(:all, :limit => count, :order => "created_on DESC")
   end
 
-  # returns all projects for public area 
+  # returns all projects for public area
   def self.all_fs(user = User.current)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
     find(:all, :conditions => "#{table_name}.is_public = 1", :order => "#{table_name}.created_on DESC")
   end
 
-  # returns limited latest projects for homepage in public area 
-  # MariaCristina creare flag .promoted_to_front_page, per il momento usiamo .is_public combinato con .status 
+  # returns limited latest projects for homepage in public area
+  # MariaCristina creare flag .promoted_to_front_page, per il momento usiamo .is_public combinato con .status
   def self.latest_fs(user = User.current, count = 5)
     find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1 AND #{table_name}.status = #{STATUS_FS}"], :order => "#{table_name}.created_on DESC")
     #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in home page
     #Il STATUS_FS dovrebbe essere presso quando la newsletter viene inviata
   end
 
-  #Generate the newsletter, program to send it, set project status to FS 
+  #Generate the newsletter, program to send it, set project status to FS
   def self.send_newsletter(user = User.current)
     #creare tabella di invio
     #reccuperare l'html da un template senza la personalizzazione per utente
@@ -170,7 +170,7 @@ class Project < ActiveRecord::Base
   end
 
   def self.find_public(id = 0, user = User.current)
-    #@edizione = Project.find(params[:id]) 
+    #@edizione = Project.find(params[:id])
     #Project.find(:first, :conditions
     #Project.find_by_id(id)
     #search(id,:conditions => "#{table_name}.is_public = 1 AND #{table_name}.status IN ( #{STATUS_ARCHIVED}, #{STATUS_FS} )", :include => :role)
@@ -731,6 +731,45 @@ class Project < ActiveRecord::Base
     end
   end
 
+
+  # --------------------------------NEWSLETTER-----------------------------------
+  #
+  def newsletter(user = User.current)
+    str = "<h1>" + self.name + "</h1>"
+    str += "<h3>" + self.description + "</h3>"
+    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
+    #loop trovi codice fee
+    #has_many :news_issues, :dependent => :destroy, :order => "#{Issue.table_name}.#{Section.table_name}.top_section_id DESC" , :include => [:status,{:section => :top_section} ]
+    indice =""
+    sommario =""
+    last_top_section=0
+    # for art in self.issues.sort_by &:section_id do
+    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC") do
+      if last_top_section != art.section.top_section_id
+        indice += "<h3>" + art.section_id.to_s + " - "
+        indice += art.section.to_s + " - "
+        indice += (art.section.nil? ? "?" : art.section.top_section.to_s) + "</h3>"
+        last_top_section = art.section.top_section_id
+      end
+      indice += smart_truncate(art.titolo, 30) + "<br />"
+      sommario += indice.nil? ? "?" : art.section.top_section.to_s
+      sommario += smart_truncate(art.riassunto, 100) + "<br />"
+
+    end
+    str += "<h2> user corrente:" + user.name + "</h2>"
+    str += "<br /><h1> INDICE </h1>"
+    str += indice
+    str += "<hr>"
+    str += "<br /><h1> SOMMARIO </h1>"
+    str += sommario
+
+
+    return str
+  end
+
+
+  # --------------------------------PRIVATE AREA-----------------------------------
+  #
   private
 
   # Copies wiki from +project+
@@ -945,42 +984,5 @@ class Project < ActiveRecord::Base
     end
     update_attribute :status, STATUS_ARCHIVED
   end
-
-
-  # --------------------------------NEWSLETTER-----------------------------------
-  #
-  def newsletter(user = User.current)
-    str = "<h1>" + self.name + "</h1>"
-    str += "<h3>" + self.description + "</h3>"
-    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
-    #loop trovi codice fee
-    #has_many :news_issues, :dependent => :destroy, :order => "#{Issue.table_name}.#{Section.table_name}.top_section_id DESC" , :include => [:status,{:section => :top_section} ]
-    indice =""
-    sommario =""
-    last_top_section=0
-    # for art in self.issues.sort_by &:section_id do
-    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC") do
-      if last_top_section != art.section.top_section_id
-        indice += "<h3>" + art.section_id.to_s + " - "
-        indice += art.section.to_s + " - "
-        indice += (art.section.nil? ? "?" : art.section.top_section.to_s) + "</h3>"
-        last_top_section = art.section.top_section_id
-      end
-      indice += smart_truncate(art.titolo, 30) + "<br />"
-      sommario += indice.nil? ? "?" : art.section.top_section.to_s
-      sommario += smart_truncate(art.riassunto, 100) + "<br />"
-
-    end
-    str += "<h2> user corrente:" + user.name + "</h2>"
-    str += "<br /><h1> INDICE </h1>"
-    str += indice
-    str += "<hr>"
-    str += "<br /><h1> SOMMARIO </h1>"
-    str += sommario
-
-
-    return str
-  end
-
 
 end
