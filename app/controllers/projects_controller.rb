@@ -135,6 +135,11 @@ class ProjectsController < ApplicationController
     @project.description += "*Redazione Fiscosport*"
 
     @project.safe_attributes = params[:project]
+
+    #debug
+    @managers = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER, :admin => false })
+    @authors = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR, :admin => false})
+
   end
 
   verify :method => :post, :only => :create, :render => {:nothing => true, :status => :method_not_allowed }
@@ -154,8 +159,8 @@ class ProjectsController < ApplicationController
       end
       #Domthu Add all collaboratori as a project members
       #user.role_id = Redattore
-      @managers = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER})
-      @authors = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR})
+      @managers = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER, :admin => false })
+      @authors = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR, :admin => false})
       #puts "***********MANAGER*****************************"
       #puts @managers
       for usr in @managers
@@ -163,7 +168,8 @@ class ProjectsController < ApplicationController
         member.user = usr
         member.project = @project
         #3 	Manager
-        member.roles = [Role.find_by_name('Manager')]
+        #member.roles = [Role.find_by_name('Manager')]
+        member.roles = [Role.find_by_id(FeeConst::ROLE_MANAGER)]
         #ActiveRecord::RecordInvalid (Validation failed: Ruolo non è valido):
         member.save
       end
@@ -174,7 +180,8 @@ class ProjectsController < ApplicationController
         member.user = usr
         member.project = @project
         #4 	Redattore
-        member.roles = [Role.find_by_name('Redattore')]
+        #member.roles = [Role.find_by_name('Redattore')]
+        member.roles = [Role.find_by_id(FeeConst::ROLE_AUTHOR)]
         member.save
       end
       #puts "***********************************************"
