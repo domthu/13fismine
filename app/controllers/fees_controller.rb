@@ -13,7 +13,7 @@ class FeesController < ApplicationController
   include FeesHelper  #ROLE_XXX  gedate
   #FeeConst::ROLE_MANAGER        = 3  #Manager<br />
   #FeeConst::ROLE_AUTHOR         = 4  #Redattore  <br />
-  ##ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore
+  #FeeConst::ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore
   #FeeConst::ROLE_VIP            = 10 #Invitato Gratuito<br />
   #FeeConst::ROLE_ABBONATO       = 6  #Abbonato user.data_scade
   #FeeConst::ROLE_REGISTERED     = 9  #Ospite periodo di prova durante
@@ -31,8 +31,9 @@ class FeesController < ApplicationController
       #_ArrStr.push "---Init---"
       #User.each do |user|
       #    existing_regions = Region.all()
-      for usr in User.all(:limit => 20) do
+      for usr in User.all(:limit => 5) do
       #for usr in User.all() do
+        puts "user --> " + usr.id.to_s
         str = control_assign_role(usr)
         if !str.nil?
           @msg << str
@@ -41,25 +42,25 @@ class FeesController < ApplicationController
       #@msg << "dasjkdashdjkas==" + FeeConst::ROLE_MANAGER.to_s + "=="
     end
 
+    @num_no_role = User.all(:conditions => {:role_id => nil}).count
+
     #Ruoli non sottoposti a controllo di abbonamento
     #FeeConst::ROLE_MANAGER        = 3  #Manager<br />
     #BY INTERNAL ROLE
     #FeeConst::ROLE_AUTHOR         = 4 = ROLE_COLLABORATOR
     #  FeeConst::ROLE_VIP            = 9
-    @num_no_role = User.all(:conditions => {:role_id => nil}).count
-    @num_admin = User.all(:conditions => {:admin => 1}).count
     @name_admin = User.all(:conditions => {:admin => 1})
-    @num_power_user = User.all(:conditions => {:power_user => 1}).count
-    @name_power_user = User.all(:conditions => {:power_user => 1})
-    @num_manager = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER}).count
+    @name_admin_count = @name_admin.count
+    #name_power_user = User.all(:conditions => {:power_user => 1})
     @name_manager = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER})
-
-    @num_author = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR}).count
+    @name_manager_count = @name_manager.count
     @name_author = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR})
-    #@num_collaboratori = User.all(:conditions => {:role_id => ROLE_COLLABORATOR}).count
+    @name_author_count = @name_author.count
     #@name_collaboratori = User.all(:conditions => {:role_id => ROLE_COLLABORATOR})
-    @num_invitati = User.all(:conditions => {:role_id => FeeConst::ROLE_VIP}).count
     @name_invitati = User.all(:conditions => {:role_id => FeeConst::ROLE_VIP})
+    @name_invitati_count = @name_invitati.count
+    @num_uncontrolled_TOTAL = @name_manager_count + @name_author_count + @name_invitati_count
+
     #BY CLIENT ROLE
     #  FeeConst::ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
     #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
@@ -71,34 +72,53 @@ class FeesController < ApplicationController
     @num_registrati = User.all(:conditions => {:role_id => FeeConst::ROLE_REGISTERED}).count
     @num_scaduti = User.all(:conditions => {:role_id => FeeConst::ROLE_EXPIRED}).count
     @num_archiviati = User.all(:conditions => {:role_id => FeeConst::ROLE_ARCHIVIED}).count
+    @num_controlled_TOTAL = @num_abbonati + @num_rinnovamento + @num_registrati + @num_scaduti + @num_archiviati
 
     #Who pay?
-    #BY PAYMENTS PRIVATE or CROSS ORGANIZATION
+    #BY PAYMENTS PRIVATE or ASSOCIATION
     #@num_power_user = User.all(:conditions => {:power_user => 1}).count
     #User member of ASSOCIATION
     @num_Associations =  Asso.all.count
     #questi utenti non pagano. Paga l'associazione (organismo associato)
-    @num_Associated =  User.all(:conditions => {:asso_id => !nil}).count
-    @num_Associated_ABBONATO =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_ABBONATO}).count
-    @num_Associated_RENEW =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_RENEW}).count
-    @num_Associated_EXPIRED =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_EXPIRED}).count
-    @num_Associated_ARCHIVIED =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_ARCHIVIED}).count
-    @num_associated_TOTAL = @num_Associated_ABBONATO + @num_Associated_RENEW + @num_Associated_EXPIRED + @num_Associated_ARCHIVIED
+    #@num_Associated_COUNT =  User.all(:conditions => {:asso_id => !nil}).count
+    @num_Associated_COUNT =  User.all(:conditions => 'asso_id IS NOT NULL').count
+    #num_Associated_AUTHOR =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_AUTHOR}).count
+    #KAPPAO trasforma come `asso_id` = 1 al posto di asso_id IS NOT NULL. SELECT * FROM `users` WHERE (`users`.`asso_id` = 1) AND ( (`users`.`type` = 'User' OR `users`.`type` = 'AnonymousUser' ) )
+    #@num_Associated_VIP =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_VIP}).count
+    #@num_Associated_ABBONATO =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_ABBONATO}).count
+    @num_Associated_ABBONATO =  User.all(:conditions => ['asso_id IS NOT NULL AND role_id = ?',  FeeConst::ROLE_ABBONATO]).count
+    #@num_Associated_REGISTERED =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_REGISTERED}).count
+    @num_Associated_REGISTERED =  User.all(:conditions => ['asso_id IS NOT NULL AND role_id = ?',  FeeConst::ROLE_REGISTERED]).count
+    #@num_Associated_RENEW =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_RENEW}).count
+    @num_Associated_RENEW =  User.all(:conditions => ['asso_id IS NOT NULL AND role_id = ?',  FeeConst::ROLE_RENEW]).count
+    #@num_Associated_EXPIRED =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_EXPIRED}).count
+    @num_Associated_EXPIRED =  User.all(:conditions => ['asso_id IS NOT NULL AND role_id = ?',  FeeConst::ROLE_EXPIRED]).count
+    #@num_Associated_ARCHIVIED =  User.all(:conditions => {:asso_id => !nil, :role_id =>  FeeConst::ROLE_ARCHIVIED}).count
+    @num_Associated_ARCHIVIED =  User.all(:conditions => ['asso_id IS NOT NULL AND role_id = ?',  FeeConst::ROLE_ARCHIVIED]).count
+    @num_associated_TOTAL = @num_Associated_ABBONATO + @num_Associated_REGISTERED + @num_Associated_RENEW + @num_Associated_EXPIRED + @num_Associated_ARCHIVIED
 
-
-
-    @num_power_user = User.all(:conditions => {:power_user => true}).count
     #Utenti che non dipendono di un associazione PAGANTI
-    @num_maybe_privati = User.all(:conditions => {:asso_id => nil}).count
-    #@num_privati = User.all(:conditions => {:asso_id => nil, :role_id => nil}).count
+    #@num_privati_COUNT = User.all(:conditions => {:asso_id => nil}).count
     @roles = []
-    @roles << FeeConst::ROLE_ABBONATO << FeeConst::ROLE_RENEW << FeeConst::ROLE_REGISTERED << FeeConst::ROLE_EXPIRED << FeeConst::ROLE_ARCHIVIED
-    @num_privati = User.all(:conditions => ['asso_id is null AND role_id IN (?)', @roles]).count
-    @active = []
-    @active << FeeConst::ROLE_ABBONATO << FeeConst::ROLE_RENEW << FeeConst::ROLE_REGISTERED
-    @num_active = User.all(:conditions => ['asso_id is null AND role_id IN (?)', @active]).count
+    @roles << FeeConst::ROLE_MANAGER << FeeConst::ROLE_AUTHOR << FeeConst::ROLE_VIP
+    @num_privati_COUNT = User.all(:conditions => ['asso_id is null AND role_id not IN (?)', @roles]).count
+    #@num_privati_AUTHOR =  User.all(:conditions => {:asso_id => nil, :role_id =>  FeeConst::ROLE_AUTHOR}).count
+    #@num_privati_VIP =  User.all(:conditions => {:asso_id => nil, :role_id =>  FeeConst::ROLE_VIP}).count
+    @num_privati_ABBONATO =  User.all(:conditions => {:asso_id => nil, :role_id =>  FeeConst::ROLE_ABBONATO}).count
+    @num_privati_REGISTERED =  User.all(:conditions => {:asso_id => nil, :role_id =>  FeeConst::ROLE_REGISTERED}).count
+    @num_privati_RENEW =  User.all(:conditions => {:asso_id => nil, :role_id =>  FeeConst::ROLE_RENEW}).count
+    @num_privati_EXPIRED =  User.all(:conditions => {:asso_id => nil, :role_id =>  FeeConst::ROLE_EXPIRED}).count
+    @num_privati_ARCHIVIED =  User.all(:conditions => {:asso_id => nil, :role_id =>  FeeConst::ROLE_ARCHIVIED}).count
+    @num_privati_TOTAL = @num_privati_ABBONATO + @num_privati_REGISTERED + @num_privati_RENEW + @num_privati_EXPIRED + @num_privati_ARCHIVIED
+#    @roles = []
+#    @roles << FeeConst::ROLE_ABBONATO << FeeConst::ROLE_RENEW << FeeConst::ROLE_REGISTERED << FeeConst::ROLE_EXPIRED << FeeConst::ROLE_ARCHIVIED
+#    @num_controlled_TOTAL = User.all(:conditions => ['asso_id is null AND role_id IN (?)', @roles]).count
+#    @active = []
+#    @active << FeeConst::ROLE_ABBONATO << FeeConst::ROLE_RENEW << FeeConst::ROLE_REGISTERED
+#    @num_active = User.all(:conditions => ['asso_id is null AND role_id IN (?)', @active]).count
+    @num_controlled_TOTAL
 
-    #AFFILIATI
+    #AFFILIATI ad una cross organization
     @num_organismi = CrossOrganization.all.count
     @num_members =  User.all(:conditions => {:cross_organization_id => !nil}).count
 

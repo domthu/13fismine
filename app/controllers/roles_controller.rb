@@ -55,6 +55,7 @@ class RolesController < ApplicationController
   end
 
   def destroy
+    #Per rendere un ruolo da sistema impostare sul database il builtin > 0
     @role = Role.find(params[:id])
     @role.destroy
     redirect_to :action => 'index'

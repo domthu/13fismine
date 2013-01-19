@@ -22,6 +22,8 @@ class MembersController < ApplicationController
   before_filter :find_project, :only => [:new, :autocomplete_for_member]
   before_filter :authorize
 
+#Processing MembersController#new (for 127.0.0.1 at 2013-01-18 21:38:03) [POST]
+#  Parameters: {"controller"=>"members", "principal_search"=>"", "member"=>{"role_ids"=>["3", "4", "6"]}, "id"=>"e-quesiti", "commit"=>"Aggiungi", "action"=>"new", "authenticity_token"=>"v34HKvNuItOuu67oYZdyxvNfkui417XFAE9H97RJSiA="}
   def new
     members = []
     if params[:member] && request.post?

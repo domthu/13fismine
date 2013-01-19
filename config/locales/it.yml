@@ -259,7 +259,7 @@ it:
 
   setting_app_title: Titolo applicazione
   setting_app_subtitle: Sottotitolo applicazione
-  setting_welcome_text: "Test'o di benvenuto sulla HOME della redazione: Area Riservata"
+  setting_welcome_text: "Testo di benvenuto sulla HOME della redazione: Area Riservata"
   setting_welcome_text_fs: "Testo di benvenuto lato abbonati: sul sito pubblico"
   setting_default_language: Lingua predefinita
   setting_login_required: Autenticazione richiesta
@@ -343,6 +343,7 @@ it:
   label_last_login: Ultimo collegamento
   label_registered_on: Registrato il
   label_activity: Attività
+  label_activity_plural: Attività
   label_new: Nuovo
   label_logged_as: Benvenuto
   label_environment: Ambiente
@@ -1421,6 +1422,15 @@ it:
   role_renew: Rinnovo, In scadenza
   role_expired: Espirato
   role_archivied: Archiviato
+  button_admin: --> Admin
+  button_manager: --> Responsabile
+  button_author: --> Redattore
+  button_vip: --> Invitato
+  button_abbonato: --> Abbonato
+  button_registered: --> Registrato
+  button_renew: --> Rinnovo
+  button_expired: --> Espirato
+  button_archivied: --> Archiviato
 
 #EDITORIAL
   list_edizioni: Lista edizioni

@@ -27,13 +27,13 @@ class Issue < ActiveRecord::Base
   belongs_to :priority, :class_name => 'IssuePriority', :foreign_key => 'priority_id'
   belongs_to :category, :class_name => 'IssueCategory', :foreign_key => 'category_id'
   #domthu20120516
-  belongs_to :section, :class_name => 'Section', :foreign_key => 'section_id' 
-  
+  belongs_to :section, :class_name => 'Section', :foreign_key => 'section_id'
+
   #belongs_to :top_section, :through => 'Section'
   def top_section
     self.section.top_section #+ "::" + self.section
-  end 
-  
+  end
+
   has_many :journals, :as => :journalized, :dependent => :destroy
   has_many :time_entries, :dependent => :delete_all
   has_and_belongs_to_many :changesets, :order => "#{Changeset.table_name}.committed_on ASC, #{Changeset.table_name}.id ASC"
@@ -94,16 +94,16 @@ class Issue < ActiveRecord::Base
   after_save :reschedule_following_issues, :update_nested_set_attributes, :update_parent_attributes, :create_journal
   after_destroy :update_parent_attributes
 
-  # returns latest issues for public area 
+  # returns latest issues for public area
   def self.latest_fs(user = User.current, count = 5)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
-    find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")	
+    find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")
   end
-  
-  
-  # returns latest issues for public area 
+
+
+  # returns latest issues for public area
   def self.all_by_sezione_fs(sezione = 1, user = User.current)
-    find(:all, :limit => count, :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.section_id = :secid", {:secid => sezione }], :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")	
+    find(:all, :limit => count, :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.section_id = :secid", {:secid => sezione }], :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")
   end
 
 
@@ -297,7 +297,7 @@ class Issue < ActiveRecord::Base
     'se_protetto',
     'ordinamento',
     :if => lambda {|issue, user| issue.new_record? || user.allowed_to?(:edit_issues, issue.project) }
-    
+
 #    add_column :issues, :section_id, :integer, :null => true
 #    add_column :issues, :ordinamento, :integer
 #    add_column :issues, :se_sommario, :boolean, :default => 1
@@ -315,7 +315,7 @@ class Issue < ActiveRecord::Base
 #    add_column :issues, :testo_no_format, :text
 #    add_column :issues, :riassunto_no_format, :text
 #    add_column :issues, :tag_link, :string
-    
+
   safe_attributes 'status_id',
     'assigned_to_id',
     'fixed_version_id',
@@ -755,13 +755,13 @@ class Issue < ActiveRecord::Base
   end
 
   def self.by_subproject(project)
-    ActiveRecord::Base.connection.select_all("select    s.id as status_id, 
-                                                s.is_closed as closed, 
+    ActiveRecord::Base.connection.select_all("select    s.id as status_id,
+                                                s.is_closed as closed,
                                                 #{Issue.table_name}.project_id as project_id,
-                                                count(#{Issue.table_name}.id) as total 
-                                              from 
+                                                count(#{Issue.table_name}.id) as total
+                                              from
                                                 #{Issue.table_name}, #{Project.table_name}, #{IssueStatus.table_name} s
-                                              where 
+                                              where
                                                 #{Issue.table_name}.status_id=s.id
                                                 and #{Issue.table_name}.project_id = #{Project.table_name}.id
                                                 and #{visible_condition(User.current, :project => project, :with_subprojects => true)}
@@ -988,14 +988,14 @@ class Issue < ActiveRecord::Base
 
     where = "#{Issue.table_name}.#{select_field}=j.id"
 
-    ActiveRecord::Base.connection.select_all("select    s.id as status_id, 
-                                                s.is_closed as closed, 
+    ActiveRecord::Base.connection.select_all("select    s.id as status_id,
+                                                s.is_closed as closed,
                                                 j.id as #{select_field},
-                                                count(#{Issue.table_name}.id) as total 
-                                              from 
+                                                count(#{Issue.table_name}.id) as total
+                                              from
                                                   #{Issue.table_name}, #{Project.table_name}, #{IssueStatus.table_name} s, #{joins} j
-                                              where 
-                                                #{Issue.table_name}.status_id=s.id 
+                                              where
+                                                #{Issue.table_name}.status_id=s.id
                                                 and #{where}
                                                 and #{Issue.table_name}.project_id=#{Project.table_name}.id
                                                 and #{visible_condition(User.current, :project => project)}
