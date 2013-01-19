@@ -90,18 +90,18 @@ class ProjectsController < ApplicationController
     flash_name = "QUINDICINALE"
     identificatore = date_edizione.to_s + "-" + desired_year.to_s
     #Control uniqueness
-    yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID + identificatore)
+    yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
     if yet_project
       #provi di creare un BIS
       #edizione :  2bis/2012
       #2bis/2012 - FISCOSPORT FLASH DEL 1/02/2012
       #e-2bis-2012
       identificatore =  date_edizione.to_s + "bis-" + desired_year.to_s
-      yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID + identificatore)
+      yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
       if yet_project
         num_edizioni = Project.count(:conditions => ['identifier LIKE ? AND extract(year from data_al) = ?', "#{FeeConst::EDIZIONE_ID}%", desired_year])
         #Model.where("strftime('%Y', date_column)     = ?", desired_year)
-        identificatore = FeeConst::EDIZIONE_ID + num_edizioni.to_s + "/" + desired_year.to_s
+        identificatore = (num_edizioni + 1).to_s + "-" + desired_year.to_s
 
       else
         flash_name = "FISCOSPORT FLASH"
