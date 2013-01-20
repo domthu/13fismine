@@ -19,7 +19,8 @@
 <div class="autoscroll">
 <table class="list">
   <thead><tr>
-  <th><%=l(:label_project)%></th>
+  <th align="left"><%=l(:label_project)%></th>
+  <th align="left"><%=l(:field_identifier)%></th>
   <th><%=l(:field_is_public)%></th>
   <th><%=l(:field_created_on)%></th>
   <th></th>
@@ -28,6 +29,7 @@
 <% project_tree(@projects) do |project, level| %>
   <tr class="<%= cycle("odd", "even") %> <%= project.css_classes %> <%= level > 0 ? "idnt idnt-#{level}" : nil %>">
   <td class="name"><span><%= link_to_project(project, {:action => 'settings'}, :title => project.short_description) %></span></td>
+  <td align="left"><%= project.identifier %></td>
   <td align="center"><%= checked_image project.is_public? %></td>
   <td align="center"><%= format_date(project.created_on) %></td>
   <td class="buttons">

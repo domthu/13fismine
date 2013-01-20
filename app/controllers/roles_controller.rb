@@ -23,6 +23,8 @@ class RolesController < ApplicationController
   verify :method => :post, :only => [ :destroy ],
          :redirect_to => { :action => :index }
 
+  include FeesHelper  #Domthu  FeeConst
+
   def index
     @role_pages, @roles = paginate :roles, :per_page => 25, :order => 'builtin, position'
     render :action => "index", :layout => false if request.xhr?
@@ -57,7 +59,19 @@ class RolesController < ApplicationController
   def destroy
     #Per rendere un ruolo da sistema impostare sul database il builtin > 0
     @role = Role.find(params[:id])
-    @role.destroy
+    #ROLE_MANAGER      = 3  #Manager<br />
+    #ROLE_AUTHOR       = 4  #Redattore  <br />
+    #ROLE_VIP          = 10 #Invitato Gratuito<br />
+    #ROLE_ABBONATO     = 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
+    #ROLE_REGISTERED   = 9  #Ospite periodo di prova durante Setting.register_days<br />
+    #ROLE_RENEW=11
+    #ROLE_EXPIRED=7
+    #ROLE_ARCHIVIED=8
+    if Setting.fee? and FeeConst::ROLES.include? @role.id
+      flash[:error] = l(:error_can_not_remove_role_for_fee_management)
+    else
+      @role.destroy
+    end
     redirect_to :action => 'index'
   rescue
     flash[:error] =  l(:error_can_not_remove_role)

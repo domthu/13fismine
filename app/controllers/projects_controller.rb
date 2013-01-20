@@ -300,6 +300,7 @@ class ProjectsController < ApplicationController
   def edit
   end
 
+
   # TODO: convert to PUT only
   verify :method => [:post, :put], :only => :update, :render => {:nothing => true, :status => :method_not_allowed }
   def update
