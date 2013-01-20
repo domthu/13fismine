@@ -15,7 +15,7 @@ module FeeConst
   #Scaduto: user.data_scadenza < today<br />
   ROLE_ARCHIVIED=8
   #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
-  ROLES =[13,14,15,16,17, ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW, ROLE_EXPIRED, ROLE_ARCHIVIED]
+  ROLES =[ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW, ROLE_EXPIRED, ROLE_ARCHIVIED]
 
   EDIZIONE_ID = "e-"
   QUESITO_ID = "e-quesiti"
