@@ -179,7 +179,7 @@
             <tr>
               <!-- sotto: immagine sx -->
               <td width="120" align="left" valign="top" rowspan="2">
-                <%= if articolo.immagine_url.nil?
+                <%= if articolo.immagine_url.nil? || !(FileTest.exist?("#{RAILS_ROOT}/public/images/#{articolo.immagine_url}"))
                       if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
                         image_tag("/images/commons/sections/#{articolo.top_section.immagine}", :width => 120, :id => ancora)
                       else
@@ -220,6 +220,10 @@
             <tr>
               <td width="560" height="33" align="right" valign="top">
                 <%= image_tag("/images/commons/btn_news_y.gif", :width => 107, :height => 29, :alt => 'vedi articolo') %>
+                <!-- TODO DOMINIQUE-HELP  " errore  nel link sotto (disattivato) non trova: articolo.section.top_section.top_menu.key"-->
+            <!-- per test --> <h2> <%=  articolo.section.top_section.top_menu %></h2>
+            <%# link_to image_tag("/images/commons/btn_news_y.gif", :width => 107, :height => 29, :alt => 'vedi articolo'),
+            url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false))%>
 
               </td>
             </tr>

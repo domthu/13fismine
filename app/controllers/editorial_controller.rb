@@ -46,15 +46,17 @@ class EditorialController < ApplicationController
     @issues = Issue.find(:all,
                          :include => [:section => :top_section],
                          :order => 'updated_on DESC',
-                         :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1"],
+                         :conditions => ["se_visible_web = 1 AND is_private = 0"],
                          :limit => @issues_pages.items_per_page,
                          :offset => @issues_pages.current.offset)
+
 
     respond_to do |format|
       format.html {
         render :layout => !request.xhr?
       }
       format.api
+
     end
     #MariaCristina Non mostrare i quesiti nella home page
     #@news = News.latest_fs
