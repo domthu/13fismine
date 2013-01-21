@@ -294,9 +294,9 @@
     float:left;
 }
 .fs-logged2 ul li{
-       color: #000000;
-        font-size: 10px;
+
     font-style: italic;
+    text-align: left;
 
 }
 .fs-logged2 a,
@@ -305,19 +305,20 @@
 .fs-logged2 a:hover{
 text-decoration: none;
     font-style: normal;
-   color: #000000;
-    font-size: 8px;
+
+    text-align: left;
+
 
 }
 .fs-logged2-ico {
     float: right;
     width:50px;
-    border: solid 1px #008b2b;
+
 }
 .fs-logged1 {
     height: 50px;
     overflow: hidden;
-    border: solid 1px #0000CC;
+
 }
 /*  fine  3 -  -  -  -  -  -   tramenu   terzo blocco   -  -  -  -  -  -  */
 

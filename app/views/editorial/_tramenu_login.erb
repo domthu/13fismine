@@ -2,11 +2,10 @@
     <p class="fs-tramenu-blockheader x-granata">Utente:&nbsp; <%= User.current.name() %></p>
     <div class="fs-blockcontent fs-logged1">
       <%= gravatar_for(User.current) unless !User.current %>
-
       <ul>
         <% if User.current && User.current.canbackend? %>
             <li>
-              <%= link_to "==> Accesso FISMINE ==>", root_path %>
+              <%= link_to "== Accesso FISMINE ==", root_path %>
             </li>
             <li>
               <%= link_to l(:label_my_page), :controller => 'my', :action => 'page' %>
@@ -24,25 +23,24 @@
         <% end %>
       </ul>
     </div>
-
     <div class="fs-logged2 fs-blockcontent ">
-
-
       <ul>
-        <% if User.current && User.current.sigla_tipo() %>
+
+        <% if User.current && User.current.associazione() %>
             <li>
-              Affiliato: <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()) %>
+              Associato a: <br /> <%= link_to h(User.current.associazione()), asso_path(User.current.associazione()) %>
             </li>
-        <% end %>
-        <% if User.current && User.current.organization() %>
-            <li>
-              Associato: <%= link_to h(User.current.organization()), cross_organization_path(User.current.organization()) %>
-            </li>
+        <% else %>
+            <% if User.current && User.current.sigla_tipo() %>
+                <li>
+                  Affiliato a:<br /> <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()) %>
+                </li>
+            <% end %>
         <% end %>
         <% if User.current && User.current.responsable? && User.current.responsable_of
              User.current.responsable_of.each do |organismo| %>
                 <li>
-                  <%= link_to h(organismo), organismo_path(organismo) %>
+                    <%= link_to h(organismo), organismo_path(organismo) %>
                 </li>
             <% end
                end %>
@@ -52,12 +50,15 @@
       </ul>
 
       <div class="fs-logged2-ico">
-        <%= image_tag "/images/banners/assos/t3swgw4uw.gif", :width => 50, :height => 50, :border => 0 %>
+        <% if User.current && User.current.organization() %>
+            <%= image_tag "/images/banners/assos/#{ User.current.asso.logo}", :width => 50, :height => 50, :border => 0 %>
+        <% else %>
+            <%= image_tag "/images/banners/ico/fs.jpg", :width => 50, :height => 50, :border => 0 %>
+        <% end %>
       </div>
     </div>
 <% else %>
     <p class="fs-tramenu-blockheader x-granata">Accesso Utenti Abbonati</p>
-
     <div class="fs-blockcontent">
       <% form_tag({:controller => 'account', :action => 'login'}, :method => 'post') do %>
           <%= back_url_hidden_field_tag %>

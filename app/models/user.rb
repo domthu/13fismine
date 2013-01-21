@@ -151,7 +151,6 @@ class User < Principal
 #      :asso_id => self.asso_id}])  #.to_s
     end
   end
-  # sandro associazione: per test ma non utilizzata  si puo' cancellare
   def associazione()
      if self.asso_id.nil? || self.asso.nil?
        nil
