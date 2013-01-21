@@ -6,6 +6,9 @@
   <label class="inline" for="issue_is_private" id="issue_is_private_label"><%= f.check_box :is_private, :no_label => true %> <%= l(:field_is_private) %></label>
 </p>
 <% end %>
+
+<p><%= f.select :section_id, (Section.all_with_topsection.collect {|c| [c.full_name, c.id]}), :include_blank => false, :required => true, :size => 100, :title => l(:label_section) %></p>
+
 <p><%= f.select :tracker_id, @project.trackers.collect {|t| [t.name, t.id]}, :required => true %></p>
 <%= observe_field :issue_tracker_id, :url => { :action => :new, :project_id => @project, :id => @issue },
                                      :update => :attributes,
@@ -18,6 +21,12 @@
                    :rows => (@issue.subject.blank? ? 2 : [[2, @issue.subject.length / 50].max, 20].min),
                    :accesskey => accesskey(:edit),
                    :class => 'wiki-edit' %></p>
+
+<div id="attributes" class="attributes">
+  <%= render :partial => 'issues/attributes' %>
+  <%#, :locals => {:project => @project, :issue => @issue}%>
+</div>
+
 <p><%= f.text_area :riassunto,
                    :cols => 20,
                    :rows => (@issue.riassunto.blank? ? 5 : [[5, @issue.riassunto.length / 50].max, 50].min),
@@ -29,10 +38,6 @@
                    :rows => (@issue.description.blank? ? 10 : [[10, @issue.description.length / 50].max, 100].min),
                    :accesskey => accesskey(:edit),
                    :class => 'wiki-edit' %></p>
-</div>
-
-<div id="attributes" class="attributes">
-  <%= render :partial => 'issues/attributes' %>
 </div>
 
 <% if @issue.new_record? %>
@@ -49,6 +54,6 @@
 
 <%= call_hook(:view_issues_form_details_bottom, { :issue => @issue, :form => f }) %>
 
-<%= wikitoolbar_for 'issue_subject' %>
+<%# wikitoolbar_for 'issue_subject' %>
 <%= wikitoolbar_for 'issue_riassunto' %>
 <%= wikitoolbar_for 'issue_description' %>

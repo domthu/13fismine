@@ -19,6 +19,12 @@ module FeeConst
 
   EDIZIONE_ID = "e-"
   QUESITO_ID = "e-quesiti"
+  #TODO pass in settings
+  QUESITO_SECTION_ID = 39 #Formula un quesito: Articolo con di default issue.section.top_section_id
+  QUESITO_TOP_SECTION_ID = 19 	#Le risposte ai quesiti
+
+  CONVEGNO_SECTION_ID = 26 #Convegni: Articolo con issue.section.top_section_id
+  CONVEGNO_TOP_SECTION_ID = 9 #Convegni ed eventi
 end
 
 module FeesHelper

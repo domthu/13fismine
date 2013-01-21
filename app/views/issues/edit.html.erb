@@ -1,5 +1,17 @@
 <h2><%=h "#{@issue.tracker.name} ##{@issue.id}" %></h2>
 
+<% if @issue.quesito and !@issue.quesito.nil? %>
+  <div class=""> <%#splitcontentright%>
+    <fieldset class="box tabular">
+      <legend><b><%=l(:label_issue_from_news)%></b></legend>
+      <%= hidden_field_tag "news_id", @issue.news_id %>
+      <div class="attributes">
+        <%= render :partial => 'news/abstract' %>
+      </div>
+    </fieldset>
+  </div>
+<% end %>
+
 <%= render :partial => 'edit' %>
 <% content_for :header_tags do %>
     <%= robot_exclusion_tag %>

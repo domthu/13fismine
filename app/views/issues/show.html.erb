@@ -17,6 +17,10 @@
 
 <table class="attributes">
 <tr>
+    <th class="status"><%=l(:field_section)%>:</th><td class="status"><%= h(@issue.section.full_name) %></td>
+    <th class="status"><%=l(:field_news)%>:</th><td class="status"><%= link_to @issue.quesito.abbr_name, news_path(@issue.quesito) unless @issue.quesito.nil? %></td>
+</tr>
+<tr>
     <th class="status"><%=l(:field_status)%>:</th><td class="status"><%= h(@issue.status.name) %></td>
     <th class="status"><%=l(:field_ordinamento)%>:</th><td class="status"><%= h(@issue.ordinamento) %></td>
 </tr>
@@ -65,7 +69,7 @@
       <%= @issue.riassunto.html_safe %>
     <% end %>
   </div>
-<--html safe----------------------------------------------------------------------textilizable--> 
+<--html safe----------------------------------------------------------------------textilizable-->
   <div class="wiki">
   <%= textilizable @issue, :riassunto, :attachments => @issue.attachments %>
   </div>
@@ -84,7 +88,7 @@
       <%= @issue.description.html_safe %>
     <% end %>
   </div>
-<--html safe----------------------------------------------------------------------textilizable--> 
+<--html safe----------------------------------------------------------------------textilizable-->
   <div class="wiki">
   <%= textilizable @issue, :description, :attachments => @issue.attachments %>
   </div>

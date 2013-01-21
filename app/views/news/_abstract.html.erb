@@ -1,0 +1,15 @@
+<div class="contextual">
+<%= link_to(l(:button_edit),
+      edit_news_path(@news),
+      :class => 'icon icon-edit',
+      :accesskey => accesskey(:edit),
+      :onclick => 'Element.show("edit-news"); return false;') if User.current.allowed_to?(:manage_news, @project) %>
+</div>
+
+<h2><%= avatar(@news.author, :size => "24") %><%=h @news.title %></h2>
+
+<p><% unless @news.summary.blank? %><em><%=h @news.summary %></em><br /><% end %>
+<span class="author"><%= authoring @news.created_on, @news.author %></span></p>
+<div class="wiki">
+<%= textilizable(@news.description) %>
+</div>

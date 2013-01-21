@@ -29,6 +29,8 @@ class IssuesController < ApplicationController
   before_filter :build_new_issue_from_params, :only => [:new, :create]
   accept_rss_auth :index, :show
   accept_api_auth :index, :show, :create, :update, :destroy
+  #Domthu
+  before_filter :find_quesito, :only => [:new, :create, :edit, :update]
 
   rescue_from Query::StatementInvalid, :with => :query_statement_invalid
 
@@ -53,6 +55,7 @@ class IssuesController < ApplicationController
   helper :timelog
   helper :gantt
   include Redmine::Export::PDF
+  include FeesHelper  #Domthu  FeeConst
 
   verify :method => [:post, :delete],
          :only => :destroy,
@@ -139,6 +142,15 @@ class IssuesController < ApplicationController
   # Add a new issue
   # The new issue will be created from an existing one if copy_from parameter is given
   def new
+    #@issue = Issue.new  --> Kappao
+    #Showing app/views/issues/_attributes.html.erb where line #20 raised:
+    #undefined method `assignable_users' for nil:NilClass
+    #http://localhost:3000/projects/e-3bis-2013/issues/new?news_id=70
+    #cf. find_project
+    #cf. find_quesito
+    #cf. find_issue
+    @issue.due_date = @project.data_al.to_date unless @project.nil?
+
     respond_to do |format|
       format.html { render :action => 'new', :layout => !request.xhr? }
       format.js { render :partial => 'attributes' }
@@ -271,7 +283,8 @@ private
   def find_issue
     # Issue.visible.find(...) can not be used to redirect user to the login form
     # if the issue actually exists but requires authentication
-    @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category])
+    @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category, :section, :quesito])
+    #Domthu [:project, :tracker, :status, :author, :priority, :category])
     unless @issue.visible?
       deny_access
       return
@@ -284,6 +297,21 @@ private
   def find_project
     project_id = (params[:issue] && params[:issue][:project_id]) || params[:project_id]
     @project = Project.find(project_id)
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
+  def find_quesito
+    news_id = (params[:issue] && params[:issue][:news_id]) || params[:news_id]
+    #repeat
+    if news_id
+      @issue.news_id = news_id
+      #@quesito = News.find(@issue.news_id)
+      @news = News.find(@issue.news_id)
+      if @issue.new_record?
+        @issue.section_id = FeeConst::QUESITO_SECTION_ID
+        @issue.quesito = @news
+      end
+    end
   rescue ActiveRecord::RecordNotFound
     render_404
   end

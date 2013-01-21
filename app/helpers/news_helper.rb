@@ -18,4 +18,13 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 module NewsHelper
+
+  include FeesHelper
+
+  def default_quesito_name(User = Current)
+    s = "QUESITO N. "
+    num_quesito =
+  QUESITO N. 195 del 14/11/2005 - utente servizi Fiscosport n.
+    return s
+  end
 end

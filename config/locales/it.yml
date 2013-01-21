@@ -296,6 +296,7 @@ it:
   label_issues_latest: Ultimi articoli
   label_issues_view_all: Vedi tutti articoli
   label_issue_new: Nuovo articolo
+  label_issue_from_news: articolo generato da quesito
   label_issue_plural: Articoli
   label_issue_view_all: Mostra tutti gli articoli
   label_document: Documento
@@ -373,6 +374,7 @@ it:
   label_report: Report
   label_report_plural: Report
   label_news: Quesito
+  field_news: Da quesito?
   label_news_new: Proponi quesito
   label_news_plural: Quesiti
   label_news_latest: Utimi quesiti
@@ -1146,6 +1148,7 @@ it:
 
 #top_section
   label_top_section: Sezione
+  field_top_section: Sezione
   label_top_section_plural: Sezioni
   label_top_section_plural_from_menu: Sezioni che dipendono del menu
   label_top_section_new: Nuova Sezione
@@ -1170,10 +1173,10 @@ it:
 
 #section
   label_section: Sotto sezione
+  field_section: Sotto sezione
   label_section_plural: Sotto sezioni
   label_section_new: Nuova sotto sezione
   label_protetto: Privato
-  field_top_section: Sezione
   error_can_not_delete_section_unless_issues: "Non è possibile eliminare una sotto sezione finchè è legata a degli articoli..."
   label_sections_from_top_section: "Sotto sezioni legate alla sezione "
 # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)

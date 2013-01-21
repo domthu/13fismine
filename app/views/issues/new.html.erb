@@ -1,8 +1,23 @@
 <h2><%=l(:label_issue_new)%></h2>
 
+
 <% labelled_tabular_form_for :issue, @issue, :url => {:controller => 'issues', :action => 'create', :project_id => @project},
                              :html => {:multipart => true, :id => 'issue-form', :class => 'tabular new-issue-form'} do |f| %>
     <%= error_messages_for 'issue' %>
+
+    <% if @issue.quesito and !@issue.quesito.nil? %>
+      <div class=""> <%#splitcontentright%>
+        <fieldset class="box tabular">
+          <legend><b><%=l(:label_issue_from_news)%></b></legend>
+          <%= hidden_field_tag "news_id", @issue.news_id %>
+          <div class="attributes">
+            <h3><%=  @issue.section_id.to_s + ": " + @issue.section.full_name %></h3>
+            <%= render :partial => 'news/abstract' %>
+          </div>
+        </fieldset>
+      </div>
+    <% end %>
+
     <div class="box">
     <%= render :partial => 'issues/form', :locals => {:f => f} %>
     </div>

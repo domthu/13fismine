@@ -20,6 +20,7 @@ class News < ActiveRecord::Base
   belongs_to :project
   belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
   has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
+  has_many :issues, :dependent => :destroy, :order => "#{Issue.table_name}.created_on DESC", :include => [:status, :tracker, {:section => :top_section} ]
 
   validates_presence_of :title, :description
   validates_length_of :title, :maximum => 60
@@ -60,6 +61,11 @@ class News < ActiveRecord::Base
     #:conditions => projects.is_public = 1
     #:conditions => Project.is_public = 1
     find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [ :author, :project ], :order => "#{News.table_name}.created_on DESC")
+  end
+
+  def abbr_name
+    #formatter from Setting.user_format
+    "N°" + self.id.to_s + " da " + self.author.name()
   end
 
   private
