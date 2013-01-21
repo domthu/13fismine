@@ -218,7 +218,8 @@
           <table width="560" border="0" cellpadding="0" cellspacing="0">
             <tr>
               <td width="560" height="33" align="right" valign="top">
-                <%= image_tag("/images/commons/btn_news_y.gif", :width => 107, :height => 29, :alt => 'vedi articolo') %>
+<%= link_to (image_tag("/images/commons/btn_news_y.gif", :width => 107, :height => 29, :alt => 'vedi articolo'), url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug) , :escape => false), :target => '_blank') %>
+
 
               </td>
             </tr>
@@ -251,5 +252,3 @@
 </td>
 </tr>
 </table>
-
-
