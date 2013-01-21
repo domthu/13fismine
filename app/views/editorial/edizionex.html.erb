@@ -1,4 +1,5 @@
 <h2><%= l(:details_edizione) %></h2>
+<h3> <%= Rails.env %></h3>
 In questa pagina:
 <ul>
   <li>La newsletter vera e propria</li>
@@ -12,5 +13,6 @@ In questa pagina:
   NUM.ART:<%= @art.count %>
   <br />
   starting newsletter for smtp
+
 </div>
 <%= @news %>
