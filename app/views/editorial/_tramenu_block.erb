@@ -1,43 +1,18 @@
 <div id="fs-tramenu-blocco1">
-<% if User.current && User.current.logged? %>
-      <h4> In caso di utente loggato in questo spazio si puo' visulizzare la scadenza dell'abbonamento la proposta di rinnovo o altro contenuto ...</h4>
-  <% if User.current.canbackend? %>
-    <%= link_to '====Accesso al backend====', home_path %>
+  <% if User.current && User.current.logged? %>
+      <%= render :partial => 'tramenu_logged' %>
   <% else %>
-    STATO: <%= get_status_role(User.current) %>  --  SCADENZA: <%= getdate(User.current.scadenza) %>  -- <%= User.current.scadenza_fra  %> -->
-    <% if User.current.isregistered? %>
-      Periodo di prova. fatto il ... scade il ... Verificare se ha confermato email?
-    <% end %>
-    <% if User.current.isabbonato? %>
-      Il tuo abbonamento scade il <%= User.current.scadenza %>
-    <% end %>
-    <% if User.current.isrenewing? %>
-      Sei normalmente abbonato. Il tuo abbonamento scade fra <%= User.current.scadenza_fra %>&nbsp;<%= link_to 'Rinnovalo', contatti_path %>
-    <% end %>
-    <% if User.current.isexpired? %>
-      SIAMO SPIACENTI però il tuo abbonamento è scaduto.
-      <%= link_to 'Rinnovalo', contatti_path %>
-    <% end %>
-    <% if User.current.isarchivied? %>
-      SIAMO SPIACENTI però non hai più accesso a questo editoriale
-      <%= link_to 'Contattaci', contatti_path %>
-    <% end %>
-
+      <%= render :partial => 'tramenu_prova' %>
   <% end %>
-
-<% else %>
-    <%= render :partial => 'tramenu_prova'  %>
-<% end %>
 </div>
 <div id="fs-tramenu-blocco2">
-<% if User.current && User.current.logged? %>
+  <% if User.current && User.current.logged? %>
       <!-- qui c'è la richiesta di MCristina per personalizzare i banners in base all'utente loggato -->
-      <%= render :partial => 'tramenu_assos'  %>
-<% else %>
-    <%= render :partial => 'tramenu_assos'  %>
-<% end %>
+      <%= render :partial => 'tramenu_assos' %>
+  <% else %>
+      <%= render :partial => 'tramenu_assos' %>
+  <% end %>
 </div>
 <div id="fs-tramenu-blocco3">
-      <%= render :partial => 'tramenu_login'  %>
-
+  <%= render :partial => 'tramenu_login' %>
 </div>
