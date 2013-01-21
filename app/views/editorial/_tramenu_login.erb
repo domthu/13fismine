@@ -1,12 +1,12 @@
 <% if User.current && User.current.logged? %>
     <p class="fs-tramenu-blockheader x-granata">Utente:&nbsp; <%= User.current.name() %></p>
-    <%= gravatar_for(User.current) unless !User.current %>
-    <p>
-    <div class="fs-blockcontent">
+    <div class="fs-blockcontent fs-logged1">
+      <%= gravatar_for(User.current) unless !User.current %>
+
       <ul>
         <% if User.current && User.current.canbackend? %>
             <li>
-              <%= link_to "==Panello di controllo (BE)==", root_path %>
+              <%= link_to "==> Accesso FISMINE ==>", root_path %>
             </li>
             <li>
               <%= link_to l(:label_my_page), :controller => 'my', :action => 'page' %>
@@ -17,21 +17,26 @@
         <% else %>
             <li>
               <%= link_to "==> Panello di controllo (FISMINE)==>", root_path %>
-              <%# link_to "== Pagina principale (FE)==", editorial_path %>
             </li>
             <li>
               <%= link_to l(:label_my_page), :controller => 'mio_profilo', :action => 'account' %>
             </li>
         <% end %>
+      </ul>
+    </div>
+
+    <div class="fs-logged2 fs-blockcontent ">
+
+
+      <ul>
         <% if User.current && User.current.sigla_tipo() %>
             <li>
-              AFFILIATO: <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()) %>
+              Affiliato: <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()) %>
             </li>
         <% end %>
         <% if User.current && User.current.organization() %>
             <li>
-              CROSS
-              ORGANIZATION: <%= link_to h(User.current.organization()), cross_organization_path(User.current.organization()) %>
+              Associato: <%= link_to h(User.current.organization()), cross_organization_path(User.current.organization()) %>
             </li>
         <% end %>
         <% if User.current && User.current.responsable? && User.current.responsable_of
@@ -46,6 +51,9 @@
         </li>
       </ul>
 
+      <div class="fs-logged2-ico">
+        <%= image_tag "/images/banners/assos/t3swgw4uw.gif", :width => 50, :height => 50, :border => 0 %>
+      </div>
     </div>
 <% else %>
     <p class="fs-tramenu-blockheader x-granata">Accesso Utenti Abbonati</p>
