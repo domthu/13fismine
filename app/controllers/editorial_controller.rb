@@ -210,7 +210,8 @@ class EditorialController < ApplicationController
     @project = Project.find_public(@id)
     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
     #@news = News.all(:limit => 10)
-    @news = @project.newsletterx(User.current)
+    @news = @project.newsletter_smtp(User.current)
+    @prj= Project.find_by_id params[:id].to_i
 
 
   end
@@ -221,7 +222,7 @@ class EditorialController < ApplicationController
      @project = Project.find_public(@id)
      @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
      #@news = News.all(:limit => 10)
-     @news = @project.newsletterx(User.current)
+     @news = @project.newsletter_smtp(User.current)
 
 
    end

@@ -767,43 +767,13 @@ class Project < ActiveRecord::Base
     return str
   end
 
-  def newsletter_smtp(user = User.current)
 
-    str = "<h1>" + self.name + "</h1>"
-    str += "<h3>" + self.description + "</h3>"
-    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
+  def newsletter_smtp(u)
+    s1="", s2="", s3="", s4="", s5="", last_tops=0, ancora ="", usr=nil
+    usr = User.find_by_id u
+    if !usr.blank?
 
-    indice =""
-    sommario =""
-    last_tops=0
-
-    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC",:include => [:section => :top_section] ) do
-
-      if last_tops != art.section.top_section_id
-      indice += '<h4 style="color:blue"><span style="font-size:70%"> ID Sez. TopSez: </span>' + art.section_id.to_s + " :: "
-      indice += art.section.to_s + " :: "
-      indice += (art.section.nil? ? "? non trovata la sezione ?" : art.section.top_section.to_s) + "</h3>"
-
-      last_tops = art.section.top_section_id
-      end
-      indice +="<h3>" + smart_truncate(art.titolo, 75) + "</h3><br />"
-      sommario += indice
-      sommario += smart_truncate(art.riassunto, 200) + "<br /> &nbsp;<br /> &nbsp;"
-
-    end
-    str += "<h2> user corrente:" + user.name + "</h2>"
-    str += "<br /><h1> INDICE </h1>"
-    str += indice
-    str += "<hr>"
-    str += "<br /><h1> SOMMARIO </h1>"
-    str += sommario
-
-
-    return str
-  end
-  def newsletterx(user=User.current)
-    s1="",s2="",s3="",s4="", s5="", last_tops=0, ancora =""
-    s1='<style type="text/css">
+      s1='<style type="text/css">
             /* Backgrounds */
         .email_background {
             width: 640px;
@@ -824,7 +794,7 @@ class Project < ActiveRecord::Base
       <td valign="bottom" height="40" align="center">
         <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
           la newsletter di Fiscosport &nbsp;|&nbsp; L\'edizione
-          <a target="_blank" href="http://fiscosport/edizione/' +  self.id.to_s  + ' style="color:#ffffff; text-decoration:underline;">
+          <a target="_blank" href="http://fiscosport/edizione/' + self.id.to_s + ' style="color:#ffffff; text-decoration:underline;">
             num. '+ self.id.to_s + ' ' + self.description + '"</a> è online!</font>
       </td>
     </tr>
@@ -842,7 +812,7 @@ class Project < ActiveRecord::Base
     <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
     <!-- inizio contenuto -->
     <!------------------------------------------------------------------------->'
-    s2='<!-- Inizio sezione con logo e nomeutente -->
+      s2='<!-- Inizio sezione con logo e nomeutente -->
       <table width="560" border="0" cellpadding="0" cellspacing="0">
         <tr>
           <td width="242" height="110" align="left" valign="top">
@@ -855,13 +825,13 @@ class Project < ActiveRecord::Base
             <td height="50" align="left" valign="center" style="border-bottom:1px solid #1C6693;">
               <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:14px; color:#333333; line-height: 18px; ">
                 Newsletter riservata a :<span style="font-size: 18px;">
-              ' + (User.current.firstname? ? "&nbsp;" : User.current.firstname) + "&nbsp;" + (User.current.lastname.nil? ? "&nbsp;" : User.current.lastname ) + '</span>
+              ' + (usr.firstname? ? "&nbsp;" : usr.firstname) + "&nbsp;" + (usr.lastname.nil? ? "&nbsp;" : usr.lastname) + '</span>
               </font></td>
           </tr>
           <tr>
             <td width="318" height="50" align="left" valign="center" style="border-bottom:1px solid #cccccc;">
               <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:13px; color:#333333; line-height:18px; font-weight: bold;">
-                ' + (User.current.soc.nil? ? " " : User.current.soc )+ ' </font>
+                ' + (usr.soc.nil? ? " " : usr.soc)+ ' </font>
             </td>
           </tr>
         </table>
@@ -897,11 +867,11 @@ class Project < ActiveRecord::Base
   <!--fine  dicitura indice -->
   <!-------------------------------------------------------------------->
 <!-- inizio loop sezione indice --> '
-    for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC",:include => [:section => :top_section] ) do
+      for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
         ancora = truncate(nart.titolo, :length => 30).to_slug
-      s3 += '<table width="560" border="0" cellpadding="0" cellspacing="0">'
-      if last_tops != nart.section.top_section_id
-      s3 +=  '<tr>
+        s3 += '<table width="560" border="0" cellpadding="0" cellspacing="0">'
+        if last_tops != nart.section.top_section_id
+          s3 += '<tr>
             <td height="14" bgcolor="#f5f5f5"></td>
             &nbsp; </tr>
           <tr>
@@ -923,8 +893,8 @@ class Project < ActiveRecord::Base
               </table>
             </td>
           </tr>'
-      end
-      s3 += '<!-- titolo --->
+        end
+        s3 += '<!-- titolo --->
           <tr>
             <td width="560">
               <table width="560" border="0" cellpadding="10" cellspacing="0">
@@ -942,9 +912,9 @@ class Project < ActiveRecord::Base
           </tr>
           <!-- fine titolo --->
         </table>'
-      last_tops = nart.section.top_section_id
-    end
-    s3 += '<!-- fine loop sezione indice -->
+        last_tops = nart.section.top_section_id
+      end
+      s3 += '<!-- fine loop sezione indice -->
         <!------------------------------------------------------------------------->
         <!--inizio dicitura sommario  -->
         <table width="560" border="0" cellpadding="0" cellspacing="0">
@@ -968,9 +938,9 @@ class Project < ActiveRecord::Base
         <!--fine  dicitura sommario  -->
         <!------------------------------------------------------------------------->
         <!-- inizio sezione loop articoli --> '
-    for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC",:include => [:section => :top_section] ) do
-      ancora = truncate(nart.titolo, :length => 30).to_slug
-    s4 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
+      for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
+        ancora = truncate(nart.titolo, :length => 30).to_slug
+        s4 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td width="560" align="center" valign="top" bgcolor="#f4f4f4" style="border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;">
               <!-- inizio tabella contenuti -->
@@ -978,17 +948,17 @@ class Project < ActiveRecord::Base
                 <tr>
                   <!-- sotto: immagine sx -->
                   <td width="120" align="left" valign="top" rowspan="2">'
-                     if nart.immagine_url.nil?
-                          if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{nart.top_section.immagine}")
-                            s4 += '<a name="' + ancora + '"> <img src="http://es.pecchia.info/images/commons/sections/"' + nart.top_section.immagine + '" :width ="120"> </a>'
-                          else
-                            image_tag("/images/commons/sections/no-img.jpg", :width => 120, :id => ancora)
-                            s4 += '<a name="' + ancora + '"> <img src="http://es.pecchia.info/images/commons/sections/no-img.jpg" :width ="120"> </a>'
-                          end
-                     else
-                          s4 += '<a name="' + ancora + '"> <img src="' + nart.immagine_url + '" :width ="120" alt="' + ancora + '"> </a>'
-                    end
-    s4 +=          '</td>
+        if nart.immagine_url.nil?
+          if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{nart.top_section.immagine}")
+            s4 += '<a name="' + ancora + '"> <img src="http://es.pecchia.info/images/commons/sections/"' + nart.top_section.immagine + '" :width ="120"> </a>'
+          else
+            image_tag("/images/commons/sections/no-img.jpg", :width => 120, :id => ancora)
+            s4 += '<a name="' + ancora + '"> <img src="http://es.pecchia.info/images/commons/sections/no-img.jpg" :width ="120"> </a>'
+          end
+        else
+          s4 += '<a name="' + ancora + '"> <img src="' + nart.immagine_url + '" :width ="120" alt="' + ancora + '"> </a>'
+        end
+        s4 += '</td>
                     <!-- titolo  -->
                   <td width="440" align="left" valign="top">
                     <font style="font-family: Arial, Helvetica, sans-serif; font-size:16px; color:#003548; text-align: justify;">
@@ -1028,11 +998,10 @@ class Project < ActiveRecord::Base
           </tr>
         </table>
         <!-- fine sezione loop articoli -->'
-     end
+      end
 
 
-
-   s5 = '<!------------------------------------------------------------------------->
+      s5 = '<!------------------------------------------------------------------------->
     <!-- IMPORTANTE fine   contenuto  email-->
     </table>
     </td>
@@ -1053,11 +1022,29 @@ class Project < ActiveRecord::Base
     </tr>
     </table> '
 
-    return s1+s2+s3+s4+s5
-
+      return s1+s2+s3+s4+s5
+    else
+      return '<h1 style="color:red;"> Utente id:[' + u.to_s + '] non trovato!</h1>'
+    end
 
   end
 
+  def testuser(u) #sperimentale sandro
+                  # User.exists?( :id => usr )
+    s=""
+    for i in 0..5
+      usr = User.find_by_id u
+      if !usr.blank?
+        s += '<h1 style="color:blue;">' + usr.firstname + '</h1>'
+
+        u += 1
+      else
+        s += '<h1 style="color:red;">' + u.to_s + '</h1>'
+        u += 1
+      end
+    end
+    return s
+  end
 
   # --------------------------------PRIVATE AREA-----------------------------------
   #
