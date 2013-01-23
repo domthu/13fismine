@@ -19,7 +19,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :templates
   map.resources :example
   # 3 under are only for testing
-  map.connect 'edizionex/:id', :controller => 'editorial', :action => 'edizionex'
+  map.connect 'edizionex/:id', :controller => 'editorial', :action => 'edizione_smtp'
   map.connect 'edizionetest/:id', :controller => 'editorial', :action => 'ediz_test'
 
   #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
@@ -49,6 +49,7 @@ ActionController::Routing::Routes.draw do |map|
   map.lavora '/lavora_con_noi', :controller => 'editorial', :action => 'lavora'
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
+  map.edizione_newsletter '/edizione_newsletter/:id', :controller => 'editorial', :action => 'edizione_newsletter'
   #to match override act_as_event after search
   map.edizioneid '/editoriale/newsletter/:id', :controller => 'editorial', :action => 'edizione'
   map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'

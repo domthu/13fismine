@@ -290,7 +290,7 @@
 
 }
 .fs-logged2 ul{
-    width: 210px;
+    width: 200px;
     float:left;
 }
 .fs-logged2 ul li{
@@ -312,7 +312,7 @@ text-decoration: none;
 }
 .fs-logged2-ico {
     float: right;
-    width:50px;
+    width:60px;
 
 }
 .fs-logged1 {
@@ -744,8 +744,57 @@ text-decoration: none;
     font-size: 12px;
     line-height: 15px;
 }
-/* fine post comuni */
+.fs-box-link span{
+    display: inline-block;
+    background-color: #e0e0e0;
+    font-style: italic;
+    padding:3px;
 
+}
+.fs-blockheader-edizioni
+{
+   background: #FDFFCA;
+   -webkit-border-radius:3px;
+   -moz-border-radius:3px;
+   border-radius:3px;
+   border:1px solid #dfd7a8;
+   padding:10px 3px;
+   margin:0 auto;
+
+}
+.fs-blockheader-edizioni,
+.fs-blockheader-edizioni a,
+.fs-blockheader-edizioni a:link,
+.fs-blockheader-edizioni a:visited,
+.fs-blockheader-edizioni a:hover
+{
+
+    font-size: 13px!important;
+   font-family:  Arial, Helvetica, Sans-Serif;
+   font-weight: bold;
+   font-style: normal;
+   font-variant: small-caps;
+   text-align: center;
+   margin: 0 10px;
+}
+.fs-block-edizioni{
+    margin: 3px auto;
+
+}
+#fs-edizione{
+    font-size: 26px;
+    width:95%;
+    height:100px;
+    text-align: center;
+    color: #FF5008;
+    padding:10px;
+}
+#fs-edizione img{
+border-left: 10px;
+    float:right;
+}
+
+/* fine post comuni */
 /* inizio slide */
 .fs-slidecontainerslideshutterstock_1 {
     position: relative;

@@ -151,13 +151,20 @@ class User < Principal
 #      :asso_id => self.asso_id}])  #.to_s
     end
   end
-  def associazione()
-     if self.asso_id.nil? || self.asso.nil?
+  def associazione_affiliata()
+     if self.asso_id.nil? || self.asso.nil? || self.asso_id == 0
        nil
      else
-       Asso.find(:all, :include => [:cross_groups => :group_banner ], :conditions => ["id =  ?", self.asso_id])
+       Asso.find(:all, :include => [:organization => :cross_organization], :conditions => ["id =  ?", self.asso_id])
      end
-   end
+  end
+  def associazione_banner()
+      if self.asso_id.nil? || self.asso.nil?
+        nil
+      else
+        Asso.find(:all, :include => [:cross_groups => :group_banner ], :conditions => ["id =  ?", self.asso_id])
+      end
+    end
   def pubblicita()
     if self.asso_id.nil? || self.asso.nil?
       nil

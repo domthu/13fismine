@@ -22,6 +22,7 @@ class EditorialController < ApplicationController
 #    @p = Project.find(:first, :order => 'created_on DESC')
 #    @projects = Project.all.compact.uniq
 #    @link_project = Project.find_by_identifier($1) || Project.find_by_name($1)
+    @block_projects = Project.latest_fs
     @projects = Project.latest_fs
 # @issues = Issue.latest_fs
 # Paginate results
@@ -192,20 +193,22 @@ class EditorialController < ApplicationController
   end
 
   def edizione
-    #Newsletter
-    #project --> 'e000259'
-    #@id = params[:id] # attenzione è una stringa .to_i
-    #project.id --> 23
     @id = params[:id].to_i
     @project = Project.find_public(@id)
-    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    @issues = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    @block_projects = Project.latest_fs
     #@newsletter = @project.newsletter(User.current)
 
   end
-
-  def edizionex
-    #Newsletter
-
+  def edizione_newsletter
+    #Newsletter  grafica della newsletter
+    @id = params[:id].to_i
+    @project = Project.find_public(@id)
+    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    @prj= Project.find_by_id params[:id].to_i
+  end
+  def edizione_smtp
+    #Newsletter spedita direttamente via smtp VIEW solo per test
     @id = params[:id].to_i
     @project = Project.find_public(@id)
     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])

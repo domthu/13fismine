@@ -26,9 +26,9 @@
     <div class="fs-logged2 fs-blockcontent ">
       <ul>
 
-        <% if User.current && User.current.associazione() %>
+        <% if User.current && User.current.associazione_affiliata %>
             <li>
-              Associato a: <br /> <%= link_to h(User.current.associazione()), asso_path(User.current.associazione()) %>
+              Associato a: <br /> <%= link_to h(User.current.associazione_affiliata), asso_path(User.current.associazione_affiliata) %>
             </li>
         <% else %>
             <% if User.current && User.current.sigla_tipo() %>
@@ -53,7 +53,7 @@
         <% if User.current && User.current.organization() %>
             <%= image_tag "/images/banners/assos/#{ User.current.asso.logo}", :width => 50, :height => 50, :border => 0 %>
         <% else %>
-            <%= image_tag "/images/banners/ico/fs.jpg", :width => 50, :height => 50, :border => 0 %>
+            <%= image_tag "/images/ico/fs.png", :width => 50, :height => 50, :border => 0 %>
         <% end %>
       </div>
     </div>

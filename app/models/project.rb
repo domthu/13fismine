@@ -150,8 +150,9 @@ class Project < ActiveRecord::Base
 
   # returns limited latest projects for homepage in public area
   # MariaCristina creare flag .promoted_to_front_page, per il momento usiamo .is_public combinato con .status
-  def self.latest_fs(user = User.current, count = 5)
-    find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1 AND #{table_name}.status = #{STATUS_FS}"], :order => "#{table_name}.created_on DESC")
+  def self.latest_fs(user = User.current, count = 10)
+    #find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1 AND #{table_name}.status = #{STATUS_FS}"], :order => "#{table_name}.created_on DESC")
+    find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1" ], :order => "#{table_name}.created_on DESC")
     #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in home page
     #Il STATUS_FS dovrebbe essere presso quando la newsletter viene inviata
   end
@@ -773,269 +774,302 @@ class Project < ActiveRecord::Base
     usr = User.find_by_id u
     if !usr.blank?
 
-      s1='<style type="text/css">
-            /* Backgrounds */
-        .email_background {
-            width: 640px;
-            background: url("http://es.pecchia.info/images/commons/email_bg.jpg") repeat-y;
-        }
-    </style>
+    s1='<style type="text/css">
+                /* Backgrounds */
+            .email_background {
+                width: 640px;
+                background: url("http://es.pecchia.info/images/commons/email_bg.jpg") repeat-y;
+            }
+        </style>
 
-    <!-- Contenitore -->
-    <table cellpadding="0" cellspacing="0" border="0" width="99%" bgcolor="#0f6da1">
-    <tr>
-    <td align="center">
-    <table cellpadding="0" cellspacing="0" border="0" width="640">
-    <tr>
-    <td>
-    <!-- Pre Email -->
-    <table cellpadding="0" cellspacing="0" border="0" width="640">
-    <tr>
-      <td valign="bottom" height="40" align="center">
-        <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
-          la newsletter di Fiscosport &nbsp;|&nbsp; L\'edizione
-          <a target="_blank" href="http://fiscosport/edizione/' + self.id.to_s + ' style="color:#ffffff; text-decoration:underline;">
-            num. '+ self.id.to_s + ' ' + self.description + '"</a> è online!</font>
-      </td>
-    </tr>
-    <tr  style="font-size=0;">
-
-      <td valign="bottom"> <img  src="http://es.pecchia.info/images/commons/top_fade.jpg" width="640" height="20" border="0"/>
-
-      </td>
-    </tr>
-    <tr>
-      <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
-      </td>
-    </tr>
-    <tr>
-    <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
-    <!-- inizio contenuto -->
-    <!------------------------------------------------------------------------->'
-      s2='<!-- Inizio sezione con logo e nomeutente -->
-      <table width="560" border="0" cellpadding="0" cellspacing="0">
+        <!-- Contenitore -->
+        <table cellpadding="0" cellspacing="0" border="0" width="99%" bgcolor="#0f6da1">
         <tr>
-          <td width="242" height="110" align="left" valign="top">
-            <!-- logo -->
-           <a href="http://es.pecchia.info/editoriale/home" target="_blank" ><img src="http://es.pecchia.info/images/commons/fiscosport_news.jpg" alt="Fiscosport specialisti fiscali sportivi" border="0"></a>
-       <td align="left" valign="top">
-        <!-- tabella di 2 righe per il testo -->
-        <table width="318" border="0" cellpadding="0" cellspacing="0">
-          <tr>
-            <td height="50" align="left" valign="center" style="border-bottom:1px solid #1C6693;">
-              <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:14px; color:#333333; line-height: 18px; ">
-                Newsletter riservata a :<span style="font-size: 18px;">
-              ' + (usr.firstname? ? "&nbsp;" : usr.firstname) + "&nbsp;" + (usr.lastname.nil? ? "&nbsp;" : usr.lastname) + '</span>
-              </font></td>
-          </tr>
-          <tr>
-            <td width="318" height="50" align="left" valign="center" style="border-bottom:1px solid #cccccc;">
-              <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:13px; color:#333333; line-height:18px; font-weight: bold;">
-                ' + (usr.soc.nil? ? " " : usr.soc)+ ' </font>
-            </td>
-          </tr>
-        </table>
-        <!-- fine tabella di 2 righe per il testo -->
-      </td>
-    </tr>
-  </table>
-  <!-- fine sezione con logo e nomeutente -->
-  <!-- inizio visibile solo se associato (nb togliere il parametro height=30) -->
-  <table width="560" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <td width="505" valign="center" bgcolor="#ffffff" height="50">
-        <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:11px; color:#333333; line-height:18px; font-weight: bold;">
-          riga che appare solo se l\'utente è associato quindi la didascalia e l\'immagine </font>
-      </td>
-      <td width="55" valign="center" align="right">
-        <font style="font-family: Tahoma,Arial, Helvetica, sans-serif; font-size:8px;">
-          icon <br/>50 x 50</font>
-      </td>
-    </tr>
-  </table>
-  <!-- fine riga visibile solo se associato -->
-  <!--inizio dicitura indice -->
-  <table width="560" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <td width="100" align="right" valign="center" height="50">
-        <img src="http://es.pecchia.info/images/commons/indice_ico.jpg" alt="Indice (icona)">
-      </td>
-      <td width="460" align="right" valign="center" height="50">
-        <img src="http://es.pecchia.info/images/commons/indice_ico.jpg" alt="Indice (icona)">
-    </tr>
-  </table>
-  <!--fine  dicitura indice -->
-  <!-------------------------------------------------------------------->
-<!-- inizio loop sezione indice --> '
-      for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
-        ancora = truncate(nart.titolo, :length => 30).to_slug
-        s3 += '<table width="560" border="0" cellpadding="0" cellspacing="0">'
-        if last_tops != nart.section.top_section_id
-          s3 += '<tr>
-            <td height="14" bgcolor="#f5f5f5"></td>
-            &nbsp; </tr>
-          <tr>
-            <td width="560" align="right" valign="top" bgcolor="#fefefe">
-              <table width="560" border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td width="36" height="30" align="center" valign="top">
-                    <img src="http://es.pecchia.info/images/ico/freg-y.png" border="0">
-                  </td>
-                  <td width="524" align="left" valign="center" bgcolor="ffffff" style="border-top:solid 1px #f1e9b8;">
-                    <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333; line-height:2em;">
-                      <!-- sezione -->
-                      <strong>
-                        <span style="color: #0C4481;">
-                        ' + (nart.section.nil? ? "? non trovata la sezione ?" : nart.section.top_section.to_s) + '</span>
-                        :: <span style="color: #e95f03;"> ' + nart.section.to_s + '</span> </strong></font>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>'
-        end
-        s3 += '<!-- titolo --->
-          <tr>
-            <td width="560">
-              <table width="560" border="0" cellpadding="10" cellspacing="0">
-                <tr>
-                  <td width="24" align="left" valign="center">
-                    <a href="#'+ ancora +'" ><img src="http://es.pecchia.info/images/ico/fred24-y.png" border ="0"> </a>
-                  </td>
-                  <td width="536" align="left" valign="center">
-                    <font style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">
-                      <strong>   <a href="#'+ ancora +'" style ="color:#333333; text-decoration: none;">' + nart.titolo + '</strong></font><br/>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <!-- fine titolo --->
-        </table>'
-        last_tops = nart.section.top_section_id
-      end
-      s3 += '<!-- fine loop sezione indice -->
-        <!------------------------------------------------------------------------->
-        <!--inizio dicitura sommario  -->
-        <table width="560" border="0" cellpadding="0" cellspacing="0">
-          <tr>
-            <td height="33">
-            </td>
-          </tr>
-          <tr>
-            <td width="100" align="right" valign="center" height="50">
-            <img src="http://es.pecchia/images/commons/sommario.ico.jpg" alt="Sommario (icona)">
-            </td>
-            <td width="460" align="right" valign="center" height="50">
-            <img src="http://es.pecchia/images/commons/sommario.ico.jpg" alt="Sommario">
-            </td>
-          </tr>
-          <tr>
-            <td height="33">
-            </td>
-          </tr>
-        </table>
-        <!--fine  dicitura sommario  -->
-        <!------------------------------------------------------------------------->
-        <!-- inizio sezione loop articoli --> '
-      for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
-        ancora = truncate(nart.titolo, :length => 30).to_slug
-        s4 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
-          <tr>
-            <td width="560" align="center" valign="top" bgcolor="#f4f4f4" style="border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;">
-              <!-- inizio tabella contenuti -->
-              <table width="560" border="0" cellpadding="0" cellspacing="9">
-                <tr>
-                  <!-- sotto: immagine sx -->
-                  <td width="120" align="left" valign="top" rowspan="2">'
-        if nart.immagine_url.nil?
-          if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{nart.top_section.immagine}")
-            s4 += '<a name="' + ancora + '"> <img src="http://es.pecchia.info/images/commons/sections/"' + nart.top_section.immagine + '" :width ="120"> </a>'
-          else
-            image_tag("/images/commons/sections/no-img.jpg", :width => 120, :id => ancora)
-            s4 += '<a name="' + ancora + '"> <img src="http://es.pecchia.info/images/commons/sections/no-img.jpg" :width ="120"> </a>'
+        <td align="center">
+        <table cellpadding="0" cellspacing="0" border="0" width="640">
+        <tr>
+        <td>
+        <!-- Pre Email -->
+        <table cellpadding="0" cellspacing="0" border="0" width="640">
+        <tr>
+          <td valign="bottom" height="40" align="center">
+            <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
+              la newsletter di Fiscosport &nbsp;|&nbsp; L\'edizione
+              <a target="_blank" href="http://fiscosport/edizione/' + self.id.to_s + ' style="color:#ffffff; text-decoration:underline;">
+                num. '+ self.id.to_s + ' ' + self.description + '"</a> è online!</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="640" style="font-size:0;">
+              <tr>
+                <td>
+                  <td valign="bottom"> <img  src="http://es.pecchia.info/images/commons/top_fade.jpg" width="640" height="20" border="0"/>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
+          </td>
+        </tr>
+        <tr>
+        <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
+        <!-- inizio contenuto -->
+        <!------------------------------------------------------------------------->'
+    s2='<!-- Inizio sezione con logo e nomeutente -->
+          <table width="560" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="242" height="110" align="left" valign="top">
+                <!-- logo -->
+               <a href="http://es.pecchia.info/editoriale/home" target="_blank" ><img src="http://es.pecchia.info/images/commons/fiscosport_news.jpg" alt="Fiscosport specialisti fiscali sportivi" border="0"></a>
+           <td align="left" valign="top">
+            <!-- tabella di 2 righe per il testo -->
+            <table width="318" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td height="50" align="left" valign="center" style="border-bottom:1px solid #1C6693;">
+                  <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:14px; color:#333333; line-height: 18px; ">
+                    Newsletter riservata a :<span style="font-size: 18px;">
+                  ' + (usr.firstname? ? "&nbsp;" : usr.firstname) + "&nbsp;" + (usr.lastname.nil? ? "&nbsp;" : usr.lastname) + '</span>
+                  </font></td>
+              </tr>
+              <tr>
+                <td width="318" height="50" align="left" valign="center" style="border-bottom:1px solid #cccccc;">
+                  <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:13px; color:#333333; line-height:18px; font-weight: bold;">
+                    ' + (usr.soc.nil? ? " " : usr.soc)+ ' </font>
+                </td>
+              </tr>
+            </table>
+            <!-- fine tabella di 2 righe per il testo -->
+          </td>
+        </tr>
+      </table>
+      <!-- fine sezione con logo e nomeutente -->
+      <!-- inizio visibile solo se associato o affiliato-->'
+      if usr.asso_id > 0 && !usr.asso_id.nil?
+      s2 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
+                <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:18px; font-weight: bold;">
+                Associato a: ' + usr.asso.ragione_sociale + '</font>
+
+              </td>
+              <td width="55" valign="bottom" align="right">
+                <img src="http://es.pecchia.info/images/banners/assos/ + usr.asso.logo  + " width="50" height="50" border="0" \>
+              </td>
+            </tr>
+          </table>'
+      else
+         if usr.sigla_tipo()
+    s2 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
+                  <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:11px; color:#333333; line-height:18px; font-weight: bold;">
+                    Affiliato a: ' + usr.sigla_tipo.to_s + '
+                  </font>
+                </td>
+                <td width="55" valign="bottom" align="right">
+                  <img src="http://es.pecchia.info/images/ico/fs.jpg" width="50" height="50" border="0" \>
+                </td>
+              </tr>
+            </table>'
+         end
+    end
+    s2 += '<!-- fine riga visibile solo se associato o è affiliato - sotto un\'ummagine di spazio -->
+          <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
+            <tr>
+              <td width="560" valign="bottom" bgcolor="#ffffff" height="6">
+                <img src="http://es.pecchia.info/images/commons/email_spacer_colors.jpg" width="560" height="6" border="0" \>
+              </td>
+            </tr>
+            <tr>
+              <td width="560" valign="bottom" bgcolor="#ffffff" height="35">
+                <img src="http://es.pecchia.info/images/commons/email_spacer.jpg" width="560" height="35" border="0" \>
+              </td>
+            </tr>
+          </table>
+            <!-------------------------------------------------------------------->
+          <!-- inizio loop sezione indice --> '
+          for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
+            ancora = truncate(nart.titolo, :length => 30).to_slug
+            s3 += '<table width="560" border="0" cellpadding="0" cellspacing="0">'
+            if last_tops != nart.section.top_section_id
+    s3 += '<tr>
+                <td height="14" bgcolor="#f5f5f5"></td>
+                &nbsp; </tr>
+              <tr>
+                <td width="560" align="right" valign="top" bgcolor="#fefefe">
+                  <table width="560" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="36" height="30" align="center" valign="top">
+                        <img src="http://es.pecchia.info/images/ico/freg-y.png" border="0">
+                      </td>
+                      <td width="524" align="left" valign="center" bgcolor="ffffff" style="border-top:solid 1px #f1e9b8;">
+                        <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333; line-height:2em;">
+                          <!-- sezione -->
+                          <strong>
+                            <span style="color: #0C4481;">
+                            ' + (nart.section.nil? ? "? non trovata la sezione ?" : nart.section.top_section.to_s) + '</span>
+                            :: <span style="color: #e95f03;"> ' + nart.section.to_s + '</span> </strong></font>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>'
+            end
+    s3 += '<!-- titolo --->
+              <tr>
+                <td width="560">
+                  <table width="560" border="0" cellpadding="10" cellspacing="0">
+                    <tr>
+                      <td width="24" align="left" valign="center">
+                        <a href="#'+ ancora +'" ><img src="http://es.pecchia.info/images/ico/fred24-y.png" border ="0"> </a>
+                      </td>
+                      <td width="536" align="left" valign="center">
+                        <font style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">
+                          <strong>   <a href="#'+ ancora +'" style ="color:#333333; text-decoration: none;">' + nart.titolo + '</strong></font><br/>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <!-- fine titolo --->
+            </table>'
+            last_tops = nart.section.top_section_id
           end
-        else
-          s4 += '<a name="' + ancora + '"> <img src="' + nart.immagine_url + '" :width ="120" alt="' + ancora + '"> </a>'
-        end
-        s4 += '</td>
+     s3 += '<!-- fine loop sezione indice -->
+            <!------------------------------------------------------------------------->
+            <!--   -- spazio --  -->
+            <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
+              <tr>
+                <td height="33"></td>
+              </tr>
+              <tr>
+                <td width="560" valign="bottom" bgcolor="#ffffff" height="35">
+                  <img src="http://es.pecchia.info/images/commons/email_spacer.jpg" width="560" height="35" border="0" \>
+                </td>
+              </tr>
+            </table>
+            <!--inizio dicitura sommario  -->
+            <table width="560" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td height="16"></td>
+              </tr>
+              <tr>
+                <td width="100" align="right" valign="center" height="50">
+                <img src="http://es.pecchia.info/images/commons/sommario_ico.jpg" alt="Sommario (icona)" \>
+                </td>
+                <td width="460" align="right" valign="center" height="50">
+                <img src="http://es.pecchia.info/images/commons/sommario.jpg" alt="Sommario" \>
+                </td>
+              </tr>
+              <tr>
+                <td height="33"></td>
+              </tr>
+            </table>
+            <!--fine  dicitura sommario  -->
+            <!------------------------------------------------------------------------->
+            <!-- inizio sezione loop articoli --> '
+          for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
+            ancora = truncate(nart.titolo, :length => 30).to_slug
+    s4 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="560" align="center" valign="top" bgcolor="#f4f4f4" style="border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;">
+                  <!-- inizio tabella contenuti -->
+                  <table width="560" border="0" cellpadding="0" cellspacing="9">
+                    <tr>
+                      <!-- sotto: immagine sx -->
+                      <td width="120" align="left" valign="top" rowspan="2">'
+            if nart.immagine_url.nil?
+              if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{nart.top_section.immagine}")
+    s4 += '<a name="' + ancora + '"><img src="http://es.pecchia.info/images/commons/sections/' + nart.top_section.immagine + '" width ="120" \> </a>'
+              else
+                image_tag("/images/commons/sections/no-img.jpg", :width => 120, :id => ancora)
+    s4 += '<a name="' + ancora + '"><img src="http://es.pecchia.info/images/commons/sections/no-img.jpg" width ="120" \> </a>'
+              end
+            else
+    s4 += '<a name="' + ancora + '"><img src="' + nart.immagine_url + '" width ="120" alt="' + ancora + '" \> </a>'
+            end
+    s4 += '</td>
                     <!-- titolo  -->
-                  <td width="440" align="left" valign="top">
-                    <font style="font-family: Arial, Helvetica, sans-serif; font-size:16px; color:#003548; text-align: justify;">
-                      <strong>' + nart.titolo + '</strong> </font><br/>
-                  </td>
-                </tr>
-                <tr>
-                  <!--  riga autore  -->
-                  <td width="440" align="right" valign="top">
-                    <font style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:15px; text-decoration: underline; font-style: italic;">
-                      <strong> <img src="http://es.pecchia.info/images/ico/pen24.png" border ="0">' + nart.author.to_s + '</strong>
-                    </font>
-                  </td>
-                </tr>
-                <tr>
-                  <!-- riga riassunto -->
-                  <td width="560" colspan="2">
-                    <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#000000; line-height:18px; ">
-                      ' + nart.riassunto + '
-                    </font><br/>
-                  </td>
-                </tr>
-              </table>
-              <!--fine tabella contenuti -->
-              <!-- pulsante vedi -->
-              <table width="560" border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td width="560" height="33" align="right" valign="top">
-                    <img src="http://es.pecchia.info/images/commons/btn_news_y.gif.gif" border ="0" width="107" height="29" alt="vedi articolo"
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td width="560" height="13"></td>
-          </tr>
+                      <td width="440" align="left" valign="top">
+                        <font style="font-family: Arial, Helvetica, sans-serif; font-size:16px; color:#003548; text-align: justify;">
+                          <strong>' + nart.titolo + '</strong> </font><br/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <!--  riga autore  -->
+                      <td width="440" align="right" valign="top">
+                        <font style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:15px; text-decoration: underline; font-style: italic;">
+                          <strong> <img src="http://es.pecchia.info/images/ico/pen24.png" border ="0">' + nart.author.to_s + '</strong>
+                        </font>
+                      </td>
+                    </tr>
+                    <tr>
+                      <!-- riga riassunto -->
+                      <td width="560" colspan="2">
+                        <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#000000; line-height:18px; ">
+                          ' + nart.riassunto + '
+                        </font><br/>
+                      </td>
+                    </tr>
+                  </table>
+                  <!--fine tabella contenuti -->
+                  <!-- pulsante vedi -->
+                  <table width="560" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="560" height="33" align="right" valign="top">
+                     <a href="http://fiscosport.it/editoriale/'+ nart.section.top_section.top_menu.key + '/' + nart.section.top_section.key + '/' + nart.id.to_s + ' ' + truncate(nart.titolo, :length => 125).to_slug + '" target="_blank" >
+                              <img src="http://es.pecchia.info/images/commons/btn_news_y.gif" width="107" height="29" alt="vedi articolo" \> </a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td width="560" height="13"></td>
+              </tr>
+            </table>
+            <!-- fine sezione loop articoli -->'
+          end
+    s5 = '<!------------------------------------------------------------------------->
+        <!-- IMPORTANTE fine   contenuto  email-->
         </table>
-        <!-- fine sezione loop articoli -->'
-      end
-
-
-      s5 = '<!------------------------------------------------------------------------->
-    <!-- IMPORTANTE fine   contenuto  email-->
-    </table>
-    </td>
-    </tr>
-    <tr>
-      <td>
-        <img src="http://es.pecchia.info/images/commons/bottom_fade.jpg" width="640" border="0" height="28"/>
-      </td>
-    </tr>
-    <tr>
-      <td valign="top" height="80" align="center">
-        <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
-          footer
-        </font>
-      </td>
-    </table>
-    </td>
-    </tr>
-    </table> '
+        </td>
+        </tr>
+        <tr>
+          <td>
+            <img src="http://es.pecchia.info/images/commons/bottom_fade.jpg" width="640" border="0" height="28"/>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" height="80" align="center">
+            <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
+              footer
+            </font>
+          </td>
+        </table>
+        </td>
+        </tr>
+        </table> '
 
       return s1+s2+s3+s4+s5
-    else
-      return '<h1 style="color:red;"> Utente id:[' + u.to_s + '] non trovato!</h1>'
+        else
+          return '<h1 style="color:red;"> Utente id:[' + u.to_s + '] non trovato!</h1>'
     end
-
   end
 
   def testuser(u) #sperimentale sandro
                   # User.exists?( :id => usr )
+                  # oppure per includere altro ... example:
+                   #User.find_by_id(id, :include => [:accounts => [:orders => [:objects]]])
     s=""
-    for i in 0..5
-      usr = User.find_by_id u
+    for i in 0..10
+    usr = User.find_by_id u
       if !usr.blank?
         s += '<h1 style="color:blue;">' + usr.firstname + '</h1>'
+        s += '<h2 style="color:green;">' + usr.asso_id.to_s + '</h2>'
 
         u += 1
       else

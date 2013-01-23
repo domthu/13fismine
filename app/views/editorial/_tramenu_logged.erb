@@ -1,10 +1,11 @@
 <h4> In caso di utente loggato in questo spazio si puo' visulizzare la scadenza dell'abbonamento la proposta di rinnovo
   o altro contenuto ...</h4>
+<% if User.current.asso && User.current.asso_id > 0   %>
 <h5> <%=  User.current.asso.logo %> </h5>
 
 <h5> <%=  User.current.pubblicita.count %> </h5>
 <h3> <%#   User.current.associazione.logo %></h3>
-
+ <% end %>
 
  STATO: <%= get_status_role(User.current) %>
 --  SCADENZA: <%= getdate(User.current.scadenza) %>
