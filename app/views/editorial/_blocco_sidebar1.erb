@@ -1,10 +1,13 @@
 <div class="fs-layout-cell fs-sidebar1 clearfix">
-
+  <% if !@block_projects.nil? %>
+    <%= render :partial => 'blocco_edizioni' %>
+   <% end %>
     <%= render :partial => 'blocco_slide1' %>
     <%# render :partial =>  'blocco_ricerca' %>
     <%# render :partial => 'blocco_banners1' %>
     <%# render :partial => 'blocco_account' %>
     <%= render :partial => 'blocco_art_evidenziati' %>
+
 
 </div>
 

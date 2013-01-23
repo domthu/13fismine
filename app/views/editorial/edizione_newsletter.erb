@@ -1,0 +1,314 @@
+<div class="fs-layout-cell fs-content clearfix">
+
+<div id="fs-edizione">
+    <%= link_to(image_tag("/images/ico/newsletter.png"), url_for(:controller => 'editorial', :action => "edizione_newsletter", :escape => false)) %>
+  <%= @project.description %>
+
+</div>
+<style type="text/css" xmlns="http://www.w3.org/1999/html">
+        /* Backgrounds */
+    .email_background {
+        width: 640px;
+        background: url('/images/commons/email_bg.jpg') repeat-y;
+    }
+</style>
+
+<!-- Contenitore -->
+<table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#0f6da1">
+<tr>
+<td align="center">
+<table cellpadding="0" cellspacing="0" border="0" width="640">
+<tr>
+<td>
+<!-- Pre Email -->
+<table cellpadding="0" cellspacing="0" border="0" width="640">
+<tr>
+  <td valign="bottom" height="40" align="center">
+    <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
+      La newsletter di Fiscosport, puoi consultare l'edizione
+      <%= link_to(@project.description ,  :controller=> 'editorial', :action=> 'edizione_newsletter',:id => @project.id  )  %>  direttamente online.
+      </font>
+  </td>
+</tr>
+<tr>
+  <td>
+    <table cellpadding="0" cellspacing="0" border="0" width="640" style="font-size:0;">
+      <tr>
+        <td>
+
+          <img src="/images/commons/top_fade.jpg" width="640" height="20" border="0"/>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td align="center" background="/images/commons/email_bg.jpg" class="email_background">
+  </td>
+</tr>
+<tr>
+<td align="center" background="/images/commons/email_bg.jpg" class="email_background">
+<!-- IMPORTANTE!   inizio contenuto   -->
+<!------------------------------------------------------------------------->
+<!-- Inizio sezione con logo e nomeutente -->
+<table width="560" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="242" height="110" align="left" valign="top">
+      <!-- logo -->
+      <%= link_to image_tag("/images/commons/fiscosport_news.jpg", :border => 0, :controller => 'editorial', :action => 'home') %>
+
+    <td align="left" valign="top">
+      <!-- tabella di 2 righe per il testo -->
+      <table width="318" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td height="50" align="left" valign="center" style="border-bottom:1px solid #1C6693;">
+            <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height: 18px; ">
+              Newsletter riservata a :<span style="font-size: 18px;">
+                            <%= User.current.firstname %> &nbsp; <%= User.current.lastname %></span>
+            </font></td>
+        </tr>
+        <tr>
+          <td width="318" height="50" align="left" valign="center" style="border-bottom:1px solid #cccccc;">
+            <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:13px; color:#333333; line-height:18px; font-weight: bold;"> <%= User.current.soc %> </font>
+          </td>
+        </tr>
+      </table>
+      <!-- fine tabella di 2 righe per il testo -->
+    </td>
+  </tr>
+</table>
+<!-- fine sezione con logo e nomeutente -->
+<!-- inizio visibile solo se associato o affiliato-->
+<% if User.current.associazione_affiliata %>
+    <table width="560" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
+          <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:18px; font-weight: bold;">
+            Associato a:<%=User.current.cross_organization.organizzazione %>&nbsp;<%=User.current.cross_organization.sigla %>&nbsp;<%= link_to h(User.current.associazione_affiliata), asso_path(User.current.associazione_affiliata), :style => "text-decoration:none;" %>
+          </font>
+        </td>
+        <td width="55" valign="bottom" align="right">
+          <%= image_tag "/images/banners/assos/#{ User.current.asso.logo}", :width => 50, :height => 50, :border => 0 %>
+        </td>
+      </tr>
+    </table>
+<% else %>
+    <% if User.current.sigla_tipo() %>
+        <table width="560" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
+              <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:11px; color:#333333; line-height:18px; font-weight: bold;">
+                Affiliato
+                a: <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()), :style => "text-decoration:none;" %>
+              </font>
+            </td>
+            <td width="55" valign="bottom" align="right">
+              <%= image_tag "/images/ico/fs.jpg", :width => 50, :height => 50, :border => 0 %>
+            </td>
+          </tr>
+        </table>
+    <% end %>
+<% end %>
+<!-- fine riga visibile solo se associato o è affiliato'  / sotto un'ummagine di spazio -->
+<table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
+  <tr>
+    <td width="560" valign="bottom" bgcolor="#ffffff" height="6">
+      <%= image_tag "/images/commons/email_spacer_colors.jpg", :width => 560, :height => 6, :border => 0 %>
+    </td>
+  </tr>
+  <tr>
+    <td width="560" valign="bottom" bgcolor="#ffffff" height="35">
+      <%= image_tag "/images/commons/email_spacer.jpg", :width => 560, :height => 35, :border => 0 %>
+    </td>
+  </tr>
+</table>
+<!--inizio dicitura indice -->
+<table width="560" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100" align="right" valign="center" height="50">
+      <%= image_tag("/images/commons/indice_ico.jpg", :alt => 'Indice') %>
+    </td>
+    <td width="460" align="right" valign="center" height="50">
+      <%= image_tag("/images/commons/indice.jpg", :alt => 'Indice') %>
+    </td>
+  </tr>
+</table>
+<!--fine  dicitura indice -->
+<!-------------------------------------------------------------------->
+<!-- inizio loop sezione indice -->
+<% last_tops=0
+   ancora ="" %>
+<% @art.each do |nart| %>
+    <% ancora = h(truncate(nart.titolo, :length => 30).to_slug) %>
+
+    <table width="560" border="0" cellpadding="0" cellspacing="0">
+      <% if last_tops != nart.section.top_section_id %>
+          <tr>
+            <td height="14" bgcolor="#f5f5f5"></td>
+            &nbsp; </tr>
+          <tr>
+            <td width="560" align="right" valign="top" bgcolor="#fefefe">
+              <table width="560" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="36" height="30" align="center" valign="top">
+                    <%= link_to image_tag("/images/ico/freg-y.png", :border => 0) %>
+
+                  </td>
+                  <td width="524" align="left" valign="center" bgcolor="ffffff" style="border-top:solid 1px #f1e9b8;">
+                    <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333; line-height:2em;">
+                      <!-- sezione -->
+                      <strong>
+                        <span style="color: #0C4481;"><%= (nart.section.nil? ? "? non trovata la sezione ?" : nart.section.top_section.to_s) %> </span>
+                        :: <span style="color: #e95f03;"> <%= nart.section.to_s %></span> </strong></font>
+                  </td>
+
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+      <% end %>
+      <!-- titolo --->
+      <tr>
+        <td width="560">
+          <table width="560" border="0" cellpadding="10" cellspacing="0">
+            <tr>
+              <td width="24" align="left" valign="center">
+                <%= link_to image_tag("/images/ico/fred24-y.png", :border => 0), :anchor => ancora %>
+              </td>
+              <td width="536" align="left" valign="center">
+
+                <font style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">
+                  <strong>  <%= link_to(h(nart.titolo), url_for(:anchor => ancora), :style => 'color:#333333; text-decoration: none;') %> </strong></font><br/>
+
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <!-- fine titolo --->
+    </table>
+    <%# end %>
+    <% last_tops = nart.section.top_section_id %>
+<% end %>
+<!-- fine loop sezione indice -->
+<!------------------------------------------------------------------------->
+<!-- spazio -->
+<table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
+  <tr>
+    <td height="33">
+    </td>
+  </tr>
+  <tr>
+    <td width="560" valign="bottom" bgcolor="#ffffff" height="35">
+      <%= image_tag "/images/commons/email_spacer.jpg", :width => 560, :height => 35, :border => 0 %>
+    </td>
+  </tr>
+</table>
+<!--inizio dicitura sommario  -->
+<table width="560" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="16">
+    </td>
+  </tr>
+  <tr>
+    <td width="100" align="right" valign="center" height="50">
+      <%= image_tag("/images/commons/sommario_ico.jpg", :alt => 'Sommario') %>
+    </td>
+    <td width="460" align="right" valign="center" height="50">
+      <%= image_tag("/images/commons/sommario.jpg", :alt => 'Sommario') %>
+    </td>
+  </tr>
+  <tr>
+    <td height="33">
+    </td>
+  </tr>
+</table>
+<!--fine  dicitura sommario  -->
+<!------------------------------------------------------------------------->
+<!-- inizio sezione loop articoli -->
+<% @art.each do |articolo| %>
+    <% ancora = h(truncate(articolo.titolo, :length => 30).to_slug) %>
+    <table width="560" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="560" align="center" valign="top" bgcolor="#f4f4f4" style="border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;">
+          <!-- inizio tabella contenuti -->
+          <table width="560" border="0" cellpadding="0" cellspacing="9">
+            <tr>
+              <!-- sotto: immagine sx -->
+              <td width="120" align="left" valign="top" rowspan="2">
+                <%= if articolo.immagine_url.nil? || !(FileTest.exist?("#{RAILS_ROOT}/public/images/#{articolo.immagine_url}"))
+                      if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
+                        image_tag("/images/commons/sections/#{articolo.top_section.immagine}", :width => 120, :id => ancora)
+                      else
+                        image_tag("/images/commons/sections/no-img.jpg", :width => 120, :id => ancora)
+                      end
+                    else
+                      image_tag(articolo.immagine_url, :id => ancora, :alt => h(truncate(articolo.titolo, :length => 25)))
+                    end
+                %>
+              </td>
+              <!-- titolo  -->
+              <td width="440" align="left" valign="top">
+                <font style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#003548; text-align: justify;">
+                  <strong> <%= articolo.titolo %>
+                  </strong> </font><br/>
+              </td>
+            </tr>
+            <tr>
+              <!--  riga autore  -->
+              <td width="440" align="right" valign="top">
+                <font style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:15px; text-decoration: underline; font-style: italic;">
+                  <strong> <%= image_tag("/images/ico/pen24.png", :border => 0) %> <%= articolo.author %> </strong>
+                </font>
+              </td>
+            </tr>
+            <tr>
+              <!-- riga riassunto -->
+              <td width="560" colspan="2">
+                <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#000000; line-height:18px; ">
+                  <%= articolo.riassunto %>
+                </font><br/>
+              </td>
+            </tr>
+          </table>
+          <!--fine tabella contenuti -->
+          <!-- pulsante vedi -->
+          <table width="560" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="560" height="33" align="right" valign="top">
+
+                <%= link_to(image_tag("/images/commons/btn_news_y.gif", :width => 107, :height => 29, :alt => 'vedi articolo'), url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false), :target => '_blank') %>
+
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td width="560" height="13"></td>
+      </tr>
+    </table>
+<% end %>
+<!-- fine sezione loop articoli -->
+<!------------------------------------------------------------------------->
+<!-- !importante fine   contenuto  email-->
+</table>
+</td>
+</tr>
+<tr>
+  <td>
+    <img src="/images/commons/bottom_fade.jpg" width="640" border="0" height="28"/>
+  </td>
+</tr>
+<tr>
+  <td valign="top" height="80" align="center">
+    <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
+      footer
+    </font>
+  </td>
+</table>
+</td>
+</tr>
+</table>
+<%= render :partial => 'blocco_sidebar1' %>
