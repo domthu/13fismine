@@ -9,7 +9,7 @@ SimpleNavigation::Configuration.run do |navigation|
   # Define the primary navigation
   navigation.items do |menu_generale|
     menu_generale.item :key_home, 'Home', editorial_path do |primary|
-      primary.item :editoriale, 'Editoriale', editorial_path , :highlights_on => %r(/edizione || /convegni-eventi)
+      primary.item :editoriale, 'Editoriale', editorial_path , :highlights_on => %r(/edizion)
       @top_menus = TopMenu.find(:all)
 
       @top_menus.each do |tmn|
@@ -42,9 +42,7 @@ SimpleNavigation::Configuration.run do |navigation|
         primary.dom_class = 'fs-menu2-hmenu'
         sub_q.dom_class='fs-menu2-hmenu'
 
-
       end
-
 
     end
     menu_generale.item :key_2, 'Chi Siamo', chisiamo_path

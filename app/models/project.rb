@@ -150,7 +150,7 @@ class Project < ActiveRecord::Base
 
   # returns limited latest projects for homepage in public area
   # MariaCristina creare flag .promoted_to_front_page, per il momento usiamo .is_public combinato con .status
-  def self.latest_fs(user = User.current, count = 10)
+  def self.latest_fs(user = User.current, count = 5)
     #find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1 AND #{table_name}.status = #{STATUS_FS}"], :order => "#{table_name}.created_on DESC")
     find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1" ], :order => "#{table_name}.created_on DESC")
     #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in home page
@@ -735,6 +735,7 @@ class Project < ActiveRecord::Base
 
   # --------------------------------NEWSLETTER-----------------------------------
   #
+=begin
   def newsletter(user = User.current)
     str = "<h1>" + self.name + "</h1>"
     str += "<h3>" + self.description + "</h3>"
@@ -767,6 +768,7 @@ class Project < ActiveRecord::Base
 
     return str
   end
+=end
 
 
   def newsletter_smtp(u)

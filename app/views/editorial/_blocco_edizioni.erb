@@ -1,31 +1,28 @@
 <h1 style="display:none">__PARTIAL EDIZIONI</h1>
 <div class="fs-block clearfix">
   <div class="fs-blockheader">
-    <h3 class="t">Ultime
-      Edizioni</h3> <!-- <span style="font-size: 14px; font-weight: bold;">:(<%#@issues.count %>)</span> -->
+    <h3 class="t">Ultime Edizioni</h3>
   </div>
-
   <div class="fs-blockcontent">
     <% @block_projects.each do |prj| %>
-        <div class="fs-postcontent fs-postcontent-0 clearfix">
-          <div class="fs-content-layout fs-block-edizioni">
-            <div class="fs-content-layout-row">
-              <div class="fs-layout-cell layout-item-0" style="width: 100%">
-
-                <div class="fs-postheader fs-blockheader-edizioni">Edizione
-
-                    <%= link_to(h(prj.description), url_for(:controller => 'editorial', :action => "edizione", :id => prj.id, :escape => false)) %>
-
-                  </div>
-                  <%# link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false) %>
-                  <p class="separticle"></p>
-
+        <div class="fs-content-layout fs-block-edizioni">
+          <div class="fs-content-layout-row">
+            <div class="fs-layout-cell layout-item-0" style="width: 100%">
+              <div class="fs-postheader fs-blockheader-edizioni">
+                Edizione <%= link_to(h(prj.description), url_for(:controller => 'editorial', :action => "edizione", :id => prj.id, :escape => false)) %>
               </div>
             </div>
           </div>
+        </div>
     <% end %>
-    <br/>
-    <%# link_to l(:label_issues_view_all), :action => 'articoli' %>
+    <div class="fs-content-layout fs-block-edizioni">
+      <div class="fs-content-layout-row">
+        <div class="fs-layout-cell layout-item-0" style="width: 100%;">
+          <div class="fs-postheader fs-blockheader-edizioni" style="height: 30px; padding-top:15px ;">
+            <%= link_to "Tutte le edizioni ... ", url_for(:controller => 'editorial', :action => "edizioni", :escape => false), :class => "fs-rosso-button" %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
