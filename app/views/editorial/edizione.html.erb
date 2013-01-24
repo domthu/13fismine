@@ -1,11 +1,9 @@
-
 <div class="fs-layout-cell fs-content clearfix">
-
-<div id="fs-edizione">
-    <%= link_to(image_tag("/images/ico/newsletter.png"), url_for(:controller => 'editorial', :action => "edizione_newsletter", :escape => false)) %>
-  <%= @project.description %>
-
-</div>
+  <div id="fs-edizione">
+    <%= link_to(image_tag("/images/ico/newsletter.png"), url_for(:controller => 'editorial', :action => "edizione_newsletter", :escape => false),:height=>64) %>
+    <%= @project.description %>
+  </div>
+<div class="cleared" style="width: 100%; margin:11px;" > </div>
   <% if @issues && @issues.any? %>
       <% @issues.each do |articolo| %>
           <!-- qui è l'inserimento dell'articolo -->
