@@ -723,7 +723,12 @@ class Project < ActiveRecord::Base
   # Yields the given block for each project with its level in the tree
   def self.project_tree(projects, &block)
     ancestors = []
-    projects.sort_by(&:lft).each do |project|
+    #projects.sort_by(&:lft).each do |project|
+    #Domthu20130125 Order project using nested set: changing the order
+    #in the nested set would require changing the lft and rgt fields of a project
+    #The lft, rgt and root_id columns used by the awesome_nested_set vendored with Redmine
+    #=> prefered for last created appears first
+    projects.sort_by(&:created_on).reverse.each do |project|
       while (ancestors.any? && !project.is_descendant_of?(ancestors.last))
         ancestors.pop
       end

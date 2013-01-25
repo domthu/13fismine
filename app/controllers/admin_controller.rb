@@ -19,12 +19,12 @@ class AdminController < ApplicationController
   layout 'admin'
   before_filter :require_admin
   helper :sort
-  include SortHelper	
+  include SortHelper
 
   def index
     @no_configuration_data = Redmine::DefaultData::Loader::no_data?
   end
-	
+
   def projects
     @status = params[:status] ? params[:status].to_i : 1
     c = ARCondition.new(@status == 0 ? "status <> 0" : ["status = ?", @status])

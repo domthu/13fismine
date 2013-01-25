@@ -49,7 +49,12 @@ class ProjectsController < ApplicationController
   def index
     respond_to do |format|
       format.html {
-        @projects = Project.visible.find(:all, :order => 'lft')
+        #@projects = Project.visible.find(:all, :order => 'lft')
+        #Domthu20130125 Order project using nested set: changing the order
+        #in the nested set would require changing the lft and rgt fields of a project
+        #The lft, rgt and root_id columns used by the awesome_nested_set vendored with Redmine
+        #=> prefered for last updated appears first
+        @projects = Project.visible.find(:all, :order => 'updated_on DESC, lft')
       }
       format.api  {
         @offset, @limit = api_offset_and_limit
