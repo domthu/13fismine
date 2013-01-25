@@ -297,6 +297,8 @@ end
 Redmine::MenuManager.map :application_menu do |menu|
   # Empty
   #domthu 20120517
+
+  menu.push :top_menu, :top_menus_path, :if => Proc.new { User.current.admin? }
   menu.push :top_section, :top_sections_path, :if => Proc.new { User.current.admin? }
   menu.push :section, :sections_path, :if => Proc.new { User.current.admin? }
   #menu.push :region, :regions_path, :if => Proc.new { User.current.admin? }
