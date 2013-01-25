@@ -183,11 +183,23 @@ class EditorialController < ApplicationController
     #@issues = Issue.find(:all, :conditions => ["section_id =  ?", @id], :limit => 100)
     #@issues = Issue.all_by_sezione_fs(@id)
   end
-
-
-  def sezione
+  # -----------------  ARTICOLO  (inizio)   ------------------
+  def articolo
+    #singolo articolo
+    @id = params[:article_id].to_i
+    @articolo= Issue.find(@id)
+    @section_id = @articolo.section_id
   end
 
+=begin
+non usata?
+  def articoli
+     @issues2 = Issue.latest_fs
+  end
+=end
+
+  # -----------------  ARTICOLO  (fine)   ------------------
+  # -----------------  EDIZIONI /NEWSLETTER  (inizio)  ------------------
   def edizioni
     @projects = Project.all_fs
   end
@@ -197,8 +209,6 @@ class EditorialController < ApplicationController
     @project = Project.find_public(@id)
     @issues = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
     @block_projects = Project.latest_fs
-    #@newsletter = @project.newsletter(User.current)
-
   end
   def edizione_newsletter
     #Newsletter  grafica della newsletter
@@ -212,35 +222,18 @@ class EditorialController < ApplicationController
     @id = params[:id].to_i
     @project = Project.find_public(@id)
     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-    #@news = News.all(:limit => 10)
     @news = @project.newsletter_smtp(User.current)
     @prj= Project.find_by_id params[:id].to_i
+  end
+  # -----------------  EDIZIONI /NEWSLETTER  (fine)  ------------------
+  # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------
+  def convegni
 
 
   end
-  def ediz_test
-     #Newsletter
+  # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------
 
-     @id = params[:id].to_i
-     @project = Project.find_public(@id)
-     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-     #@news = News.all(:limit => 10)
-     @news = @project.newsletter_smtp(User.current)
-
-
-   end
-
-  def articoli
-    @issues2 = Issue.latest_fs
-  end
-
-  #map.articolo_page '/editorial/:topmenu_key/sezione/:topsection_id/articolo/:article_id'
-  #map.articolo_page '/editorial/:topmenu_key/articolo/:article_id'
-  def articolo
-    @id = params[:article_id].to_i
-    @articolo= Issue.find(@id)
-    @section_id = @articolo.section_id
-  end
+ # -----------------       QUESITI    (inizio)        ------------------
 
   def quesiti
   end
@@ -269,7 +262,7 @@ class EditorialController < ApplicationController
     #DO SOME USRE STUFF HERE
 
   end
-
+  # -----------------       QUESITI    (fine)        ------------------
   def contact
   end
 
