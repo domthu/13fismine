@@ -284,7 +284,42 @@
     color: #5f0100;
     position: relative;
 }
+.fs-logged2{
+    width: 100%;
+    border: dotted 1px #d2b48c;
 
+}
+.fs-logged2 ul{
+    width: 200px;
+    float:left;
+}
+.fs-logged2 ul li{
+
+    font-style: italic;
+    text-align: left;
+
+}
+.fs-logged2 a,
+.fs-logged2 a:link,
+.fs-logged2 a:visited,
+.fs-logged2 a:hover{
+text-decoration: none;
+    font-style: normal;
+
+    text-align: left;
+
+
+}
+.fs-logged2-ico {
+    float: right;
+    width:60px;
+
+}
+.fs-logged1 {
+    height: 50px;
+    overflow: hidden;
+
+}
 /*  fine  3 -  -  -  -  -  -   tramenu   terzo blocco   -  -  -  -  -  -  */
 
 /* pagina chi siamo */
@@ -349,6 +384,7 @@ h3.fs-postheader {
     margin: 0 auto;
     display: inline-block;
     position: relative;
+    font-variant: small-caps;
 
 }
 
@@ -357,6 +393,9 @@ h3.fs-postheader {
     color: #fff;
     font-size: 12px;
     font-family: Arial, Helvetica, Sans-Serif;
+    line-height: 16px;
+    font-variant: small-caps;
+
     /*
     background: linear-gradient(top, #FFFFFF 0, #80DDFF 100%) no-repeat;
     background: -webkit-linear-gradient(top,#80DDFF 0, #d0e6e8 50%, #80DDFF 100%) no-repeat;
@@ -645,6 +684,9 @@ margin-left:-1px;*/
     display: block;
 
 }
+.fs-riassunto-full p{
+    padding-left: 10px;
+}
 
 .fs-postmetadata-full {
     background: #ffffff;
@@ -672,7 +714,7 @@ margin-left:-1px;*/
 }
 
 .fs-image-caption-wrapper-full img {
-    margin: 5px;
+    margin: 5px auto;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -709,8 +751,100 @@ text-decoration: none;
     font-size: 12px;
     line-height: 15px;
 }
-/* fine post comuni */
+.fs-box-link span{
+    display: inline-block;
+    background-color: #e0e0e0;
+    font-style: italic;
+    padding:3px;
 
+}
+/*per il blocco edizioni */
+.fs-blockheader-edizioni
+{
+   background: #FDFFCA;
+   -webkit-border-radius:3px;
+   -moz-border-radius:3px;
+   border-radius:3px;
+   border:1px solid #dfd7a8;
+   padding:10px 3px;
+   margin:0 auto;
+
+}
+.fs-blockheader-edizioni,
+.fs-blockheader-edizioni a,
+.fs-blockheader-edizioni a:link,
+.fs-blockheader-edizioni a:visited,
+.fs-blockheader-edizioni a:hover
+{
+
+    font-size: 13px!important;
+   font-family:  Arial, Helvetica, Sans-Serif;
+   font-weight: bold;
+   font-style: normal;
+   font-variant: small-caps;
+   text-align: center;
+   margin: 0 10px;
+}
+.fs-block-edizioni{
+    margin: 3px auto;
+
+}
+/* per la pagina edizioni tutte */
+.fs-blockheader-ediz-all
+{
+   background: #FDFFCA;
+   -webkit-border-radius:3px;
+   -moz-border-radius:3px;
+   border-radius:3px;
+   border:1px solid #dfd7a8;
+   padding:3px 3px;
+   margin:0 auto;
+    width: 280px;
+    overflow: hidden;
+    height:15px;
+
+}
+.fs-blockheader-ediz-all,
+.fs-blockheader-ediz-all a,
+.fs-blockheader-ediz-all a:link,
+.fs-blockheader-ediz-all a:visited,
+.fs-blockheader-ediz-all a:hover
+{
+
+    font-size: 10px!important;
+   font-family: Arial, Helvetica, Sans-Serif;
+   font-weight: bold;
+   font-style: normal;
+   font-variant: small-caps;
+   text-align: center;
+   margin: 0;
+  }
+
+.fs-edizioni-all{
+    margin: 3px;
+    width: 286px;
+
+    position: relative;
+    float:left;
+}
+
+#fs-edizione{
+    font-size: 26px;
+    width:95%;
+    text-align: center;
+    color: #FF5008;
+    padding:10px;
+}
+#fs-edizione img{
+border-left: 10px;
+    float:right;
+}
+.fs-3columns{
+    float: left;
+    width: 225px;
+    border: dotted 1px #4169e1;
+}
+/* fine post comuni */
 /* inizio slide */
 .fs-slidecontainerslideshutterstock_1 {
     position: relative;
@@ -865,14 +999,14 @@ text-decoration: none;
     height: 7px;
 }
 
-/*  fine slide */
+/* fine slide sott:; non usata
 
 #approfondimenti3 {
     background-image: url('/images/commons/3-32.png');
     background-repeat: no-repeat;
     background-color: #EAF4F5;
     background-clip: content-box;
-    -webkit-background-clip: content-box; /* Safari */
+    -webkit-background-clip: content-box;
     background-position: 2px 1px;
 }
 
@@ -881,7 +1015,7 @@ text-decoration: none;
     background-repeat: no-repeat;
     background-color: #EAF4F5;
     background-clip: content-box;
-    -webkit-background-clip: content-box; /* Safari */
+    -webkit-background-clip: content-box;
     background-position: 2px 1px;
 }
 
@@ -890,10 +1024,10 @@ text-decoration: none;
     background-repeat: no-repeat;
     background-color: #EAF4F5;
     background-clip: content-box;
-    -webkit-background-clip: content-box; /* Safari */
+    -webkit-background-clip: content-box;
     background-position: 2px 1px;
 }
-
+*/
 /*     menudi navigazione    */
 .art-nav {
     /*
@@ -1807,4 +1941,352 @@ ul.fs-menu2-hmenu>li.ext.ext-l.ext-r:hover>.ext-m:before {
     right: -8px;
 
 }
+/* bottone -blu !!*/
+.fs-blu-button
+{
+   border: 0;
+   border-collapse: separate;
+   -webkit-background-origin: border !important;
+   -moz-background-origin: border !important;
+   background-origin: border-box !important;
+   background: #006B92;
+   background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+   background: -moz-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+   background: -o-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+   background: -ms-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+   background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+   -svg-background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   padding:0 35px;
+   margin:0 auto;
+   height:32px;
+    font-variant:normal;
 
+}
+
+a.fs-blu-button,
+a.fs-blu-button:link,
+a:link.fs-blu-button:link,
+body a.fs-blu-button:link,
+a.fs-blu-button:visited,
+body a.fs-blu-button:visited,
+input.fs-blu-button,
+button.fs-blu-button
+{
+   text-decoration: none;
+   font-size: 13px;
+   font-family: 'Trebuchet MS', Arial, Helvetica, Sans-Serif;
+   font-weight: bold;
+   font-style: normal;
+   position:relative;
+   display: inline-block;
+   vertical-align: middle;
+   white-space: nowrap;
+   text-align: center;
+   color: #FFFFFF;
+   margin: 0 5px 0 0 !important;
+   overflow: visible;
+   cursor: pointer;
+   text-indent: 0;
+   line-height: 32px;
+   -webkit-box-sizing: content-box;
+   -moz-box-sizing: content-box;
+   box-sizing: content-box;
+    font-variant:normal;
+
+}
+
+.fs-blu-button img
+{
+   margin: 0;
+   vertical-align: middle;
+}
+
+
+
+.fs-blu-button.active, .fs-blu-button.active:hover
+{
+   background: #FFBE1A;
+   background: linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
+   background: -moz-linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
+   background: -o-linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
+   background: -ms-linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
+   background: linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
+   -svg-background: linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   padding:0 35px;
+   margin:0 auto;
+    font-variant:normal;
+}
+.fs-blu-button.active, .fs-blu-button.active:hover {
+   color: #8A311F !important;
+}
+
+.fs-blu-button.hover, .fs-blu-button:hover
+{
+   background: #007FAD;
+   background: linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+   background: -moz-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+   background: -o-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+   background: -ms-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+   background: linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+   -svg-background: linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   padding:0 35px;
+   margin:0 auto;
+    font-variant:normal;
+}
+.fs-blu-button.hover, .fs-blu-button:hover {
+   color: #FFFFFF !important;
+}
+/*fine bottoni blu */
+/* inizio bottone giallo */
+
+.fs-giallo-button
+{
+   border: 0;
+   border-collapse: separate;
+   -webkit-background-origin: border !important;
+   -moz-background-origin: border !important;
+   background-origin: border-box !important;
+   background: #FCB500;
+   background: linear-gradient(top, #FFBD14 0, #FFBD14 50%, #FFBB0F 60%, #FFB700 75%, #E5A400 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #FFBD14 0, #FFBD14 50%, #FFBB0F 60%, #FFB700 75%, #E5A400 100%) no-repeat;
+   background: -moz-linear-gradient(top, #FFBD14 0, #FFBD14 50%, #FFBB0F 60%, #FFB700 75%, #E5A400 100%) no-repeat;
+   background: -o-linear-gradient(top, #FFBD14 0, #FFBD14 50%, #FFBB0F 60%, #FFB700 75%, #E5A400 100%) no-repeat;
+   background: -ms-linear-gradient(top, #FFBD14 0, #FFBD14 50%, #FFBB0F 60%, #FFB700 75%, #E5A400 100%) no-repeat;
+   background: linear-gradient(top, #FFBD14 0, #FFBD14 50%, #FFBB0F 60%, #FFB700 75%, #E5A400 100%) no-repeat;
+   -svg-background: linear-gradient(top, #FFBD14 0, #FFBD14 50%, #FFBB0F 60%, #FFB700 75%, #E5A400 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   padding:0 35px;
+   margin:0 auto;
+   height:32px;
+    font-variant:normal;
+}
+a.fs-giallo-button,
+a.fs-giallo-button:link,
+a:link.fs-giallo-button:link,
+body a.fs-giallo-button:link,
+a.fs-giallo-button:visited,
+body a.fs-giallo-button:visited,
+input.fs-giallo-button,
+button.fs-giallo-button
+{
+   text-decoration: none;
+   font-size: 13px;
+   font-family: 'Trebuchet MS', Arial, Helvetica, Sans-Serif;
+   font-weight: bold;
+   font-style: normal;
+   position:relative;
+   display: inline-block;
+   vertical-align: middle;
+   white-space: nowrap;
+   text-align: center;
+   color: #000000;
+   margin: 0 5px 0 0 !important;
+   overflow: visible;
+   cursor: pointer;
+   text-indent: 0;
+   line-height: 32px;
+   -webkit-box-sizing: content-box;
+   -moz-box-sizing: content-box;
+   box-sizing: content-box;
+    font-variant:normal;
+}
+
+.fs-giallo-button img
+{
+   margin: 0;
+   vertical-align: middle;
+}
+
+.fs-giallo-button.active, .fs-giallo-button.active:hover
+{
+   background: #8A311F;
+   background: linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -moz-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -o-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -ms-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   -svg-background: linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   padding:0 35px;
+   margin:0 auto;
+    font-variant:normal;
+}
+.fs-giallo-button.active, .fs-giallo-button.active:hover {
+   color: #FFC91A !important;
+}
+
+.fs-giallo-button.hover, .fs-giallo-button:hover
+{
+   background: #FFC91A;
+   background: linear-gradient(top, #FFCE2E 0, #FFCE2E 50%, #FFCD29 60%, #FFC300 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #FFCE2E 0, #FFCE2E 50%, #FFCD29 60%, #FFC300 100%) no-repeat;
+   background: -moz-linear-gradient(top, #FFCE2E 0, #FFCE2E 50%, #FFCD29 60%, #FFC300 100%) no-repeat;
+   background: -o-linear-gradient(top, #FFCE2E 0, #FFCE2E 50%, #FFCD29 60%, #FFC300 100%) no-repeat;
+   background: -ms-linear-gradient(top, #FFCE2E 0, #FFCE2E 50%, #FFCD29 60%, #FFC300 100%) no-repeat;
+   background: linear-gradient(top, #FFCE2E 0, #FFCE2E 50%, #FFCD29 60%, #FFC300 100%) no-repeat;
+   -svg-background: linear-gradient(top, #FFCE2E 0, #FFCE2E 50%, #FFCD29 60%, #FFC300 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   padding:0 35px;
+   margin:0 auto;
+    font-variant:normal;
+}
+.fs-giallo-button.hover, .fs-giallo-button:hover {
+   color: #000000 !important;
+}
+/*fine bottone giallo */
+/* inizio bottone rosso */
+.fs-rosso-button
+{
+   border: 0;
+   border-collapse: separate;
+   -webkit-background-origin: border !important;
+   -moz-background-origin: border !important;
+   background-origin: border-box !important;
+   background: #8A311F;
+   background: linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -moz-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -o-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -ms-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   -svg-background: linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   padding:0 35px;
+   margin:0 auto;
+   height:32px;
+    font-variant:normal;
+
+}
+
+a.fs-rosso-button,
+a.fs-rosso-button:link,
+a:link.fs-rosso-button:link,
+body a.fs-rosso-button:link,
+a.fs-rosso-button:visited,
+body a.fs-rosso-button:visited,
+input.fs-rosso-button,
+button.fs-rosso-button
+{
+   text-decoration: none;
+   font-size: 13px;
+   font-family: 'Trebuchet MS', Arial, Helvetica, Sans-Serif;
+   font-weight: bold;
+   font-style: normal;
+   position:relative;
+   display: inline-block;
+   vertical-align: middle;
+   white-space: nowrap;
+   text-align: center;
+   color: #FFFFFF;
+   margin: 0 5px 0 0 !important;
+   overflow: visible;
+   cursor: pointer;
+   text-indent: 0;
+   line-height: 32px;
+   -webkit-box-sizing: content-box;
+   -moz-box-sizing: content-box;
+   box-sizing: content-box;
+    font-variant:normal;
+}
+
+.fs-rosso-button img
+{
+   margin: 0;
+   vertical-align: middle;
+}
+
+
+input.fs-rosso-button
+{
+   float: none !important;
+}
+
+.fs-rosso-button.active, .fs-rosso-button.active:hover
+{
+   background: #8A311F;
+   background: linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -moz-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -o-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: -ms-linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   background: linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   -svg-background: linear-gradient(top, #9A3723 0, #9A3723 50%, #9A3723 60%, #74291A 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   padding:0 35px;
+   margin:0 auto;
+    font-variant:normal;
+}
+.fs-rosso-button.active, .fs-rosso-button.active:hover {
+   color: #FFC91A !important;
+}
+
+.fs-rosso-button.hover, .fs-rosso-button:hover
+{
+   background: #B7412A;
+   background: linear-gradient(top, #C8472D 0, #C8472D 50%, #C3462C 60%, #A23A25 100%) no-repeat;
+   background: -webkit-linear-gradient(top, #C8472D 0, #C8472D 50%, #C3462C 60%, #A23A25 100%) no-repeat;
+   background: -moz-linear-gradient(top, #C8472D 0, #C8472D 50%, #C3462C 60%, #A23A25 100%) no-repeat;
+   background: -o-linear-gradient(top, #C8472D 0, #C8472D 50%, #C3462C 60%, #A23A25 100%) no-repeat;
+   background: -ms-linear-gradient(top, #C8472D 0, #C8472D 50%, #C3462C 60%, #A23A25 100%) no-repeat;
+   background: linear-gradient(top, #C8472D 0, #C8472D 50%, #C3462C 60%, #A23A25 100%) no-repeat;
+   -svg-background: linear-gradient(top, #C8472D 0, #C8472D 50%, #C3462C 60%, #A23A25 100%) no-repeat;
+   -webkit-border-radius:4px;
+   -moz-border-radius:4px;
+   border-radius:4px;
+   -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
+   padding:0 35px;
+   margin:0 auto;
+    font-variant:normal;
+}
+.fs-rosso-button.hover, .fs-rosso-button:hover {
+   color: #FFFFFF !important;
+}

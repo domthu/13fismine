@@ -1,0 +1,28 @@
+<h1 style="display:none">__PARTIAL EDIZIONI</h1>
+<div class="fs-block clearfix">
+  <div class="fs-blockheader">
+    <h3 class="t">Ultime Edizioni</h3>
+  </div>
+  <div class="fs-blockcontent">
+    <% @block_projects.each do |prj| %>
+        <div class="fs-content-layout fs-block-edizioni">
+          <div class="fs-content-layout-row">
+            <div class="fs-layout-cell layout-item-0" style="width: 100%">
+              <div class="fs-postheader fs-blockheader-edizioni">
+                Edizione <%= link_to(h(prj.description), url_for(:controller => 'editorial', :action => "edizione", :id => prj.id, :escape => false)) %>
+              </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+    <div class="fs-content-layout fs-block-edizioni">
+      <div class="fs-content-layout-row">
+        <div class="fs-layout-cell layout-item-0" style="width: 100%;">
+          <div class="fs-postheader fs-blockheader-edizioni" style="height: 30px; padding-top:15px ;">
+            <%= link_to "Tutte le edizioni ... ", url_for(:controller => 'editorial', :action => "edizioni", :escape => false), :class => "fs-rosso-button" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

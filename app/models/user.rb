@@ -23,31 +23,31 @@ class User < Principal
   #include FeeConst
 
   # Account statuses
-  STATUS_ANONYMOUS  = 0
-  STATUS_ACTIVE     = 1
+  STATUS_ANONYMOUS = 0
+  STATUS_ACTIVE = 1
   STATUS_REGISTERED = 2
-  STATUS_LOCKED     = 3
+  STATUS_LOCKED = 3
 
   # Different ways of displaying/sorting users
   USER_FORMATS = {
-    :firstname_lastname => {:string => '#{firstname} #{lastname}', :order => %w(firstname lastname id)},
-    :firstname => {:string => '#{firstname}', :order => %w(firstname id)},
-    :lastname_firstname => {:string => '#{lastname} #{firstname}', :order => %w(lastname firstname id)},
-    :lastname_coma_firstname => {:string => '#{lastname}, #{firstname}', :order => %w(lastname firstname id)},
-    :username => {:string => '#{login}', :order => %w(login id)},
+      :firstname_lastname => {:string => '#{firstname} #{lastname}', :order => %w(firstname lastname id)},
+      :firstname => {:string => '#{firstname}', :order => %w(firstname id)},
+      :lastname_firstname => {:string => '#{lastname} #{firstname}', :order => %w(lastname firstname id)},
+      :lastname_coma_firstname => {:string => '#{lastname}, #{firstname}', :order => %w(lastname firstname id)},
+      :username => {:string => '#{login}', :order => %w(login id)},
   }
 
   MAIL_NOTIFICATION_OPTIONS = [
-    ['all', :label_user_mail_option_all],
-    ['selected', :label_user_mail_option_selected],
-    ['only_my_events', :label_user_mail_option_only_my_events],
-    ['only_assigned', :label_user_mail_option_only_assigned],
-    ['only_owner', :label_user_mail_option_only_owner],
-    ['none', :label_user_mail_option_none]
+      ['all', :label_user_mail_option_all],
+      ['selected', :label_user_mail_option_selected],
+      ['only_my_events', :label_user_mail_option_only_my_events],
+      ['only_assigned', :label_user_mail_option_only_assigned],
+      ['only_owner', :label_user_mail_option_only_owner],
+      ['none', :label_user_mail_option_none]
   ]
 
-  has_and_belongs_to_many :groups, :after_add => Proc.new {|user, group| group.user_added(user)},
-                                   :after_remove => Proc.new {|user, group| group.user_removed(user)}
+  has_and_belongs_to_many :groups, :after_add => Proc.new { |user, group| group.user_added(user) },
+                          :after_remove => Proc.new { |user, group| group.user_removed(user) }
   has_many :changesets, :dependent => :nullify
   has_one :preference, :dependent => :destroy, :class_name => 'UserPreference'
   has_one :rss_token, :class_name => 'Token', :conditions => "action='feeds'"
@@ -66,32 +66,36 @@ class User < Principal
   #ATTENZIONE i 2 campi Sigla (ex Organismi) e Tipo organizzazione sono raddunati in una foreign_key
   belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
   #TODO: verificare ci potrebbe essere che alcuni associazione Sigla - Tipo non appare nella tabella CrossOrganization
-  # idem for Organization
+  # prova per i banner (sandro)
+  ##su cross_group.rb è :
+  #  belongs_to :user
+  #  belongs_to :group_banner
+  has_many :cross_groups
+  has_many :group_banners, :through => :cross_groups
 
   #l'utente può essere il referente di una (o più) organizzazione
   #2.7 Choosing Between belongs_to and has_one. La foreign key si trova sulla tabella che fa belongs_to
   #Puo anche essere il power_user di un organization
   #has_one :reference, :class_name => 'Organization', :dependent => :nullify
   has_many :references, :class_name => 'Organization', :dependent => :nullify
-
   has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
 
 #  scope :logged, :conditions => "#{User.table_name}.status <> #{STATUS_ANONYMOUS}"
 #  scope :status, lambda {|arg| arg.blank? ? {} : {:conditions => {:status => arg.to_i}} }
-  # Active non-anonymous users scope
+# Active non-anonymous users scope
   named_scope :active, :conditions => "#{User.table_name}.status = #{STATUS_ACTIVE}"
 
   acts_as_customizable
 
   attr_accessor :password, :password_confirmation
   attr_accessor :last_before_login_on
-  # Prevents unauthorized assignments
+# Prevents unauthorized assignments
   attr_protected :login, :admin, :password, :password_confirmation, :hashed_password
 
   validates_presence_of :login, :firstname, :lastname, :mail, :if => Proc.new { |user| !user.is_a?(AnonymousUser) }
   validates_uniqueness_of :login, :if => Proc.new { |user| !user.login.blank? }, :case_sensitive => false
   validates_uniqueness_of :mail, :if => Proc.new { |user| !user.mail.blank? }, :case_sensitive => false
-  # Login must contain lettres, numbers, underscores only
+# Login must contain lettres, numbers, underscores only
   validates_format_of :login, :with => /^[a-z0-9_\-@\.]*$/i
   validates_length_of :login, :maximum => 30
   validates_length_of :firstname, :lastname, :maximum => 30
@@ -102,22 +106,22 @@ class User < Principal
   validate :validate_password_length
 
   before_create :set_mail_notification
-  before_save   :update_hashed_password
+  before_save :update_hashed_password
   before_destroy :remove_references_before_destroy
 
-  named_scope :in_group, lambda {|group|
+  named_scope :in_group, lambda { |group|
     group_id = group.is_a?(Group) ? group.id : group.to_i
-    { :conditions => ["#{User.table_name}.id IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id] }
+    {:conditions => ["#{User.table_name}.id IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id]}
   }
-  named_scope :not_in_group, lambda {|group|
+  named_scope :not_in_group, lambda { |group|
     group_id = group.is_a?(Group) ? group.id : group.to_i
-    { :conditions => ["#{User.table_name}.id NOT IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id] }
+    {:conditions => ["#{User.table_name}.id NOT IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id]}
   }
 
   #ricerca utente apartenente ad un gruppo
-  named_scope :in_role, lambda {|role|
+  named_scope :in_role, lambda { |role|
     role_id = role.is_a?(Role) ? role.id : role.to_i
-    { :conditions => ["#{User.table_name}.role_id = ?", role_id] }
+    {:conditions => ["#{User.table_name}.role_id = ?", role_id]}
   }
 
   #Utente è affiliato ad una Sigla-TipoOrganizzazione
@@ -147,6 +151,27 @@ class User < Principal
 #      :asso_id => self.asso_id}])  #.to_s
     end
   end
+  def associazione_affiliata()
+     if self.asso_id.nil? || self.asso.nil? || self.asso_id == 0
+       nil
+     else
+       Asso.find(:all, :include => [:organization => :cross_organization], :conditions => ["id =  ?", self.asso_id])
+     end
+  end
+  def associazione_banner()
+      if self.asso_id.nil? || self.asso.nil?
+        nil
+      else
+        Asso.find(:all, :include => [:cross_groups => :group_banner ], :conditions => ["id =  ?", self.asso_id])
+      end
+    end
+  def pubblicita()
+    if self.asso_id.nil? || self.asso.nil?
+      nil
+    else
+      CrossGroup.find(:all, :include => :group_banner, :conditions => ["se_visibile = 1 AND asso_id = #{self.asso_id}"])
+    end
+  end
 
   #CALL this procedure from Frontend only
   def isfee?(issueid = nil)
@@ -168,7 +193,7 @@ class User < Principal
     #PUBLIC INSTALLATION
     if !Setting.fee?
       #Rails.logger.info("isfee OK fee not operated in this installation  #{self}")
-      return true  #PUBLIC AREA
+      return true #PUBLIC AREA
     end
     #Control Always abilitated User RoleId
     if self.ismanager? || self.isauthor? || self.isvip?
@@ -191,8 +216,8 @@ class User < Principal
 
     #Control content if public
     if issueid #!issueid.nil?
-      #return self.asso.nil?
-      #TODO retreive another Object like Project(Newsletter) or News(Quesiti)
+               #return self.asso.nil?
+               #TODO retreive another Object like Project(Newsletter) or News(Quesiti)
       @article = Issue.find(issueid)
       #Show if it is public content
       if @article.nil? || !@article.se_visible_web?
@@ -223,7 +248,7 @@ class User < Principal
   def canbackend?
     #FEE INSTALLATION
     if Setting.fee?
-      if (self.ismanager? || self.isauthor? )
+      if (self.ismanager? || self.isauthor?)
         #Rails.logger.info("fee canbackend OK is staff #{self}")
         return true
       end
@@ -305,6 +330,7 @@ class User < Principal
   def responsable?
     return self.references.nil?
   end
+
   #List of Organization the user is power user
   def responsable_of
     self.references
@@ -313,30 +339,38 @@ class User < Principal
 
   #region ROLE * USER
   def ismanager?
-    self.role_id == FeeConst::ROLE_MANAGER  #= 3  #Manager<br />
+    self.role_id == FeeConst::ROLE_MANAGER #= 3  #Manager<br />
   end
+
   def isauthor?
     self.role_id == FeeConst::ROLE_AUTHOR #= 4  #Redattore  <br />
-    #FeeConst::ROLE_COLLABORATOR   = 4  #FeeConst::ROLE_REDATTORE   autore, redattore e collaboratore   tutti uguali<br />
+                                          #FeeConst::ROLE_COLLABORATOR   = 4  #FeeConst::ROLE_REDATTORE   autore, redattore e collaboratore   tutti uguali<br />
   end
+
   def isvip?
     self.role_id == FeeConst::ROLE_VIP #= 10 #Invitato Gratuito<br />
   end
+
   def isabbonato?
     self.role_id == FeeConst::ROLE_ABBONATO #= 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)<br />
   end
+
   def isregistered?
     self.role_id == FeeConst::ROLE_REGISTERED #= 9  #Ospite periodo di prova durante Setting.register_days<br />
   end
+
   def isrenewing?
     self.role_id == FeeConst::ROLE_RENEW #= 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
   end
+
   def isexpired?
     self.role_id == FeeConst::ROLE_EXPIRED #= 7  #Scaduto: user.data_scadenza < today<br />
   end
+
   def isarchivied?
     self.role_id == FeeConst::ROLE_ARCHIVIED #= 8  #Ar
   end
+
   #endregion ROLE * USER
 
   def set_mail_notification
@@ -433,7 +467,7 @@ class User < Principal
   #   User.fields_for_order_statement('authors')   => ['authors.login', 'authors.id']
   def self.fields_for_order_statement(table=nil)
     table ||= table_name
-    name_formatter[:order].map {|field| "#{table}.#{field}"}
+    name_formatter[:order].map { |field| "#{table}.#{field}" }
   end
 
   # Return user's full name for display
@@ -542,7 +576,7 @@ class User < Principal
 
   # Return an array of project ids for which the user has explicitly turned mail notifications on
   def notified_projects_ids
-    @notified_projects_ids ||= memberships.select {|m| m.mail_notification?}.collect(&:project_id)
+    @notified_projects_ids ||= memberships.select { |m| m.mail_notification? }.collect(&:project_id)
   end
 
   def notified_project_ids=(ids)
@@ -561,7 +595,7 @@ class User < Principal
     # Note that @user.membership.size would fail since AR ignores
     # :include association option when doing a count
     if user.nil? || user.memberships.length < 1
-      MAIL_NOTIFICATION_OPTIONS.reject {|option| option.first == 'selected'}
+      MAIL_NOTIFICATION_OPTIONS.reject { |option| option.first == 'selected' }
     else
       MAIL_NOTIFICATION_OPTIONS
     end
@@ -627,7 +661,7 @@ class User < Principal
     return roles unless project && project.active?
     if logged?
       # Find project membership
-      membership = memberships.detect {|m| m.project_id == project.id}
+      membership = memberships.detect { |m| m.project_id == project.id }
       if membership
         roles = membership.roles
       else
@@ -643,14 +677,14 @@ class User < Principal
 
   # Return true if the user is a member of project
   def member_of?(project)
-    !roles_for_project(project).detect {|role| role.member?}.nil?
+    !roles_for_project(project).detect { |role| role.member? }.nil?
   end
 
   # Returns a hash of user's projects grouped by roles
   def projects_by_role
     return @projects_by_role if @projects_by_role
 
-    @projects_by_role = Hash.new {|h,k| h[k]=[]}
+    @projects_by_role = Hash.new { |h, k| h[k]=[] }
     memberships.each do |membership|
       membership.roles.each do |role|
         @projects_by_role[role] << membership.project if membership.project
@@ -694,16 +728,16 @@ class User < Principal
 
       roles = roles_for_project(context)
       return false unless roles
-      roles.detect {|role|
+      roles.detect { |role|
         (context.is_public? || role.member?) &&
-        role.allowed_to?(action) &&
-        (block_given? ? yield(role, self) : true)
+            role.allowed_to?(action) &&
+            (block_given? ? yield(role, self) : true)
       }
     elsif context && context.is_a?(Array)
       # Authorize if user is authorized on every element of the array
       context.map do |project|
         allowed_to?(action, project, options, &block)
-      end.inject do |memo,allowed|
+      end.inject do |memo, allowed|
         memo && allowed
       end
     elsif options[:global]
@@ -711,11 +745,11 @@ class User < Principal
       return true if admin?
 
       # authorize if user has at least one role that has this permission
-      roles = memberships.collect {|m| m.roles}.flatten.uniq
+      roles = memberships.collect { |m| m.roles }.flatten.uniq
       roles << (self.logged? ? Role.non_member : Role.anonymous)
-      roles.detect {|role|
+      roles.detect { |role|
         role.allowed_to?(action) &&
-        (block_given? ? yield(role, self) : true)
+            (block_given? ? yield(role, self) : true)
       }
     else
       false
@@ -729,21 +763,21 @@ class User < Principal
   end
 
   safe_attributes 'login',
-    'firstname',
-    'lastname',
-    'mail',
-    'mail_notification',
-    'language',
-    'custom_field_values',
-    'custom_fields',
-    'identity_url'
+                  'firstname',
+                  'lastname',
+                  'mail',
+                  'mail_notification',
+                  'language',
+                  'custom_field_values',
+                  'custom_fields',
+                  'identity_url'
 
   safe_attributes 'status',
-    'auth_source_id',
-    :if => lambda {|user, current_user| current_user.admin?}
+                  'auth_source_id',
+                  :if => lambda { |user, current_user| current_user.admin? }
 
   safe_attributes 'group_ids',
-    :if => lambda {|user, current_user| current_user.admin? && !user.new_record?}
+                  :if => lambda { |user, current_user| current_user.admin? && !user.new_record? }
 
   # Utility method to help check if a user should be notified about an
   # event.
@@ -751,37 +785,37 @@ class User < Principal
   # TODO: only supports Issue events currently
   def notify_about?(object)
     case mail_notification
-    when 'all'
-      true
-    when 'selected'
-      # user receives notifications for created/assigned issues on unselected projects
-      if object.is_a?(Issue) && (object.author == self || is_or_belongs_to?(object.assigned_to))
+      when 'all'
         true
+      when 'selected'
+        # user receives notifications for created/assigned issues on unselected projects
+        if object.is_a?(Issue) && (object.author == self || is_or_belongs_to?(object.assigned_to))
+          true
+        else
+          false
+        end
+      when 'none'
+        false
+      when 'only_my_events'
+        if object.is_a?(Issue) && (object.author == self || is_or_belongs_to?(object.assigned_to))
+          true
+        else
+          false
+        end
+      when 'only_assigned'
+        if object.is_a?(Issue) && is_or_belongs_to?(object.assigned_to)
+          true
+        else
+          false
+        end
+      when 'only_owner'
+        if object.is_a?(Issue) && object.author == self
+          true
+        else
+          false
+        end
       else
         false
-      end
-    when 'none'
-      false
-    when 'only_my_events'
-      if object.is_a?(Issue) && (object.author == self || is_or_belongs_to?(object.assigned_to))
-        true
-      else
-        false
-      end
-    when 'only_assigned'
-      if object.is_a?(Issue) && is_or_belongs_to?(object.assigned_to)
-        true
-      else
-        false
-      end
-    when 'only_owner'
-      if object.is_a?(Issue) && object.author == self
-        true
-      else
-        false
-      end
-    else
-      false
     end
   end
 
@@ -813,7 +847,7 @@ class User < Principal
         next if user.hashed_password.blank?
         salt = User.generate_salt
         hashed_password = User.hash_password("#{salt}#{user.hashed_password}")
-        User.update_all("salt = '#{salt}', hashed_password = '#{hashed_password}'", ["id = ?", user.id] )
+        User.update_all("salt = '#{salt}', hashed_password = '#{hashed_password}'", ["id = ?", user.id])
       end
     end
   end
@@ -878,12 +912,29 @@ class AnonymousUser < User
   end
 
   # Overrides a few properties
-  def logged?; false end
-  def admin; false end
-  def name(*args); I18n.t(:label_user_anonymous) end
-  def mail; nil end
-  def time_zone; nil end
-  def rss_key; nil end
+  def logged?;
+    false
+  end
+
+  def admin;
+    false
+  end
+
+  def name(*args)
+    ; I18n.t(:label_user_anonymous)
+  end
+
+  def mail;
+    nil
+  end
+
+  def time_zone;
+    nil
+  end
+
+  def rss_key;
+    nil
+  end
 
   # Anonymous user can not be destroyed
   def destroy

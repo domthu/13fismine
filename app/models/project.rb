@@ -17,7 +17,7 @@
 
 class Project < ActiveRecord::Base
   include Redmine::SafeAttributes
-
+  include ActionView::Helpers::TextHelper
   # Project statuses
   STATUS_ACTIVE = 1
   STATUS_ARCHIVED = 9
@@ -39,7 +39,7 @@ class Project < ActiveRecord::Base
 
   has_many :enabled_modules, :dependent => :delete_all
   has_and_belongs_to_many :trackers, :order => "#{Tracker.table_name}.position"
-  has_many :issues, :dependent => :destroy, :order => "#{Issue.table_name}.created_on DESC", :include => [:status, :tracker, {:section => :top_section} ]
+  has_many :issues, :dependent => :destroy, :order => "#{Issue.table_name}.created_on DESC", :include => [:status, :tracker, {:section => :top_section}]
   has_many :issue_changes, :through => :issues, :source => :journals
   has_many :versions, :dependent => :destroy, :order => "#{Version.table_name}.effective_date DESC, #{Version.table_name}.name DESC"
   has_many :time_entries, :dependent => :delete_all
@@ -90,45 +90,14 @@ class Project < ActiveRecord::Base
   named_scope :active, {:conditions => "#{Project.table_name}.status = #{STATUS_ACTIVE}"}
   named_scope :all_public, {:conditions => {:is_public => true}}
   named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift || User.current, *args)} }
+  #
+  #CODICE DI ESEMPO:
+  # SELECT `issues`.`id` AS t0_r0, `issues`.`tracker_id` AS t0_r1, `issues`.`project_id` AS t0_r2, `issues`.`subject` AS t0_r3, `issues`.`description` AS t0_r4, `issues`.`due_date` AS t0_r5, `issues`.`category_id` AS t0_r6, `issues`.`status_id` AS t0_r7, `issues`.`assigned_to_id` AS t0_r8, `issues`.`priority_id` AS t0_r9, `issues`.`fixed_version_id` AS t0_r10, `issues`.`author_id` AS t0_r11, `issues`.`lock_version` AS t0_r12, `issues`.`created_on` AS t0_r13, `issues`.`updated_on` AS t0_r14, `issues`.`start_date` AS t0_r15, `issues`.`done_ratio` AS t0_r16, `issues`.`estimated_hours` AS t0_r17, `issues`.`parent_id` AS t0_r18, `issues`.`root_id` AS t0_r19, `issues`.`lft` AS t0_r20, `issues`.`rgt` AS t0_r21, `issues`.`is_private` AS t0_r22, `issues`.`section_id` AS t0_r23, `issues`.`ordinamento` AS t0_r24, `issues`.`se_sommario` AS t0_r25, `issues`.`riassunto` AS t0_r26, `issues`.`titolo` AS t0_r27, `issues`.`testo` AS t0_r28, `issues`.`riferimento` AS t0_r29, `issues`.`se_visible_web` AS t0_r30, `issues`.`data_scadenza` AS t0_r31, `issues`.`se_visible_data` AS t0_r32, `issues`.`se_visible_newsletter` AS t0_r33, `issues`.`se_protetto` AS t0_r34, `issues`.`immagine_url` AS t0_r35, `issues`.`titolo_no_format` AS t0_r36, `issues`.`testo_no_format` AS t0_r37, `issues`.`riassunto_no_format` AS t0_r38, `issues`.`tag_link` AS t0_r39, `issue_statuses`.`id` AS t1_r0, `issue_statuses`.`name` AS t1_r1, `issue_statuses`.`is_closed` AS t1_r2, `issue_statuses`.`is_default` AS t1_r3, `issue_statuses`.`position` AS t1_r4, `issue_statuses`.`default_done_ratio` AS t1_r5, `trackers`.`id` AS t2_r0, `trackers`.`name` AS t2_r1, `trackers`.`is_in_chlog` AS t2_r2, `trackers`.`position` AS t2_r3, `trackers`.`is_in_roadmap` AS t2_r4, `sections`.`id` AS t3_r0, `sections`.`sezione` AS t3_r1, `sections`.`protetto` AS t3_r2, `sections`.`ordinamento` AS t3_r3, `sections`.`top_section_id` AS t3_r4, `sections`.`created_at` AS t3_r5, `sections`.`updated_at` AS t3_r6, `top_sections`.`id` AS t4_r0, `top_sections`.`sezione_top` AS t4_r1, `top_sections`.`ordinamento` AS t4_r2, `top_sections`.`se_visibile` AS t4_r3, `top_sections`.`immagine` AS t4_r4, `top_sections`.`key` AS t4_r5, `top_sections`.`created_at` AS t4_r6, `top_sections`.`updated_at` AS t4_r7, `top_sections`.`top_menu_id` AS t4_r8, `top_sections`.`se_home_menu` AS t4_r9 FROM `issues`  LEFT OUTER JOIN `issue_statuses` ON `issue_statuses`.id = `issues`.status_id  LEFT OUTER JOIN `trackers` ON `trackers`.id = `issues`.tracker_id  LEFT OUTER JOIN `sections` ON `sections`.id = `issues`.section_id  LEFT OUTER JOIN `top_sections` ON `top_sections`.id = `sections`.top_section_id WHERE (`issues`.project_id = 329)  ORDER BY issues.sections.top_section_id DESC, issues.created_on DESC
+  # for art in self.issues.sort_by &:section_id do
+  # has_many :news_issues, :dependent => :destroy, :order => "#{Issue.table_name}.#{Section.table_name}.top_section_id DESC" , :include => [:status,{:section => :top_section} ]
+  #
+  #
 
-  def newsletter(user = User.current)
-    str = "<h1>" + self.name + "</h1>"
-    str += "<h3>" + self.description + "</h3>"
-    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
-    #loop trovi codice fee
-    #has_many :news_issues, :dependent => :destroy, :order => "#{Issue.table_name}.#{Section.table_name}.top_section_id DESC" , :include => [:status,{:section => :top_section} ]
-    indice =""
-    sommerio =""
-    last_top_section=0
-   # for art in self.issues.sort_by &:section_id do
-    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC" ) do
-
-#SELECT `issues`.`id` AS t0_r0, `issues`.`tracker_id` AS t0_r1, `issues`.`project_id` AS t0_r2, `issues`.`subject` AS t0_r3, `issues`.`description` AS t0_r4, `issues`.`due_date` AS t0_r5, `issues`.`category_id` AS t0_r6, `issues`.`status_id` AS t0_r7, `issues`.`assigned_to_id` AS t0_r8, `issues`.`priority_id` AS t0_r9, `issues`.`fixed_version_id` AS t0_r10, `issues`.`author_id` AS t0_r11, `issues`.`lock_version` AS t0_r12, `issues`.`created_on` AS t0_r13, `issues`.`updated_on` AS t0_r14, `issues`.`start_date` AS t0_r15, `issues`.`done_ratio` AS t0_r16, `issues`.`estimated_hours` AS t0_r17, `issues`.`parent_id` AS t0_r18, `issues`.`root_id` AS t0_r19, `issues`.`lft` AS t0_r20, `issues`.`rgt` AS t0_r21, `issues`.`is_private` AS t0_r22, `issues`.`section_id` AS t0_r23, `issues`.`ordinamento` AS t0_r24, `issues`.`se_sommario` AS t0_r25, `issues`.`riassunto` AS t0_r26, `issues`.`titolo` AS t0_r27, `issues`.`testo` AS t0_r28, `issues`.`riferimento` AS t0_r29, `issues`.`se_visible_web` AS t0_r30, `issues`.`data_scadenza` AS t0_r31, `issues`.`se_visible_data` AS t0_r32, `issues`.`se_visible_newsletter` AS t0_r33, `issues`.`se_protetto` AS t0_r34, `issues`.`immagine_url` AS t0_r35, `issues`.`titolo_no_format` AS t0_r36, `issues`.`testo_no_format` AS t0_r37, `issues`.`riassunto_no_format` AS t0_r38, `issues`.`tag_link` AS t0_r39, `issue_statuses`.`id` AS t1_r0, `issue_statuses`.`name` AS t1_r1, `issue_statuses`.`is_closed` AS t1_r2, `issue_statuses`.`is_default` AS t1_r3, `issue_statuses`.`position` AS t1_r4, `issue_statuses`.`default_done_ratio` AS t1_r5, `trackers`.`id` AS t2_r0, `trackers`.`name` AS t2_r1, `trackers`.`is_in_chlog` AS t2_r2, `trackers`.`position` AS t2_r3, `trackers`.`is_in_roadmap` AS t2_r4, `sections`.`id` AS t3_r0, `sections`.`sezione` AS t3_r1, `sections`.`protetto` AS t3_r2, `sections`.`ordinamento` AS t3_r3, `sections`.`top_section_id` AS t3_r4, `sections`.`created_at` AS t3_r5, `sections`.`updated_at` AS t3_r6, `top_sections`.`id` AS t4_r0, `top_sections`.`sezione_top` AS t4_r1, `top_sections`.`ordinamento` AS t4_r2, `top_sections`.`se_visibile` AS t4_r3, `top_sections`.`immagine` AS t4_r4, `top_sections`.`key` AS t4_r5, `top_sections`.`created_at` AS t4_r6, `top_sections`.`updated_at` AS t4_r7, `top_sections`.`top_menu_id` AS t4_r8, `top_sections`.`se_home_menu` AS t4_r9 FROM `issues`  LEFT OUTER JOIN `issue_statuses` ON `issue_statuses`.id = `issues`.status_id  LEFT OUTER JOIN `trackers` ON `trackers`.id = `issues`.tracker_id  LEFT OUTER JOIN `sections` ON `sections`.id = `issues`.section_id  LEFT OUTER JOIN `top_sections` ON `top_sections`.id = `sections`.top_section_id WHERE (`issues`.project_id = 329)  ORDER BY issues.sections.top_section_id DESC, issues.created_on DESC
-        if last_top_section != art.section.top_section_id
-          indice += "<h3>" + art.section_id.to_s + " - "
-          indice += art.section.to_s + " - "
-          indice += (art.section.nil? ? "?" : art.section.top_section.to_s) + "</h3>"
-          last_top_section = art.section.top_section_id
-        end
-        indice += smart_truncate(art.titolo, 30) + "<br />"
-        sommario += indice.nil? ? "?" : art.section.top_section.to_s
-        sommario +=      smart_truncate(art.riassunto, 100) + "<br />"
-            if art.riassunto.nil?
-        @msg << str
-      end
-    end
-    str += "<h2> user corrente:" + user.name + "</h2>"
-    str += "<br /><h1> INDICE </h1>"
-    str += indice
-    str += "<hr>"
-    str += "<br /><h1> SOMMARIO </h1>"
-    str += sommario
-
-
-
-
-    return str
-  end
 
   #TODO
   def is_public_fs?
@@ -182,7 +151,8 @@ class Project < ActiveRecord::Base
   # returns limited latest projects for homepage in public area
   # MariaCristina creare flag .promoted_to_front_page, per il momento usiamo .is_public combinato con .status
   def self.latest_fs(user = User.current, count = 5)
-    find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1 AND #{table_name}.status = #{STATUS_FS}"], :order => "#{table_name}.created_on DESC")
+    #find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1 AND #{table_name}.status = #{STATUS_FS}"], :order => "#{table_name}.created_on DESC")
+    find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1" ], :order => "#{table_name}.created_on DESC")
     #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in home page
     #Il STATUS_FS dovrebbe essere presso quando la newsletter viene inviata
   end
@@ -762,6 +732,358 @@ class Project < ActiveRecord::Base
     end
   end
 
+
+  # --------------------------------NEWSLETTER-----------------------------------
+  #
+=begin
+  def newsletter(user = User.current)
+    str = "<h1>" + self.name + "</h1>"
+    str += "<h3>" + self.description + "</h3>"
+    str += "<div>Numero di articoli presente in questa newsletter: " + self.issues.count.to_s + "</div>"
+    #loop trovi codice fee
+    #has_many :news_issues, :dependent => :destroy, :order => "#{Issue.table_name}.#{Section.table_name}.top_section_id DESC" , :include => [:status,{:section => :top_section} ]
+    indice =""
+    sommario =""
+    last_top_section=0
+    # for art in self.issues.sort_by &:section_id do
+    for art in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC") do
+      if last_top_section != art.section.top_section_id
+        indice += "<h3>" + art.section_id.to_s + " - "
+        indice += art.section.to_s + " - "
+        indice += (art.section.nil? ? "?" : art.section.top_section.to_s) + "</h3>"
+        last_top_section = art.section.top_section_id
+      end
+      indice += smart_truncate(art.titolo, 30) + "<br />"
+      sommario += indice.nil? ? "?" : art.section.top_section.to_s
+      sommario += smart_truncate(art.riassunto, 100) + "<br />"
+
+    end
+    str += "<h2> user corrente:" + user.name + "</h2>"
+    str += "<br /><h1> INDICE </h1>"
+    str += indice
+    str += "<hr>"
+    str += "<br /><h1> SOMMARIO </h1>"
+    str += sommario
+
+
+    return str
+  end
+=end
+
+
+  def newsletter_smtp(u)
+    s1="", s2="", s3="", s4="", s5="", last_tops=0, ancora ="", usr=nil
+    usr = User.find_by_id u
+    if !usr.blank?
+
+    s1='<style type="text/css">
+                /* Backgrounds */
+            .email_background {
+                width: 640px;
+                background: url("http://es.pecchia.info/images/commons/email_bg.jpg") repeat-y;
+            }
+        </style>
+
+        <!-- Contenitore -->
+        <table cellpadding="0" cellspacing="0" border="0" width="99%" bgcolor="#0f6da1">
+        <tr>
+        <td align="center">
+        <table cellpadding="0" cellspacing="0" border="0" width="640">
+        <tr>
+        <td>
+        <!-- Pre Email -->
+        <table cellpadding="0" cellspacing="0" border="0" width="640">
+        <tr>
+          <td valign="bottom" height="40" align="center">
+            <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
+              la newsletter di Fiscosport &nbsp;|&nbsp; L\'edizione
+              <a target="_blank" href="http://fiscosport/edizione/' + self.id.to_s + ' style="color:#ffffff; text-decoration:underline;">
+                num. '+ self.id.to_s + ' ' + self.description + '"</a> è online!</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="640" style="font-size:0;">
+              <tr>
+                <td>
+                  <td valign="bottom"> <img  src="http://es.pecchia.info/images/commons/top_fade.jpg" width="640" height="20" border="0"/>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
+          </td>
+        </tr>
+        <tr>
+        <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
+        <!-- inizio contenuto -->
+        <!------------------------------------------------------------------------->'
+    s2='<!-- Inizio sezione con logo e nomeutente -->
+          <table width="560" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="242" height="110" align="left" valign="top">
+                <!-- logo -->
+               <a href="http://es.pecchia.info/editoriale/home" target="_blank" ><img src="http://es.pecchia.info/images/commons/fiscosport_news.jpg" alt="Fiscosport specialisti fiscali sportivi" border="0"></a>
+           <td align="left" valign="top">
+            <!-- tabella di 2 righe per il testo -->
+            <table width="318" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td height="50" align="left" valign="center" style="border-bottom:1px solid #1C6693;">
+                  <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:14px; color:#333333; line-height: 18px; ">
+                    Newsletter riservata a :<span style="font-size: 18px;">
+                  ' + (usr.firstname? ? "&nbsp;" : usr.firstname) + "&nbsp;" + (usr.lastname.nil? ? "&nbsp;" : usr.lastname) + '</span>
+                  </font></td>
+              </tr>
+              <tr>
+                <td width="318" height="50" align="left" valign="center" style="border-bottom:1px solid #cccccc;">
+                  <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:13px; color:#333333; line-height:18px; font-weight: bold;">
+                    ' + (usr.soc.nil? ? " " : usr.soc)+ ' </font>
+                </td>
+              </tr>
+            </table>
+            <!-- fine tabella di 2 righe per il testo -->
+          </td>
+        </tr>
+      </table>
+      <!-- fine sezione con logo e nomeutente -->
+      <!-- inizio visibile solo se associato o affiliato-->'
+      if usr.asso_id > 0 && !usr.asso_id.nil?
+      s2 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
+                <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:18px; font-weight: bold;">
+                Associato a: ' + usr.asso.ragione_sociale + '</font>
+
+              </td>
+              <td width="55" valign="bottom" align="right">
+                <img src="http://es.pecchia.info/images/banners/assos/ + usr.asso.logo  + " width="50" height="50" border="0" \>
+              </td>
+            </tr>
+          </table>'
+      else
+         if usr.sigla_tipo()
+    s2 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
+                  <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:11px; color:#333333; line-height:18px; font-weight: bold;">
+                    Affiliato a: ' + usr.sigla_tipo.to_s + '
+                  </font>
+                </td>
+                <td width="55" valign="bottom" align="right">
+                  <img src="http://es.pecchia.info/images/ico/fs.jpg" width="50" height="50" border="0" \>
+                </td>
+              </tr>
+            </table>'
+         end
+    end
+    s2 += '<!-- fine riga visibile solo se associato o è affiliato - sotto un\'ummagine di spazio -->
+          <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
+            <tr>
+              <td width="560" valign="bottom" bgcolor="#ffffff" height="6">
+                <img src="http://es.pecchia.info/images/commons/email_spacer_colors.jpg" width="560" height="6" border="0" \>
+              </td>
+            </tr>
+            <tr>
+              <td width="560" valign="bottom" bgcolor="#ffffff" height="35">
+                <img src="http://es.pecchia.info/images/commons/email_spacer.jpg" width="560" height="35" border="0" \>
+              </td>
+            </tr>
+          </table>
+            <!-------------------------------------------------------------------->
+          <!-- inizio loop sezione indice --> '
+          for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
+            ancora = truncate(nart.titolo, :length => 30).to_slug
+            s3 += '<table width="560" border="0" cellpadding="0" cellspacing="0">'
+            if last_tops != nart.section.top_section_id
+    s3 += '<tr>
+                <td height="14" bgcolor="#f5f5f5"></td>
+                &nbsp; </tr>
+              <tr>
+                <td width="560" align="right" valign="top" bgcolor="#fefefe">
+                  <table width="560" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="36" height="30" align="center" valign="top">
+                        <img src="http://es.pecchia.info/images/ico/freg-y.png" border="0">
+                      </td>
+                      <td width="524" align="left" valign="center" bgcolor="ffffff" style="border-top:solid 1px #f1e9b8;">
+                        <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333; line-height:2em;">
+                          <!-- sezione -->
+                          <strong>
+                            <span style="color: #0C4481;">
+                            ' + (nart.section.nil? ? "? non trovata la sezione ?" : nart.section.top_section.to_s) + '</span>
+                            :: <span style="color: #e95f03;"> ' + nart.section.to_s + '</span> </strong></font>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>'
+            end
+    s3 += '<!-- titolo --->
+              <tr>
+                <td width="560">
+                  <table width="560" border="0" cellpadding="10" cellspacing="0">
+                    <tr>
+                      <td width="24" align="left" valign="center">
+                        <a href="#'+ ancora +'" ><img src="http://es.pecchia.info/images/ico/fred24-y.png" border ="0"> </a>
+                      </td>
+                      <td width="536" align="left" valign="center">
+                        <font style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">
+                          <strong>   <a href="#'+ ancora +'" style ="color:#333333; text-decoration: none;">' + nart.titolo + '</strong></font><br/>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <!-- fine titolo --->
+            </table>'
+            last_tops = nart.section.top_section_id
+          end
+     s3 += '<!-- fine loop sezione indice -->
+            <!------------------------------------------------------------------------->
+            <!--   -- spazio --  -->
+            <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
+              <tr>
+                <td height="33"></td>
+              </tr>
+              <tr>
+                <td width="560" valign="bottom" bgcolor="#ffffff" height="35">
+                  <img src="http://es.pecchia.info/images/commons/email_spacer.jpg" width="560" height="35" border="0" \>
+                </td>
+              </tr>
+            </table>
+            <!--inizio dicitura sommario  -->
+            <table width="560" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td height="16"></td>
+              </tr>
+              <tr>
+                <td width="100" align="right" valign="center" height="50">
+                <img src="http://es.pecchia.info/images/commons/sommario_ico.jpg" alt="Sommario (icona)" \>
+                </td>
+                <td width="460" align="right" valign="center" height="50">
+                <img src="http://es.pecchia.info/images/commons/sommario.jpg" alt="Sommario" \>
+                </td>
+              </tr>
+              <tr>
+                <td height="33"></td>
+              </tr>
+            </table>
+            <!--fine  dicitura sommario  -->
+            <!------------------------------------------------------------------------->
+            <!-- inizio sezione loop articoli --> '
+          for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
+            ancora = truncate(nart.titolo, :length => 30).to_slug
+    s4 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="560" align="center" valign="top" bgcolor="#f4f4f4" style="border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;">
+                  <!-- inizio tabella contenuti -->
+                  <table width="560" border="0" cellpadding="0" cellspacing="9">
+                    <tr>
+                      <!-- sotto: immagine sx -->
+                      <td width="120" align="left" valign="top" rowspan="2">'
+            if nart.immagine_url.nil?
+              if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{nart.top_section.immagine}")
+    s4 += '<a name="' + ancora + '"><img src="http://es.pecchia.info/images/commons/sections/' + nart.top_section.immagine + '" width ="120" \> </a>'
+              else
+                image_tag("/images/commons/sections/no-img.jpg", :width => 120, :id => ancora)
+    s4 += '<a name="' + ancora + '"><img src="http://es.pecchia.info/images/commons/sections/no-img.jpg" width ="120" \> </a>'
+              end
+            else
+    s4 += '<a name="' + ancora + '"><img src="' + nart.immagine_url + '" width ="120" alt="' + ancora + '" \> </a>'
+            end
+    s4 += '</td>
+                    <!-- titolo  -->
+                      <td width="440" align="left" valign="top">
+                        <font style="font-family: Arial, Helvetica, sans-serif; font-size:16px; color:#003548; text-align: justify;">
+                          <strong>' + nart.titolo + '</strong> </font><br/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <!--  riga autore  -->
+                      <td width="440" align="right" valign="top">
+                        <font style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:15px; text-decoration: underline; font-style: italic;">
+                          <strong> <img src="http://es.pecchia.info/images/ico/pen24.png" border ="0">' + nart.author.to_s + '</strong>
+                        </font>
+                      </td>
+                    </tr>
+                    <tr>
+                      <!-- riga riassunto -->
+                      <td width="560" colspan="2">
+                        <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#000000; line-height:18px; ">
+                          ' + nart.riassunto + '
+                        </font><br/>
+                      </td>
+                    </tr>
+                  </table>
+                  <!--fine tabella contenuti -->
+                  <!-- pulsante vedi -->
+                  <table width="560" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="560" height="33" align="right" valign="top">
+                     <a href="http://fiscosport.it/editoriale/'+ nart.section.top_section.top_menu.key + '/' + nart.section.top_section.key + '/' + nart.id.to_s + ' ' + truncate(nart.titolo, :length => 125).to_slug + '" target="_blank" >
+                              <img src="http://es.pecchia.info/images/commons/btn_news_y.gif" width="107" height="29" alt="vedi articolo" \> </a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td width="560" height="13"></td>
+              </tr>
+            </table>
+            <!-- fine sezione loop articoli -->'
+          end
+    s5 = '<!------------------------------------------------------------------------->
+        <!-- IMPORTANTE fine   contenuto  email-->
+        </table>
+        </td>
+        </tr>
+        <tr>
+          <td>
+            <img src="http://es.pecchia.info/images/commons/bottom_fade.jpg" width="640" border="0" height="28"/>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" height="80" align="center">
+            <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
+              footer
+            </font>
+          </td>
+        </table>
+        </td>
+        </tr>
+        </table> '
+
+      return s1+s2+s3+s4+s5
+        else
+          return '<h1 style="color:red;"> Utente id:[' + u.to_s + '] non trovato!</h1>'
+    end
+  end
+
+  def testuser(u) #sperimentale sandro
+                  # User.exists?( :id => usr )
+                  # oppure per includere altro ... example:
+                   #User.find_by_id(id, :include => [:accounts => [:orders => [:objects]]])
+    s=""
+    for i in 0..10
+    usr = User.find_by_id u
+      if !usr.blank?
+        s += '<h1 style="color:blue;">' + usr.firstname + '</h1>'
+        s += '<h2 style="color:green;">' + usr.asso_id.to_s + '</h2>'
+
+        u += 1
+      else
+        s += '<h1 style="color:red;">' + u.to_s + '</h1>'
+        u += 1
+      end
+    end
+    return s
+  end
+
+  # --------------------------------PRIVATE AREA-----------------------------------
+  #
   private
 
   # Copies wiki from +project+
@@ -976,4 +1298,5 @@ class Project < ActiveRecord::Base
     end
     update_attribute :status, STATUS_ARCHIVED
   end
+
 end

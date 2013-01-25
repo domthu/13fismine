@@ -1,0 +1,15 @@
+<h2><%= l(:details_edizione) %></h2>
+<h5> <%= Rails.env %></h5>
+<h3> Pagina di test per la spedizione diretta via smtp </h3>
+
+<div style=" border: dotted 2px #add8e6 ; ">
+  ID: <%= @id %>
+  PROJECT: <%= @project %>
+  NUM.ART:<%= @art.count %>
+
+  ... starting newsletter for smtp
+
+</div>
+<%# @prj.testuser(1010) %>
+
+<%= @prj.newsletter_smtp(1) %>
