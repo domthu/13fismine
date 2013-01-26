@@ -27,8 +27,9 @@ class Role < ActiveRecord::Base
   ]
 
   #named_scope :givable, { :conditions => "builtin = 0", :order => 'position' }
-  #Domthu
-  named_scope :givable, { :conditions => "builtin = 0 or builtin IN [3,4]", :order => 'position' }
+  #Domthu authorized only managers and authors and admin
+  givable_roles = [0,3,4]
+  named_scope :givable, { :conditions =>  ["builtin in (?)", givable_roles], :order => 'position' }
   named_scope :builtin, lambda { |*args|
     compare = 'not' if args.first == true
     { :conditions => "#{compare} builtin = 0" }
