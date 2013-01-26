@@ -285,7 +285,7 @@ class User < Principal
       else
         #  FeeConst::ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
         #str << ensure_role(_usr, FeeConst::ROLE_EXPIRED, "EXPIRED", old_state)
-        "espirato da " << distance_of_date_in_words(today, scadeil)
+        "scaduto da " << distance_of_date_in_words(today, scadeil)
       end
     end
   end

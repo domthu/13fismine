@@ -1,31 +1,37 @@
 <h2><%=l(:label_project_new)%></h2>
 
 
-<% labelled_tabular_form_for @project do |f| %>
-<%= render :partial => 'form', :locals => { :f => f } %>
-<%= submit_tag l(:button_create) %>
-<%= submit_tag l(:button_create_and_continue), :name => 'continue' %>
-<%= javascript_tag "Form.Element.focus('project_name');" %>
-<% end %>
+<%= render :partial => 'lastprojects_box' %>
+
+<div class="splitcontentleft">
+  <% labelled_tabular_form_for @project do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag l(:button_create) %>
+  <%= submit_tag l(:button_create_and_continue), :name => 'continue' %>
+  <%= javascript_tag "Form.Element.focus('project_name');" %>
+  <% end %>
+</div>
 
 
-<div class="box">
-  <% if !@managers.nil? %>
-    <h5>
-      <p class="power_user">Lista Manager che accedono all'edizione: <b><%= @managers.count() %></b></p>
-    </h5>
-    <% @managers.each do |usr| %>
-      <div class="icon icon-man"><%= link_to usr, user_path(usr) %></div>
-    <% end
-  end
-  if !@authors.nil? %>
-<hr>
-    <h5>
-      <p class="redattore">Lisat dei Redattori che possono partecipare alla realizzazione degli articoli: <b><%= @authors.count() %></b></p>
-    </h5>
+<% if !@authors.nil? && @authors.any? %>
+  <div class="box splitcontentright">
+    <h3 class="redattore">Lista redattori che possono partecipare alla realizzazione degli articoli: <b><%= @authors.count() %></b>
+    </h3>
+    <p>
     <% @authors.each do |usr| %>
       <div class="icon icon-auth"><%= link_to usr, user_path(usr) %></div>
-    <% end
-  end %>
-<br />
-</div>
+    <% end %>
+    </p>
+  </div>
+<% end %>
+
+<% if !@managers.nil? && @managers.any? %>
+  <div class="box splitcontentleft">
+    <h3 class="power_user">Lista Manager che accedono all'edizione: <b><%= @managers.count() %></b></h3>
+    <p>
+    <% @managers.each do |usr| %>
+      <div class="icon icon-man"><%= link_to usr, user_path(usr) %></div>
+    <% end %>
+    </p>
+  </div>
+<% end %>

@@ -74,77 +74,13 @@ class ProjectsController < ApplicationController
     @trackers = Tracker.all
     @project = Project.new
 
-    #edizione :  4/2012
-    #4/2012 - QUINDICINALE del 23 febbraio 2012
-    #e-4-2012
-    #EDIZIONE_ID = "e-"
-    #QUESITO_ID = "e-quesiti"
-    @project.data_dal = Date.today
-    @project.data_al = Date.today + 15
-    desired_year = @project.data_al.year
-    date_edizione = (((@project.data_al.month) -1) * 2)
-    if (@project.data_al.day <= 15)
-      abbr_meta = " --> prima "
-      meta = "della prima meta di "
-      date_edizione += 1
-    else
-      abbr_meta = " --> fine "
-      meta = "della seconda meta di "
-      date_edizione += 2
-    end
-    flash_name = "QUINDICINALE"
-    identificatore = date_edizione.to_s + "-" + desired_year.to_s
-    #Control uniqueness
-    yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
-    if yet_project
-      #provi di creare un BIS
-      #edizione :  2bis/2012
-      #2bis/2012 - FISCOSPORT FLASH DEL 1/02/2012
-      #e-2bis-2012
-      identificatore =  date_edizione.to_s + "bis-" + desired_year.to_s
-      yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
-      if yet_project
-        num_edizioni = Project.count(:conditions => ['identifier LIKE ? AND extract(year from data_al) = ?', "#{FeeConst::EDIZIONE_ID}%", desired_year])
-        #Model.where("strftime('%Y', date_column)     = ?", desired_year)
-        identificatore = (num_edizioni + 1).to_s + "-" + desired_year.to_s
-
-      else
-        flash_name = "FISCOSPORT FLASH"
-      end
-    end
-
-
-    @project.identifier = FeeConst::EDIZIONE_ID + identificatore
-    identificatore = identificatore.sub( "-", "/" )
-    @project.name = "edizione :  " + identificatore
-    @project.description = identificatore + " - " + flash_name + " del "
-    @project.description += @project.data_al.strftime("%d ")
-    @project.description += l('date.month_names')[@project.data_al.month] + " "
-    @project.description += @project.data_al.strftime("%Y \r\n\r\n")
-    @project.search_key = "edizione " + Date.today.year.to_s
-
-
-    @project.name += abbr_meta
-    #@project.name += @project.data_al.strftime("%B") + "\r\n"
-    @project.name += l('date.abbr_month_names')[@project.data_al.month] + "\r\n"
-
-    @project.description = "h3. " + @project.description
-    @project.description += "h2. Newsletter bisettimanale "
-    @project.description += meta
-    #@project.description += @project.data_al.strftime("%B") + "\r\n"
-    @project.description += l('date.month_names')[@project.data_al.month] + "\r\n"
-    @project.description += "COMMENTO della redazione\r\n"
-    @project.description += "<pre>\r\n"
-    @project.description += "\r\n"
-    @project.description += "</pre>\r\n"
-    @project.description += "*Redazione Fiscosport*"
-
-    @project.safe_attributes = params[:project]
-
-    #debug
+    #domthu20130126
+    @project.set_creation_names()
     @managers = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER, :admin => false })
     @authors = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR, :admin => false})
+    @lastproject = Project.all(:limit => 10, :order => 'created_on DESC')
 
+    @project.safe_attributes = params[:project]
   end
 
   verify :method => :post, :only => :create, :render => {:nothing => true, :status => :method_not_allowed }

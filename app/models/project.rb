@@ -18,6 +18,7 @@
 class Project < ActiveRecord::Base
   include Redmine::SafeAttributes
   include ActionView::Helpers::TextHelper
+  include FeesHelper  #Domthu  FeeConst
   # Project statuses
   STATUS_ACTIVE = 1
   STATUS_ARCHIVED = 9
@@ -89,6 +90,7 @@ class Project < ActiveRecord::Base
   named_scope :has_module, lambda { |mod| {:conditions => ["#{Project.table_name}.id IN (SELECT em.project_id FROM #{EnabledModule.table_name} em WHERE em.name=?)", mod.to_s]} }
   named_scope :active, {:conditions => "#{Project.table_name}.status = #{STATUS_ACTIVE}"}
   named_scope :all_public, {:conditions => {:is_public => true}}
+  named_scope :all_public_fs, {:conditions =>  ['is_public = true AND identifier LIKE ?', "#{FeeConst::EDIZIONE_ID}%"], :order => "#{table_name}.created_on DESC"}
   named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift || User.current, *args)} }
   #
   #CODICE DI ESEMPO:
@@ -145,14 +147,15 @@ class Project < ActiveRecord::Base
   # returns all projects for public area
   def self.all_fs(user = User.current)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
-    find(:all, :conditions => "#{table_name}.is_public = 1", :order => "#{table_name}.created_on DESC")
+    #find(:all, :conditions => "#{table_name}.is_public = 1", :order => "#{table_name}.created_on DESC")
+    all_public_fs.all
   end
 
   # returns limited latest projects for homepage in public area
   # MariaCristina creare flag .promoted_to_front_page, per il momento usiamo .is_public combinato con .status
   def self.latest_fs(user = User.current, count = 5)
-    #find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1 AND #{table_name}.status = #{STATUS_FS}"], :order => "#{table_name}.created_on DESC")
-    find(:all, :limit => count, :conditions => ["#{table_name}.is_public = 1" ], :order => "#{table_name}.created_on DESC")
+    #:conditions => [... AND #{table_name}.status = #{STATUS_FS}"]
+    all_public_fs.all(:limit => count)
     #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in home page
     #Il STATUS_FS dovrebbe essere presso quando la newsletter viene inviata
   end
@@ -1085,6 +1088,108 @@ class Project < ActiveRecord::Base
       end
     end
     return s
+  end
+
+  def set_creation_names()
+    #edizione :  4/2012
+    #4/2012 - QUINDICINALE del 23 febbraio 2012
+    #e-4-2012
+    #EDIZIONE_ID = "e-"
+    #QUESITO_ID = "e-quesiti"
+    self.data_dal = Date.today
+    self.data_al = Date.today + 15
+    desired_year = self.data_al.year
+    date_edizione = (((self.data_al.month) -1) * 2)
+    if (self.data_al.day <= 15)
+      abbr_meta = " --> prima "
+      meta = "della prima meta di "
+      date_edizione += 1
+    else
+      abbr_meta = " --> fine "
+      meta = "della seconda meta di "
+      date_edizione += 2
+    end
+    identificatore = date_edizione.to_s + "-" + desired_year.to_s
+    flash_name = "QUINDICINALE"
+
+    #Control uniqueness
+    #.nil? can be used on any object and is true if the object is nil.
+    #.empty? can be used on strings, arrays and hashes and returns true if:
+    #Running .empty? on something that is nil will throw a NoMethodError.
+    #That is where .blank? comes in. It is implemented by Rails and will operate on any object as well as work like .empty? on strings, arrays and hashes.
+    yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
+    if yet_project #|| !@yet_project.nil?
+      #provi di creare un BIS
+      #edizione :  2bis/2012
+      #2bis/2012 - FISCOSPORT FLASH DEL 1/02/2012
+      #e-2bis-2012
+      identificatore =  date_edizione.to_s + "bis-" + desired_year.to_s
+
+      yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
+      if yet_project #|| !@yet_project.nil?
+        #provo di cercare il numero di edizioni create questo anno
+        num_edizioni = Project.count(:conditions => ['identifier LIKE ? AND extract(year from data_al) = ?', "#{FeeConst::EDIZIONE_ID}%", desired_year])
+        #Model.where("strftime('%Y', date_column)     = ?", desired_year)
+        identificatore = (num_edizioni + 1).to_s + "-" + desired_year.to_s
+
+        yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
+        if yet_project #|| !@yet_project.nil?
+          #prendo l'ultima edizione creato questo anno
+          yet_project = Project.first(:conditions => ['identifier LIKE ?', "#{FeeConst::EDIZIONE_ID}%"], :order => 'created_on DESC')
+          if yet_project && !yet_project.nil?
+            self.data_al = yet_project.data_al + 15
+            desired_year = self.data_al.year
+            date_edizione = (((self.data_al.month) -1) * 2)
+            if (self.data_al.day <= 15)
+              abbr_meta = " --> prima "
+              meta = "della prima meta di "
+              date_edizione += 1
+            else
+              abbr_meta = " --> fine "
+              meta = "della seconda meta di "
+              date_edizione += 2
+            end
+            identificatore = date_edizione.to_s + "-" + desired_year.to_s
+
+          else
+            flash[:notice] = l(:notice_ensure_identifier)
+          end
+        end
+      else
+        flash_name = "FISCOSPORT FLASH"
+      end
+    end
+
+
+    self.identifier = FeeConst::EDIZIONE_ID + identificatore
+    identificatore = identificatore.sub( "-", "/" )
+
+    #self.name = "edizione:  " + identificatore
+    #self.name += abbr_meta
+    ##self.name += self.data_al.strftime("%B") + "\r\n"
+    #self.name += l('date.abbr_month_names')[self.data_al.month] + "\r\n"
+    #3/2013 - QUINDICINALE dell'8 febbraio 2013
+    self.name = identificatore + " QUINDICINALE dell'" + self.data_al.strftime("%e ")
+    self.name += l('date.month_names')[self.data_al.month].downcase
+    self.name += self.data_al.strftime(" %Y")
+
+    self.description = identificatore + " - " + flash_name + " del "
+    self.description += self.data_al.strftime("%d ")
+    self.description += l('date.month_names')[self.data_al.month] + " "
+    self.description += self.data_al.strftime("%Y \r\n\r\n")
+
+    self.search_key = "edizione " + Date.today.year.to_s
+
+    self.description = "h3. " + self.description
+    self.description += "h2. Newsletter bisettimanale "
+    self.description += meta
+    #self.description += self.data_al.strftime("%B") + "\r\n"
+    self.description += l('date.month_names')[self.data_al.month] + "\r\n"
+    self.description += "COMMENTO della redazione\r\n"
+    self.description += "<pre>\r\n"
+    self.description += "\r\n"
+    self.description += "</pre>\r\n"
+    self.description += "*Redazione Fiscosport*"
   end
 
   # --------------------------------PRIVATE AREA-----------------------------------

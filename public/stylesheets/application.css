@@ -1050,7 +1050,7 @@ h2 img { vertical-align:middle; }
 .abbonato{background: url(../images/role/abbo.jpg) no-repeat 0% 50%; padding-left: 32px; min-height:37px;}
 .registrato{background: url(../images/role/reg.jpg) no-repeat 0% 50%; padding-left: 40px; min-height:45px;}
 .inscadenza{background: url(../images/role/renew.jpg) no-repeat 0% 50%; padding-left: 64px; min-height:69px; }
-.espirato{background: url(../images/role/exp.jpg) no-repeat 0% 50%; padding-left: 26px; font-style: italic; min-height:31px; }
+.scaduto{background: url(../images/role/exp.jpg) no-repeat 0% 50%; padding-left: 26px; font-style: italic; min-height:31px; }
 .archivied{background: url(../images/role/arc.jpg) no-repeat 0% 50%; padding-left: 16px; font-style: italic; min-height:21px; }
 .modified{
     box-shadow: 0 0 5px 0 red;

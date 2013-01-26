@@ -1,0 +1,9 @@
+<%# if @lastproject && !@lastproject.empty? %>
+<% if @lastproject.any? %>
+  <div class="projects box splitcontentright">
+    <h3><%=l(:label_project_latest)%></h3>
+    <p><% @lastproject.each do |project| %>
+        <span class="project"><%= link_to_project(project, {:target => '_blank'}, :title => project.short_description) %>&nbsp;<b><%= project.identifier %></b>&nbsp;<%= checked_image project.is_public? %>&nbsp;<%= format_date(project.created_on) %></span><br />
+    <% end %></p>
+  </div>
+<% end %>

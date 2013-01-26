@@ -52,7 +52,7 @@
 <p class="abbonato"><b>[<%= @num_abbonati %>]</b> ROLE_ABBONATO       = 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)</p>
 <p class="inscadenza"><b>[<%= @num_rinnovamento %>]</b>ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />Numero di abbonati in stato di rinnovamento (Scadenza - <%= Setting.renew_days%> giorni)</p>
 <p class="registrato"><b>[<%= @num_registrati %>]</b>ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />Con periodo di prova (Data di registrazione + <%= Setting.register_days%> giorni)</p>
-<p class="espirato"><b>[<%= @num_scaduti %>]</b>ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza &lt; today</p>
+<p class="scaduto"><b>[<%= @num_scaduti %>]</b>ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza &lt; today</p>
 <p class="archivied"><b>[<%= @num_archiviati %>]</b>ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)</p>
     </blockquote>
   </fieldset>
