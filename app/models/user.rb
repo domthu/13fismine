@@ -371,6 +371,14 @@ class User < Principal
     self.role_id == FeeConst::ROLE_ARCHIVIED #= 8  #Ar
   end
 
+  def isauthored?
+    if Setting.fee?
+      FeeConst::AUTHORED_ROLES.include? self.role_id
+    else
+      #No fee management. All data are public
+      true
+    end
+  end
   #endregion ROLE * USER
 
   def set_mail_notification

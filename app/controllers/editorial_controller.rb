@@ -207,28 +207,30 @@ non usata?
   def edizione
     @id = params[:id].to_i
     @project = Project.find_public(@id)
-    if @project.nil? || !@project.is_public
+    if @project.nil?
         flash[:notice] = l(:notice_not_authorized)
         return redirect_to({:action => 'home'})
     else
       @issues = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
       @block_projects = Project.latest_fs
     end
-    def edizione_newsletter
-      #Newsletter  grafica della newsletter
-      @id = params[:id].to_i
-      @project = Project.find_public(@id)
-      @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-      @prj= Project.find_by_id params[:id].to_i
-    end
-    def edizione_smtp
-      #Newsletter spedita direttamente via smtp VIEW solo per test
-      @id = params[:id].to_i
-      @project = Project.find_public(@id)
-      @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-      @news = @project.newsletter_smtp(User.current)
-      @prj= Project.find_by_id params[:id].to_i
-    end
+  end
+
+  def edizione_newsletter
+    #Newsletter  grafica della newsletter
+    @id = params[:id].to_i
+    @project = Project.find_public(@id)
+    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    @prj= Project.find_by_id params[:id].to_i
+  end
+
+  def edizione_smtp
+    #Newsletter spedita direttamente via smtp VIEW solo per test
+    @id = params[:id].to_i
+    @project = Project.find_public(@id)
+    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    @news = @project.newsletter_smtp(User.current)
+    @prj= Project.find_by_id params[:id].to_i
   end
   # -----------------  EDIZIONI /NEWSLETTER  (fine)  ------------------
   # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------

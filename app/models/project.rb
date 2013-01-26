@@ -174,11 +174,22 @@ class Project < ActiveRecord::Base
   end
 
   def self.find_public(id = 0, user = User.current)
-    #@edizione = Project.find(params[:id])
-    #Project.find(:first, :conditions
-    #Project.find_by_id(id)
-    #search(id,:conditions => "#{table_name}.is_public = 1 AND #{table_name}.status IN ( #{STATUS_ARCHIVED}, #{STATUS_FS} )", :include => :role)
-    find(id)
+    nil
+#    #@edizione = Project.find(params[:id])
+#    #Project.find(:first, :conditions
+#    #Project.find_by_id(id)
+#    #search(id,:conditions => "#{table_name}.is_public = 1 AND #{table_name}.status IN ( #{STATUS_ARCHIVED}, #{STATUS_FS} )", :include => :role)
+#    if user.nil? || !user.isauthored
+#      return nil
+#    else
+#      #control user
+#      prj = find(id)
+#      if prj && !prj.is_public
+#        return nil
+#      else
+#        return prj
+#      end
+#    end
   end
 
   # Returns a SQL conditions string used to find all projects visible by the specified user.

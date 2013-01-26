@@ -62,6 +62,7 @@ class Issue < ActiveRecord::Base
   attr_reader :current_journal
 
   validates_presence_of :subject, :priority, :project, :tracker, :author, :status
+  #, :titolo Kappao Use Sommario = subject
 
   validates_length_of :subject, :maximum => 255
   validates_inclusion_of :done_ratio, :in => 0..100

@@ -17,6 +17,8 @@ module FeeConst
   #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
   ROLES =[ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW, ROLE_EXPIRED, ROLE_ARCHIVIED]
 
+  AUTHORED_ROLES =[ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW]
+
   EDIZIONE_ID = "e-"
   QUESITO_ID = "e-quesiti"
   #TODO pass in settings
