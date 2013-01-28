@@ -41,15 +41,18 @@
     </p>
     <p>
       <%= l(:label_didascalia) %>:
+<hr />HTML<br />
       <div class="html">
         <% unless @group_banner.didascalia.nil? %>
           <%= @group_banner.didascalia.html_safe %>
         <% end %>
       </div>
-<--html safe----------------------------------------------------------------------textilizable-->
+<hr />
+<hr />textilizable<br />
       <div class="wiki">
         <%= textilizable(@group_banner.didascalia) %>
       </div>
+<hr />
     </p>
     <p>
         <%= check_box_tag '', 1, @group_banner.se_prima_pagina, :disabled => 'disabled'  %> <%= l(:label_se_prima_pagina) %>

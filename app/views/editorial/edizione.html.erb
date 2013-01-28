@@ -1,8 +1,14 @@
 <div class="fs-layout-cell fs-content clearfix">
   <div id="fs-edizione">
     <%= link_to(image_tag("/images/ico/newsletter.png"), url_for(:controller => 'editorial', :action => "edizione_newsletter", :escape => false),:height=>64) %>
-    <%= @project.description %>
+    <%= @project.name %>
   </div>
+  <%# @project.description.html_safe unless @project.description.blank? %>
+  <div class="wiki">
+    <%= textilizable(@project.description) %>
+  </div>
+  <br />
+
 <div class="cleared" style="width: 100%; margin:11px;" > </div>
   <% if @issues && @issues.any? %>
       <% @issues.each do |articolo| %>
