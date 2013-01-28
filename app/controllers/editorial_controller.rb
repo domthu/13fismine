@@ -169,7 +169,7 @@ class EditorialController < ApplicationController
     @issues = Issue.find(:all,
                          :include => [:section => :top_section],
                          :order => 'created_on DESC',
-                         :conditions => ["se_visible_web = 1 AND is_private = 0 AND se_visible_newsletter = 1 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
+                         :conditions => ["se_visible_web = 1 AND is_private = 0 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
                          :limit => @issues_pages.items_per_page,
                          :offset => @issues_pages.current.offset)
 
@@ -237,8 +237,51 @@ non usata?
   # -----------------  EDIZIONI /NEWSLETTER  (fine)  ------------------
   # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------
   def convegni
+=begin
+    @base_url = params[:pages] #request.path
+    @key_url = params[:topmenu_key]
+=end
+    # Paginate results
+    case params[:format]
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        @limit = 5
+        @offset= 25
+    end
 
+    @topsection = TopSection.find(:first, :conditions => ["top_sections.id = 9"])
+    @issues_count =Issue.count(
+        :include => [:section => :top_section],
+        :conditions => ["#{TopSection.table_name}.id = 9"]
+    )
+    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+    @convegni = Issue.find(:all,
+                           :include => [:section => :top_section],
+                           :order => 'created_on DESC',
+                           :conditions => [" #{TopSection.table_name}.id =?", 9],
+                           #:conditions => ["se_visible_web = 1 AND is_private = 0 AND  #{TopSection.table_name}.id = 6"],
+                           :limit => @issues_pages.items_per_page,
+                           :offset => @issues_pages.current.offset)
 
+    respond_to do |format|
+      format.html {
+        render :layout => !request.xhr?
+      }
+      format.api
+    end
+
+  end
+
+  def convegno
+    #singolo articolo
+    @id = params[:id].to_i
+    @convegno= Issue.find(@id)
+    @section_id = @convegno.section_id
+    @reservation_new =Reservation.new
+    @reservation =Reservation.find(:first,
+                                   :conditions => ["user_id = :uid", {:uid => User.current},
+                                                   "AND issue_id = :iid", {:iid => @convegno.id}])
   end
 
   # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------

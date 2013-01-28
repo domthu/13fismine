@@ -1,12 +1,6 @@
-<h1 style="display:block">Convegni ed eventi</h1>
-<h2 style="color:red">Pagina in costruzione</h2>
-
-<p class="fs-postcontent">questa pagina conterrà una lista di eventi passati e futuri, <br /> sotto gli eventi ci sarà un pulsante - PRENOTATI - che permette all'utente collegato una rapida riservazione .
-  <br /> &nbsp; <br /> Per dare evidenza al nuovo (prossimo) evento/convegno apparirà oltre in questa pagina anche in un blocco in prima pagina </p>
- <hr>
 <div class="fs-layout-cell fs-content clearfix">
-  <% if @issues && @issues.any? %>
-      <% @issues.each do |articolo| %>
+  <% if @convegni && @convegni.any? %>
+      <% @convegni.each do |articolo| %>
           <!-- qui è l'inserimento dell'articolo -->
           <ARTICLE class="fs-post fs-article">
             <% if articolo %>
