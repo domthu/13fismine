@@ -15,7 +15,6 @@
                 </div>
                 <div class="fs-postcontent fs-postcontent-0 clearfix">
                   <div class="fs-content-layout-wrapper layout-item-0">
-
                     <div class="fs-image-caption-wrapper">
                       <%= if articolo.immagine_url.nil?
                             if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
@@ -26,8 +25,6 @@
                           else
                             image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 25)))
                           end
-                          #   image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 25)))
-                          # end
                       %>
                       <% if articolo.se_protetto %>
                           <div class="fs-postmetadatafooter-ko">
@@ -46,18 +43,14 @@
                             </div>
                           </div>
                       <% end %>
-
-
                     </div>
                     <%= articolo.riassunto %>
                     <br/>
                     <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug), :escape => false) %>
                   </div>
                 </div>
-
             <% else %>
                 <br/>
-
                 <p class="nodata"><%= l(:label_no_data) %></p>
                 <br/>
             <% end %>

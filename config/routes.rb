@@ -18,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :templates
   map.resources :example
+  map.resources :reservations
   # 3 under are only for testing
   map.connect 'edizionex/:id', :controller => 'editorial', :action => 'edizione_smtp'
   map.connect 'edizionetest/:id', :controller => 'editorial', :action => 'ediz_test'
@@ -44,6 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   map.servizi '/servizi', :controller => 'editorial', :action => 'servizi'
   map.contatti '/contatti', :controller => 'editorial', :action => 'contatti'
   map.convegni '/convegni-eventi', :controller => 'editorial', :action => 'convegni'
+  map.convegno '/convegni-eventi/:id', :controller => 'editorial', :action => 'convegno'
   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
   map.enti  '/enti_federazioni', :controller => 'editorial', :action => 'enti'
   map.lavora '/lavora_con_noi', :controller => 'editorial', :action => 'lavora'

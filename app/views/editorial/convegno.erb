@@ -1,0 +1,127 @@
+<%# render :partial => 'blocco_sidebar2' %>
+<link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
+<h1 style="display:none">Convegno singolo</h1>
+<div class="fs-layout-cell fs-content clearfix">
+  <article class="fs-post-convegni fs-article">
+    <div class="fs-postcontent fs-postcontent-convegni clearfix">
+
+      <div class="fs-content-layout">
+        <div class="fs-content-layout-row">
+
+          <div class="fs-layout-cell layout-item-0" style="width: 100%; position:relative;">
+            <div class="fs-convegni-deco-tl"></div>
+            <div class="fs-convegni-deco-bl"></div>
+            <div class="fs-convegni-deco-tr"></div>
+            <div class="fs-convegni-deco-br"></div>
+            <div class="fs-convegni-wrapper">
+              <% if @convegno %>
+                  <% if User.current && User.current.logged? && User.current.isfee?(@convegno.id) %>
+                      <div id="counter"><span>
+                        <%= @convegno.section %> &nbsp;</span>
+
+                        <div class="counter_item">
+                          <span><%= I18n.localize(@convegno.due_date.to_date, :format => :giorno_mese_anno) %> </span>
+
+                          <div class="front"></div>
+                        </div>
+                      </div>
+                      <div class="fs-postmetadataheader">
+
+                        <div class="fs-postheader-full">      <%= @convegno.titolo %>  </div>
+                      </div>
+                      <div style="width:100%;">
+                        <div class="fs-image-caption-wrapper-convegni">
+                          <%= if @convegno.immagine_url.nil?
+                                if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{@convegno.top_section.immagine}")
+                                  image_tag("/images/commons/sections/#{@convegno.top_section.immagine}")
+                                else
+                                  image_tag("/images/commons/sections/no-img.jpg")
+                                end
+                              else
+                                image_tag(@convegno.immagine_url, :alt => h(truncate(@convegno.titolo, :length => 25)))
+                              end
+                          %>
+                        </div>
+
+                        <div class="fs-riassunto-full"><p>
+                          <%= h(smart_truncate(@convegno.riassunto, 200)) %></p></div>
+                        <br/>
+                      </div>
+                      <div class="clearfix">&nbsp; <br/>&nbsp; <br/></div>
+                      <div class="fs-layout-cell layout-item-1">
+
+                        <%= @convegno.testo %>
+
+                      </div>
+
+                      <div class="fs-postmetadata-full-convegni">
+                        <div class='fs-social'>
+                          <div class='fs-social-fb '>
+                            <script src="http://connect.facebook.net/it_IT/all.js#xfbml=1"></script>
+                            <fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like>
+                          </div>
+                          <div class='fs-social-tw '>
+                            <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
+                            <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                          </div>
+                          <div class='fs-social-gp '>
+                            <!-- Place this tag where you want the +1 button to render. -->
+                            <div class="g-plusone" data-size="medium" data-recommendations="false">
+                              <!-- Place this tag after the last +1 button tag. -->
+                              <script type="text/javascript">
+                                  window.___gcfg = {lang:'it'};
+                                  (function () {
+                                      var po = document.createElement('script');
+                                      po.type = 'text/javascript';
+                                      po.async = true;
+                                      po.src = 'https://apis.google.com/js/plusone.js';
+                                      var s = document.getElementsByTagName('script')[0];
+                                      s.parentNode.insertBefore(po, s);
+                                  })();
+                              </script>
+                            </div>
+                          </div>
+                          <div class="fs-resize-box">
+                            <a href="javascript:increaseFontSize()" id="increase" class="fs-resize-itm">A<sup>+</sup></a>
+                            <a href="javascript:decreaseFontSize()" id="decrease" class="fs-resize-itm">a<sup>-</sup></a>
+                          </div>
+                        </div>
+                        <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
+                      </div>
+                      <div class="fs-convegni-prenota">
+                                               <%= render :partial => 'reservation' %>
+
+                      </div>
+                  <% else %>
+                      <br/>
+
+                      <p class="nodata"><%= l(:label_no_data) %></p>
+                      <br/>
+                      <h4 style="color:red">Utente non loggato? loggati per visualizzare l'evento</h4>
+                  <% end %>
+
+              <% else %>
+                  <br/>
+
+                  <p class="nodata"><%= l(:label_no_data) %></p>
+
+                  <br/>
+              <% end %>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+  </article>
+
+  <br/>
+
+  <div class="clearfix"></div>
+</div>
+
+<%= render :partial => 'blocco_sidebar1' %>
+<%#sidebar a destra %>
