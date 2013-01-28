@@ -107,7 +107,7 @@ class EditorialController < ApplicationController
 
     @issues_count =Issue.count(
         :include => [:section => :top_section],
-        :conditions => ["#{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids]
+        :conditions => ["#{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids," AND se_visible_web = 1"]
     )
 
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']

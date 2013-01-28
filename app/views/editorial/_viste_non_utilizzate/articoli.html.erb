@@ -8,7 +8,7 @@
                         <% @issues.each do |articolo| %>
                           <div class="art-contenitore">
 
-                        <h5 class="fs-postheader" > <%= articolo.titolo %>  </h5>
+                        <h5 class="fs-postheader" > <%= articolo.subject %>  </h5>
                       <div class="fs-postheadericons ">
                       <%= articolo.top_section  %> (<%= articolo.section.top_section.id  %>)<br />
                       <%= articolo.section  %> (<%= articolo.section.id  %>)<br />

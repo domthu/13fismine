@@ -5,8 +5,8 @@
         <div class="fs-content-layout-row">
           <div class="fs-layout-cell layout-item-0" style="width: 100%">
             <h4 style="border-bottom: 1px dotted #A8ADB8; padding-bottom: 5px">
-              <%= link_to (h(truncate(articolo.titolo, :length => 100)),
-                url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s,:article_slug => h(truncate(articolo.titolo, :length => 125).to_slug) , :escape => false))
+              <%= link_to (h(truncate(articolo.subject, :length => 100)),
+                url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s,:article_slug => h(truncate(articolo.subject, :length => 125).to_slug) , :escape => false))
               %>
             </h4>
 
@@ -28,7 +28,7 @@
             <br/>
             <%= articolo.riassunto %>
             <br/>
-            <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.titolo, :length => 125).to_slug) , :escape => false)%>
+            <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug) , :escape => false)%>
           </div>
         </div>
       </div>

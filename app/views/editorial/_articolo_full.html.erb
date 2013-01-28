@@ -2,7 +2,7 @@
     <% if User.current && User.current.logged? && User.current.isfee?(articolo.id) %>
         <div class="fs-postmetadataheader">
           <div class="fs-art-sezione-full">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></div>
-          <div class="fs-postheader-full">      <%= @articolo.titolo %>  </div>
+          <div class="fs-postheader-full">      <%= @articolo.subject %>  </div>
         </div>
         <div style="width:100%;">
           <div class="fs-image-caption-wrapper-full">
@@ -13,7 +13,7 @@
                     image_tag("/images/commons/sections/no-img.jpg")
                   end
                 else
-                  image_tag(articolo.immagine_url, :alt => h(truncate(articolo.titolo, :length => 25)))
+                  image_tag(articolo.immagine_url, :alt => h(truncate(articolo.subject, :length => 25)))
                 end
             %>
           </div>
@@ -63,7 +63,7 @@
         <div class="clearfix">&nbsp; <br />&nbsp; <br /></div>
         <div class="fs-layout-cell layout-item-2">
           <div id="fs-articolo-full">
-            <%= @articolo.testo %>
+            <%= @articolo.description %>
           </div>
         </div>
         <%= link_to "Ritorna ...", '/editoriale/' + @articolo.section.top_section.top_menu.key + '/'+ @articolo.section.top_section.key, :class => "fs-back" %>

@@ -9,9 +9,9 @@
         <p><img src=<%= asset_path "rails.png"%> /><span style="font-family: Verdana;">Enter Page content here...</span></p>
 
         <% @contents.each do |contenuto| %>
-<h3 class="fs-postheader" > <%= contenuto.titolo %>  </h3>
+<h3 class="fs-postheader" > <%= contenuto.subject %>  </h3>
    <div class="fs-postheadericons "><%# @categoria.categoria  %></div>
-   <div class="fs-postcontent" >   <%= contenuto.testo %> </div>
+   <div class="fs-postcontent" >   <%= contenuto.description %> </div>
    <br />
 
 <div class="fs-postheadericons "> <%# @get_categorie0(contenuto.categorie_id ) %>  </div>

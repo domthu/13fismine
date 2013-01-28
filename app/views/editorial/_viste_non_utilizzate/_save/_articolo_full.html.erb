@@ -1,5 +1,5 @@
 <h4 style="border-bottom: 1px dotted #A8ADB8; padding-bottom: 5px">
-  <%= @articolo.titolo %>
+  <%= @articolo.subject %>
 </h4>
  <span style="color:#ffffff;" class="fs-sections">
   <%= link_to h(truncate(@articolo.section.top_section.name)), url_for(:controller => 'editorial', :action => "topsezione", :topmenu_key => @articolo.section.top_section.top_menu.key, :topsection_key => @articolo.section.top_section.key, :escape => false) %>
@@ -10,6 +10,6 @@
   </span>
 <br/>
 <div class="fs-layout-cell layout-item-1">
-  <%= @articolo.testo %>
+  <%= @articolo.description %>
 </div>
 <%= link_to "Ritorna ...", '/editoriale/' + @articolo.section.top_section.top_menu.key + '/'+ @articolo.section.top_section.key %>
