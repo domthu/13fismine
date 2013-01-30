@@ -50,7 +50,7 @@
     <th class="chklabel"><%= check_box_tag('x', 'x', @issue.se_protetto, :disabled => true)  %><%=l(:label_se_protetto)%></th>
 </tr>
 <tr>
-    <th class=""></th><td class=""></td>
+    <th class="chklabel"><%= check_box_tag('c', 'c', @issue.se_prenotazione, :disabled => true)  %><%=l(:label_se_prenotazione)%></th><td class=""></td>
     <% if @issue.estimated_hours %>
     <th class="estimated-hours"><%=l(:field_estimated_hours)%>:</th><td class="estimated-hours"><%= l_hours(@issue.estimated_hours) %></td>
     <% end %>
@@ -64,12 +64,12 @@
 <hr />
 
   <p><strong><%=l(:field_riassunto)%></strong></p>
-  <div class="html">
+  <div class="html" style="display: none;">
     <% unless @issue.riassunto.nil? %>
       <%= @issue.riassunto.html_safe %>
     <% end %>
-  </div>
 <--html safe----------------------------------------------------------------------textilizable-->
+  </div>
   <div class="wiki">
   <%= textilizable @issue, :riassunto, :attachments => @issue.attachments %>
   </div>
@@ -83,12 +83,12 @@
   </div>
 
   <p><strong><%=l(:field_description)%></strong></p>
-  <div class="html">
+  <div class="html" style="display: none;">
     <% unless @issue.description.nil? %>
       <%= @issue.description.html_safe %>
     <% end %>
-  </div>
 <--html safe----------------------------------------------------------------------textilizable-->
+  </div>
   <div class="wiki">
   <%= textilizable @issue, :description, :attachments => @issue.attachments %>
   </div>

@@ -161,6 +161,12 @@ class IssuesController < ApplicationController
     call_hook(:controller_issues_new_before_save, { :params => params, :issue => @issue })
     #domthu 20120710
     #@issue.riassunto =  (params[:riassunto].present? ? params[:riassunto] : '?')
+    if @issue.se_prenotazione
+      #CONVEGNO_SECTION_ID = 26 #Convegni: Articolo con issue.section.top_section_id
+      #CONVEGNO_TOP_SECTION_ID = 9 #Convegni ed eventi
+      @issue.section_id = FeeConst::CONVEGNO_SECTION_ID
+    end
+
     if @issue.save
       attachments = Attachment.attach_files(@issue, params[:attachments])
       call_hook(:controller_issues_new_after_save, { :params => params, :issue => @issue})

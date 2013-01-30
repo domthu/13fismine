@@ -1226,6 +1226,7 @@ it:
   label_clicks: Clicks
   label_didascalia: Didascalia
   label_se_prima_pagina: promosso in prima pagina
+  label_se_prenotazione: Gestione convegno?
   label_impressions_history: Storico impressione
 
   field_espositore: Espositore
@@ -1238,6 +1239,7 @@ it:
   field_clicks: Clicks
   field_didascalia: Didascalia
   field_se_prima_pagina: promosso in prima pagina
+  field_se_prenotazione: Gestione convegno?
   field_impressions_history: Storico impressione
 
 #ISSUE --> ATTIVITA
