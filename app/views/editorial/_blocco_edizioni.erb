@@ -9,7 +9,7 @@
           <div class="fs-content-layout-row">
             <div class="fs-layout-cell layout-item-0" style="width: 100%">
               <div class="fs-postheader fs-blockheader-edizioni">
-                Edizione <%= link_to(h(prj.description), url_for(:controller => 'editorial', :action => "edizione", :id => prj.id, :escape => false)) %>
+                <%= link_to(h(prj.name), url_for(:controller => 'editorial', :action => "edizione", :id => prj.id, :escape => false)) %>
               </div>
             </div>
           </div>

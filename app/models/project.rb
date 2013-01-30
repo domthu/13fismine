@@ -872,7 +872,7 @@ class Project < ActiveRecord::Base
                   </font>
                 </td>
                 <td width="55" valign="bottom" align="right">
-                  <img src="http://es.pecchia.info/images/ico/fs.jpg" width="50" height="50" border="0" \>
+                  <img src="http://es.pecchia.info/images/ico/fs.png" width="50" height="50" border="0" \>
                 </td>
               </tr>
             </table>'

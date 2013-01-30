@@ -1,42 +1,22 @@
 <% if (@reservation.nil?) %>
-
-    <%=  (!@reservation.nil?).to_s %>   <%= (@reservation.nil?).to_s %>
-
     <% form_for(@reservation_new) do |f| %>
         <h4> Partecipa a questo evento </h4>
         <%= f.submit 'Prenota!', :class => "fs-blu-button" %>
         <%= f.error_messages %>
         <%= f.hidden_field :user_id, {:value => User.current.id} %>
         <%= f.hidden_field :issue_id, {:value => @convegno.id} %>
-        <!--
-      <p>
-        <%= f.label :user_id %><br />
-        <%= f.text_field :user_id, {:value => User.current.id} %>
-      </p>
-      <p>
-        <%= f.label :issue_id %><br />
-        <%= f.text_field :issue_id, {:value => @convegno.id} %>
-      </p>
-      -->
         <p>Numero persone
           <%= f.text_field :num_persone, {:value => 1} %>
-
-          <!--
-      <p>
-        <%= f.label :prezzo %><br />
-        <%= f.text_field :prezzo %>
-      </p>
-      -->
-
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Messaggio (opzionale)
           <%= f.text_area :msg %>
         </p>
     <% end %>
 <% else %>
-        <h4> Grazie di aver già prenotato questo evento per
-          <%= @reservation.num_persone == 1 ? @reservation.num_persone.to_s + " persona."  : @reservation.num_persone.to_s + " persone." %></h4>
-         <div>
-           Non desideri più partecipare? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <%= link_to 'Cancella prenotazione!','/reservations/'+ @reservation.id.to_s ,  :confirm => 'Confermi?', :method => :delete , :class => "fs-rosso-button"%>
+    <h4> Grazie di aver già prenotato questo evento per
+      <%= @reservation.num_persone == 1 ? @reservation.num_persone.to_s + " persona." : @reservation.num_persone.to_s + " persone." %></h4>
+    <div>
+      Non desideri più partecipare? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <%= link_to 'Cancella prenotazione!', '/reservations/'+ @reservation.id.to_s, :confirm => 'Confermi?', :method => :delete, :class => "fs-rosso-button" %>
+      <br/>
     </div>
 <% end %>
