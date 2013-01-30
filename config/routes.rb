@@ -19,10 +19,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :templates
   map.resources :example
   map.resources :reservations
-  # 3 under are only for testing
+  #  under are only for testing
   map.connect 'edizionex/:id', :controller => 'editorial', :action => 'edizione_smtp'
-  map.connect 'edizionetest/:id', :controller => 'editorial', :action => 'ediz_test'
-
+  map.connect 'eventi/', :controller => 'editorial', :action => 'eventi'
+  #----------------------------------------------------------------------------------
   #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
   #AJAX get usando JQuery UI autocomplete
   map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle', :conditions => {:method => [:get]}

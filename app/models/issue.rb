@@ -785,7 +785,8 @@ class Issue < ActiveRecord::Base
     projects
   end
 
-  private
+
+private
 
   def update_nested_set_attributes
     if root_id.nil?
