@@ -1,4 +1,5 @@
-/* rewrites jquery ui classes */
+/* rewrites jquery ui classes  */
+/*inizio  per edizioni */
 .ui-accordion .ui-accordion-header {
     display: block;
     cursor: pointer;
@@ -7,6 +8,7 @@
     padding: 2px;
     zoom: 1
 }
+
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
     margin-bottom: 0;
     padding-bottom: 0;
@@ -21,31 +23,32 @@
 .ui-widget-header a {
     color: #eaf5f7
 }
-  /* inizio bootone inattivo */
+
+/* inizio bootone inattivo */
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
     border: 0;
-      border-collapse: separate;
-      -webkit-background-origin: border !important;
-      -moz-background-origin: border !important;
-      background-origin: border-box !important;
-      background: #006B92;
-      background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-      background: -webkit-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-      background: -moz-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-      background: -o-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-      background: -ms-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-      background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-      -svg-background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-      -webkit-border-radius:4px;
-      -moz-border-radius:4px;
-      border-radius:4px;
-      -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
-      -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
-      box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
-      padding:0 35px;
-      margin:0 auto;
-      height:32px;
-      color: #FFFFFF;
+    border-collapse: separate;
+    -webkit-background-origin: border !important;
+    -moz-background-origin: border !important;
+    background-origin: border-box !important;
+    background: #006B92;
+    background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+    background: -webkit-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+    background: -moz-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+    background: -o-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+    background: -ms-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+    background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+    -svg-background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    padding: 0 35px;
+    margin: 0 auto;
+
+    color: #FFFFFF;
 
 }
 
@@ -53,25 +56,26 @@
     ccolor: #FFFFFF !important;
     text-decoration: none
 }
-  /* fine bootone inattivo */
+
+/* fine bootone inattivo */
 /* inizio non selezionato hover*/
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
     background: #007FAD;
-      background: linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
-      background: -webkit-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
-      background: -moz-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
-      background: -o-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
-      background: -ms-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
-      background: linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
-      -svg-background: linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
-      -webkit-border-radius:4px;
-      -moz-border-radius:4px;
-      border-radius:4px;
-      -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
-      -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
-      box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
-      padding:0 35px;
-      margin:0 auto;
+    background: linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+    background: -webkit-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+    background: -moz-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+    background: -o-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+    background: -ms-linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+    background: linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+    -svg-background: linear-gradient(top, #008EC2 0, #008EC2 50%, #008EC2 60%, #006C94 100%) no-repeat;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    padding: 0 35px;
+    margin: 0 auto;
     color: #ffffff
 }
 
@@ -79,8 +83,9 @@
     ccolor: #FFFFFF !important;
     text-decoration: none
 }
- /* fine non selezionato hover*/
- /* inizio attivo hover*/
+
+/* fine non selezionato hover*/
+/* inizio attivo hover*/
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
     background: #FFBE1A;
     background: linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
@@ -90,18 +95,108 @@
     background: -ms-linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
     background: linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
     -svg-background: linear-gradient(top, #FFC42E 0, #FFC42E 50%, #FFC229 60%, #FFB700 100%) no-repeat;
-    -webkit-border-radius:4px;
-    -moz-border-radius:4px;
-    border-radius:4px;
-    -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
-    box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.2);
-    padding:0 35px;
-    margin:0 auto;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    padding: 0 35px;
+    margin: 0 auto;
     color: #Df0000
 }
 
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
     color: #Df0000;
     text-decoration: none
+}
+
+/* fine per edizioni */
+/* ------------------------------------------------------------------------*/
+/* inizio  per EVENTI */
+/* rewrites jquery ui classes */
+#accordion-events {
+    width: 99%;
+}
+
+/* inizio bootone inattivo */
+#accordion-events .ui-state-hover {
+    background: transparent;
+    -webkit-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 1px;
+    -opera-border-radius: 1px;
+    -moz-border-radius: 1px;
+    color: #000;
+    padding: 6px 0 0 48px;
+    margin: 0 auto;
+    height: 30px;
+
+}
+
+#accordion-events .ui-state-default a, #accordion-events .ui-state-default a:link, #accordion-events .ui-state-default a:visited {
+    ccolor: #000000 !important;
+    text-decoration: none
+}
+
+#accordion-events .ui-state-active {
+    background: transparent;
+    -webkit-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 1px;
+    -opera-border-radius: 1px;
+    -moz-border-radius: 1px;
+    padding: 6px 0 0 48px;
+    margin: 0 auto;
+    height: 30px;
+
+}
+
+#accordion-events .ui-state-default {
+    background: transparent;
+    -webkit-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 1px;
+    -opera-border-radius: 1px;
+    -moz-border-radius: 1px;
+    padding: 6px 0 0 48px;
+    margin: 0 auto;
+    height: 30px;
+
+}
+
+/*  ui-accordion-header-icon ui-icon ui-icon-triangle-1-e   */
+#accordion-events .ui-icon-triangle-1-e {
+    background: url('/images/ico/bullet-b.png') top left no-repeat;
+}
+
+#accordion-events .ui-icon-triangle-1-s {
+    background: url('/images/ico/bullet-y.png') top left no-repeat;
+}
+
+#accordion-events .ui-icon-triangle-1-w {
+    background: url('/images/ico/bullet-a.png') top left no-repeat;
+}
+
+#accordion-events .ui-icon {
+    width: 30px;
+    height: 30px;
+}
+
+#accordion-events .ui-accordion-header-icon {
+     top: 12px;
+ }
+#accordion-events h6{
+    color: #000;
+       font-family: 'Allerta', arial, sans-serif;
+       font-size: 15px;
+       text-transform: uppercase;
+    line-height: 2em;
+}
+#accordion-events .ui-accordion-content{
+padding: 1em;
+    outline: hidden;
 }

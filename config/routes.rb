@@ -45,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   map.servizi '/servizi', :controller => 'editorial', :action => 'servizi'
   map.contatti '/contatti', :controller => 'editorial', :action => 'contatti'
   map.convegni '/convegni-eventi', :controller => 'editorial', :action => 'convegni'
-  map.convegno '/convegni-eventi/:id', :controller => 'editorial', :action => 'convegno'
+  map.evento '/evento/:id', :controller => 'editorial', :action => 'evento'
   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
   map.enti  '/enti_federazioni', :controller => 'editorial', :action => 'enti'
   map.lavora '/lavora_con_noi', :controller => 'editorial', :action => 'lavora'

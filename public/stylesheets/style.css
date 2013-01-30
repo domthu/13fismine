@@ -263,28 +263,32 @@ ul.fs-vmenu a
 
 .fs-postcontent h6
 {
-   color: #006B92;
-   margin: 10px 0 0;
-   font-size: 13px;
-   font-family:  Arial, Helvetica, Sans-Serif;
-  /* font-variant: small-caps;
-   text-align: center;    */
+    color: #00678C;
+    margin: 10px 0 0;
+    font-size: 16px;
+    font-family:  Arial, Helvetica, Sans-Serif;
+    line-height: 2em;
+   /* font-variant: small-caps;
+    text-align: center;    */
+
 }
 
 .fs-blockcontent h6
 {
-
-   margin: 10px 0 0;
-   font-size: 13px;
-   font-family:  Arial, Helvetica, Sans-Serif;
-  /* font-variant: small-caps;
-   text-align: center;    */
+    color: #00678C;
+    margin: 10px 0 0;
+    font-size: 16px;
+    font-family:  Arial, Helvetica, Sans-Serif;
+     line-height: 2em;
 }
 
 .fs-postcontent h6 a, .fs-postcontent h6 a:link, .fs-postcontent h6 a:hover, .fs-postcontent h6 a:visited, .fs-blockcontent h6 a, .fs-blockcontent h6 a:link, .fs-blockcontent h6 a:hover, .fs-blockcontent h6 a:visited
 {
-   font-size: 13px;
-   font-family:  Arial, Helvetica, Sans-Serif;
+    font-size: 16px;
+    font-family:  Arial, Helvetica, Sans-Serif;
+    text-decoration: none;
+    color: #00678C;
+
   /* font-variant: small-caps;
    text-align: center;    */
 }

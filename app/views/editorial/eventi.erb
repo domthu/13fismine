@@ -2,16 +2,16 @@
 <% if User.current && User.current.logged? && User.current.isfee?(@conv_prossimo.id) %>
     <script>
         $(document).ready(function () {
-            $("#accordion-events").accordion({heightStyle:"content", autoHeight:false });
+            $("#accordion-events").accordion({heightStyle:"content", autoHeight:false, active: 1 });
         });
     </script>
     <link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
     <h1 style="display:none">eventi</h1>
-    <div class="fs-layout-cell fs-content clearfix">
+    <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
       <!-- accordion -->
       <div id="accordion-events">
         <!-- convegni futuri -->
-        <h4 style="font-weight: bold;">Convegni/Eventi Futuri </h4>
+        <h6>Convegni/Eventi Futuri </h6>
         <% if @conv_futuri.nil? %>
             <div> Nessun evento o convegno previsto.
             </div>
@@ -22,6 +22,7 @@
                   <div class="fs-content-layout-row">
                     <div class="fs-layout-cell layout-item-0" style="width: 100%; position:relative;">
                       <% @conv_futuri.each do |con| %>
+
                           <p><%= con.id.to_s + ' | del: ' + con.due_date.to_s + ' -> ' + con.subject %>  </p>
                       <% end %>
                     </div>
@@ -31,7 +32,7 @@
             </article>
         <% end %>
         <!--convegno prossimo -->
-        <h4 style="font-weight: bold;">Convegno/Evento Prossimo </h4>
+        <h6>Convegno/Evento Prossimo </h6>
         <% if @conv_prossimo.nil? %>
             <div> Nessun evento o convegno in corso.
             </div>
@@ -60,7 +61,7 @@
                         </div>
                         <div style="width:100%;">
                           <div class="fs-image-caption-wrapper-convegni">
-                            <%= if @conv_prossimo.immagine_url.nil?
+                            <%= if !@conv_prossimo.immagine_url.nil?
                                   if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
                                     image_tag("/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
                                   else
@@ -75,7 +76,7 @@
                             <%= h(smart_truncate(@conv_prossimo.riassunto, 200)) %></p><br/>
                           </div>
                         </div>
-                        <div class="clearfix">&nbsp; <br/>&nbsp; <br/></div>
+                        <div class="clearfix"></div>
                         <div class="fs-layout-cell layout-item-1">
                           <%= @conv_prossimo.testo %>
                         </div>
@@ -124,23 +125,27 @@
             </article>
         <% end %>
         <!-- convegni passati -->
-        <h4 style="font-weight: bold;">Convegni/Eventi Passati %> </h4>
-        <% if (@conv_futuri.nil?) %>
+        <h6>Convegni/Eventi Passati </h6>
+        <% if (@conv_passati.nil?) %>
             <div> Nessun evento o convegno passato.
             </div>
         <% else %>
             <article class="fs-post-convegni fs-article">
-              <div class="fs-postcontent fs-postcontent-convegni clearfix">
-                <div class="fs-content-layout">
-                  <div class="fs-content-layout-row">
-                    <div class="fs-layout-cell layout-item-0" style="width: 100%; position:relative;">
+
                       <% @conv_passati.each do |con| %>
-                          <p><%= con.id.to_s + ' | del: ' + con.due_date.to_s + ' -> ' + con.subject %>  </p>
+                          <div class="fs-content-layout fs-block-edizioni">
+                                   <div class="fs-content-layout-row">
+                                     <div class="fs-layout-cell layout-item-0" style="width: 100%">
+                                       <div class="fs-postheader fs-blockheader-edizioni" style="text-align: left;">
+                                         <span style="font-weight: bold; color:#003973; border:solid 1px #d3d3d3; margin:3px;"><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %> </span>
+                                         <%=  con.subject %>                                          <%# link_to(h(prj.name), url_for(:controller => 'editorial', :action => "edizione", :id => prj.id, :escape => false)) %>
+                                        </div>
+                                     </div>
+                                   </div>
+                                 </div>
+
                       <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
             </article>
         <% end %>
       </div>

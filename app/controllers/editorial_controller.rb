@@ -273,7 +273,7 @@ non usata?
 
   end
 
-  def convegno
+  def evento
     #singolo articolo
     @id = params[:id].to_i
     @convegno= Issue.find(@id)
