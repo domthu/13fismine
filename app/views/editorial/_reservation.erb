@@ -7,7 +7,7 @@
         <%= f.hidden_field :issue_id, {:value => @convegno.id} %>
         <p>Numero persone
           <%= f.text_field :num_persone, {:value => 1} %>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Messaggio (opzionale)
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Messaggio (opzionale)
           <%= f.text_area :msg %>
         </p>
     <% end %>
@@ -15,8 +15,9 @@
     <h4> Grazie di aver già prenotato questo evento per
       <%= @reservation.num_persone == 1 ? @reservation.num_persone.to_s + " persona." : @reservation.num_persone.to_s + " persone." %></h4>
     <div>
-      Non desideri più partecipare? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <br/>
+      Non desideri più partecipare? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <%= link_to 'Cancella prenotazione!', '/reservations/'+ @reservation.id.to_s, :confirm => 'Confermi?', :method => :delete, :class => "fs-rosso-button" %>
-      <br/>
+      <br/> &nbsp;
     </div>
 <% end %>

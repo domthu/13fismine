@@ -2,8 +2,11 @@
 
     <%= render :partial => 'blocco_slide1' %>
   <% if !@block_projects.nil? %>
-        <%= render :partial => 'blocco_edizioni' %>
-       <% end %>
+               <%= render :partial => 'blocco_edizioni' %>
+              <% end %>
+  <% if !@conv_prossimo.nil? %>
+         <%= render :partial => 'blocco_eventi' %>
+        <% end %>
     <%# render :partial =>  'blocco_ricerca' %>
     <%# render :partial => 'blocco_banners1' %>
     <%# render :partial => 'blocco_account' %>

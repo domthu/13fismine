@@ -285,13 +285,9 @@ non usata?
                               :order => 'due_date DESC',
                               :conditions =>" #{TopSection.table_name}.id = 9 AND  due_date >=' #{DateTime.now.to_date}'" )
     @cid = if @conv_prossimo.id.nil? ? 0 : @conv_prossimo.id ; end
-    @conv_futuri = Issue.find(:first, :include => [:section => :top_section],
+    @conv_futuri = Issue.find(:all, :include => [:section => :top_section],
                                  :order => 'due_date DESC',
                                  :conditions =>" #{TopSection.table_name}.id = 9 AND  issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}" )
-    @conv_passati = Issue.find(:first, :include => [:section => :top_section],
-                                  :order => 'due_date DESC',
-                                  :conditions =>" #{TopSection.table_name}.id = 9 AND  due_date <' #{DateTime.now.to_date}'" )
-
   end
   def eventi
     #solo per test copia di convegno
@@ -312,6 +308,7 @@ non usata?
     @reservation =Reservation.find(:first, :conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
     @convegno= Issue.find(@cid)
   end
+
 
   # -----------------  CONVEGNI / EVENTI  (fine)   ------------------
 

@@ -4,10 +4,8 @@
 <div class="fs-layout-cell fs-content clearfix">
   <article class="fs-post-convegni fs-article">
     <div class="fs-postcontent fs-postcontent-convegni clearfix">
-
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">
-
           <div class="fs-layout-cell layout-item-0" style="width: 100%; position:relative;">
             <div class="fs-convegni-deco-tl"></div>
             <div class="fs-convegni-deco-bl"></div>
@@ -16,18 +14,18 @@
             <div class="fs-convegni-wrapper">
               <% if @convegno %>
                   <% if User.current && User.current.logged? && User.current.isfee?(@convegno.id) %>
-                      <div id="counter"><span>
-                        <%= @convegno.section %> &nbsp;</span>
+                      <div class="counter-bg">
+                        <div class="counter">
+                          <span><%= @convegno.section %> &nbsp;</span>
 
-                        <div class="counter_item">
-                          <span><%= I18n.localize(@convegno.due_date.to_date, :format => :giorno_mese_anno) %> </span>
-
-                          <div class="front"></div>
+                          <div class="counter_item">
+                            <span><%= I18n.localize(@convegno.due_date.to_date, :format => :giorno_mese_anno) %></span>
+                          </div>
                         </div>
                       </div>
                       <div class="fs-postmetadataheader">
-
-                        <div class="fs-postheader-full">      <%= @convegno.titolo %>  </div>
+                        <div class="fs-postheader-eventi-full">
+                          <%= @convegno.subject %>  </div>
                       </div>
                       <div style="width:100%;">
                         <div class="fs-image-caption-wrapper-convegni">
@@ -38,21 +36,22 @@
                                   image_tag("/images/commons/sections/no-img.jpg")
                                 end
                               else
+                                begin
                                 image_tag(@convegno.immagine_url, :alt => h(truncate(@convegno.titolo, :length => 25)))
+                                rescue
+                                  image_tag("/images/commons/sections/no-img.jpg")
+                                end
                               end
                           %>
                         </div>
                         <div class="fs-riassunto-full"><p>
-                          <%= h(smart_truncate(@convegno.riassunto, 200)) %></p></div>
-                        <br/>
+                          <%= h(smart_truncate(@convegno.riassunto, 200)) %></p>
+                        </div>
                       </div>
-                      <div class="clearfix">&nbsp; <br/>&nbsp; <br/></div>
+                      <div class="clearfix"></div>
                       <div class="fs-layout-cell layout-item-1">
-
                         <%= @convegno.testo %>
-
                       </div>
-
                       <div class="fs-postmetadata-full-convegni">
                         <div class='fs-social'>
                           <div class='fs-social-fb '>
@@ -88,8 +87,7 @@
                         <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
                       </div>
                       <div class="fs-convegni-prenota">
-                                               <%= render :partial => 'reservation' %>
-
+                        <%= render :partial => 'reservation' %>
                       </div>
                   <% else %>
                       <br/>
@@ -98,7 +96,6 @@
                       <br/>
                       <h4 style="color:red">Utente non loggato? loggati per visualizzare l'evento</h4>
                   <% end %>
-
               <% else %>
                   <br/>
 
@@ -106,17 +103,13 @@
 
                   <br/>
               <% end %>
-
             </div>
-
-
           </div>
         </div>
       </div>
     </div>
     <br/>
   </article>
-
   <br/>
 
   <div class="clearfix"></div>

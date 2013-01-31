@@ -1,5 +1,11 @@
 /* rewrites jquery ui classes  */
 /*inizio  per edizioni */
+
+.ui-widget input{
+    font-family:  Arial, Helvetica, Sans-Serif;
+    font-size:inherit ;
+    text-align: center;
+  }
 .ui-accordion .ui-accordion-header {
     display: block;
     cursor: pointer;

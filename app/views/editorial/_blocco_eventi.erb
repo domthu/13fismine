@@ -1,0 +1,65 @@
+<div class="fs-block clearfix">
+  <div class="fs-blockheader">
+    <h3 class="t">Convegni ed Eventi</h3>
+  </div>
+  <div class="fs-blockcontent">
+    <% if @conv_prossimo.nil? %>
+        <div> Nessun evento o convegno previsto.
+        </div>
+    <% else %>
+        <article class="fs-post-convegni fs-article">
+          <div class="fs-convegni-border">
+            <div class="fs-convegni-block-data"><span>
+                        <%= @conv_prossimo.section %> &nbsp;</span>
+              <span><%= I18n.localize(@conv_prossimo.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+            </div>
+            <div class="fs-convegni-futuri fs-conv-block ">
+              <%= if @conv_prossimo.immagine_url.nil?
+                    if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
+                      image_tag("/images/commons/sections/#{@conv_prossimo.top_section.immagine}", :width => 100)
+                    else
+                      image_tag("/images/commons/sections/no-img.jpg", :width => 100)
+                    end
+                  else
+                    begin
+                      image_tag(@conv_prossimo.immagine_url, :alt => h(truncate(@conv_prossimo.subject, :length => 25)))
+                    rescue
+                      image_tag("/images/commons/sections/no-img.jpg")
+                    end
+                  end
+              %>
+              <span> <%= link_to(h(@conv_prossimo.subject), :controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false) %></span>
+
+              <p>
+                <%= link_to(h(smart_truncate(@conv_prossimo.riassunto, 120)), :controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false) %>
+                <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false), :class => "fs-giallo-inline-button" %></p>
+              <br/>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </article>
+    <% end %>
+    <% if @conv_futuri.nil? %>
+        <div> Nessun evento o convegno previsto.
+        </div>
+    <% else %>
+        <article class="fs-post-convegni fs-article">
+          <% @conv_futuri.each do |con| %>
+              <div class="fs-convegni-border">
+                <div class="fs-convegni-block2-data"><span>
+                                                               <%= con.section %> &nbsp;</span>
+                  <span><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+                </div>
+                <div class="fs-convegni-futuri fs-conv-block">
+                                <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>
+                                  <%= link_to "Visualizza...", url_for(:controller => 'editorial', :action => "evento", :id => con.id, :escape => false), :class => "fs-vuoto-inline-button" %>
+                                </span>
+                  <br/>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+          <% end %>
+        </article>
+    <% end %>
+  </div>
+</div>

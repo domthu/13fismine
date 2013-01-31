@@ -48,7 +48,7 @@ SimpleNavigation::Configuration.run do |navigation|
     menu_generale.item :key_2, 'Chi Siamo', chisiamo_path
     menu_generale.item :key_3, 'Servizi alle Associazioni', servizi_path
     menu_generale.item :key_5, 'Lavora con Noi', lavora_path
-    menu_generale.item :key_6, 'Convegni', convegni_path
+    menu_generale.item :key_6, 'Eventi e Convegni', eventi_path
     menu_generale.item :key_7, 'Enti e Federazioni', enti_path
     menu_generale.item :key_8, 'Abbonamenti', abbonamenti_path
     menu_generale.item :key_10, 'News & Sport', newsport_path

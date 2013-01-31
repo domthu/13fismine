@@ -2,11 +2,10 @@
 <% if User.current && User.current.logged? && User.current.isfee?(@conv_prossimo.id) %>
     <script>
         $(document).ready(function () {
-            $("#accordion-events").accordion({heightStyle:"content", autoHeight:false, active: 1 });
+            $("#accordion-events").accordion({heightStyle:"content", autoHeight:false, active:1 });
         });
     </script>
     <link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
-    <h1 style="display:none">eventi</h1>
     <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
       <!-- accordion -->
       <div id="accordion-events">
@@ -17,18 +16,34 @@
             </div>
         <% else %>
             <article class="fs-post-convegni fs-article">
-              <div class="fs-postcontent fs-postcontent-convegni clearfix">
-                <div class="fs-content-layout">
-                  <div class="fs-content-layout-row">
-                    <div class="fs-layout-cell layout-item-0" style="width: 100%; position:relative;">
-                      <% @conv_futuri.each do |con| %>
-
-                          <p><%= con.id.to_s + ' | del: ' + con.due_date.to_s + ' -> ' + con.subject %>  </p>
-                      <% end %>
+              <% @conv_futuri.each do |con| %>
+                  <div class="fs-convegni-border">
+                    <div class="fs-convegni-futuri-data"><span>
+                                                     <%= con.section %> &nbsp;</span>
+                      <span><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
                     </div>
+                    <div class="fs-convegni-futuri">
+                      <%= if con.immagine_url.nil?
+                            if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{con.top_section.immagine}")
+                              image_tag("/images/commons/sections/#{con.top_section.immagine}", :width => 100)
+                            else
+                              image_tag("/images/commons/sections/no-img.jpg", :width => 100)
+                            end
+                          else
+                            image_tag(con.immagine_url, :alt => h(truncate(con.subject, :length => 25)), :width => 100)
+                          end
+                      %>
+                      <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %></span>
+
+                      <p>
+                        <%= link_to(h(smart_truncate(con.riassunto, 120)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>
+                        <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :id => con.id, :escape => false), :class => "fs-giallo-inline-button" %></p>
+                      <br/>
+
+                    </div>
+                    <div class="clearfix"></div>
                   </div>
-                </div>
-              </div>
+              <% end %>
             </article>
         <% end %>
         <!--convegno prossimo -->
@@ -47,28 +62,33 @@
                       <div class="fs-convegni-deco-tr"></div>
                       <div class="fs-convegni-deco-br"></div>
                       <div class="fs-convegni-wrapper">
-                        <div id="counter"><span>
-                        <%= @conv_prossimo.section %> &nbsp;</span>
+                        <div class="counter-bg">
+                          <div class="counter">
+                            <span><%= @conv_prossimo.section %> &nbsp;</span>
 
-                          <div class="counter_item">
-                            <span><%= I18n.localize(@conv_prossimo.due_date.to_date, :format => :giorno_mese_anno) %> </span>
-
-                            <div class="front"></div>
+                            <div class="counter_item">
+                              <span><%= I18n.localize(@conv_prossimo.due_date.to_date, :format => :giorno_mese_anno) %></span>
+                            </div>
                           </div>
                         </div>
                         <div class="fs-postmetadataheader">
-                          <div class="fs-postheader-full">      <%= @conv_prossimo.titolo %>  </div>
+                          <div class="fs-postheader-eventi-full">
+                            <%= @conv_prossimo.titolo %>  </div>
                         </div>
                         <div style="width:100%;">
                           <div class="fs-image-caption-wrapper-convegni">
-                            <%= if !@conv_prossimo.immagine_url.nil?
+                            <%= if @conv_prossimo.immagine_url.nil?
                                   if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
                                     image_tag("/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
                                   else
                                     image_tag("/images/commons/sections/no-img.jpg")
                                   end
                                 else
-                                  image_tag(@conv_prossimo.immagine_url, :alt => h(truncate(@conv_prossimo.titolo, :length => 25)))
+                                  begin
+                                                                  image_tag(conv_prossimo.immagine_url, :alt => h(truncate(conv_prossimo.titolo, :length => 25)))
+                                                                  rescue
+                                                                    image_tag("/images/commons/sections/no-img.jpg")
+                                                                  end
                                 end
                             %>
                           </div>
@@ -126,26 +146,24 @@
         <% end %>
         <!-- convegni passati -->
         <h6>Convegni/Eventi Passati </h6>
-        <% if (@conv_passati.nil?) %>
+        <% if @conv_passati.nil? %>
             <div> Nessun evento o convegno passato.
             </div>
         <% else %>
             <article class="fs-post-convegni fs-article">
+              <% @conv_passati.each do |con| %>
+                  <div class="fs-content-layout fs-block-edizioni">
+                    <div class="fs-content-layout-row">
 
-                      <% @conv_passati.each do |con| %>
-                          <div class="fs-content-layout fs-block-edizioni">
-                                   <div class="fs-content-layout-row">
-                                     <div class="fs-layout-cell layout-item-0" style="width: 100%">
-                                       <div class="fs-postheader fs-blockheader-edizioni" style="text-align: left;">
-                                         <span style="font-weight: bold; color:#003973; border:solid 1px #d3d3d3; margin:3px;"><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %> </span>
-                                         <%=  con.subject %>                                          <%# link_to(h(prj.name), url_for(:controller => 'editorial', :action => "edizione", :id => prj.id, :escape => false)) %>
-                                        </div>
-                                     </div>
-                                   </div>
-                                 </div>
+                      <div class="fs-postheader fs-blockheader-edizioni fs-convegni-border" style="text-align: left;">
+                        <span><%= link_to(h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %> </span>
 
-                      <% end %>
-
+                        <p class="event-tetx"><%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>   </p>
+                      </div>
+                    </div>
+                  </div>
+                  <p style="padding:2px"></p>
+              <% end %>
             </article>
         <% end %>
       </div>
