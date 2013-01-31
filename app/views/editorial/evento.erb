@@ -14,6 +14,7 @@
             <div class="fs-convegni-wrapper">
               <% if @convegno %>
                   <% if User.current && User.current.logged? && User.current.isfee?(@convegno.id) %>
+                      <div class="counter-bg-fade1"></div>
                       <div class="counter-bg">
                         <div class="counter">
                           <span><%= @convegno.section %> &nbsp;</span>
@@ -27,6 +28,7 @@
                         <div class="fs-postheader-eventi-full">
                           <%= @convegno.subject %>  </div>
                       </div>
+                      <div class="counter-bg-fade2"></div>
                       <div style="width:100%;">
                         <div class="fs-image-caption-wrapper-convegni">
                           <%= if @convegno.immagine_url.nil?
@@ -36,10 +38,10 @@
                                   image_tag("/images/commons/sections/no-img.jpg")
                                 end
                               else
-                                begin
-                                image_tag(@convegno.immagine_url, :alt => h(truncate(@convegno.titolo, :length => 25)))
-                                rescue
-                                  image_tag("/images/commons/sections/no-img.jpg")
+                                if FileTest.exist?("#{RAILS_ROOT}/public/images/articles/#{@convegno.immagine_url}")
+                                    image_tag(@convegno.immagine_url, :alt => h(truncate(@convegno.subject, :length => 25)))
+                                else
+                                    image_tag("/images/articles/no-img.jpg")
                                 end
                               end
                           %>

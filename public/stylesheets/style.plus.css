@@ -744,7 +744,6 @@ background: -ms-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,246,196,1
 background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,246,196,1) 6%,rgba(255,246,196,1) 95%,rgba(255,255,255,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 );
        color: #c93214;
-    margin-bottom: 10px;
     font-size: 18px;
     line-height: 2.0em;
     font-family: Arial, Helvetica, Sans-Serif;
@@ -927,6 +926,7 @@ color: #000000;
     font-size: 0.8em;
     text-align: left;
     line-height: 1.2em;
+    margin: 5px;
 
 }
 
@@ -945,7 +945,7 @@ color: #000000;
 }
 .fs-convegni-futuri img{
  float:left;
-    border-right: solid 15px #ffffff;
+    border-right: solid 5px #ffffff;
 }
 .fs-convegni-border{
     background: transparent;
@@ -990,7 +990,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', e
 
 }
 .fs-convegni-block-data {
-    background-color: #f1e9b8;
+    background-color: #FFF6C4;
    position:relative ;
     display: block;
     height: 24px;
@@ -1006,7 +1006,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', e
 
 }
 .fs-convegni-block2-data {
-    background-color: #f1e9b8;
+    background-color: #FFF6C4;
    position:relative ;
     display: block;
     height: 24px;
@@ -1090,7 +1090,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', e
 }
 
 .fs-image-caption-wrapper-convegni {
-    padding: 7px 8px 7px 0;
+    padding: 7px 8px 7px 7px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -1128,15 +1128,36 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', e
 }
 .counter-bg{
     background: rgb(255,255,255);
-    background: -moz-linear-gradient(left,  rgba(255,255,255,1) 0%, rgba(255,246,196,1) 6%, rgba(255,246,196,1) 95%, rgba(255,255,255,1) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,1)), color-stop(6%,rgba(255,246,196,1)), color-stop(95%,rgba(255,246,196,1)), color-stop(100%,rgba(255,255,255,1)));
-    background: -webkit-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,246,196,1) 6%,rgba(255,246,196,1) 95%,rgba(255,255,255,1) 100%);
-    background: -o-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,246,196,1) 6%,rgba(255,246,196,1) 95%,rgba(255,255,255,1) 100%);
-    background: -ms-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,246,196,1) 6%,rgba(255,246,196,1) 95%,rgba(255,255,255,1) 100%);
-    background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,246,196,1) 6%,rgba(255,246,196,1) 95%,rgba(255,255,255,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 );
-
+    background: -moz-linear-gradient(left,  rgba(255,255,255,1) 0%, rgba(255,246,196,1) 5%, rgba(255,246,196,1) 95%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,1)), color-stop(5%,rgba(255,246,196,1)), color-stop(95%,rgba(255,246,196,1)), color-stop(100%,rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,246,196,1) 5%,rgba(255,246,196,1) 95%,rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,246,196,1) 5%,rgba(255,246,196,1) 95%,rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,246,196,1) 5%,rgba(255,246,196,1) 95%,rgba(255,255,255,1) 100%);
+    background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,246,196,1) 5%,rgba(255,246,196,1) 95%,rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff6c4', endColorstr='#fff6c4',GradientType=1 );
     padding:15px 0;
+}
+.counter-bg-fade1{
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,246,196,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,246,196,1)));
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,246,196,1) 100%);
+    background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,246,196,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,246,196,1) 100%);
+    background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,246,196,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#fff6c4',GradientType=0 );
+    margin: 0 20px;
+    padding:10px ;
+}
+.counter-bg-fade2{
+    background: -moz-linear-gradient(bottom,  rgba(255,255,255,0) 0%, rgba(255,246,196,1) 100%);
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,246,196,1)));
+    background: -webkit-linear-gradient(bottom,  rgba(255,255,255,0) 0%,rgba(255,246,196,1) 100%);
+    background: -o-linear-gradient(bottom,  rgba(255,255,255,0) 0%,rgba(255,246,196,1) 100%);
+    background: -ms-linear-gradient(bottom,  rgba(255,255,255,0) 0%,rgba(255,246,196,1) 100%);
+    background: linear-gradient(to top,  rgba(255,255,255,0) 0%,rgba(255,246,196,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff6c4', endColorstr='#00ffffff',GradientType=0 );
+    margin: 0 20px;
+    padding:10px ;
 }
 .counter {
     margin-left: 33%;
@@ -2761,13 +2782,14 @@ button.fs-giallo-inline-button {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    -webkit-box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2);
-    padding: 1px 5px;
+    -webkit-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.3);
+    -moz-box-shadow:    0 2px 5px rgba(50, 50, 50, 0.3);
+    box-shadow:         0 2px 5px rgba(50, 50, 50, 0.3);
+    padding: 2px 5px;
     margin: 0 auto;
     font-variant:normal;
     font-size: 0.9em;
+    float: right;
 
 }
 

@@ -73,7 +73,7 @@
                         </div>
                         <div class="fs-postmetadataheader">
                           <div class="fs-postheader-eventi-full">
-                            <%= @conv_prossimo.titolo %>  </div>
+                            <%= @conv_prossimo.subject %>  </div>
                         </div>
                         <div style="width:100%;">
                           <div class="fs-image-caption-wrapper-convegni">
@@ -84,11 +84,11 @@
                                     image_tag("/images/commons/sections/no-img.jpg")
                                   end
                                 else
-                                  begin
-                                                                  image_tag(conv_prossimo.immagine_url, :alt => h(truncate(conv_prossimo.titolo, :length => 25)))
-                                                                  rescue
-                                                                    image_tag("/images/commons/sections/no-img.jpg")
-                                                                  end
+                                  if FileTest.exist?("#{RAILS_ROOT}/public/images/articles/#{@conv_prossimo.immagine_url}")
+                                    image_tag(@conv_prossimo.immagine_url, :alt => h(truncate(@conv_prossimo.subject, :length => 25)))
+                                  else
+                                    image_tag("/images/articles/no-img.jpg")
+                                  end
                                 end
                             %>
                           </div>

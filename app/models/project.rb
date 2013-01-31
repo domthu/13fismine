@@ -774,7 +774,7 @@ class Project < ActiveRecord::Base
         indice += (art.section.nil? ? "?" : art.section.top_section.to_s) + "</h3>"
         last_top_section = art.section.top_section_id
       end
-      indice += smart_truncate(art.titolo, 30) + "<br />"
+      indice += smart_truncate(art.subject, 30) + "<br />"
       sommario += indice.nil? ? "?" : art.section.top_section.to_s
       sommario += smart_truncate(art.riassunto, 100) + "<br />"
 
@@ -916,7 +916,7 @@ class Project < ActiveRecord::Base
             <!-------------------------------------------------------------------->
           <!-- inizio loop sezione indice --> '
           for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
-            ancora = truncate(nart.titolo, :length => 30).to_slug
+            ancora = truncate(nart.subject, :length => 30).to_slug
             s3 += '<table width="560" border="0" cellpadding="0" cellspacing="0">'
             if last_tops != nart.section.top_section_id
     s3 += '<tr>
@@ -952,7 +952,7 @@ class Project < ActiveRecord::Base
                       </td>
                       <td width="536" align="left" valign="center">
                         <font style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">
-                          <strong>   <a href="#'+ ancora +'" style ="color:#333333; text-decoration: none;">' + nart.titolo + '</strong></font><br/>
+                          <strong>   <a href="#'+ ancora +'" style ="color:#333333; text-decoration: none;">' + nart.subject + '</strong></font><br/>
                       </td>
                     </tr>
                   </table>
@@ -996,7 +996,7 @@ class Project < ActiveRecord::Base
             <!------------------------------------------------------------------------->
             <!-- inizio sezione loop articoli --> '
           for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
-            ancora = truncate(nart.titolo, :length => 30).to_slug
+            ancora = truncate(nart.subject, :length => 30).to_slug
     s4 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td width="560" align="center" valign="top" bgcolor="#f4f4f4" style="border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;">
@@ -1019,7 +1019,7 @@ class Project < ActiveRecord::Base
                     <!-- titolo  -->
                       <td width="440" align="left" valign="top">
                         <font style="font-family: Arial, Helvetica, sans-serif; font-size:16px; color:#003548; text-align: justify;">
-                          <strong>' + nart.titolo + '</strong> </font><br/>
+                          <strong>' + nart.subject + '</strong> </font><br/>
                       </td>
                     </tr>
                     <tr>
@@ -1044,7 +1044,7 @@ class Project < ActiveRecord::Base
                   <table width="560" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td width="560" height="33" align="right" valign="top">
-                     <a href="http://fiscosport.it/editoriale/'+ nart.section.top_section.top_menu.key + '/' + nart.section.top_section.key + '/' + nart.id.to_s + ' ' + truncate(nart.titolo, :length => 125).to_slug + '" target="_blank" >
+                     <a href="http://fiscosport.it/editoriale/'+ nart.section.top_section.top_menu.key + '/' + nart.section.top_section.key + '/' + nart.id.to_s + ' ' + truncate(nart.subject, :length => 125).to_slug + '" target="_blank" >
                               <img src="http://es.pecchia.info/images/commons/btn_news_y.gif" width="107" height="29" alt="vedi articolo" \> </a>
                       </td>
                     </tr>
