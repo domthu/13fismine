@@ -285,7 +285,7 @@ class Issue < ActiveRecord::Base
     'priority_id',
     'fixed_version_id',
     'subject',
-    'riassunto',
+    'summary',
     'description',
     'start_date',
     'due_date',

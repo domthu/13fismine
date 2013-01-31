@@ -17,7 +17,7 @@
 
         <div class="fs-postcontent">
           <div class="fs-box-link">
-          <%= link_to(h(smart_truncate(articolo.riassunto, 130)),
+          <%= link_to(h(smart_truncate(articolo.summary, 130)),
               url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))
           %>
           <br/></div>  </div>

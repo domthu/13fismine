@@ -93,14 +93,6 @@ class Project < ActiveRecord::Base
   named_scope :all_public_fs, {:conditions =>  ['is_public = true AND identifier LIKE ?', "#{FeeConst::EDIZIONE_ID}%"], :order => "#{table_name}.created_on DESC"}
   named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift || User.current, *args)} }
   #
-  #CODICE DI ESEMPO:
-  # SELECT `issues`.`id` AS t0_r0, `issues`.`tracker_id` AS t0_r1, `issues`.`project_id` AS t0_r2, `issues`.`subject` AS t0_r3, `issues`.`description` AS t0_r4, `issues`.`due_date` AS t0_r5, `issues`.`category_id` AS t0_r6, `issues`.`status_id` AS t0_r7, `issues`.`assigned_to_id` AS t0_r8, `issues`.`priority_id` AS t0_r9, `issues`.`fixed_version_id` AS t0_r10, `issues`.`author_id` AS t0_r11, `issues`.`lock_version` AS t0_r12, `issues`.`created_on` AS t0_r13, `issues`.`updated_on` AS t0_r14, `issues`.`start_date` AS t0_r15, `issues`.`done_ratio` AS t0_r16, `issues`.`estimated_hours` AS t0_r17, `issues`.`parent_id` AS t0_r18, `issues`.`root_id` AS t0_r19, `issues`.`lft` AS t0_r20, `issues`.`rgt` AS t0_r21, `issues`.`is_private` AS t0_r22, `issues`.`section_id` AS t0_r23, `issues`.`ordinamento` AS t0_r24, `issues`.`se_sommario` AS t0_r25, `issues`.`riassunto` AS t0_r26, `issues`.`titolo` AS t0_r27, `issues`.`testo` AS t0_r28, `issues`.`riferimento` AS t0_r29, `issues`.`se_visible_web` AS t0_r30, `issues`.`data_scadenza` AS t0_r31, `issues`.`se_visible_data` AS t0_r32, `issues`.`se_visible_newsletter` AS t0_r33, `issues`.`se_protetto` AS t0_r34, `issues`.`immagine_url` AS t0_r35, `issues`.`titolo_no_format` AS t0_r36, `issues`.`testo_no_format` AS t0_r37, `issues`.`riassunto_no_format` AS t0_r38, `issues`.`tag_link` AS t0_r39, `issue_statuses`.`id` AS t1_r0, `issue_statuses`.`name` AS t1_r1, `issue_statuses`.`is_closed` AS t1_r2, `issue_statuses`.`is_default` AS t1_r3, `issue_statuses`.`position` AS t1_r4, `issue_statuses`.`default_done_ratio` AS t1_r5, `trackers`.`id` AS t2_r0, `trackers`.`name` AS t2_r1, `trackers`.`is_in_chlog` AS t2_r2, `trackers`.`position` AS t2_r3, `trackers`.`is_in_roadmap` AS t2_r4, `sections`.`id` AS t3_r0, `sections`.`sezione` AS t3_r1, `sections`.`protetto` AS t3_r2, `sections`.`ordinamento` AS t3_r3, `sections`.`top_section_id` AS t3_r4, `sections`.`created_at` AS t3_r5, `sections`.`updated_at` AS t3_r6, `top_sections`.`id` AS t4_r0, `top_sections`.`sezione_top` AS t4_r1, `top_sections`.`ordinamento` AS t4_r2, `top_sections`.`se_visibile` AS t4_r3, `top_sections`.`immagine` AS t4_r4, `top_sections`.`key` AS t4_r5, `top_sections`.`created_at` AS t4_r6, `top_sections`.`updated_at` AS t4_r7, `top_sections`.`top_menu_id` AS t4_r8, `top_sections`.`se_home_menu` AS t4_r9 FROM `issues`  LEFT OUTER JOIN `issue_statuses` ON `issue_statuses`.id = `issues`.status_id  LEFT OUTER JOIN `trackers` ON `trackers`.id = `issues`.tracker_id  LEFT OUTER JOIN `sections` ON `sections`.id = `issues`.section_id  LEFT OUTER JOIN `top_sections` ON `top_sections`.id = `sections`.top_section_id WHERE (`issues`.project_id = 329)  ORDER BY issues.sections.top_section_id DESC, issues.created_on DESC
-  # for art in self.issues.sort_by &:section_id do
-  # has_many :news_issues, :dependent => :destroy, :order => "#{Issue.table_name}.#{Section.table_name}.top_section_id DESC" , :include => [:status,{:section => :top_section} ]
-  #
-  #
-
-
   #TODO
   def is_public_fs?
     self.is_public == true #&& self.promoted_to_front_page == true
@@ -776,7 +768,7 @@ class Project < ActiveRecord::Base
       end
       indice += smart_truncate(art.subject, 30) + "<br />"
       sommario += indice.nil? ? "?" : art.section.top_section.to_s
-      sommario += smart_truncate(art.riassunto, 100) + "<br />"
+      sommario += smart_truncate(art.summary, 100) + "<br />"
 
     end
     str += "<h2> user corrente:" + user.name + "</h2>"
@@ -1034,7 +1026,7 @@ class Project < ActiveRecord::Base
                       <!-- riga riassunto -->
                       <td width="560" colspan="2">
                         <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#000000; line-height:18px; ">
-                          ' + nart.riassunto + '
+                          ' + nart.summary + '
                         </font><br/>
                       </td>
                     </tr>

@@ -33,9 +33,9 @@
   <%#, :locals => {:project => @project, :issue => @issue}%>
 </div>
 
-<p><%= f.text_area :riassunto,
+<p><%= f.text_area :summary,
                    :cols => 20,
-                   :rows => (@issue.riassunto.blank? ? 5 : [[5, @issue.riassunto.length / 50].max, 50].min),
+                   :rows => (@issue.summary.blank? ? 5 : [[5, @issue.summary.length / 50].max, 50].min),
                    :accesskey => accesskey(:edit),
                    :class => 'wiki-edit' %></p>
 
@@ -61,5 +61,5 @@
 <%= call_hook(:view_issues_form_details_bottom, { :issue => @issue, :form => f }) %>
 
 <%# wikitoolbar_for 'issue_subject' %>
-<%= wikitoolbar_for 'issue_riassunto' %>
+<%= wikitoolbar_for 'issue_summary' %>
 <%= wikitoolbar_for 'issue_description' %>

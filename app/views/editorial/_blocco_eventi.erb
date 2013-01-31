@@ -31,7 +31,7 @@
               <span> <%= link_to(h(@conv_prossimo.subject), :controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false) %></span>
 
 
-                <%= link_to(h(smart_truncate(@conv_prossimo.riassunto, 120)), :controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false) %>
+                <%= link_to(h(smart_truncate(@conv_prossimo.summary, 120)), :controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false) %>
                 <%= link_to "Visualizza... ", url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false), :class => "fs-vuoto-inline-button" %>
               <br/>
             </div>

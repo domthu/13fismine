@@ -20,7 +20,7 @@
                         image_tag(articolo.immagine_url, :alt => h(truncate(articolo.subject, :length => 12)), :style => "width:200px", :class => "image-caption-wrapper")
                       end
                   %>
-                <%= articolo.riassunto %>
+                <%= articolo.summary %>
                 <br/>
                 <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false) %>
               </div>

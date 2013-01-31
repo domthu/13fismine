@@ -36,7 +36,7 @@
                       <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %></span>
 
                       <p>
-                        <%= link_to(h(smart_truncate(con.riassunto, 120)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>
+                        <%= link_to(h(smart_truncate(con.summary, 120)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>
                         <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :id => con.id, :escape => false), :class => "fs-giallo-inline-button" %></p>
                       <br/>
 
@@ -93,7 +93,7 @@
                             %>
                           </div>
                           <div class="fs-riassunto-full"><p>
-                            <%= h(smart_truncate(@conv_prossimo.riassunto, 200)) %></p><br/>
+                            <%= h(smart_truncate(@conv_prossimo.summary, 200)) %></p><br/>
                           </div>
                         </div>
                         <div class="clearfix"></div>

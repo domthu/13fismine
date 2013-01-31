@@ -60,18 +60,18 @@
 <%= call_hook(:view_issues_show_details_bottom, :issue => @issue) %>
 </table>
 
-<% if @issue.riassunto? -%>
+<% if @issue.summary? -%>
 <hr />
 
-  <p><strong><%=l(:field_riassunto)%></strong></p>
+  <p><strong><%=l(:field_summary)%></strong></p>
   <div class="html" style="display: none;">
-    <% unless @issue.riassunto.nil? %>
-      <%= @issue.riassunto.html_safe %>
+    <% unless @issue.summary.nil? %>
+      <%= @issue.summary.html_safe %>
     <% end %>
 <--html safe----------------------------------------------------------------------textilizable-->
   </div>
   <div class="wiki">
-  <%= textilizable @issue, :riassunto, :attachments => @issue.attachments %>
+  <%= textilizable @issue, :summary, :attachments => @issue.attachments %>
   </div>
 <% end %>
 

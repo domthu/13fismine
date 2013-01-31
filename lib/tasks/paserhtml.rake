@@ -14,8 +14,8 @@ namespace :db do
 	#		articolo.subject = tmp
 	#		tmp = wc.html2wiki( articolo.description)
 	#		articolo.description = tmp
-	#		tmp = wc.html2wiki( articolo.riassunto)
-	#		articolo.riassunto = tmp
+	#		tmp = wc.html2wiki( articolo.summary)
+	#		articolo.summary = tmp
 	#		articolo.save()
 	#end
 

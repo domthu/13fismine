@@ -160,7 +160,7 @@ class IssuesController < ApplicationController
   def create
     call_hook(:controller_issues_new_before_save, { :params => params, :issue => @issue })
     #domthu 20120710
-    #@issue.riassunto =  (params[:riassunto].present? ? params[:riassunto] : '?')
+    #@issue.summary =  (params[:summary].present? ? params[:summary] : '?')
     if @issue.se_prenotazione
       #CONVEGNO_SECTION_ID = 26 #Convegni: Articolo con issue.section.top_section_id
       #CONVEGNO_TOP_SECTION_ID = 9 #Convegni ed eventi
@@ -202,7 +202,7 @@ class IssuesController < ApplicationController
   def update
     update_issue_from_params
     #domthu 20120710
-    #@issue.riassunto =  params[:riassunto]
+    #@issue.summary =  params[:summary]
     if @issue.save_issue_with_child_records(params, @time_entry)
       render_attachment_warning_if_needed(@issue)
       flash[:notice] = l(:notice_successful_update) unless @issue.current_journal.new_record?
@@ -336,8 +336,8 @@ private
     @issue.init_journal(User.current, @notes)
 
     #domthu 20120710
-    #@issue.riassunto =  (params[:riassunto].present? ? params[:riassunto] : 'updt')
-    #@issue.riassunto =  (params[:issue][:riassunto].present? ? params[:issue][:riassunto] : 'updt2')
+    #@issue.summary =  (params[:summary].present? ? params[:summary] : 'updt')
+    #@issue.summary =  (params[:issue][:summary].present? ? params[:issue][:summary] : 'updt2')
     #--> Add to safe_attribute
     @issue.safe_attributes = params[:issue]
   end
