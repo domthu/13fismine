@@ -1,177 +1,172 @@
 <%# render :partial => 'blocco_sidebar2' %>
-<% if User.current && User.current.logged? && User.current.isfee?(@conv_prossimo.id) %>
-    <script>
-        $(document).ready(function () {
-            $("#accordion-events").accordion({heightStyle:"content", autoHeight:false, active:1 });
-        });
-    </script>
-    <link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
-    <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
-      <!-- accordion -->
-      <div id="accordion-events">
-        <!-- convegni futuri -->
+<script>
+    $(document).ready(function () {
+        $("#accordion-events").accordion({heightStyle:"content", autoHeight:false, active:1 });
+    });
+</script>
+<link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
+<div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
+  <!-- accordion -->
+  <div id="accordion-events">
+    <!-- convegni futuri -->
+    <% if @conv_futuri.nil? %>
+    <% else %>
         <h6>Convegni/Eventi Futuri </h6>
-        <% if @conv_futuri.nil? %>
-            <div> Nessun evento o convegno previsto.
-            </div>
-        <% else %>
-            <article class="fs-post-convegni fs-article">
-              <% @conv_futuri.each do |con| %>
-                  <div class="fs-convegni-border">
-                    <div class="fs-convegni-futuri-data"><span>
+        <article class="fs-post-convegni fs-article">
+          <% @conv_futuri.each do |con| %>
+              <div class="fs-convegni-border">
+                <div class="fs-convegni-futuri-data"><span>
                                                      <%= con.section %> &nbsp;</span>
-                      <span><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
-                    </div>
-                    <div class="fs-convegni-futuri">
-                      <%= if con.immagine_url.nil?
-                            if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{con.top_section.immagine}")
-                              image_tag("/images/commons/sections/#{con.top_section.immagine}", :width => 100)
-                            else
-                              image_tag("/images/commons/sections/no-img.jpg", :width => 100)
-                            end
-                          else
-                            image_tag(con.immagine_url, :alt => h(truncate(con.subject, :length => 25)), :width => 100)
-                          end
-                      %>
-                      <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %></span>
+                  <span><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+                </div>
+                <div class="fs-convegni-futuri">
+                  <%= if con.immagine_url.nil?
+                        if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{con.top_section.immagine}")
+                          image_tag("/images/commons/sections/#{con.top_section.immagine}", :width => 100)
+                        else
+                          image_tag("/images/commons/sections/no-img.jpg", :width => 100)
+                        end
+                      else
+                        image_tag(con.immagine_url, :alt => h(truncate(con.subject, :length => 25)), :width => 100)
+                      end
+                  %>
+                  <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %></span>
 
-                      <p>
-                        <%= link_to(h(smart_truncate(con.summary, 120)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>
-                        <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :id => con.id, :escape => false), :class => "fs-giallo-inline-button" %></p>
-                      <br/>
+                  <p>
+                    <%= link_to(h(smart_truncate(con.summary, 120)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>
+                    <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :id => con.id, :escape => false), :class => "fs-giallo-inline-button" %></p>
+                  <br/>
 
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-              <% end %>
-            </article>
-        <% end %>
-        <!--convegno prossimo -->
-        <h6>Convegno/Evento Prossimo </h6>
-        <% if @conv_prossimo.nil? %>
-            <div> Nessun evento o convegno in corso.
-            </div>
-        <% else %>
-            <article class="fs-post-convegni fs-article">
-              <div class="fs-postcontent fs-postcontent-convegni clearfix">
-                <div class="fs-content-layout">
-                  <div class="fs-content-layout-row">
-                    <div class="fs-layout-cell layout-item-0" style="width: 100%; position:relative;">
-                      <div class="fs-convegni-deco-tl"></div>
-                      <div class="fs-convegni-deco-bl"></div>
-                      <div class="fs-convegni-deco-tr"></div>
-                      <div class="fs-convegni-deco-br"></div>
-                      <div class="fs-convegni-wrapper">
-                        <div class="counter-bg">
-                          <div class="counter">
-                            <span><%= @conv_prossimo.section %> &nbsp;</span>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+          <% end %>
+        </article>
+    <% end %>
+    <!--convegno prossimo -->
+    <h6>Convegno/Evento Prossimo </h6>
+    <% if @conv_prossimo.nil? %>
+        <div> Nessun evento o convegno in corso o previsto.
+        </div>
+    <% else %>
+        <article class="fs-post-convegni fs-article">
+          <div class="fs-postcontent fs-postcontent-convegni clearfix">
+            <div class="fs-content-layout">
+              <div class="fs-content-layout-row">
+                <div class="fs-layout-cell layout-item-0" style="width: 100%; position:relative;">
+                  <div class="fs-convegni-deco-tl"></div>
+                  <div class="fs-convegni-deco-bl"></div>
+                  <div class="fs-convegni-deco-tr"></div>
+                  <div class="fs-convegni-deco-br"></div>
+                  <div class="fs-convegni-wrapper">
+                    <div class="counter-bg">
+                      <div class="counter">
+                        <span><%= @conv_prossimo.section %> &nbsp;</span>
 
-                            <div class="counter_item">
-                              <span><%= I18n.localize(@conv_prossimo.due_date.to_date, :format => :giorno_mese_anno) %></span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="fs-postmetadataheader">
-                          <div class="fs-postheader-eventi-full">
-                            <%= @conv_prossimo.subject %>  </div>
-                        </div>
-                        <div style="width:100%;">
-                          <div class="fs-image-caption-wrapper-convegni">
-                            <%= if @conv_prossimo.immagine_url.nil?
-                                  if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
-                                    image_tag("/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
-                                  else
-                                    image_tag("/images/commons/sections/no-img.jpg")
-                                  end
-                                else
-                                  if FileTest.exist?("#{RAILS_ROOT}/public/images/articles/#{@conv_prossimo.immagine_url}")
-                                    image_tag(@conv_prossimo.immagine_url, :alt => h(truncate(@conv_prossimo.subject, :length => 25)))
-                                  else
-                                    image_tag("/images/articles/no-img.jpg")
-                                  end
-                                end
-                            %>
-                          </div>
-                          <div class="fs-riassunto-full"><p>
-                            <%= h(smart_truncate(@conv_prossimo.summary, 200)) %></p><br/>
-                          </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="fs-layout-cell layout-item-1">
-                          <%= @conv_prossimo.testo %>
-                        </div>
-                        <div class="fs-postmetadata-full-convegni">
-                          <div class='fs-social'>
-                            <div class='fs-social-fb '>
-                              <script src="http://connect.facebook.net/it_IT/all.js#xfbml=1"></script>
-                              <fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like>
-                            </div>
-                            <div class='fs-social-tw '>
-                              <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
-                              <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-                            </div>
-                            <div class='fs-social-gp '>
-                              <!-- Place this tag where you want the +1 button to render. -->
-                              <div class="g-plusone" data-size="medium" data-recommendations="false">
-                                <!-- Place this tag after the last +1 button tag. -->
-                                <script type="text/javascript">
-                                    window.___gcfg = {lang:'it'};
-                                    (function () {
-                                        var po = document.createElement('script');
-                                        po.type = 'text/javascript';
-                                        po.async = true;
-                                        po.src = 'https://apis.google.com/js/plusone.js';
-                                        var s = document.getElementsByTagName('script')[0];
-                                        s.parentNode.insertBefore(po, s);
-                                    })();
-                                </script>
-                              </div>
-                            </div>
-                            <div class="fs-resize-box">
-                              <a href="javascript:increaseFontSize()" id="increase" class="fs-resize-itm">A<sup>+</sup></a>
-                              <a href="javascript:decreaseFontSize()" id="decrease" class="fs-resize-itm">a<sup>-</sup></a>
-                            </div>
-                          </div>
-                          <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
-                        </div>
-                        <div class="fs-convegni-prenota">
-                          <%= render :partial => 'reservation' %>
+                        <div class="counter_item">
+                          <span><%= I18n.localize(@conv_prossimo.due_date.to_date, :format => :giorno_mese_anno) %></span>
                         </div>
                       </div>
+                    </div>
+                    <div class="fs-postmetadataheader">
+                      <div class="fs-postheader-eventi-full">
+                        <%= @conv_prossimo.subject %>  </div>
+                    </div>
+                    <div style="width:100%;">
+                      <div class="fs-image-caption-wrapper-convegni">
+                        <%= if @conv_prossimo.immagine_url.nil?
+                              if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
+                                image_tag("/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
+                              else
+                                image_tag("/images/commons/sections/no-img.jpg")
+                              end
+                            else
+                              if FileTest.exist?("#{RAILS_ROOT}/public/images/articles/#{@conv_prossimo.immagine_url}")
+                                image_tag(@conv_prossimo.immagine_url, :alt => h(truncate(@conv_prossimo.subject, :length => 25)))
+                              else
+                                image_tag("/images/articles/no-img.jpg")
+                              end
+                            end
+                        %>
+                      </div>
+                      <div class="fs-riassunto-full"><p>
+                        <%= h(smart_truncate(@conv_prossimo.summary, 200)) %></p><br/>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="fs-layout-cell layout-item-1">
+                      <%= @conv_prossimo.testo %>
+                    </div>
+                    <div class="fs-postmetadata-full-convegni">
+                      <div class='fs-social'>
+                        <div class='fs-social-fb '>
+                          <script src="http://connect.facebook.net/it_IT/all.js#xfbml=1"></script>
+                          <fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like>
+                        </div>
+                        <div class='fs-social-tw '>
+                          <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
+                          <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                        </div>
+                        <div class='fs-social-gp '>
+                          <!-- Place this tag where you want the +1 button to render. -->
+                          <div class="g-plusone" data-size="medium" data-recommendations="false">
+                            <!-- Place this tag after the last +1 button tag. -->
+                            <script type="text/javascript">
+                                window.___gcfg = {lang:'it'};
+                                (function () {
+                                    var po = document.createElement('script');
+                                    po.type = 'text/javascript';
+                                    po.async = true;
+                                    po.src = 'https://apis.google.com/js/plusone.js';
+                                    var s = document.getElementsByTagName('script')[0];
+                                    s.parentNode.insertBefore(po, s);
+                                })();
+                            </script>
+                          </div>
+                        </div>
+                        <div class="fs-resize-box">
+                          <a href="javascript:increaseFontSize()" id="increase" class="fs-resize-itm">A<sup>+</sup></a>
+                          <a href="javascript:decreaseFontSize()" id="decrease" class="fs-resize-itm">a<sup>-</sup></a>
+                        </div>
+                      </div>
+                      <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
+                    </div>
+                    <div class="fs-convegni-prenota">
+                      <%= render :partial => 'reservation' %>
                     </div>
                   </div>
                 </div>
               </div>
-            </article>
-        <% end %>
-        <!-- convegni passati -->
-        <h6>Convegni/Eventi Passati </h6>
-        <% if @conv_passati.nil? %>
-            <div> Nessun evento o convegno passato.
             </div>
-        <% else %>
-            <article class="fs-post-convegni fs-article">
-              <% @conv_passati.each do |con| %>
-                  <div class="fs-content-layout fs-block-edizioni">
-                    <div class="fs-content-layout-row">
+          </div>
+        </article>
+    <% end %>
+    <!-- convegni passati -->
+    <h6>Convegni/Eventi Passati </h6>
+    <% if @conv_passati.nil? %>
+        <div> Nessun evento o convegno passato.
+        </div>
+    <% else %>
+        <article class="fs-post-convegni fs-article">
+          <% @conv_passati.each do |con| %>
+              <div class="fs-content-layout fs-block-edizioni">
+                <div class="fs-content-layout-row">
 
-                      <div class="fs-postheader fs-blockheader-edizioni fs-convegni-border" style="text-align: left;">
-                        <span><%= link_to(h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %> </span>
+                  <div class="fs-postheader fs-blockheader-edizioni fs-convegni-border" style="text-align: left;">
+                    <span><%= link_to(h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %> </span>
 
-                        <p class="event-tetx"><%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>   </p>
-                      </div>
-                    </div>
+                    <p class="event-tetx"><%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>   </p>
                   </div>
-                  <p style="padding:2px"></p>
-              <% end %>
-            </article>
-        <% end %>
-      </div>
-    </div>
-    <div class="clearfix"></div>
-<% else %>
-    <h4 style="color:red">Utente non loggato? loggati per visualizzare l'evento</h4>
-<% end %>
+                </div>
+              </div>
+              <p style="padding:2px"></p>
+          <% end %>
+        </article>
+    <% end %>
+  </div>
+</div>
+<div class="clearfix"></div>
+
 
 <%= render :partial => 'blocco_sidebar1' %>
 <%#sidebar a destra %>

@@ -745,7 +745,7 @@ background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,246,196,1
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 );
        color: #c93214;
     font-size: 18px;
-    line-height: 2.0em;
+    line-height: 1.2em;
     font-family: Arial, Helvetica, Sans-Serif;
     font-weight: bold;
     font-style: normal;
