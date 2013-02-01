@@ -280,12 +280,16 @@ non usata?
 
   end
 
-  def evento_prenotazione_del
-
+  def evento_prenotazione_delete
+    @reservation = Reservation.find(params[:id])
+    @reservation.destroy
+    redirect_back_or_default eventi_url
   end
+
   def evento
     #singolo articolo
     @id = params[:id].to_i
+    @backurl = request.url
     @convegno= Issue.find(@id)
 
     @rcount = Reservation.count(:conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
@@ -310,6 +314,7 @@ non usata?
   end
 
   def eventi
+    @backurl = request.url
     #solo per test copia di convegno
     @conv_passati = Issue.find(:all, :include => [:section => :top_section],
                                :order => 'due_date DESC',

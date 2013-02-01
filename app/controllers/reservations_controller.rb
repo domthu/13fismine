@@ -45,24 +45,9 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.save
-        back_url = CGI.unescape(params[:back_url].to_s)
-        if !back_url.blank?
-          begin
-            uri = URI.parse(back_url)
-            # do not redirect user to another host or to the login or register page
-            if (uri.relative? || (uri.host == request.host)) && !uri.path.match(%r{/(login|account/register)})
-              redirect_to(back_url)
-              return
-            end
-          rescue URI::InvalidURIError
-            # redirect to default
-          end
-        else
-          redirect_to default
-        end
-         #redirect_back_or_default({:controller => 'reservation', :action => 'show', :id => @reservation.id})
+        format.html { redirect_back_or_default home_url }
         #format.html { redirect_to(@reservation, :notice => 'Reservation was successfully created.') }
-        #format.xml  { render :xml => @reservation, :status => :created, :location => @reservation }
+        format.xml  { render :xml => @reservation, :status => :created, :location => @reservation }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @reservation.errors, :status => :unprocessable_entity }
@@ -93,11 +78,7 @@ class ReservationsController < ApplicationController
     @reservation.destroy
 
     respond_to do |format|
-
-      format.html {
-        redirect_back_or_default reservations_url
-      }
-      #format.html { redirect_to(reservations_url) }
+      format.html { redirect_to(reservations_url) }
       format.xml  { head :ok }
     end
   end

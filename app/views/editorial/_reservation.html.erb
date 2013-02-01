@@ -1,6 +1,9 @@
 <% if (@reservation.nil?) %>
     <% form_for(@reservation_new) do |f| %>
-        <%= back_url_hidden_field_tag %>
+        <%# back_url_hidden_field_tag %>
+        <%# f.hidden_field :back_url, {:value => @backurl} %>
+        <%# Non usiamo f.hidden_field perchè ci sposta il params sotto il params["@reservation_new"] %>
+        <%= hidden_field_tag "back_url", @backurl %>
         <h4> Partecipa a questo evento </h4>
         <%= f.submit 'Prenota!', :class => "fs-blu-button" %>
         <%= f.error_messages %>
@@ -18,9 +21,11 @@
     <div>
        <br/>
       Non desideri più partecipare? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <% form_tag({}, :method => 'post') do %>
-          <%= back_url_hidden_field_tag %>
-          <%= link_to 'Cancella prenotazione!', '/reservations/'+ @reservation.id.to_s, :confirm => 'Confermi?', :method => :delete, :class => "fs-rosso-button" %>
+      <% form_tag( {:controller=>"editorial", :action=>"evento_prenotazione_delete", :id =>  @reservation.id }) do %>
+          <%# hidden_field_tag "back_url", @backurl %>
+          <%= hidden_field_tag :back_url, @backurl %>
+          <%= submit_tag 'Cancella prenotazione!', :class => "fs-rosso-button", :confirm => 'Confermi?' %>
+          <%# link_to 'Cancella prenotazione!', '/reservations/'+ @reservation.id.to_s, :method => :delete, :class => "fs-rosso-button" %>
       <% end %>
       <br/> &nbsp;
     </div>
