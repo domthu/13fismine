@@ -5,6 +5,7 @@ class TopMenusController < ApplicationController
 
   helper :sort
   include SortHelper
+  include FeesHelper
 
   # GET /top_menus
   # GET /top_menus.xml
@@ -95,11 +96,20 @@ class TopMenusController < ApplicationController
   # DELETE /top_menus/1.xml
   def destroy
     @top_menu = TopMenu.find(params[:id])
-    if @top_menu.top_sections.count > 0
-      flash[:error] = l(:error_can_not_delete_top_menu_unless_sections)
-      return redirect_to :action => 'index'
+    if !@top_menu.nil? && !@top_menu.top_sections.empty? && @top_menu.top_sections.count > 0
+      flash[:error] = l(:error_can_not_delete_top_menu_unless_topsections)
+      flash[:notice] = "Verificare la lista delle sezioni (" + @top_menu.top_sections.count.to_s + ") qui sotto <ol>"
+      @top_menu.top_sections.each do |ts|
+        #flash[:notice] += link_to_top_section(ts)
+        flash[:notice] += "<li>" + ts.name + "</li>"
+      end
+      flash[:notice] += "</ol>"
     else
-      @top_menu.destroy
+      if @top_menu.id == FeeConst::DEFAULT_TOP_MENU
+        flash[:error] = l(:error_can_not_delete_system, :name => "questo menu")
+      else
+        @top_menu.destroy
+      end
     end
     respond_to do |format|
       format.html { redirect_to(top_menus_url) }
