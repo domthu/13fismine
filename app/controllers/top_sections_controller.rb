@@ -8,6 +8,7 @@ class TopSectionsController < ApplicationController
 
   helper :attachments
   include AttachmentsHelper
+  include FeesHelper
 
 #     sort_init 'last_name'
 #     sort_update %w(first_name last_name)
@@ -145,7 +146,20 @@ class TopSectionsController < ApplicationController
   # DELETE /top_sections/1.xml
   def destroy
     @top_section = TopSection.find(params[:id])
-    @top_section.destroy
+    if !@top_section.nil? && !@top_section.sections.empty? && @top_section.sections.count > 0
+      flash[:error] = l(:error_can_not_delete_topsection_unless_sections)
+      flash[:notice] = "Verificare la lista delle sotto sezioni (" + @top_section.sections.count.to_s + ") qui sotto <ol>"
+      @top_section.sections.each do |sec|
+        flash[:notice] += "<li>" + sec.full_name + "</li>"
+      end
+      flash[:notice] += "</ol>"
+    else
+      if @top_section.id == FeeConst::DEFAULT_TOP_SECTION
+        flash[:error] = l(:error_can_not_delete_system, :name => "questa sezione ")
+      else
+        @top_section.destroy
+      end
+    end
 
     respond_to do |format|
       format.html { redirect_to(top_sections_url) }

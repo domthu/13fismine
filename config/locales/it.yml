@@ -1026,7 +1026,8 @@ it:
   field_search_key: Chiave di ricerca
   label_search_key: tags
 
-  field_riassunto: Sommario
+  field_summary: Sommario
+  label_summary: Sommario
   field_cross_group: AssoGRPO
   field_Invoice: Fattura
   field_Date_from: Valido dal
@@ -1167,13 +1168,14 @@ it:
   field_style: Foglio di stile
   field_key: chiave
   notice_top_section_successful_create: Sezione %{id} creata
+  error_can_not_delete_topsection_unless_sections: "Non è possibile eliminare una sezione a lei sono legate dellle sotto sezione..."
 #top_menu
   label_top_menu: menu
   label_top_menu_plural: lista dei menu
   label_top_menu_new: Nuovo menu
   field_top_menu: menu
-  error_can_not_delete_top_menu_unless_sections: "Non è possibile eliminare un menu finchè è assiociato ad sezioni..."
-
+  error_can_not_delete_top_menu_unless_topsections: "Non è possibile eliminare un menu finchè è associato ad sezioni top..."
+  error_can_not_delete_system: "Non è possibile eliminare %{name}, perchè serve come default al sistema. Solo modifica accettata. "
 #section
   label_section: Sotto sezione
   field_section: Sotto sezione
@@ -1254,6 +1256,8 @@ it:
   field_se_visible_newsletter: Visibile Mail?
   field_se_protetto: Protetto?
   label_issue_plural_from_section: "Articoli legati alla sezione"
+  label_address_map: Geo posizione
+  field_address_map: Geo posizione
 
 #User
   label_power_user: Resp. Asso.

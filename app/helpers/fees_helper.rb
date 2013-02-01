@@ -27,13 +27,28 @@ module FeeConst
 
   CONVEGNO_SECTION_ID = 26 #Convegni: Articolo con issue.section.top_section_id
   CONVEGNO_TOP_SECTION_ID = 9 #Convegni ed eventi
+
+  #di sistema: Non si possono cancellare
+  DEFAULT_SECTION = 5 #Approfondimenti
+  DEFAULT_TOP_SECTION =  3 #Approfondimenti
+  DEFAULT_TOP_MENU = 1 #Approfondimenti
 end
 
 module FeesHelper
   include ActionView::Helpers::DateHelper
-
   #include ApplicationHelper   NO utc? in format_time
   #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
+
+  def link_to_top_section(ts)
+    if ts.is_a?(TopSection)
+      url = {:controller => 'top_sections', :action => 'edit', :id => ts.id}
+      str = link_to("pippo", url)
+      #link_to ts, edit_top_section_path(ts) undefined method
+    else
+      str = h(ts.to_s)
+    end
+    return str
+  end
 
 #La gestione dipende del ruolo
 # Se sottoposto a controllo abbonamento

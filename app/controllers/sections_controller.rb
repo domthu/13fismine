@@ -5,6 +5,7 @@ class SectionsController < ApplicationController
 
   helper :sort
   include SortHelper
+  include FeesHelper
 
   # GET /sections
   # GET /sections.xml
@@ -100,12 +101,21 @@ class SectionsController < ApplicationController
   # DELETE /sections/1.xml
   def destroy
     @section = Section.find(params[:id])
-    if @section.issues.count > 0
+    if !@section.nil? && !@section.issues.empty? && @section.issues.count > 0
       flash[:error] = l(:error_can_not_delete_section_unless_issues)
-      return redirect_to :action => 'index'
+      flash[:notice] = "Verificare la lista degli articoli (" + @section.issues.count.to_s + ") legati qui sotto <ol>"
+      @section.issues.each do |art|
+        flash[:notice] += "<li>" + art.to_s + "</li>"
+      end
+      flash[:notice] += "</ol>"
     else
-      @section.destroy
+      if @section.id == FeeConst::DEFAULT_SECTION
+        flash[:error] = l(:error_can_not_delete_system, :name => "questa sotto sezione")
+      else
+        @section.destroy
+      end
     end
+
     respond_to do |format|
       format.html { redirect_to(sections_url) }
       format.xml  { head :ok }

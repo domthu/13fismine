@@ -17,6 +17,7 @@
 
 class Issue < ActiveRecord::Base
   include Redmine::SafeAttributes
+  #include FeesHelper
 
   belongs_to :project
   belongs_to :tracker
@@ -33,6 +34,17 @@ class Issue < ActiveRecord::Base
   #belongs_to :top_section, :through => 'Section'
   def top_section
     self.section.top_section #+ "::" + self.section
+  end
+  def top_section_key
+    if (self.section.nil?)
+      FeeConst::TOP_SECTION_DEFAULT
+    else
+      if (self.section.top_section.nil?)
+        FeeConst::TOP_SECTION_DEFAULT
+      else
+        self.section.top_section.key
+      end
+    end
   end
 
   has_many :journals, :as => :journalized, :dependent => :destroy
@@ -303,6 +315,7 @@ class Issue < ActiveRecord::Base
     'tag_link',
     'news_id',
     'se_prenotazione',
+    'address_map',
     'section_id',
     :if => lambda {|issue, user| issue.new_record? || user.allowed_to?(:edit_issues, issue.project) }
 

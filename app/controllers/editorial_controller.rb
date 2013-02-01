@@ -3,7 +3,7 @@ class EditorialController < ApplicationController
   #before_filter :require_admin
   helper :sort
   include SortHelper
-  include FeesHelper #ROLE_XXX
+  include FeesHelper #ROLE_XXX  CONVEGNI_XXX QUESITO_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
   before_filter :correct_user, :only => [:articolo, :quesito_full]
@@ -250,6 +250,7 @@ non usata?
         @offset= 25
     end
 
+    #FeeConst::CONVEGNO_TOP_SECTION_ID
     @topsection = TopSection.find(:first, :conditions => ["top_sections.id = 9"])
     @issues_count =Issue.count(
         :include => [:section => :top_section],
