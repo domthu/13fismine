@@ -1026,7 +1026,8 @@ it:
   field_search_key: Chiave di ricerca
   label_search_key: tags
 
-  field_riassunto: Sommario
+  field_summary: Sommario
+  label_summary: Sommario
   field_cross_group: AssoGRPO
   field_Invoice: Fattura
   field_Date_from: Valido dal
@@ -1254,6 +1255,8 @@ it:
   field_se_visible_newsletter: Visibile Mail?
   field_se_protetto: Protetto?
   label_issue_plural_from_section: "Articoli legati alla sezione"
+  label_address_map: Geo posizione
+  field_address_map: Geo posizione
 
 #User
   label_power_user: Resp. Asso.

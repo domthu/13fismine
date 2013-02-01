@@ -303,6 +303,7 @@ class Issue < ActiveRecord::Base
     'tag_link',
     'news_id',
     'se_prenotazione',
+    'address_map',
     'section_id',
     :if => lambda {|issue, user| issue.new_record? || user.allowed_to?(:edit_issues, issue.project) }
 
