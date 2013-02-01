@@ -1,5 +1,6 @@
 <% if (@reservation.nil?) %>
     <% form_for(@reservation_new) do |f| %>
+        <%= back_url_hidden_field_tag %>
         <h4> Partecipa a questo evento </h4>
         <%= f.submit 'Prenota!', :class => "fs-blu-button" %>
         <%= f.error_messages %>
@@ -17,7 +18,10 @@
     <div>
        <br/>
       Non desideri più partecipare? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <%= link_to 'Cancella prenotazione!', '/reservations/'+ @reservation.id.to_s, :confirm => 'Confermi?', :method => :delete, :class => "fs-rosso-button" %>
+      <% form_tag({}, :method => 'post') do %>
+          <%= back_url_hidden_field_tag %>
+          <%= link_to 'Cancella prenotazione!', '/reservations/'+ @reservation.id.to_s, :confirm => 'Confermi?', :method => :delete, :class => "fs-rosso-button" %>
+      <% end %>
       <br/> &nbsp;
     </div>
 <% end %>

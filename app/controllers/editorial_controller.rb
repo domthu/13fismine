@@ -272,15 +272,28 @@ non usata?
     end
 
   end
+  def evento_prenotazione
+    @reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id],:num_persone => params[:num_persone],:msg => params[:msg])
 
+      redirect_back_or_default({:action => 'evento', :id => params[:id].to_i})
+
+  end
+
+  def evento_prenotazione_del
+
+  end
   def evento
     #singolo articolo
     @id = params[:id].to_i
     @convegno= Issue.find(@id)
-    @section_id = @convegno.section_id
-    @reservation_new =Reservation.new
+
     @rcount = Reservation.count(:conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
-    @reservation =Reservation.find(:first, :conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
+    if @rcount <= 0
+      #@reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id],:num_persone => params[:num_persone],:msg => params[:msg])
+      @reservation_new = Reservation.new
+    else
+      @reservation =Reservation.find(:first, :conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
+    end
     @conv_prossimo = Issue.find(:first, :include => [:section => :top_section],
                                 :order => 'due_date DESC',
                                 :conditions => " #{TopSection.table_name}.id = 9 AND  due_date >=' #{DateTime.now.to_date}'")
