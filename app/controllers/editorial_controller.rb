@@ -40,17 +40,10 @@ class EditorialController < ApplicationController
                                       :conditions => ["top_menu_id =  ?", @top_menu.id]
     )
 # -->
-    @issues_count =Issue.count(
-        :include => [:section => :top_section]
-    )
+    @issues_count = Issue.all_public_fs.count
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @issues = Issue.find(:all,
-                         :include => [:section => :top_section],
-                         :order => 'updated_on DESC',
-                         :conditions => ["se_visible_web = 1 AND is_private = 0"],
-                         :limit => @issues_pages.items_per_page,
-                         :offset => @issues_pages.current.offset)
-
+    @issues = Issue.all_public_fs.with_limit(@issues_pages.items_per_page).with_offset(@issues_pages.current.offset)
+    #Issue.visible.on_active_project.watched_by(user.id).recently_updated.with_limit(10)
 
     respond_to do |format|
       format.html {
@@ -92,8 +85,8 @@ class EditorialController < ApplicationController
     end
     #@top_sections = TopSection.find(:all,
     @topsection_ids = TopSection.find(:all,
-                                      :select => 'distinct id',
-                                      :conditions => ["se_visibile = 1 AND se_home_menu = 0 AND top_menu_id =  ?", @top_menu.id]
+      :select => 'distinct id',
+      :conditions => ["se_visibile = 1 AND se_home_menu = 0 AND top_menu_id =  ?", @top_menu.id]
     )
     #@topsection_ids = @top_sections.select(:id).uniq
     # Paginate results
@@ -105,18 +98,10 @@ class EditorialController < ApplicationController
         @offset= 25
     end
 
-    @issues_count =Issue.count(
-        :include => [:section => :top_section],
-        :conditions => ["#{TopSection.table_name}.top_menu_id IN (?)", @topsection_ids, " AND se_visible_web = 1"]
-    )
+    @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.se_home_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).count()
 
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @issues = Issue.find(:all,
-                         :include => [:section => :top_section],
-                         :order => 'updated_on DESC',
-                         :conditions => ["se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{TopSection.table_name}.se_home_menu = 0 AND #{TopSection.table_name}.top_menu_id = ?", @top_menu.id],
-                         :limit => @issues_pages.items_per_page,
-                         :offset => @issues_pages.current.offset)
+    @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.se_home_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).with_offset(@issues_pages.current.offset).with_limit(@issues_pages.items_per_page)
 
     respond_to do |format|
       format.html {
@@ -135,12 +120,12 @@ class EditorialController < ApplicationController
                                # @topsection_id = params[:topsection_id]
     @topsection_key = params[:topsection_key]
     @topsection = TopSection.find(:first, :conditions => ["top_sections.`key` = ?", @topsection_key])
-                               #flash[:notice] = l(:notice_missing_parameters) + " -->  @section_id="+ @topsection.id.to_s   + @topsection_key
-                               # if @topsection_id.nil?
-                               #         flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
-                               #         redirect_to :action => 'home'
-                               #         return
-                               #     end
+    #flash[:notice] = l(:notice_missing_parameters) + " -->  @section_id="+ @topsection.id.to_s   + @topsection_key
+    # if @topsection_id.nil?
+    #         flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
+    #         redirect_to :action => 'home'
+    #         return
+    #     end
     if @topsection.nil?
       flash[:notice] = l(:notice_missing_parameters) + " --> 3 @section_id="+ @topsection.id.to_s
       redirect_to :action => 'home'
@@ -154,24 +139,16 @@ class EditorialController < ApplicationController
         @limit = 5
         @offset= 25
     end
-                               # --> sandro debug zona
-                               # @top_menu = TopMenu.find(:first, :conditions => ["`key`=?", @key_url])
-                               # @topsection_ids = TopSection.find(:all,
-                               #                                   :select => 'distinct id',
-                               #                                   :conditions => ["top_menu_id =  ?", @top_menu.id]
-                               # )
-                               # -->
-    @issues_count =Issue.count(
-        :include => [:section => :top_section],
-        :conditions => ["#{TopSection.table_name}.id = ?", @topsection.id]
-    )
+    # --> sandro debug zona
+    # @top_menu = TopMenu.find(:first, :conditions => ["`key`=?", @key_url])
+    # @topsection_ids = TopSection.find(:all,
+    #                                   :select => 'distinct id',
+    #                                   :conditions => ["top_menu_id =  ?", @top_menu.id]
+    # )
+    # -->
+    @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).count()
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @issues = Issue.find(:all,
-                         :include => [:section => :top_section],
-                         :order => 'created_on DESC',
-                         :conditions => ["se_visible_web = 1 AND is_private = 0 AND  #{TopSection.table_name}.id = :sid", {:sid => @topsection.id}],
-                         :limit => @issues_pages.items_per_page,
-                         :offset => @issues_pages.current.offset)
+    @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).with_limit(@issues_pages.items_per_page).with_offset(@issues_pages.current.offset)
 
     respond_to do |format|
       format.html {
@@ -251,19 +228,15 @@ non usata?
     end
 
     #FeeConst::CONVEGNO_TOP_SECTION_ID
-    @topsection = TopSection.find(:first, :conditions => ["top_sections.id = 9"])
-    @issues_count =Issue.count(
-        :include => [:section => :top_section],
-        :conditions => ["#{TopSection.table_name}.id = 9"]
+    @topsection = TopSection.find(:first, :conditions => ["top_sections.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID])
+    @issues_count =Issue.all_public_fs.count(
+        :conditions => ["#{TopSection.table_name}.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID]
     )
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @convegni = Issue.find(:all,
-                           :include => [:section => :top_section],
-                           :order => 'created_on DESC',
-                           :conditions => [" #{TopSection.table_name}.id =?", 9],
-                           #:conditions => ["se_visible_web = 1 AND is_private = 0 AND  #{TopSection.table_name}.id = 6"],
-                           :limit => @issues_pages.items_per_page,
-                           :offset => @issues_pages.current.offset)
+    @convegni = Issue.all_public_fs(
+       :conditions => [" #{TopSection.table_name}.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID],
+       :limit => @issues_pages.items_per_page,
+       :offset => @issues_pages.current.offset)
 
     respond_to do |format|
       format.html {
@@ -273,6 +246,7 @@ non usata?
     end
 
   end
+
   def evento_prenotazione
     @reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id],:num_persone => params[:num_persone],:msg => params[:msg])
 
@@ -344,17 +318,6 @@ non usata?
 
   # -----------------  CONVEGNI / EVENTI  (fine)   ------------------
 
-  # -----------------       QUESITI    (inizio)        ------------------
-
-  def quesiti
-  end
-
-  def quesito_full
-    @id = params[:id].to_i
-    @quesito= New.find(@id)
-    @editorial_id = @quesito.project_id
-  end
-
 #domthu permission :front_end_quesito, :editorial => :quesito_nuovo, :require => :loggedin
 #add permission to control permission action
 #Admin e power_user sono definiti da campi della tabella User
@@ -366,6 +329,22 @@ non usata?
 #GUEST --> KAPPAO
 #SCADUTI --> KAPPAO
 #ARCHIVIATI --> KAPPAO
+
+  # -----------------       QUESITI    (inizio)        ------------------
+
+  #Lista di tutti quesiti (ISSUE) che hanno avvuto una risposta positiva e pubblicata
+  def quesiti
+    @quesiti_art = Issue.quesiti
+  end
+
+  #Lista dei quesiti (NEWS) dell'utente
+  def quesiti_my
+    if User.current = nil
+      redirect_to(login_url) && return
+    end
+    @quesiti_news = User.current.my_quesiti
+  end
+
   def quesito_new
     if User.current = nil
       redirect_to(login_url) && return
@@ -374,7 +353,37 @@ non usata?
 
   end
 
+  #POST del quesito_new
+  def quesito_create
+
+  end
+
+  #Show del singolo quesito. Attenzione l'id passato è quello della NEWS
+  # Viene passato un id che corrisponde alla news = domanda fatta dal cliente
+  #REQUEST
+  def quesito_show
+    @id = params[:id].to_i
+    #1 news sola
+    @quesito_news = News.find(@id) unless !@id.nil?
+    @quesito_news_stato = @quesito_news.status_fs
+    #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
+    #@quesito_issues = @quesito_news.issue unless !@quesito_news.nil?
+    @quesito_issues = @quesito_news.issues_visible_fs unless !@quesito_news.nil?
+  end
+
+  #Show del singolo quesito. Attenzione l'id passato è quello dell'articolo
+  # Viene passato un id che corrisponde all'articolo = risposta di un quesito cliente
+  #RESPONSE(s)
+  def quesito_full
+    @id = params[:id].to_i
+    #1 issue-articolo sola
+    @quesito_issue = Issue.find(@id) unless !@id.nil?
+    #1 news sola
+    @quesito_news = @quesito_issue.quesito_news unless !@quesito_art.nil?
+  end
+
 # -----------------       QUESITI    (fine)        ------------------
+
   def contact
   end
 
@@ -417,7 +426,7 @@ non usata?
     end
 
     # quick jump to an issue
-    if @question.match(/^#?(\d+)$/) && Issue.visible.find_by_id($1.to_i)
+    if @question.match(/^#?(\d+)$/) && Issue.visible_fs.find_by_id($1.to_i)
       redirect_to :controller => "editorial", :action => "articolo", :id => $1
       return
     end

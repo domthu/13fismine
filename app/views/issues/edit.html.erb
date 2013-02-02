@@ -1,6 +1,6 @@
 <h2><%=h "#{@issue.tracker.name} ##{@issue.id}" %></h2>
 
-<% if @issue.quesito and !@issue.quesito.nil? %>
+<% if @issue.quesito_news and !@issue.quesito_news.nil? %>
   <div class=""> <%#splitcontentright%>
     <fieldset class="box tabular">
       <legend><b><%=l(:label_issue_from_news)%></b></legend>

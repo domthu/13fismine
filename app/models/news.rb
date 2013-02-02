@@ -20,7 +20,8 @@ class News < ActiveRecord::Base
   belongs_to :project
   belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
   has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
-  has_many :issues, :dependent => :destroy, :order => "#{Issue.table_name}.created_on DESC", :include => [:status, :tracker, {:section => :top_section} ]
+  #Un quesito puo generare un articolo (o più di uno)
+  has_many :issues, :order => "#{Issue.table_name}.created_on DESC", :include => [:status, :tracker, {:section => :top_section} ]  #, :dependent => :destroy
 
   validates_presence_of :title, :description
   validates_length_of :title, :maximum => 60
@@ -39,11 +40,32 @@ class News < ActiveRecord::Base
     :conditions => Project.allowed_to_condition(args.shift || User.current, :view_news, *args)
   }}
 
+  named_scope :issues_visible_fs,
+    :include => [{:issue => :project}],
+    :conditions => ["#{Project.table_name}.status=#{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public => true AND #{Issue.table_name}.se_visible_web => true"]
+
   safe_attributes 'title',
      'summary',
      'description',
      'status_id',
      'causale'
+
+  def status_fs
+    if self.status_id.nil?
+      "Modificabile"
+    else
+      case self.status_id
+        when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
+          "Richiesta in attesa"
+        when FeeConst::QUESITO_STATUS_KO #= 2 #NON ATTINENTE - RIFIUTATO
+          "RIFIUTATO: " + self.causale.html_safe
+        when FeeConst::QUESITO_STATUS_OK #=  3 #ACCETTATO
+          "ACCETTATO" + (self.issues.empty? ? " 0 risposta" : " " + self.issues.count.to_s + " risposte.")
+        else
+          "Status non conosciuto"
+      end
+    end
+  end
 
   def visible?(user=User.current)
     !user.nil? && user.allowed_to?(:view_news, project)

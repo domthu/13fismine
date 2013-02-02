@@ -289,7 +289,7 @@ private
   def find_issue
     # Issue.visible.find(...) can not be used to redirect user to the login form
     # if the issue actually exists but requires authentication
-    @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category, :section, :quesito])
+    @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category, :section, :quesito_news])
     #Domthu [:project, :tracker, :status, :author, :priority, :category])
     unless @issue.visible?
       deny_access
@@ -315,7 +315,7 @@ private
       @news = News.find(@issue.news_id)
       if @issue.new_record?
         @issue.section_id = FeeConst::QUESITO_SECTION_ID
-        @issue.quesito = @news
+        @issue.quesito_news = @news
       end
     end
   rescue ActiveRecord::RecordNotFound

@@ -32,6 +32,10 @@ module FeeConst
   DEFAULT_SECTION = 5 #Approfondimenti
   DEFAULT_TOP_SECTION =  3 #Approfondimenti
   DEFAULT_TOP_MENU = 1 #Approfondimenti
+
+  QUESITO_STATUS_WAIT =  1 #IN ATTESA - RICHIESTA
+  QUESITO_STATUS_KO = 2 #NON ATTINENTE - RIFIUTATO
+  QUESITO_STATUS_OK =  3 #ACCETTATO
 end
 
 module FeesHelper
@@ -102,6 +106,7 @@ module FeesHelper
 #    FeeConst::ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
 #    FeeConst::ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
 #    FeeConst::ROLE_ARCHIVIED
+
     case user.role_id
 
       #FeeConst::ROLE_MANAGER  --> Admin

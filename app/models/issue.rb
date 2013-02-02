@@ -17,7 +17,7 @@
 
 class Issue < ActiveRecord::Base
   include Redmine::SafeAttributes
-  #include FeesHelper
+  include FeesHelper
 
   belongs_to :project
   belongs_to :tracker
@@ -29,7 +29,7 @@ class Issue < ActiveRecord::Base
   belongs_to :category, :class_name => 'IssueCategory', :foreign_key => 'category_id'
   #domthu20120516
   belongs_to :section, :class_name => 'Section', :foreign_key => 'section_id'
-  belongs_to :quesito, :class_name => 'News', :foreign_key => 'news_id', :include => :author
+  belongs_to :quesito_news, :class_name => 'News', :foreign_key => 'news_id', :include => [:news, :author]
 
   #belongs_to :top_section, :through => 'Section'
   def top_section
@@ -83,26 +83,25 @@ class Issue < ActiveRecord::Base
   validate :validate_issue
 
   named_scope :visible, lambda {|*args| { :include => :project,
-                                          :conditions => Issue.visible_condition(args.shift || User.current, *args) } }
-
+      :conditions => Issue.visible_condition(args.shift || User.current, *args) } }
   named_scope :open, :conditions => ["#{IssueStatus.table_name}.is_closed = ?", false], :include => :status
-
   named_scope :recently_updated, :order => "#{Issue.table_name}.updated_on DESC"
   named_scope :with_limit, lambda { |limit| { :limit => limit} }
+  named_scope :with_offset, lambda { |offset| { :offset => offset} }
   named_scope :on_active_project, :include => [:status, :project, :tracker],
-                                  :conditions => ["#{Project.table_name}.status=#{Project::STATUS_ACTIVE}"]
-
+      :conditions => ["#{Project.table_name}.status=#{Project::STATUS_ACTIVE}"]
   named_scope :without_version, lambda {
     {
       :conditions => { :fixed_version_id => nil}
     }
   }
-
   named_scope :with_query, lambda {|query|
     {
       :conditions => Query.merge_conditions(query.statement)
     }
   }
+  named_scope :all_public_fs, {:include => [:project, :quesito_news, :author, {:section => :top_section}], :order => 'updated_on DESC', :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_ID}%"], :order => "#{Issue.table_name}.updated_on DESC"}
+  named_scope :with_filter, lambda {|filter| { :conditions => merge_conditions(filter) } }
 
   before_create :default_assign
   before_save :close_duplicates, :update_done_ratio_from_issue_status
@@ -112,15 +111,13 @@ class Issue < ActiveRecord::Base
   # returns latest issues for public area
   def self.latest_fs(user = User.current, count = 5)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
-    find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")
+   all_public_fs(:all, :limit => count, :order => "#{table_name}.created_on DESC")
   end
-
 
   # returns latest issues for public area
   def self.all_by_sezione_fs(sezione = 1, user = User.current)
-    find(:all, :limit => count, :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.section_id = :secid", {:secid => sezione }], :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")
+    all_public_fs(:all, :limit => count, :conditions => ["#{Issue.table_name}.section_id = :secid", {:secid => sezione }], :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")
   end
-
 
   # Returns a SQL conditions string used to find all issues visible by the specified user
   def self.visible_condition(user, options={})
@@ -485,6 +482,14 @@ class Issue < ActiveRecord::Base
       end
     end
     false
+  end
+
+  def is_public_fs?
+    if !self.se_visibile_web.nil? && self.se_visibile_web == true && self.project.is_public == true
+      true
+    else
+      false
+    end
   end
 
   # Returns true if the issue is overdue

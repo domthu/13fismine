@@ -124,6 +124,10 @@ class User < Principal
     {:conditions => ["#{User.table_name}.role_id = ?", role_id]}
   }
 
+  def my_quesiti
+    News.all(:conditions  => ['author_id = ?', self.id], :order => "created_on DESC")
+  end
+
   #Utente è affiliato ad una Sigla-TipoOrganizzazione
   def sigla_tipo()
     if self.cross_organization_id.nil? || self.cross_organization.nil?
