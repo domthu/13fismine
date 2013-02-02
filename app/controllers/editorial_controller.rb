@@ -42,7 +42,9 @@ class EditorialController < ApplicationController
 # -->
     @issues_count = Issue.all_public_fs.count
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @issues = Issue.all_public_fs.with_limit(@issues_pages.items_per_page).with_offset(@issues_pages.current.offset)
+    @issues = Issue.all_public_fs.all(
+      :limit => @issues_pages.items_per_page,
+      :offset => @issues_pages.current.offset)
     #Issue.visible.on_active_project.watched_by(user.id).recently_updated.with_limit(10)
 
     respond_to do |format|
@@ -101,7 +103,9 @@ class EditorialController < ApplicationController
     @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.se_home_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).count()
 
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.se_home_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).with_offset(@issues_pages.current.offset).with_limit(@issues_pages.items_per_page)
+    @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.se_home_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).all(
+      :limit => @issues_pages.items_per_page,
+      :offset => @issues_pages.current.offset)
 
     respond_to do |format|
       format.html {
@@ -139,16 +143,12 @@ class EditorialController < ApplicationController
         @limit = 5
         @offset= 25
     end
-    # --> sandro debug zona
-    # @top_menu = TopMenu.find(:first, :conditions => ["`key`=?", @key_url])
-    # @topsection_ids = TopSection.find(:all,
-    #                                   :select => 'distinct id',
-    #                                   :conditions => ["top_menu_id =  ?", @top_menu.id]
-    # )
-    # -->
     @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).count()
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).with_limit(@issues_pages.items_per_page).with_offset(@issues_pages.current.offset)
+    #Kapao riompe la paginazione @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).with_limit(@issues_pages.items_per_page).with_offset(@issues_pages.current.offset)
+    @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).all(
+    :limit => @issues_pages.items_per_page,
+    :offset => @issues_pages.current.offset)
 
     respond_to do |format|
       format.html {
@@ -156,9 +156,6 @@ class EditorialController < ApplicationController
       }
       format.api
     end
-    #MariaCristina Condizione per VisibileWeb, ordinamento per
-    #@issues = Issue.find(:all, :conditions => ["section_id =  ?", @id], :limit => 100)
-    #@issues = Issue.all_by_sezione_fs(@id)
   end
 
   # -----------------  ARTICOLO  (inizio)   ------------------
