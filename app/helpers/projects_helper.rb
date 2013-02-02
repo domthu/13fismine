@@ -79,7 +79,8 @@ module ProjectsHelper
         s << "</td><td align='left'>" + project.identifier + "</td><td>"
         s << "</td><td align='center'>#{checked_image(project.is_public?)} </td><td>"
         s << "</td><td><div class='due_date'>#{format_date(project.data_dal)} / #{format_date(project.data_al)} </div></td><td>"
-        s << "<div class='wiki description'>#{textilizable(project.short_description, :project => project)}</div>" unless project.description.blank?
+        #s << "<div class='wiki description'>#{textilizable(project.short_description, :project => project)}</div>" unless project.description.blank?
+        s << "<div class='description'>#{smart_truncate(project.short_description,90)}</div>" unless project.description.blank?
         s << "</td></tr></table></div>\n"
         ancestors << project
       end

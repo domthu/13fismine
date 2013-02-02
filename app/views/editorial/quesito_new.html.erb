@@ -1,7 +1,15 @@
 <h2><%=l(:quesito_nuovo)%></h2>
-  In questa pagina:
-  <ul> 
-    <li>Un utente definisce un titolo</li>
-    <li>Un utente immette un testo</li>
-    <li>AZIONE: SALVA ed allega all'editoriale in corso di elaborazione</li>
-  </ul> 
+
+  <% form_tag( {:controller=>"editorial", :action=>"evento_prenotazione_delete", :id =>  @reservation.id }) do %>
+      <%= hidden_field_tag :back_url, @backurl %>
+      <%= submit_tag 'Cancella prenotazione!', :class => "fs-rosso-button", :confirm => 'Confermi?' %>
+  <% end %>
+
+<%= f.error_messages %>
+<div class="box tabular">
+<p><%= f.text_field :title, :required => true, :size => 60 %></p>
+<p><%= f.text_area :summary, :cols => 60, :rows => 2 %></p>
+<p><%= f.text_area :description, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+</div>
+
+<%= wikitoolbar_for 'news_description' %>  
