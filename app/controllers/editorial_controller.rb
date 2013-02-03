@@ -209,12 +209,9 @@ non usata?
   end
 
   # -----------------  EDIZIONI /NEWSLETTER  (fine)  ------------------
+
   # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------
   def convegni
-=begin
-    @base_url = params[:pages] #request.path
-    @key_url = params[:topmenu_key]
-=end
     # Paginate results
     case params[:format]
       when 'xml', 'json'
@@ -224,14 +221,21 @@ non usata?
         @offset= 25
     end
 
-    #FeeConst::CONVEGNO_TOP_SECTION_ID
-    @topsection = TopSection.find(:first, :conditions => ["top_sections.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID])
-    @issues_count =Issue.all_public_fs.count(
-        :conditions => ["#{TopSection.table_name}.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID]
-    )
+#    @topsection = TopSection.find(:first, :conditions => ["top_sections.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID])
+#    @issues_count =Issue.all.count(
+#        :conditions => ["#{TopSection.table_name}.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID]
+#    )
+#    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+#    @convegni = Issue.all(
+#       :conditions => [" #{TopSection.table_name}.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID],
+#       :limit => @issues_pages.items_per_page,
+#       :offset => @issues_pages.current.offset)
+
+
+    @topsection = TopSection.find_convegno(:first)
+    @issues_count =Issue.all_public_fs.solo_convegni.count()
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @convegni = Issue.all_public_fs(
-       :conditions => [" #{TopSection.table_name}.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID],
+    @convegni = Issue.all_public_fs.solo_convegni.all(
        :limit => @issues_pages.items_per_page,
        :offset => @issues_pages.current.offset)
 
@@ -270,46 +274,44 @@ non usata?
     else
       @reservation =Reservation.find(:first, :conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
     end
-    @conv_prossimo = Issue.find(:first, :include => [:section => :top_section],
-                                :order => 'due_date DESC',
-                                :conditions => " #{TopSection.table_name}.id = 9 AND  due_date >=' #{DateTime.now.to_date}'")
+    @conv_prossimo = Issue.all_public_fs.solo_convegni.first(
+        :order => 'due_date ASC',
+        :conditions => "#{Issue.table_name}.due_date >=' #{DateTime.now.to_date}'")
 
     if @conv_prossimo.nil?
         @conv_futuri
     else
       @cid = @conv_prossimo.id
-      @conv_futuri = Issue.find(:all, :include => [:section => :top_section],
-                                :order => 'due_date DESC',
-                                :conditions => " #{TopSection.table_name}.id = 9 AND  issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
+      @conv_futuri = Issue.all_public_fs.solo_convegni.all(
+        :order => 'due_date ASC',
+        :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
     end
   end
 
   def eventi
     @backurl = request.url
     #solo per test copia di convegno
-    @conv_passati = Issue.find(:all, :include => [:section => :top_section],
-                               :order => 'due_date DESC',
-                               :conditions => " #{TopSection.table_name}.id = 9 AND  due_date <' #{DateTime.now.to_date}'")
+    @conv_passati = Issue.all_public_fs.solo_convegni.all(
+         :order => 'due_date DESC',
+         :conditions => "due_date <' #{DateTime.now.to_date}'")
 
-    @conv_prossimo = Issue.find(:first, :include => [:section => :top_section],
-                                :order => 'due_date DESC',
-                                :conditions => " #{TopSection.table_name}.id = 9 AND  due_date >=' #{DateTime.now.to_date}'")
+    @conv_prossimo = Issue.all_public_fs.solo_convegni.first(
+        :order => 'due_date ASC',
+        :conditions => "#{Issue.table_name}.due_date >=' #{DateTime.now.to_date}'")
+
     if @conv_prossimo.nil?
       @conv_futuri
     else
-
       @cid = @conv_prossimo.id #  = if @conv_prossimo.id.nil? ? 0 : @conv_prossimo.id ; end
-      @conv_futuri = Issue.find(:all, :include => [:section => :top_section],
-                                :order => 'due_date DESC',
-                                :conditions => " #{TopSection.table_name}.id = 9 AND  issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
-                               #reservations
+      @conv_futuri = Issue.all_public_fs.solo_convegni.all(
+        :order => 'due_date ASC',
+        :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
+      #reservations
       @reservation_new =Reservation.new
       @rcount = Reservation.count(:conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
       @reservation =Reservation.find(:first, :conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
       @convegno= Issue.find(@cid)
-
     end
-
   end
 
 

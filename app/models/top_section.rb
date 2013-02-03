@@ -1,5 +1,7 @@
 class TopSection < ActiveRecord::Base
 
+  include FeesHelper  #Domthu  FeeConst
+
   #domthu20120516
   #has_many :sections, :dependent => :destroy
   has_many :sections, :foreign_key => 'top_section_id', :dependent => :nullify
@@ -25,6 +27,8 @@ class TopSection < ActiveRecord::Base
   #text-area? CSS? HTML area
   #validates_presence_of :key
   validates_length_of :key, :maximum => 4000
+
+  named_scope :find_convegno, :conditions => "id = " + FeeConst::CONVEGNO_TOP_SECTION_ID.to_s
 
   def to_s
     sezione_top.to_s
