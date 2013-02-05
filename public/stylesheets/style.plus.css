@@ -1219,7 +1219,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', e
     z-index: 10;
 }
 
-/* fine convegni */
+/*  ---       fine convegni            --------- */
+/* ---       inizio  quesiti    ------*/
+#fs-form-quesito-new{
+    background: transparent url('/images/commons/lapis-giallo.jpg') no-repeat;
+    background-position: right top ;
+    height:250px;
+}
+#fs-form-quesito-new p{
+    width: 50%;
+}
+#fs-form-quesito-new-btn{
+ padding-top: 3%;
+    text-align: center;
+}
+/* ---       fine quesiti         --*/
 /* inizio slide */
 .fs-slidecontainerslideshutterstock_1 {
     position: relative;

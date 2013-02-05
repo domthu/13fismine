@@ -44,26 +44,29 @@ ActionController::Routing::Routes.draw do |map|
   map.chisiamo '/chi_siamo', :controller => 'editorial', :action => 'chisiamo'
   map.servizi '/servizi', :controller => 'editorial', :action => 'servizi'
   map.contatti '/contatti', :controller => 'editorial', :action => 'contatti'
-   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
+  map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
   map.enti  '/enti_federazioni', :controller => 'editorial', :action => 'enti'
   map.lavora '/lavora_con_noi', :controller => 'editorial', :action => 'lavora'
+  #-> Edizioni e Newletter (table: projects)-
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
   map.edizione_newsletter '/edizione_newsletter/:id', :controller => 'editorial', :action => 'edizione_newsletter'
+  #-> Convegni ed Eventi ()topsection_id=9) -
   map.evento '/evento/:id', :controller => 'editorial', :action => 'evento'
   map.eventi '/eventi', :controller => 'editorial', :action => 'eventi'
-  #to match override act_as_event after search
-  #map.edizioneid '/editoriale/newsletter/:id', :controller => 'editorial', :action => 'edizione'
-  map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
-  #to match override act_as_event after search
-  map.articoloid '/editoriale/articolo/:id', :controller => 'editorial', :action => 'articolo'
-  map.abbonamenti 'account/register', :controller => 'account', :action => 'register'
-  #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
+  #-> Quesiti (table: news)-
   map.quesiti '/quesiti', :controller => 'editorial', :action => 'quesiti'
-  map.quesito_full '/quesito/:id', :controller => 'editorial', :action => 'quesito_full'
-  map.quesito_new '/quesito_nuovo', :controller => 'editorial', :action => 'quesito_new'
-  map.quesiti_my '/quesiti_miei', :controller => 'editorial', :action => 'quesiti_my'
+  map.quesito '/quesito/:id', :controller => 'editorial', :action => 'quesito'
+  map.quesito_new '/quesito_new', :controller => 'editorial', :action => 'quesito_new'
+  map.quesiti_my '/quesiti_my', :controller => 'editorial', :action => 'quesiti_my'
+    #to match override act_as_event after search
+  #map.edizioneid '/editoriale/newsletter/:id', :controller => 'editorial', :action => 'edizione'
+  #map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
+  #to match override act_as_event after search
+  #map.articoloid '/editoriale/articolo/:id', :controller => 'editorial', :action => 'articolo'
+  #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
+  map.abbonamenti 'account/register', :controller => 'account', :action => 'register'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
 
 #Map menu

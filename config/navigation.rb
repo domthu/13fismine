@@ -36,9 +36,9 @@ SimpleNavigation::Configuration.run do |navigation|
 
       end #top_menus
       primary.item :q1, 'Quesiti', quesiti_path do |sub_q|
-        sub_q.item :q2, 'Le Risposte ai quesiti', quesiti_path
-        sub_q.item :q3, 'Poni un quesito', quesito_new_path
-        sub_q.item :q4, 'I miei quesiti', quesiti_my_path
+        sub_q.item :q2, 'Poni un quesito', quesito_new_path
+        sub_q.item :q3, 'I miei quesiti', quesiti_my_path
+        sub_q.item :q4, 'Le Risposte ai quesiti', quesiti_path
         primary.dom_class = 'fs-menu2-hmenu'
         sub_q.dom_class='fs-menu2-hmenu'
 

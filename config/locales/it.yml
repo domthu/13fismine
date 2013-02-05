@@ -378,10 +378,11 @@ it:
   label_report_plural: Report
   label_news: Quesito
   field_news: Da quesito?
-  label_news_new: Proponi quesito
+  label_news_new: Poni un quesito
+  label_news_my: I miei quesiti
   label_news_plural: Quesiti
   label_news_latest: Utimi quesiti
-  label_news_view_all: Tutti gli quesiti
+  label_news_view_all: Tutti i quesiti
   label_settings: Impostazioni
   label_overview: Panoramica
   label_version: Versione

@@ -1,7 +1,10 @@
-<h2><%=l(:quesito_nuovo)%></h2>
+<h2><%=l(:label_news_my)%></h2>
   In questa pagina:
   <ul> 
     <li>Un utente definisce un titolo</li>
     <li>Un utente immette un testo</li>
     <li>AZIONE: SALVA ed allega all'editoriale in corso di elaborazione</li>
-  </ul> 
+  </ul>   chi sei ?
+<%=  User.current.to_s  %>
+sei loggato?
+<%=  User.current.logged?.to_s  %>

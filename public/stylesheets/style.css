@@ -129,16 +129,18 @@ ul.fs-vmenu a
 {
    color: #494949;
    margin: 10px 0 0;
-   font-size: 26px;
+   font-size: 22px;
    font-family:  Arial, Helvetica, Sans-Serif;
    font-variant: small-caps;
    text-align: center;
+    background-color: transparent;
 }
 
 .fs-blockcontent h1
 {
-   margin: 10px 0 0;
-   font-size: 26px;
+    color: #494949;
+    margin: 10px 0 0;
+   font-size: 24px;
    font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
@@ -146,7 +148,8 @@ ul.fs-vmenu a
 
 .fs-postcontent h1 a, .fs-postcontent h1 a:link, .fs-postcontent h1 a:hover, .fs-postcontent h1 a:visited, .fs-blockcontent h1 a, .fs-blockcontent h1 a:link, .fs-blockcontent h1 a:hover, .fs-blockcontent h1 a:visited
 {
-   font-size: 26px;
+    color: #494949;
+   font-size: 24px;
    font-family:  Arial, Helvetica, Sans-Serif;
   /* font-variant: small-caps;
    text-align: center;    */
