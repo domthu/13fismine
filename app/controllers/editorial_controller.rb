@@ -338,22 +338,34 @@ non usata?
 
   #Lista dei quesiti (NEWS) dell'utente
   def quesiti_my
-    if User.current = nil
-      redirect_to(login_url) && return
-    end
+   # if User.current = nil
+   #   redirect_to(login_url) && return
+   # end
     @quesiti_news = User.current.my_quesiti
   end
 
   def quesito_new
-    if User.current = nil
-      redirect_to(login_url) && return
-    end
-    #DO SOME USRE STUFF HERE
-
+  Project.exists_row_quesiti
   end
 
   #POST del quesito_new
   def quesito_create
+    @project = Project.find_by_id(1)
+    @news = News.new(:project => @project, :author => User.current)
+       @news.safe_attributes = params[:quesito]
+        @news.title = 'Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
+        @news.status_id = 1
+        @news.comments_count = 0
+       if request.post?
+         if @news.save
+           flash[:notice] = l(:notice_successful_create)
+          # redirect_to :controller => 'news', :action => 'index', :project_id => @project
+         else
+           flash[:notice] =  'qualcosa è andato storto!'
+          # render :action => 'new'
+         end
+       end
+               redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @news
 
   end
 

@@ -18,11 +18,11 @@
 class Project < ActiveRecord::Base
   include Redmine::SafeAttributes
   include ActionView::Helpers::TextHelper
-  include FeesHelper  #Domthu  FeeConst
-  # Project statuses
+  include FeesHelper #Domthu  FeeConst
+                     # Project statuses
   STATUS_ACTIVE = 1
   STATUS_ARCHIVED = 9
-  #domthu verificare i status possibily dentro la gestione amministrazione
+                     #domthu verificare i status possibily dentro la gestione amministrazione
   STATUS_FS = 99
 
   # Maximum length for project identifiers
@@ -90,7 +90,7 @@ class Project < ActiveRecord::Base
   named_scope :has_module, lambda { |mod| {:conditions => ["#{Project.table_name}.id IN (SELECT em.project_id FROM #{EnabledModule.table_name} em WHERE em.name=?)", mod.to_s]} }
   named_scope :active, {:conditions => "#{Project.table_name}.status = #{STATUS_ACTIVE}"}
   named_scope :all_public, {:conditions => {:is_public => true}}
-  named_scope :all_public_fs, {:conditions =>  ['is_public = true AND identifier LIKE ?', "#{FeeConst::EDIZIONE_ID}%"], :order => "#{table_name}.created_on DESC"}
+  named_scope :all_public_fs, {:conditions => ['is_public = true AND identifier LIKE ?', "#{FeeConst::EDIZIONE_ID}%"], :order => "#{table_name}.created_on DESC"}
   named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift || User.current, *args)} }
   #
   #TODO
@@ -181,6 +181,21 @@ class Project < ActiveRecord::Base
       return prj
     end
     #end
+  end
+
+  def self.exists_row_quesiti
+
+    # p=  Project.find_or_initialize_by_id(1).first_or_create(:id => 1 , :name => 'QUESITI', :identifier => 'quesiti', :status => 1, :is_public => 0, :description => 'Contenitore di sistema per quesiti')
+
+    Project.find_or_initialize_by_id(1) do |p|
+      p.id = 1,
+      p.name = 'QUESITI',
+      p.identifier = 'sys-quesiti',
+      p.status = 1,
+      p.is_public = 0,
+      p.description = 'Contenitore di sistema per quesiti',
+      p.save!
+    end
   end
 
   # Returns a SQL conditions string used to find all projects visible by the specified user.
@@ -790,7 +805,7 @@ class Project < ActiveRecord::Base
     usr = User.find_by_id u
     if !usr.blank?
 
-    s1='<style type="text/css">
+      s1='<style type="text/css">
                 /* Backgrounds */
             .email_background {
                 width: 640px;
@@ -834,7 +849,7 @@ class Project < ActiveRecord::Base
         <td align="center" background="http://es.pecchia.info/images/commons/email_bg.jpg" class="email_background">
         <!-- inizio contenuto -->
         <!------------------------------------------------------------------------->'
-    s2='<!-- Inizio sezione con logo e nomeutente -->
+      s2='<!-- Inizio sezione con logo e nomeutente -->
           <table width="560" border="0" cellpadding="0" cellspacing="0">
             <tr>
               <td width="242" height="110" align="left" valign="top">
@@ -864,7 +879,7 @@ class Project < ActiveRecord::Base
       <!-- fine sezione con logo e nomeutente -->
       <!-- inizio visibile solo se associato o affiliato-->'
       if usr.asso_id > 0 && !usr.asso_id.nil?
-      s2 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
+        s2 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
             <tr>
               <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
                 <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:18px; font-weight: bold;">
@@ -877,8 +892,8 @@ class Project < ActiveRecord::Base
             </tr>
           </table>'
       else
-         if usr.sigla_tipo()
-    s2 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
+        if usr.sigla_tipo()
+          s2 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
                   <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:11px; color:#333333; line-height:18px; font-weight: bold;">
@@ -890,9 +905,9 @@ class Project < ActiveRecord::Base
                 </td>
               </tr>
             </table>'
-         end
-    end
-    s2 += '<!-- fine riga visibile solo se associato o è affiliato - sotto un\'ummagine di spazio -->
+        end
+      end
+      s2 += '<!-- fine riga visibile solo se associato o è affiliato - sotto un\'ummagine di spazio -->
           <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
             <tr>
               <td width="560" valign="bottom" bgcolor="#ffffff" height="6">
@@ -907,11 +922,11 @@ class Project < ActiveRecord::Base
           </table>
             <!-------------------------------------------------------------------->
           <!-- inizio loop sezione indice --> '
-          for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
-            ancora = truncate(nart.subject, :length => 30).to_slug
-            s3 += '<table width="560" border="0" cellpadding="0" cellspacing="0">'
-            if last_tops != nart.section.top_section_id
-    s3 += '<tr>
+      for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
+        ancora = truncate(nart.subject, :length => 30).to_slug
+        s3 += '<table width="560" border="0" cellpadding="0" cellspacing="0">'
+        if last_tops != nart.section.top_section_id
+          s3 += '<tr>
                 <td height="14" bgcolor="#f5f5f5"></td>
                 &nbsp; </tr>
               <tr>
@@ -933,8 +948,8 @@ class Project < ActiveRecord::Base
                   </table>
                 </td>
               </tr>'
-            end
-    s3 += '<!-- titolo --->
+        end
+        s3 += '<!-- titolo --->
               <tr>
                 <td width="560">
                   <table width="560" border="0" cellpadding="10" cellspacing="0">
@@ -952,9 +967,9 @@ class Project < ActiveRecord::Base
               </tr>
               <!-- fine titolo --->
             </table>'
-            last_tops = nart.section.top_section_id
-          end
-     s3 += '<!-- fine loop sezione indice -->
+        last_tops = nart.section.top_section_id
+      end
+      s3 += '<!-- fine loop sezione indice -->
             <!------------------------------------------------------------------------->
             <!--   -- spazio --  -->
             <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
@@ -987,9 +1002,9 @@ class Project < ActiveRecord::Base
             <!--fine  dicitura sommario  -->
             <!------------------------------------------------------------------------->
             <!-- inizio sezione loop articoli --> '
-          for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
-            ancora = truncate(nart.subject, :length => 30).to_slug
-    s4 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
+      for nart in self.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section]) do
+        ancora = truncate(nart.subject, :length => 30).to_slug
+        s4 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td width="560" align="center" valign="top" bgcolor="#f4f4f4" style="border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;">
                   <!-- inizio tabella contenuti -->
@@ -997,17 +1012,17 @@ class Project < ActiveRecord::Base
                     <tr>
                       <!-- sotto: immagine sx -->
                       <td width="120" align="left" valign="top" rowspan="2">'
-            if nart.immagine_url.nil?
-              if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{nart.top_section.immagine}")
-    s4 += '<a name="' + ancora + '"><img src="http://es.pecchia.info/images/commons/sections/' + nart.top_section.immagine + '" width ="120" \> </a>'
-              else
-                image_tag("/images/commons/sections/no-img.jpg", :width => 120, :id => ancora)
-    s4 += '<a name="' + ancora + '"><img src="http://es.pecchia.info/images/commons/sections/no-img.jpg" width ="120" \> </a>'
-              end
-            else
-    s4 += '<a name="' + ancora + '"><img src="' + nart.immagine_url + '" width ="120" alt="' + ancora + '" \> </a>'
-            end
-    s4 += '</td>
+        if nart.immagine_url.nil?
+          if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{nart.top_section.immagine}")
+            s4 += '<a name="' + ancora + '"><img src="http://es.pecchia.info/images/commons/sections/' + nart.top_section.immagine + '" width ="120" \> </a>'
+          else
+            image_tag("/images/commons/sections/no-img.jpg", :width => 120, :id => ancora)
+            s4 += '<a name="' + ancora + '"><img src="http://es.pecchia.info/images/commons/sections/no-img.jpg" width ="120" \> </a>'
+          end
+        else
+          s4 += '<a name="' + ancora + '"><img src="' + nart.immagine_url + '" width ="120" alt="' + ancora + '" \> </a>'
+        end
+        s4 += '</td>
                     <!-- titolo  -->
                       <td width="440" align="left" valign="top">
                         <font style="font-family: Arial, Helvetica, sans-serif; font-size:16px; color:#003548; text-align: justify;">
@@ -1048,8 +1063,8 @@ class Project < ActiveRecord::Base
               </tr>
             </table>
             <!-- fine sezione loop articoli -->'
-          end
-    s5 = '<!------------------------------------------------------------------------->
+      end
+      s5 = '<!------------------------------------------------------------------------->
         <!-- IMPORTANTE fine   contenuto  email-->
         </table>
         </td>
@@ -1071,18 +1086,18 @@ class Project < ActiveRecord::Base
         </table> '
 
       return s1+s2+s3+s4+s5
-        else
-          return '<h1 style="color:red;"> Utente id:[' + u.to_s + '] non trovato!</h1>'
+    else
+      return '<h1 style="color:red;"> Utente id:[' + u.to_s + '] non trovato!</h1>'
     end
   end
 
   def testuser(u) #sperimentale sandro
                   # User.exists?( :id => usr )
                   # oppure per includere altro ... example:
-                   #User.find_by_id(id, :include => [:accounts => [:orders => [:objects]]])
+                  #User.find_by_id(id, :include => [:accounts => [:orders => [:objects]]])
     s=""
     for i in 0..10
-    usr = User.find_by_id u
+      usr = User.find_by_id u
       if !usr.blank?
         s += '<h1 style="color:blue;">' + usr.firstname + '</h1>'
         s += '<h2 style="color:green;">' + usr.asso_id.to_s + '</h2>'
@@ -1125,22 +1140,22 @@ class Project < ActiveRecord::Base
     #That is where .blank? comes in. It is implemented by Rails and will operate on any object as well as work like .empty? on strings, arrays and hashes.
     yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
     if yet_project #|| !@yet_project.nil?
-      #provi di creare un BIS
-      #edizione :  2bis/2012
-      #2bis/2012 - FISCOSPORT FLASH DEL 1/02/2012
-      #e-2bis-2012
-      identificatore =  date_edizione.to_s + "bis-" + desired_year.to_s
+                   #provi di creare un BIS
+                   #edizione :  2bis/2012
+                   #2bis/2012 - FISCOSPORT FLASH DEL 1/02/2012
+                   #e-2bis-2012
+      identificatore = date_edizione.to_s + "bis-" + desired_year.to_s
 
       yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
       if yet_project #|| !@yet_project.nil?
-        #provo di cercare il numero di edizioni create questo anno
+                     #provo di cercare il numero di edizioni create questo anno
         num_edizioni = Project.count(:conditions => ['identifier LIKE ? AND extract(year from data_al) = ?', "#{FeeConst::EDIZIONE_ID}%", desired_year])
         #Model.where("strftime('%Y', date_column)     = ?", desired_year)
         identificatore = (num_edizioni + 1).to_s + "-" + desired_year.to_s
 
         yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
         if yet_project #|| !@yet_project.nil?
-          #prendo l'ultima edizione creato questo anno
+                       #prendo l'ultima edizione creato questo anno
           yet_project = Project.first(:conditions => ['identifier LIKE ?', "#{FeeConst::EDIZIONE_ID}%"], :order => 'created_on DESC')
           if yet_project && !yet_project.nil?
             self.data_al = yet_project.data_al + 15
@@ -1168,7 +1183,7 @@ class Project < ActiveRecord::Base
 
 
     self.identifier = FeeConst::EDIZIONE_ID + identificatore
-    identificatore = identificatore.sub( "-", "/" )
+    identificatore = identificatore.sub("-", "/")
 
     #self.name = "edizione:  " + identificatore
     #self.name += abbr_meta

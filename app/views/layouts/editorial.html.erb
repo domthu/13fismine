@@ -2,7 +2,7 @@
 <html dir="ltr" lang="en-EN" xmlns="http://www.w3.org/1999/html">
 <head><!-- Created by DomThu & SPecchiaSoft -->
    <meta charset="utf-8"/>
-  <title>FiscoSport (tartist v 0.7) <%= h html_title %></title>
+  <title>FiscoSport (v0.8) <%= h html_title %></title>
   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width"/>
   <meta name="description" content="<%= Redmine::Info.app_name %>"/>
   <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
@@ -145,12 +145,20 @@
       <p><a href="#">Link1</a> | <a href="#">Link2</a> | <a href="#">Link3</a></p>
 
       <p>Copyright © 2012. All Rights Reserved.</p>
+      <% if flash[:notice] ||  flash[:alert]   %>
+      <div style="background-color: #F63B22; width:33%; color:yellow; font-size: 2em; text-align: center;">
+        <div> Notice :       <%= notice %></div>
+        <div> Alert :      <%= alert %> </div>
+          </div>
+       <% end %>
+
     </footer>
 
   </div>
-  <p class="fs-page-footer">
+  <div class="fs-page-footer">
+
     <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank">Privacy </a> | site created by collaborations.</span>
-  </p>
+  </div>
 </div>
 
 </body>

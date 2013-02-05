@@ -58,6 +58,7 @@ ActionController::Routing::Routes.draw do |map|
   map.quesiti '/quesiti', :controller => 'editorial', :action => 'quesiti'
   map.quesito '/quesito/:id', :controller => 'editorial', :action => 'quesito'
   map.quesito_new '/quesito_new', :controller => 'editorial', :action => 'quesito_new'
+  map.quesito_create '/quesito_create', :controller => 'editorial', :action => 'quesito_create'
   map.quesiti_my '/quesiti_my', :controller => 'editorial', :action => 'quesiti_my'
     #to match override act_as_event after search
   #map.edizioneid '/editoriale/newsletter/:id', :controller => 'editorial', :action => 'edizione'

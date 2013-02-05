@@ -1,54 +1,54 @@
 <h1 style="display:none" xmlns="http://www.w3.org/1999/html">quesito</h1>
-<%# if User.current && User.current.logged? %>
-  <div class="fs-layout-cell fs-content clearfix">
-    <article class="fs-post fs-article">
-      <div class="fs-postcontent fs-postcontent-0 clearfix">
-        <div class="fs-content-layout">
-          <div class="fs-content-layout-row">
-            <div class="fs-layout-cell layout-item-0" style="width: 99%">
-              <div id="fs-form-quesito-new">
-               <p> Se hai un dubbio sugli argomenti trattati, se ti serve approfondire un argomento specifico puoi fare una domanda in questa sezione. </p>
-                <p>Come abbonato a Fiscosport hai diritto a questo importante servizio; scrivi una domanda alla nostra redazione.<br /> Prenderemo spunto dal tuo quesito e ti risponderemo appena possibile attraverso uno o più  articoli
-                , che verranno pubblicati sul sito. Saranno accettati solo quesiti attinenti agli argomenti fiscali/sportivi e di pubblico interesse.</p>
+<% if User.current && User.current.logged? %>
 
-                                <%# gravatar_for(User.current) %>
+    <div class="fs-layout-cell fs-content clearfix">
+      <article class="fs-post fs-article">
+        <div class="fs-postcontent fs-postcontent-0 clearfix">
+          <div class="fs-content-layout">
+            <div class="fs-content-layout-row">
+              <div class="fs-layout-cell layout-item-0" style="width: 99%">
+                <div id="fs-form-quesito-new">
+                  <p> Se hai un dubbio sugli argomenti trattati, se ti serve approfondire un argomento specifico puoi
+                    fare una domanda in questa sezione. </p>
+
+                  <p>Come abbonato a Fiscosport hai diritto a questo importante servizio; scrivi una domanda alla nostra
+                    redazione.<br/> Prenderemo spunto dal tuo quesito e ti risponderemo appena possibile attraverso uno
+                    o più articoli
+                    , che verranno pubblicati sul sito. Saranno accettati solo quesiti attinenti agli argomenti
+                    fiscali/sportivi e di pubblico interesse.</p>
+                  <%# gravatar_for(User.current) %>
+                </div>
+                <h1><%= l(:label_news_new) %></h1>
+                <% form_tag({:controller => "editorial", :action => "quesito_create", :method => "post"}, :class => "input", :id => "fs-quesito-new") do %>
+                    <div>
+                      <label>Oggetto </label>
+                      <span>  <%= text_area 'quesito','summary',  :rows => 2, :cols => 25, :tabindex => '1' %>  </span>
+                    </div>
+                    <div>
+                      <label>Quesito </label>
+                      <span>  <%= text_area 'quesito','description',  :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
+                    </div>
+                    <div id="fs-form-quesito-new-btn">
+                      <%= submit_tag 'Invia', :class => "fs-giallo-button", :confirm => 'Confermi?' %>   </div>
+                <% end %>
+                <%= render :partial => 'flash' %>
               </div>
-              <h1><%= l(:label_news_new) %></h1>
-              <% form_tag({:controller => "editorial", :action => "quesito_new"}, :class => "input", :id => "fs-quesito-new", :method => "post") do %>
-                  <%= hidden_field_tag :back_url, @backurl %>
-                  <p><%# text_field_tag :title, :required => true, :size => 60 %></p>
-                  <div >
-                    <label>Oggetto </label>
-                    <span>  <%= text_area_tag 'subject', nil, :rows => 2, :cols => 25, :tabindex => '1' %>  </span>
-                  </div>
-                  <div>
-                    <label>Quesito </label>
-                    <span>  <%= text_area_tag 'subject', nil, :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
-                  </div>
-                  <div id="fs-form-quesito-new-btn">
-                  <%= submit_tag 'Invia', :class => "fs-giallo-button", :confirm => 'Confermi?' %>   </div>
-              <% end %>
             </div>
           </div>
         </div>
-      </div>
+        <br/>
+      </article>
       <br/>
-    </article>
 
-    <br/>
+      <div class="clearfix"></div>
+    </div>
+<% else %>
+    <h2 style="color:red;">
+      Gentile utente per porre quesiti a fiscosport occorre essere autenticati </h2>
+<% end %>
 
-    <div class="clearfix"></div>
-  </div>
-<!--
-    <%# else %>
-    <h3 style="color:red;">
-    Gentile utente per porre quesiti a fiscosport occorre essere autenticati </h3>
-    <%=  User.current.to_s  %>
-    <%=  User.current.logged?.to_s  %>
-    <%# end %>
--->
-  <%= render :partial => 'blocco_sidebar1' %>
+<%= render :partial => 'blocco_sidebar1' %>
 <%#sidebar a destra %>
 
-</div>
+
 
