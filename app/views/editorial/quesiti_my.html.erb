@@ -1,29 +1,47 @@
 <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
-<% if @quesiti_news.nil? %>
-       <div> Non risultano quesiti posti da lei.
-       </div>
-   <% else %>
-      <article class="fs-article fs-post-quesiti">
-               <% @quesiti_news.each do |item| %>
-                   <div class="fs-convegni-border">
-                     <div class="fs-convegni-futuri-data">
-                                                <span><%= I18n.localize(item.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
-                     </div>
-                     <div class="fs-convegni-futuri">
-                      
-                       <span> <%= link_to(h(item.summary), :controller => 'editorial', :action => "evento", :id => item.id, :escape => false) %></span>
-     
-                       <p>
-                         <%= link_to(h(smart_truncate(item.description, 120)), :controller => 'editorial', :action => "evento", :id => item.id, :escape => false) %>
-                         <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false), :class => "fs-giallo-inline-button" %></p>
-                       <br/>
-     
-                     </div>
-                     <div class="clearfix"></div>
-                   </div>
-               <% end %>
-             </article>
-         <% end %>
- </div>
+  <% if User.current && User.current.logged? %>
+      <% if @quesiti_news.nil? %>
+          <div> Non risultano quesiti posti da lei.
+          </div>
+      <% else %>
+          <article class="fs-article fs-post-quesiti">
+            <% @quesiti_news.each do |item| %>
+                <div class="fs-convegni-border">
+                  <div class="fs-quesiti-data">
+                    <span><%= I18n.localize(item.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+                  </div>
+                  <div class="fs-quesiti-list">
+                    <% case item.status_id when nil %>
+                        <div class='fs-quesiti-status-icon'></div>
+                    <% when 1 %>
+                        <div class='fs-quesiti-status-icon fs-quesiti-status-1'><%= item.status_id %> </div>
+                    <% when 2 %>
+                        <div class='fs-quesiti-status-icon fs-quesiti-status-2'><%= item.status_id %></div>
+                    <% when 3 %>
+                        <div class='fs-quesiti-status-icon fs-quesiti-status-3'><%= item.status_id %></div>
+                    <% when 3 %>
+                        <div class='fs-quesiti-status-icon fs-quesiti-status-4'><%= item.status_id %></div>
+                    <% else %>
+                    <% end %>
+                    <span> <%= link_to(h(item.summary), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %></span>
+
+                    <p>
+                      <%= link_to(h(smart_truncate(item.description, 120)), :controller => 'editorial', :action => "evento", :id => item.id, :escape => false) %>
+                    </p>
+
+                    <div class="fs-btn-center">
+                      <%= link_to "Visualizza", url_for(:controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false), :class => "fs-vuoto-inline2-button" %>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+            <% end %>
+          </article>
+      <% end %>
+  <% else %>
+      <pre style=color:red;>
+  Gentile utente occorre essere autenticati per accedere a questa sezione.</pre>
+  <% end %>
+</div>
 <%= render :partial => 'blocco_sidebar1' %>
 <%#sidebar a destra %>

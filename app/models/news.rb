@@ -58,7 +58,7 @@ class News < ActiveRecord::Base
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
           "Richiesta in attesa"
         when FeeConst::QUESITO_STATUS_KO #= 2 #NON ATTINENTE - RIFIUTATO
-          "RIFIUTATO: " + self.causale.html_safe
+          "RIFIUTATO: " + self.causale.to_s
         when FeeConst::QUESITO_STATUS_OK #=  3 #ACCETTATO
           "ACCETTATO" + (self.issues.empty? ? " 0 risposta" : " " + self.issues.count.to_s + " risposte.")
         else

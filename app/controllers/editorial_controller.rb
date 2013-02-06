@@ -342,6 +342,9 @@ non usata?
    #   redirect_to(login_url) && return
    # end
     @quesiti_news = User.current.my_quesiti
+        #if User.current = nil
+    #   redirect_to(login_url) && return
+    # end
   end
 
   def quesito_new
