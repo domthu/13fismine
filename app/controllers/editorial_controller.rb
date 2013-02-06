@@ -390,7 +390,11 @@ non usata?
        end
              redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @news
   end
-
+   def quesito_destroy
+     @quesito_news = News.destroy(params[:id])
+           flash[:notice] =  'quesito rimosso!'
+         redirect_to :controller => 'editorial', :action => 'quesiti_my'
+     end
   #Show del singolo quesito. Attenzione l'id passato è quello della NEWS
   # Viene passato un id che corrisponde alla news = domanda fatta dal cliente
   #REQUEST

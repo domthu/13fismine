@@ -1345,6 +1345,18 @@ right: -14px;   */
 .fs-quesiti-status-4 {
     background-position: 0 -300px;
 }
+#fs-quesito-new textarea#causale{
+    color: #000000!important;
+}
+#fs-quesito-new textarea#summary{
+    font-size: 1em;
+}
+#fs-quesito-new label{
+   font-weight: bold;
+    font-style: italic;
+    margin-left: 12px;
+color: #333333;
+}
 /*
 /*
 /*

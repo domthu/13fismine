@@ -76,11 +76,7 @@ class News < ActiveRecord::Base
           when FeeConst::QUESITO_STATUS_KO #= 2 #NON ATTINENTE - RIFIUTATO
             FeeConst::QUESITO_STATUS_KO
           when FeeConst::QUESITO_STATUS_OK #=  3 #ACCETTATO
-            if self.issue.empty?
-              FeeConst::QUESITO_STATUS_OK
-            else
-              4
-            end
+          self.issues.empty? ? 3:4
            else
            9
         end
