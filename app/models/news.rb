@@ -52,7 +52,7 @@ class News < ActiveRecord::Base
 
   def status_fs
     if self.status_id.nil?
-      "Modificabile"
+     "Modificabile"
     else
       case self.status_id
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
@@ -66,6 +66,26 @@ class News < ActiveRecord::Base
       end
     end
   end
+  def status_fs_number
+      if self.status_id.nil?
+       0
+      else
+        case self.status_id
+          when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
+            FeeConst::QUESITO_STATUS_WAIT
+          when FeeConst::QUESITO_STATUS_KO #= 2 #NON ATTINENTE - RIFIUTATO
+            FeeConst::QUESITO_STATUS_KO
+          when FeeConst::QUESITO_STATUS_OK #=  3 #ACCETTATO
+            if self.issue.empty?
+              FeeConst::QUESITO_STATUS_OK
+            else
+              4
+            end
+           else
+           9
+        end
+      end
+    end
 
   def visible?(user=User.current)
     !user.nil? && user.allowed_to?(:view_news, project)

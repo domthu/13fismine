@@ -55,8 +55,8 @@ ActionController::Routing::Routes.draw do |map|
   map.evento '/evento/:id', :controller => 'editorial', :action => 'evento'
   map.eventi '/eventi', :controller => 'editorial', :action => 'eventi'
   #-> Quesiti (table: news)-
-  map.quesiti '/quesiti', :controller => 'editorial', :action => 'quesiti'
-  map.quesito '/quesito/:id', :controller => 'editorial', :action => 'quesito'
+  map.quesiti_all '/quesiti', :controller => 'editorial', :action => 'quesiti_all'
+  map.quesito_show '/quesito/:id', :controller => 'editorial', :action => 'quesito_show'
   map.quesito_new '/quesito_new', :controller => 'editorial', :action => 'quesito_new'
   map.quesito_create '/quesito_create', :controller => 'editorial', :action => 'quesito_create'
   map.quesiti_my '/quesiti_my', :controller => 'editorial', :action => 'quesiti_my'

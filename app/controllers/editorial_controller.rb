@@ -354,7 +354,7 @@ non usata?
     @news = News.new(:project => @project, :author => User.current)
        @news.safe_attributes = params[:quesito]
         @news.title = 'Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
-        @news.status_id = 1
+        @news.status_id = nil
         @news.comments_count = 0
        if request.post?
          if @news.save
@@ -366,17 +366,39 @@ non usata?
          end
        end
                redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @news
+  end
 
+  def quesito_edit
+    @id = params[:id].to_i
+      @news = News.find(@id)
+      # @news.safe_attributes = params[:quesito]
+       @news.title = 'UPdated->Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
+        @news.summary = params[:summary]
+        @news.description = params[:description]
+        @news.comments_count = 0
+       if request.post?
+         if @news.save
+           flash[:notice] = l(:notice_successful_create)
+          # redirect_to :controller => 'news', :action => 'index', :project_id => @project
+         else
+           flash[:notice] =  'qualcosa è andato storto!'
+          # render :action => 'new'
+         end
+       end
+             redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @news
   end
 
   #Show del singolo quesito. Attenzione l'id passato è quello della NEWS
   # Viene passato un id che corrisponde alla news = domanda fatta dal cliente
   #REQUEST
   def quesito_show
+
     @id = params[:id].to_i
     #1 news sola
-    @quesito_news = News.find(@id) unless !@id.nil?
+    @news = News.find(@id)
+    @quesito_news = News.find(@id)  # unless !@id.nil?
     @quesito_news_stato = @quesito_news.status_fs
+    @quesito_news_stato_num = @quesito_news.status_fs_number
     #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
     #@quesito_issues = @quesito_news.issue unless !@quesito_news.nil?
     @quesito_issues = @quesito_news.issues_visible_fs unless !@quesito_news.nil?

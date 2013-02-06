@@ -1,0 +1,75 @@
+ <% if User.current && User.current.logged? %>
+    <div class="fs-layout-cell fs-content clearfix">
+      <article class="fs-post fs-article">
+        <div class="fs-postcontent fs-postcontent-0 clearfix">
+          <div class="fs-content-layout">
+            <div class="fs-content-layout-row">
+              <div class="fs-layout-cell layout-item-0" style="width: 99%">
+               <% case @quesito_news_stato_num
+                  when 0 %>
+                    <h5>Status: <%= @quesito_news_stato %> </h5>
+                    <h3>Il suo questito verrà esaminato dalla redazione appena possibile.</h3>
+                    <p>Se desidera puo' apportare modifiche alla sua richiesta e sallvi con il pulsante  </p>
+
+                    <% form_tag({:controller => "editorial", :action => "quesito_edit", :id=> @quesito_news.id ,:method => "post"}, :class => "input", :id => "fs-quesito-new") do %>
+                        <div>
+                          <label>Oggetto </label>
+                          <span>  <%= text_area_tag :summary, @quesito_news.summary , :rows => 2, :cols => 25, :tabindex => '1' %>  </span>
+                        </div>
+                        <div>
+                          <label>Quesito </label>
+                          <span>  <%= text_area_tag :description, @quesito_news.description,  :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
+                        </div>
+                        <div id="fs-form-quesito-new-btn">
+                          <%= submit_tag 'Salva', :class => "fs-giallo-button", :confirm => 'Confermi le modifiche?' %>   </div>
+                    <% end %>
+                    <%= render :partial => 'flash' %>
+                <% when 1 %>
+                <h2> <%=  @quesito_news_stato.to_s %> </h2>
+
+                                 <% form_tag({:controller => "editorial", :action => "quesito_create", :method => "get"}, :class => "input", :id => "fs-quesito-new") do %>
+                                     <div>
+                                       <label>Oggetto </label>
+                                       <span>  <%= text_area 'quesito','summary',  :rows => 2, :cols => 25, :tabindex => '1' %>  </span>
+                                     </div>
+                                     <div>
+                                       <label>Quesito </label>
+                                       <span>  <%= text_area 'quesito','description',  :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
+                                     </div>
+                                     <div id="fs-form-quesito-new-btn">
+                                       <%= submit_tag 'Invia', :class => "fs-giallo-button", :confirm => 'Confermi?' %>   </div>
+                                 <% end %>
+                <% when 2 %>
+                     <h2> <%= @quesito_news_stato_num.to_s  %></h2>
+
+                <% when 3 %>
+                             <h2> <%=@quesito_news_stato_num.to_s  %></h2>
+                <% when 4 %>
+                             <h2><%= @quesito_news_stato_num.to_s  %></h2>
+                <% when 9 %>
+                             <h2><%= @quesito_news_stato_num.to_s  %></h2>
+                 <% else  %>
+                case else???
+
+
+               <% end  %>
+
+
+                <%= render :partial => 'flash' %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br/>
+      </article>
+      <br/>
+
+      <div class="clearfix"></div>
+    </div>
+<% else %>
+    <h2 style="color:red;">
+      Gentile utente per porre quesiti a fiscosport occorre essere autenticati </h2>
+<% end %>
+
+<%= render :partial => 'blocco_sidebar1' %>
+<%#sidebar a destra %>

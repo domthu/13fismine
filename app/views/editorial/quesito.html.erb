@@ -16,3 +16,73 @@
       rendere domanda
 
       puslòabnate tironti alla lista 
+<h1 style="display:none" xmlns="http://www.w3.org/1999/html">quesito</h1>
+<% if User.current && User.current.logged? %>
+    <div class="fs-layout-cell fs-content clearfix">
+      <article class="fs-post fs-article">
+        <div class="fs-postcontent fs-postcontent-0 clearfix">
+          <div class="fs-content-layout">
+            <div class="fs-content-layout-row">
+              <div class="fs-layout-cell layout-item-0" style="width: 99%">
+               <% case @quesito_news_stato
+                 when nil %>
+                    <h1>Il suo questito sarà preso in esame dalla redazione appena possibile.</h1>
+                    <p>Se vuole puo' apportare delle modifiche alla sua richiesta premedo sul pulsante Modifica  </p>
+
+                    <div class="fs-convegni-border">
+                                   <div class="fs-convegni-futuri-data">
+                                     <span><%= I18n.localize(@quesito_news.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+                                   </div>
+                                   <div class="fs-convegni-futuri">
+                                    <%=  @quesito_news.summary %>
+                                     <p>
+                                       <%=  @quesito_news.description %>
+                                     </p>
+                                       <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :id => con.id, :escape => false), :class => "fs-giallo-button" %>
+                                     <br/>
+                                   </div>
+                                   <div class="clearfix"></div>
+                                 </div>
+                 <% else  %>
+                case else???
+                    <h2> @quesito_news_stato.to_s </h2>
+
+               <% end  %>
+
+                <h1><%= l(:label_news_show) %></h1>
+                <% form_tag({:controller => "editorial", :action => "quesito_edit", :method => "get"}, :class => "input", :id => "fs-quesito-new") do %>
+                    <div>
+                      <label>Oggetto </label>
+                      <span>  <%= text_area 'quesito','summary',  :rows => 2, :cols => 25, :tabindex => '1' %>  </span>
+                    </div>
+                    <div>
+                      <label>Quesito </label>
+                      <span>  <%= text_area 'quesito','description',  :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
+                    </div>
+                    <div id="fs-form-quesito-new-btn">
+                      <%= submit_tag 'Invia', :class => "fs-giallo-button", :confirm => 'Confermi?' %>   </div>
+                <% end %>
+                <%= render :partial => 'flash' %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br/>
+      </article>
+      <br/>
+
+      <div class="clearfix"></div>
+    </div>
+<% else %>
+    <h2 style="color:red;">
+      Gentile utente per porre quesiti a fiscosport occorre essere autenticati </h2>
+<% end %>
+
+<%= render :partial => 'blocco_sidebar1' %>
+<%#sidebar a destra %>
+
+
+
+
+
+<h2><%=l(:label_news_show)%></h2>
