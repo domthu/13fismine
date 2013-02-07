@@ -400,8 +400,7 @@ non usata?
   # Viene passato un id che corrisponde alla news = domanda fatta dal cliente
   #REQUEST
   def quesito_show
-
-    @id = params[:id].to_i
+                         @id = params[:id].to_i
     #1 news sola
     @news = News.find(@id)
     @quesito_news = News.find(@id)  # unless !@id.nil?
@@ -409,7 +408,8 @@ non usata?
     @quesito_news_stato_num = @quesito_news.status_fs_number
     #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
     #@quesito_issues = @quesito_news.issue unless !@quesito_news.nil?
-    @quesito_issues = @quesito_news.issues_visible_fs unless !@quesito_news.nil?
+    @quesito_issues = @quesito_news.issues_visible_fs  unless !@quesito_news.nil?
+    @quesito_issues_count = @quesito_issues.count  unless  !@quesito_news.nil?
   end
 
   #Show del singolo quesito. Attenzione l'id passato è quello dell'articolo

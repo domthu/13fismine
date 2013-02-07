@@ -1,0 +1,18 @@
+<article class="fs-article">
+  <div class="fs-convegni-border">
+    <div class="fs-quesiti-data">
+     <span class="fs-quesiti-data-left">Quesito di:<%= User.current.firstname %> </span>
+      <span><%= I18n.localize(@quesito_news.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+    </div>
+    <div class="fs-quesiti-wrapper">
+      <div class="fs-quesiti-gravatar">qui gravatar for user che ha
+        creato <%# gravatar_for(@quesito_news.firstname) unless !@quesito_news.firstname %>
+      </div>
+      <span style="font-weight: bold;"><%= @quesito_news.summary %> </span>
+
+      <p><%= @quesito_news.description %> </p>
+      <br/> &nbsp;
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</article>

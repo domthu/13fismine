@@ -1236,7 +1236,7 @@ right: -14px;   */
 /* ---       inizio  quesiti    ------*/
 #fs-form-quesito-new {
     background: transparent url('/images/commons/lapis-giallo.jpg') no-repeat;
-    background-position: right top;
+    background-position: right -10px;
     height: 250px;
 }
 
@@ -1280,20 +1280,29 @@ right: -14px;   */
     height: 24px;
     border-radius: 1px;
     text-align: right;
-    color: #ffdd00;
+    color: #ffffff;
     font-family: 'Allerta', arial, sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     text-transform: uppercase;
     margin-bottom: 6px;
     line-height: 1em;
     width: auto;
+    font-weight: bold;
 
 }
 
 .fs-quesiti-data span {
     display: inline-block;
     position: relative;
-    margin: 5px 0 0 2px;
+    margin: 5px 5px 0 0;
+
+}
+.fs-quesiti-data span.fs-quesiti-data-left {
+    display: inline-block;
+    position: relative;
+   float:left;
+    margin: 5px 0 0 5px;
+    color: #000000;
 
 }
 
@@ -1314,7 +1323,7 @@ right: -14px;   */
 }
 
 .fs-quesiti-list div.fs-btn-center {
-   padding: 0  13% 5%;
+    padding: 0 13% 5%;
 }
 
 .fs-quesiti-status-icon {
@@ -1357,6 +1366,20 @@ right: -14px;   */
     font-style: italic;
     margin-left: 12px;
     color: #333333;
+}
+
+.fs-quesiti-wrapper {
+    padding: 0 11px 5px 11px;
+}
+
+.fs-quesiti-gravatar {
+    height: 80px;
+    width: 80px;
+    float: left;
+    border: 2px solid #808080;
+    margin: 0 10px 10px -6px;
+    padding: 6px;
+    overflow: hidden;
 }
 
 /* =========================== fine quesiti  ============================= */
@@ -1517,22 +1540,23 @@ right: -14px;   */
 /* ===================  zona riservata    SOTTO MENU E BOTTONI E COMMONS ================= */
 /* ======================================================================================= */
 #fs-flash-notice {
+    background: url('/images/commons/flash-bg.jpg') repeat-x;
     display: block;
     text-align: center;
-    color: #c93214;
+    color: #ffce0b;
     font-size: 18px;
     font-family: 'Trebuchet MS', Arial, Helvetica, Sans-Serif;
     line-height: 2em;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-    -webkit-box-shadow: 0 0 3px 2px rgb(201, 50, 20);
-    -moz-box-shadow: 0 0 3px 2px rgb(201, 50, 20);
-    box-shadow: 0 0 3px 2px rgb(201, 50, 20);
-    padding: 7px;
+    -webkit-box-shadow: 0 0 3px 2px rgb(200, 50, 20);
+    -moz-box-shadow: 0 0 3px 2px rgb(200, 50, 20);
+    box-shadow: 0 0 3px 2px rgb(200, 50, 20);
+    text-shadow: 0 0 6px rgb(255, 70, 0);
     width: 98%;
-    margin-top: 7px;
-    margin: 5px 0;
+    height: 75px;
+    margin: 5px 2px;
 }
 
 .art-nav {
