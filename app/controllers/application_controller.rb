@@ -535,3 +535,29 @@ class ApplicationController < ActionController::Base
     api_request? ? nil : super
   end
 end
+
+def fading_flash_message2(text, seconds=3)
+  text +
+    <<-EOJS
+      <script type='text/javascript'>
+        Event.observe(window, 'load',function() {
+          setTimeout(function() {
+            #fs-flash-notice = $('notice') ? 'notice' : 'warning';
+            new Effect.Fade(#fs-flash-notice);
+          }, #{seconds*1000});
+        }, false);
+      </script>
+    EOJS
+end
+def fading_flash_message(text, seconds=3)
+ 	text +
+   	<<-EOJS
+     	<script type='text/javascript'>
+       	$(document).ready( function() {
+         	setTimeout(function() {
+           	$('#fs-flash-notice').fadeOut(2500);
+         	}, #{seconds*1000});
+       	});
+     	</script>
+   	EOJS
+end

@@ -1264,17 +1264,18 @@ right: -14px;   */
     width: 98%;
 
 }
+
 .fs-quesiti-data {
-    background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65)));
-    background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
-    background: -o-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
-    background: -ms-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
-    background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 );
+    background: -moz-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.65)));
+    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
+    background: -o-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
+    background: -ms-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#00000000', endColorstr = '#a6000000', GradientType = 1);
 
     position: relative;
-   right: 1px;
+    right: 1px;
     display: block;
     height: 24px;
     border-radius: 1px;
@@ -1295,6 +1296,7 @@ right: -14px;   */
     margin: 5px 0 0 2px;
 
 }
+
 .fs-quesiti-list {
     font-weight: bold;
     color: #333333;
@@ -1310,18 +1312,11 @@ right: -14px;   */
     font-weight: normal;
     color: #333333;
 }
-.fs-quesiti-list div{
-    margin-left: 10px;
-}
-/*.fs-btn-center{
-    width: 30%;
-    display: block;
-    text-align: center;
-    background-color: #5f9ea0;
-    height: 30px;
 
+.fs-quesiti-list div.fs-btn-center {
+   padding: 0  13% 5%;
 }
-*/
+
 .fs-quesiti-status-icon {
     background-image: url('/images/commons/quesito-status.jpg');
     width: 100px;
@@ -1336,32 +1331,35 @@ right: -14px;   */
 .fs-quesiti-status-1 {
     background-position: 0 -75px;
 }
+
 .fs-quesiti-status-2 {
     background-position: 0 -150px;
 }
+
 .fs-quesiti-status-3 {
     background-position: 0 -225px;
 }
+
 .fs-quesiti-status-4 {
     background-position: 0 -300px;
 }
-#fs-quesito-new textarea#causale{
-    color: #000000!important;
+
+#fs-quesito-new textarea#causale {
+    color: #000000 !important;
 }
-#fs-quesito-new textarea#summary{
+
+#fs-quesito-new textarea#summary {
     font-size: 1em;
 }
-#fs-quesito-new label{
-   font-weight: bold;
+
+#fs-quesito-new label {
+    font-weight: bold;
     font-style: italic;
     margin-left: 12px;
-color: #333333;
+    color: #333333;
 }
-/*
-/*
-/*
 
-/* ---       fine quesiti         --*/
+/* =========================== fine quesiti  ============================= */
 /* inizio slide */
 .fs-slidecontainerslideshutterstock_1 {
     position: relative;
@@ -1506,57 +1504,38 @@ color: #333333;
     -webkit-border-radius: 30%;
     -moz-border-radius: 30%;
     border-radius: 30%;
-
     border: 1px solid #00A8E5;
-
     margin: 0 10px 0 0;
-
     width: 7px;
-
     height: 7px;
 }
 
-/* fine slide sott:; non usata
-
-#approfondimenti3 {
-    background-image: url('/images/commons/3-32.png');
-    background-repeat: no-repeat;
-    background-color: #EAF4F5;
-    background-clip: content-box;
-    -webkit-background-clip: content-box;
-    background-position: 2px 1px;
+/* ======================================================================================= */
+/* ===================zona riservata . SOPRA TUTTE LE PERSONALIZZAZIONI ================== */
+/* ===================                                                   ================= */
+/* ===================                                                   ================= */
+/* ===================  zona riservata    SOTTO MENU E BOTTONI E COMMONS ================= */
+/* ======================================================================================= */
+#fs-flash-notice {
+    display: block;
+    text-align: center;
+    color: #c93214;
+    font-size: 18px;
+    font-family: 'Trebuchet MS', Arial, Helvetica, Sans-Serif;
+    line-height: 2em;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 3px 2px rgb(201, 50, 20);
+    -moz-box-shadow: 0 0 3px 2px rgb(201, 50, 20);
+    box-shadow: 0 0 3px 2px rgb(201, 50, 20);
+    padding: 7px;
+    width: 98%;
+    margin-top: 7px;
+    margin: 5px 0;
 }
 
-#approfondimenti9 {
-    background-image: url('/images/commons/9-32.png');
-    background-repeat: no-repeat;
-    background-color: #EAF4F5;
-    background-clip: content-box;
-    -webkit-background-clip: content-box;
-    background-position: 2px 1px;
-}
-
-#approfondimenti19 {
-    background-image: url('/images/commons/19-32.png');
-    background-repeat: no-repeat;
-    background-color: #EAF4F5;
-    background-clip: content-box;
-    -webkit-background-clip: content-box;
-    background-position: 2px 1px;
-}
-*/
-/*     menudi navigazione    */
 .art-nav {
-    /*
-   background: #FBC737;
-   background: linear-gradient(top, #FAC01E 0, #FBCC4B 40%, #FBCC4B 50%, #FBCC4B 60%, #FAC01E 100%) no-repeat;
-   background: -webkit-linear-gradient(top, #FAC01E 0, #FBCC4B 40%, #FBCC4B 50%, #FBCC4B 60%, #FAC01E 100%) no-repeat;
-   background: -moz-linear-gradient(top, #FAC01E 0, #FBCC4B 40%, #FBCC4B 50%, #FBCC4B 60%, #FAC01E 100%) no-repeat;
-   background: -o-linear-gradient(top, #FAC01E 0, #FBCC4B 40%, #FBCC4B 50%, #FBCC4B 60%, #FAC01E 100%) no-repeat;
-   background: -ms-linear-gradient(top, #FAC01E 0, #FBCC4B 40%, #FBCC4B 50%, #FBCC4B 60%, #FAC01E 100%) no-repeat;
-   background: linear-gradient(top, #FAC01E 0, #FBCC4B 40%, #FBCC4B 50%, #FBCC4B 60%, #FAC01E 100%) no-repeat;
-   -svg-background: linear-gradient(top, #FAC01E 0, #FBCC4B 40%, #FBCC4B 50%, #FBCC4B 60%, #FAC01E 100%) no-repeat;
-  */
     padding: 2px;
     z-index: 100;
     font-size: 0;
@@ -2960,6 +2939,7 @@ button.fs-vuoto-inline-button {
     font-style: italic;
 
 }
+
 .fs-vuoto-inline2-button {
     border: 0;
     border-collapse: separate;
@@ -2980,7 +2960,8 @@ button.fs-vuoto-inline-button {
     float: right;
 
 }
- /* in line vers 2 */
+
+/* in line vers 2 */
 a.fs-vuoto-inline2-button,
 a.fs-vuoto-inline2-button:link,
 a:link.fs-vuoto-inline2-button:link,

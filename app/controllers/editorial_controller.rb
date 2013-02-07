@@ -361,21 +361,21 @@ non usata?
         @news.comments_count = 0
        if request.post?
          if @news.save
-           flash[:notice] = l(:notice_successful_create)
+          # flash[:notice] = l(:notice_successful_create)
+           flash[:notice] = fading_flash_message("Thank you for your message.", 5)
+           redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
           # redirect_to :controller => 'news', :action => 'index', :project_id => @project
          else
-           flash[:notice] =  'qualcosa è andato storto!'
-          # render :action => 'new'
+           flash.now[:notice] =  'Bah... qualcosa è andato storto!'
          end
        end
-               redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @news
-  end
+     end
 
   def quesito_edit
     @id = params[:id].to_i
       @news = News.find(@id)
       # @news.safe_attributes = params[:quesito]
-       @news.title = 'UPdated->Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
+       @news.title = 'Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
         @news.summary = params[:summary]
         @news.description = params[:description]
         @news.comments_count = 0
@@ -392,7 +392,8 @@ non usata?
   end
    def quesito_destroy
      @quesito_news = News.destroy(params[:id])
-           flash[:notice] =  'quesito rimosso!'
+         flash[:notice] = fading_flash_message("Il suo quesito è stato rimosso.", 5)
+          # flash[:notice] =  'quesito rimosso!'
          redirect_to :controller => 'editorial', :action => 'quesiti_my'
      end
   #Show del singolo quesito. Attenzione l'id passato è quello della NEWS
