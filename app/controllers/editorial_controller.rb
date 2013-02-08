@@ -348,28 +348,31 @@ non usata?
   end
 
   def quesito_new
-  Project.exists_row_quesiti
   end
 
   #POST del quesito_new
   def quesito_create
-    @project = Project.find_by_id(1)
+    @project = Project.find_by_id(FeeConst::QUESITO_ID)
+    if @project.nil?
+      Project.exists_row_quesiti
+      @project = Project.find_by_id(FeeConst::QUESITO_ID)
+    end
     @news = News.new(:project => @project, :author => User.current)
-       @news.safe_attributes = params[:quesito]
-        @news.title = 'Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
-        @news.status_id = nil
-        @news.comments_count = 0
-       if request.post?
-         if @news.save
+    @news.safe_attributes = params[:quesito]
+    @news.title = 'Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
+    @news.status_id = FeeConst::QUESITO_STATUS_WAIT
+    @news.comments_count = 0
+    if request.post?
+      if @news.save
           # flash[:notice] = l(:notice_successful_create)
-           flash[:notice] = fading_flash_message("I suo quesito è stato registrato grazie.", 5)
-           redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
+          flash[:notice] = fading_flash_message("I suo quesito è stato registrato grazie.", 5)
+          redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
           # redirect_to :controller => 'news', :action => 'index', :project_id => @project
-         else
-           flash.now[:notice] =  'Bah... qualcosa è andato storto!'
-         end
-       end
-     end
+        else
+          flash.now[:notice] =  'Bah... qualcosa è andato storto!'
+        end
+      end
+    end
 
   def quesito_edit
     @id = params[:id].to_i

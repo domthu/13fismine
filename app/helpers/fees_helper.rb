@@ -20,7 +20,12 @@ module FeeConst
   AUTHORED_ROLES =[ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW]
 
   EDIZIONE_ID = "e-"
-  QUESITO_ID = "e-quesiti"
+
+  #QUESITO_ID = 15
+  #QUESITO_KEY = "e-quesiti"
+  QUESITO_ID = 1
+  QUESITO_KEY = "sys-quesiti"
+
   #TODO pass in settings
   QUESITO_SECTION_ID = 39 #Formula un quesito: Articolo con di default issue.section.top_section_id
   QUESITO_TOP_SECTION_ID = 19 	#Le risposte ai quesiti

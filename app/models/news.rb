@@ -52,11 +52,11 @@ class News < ActiveRecord::Base
 
   def status_fs
     if self.status_id.nil?
-     "Modificabile"
+     "Richiesta in attesa, Modificabile"
     else
       case self.status_id
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
-          "Richiesta in attesa"
+          "Richiesta in attesa, Modificabile"
         when FeeConst::QUESITO_STATUS_KO #= 2 #NON ATTINENTE - RIFIUTATO
           "RIFIUTATO: " + self.causale.to_s
         when FeeConst::QUESITO_STATUS_OK #=  3 #ACCETTATO
@@ -67,8 +67,8 @@ class News < ActiveRecord::Base
     end
   end
   def status_fs_number
-      if self.status_id.nil?
-       0
+    if self.status_id.nil?
+        FeeConst::QUESITO_STATUS_WAIT
       else
         case self.status_id
           when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
@@ -76,9 +76,9 @@ class News < ActiveRecord::Base
           when FeeConst::QUESITO_STATUS_KO #= 2 #NON ATTINENTE - RIFIUTATO
             FeeConst::QUESITO_STATUS_KO
           when FeeConst::QUESITO_STATUS_OK #=  3 #ACCETTATO
-          self.issues.empty? ? 3:4
-           else
-           9
+            self.issues.empty? ? 3:4
+          else
+          9
         end
       end
     end

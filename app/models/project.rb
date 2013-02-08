@@ -187,10 +187,10 @@ class Project < ActiveRecord::Base
 
     # p=  Project.find_or_initialize_by_id(1).first_or_create(:id => 1 , :name => 'QUESITI', :identifier => 'quesiti', :status => 1, :is_public => 0, :description => 'Contenitore di sistema per quesiti')
 
-    Project.find_or_initialize_by_id(1) do |p|
-      p.id = 1,
+    Project.find_or_initialize_by_id(FeeConst::QUESITO_ID) do |p|
+      p.id = FeeConst::QUESITO_ID,
       p.name = 'QUESITI',
-      p.identifier = 'sys-quesiti',
+      p.identifier = FeeConst::QUESITO_KEY,
       p.status = 1,
       p.is_public = 0,
       p.description = 'Contenitore di sistema per quesiti',
@@ -1190,7 +1190,7 @@ class Project < ActiveRecord::Base
     ##self.name += self.data_al.strftime("%B") + "\r\n"
     #self.name += l('date.abbr_month_names')[self.data_al.month] + "\r\n"
     #3/2013 - QUINDICINALE dell'8 febbraio 2013
-    self.name = identificatore + " QUINDICINALE dell'" + self.data_al.strftime("%e ")
+    self.name = identificatore + " QUINDICINALE del " + self.data_al.strftime("%e ")
     self.name += l('date.month_names')[self.data_al.month].downcase
     self.name += self.data_al.strftime(" %Y")
 
@@ -1433,4 +1433,3 @@ class Project < ActiveRecord::Base
   end
 
 end
-
