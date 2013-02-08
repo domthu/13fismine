@@ -1321,7 +1321,27 @@ input.fs-button
 .fs-button.hover, .fs-button:hover {
    color: #f8da00 !important;
 }
-
+input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
+{
+    background: #FFFFFF;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    border:1px solid #68D7FF;
+    margin:0 auto;
+}
+input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
+{
+    width: 100%;
+    padding: 4px 0;
+    color: #00678C !important;
+    font-size: 11px;
+    font-family: Arial, Helvetica, Sans-Serif;
+    font-weight: bold;
+    font-style: normal;
+    text-shadow: none;
+}
+   /*
 input[type="text"], input[type="password"], input[type="email"], input[type="url"], textarea
 {
    background: #FFFFFF;
@@ -1342,6 +1362,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
    font-style: normal;
    text-shadow: none;
 }
+*/
 input.fs-error, textarea.fs-error
 {
    background: #FFFFFF;
