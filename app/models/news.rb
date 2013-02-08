@@ -57,10 +57,10 @@ class News < ActiveRecord::Base
       case self.status_id
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
           "Richiesta in attesa, Modificabile"
-        when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #NON ATTINENTE - RIFIUTATO
-          "RIFIUTATO: " + self.causale.to_s
-        when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=  3 #ACCETTATO
-          "ACCETTATO" + (self.issues.empty? ? " 0 risposta" : " " + self.issues.count.to_s + " risposte.")
+        when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
+          "risposto : " + self.causale.to_s
+        when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
+          "Accettato " + (self.issues.empty? ? " 0 risposta" : " " + self.issues.count.to_s + " risposte.")
         else
           "Status non conosciuto"
       end
@@ -73,9 +73,9 @@ class News < ActiveRecord::Base
         case self.status_id
           when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
             FeeConst::QUESITO_STATUS_WAIT
-          when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #NON ATTINENTE - RIFIUTATO
+          when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
             FeeConst::QUESITO_STATUS_FAST_REPLY
-          when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=  3 #ACCETTATO
+          when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
             self.issues.empty? ? 3:4
           else
           9
