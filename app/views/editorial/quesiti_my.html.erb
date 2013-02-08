@@ -15,7 +15,7 @@
                   </div>
                   <div class="fs-quesiti-list">
                     <% case item.status_id when nil %>
-                       <%= link_to(("<div class='fs-quesiti-status-icon fs-quesiti-status-0'></div>"), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
+                       <%= link_to(("<div class='fs-quesiti-status-icon fs-quesiti-status-1'></div>"), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
                     <% when 1 %>
                       <%= link_to(("<div class='fs-quesiti-status-icon fs-quesiti-status-1'></div>"), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
                     <% when 2 %>

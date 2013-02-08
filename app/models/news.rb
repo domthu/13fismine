@@ -21,38 +21,38 @@ class News < ActiveRecord::Base
   belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
   has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
   #Un quesito puo generare un articolo (o più di uno)
-  has_many :issues, :order => "#{Issue.table_name}.created_on DESC", :include => [:status, :tracker, {:section => :top_section} ]  #, :dependent => :destroy
+  has_many :issues, :order => "#{Issue.table_name}.created_on DESC", :include => [:status, :tracker, {:section => :top_section}] #, :dependent => :destroy
 
   validates_presence_of :title, :description
   validates_length_of :title, :maximum => 60
   validates_length_of :summary, :maximum => 255
 
   acts_as_searchable :columns => ['title', 'summary', "#{table_name}.description"], :include => :project
-  acts_as_event :url => Proc.new {|o| {:controller => 'news', :action => 'show', :id => o.id}}
+  acts_as_event :url => Proc.new { |o| {:controller => 'news', :action => 'show', :id => o.id} }
   acts_as_activity_provider :find_options => {:include => [:project, :author]},
                             :author_key => :author_id
   acts_as_watchable
 
   after_create :add_author_as_watcher
 
-  named_scope :visible, lambda {|*args| {
-    :include => :project,
-    :conditions => Project.allowed_to_condition(args.shift || User.current, :view_news, *args)
-  }}
+  named_scope :visible, lambda { |*args| {
+      :include => :project,
+      :conditions => Project.allowed_to_condition(args.shift || User.current, :view_news, *args)
+  } }
 
   named_scope :issues_visible_fs,
-    :include => [{:issue => :project}],
-    :conditions => ["#{Project.table_name}.status=#{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public => true AND #{Issue.table_name}.se_visible_web => true"]
+              :include => [{:issue => :project}],
+              :conditions => ["#{Project.table_name}.status=#{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public => true AND #{Issue.table_name}.se_visible_web => true"]
 
   safe_attributes 'title',
-     'summary',
-     'description',
-     'status_id',
-     'causale'
+                  'summary',
+                  'description',
+                  'status_id',
+                  'causale'
 
   def status_fs
     if self.status_id.nil?
-     "Richiesta in attesa, Modificabile"
+      "Richiesta in attesa, Modificabile"
     else
       case self.status_id
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
@@ -66,22 +66,35 @@ class News < ActiveRecord::Base
       end
     end
   end
+
   def status_fs_number
     if self.status_id.nil?
-        FeeConst::QUESITO_STATUS_WAIT
-      else
-        case self.status_id
-          when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
-            FeeConst::QUESITO_STATUS_WAIT
-          when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
-            FeeConst::QUESITO_STATUS_FAST_REPLY
-          when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
-            self.issues.empty? ? 3:4
-          else
+      FeeConst::QUESITO_STATUS_WAIT
+    else
+      case self.status_id
+        when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
+          FeeConst::QUESITO_STATUS_WAIT
+        when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
+          FeeConst::QUESITO_STATUS_FAST_REPLY
+        when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
+          self.issues.empty? ? 3 : 4
+        else
           9
-        end
       end
     end
+  end
+
+  def quesito_new_default_title(user=User.current)
+    if user.nil?
+      'Utente non identificato '
+    else
+      s = 'Quesito posto dall\'utente [n°'
+      s += User.current.id.to_s + '] '
+      s += User.current.firstname? ? User.current.firstname.to_s : ''
+      s += User.current.lastname? ? User.current.lastname.to_s : ''
+      return s
+    end
+  end
 
   def visible?(user=User.current)
     !user.nil? && user.allowed_to?(:view_news, project)
@@ -89,7 +102,7 @@ class News < ActiveRecord::Base
 
   # returns latest news for projects visible by user
   def self.latest(user = User.current, count = 5)
-    find(:all, :limit => count, :conditions => Project.allowed_to_condition(user, :view_news), :include => [ :author, :project ], :order => "#{News.table_name}.created_on DESC")
+    find(:all, :limit => count, :conditions => Project.allowed_to_condition(user, :view_news), :include => [:author, :project], :order => "#{News.table_name}.created_on DESC")
   end
 
   # returns latest news for public area
@@ -98,7 +111,7 @@ class News < ActiveRecord::Base
     #:conditions => Project.is_public == true  -->  method missing
     #:conditions => projects.is_public = 1
     #:conditions => Project.is_public = 1
-    find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [ :author, :project ], :order => "#{News.table_name}.created_on DESC")
+    find(:all, :limit => count, :conditions => "#{Project.table_name}.is_public = 1", :include => [:author, :project], :order => "#{News.table_name}.created_on DESC")
   end
 
   def abbr_name
