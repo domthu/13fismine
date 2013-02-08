@@ -45,6 +45,11 @@ class News < ActiveRecord::Base
     :conditions => "#{Project.table_name}.status = #{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public = true AND #{Issue.table_name}.se_visible_web = true AND #{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
     :order => "#{table_name}.created_on DESC"}
 
+  named_scope :all_quesiti_fs, {
+    :include => [:project, :issues],
+    :conditions => "#{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
+    :order => "#{table_name}.created_on DESC"}
+
   safe_attributes 'title',
      'summary',
      'description',

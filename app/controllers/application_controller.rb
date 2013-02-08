@@ -276,10 +276,10 @@ class ApplicationController < ActionController::Base
   # used as a before_filter for actions that do not require any particular permission on the project
   def check_quesito_privacy_fs
     if @quesito_news && @quesito_news.project.active?
-      if @project.is_public? || User.current.admin?
+      if @quesito_news.author = User.current || User.current.admin?
         true
       else
-        flash[:notice] = "Non esite"
+        flash[:notice] = "Non hai accesso a questa risorsa"
         deny_access
       end
     else

@@ -544,11 +544,13 @@ non usata?
 
     def find_quesito_fs
       @id = params[:id].to_i
-      @quesito_news = News.all_public_fs.find(@id)
+      #@quesito_news = News.all_public_fs.find(@id)
+      #solo i quesiti di FeeConst::QUESITO_KEY
+      @quesito_news = News.all_quesiti_fs.find(@id)
       #In application_contoller
       check_quesito_privacy_fs
-    rescue ActiveRecord::RecordNotFound
-      render_404
+    #rescue ActiveRecord::RecordNotFound
+    #  render_404
     end
 
     def find_optional_project
