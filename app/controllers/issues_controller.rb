@@ -149,7 +149,9 @@ class IssuesController < ApplicationController
     #cf. find_project
     #cf. find_quesito
     #cf. find_issue
-    @issue.due_date = @project.data_al.to_date unless @project.nil?
+    if !@project.nil?
+      @issue.due_date = (@project.data_al.to_date > Date.today) ? @project.data_al.to_date : (Date.today + 10)
+    end
 
     respond_to do |format|
       format.html { render :action => 'new', :layout => !request.xhr? }
