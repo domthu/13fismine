@@ -41,10 +41,9 @@ class News < ActiveRecord::Base
   }}
 
   named_scope :all_public_fs, {
-    :include => [{:issue, :project}],
-    :conditions => ['#{Project.table_name}.status=#{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public => true AND #{Issue.table_name}.se_visible_web => true AND #{Project.table_name}.identifier == ?', "#{FeeConst::QUESITO_KEY}%"],
+    :include => [{:issues, :project}],
+    :conditions => "#{Project.table_name}.status = #{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public = true AND #{Issue.table_name}.se_visible_web = true AND #{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
     :order => "#{table_name}.created_on DESC"}
-  named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift ||
 
   safe_attributes 'title',
      'summary',

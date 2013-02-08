@@ -174,6 +174,10 @@ non usata?
 
   def edizione
     @id = params[:id].to_i
+    if @id.nil?
+      flash[:notice] = l(:notice_not_authorized)
+      return redirect_to({:action => 'home'})
+    end
     @project = Project.all_public_fs.find_public(@id)
     if @project.nil?
       flash[:notice] = l(:notice_not_authorized)
@@ -182,6 +186,8 @@ non usata?
       @issues = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
       @block_projects = Project.latest_fs
     end
+  rescue ActiveRecord::RecordNotFound
+      render_404
   end
 
   def edizione_newsletter
