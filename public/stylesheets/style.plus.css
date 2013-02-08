@@ -1094,7 +1094,7 @@ right: -14px;   */
     border-bottom: 1px solid #d3d3d3;
     border-top: 3px solid #afafaf;
     position: relative;
-    width: 100%;
+    width: 98%;
     display: block;
     margin: 10px;
 }
@@ -1115,7 +1115,7 @@ right: -14px;   */
     background: #ffffff;
     border-bottom: 3px solid #afafaf;
     position: relative;
-    width: 100%;
+    width: 98%;
     display: block;
     margin: 5px;
 }
@@ -1124,7 +1124,15 @@ right: -14px;   */
     width: 62%;
     display: inline-block;
 }
-
+#fs-reservation-del{
+    color: #b22222;
+    padding:1% 6%;
+    font-weight: bold;
+}
+#fs-reservation-del div{
+    display:inline-block;
+    float:right;
+}
 #reservation_num_persone {
     width: 20px;
     display: inline-block;
@@ -1180,7 +1188,7 @@ right: -14px;   */
     -moz-box-shadow: 0 0 2px 3px rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 2px 3px rgba(0, 0, 0, 0.2);
     display: block;
-    width: 204px;
+    width: 214px;
     height: 34px;
     border-radius: 1px;
     -webkit-border-radius: 1px;
@@ -1190,12 +1198,12 @@ right: -14px;   */
     font-family: 'Allerta', arial, sans-serif;
     font-size: 15px;
     text-transform: uppercase;
+    position:relative;
 
 }
 
 .counter span {
     display: inline-block;
-    position: absolute;
     margin: 5px 0 0 2px;
 
 }
@@ -1211,7 +1219,9 @@ right: -14px;   */
     font-family: 'Allerta', arial, sans-serif;
     font-size: 15px;
     text-transform: uppercase;
-    margin-left: 102px;
+    position: absolute;
+    right:0;
+    top:0;
 }
 
 .counter_item span {

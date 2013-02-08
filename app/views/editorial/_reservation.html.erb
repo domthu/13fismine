@@ -18,15 +18,17 @@
 <% else %>
     <h4> Grazie di aver già prenotato questo evento per
       <%= @reservation.num_persone == 1 ? @reservation.num_persone.to_s + " persona." : @reservation.num_persone.to_s + " persone." %></h4>
-    <div>
-       <br/>
-      Non desideri più partecipare? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <br/> &nbsp;
+    <div id="fs-reservation-del">
+      Non desideri più partecipare? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <div>
       <% form_tag( {:controller=>"editorial", :action=>"evento_prenotazione_delete", :id =>  @reservation.id }) do %>
           <%# hidden_field_tag "back_url", @backurl %>
           <%= hidden_field_tag :back_url, @backurl %>
           <%= submit_tag 'Cancella prenotazione!', :class => "fs-rosso-button", :confirm => 'Confermi?' %>
           <%# link_to 'Cancella prenotazione!', '/reservations/'+ @reservation.id.to_s, :method => :delete, :class => "fs-rosso-button" %>
       <% end %>
-      <br/> &nbsp;
     </div>
+    </div>
+    <br/> &nbsp;
 <% end %>

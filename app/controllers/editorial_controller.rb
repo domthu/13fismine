@@ -362,7 +362,7 @@ non usata?
        if request.post?
          if @news.save
           # flash[:notice] = l(:notice_successful_create)
-           flash[:notice] = fading_flash_message("Thank you for your message.", 5)
+           flash[:notice] = fading_flash_message("I suo quesito è stato registrato grazie.", 5)
            redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
           # redirect_to :controller => 'news', :action => 'index', :project_id => @project
          else
