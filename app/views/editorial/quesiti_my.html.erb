@@ -1,10 +1,52 @@
-<h2><%=l(:label_news_my)%></h2>
-  In questa pagina:
-  <ul> 
-    <li>Un utente definisce un titolo</li>
-    <li>Un utente immette un testo</li>
-    <li>AZIONE: SALVA ed allega all'editoriale in corso di elaborazione</li>
-  </ul>   chi sei ?
-<%=  User.current.to_s  %>
-sei loggato?
-<%=  User.current.logged?.to_s  %>
+<div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
+  <% if User.current && User.current.logged? %>
+      <% if @quesiti_news.nil? %>
+          <div> Non risultano quesiti posti da lei.
+          </div>
+      <% else %>
+          <article class="fs-article fs-post-quesiti">
+            <% if flash[:notice] %>
+                    <div id="fs-flash-notice"><%= notice %> </div>
+                     <% end %>
+            <% @quesiti_news.each do |item| %>
+                <div class="fs-convegni-border">
+                  <div class="fs-quesiti-data">
+                    <span><%= I18n.localize(item.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+                  </div>
+                  <div class="fs-quesiti-list">
+                    <% case item.status_id when nil %>
+                       <%= link_to(("<div class='fs-quesiti-status-icon fs-quesiti-status-0'></div>"), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
+                    <% when 1 %>
+                      <%= link_to(("<div class='fs-quesiti-status-icon fs-quesiti-status-1'></div>"), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
+                    <% when 2 %>
+                        <%= link_to(("<div class='fs-quesiti-status-icon fs-quesiti-status-2'></div>"), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
+                    <% when 3 %>
+                        <%= link_to(("<div class='fs-quesiti-status-icon fs-quesiti-status-3'></div>"), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
+                    <% when 4 %>
+                        <%= link_to(("<div class='fs-quesiti-status-icon fs-quesiti-status-4'></div>"), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
+                    <% else %>
+                    <% end %>
+                    <span> <%= link_to(h(item.summary), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %></span>
+
+                    <p>
+                      <%= link_to(h(smart_truncate(item.description, 120)), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
+                    </p>
+                     <!--
+                    <div class="fs-btn-center">
+                      <%= link_to "Visualizza", url_for(:controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false), :class => "fs-vuoto-inline2-button" %>
+                    </div>
+                    -->
+                    <br /> &nbsp;
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+            <% end %>
+          </article>
+      <% end %>
+  <% else %>
+      <pre style=color:red;>
+  Gentile utente occorre essere autenticati per accedere a questa sezione.</pre>
+  <% end %>
+</div>
+<%= render :partial => 'blocco_sidebar1' %>
+<%#sidebar a destra %>

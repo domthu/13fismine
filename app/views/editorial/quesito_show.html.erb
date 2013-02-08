@@ -1,0 +1,128 @@
+<% if User.current && User.current.logged? %>
+    <div class="fs-layout-cell fs-content clearfix">
+      <article class="fs-post fs-article">
+        <div class="fs-postcontent fs-postcontent-0 clearfix">
+          <div class="fs-content-layout">
+            <div class="fs-content-layout-row">
+              <div class="fs-layout-cell layout-item-0" style="width: 99%">
+                <% case @quesito_news_stato_num
+                     when 0 %> <!-- MODIFICABILE -->
+
+                    <div class="fs-quesiti-status-icon fs-quesiti-status-0"></div>
+                    <h3>Il suo quesito verrà esaminato dalla redazione appena possibile.</h3>
+
+                    <p>Se lo desidera puo' eliminarlo oppure apportare modifiche</p>
+
+                    <% form_tag({:controller => "editorial", :action => "quesito_edit", :id => @quesito_news.id, :method => "post"}, :class => "input", :id => "fs-quesito-new") do %>
+                        <div>
+                          <label>Oggetto </label>
+                          <span>  <%= text_area_tag :summary, @quesito_news.summary, :rows => 2, :cols => 25, :tabindex => '1' %>  </span>
+                        </div>
+                        <div>
+                          <label>Quesito </label>
+                          <span>  <%= text_area_tag :description, @quesito_news.description, :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
+                        </div>
+                        <div id="fs-form-quesito-new-btn">
+                                                  <%= link_to 'Elimina', { :action => 'quesito_destroy',:id=>@quesito_news.id }, :class => "fs-giallo-button", :confirm => 'Confermi la cancellazione del quesito?' %> &nbsp;
+                          <%= submit_tag 'Salva le modifiche', :class => "fs-giallo-button", :confirm => 'Confermi le modifiche?' %> &nbsp;
+                          <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>
+                        </div>
+                    <% end %>
+                    <%= render :partial => 'flash' %>
+                <% when 1 %>  <!-- IN ATTESA -->
+                    <div class="fs-quesiti-status-icon fs-quesiti-status-1"></div>
+                    <h3>Il suo quesito è in esame dalla redazione e non è più modificabile.</h3>
+
+                    <p>Ritorni a breve per vedere se il suo quesito è stato accettato o rifuitato, grazie.</p>
+                    <% form_tag({}, :class => "input", :id => "fs-quesito-new") do %>
+                        <div>
+                          <label>Oggetto </label>
+                          <span>  <%= text_area_tag :summary, @quesito_news.summary, :rows => 2, :cols => 25, :disabled => true %>  </span>
+                        </div>
+                        <div>
+                          <label>Quesito </label>
+                          <span>  <%= text_area_tag :description, @quesito_news.description, :rows => 10, :cols => 25, :disabled => true %>  </span>
+                        </div>
+                        <div id="fs-form-quesito-new-btn">
+                          <%= link_to('Indietro', quesiti_my_path, :class => "fs-rosso-button") %>
+                        </div>
+                    <% end %>
+                <% when 2 %> <!-- RIFIUTATO -->
+                    <div class="fs-quesiti-status-icon fs-quesiti-status-2"></div>
+                    <h3>Il suo quesito è stato rifiutato dalla redazione.</h3>
+
+                    <p>Non è stato possibile accettare il suo quesito, legga la motivazione nel campo sotto.</p>
+                    <% form_tag({}, :class => "input", :id => "fs-quesito-new") do %>
+                        <div>
+                          <label>Oggetto </label>
+                          <span>  <%= text_area_tag :summary, @quesito_news.summary, :rows => 2, :cols => 25, :disabled => true %>  </span>
+                        </div>
+                        <div>
+                          <label>Quesito </label>
+                          <span>  <%= text_area_tag :description, @quesito_news.description, :rows => 10, :cols => 25, :disabled => true %>  </span>
+                        </div>
+                        <div>
+                          <label style="color:red; font-weight: bold;">Motivazione</label>
+                          <span>  <%= text_area_tag :causale, @quesito_news.causale, :rows => 10, :cols => 25, :disabled => true,:class=>"causale" %>  </span>
+                        </div>
+                        <div id="fs-form-quesito-new-btn">
+                          <%= link_to('Indietro', quesiti_my_path, :class => "fs-rosso-button") %>
+                        </div>
+                    <% end %>
+
+                <% when 3 %>  <!-- ACCETTATO SENZA RISPOSTA -->
+                              <div class="fs-quesiti-status-icon fs-quesiti-status-3"></div>
+                    <h3>Il suo quesito è stato accettato ma non ha avuto ancora risposta.</h3>
+                    <p>Appena possibile le forniremo una risposta tramite uno o più articoli che trattano argomenti attinenti al suo quesito, grazie.</p>
+                    <% form_tag({}, :class => "input", :id => "fs-quesito-new") do %>
+                        <div>
+                          <label>Oggetto </label>
+                          <span>  <%= text_area_tag :summary, @quesito_news.summary, :rows => 2, :cols => 25, :disabled => true %>  </span>
+                        </div>
+                        <div>
+                          <label>Quesito </label>
+                          <span>  <%= text_area_tag :description, @quesito_news.description, :rows => 10, :cols => 25, :disabled => true %>  </span>
+                        </div>
+                          <div id="fs-form-quesito-new-btn">
+                          <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>
+                        </div>
+                    <% end %>
+                <% when 4 %> <!-- ACCETTATO CON RISPOSTA -->
+                    <div style="min-height:76px;">
+                    <div class="fs-quesiti-status-icon fs-quesiti-status-4"></div>
+                       <h3>Il suo quesito è stato accettato ed ha avuto queste risposte.</h3>
+                       <% if @quesito_news.causale  %>
+                          <h5>La redazione : </h5>
+                       <p><%= @quesito_news.causale %>  </p>
+                           <% end %>
+                    </div>
+                       <%= render :partial => 'quesito', :locals => {:quesito_news => @quesito_news} %>
+                    <%= render :partial => 'articoli', :locals => {:issues => @quesito_issues , :issues_pages => 1, :issues_count => 2} %>
+                    <h4 > debug quanti articoli? = <%= @quesito_issues_count.to_s  %> </h4>
+                <% when 9 %> <!-- STATO NON DETERMINATO -->
+                    <h2><%= @quesito_news_stato_num.to_s %></h2>
+                <% else %>
+                    case else???
+
+
+                <% end %>
+
+
+                <%= render :partial => 'flash' %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br/>
+      </article>
+      <br/>
+
+      <div class="clearfix"></div>
+    </div>
+<% else %>
+    <h2 style="color:red;">
+      Gentile utente per porre quesiti a fiscosport occorre essere autenticati </h2>
+<% end %>
+
+<%= render :partial => 'blocco_sidebar1' %>
+<%#sidebar a destra %>

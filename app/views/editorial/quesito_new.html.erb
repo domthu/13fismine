@@ -16,9 +16,19 @@
                     o più articoli
                     , che verranno pubblicati sul sito. Saranno accettati solo quesiti attinenti agli argomenti
                     fiscali/sportivi e di pubblico interesse.</p>
+                <h1><%= l(:label_news_new) %></h1>
+
                   <%# gravatar_for(User.current) %>
                 </div>
-                <h1><%= l(:label_news_new) %></h1>
+                <% if flash[:notice] %>
+                <div id="fs-flash-notice"><%= notice %> </div>
+                 <% end %>
+                <% if flash[:warning] -%>
+                   <div id='warning'><%= flash[:warning] -%></div>
+                <% end -%>
+                <% if flash[:notice] -%>
+                  <div id='notice'><%= flash[:notice] -%></div>
+                <% end -%>
                 <% form_tag({:controller => "editorial", :action => "quesito_create", :method => "post"}, :class => "input", :id => "fs-quesito-new") do %>
                     <div>
                       <label>Oggetto </label>

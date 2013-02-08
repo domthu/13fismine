@@ -342,6 +342,9 @@ non usata?
    #   redirect_to(login_url) && return
    # end
     @quesiti_news = User.current.my_quesiti
+        #if User.current = nil
+    #   redirect_to(login_url) && return
+    # end
   end
 
   def quesito_new
@@ -354,7 +357,27 @@ non usata?
     @news = News.new(:project => @project, :author => User.current)
        @news.safe_attributes = params[:quesito]
         @news.title = 'Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
-        @news.status_id = 1
+        @news.status_id = nil
+        @news.comments_count = 0
+       if request.post?
+         if @news.save
+          # flash[:notice] = l(:notice_successful_create)
+           flash[:notice] = fading_flash_message("Thank you for your message.", 5)
+           redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
+          # redirect_to :controller => 'news', :action => 'index', :project_id => @project
+         else
+           flash.now[:notice] =  'Bah... qualcosa è andato storto!'
+         end
+       end
+     end
+
+  def quesito_edit
+    @id = params[:id].to_i
+      @news = News.find(@id)
+      # @news.safe_attributes = params[:quesito]
+       @news.title = 'Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
+        @news.summary = params[:summary]
+        @news.description = params[:description]
         @news.comments_count = 0
        if request.post?
          if @news.save
@@ -365,21 +388,28 @@ non usata?
           # render :action => 'new'
          end
        end
-               redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @news
-
+             redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @news
   end
-
+   def quesito_destroy
+     @quesito_news = News.destroy(params[:id])
+         flash[:notice] = fading_flash_message("Il suo quesito è stato rimosso.", 5)
+          # flash[:notice] =  'quesito rimosso!'
+         redirect_to :controller => 'editorial', :action => 'quesiti_my'
+     end
   #Show del singolo quesito. Attenzione l'id passato è quello della NEWS
   # Viene passato un id che corrisponde alla news = domanda fatta dal cliente
   #REQUEST
   def quesito_show
-    @id = params[:id].to_i
+                         @id = params[:id].to_i
     #1 news sola
-    @quesito_news = News.find(@id) unless !@id.nil?
+    @news = News.find(@id)
+    @quesito_news = News.find(@id)  # unless !@id.nil?
     @quesito_news_stato = @quesito_news.status_fs
+    @quesito_news_stato_num = @quesito_news.status_fs_number
     #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
     #@quesito_issues = @quesito_news.issue unless !@quesito_news.nil?
-    @quesito_issues = @quesito_news.issues_visible_fs unless !@quesito_news.nil?
+    @quesito_issues = @quesito_news.issues_visible_fs  unless !@quesito_news.nil?
+    @quesito_issues_count = @quesito_issues.count  unless  !@quesito_news.nil?
   end
 
   #Show del singolo quesito. Attenzione l'id passato è quello dell'articolo
