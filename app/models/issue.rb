@@ -100,7 +100,7 @@ class Issue < ActiveRecord::Base
       :conditions => Query.merge_conditions(query.statement)
     }
   }
-  named_scope :all_public_fs, {:include => [:project, :quesito_news, :author, {:section => :top_section}], :order => 'updated_on DESC', :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_ID}%"], :order => "#{Issue.table_name}.updated_on DESC"}
+  named_scope :all_public_fs, {:include => [:project, :quesito_news, :author, {:section => :top_section}], :order => 'updated_on DESC', :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{Issue.table_name}.updated_on DESC"}
   named_scope :with_filter, lambda {|filter| { :conditions => merge_conditions(filter) } }
   named_scope :solo_convegni, :conditions => merge_conditions("#{TopSection.table_name}.id = " + FeeConst::CONVEGNO_TOP_SECTION_ID.to_s)
 
@@ -131,7 +131,6 @@ class Issue < ActiveRecord::Base
         "(#{table_name}.is_private = #{connection.quoted_false} OR #{table_name}.author_id = #{user.id} OR #{table_name}.assigned_to_id IN (#{user_ids.join(',')}))"
       when 'own'
         user_ids = [user.id] + user.groups.map(&:id)
-        "(#{table_name}.author_id = #{user.id} OR #{table_name}.assigned_to_id IN (#{user_ids.join(',')}))"
       else
         '1=0'
       end

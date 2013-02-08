@@ -90,7 +90,8 @@ class Project < ActiveRecord::Base
   named_scope :has_module, lambda { |mod| {:conditions => ["#{Project.table_name}.id IN (SELECT em.project_id FROM #{EnabledModule.table_name} em WHERE em.name=?)", mod.to_s]} }
   named_scope :active, {:conditions => "#{Project.table_name}.status = #{STATUS_ACTIVE}"}
   named_scope :all_public, {:conditions => {:is_public => true}}
-  named_scope :all_public_fs, {:conditions => ['is_public = true AND identifier LIKE ?', "#{FeeConst::EDIZIONE_ID}%"], :order => "#{table_name}.created_on DESC"}
+  #domthu
+  named_scope :all_public_fs, {:conditions => ['is_public = true AND identifier LIKE ?', "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{table_name}.created_on DESC"}
   named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift || User.current, *args)} }
   #
   #TODO
@@ -186,18 +187,63 @@ class Project < ActiveRecord::Base
   def self.exists_row_quesiti
 
     # p=  Project.find_or_initialize_by_id(1).first_or_create(:id => 1 , :name => 'QUESITI', :identifier => 'quesiti', :status => 1, :is_public => 0, :description => 'Contenitore di sistema per quesiti')
-
-    Project.find_or_initialize_by_id(FeeConst::QUESITO_ID) do |p|
+#    prj = Project.find_or_initialize_by_id(FeeConst::QUESITO_ID) do |p|
+#      p.id = FeeConst::QUESITO_ID,
+#      p.name = 'QUESITI',
+#      p.identifier = FeeConst::QUESITO_KEY,
+#      p.status = 1,
+#      p.is_public = 0,
+#      p.description = 'Contenitore di sistema per quesiti',
+#      p.data_dal = Date.today
+#      p.data_al = Date.today + (365 * 100)
+#      p.save!
+#    end
+    p = Project.find_or_initialize_by_id(FeeConst::QUESITO_ID)
+    if p.new_record?
+      p.members
       p.id = FeeConst::QUESITO_ID,
       p.name = 'QUESITI',
       p.identifier = FeeConst::QUESITO_KEY,
       p.status = 1,
       p.is_public = 0,
       p.description = 'Contenitore di sistema per quesiti',
+      p.data_dal = Date.today
+      p.data_al = Date.today + (365 * 100)
       p.save!
+      p.members_fs_add_author_manager()
     end
   end
 
+  def members_fs_add_author_manager()
+    #begin
+    #Domthu Add all collaboratori as a project members
+    #user.role_id = Redattore
+    @managers = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER, :admin => false })
+    @authors = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR, :admin => false})
+    #puts "***********MANAGER*****************************"
+    #puts @managers
+    for usr in @managers
+      member = Member.new
+      member.user = usr
+      #3 	Manager
+      #member.roles = [Role.find_by_name('Manager')]
+      member.roles = [Role.find_by_id(FeeConst::ROLE_MANAGER)]
+      #ActiveRecord::RecordInvalid (Validation failed: Ruolo non è valido):
+      self.members << member
+    end
+    #puts "***********AUTHORS*****************************"
+    #puts @authors
+    for usr in @authors
+      member = Member.new
+      member.user = usr
+      #4 	Redattore
+      #member.roles = [Role.find_by_name('Redattore')]
+      member.roles = [Role.find_by_id(FeeConst::ROLE_AUTHOR)]
+      self.members << member
+    end
+    #puts "***********************************************"
+    #rescue
+  end
   # Returns a SQL conditions string used to find all projects visible by the specified user.
   #
   # Examples:
@@ -1115,7 +1161,7 @@ class Project < ActiveRecord::Base
     #edizione :  4/2012
     #4/2012 - QUINDICINALE del 23 febbraio 2012
     #e-4-2012
-    #EDIZIONE_ID = "e-"
+    #EDIZIONE_KEY = "e-"
     #QUESITO_ID = "e-quesiti"
     self.data_dal = Date.today
     self.data_al = Date.today + 15
@@ -1138,7 +1184,7 @@ class Project < ActiveRecord::Base
     #.empty? can be used on strings, arrays and hashes and returns true if:
     #Running .empty? on something that is nil will throw a NoMethodError.
     #That is where .blank? comes in. It is implemented by Rails and will operate on any object as well as work like .empty? on strings, arrays and hashes.
-    yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
+    yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_KEY.to_s + identificatore)
     if yet_project #|| !@yet_project.nil?
                    #provi di creare un BIS
                    #edizione :  2bis/2012
@@ -1146,17 +1192,17 @@ class Project < ActiveRecord::Base
                    #e-2bis-2012
       identificatore = date_edizione.to_s + "bis-" + desired_year.to_s
 
-      yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
+      yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_KEY.to_s + identificatore)
       if yet_project #|| !@yet_project.nil?
                      #provo di cercare il numero di edizioni create questo anno
-        num_edizioni = Project.count(:conditions => ['identifier LIKE ? AND extract(year from data_al) = ?', "#{FeeConst::EDIZIONE_ID}%", desired_year])
+        num_edizioni = Project.count(:conditions => ['identifier LIKE ? AND extract(year from data_al) = ?', "#{FeeConst::EDIZIONE_KEY}%", desired_year])
         #Model.where("strftime('%Y', date_column)     = ?", desired_year)
         identificatore = (num_edizioni + 1).to_s + "-" + desired_year.to_s
 
-        yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_ID.to_s + identificatore)
+        yet_project = Project.find_by_identifier(FeeConst::EDIZIONE_KEY.to_s + identificatore)
         if yet_project #|| !@yet_project.nil?
                        #prendo l'ultima edizione creato questo anno
-          yet_project = Project.first(:conditions => ['identifier LIKE ?', "#{FeeConst::EDIZIONE_ID}%"], :order => 'created_on DESC')
+          yet_project = Project.first(:conditions => ['identifier LIKE ?', "#{FeeConst::EDIZIONE_KEY}%"], :order => 'created_on DESC')
           if yet_project && !yet_project.nil?
             self.data_al = yet_project.data_al + 15
             desired_year = self.data_al.year
@@ -1182,7 +1228,7 @@ class Project < ActiveRecord::Base
     end
 
 
-    self.identifier = FeeConst::EDIZIONE_ID + identificatore
+    self.identifier = FeeConst::EDIZIONE_KEY + identificatore
     identificatore = identificatore.sub("-", "/")
 
     #self.name = "edizione:  " + identificatore

@@ -99,6 +99,7 @@ class ProjectsController < ApplicationController
         @project.members << m
       end
 
+      @project.members_fs_add_author_manager()
       #begin
       #Domthu Add all collaboratori as a project members
       #user.role_id = Redattore
@@ -294,7 +295,13 @@ class ProjectsController < ApplicationController
       # display confirmation view
     else
       if api_request? || params[:confirm]
-        @project_to_destroy.destroy
+
+        if @project_to_destroy.id == FeeConst::QUESITO_ID
+          flash[:error] = l(:error_can_not_delete_system, :name => FeeConst::QUESITO_KEY)
+        else
+          @project_to_destroy.destroy
+        end
+
         respond_to do |format|
           format.html { redirect_to :controller => 'admin', :action => 'projects' }
           format.api  { head :ok }

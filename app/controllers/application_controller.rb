@@ -272,6 +272,23 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # make sure that the user is a member of the project (or admin) if project is private
+  # used as a before_filter for actions that do not require any particular permission on the project
+  def check_quesito_privacy_fs
+    if @quesito_news && @quesito_news.project.active?
+      if @project.is_public? || User.current.admin?
+        true
+      else
+        flash[:notice] = "Non esite"
+        deny_access
+      end
+    else
+      @quesito_news = nil
+      render_404
+      false
+    end
+  end
+
   def back_url
     params[:back_url] || request.env['HTTP_REFERER']
   end
@@ -323,7 +340,7 @@ class ApplicationController < ActionController::Base
       format.json { head @status }
     end
   end
-  
+
   # Filter for actions that provide an API response
   # but have no HTML representation for non admin users
   def require_admin_or_api_request
