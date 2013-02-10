@@ -48,20 +48,30 @@ class News < ActiveRecord::Base
 =======
 =end
   named_scope :all_public_fs, {
-    :include => [{:issues, :project}],
-    :conditions => "#{Project.table_name}.status = #{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public = true AND #{Issue.table_name}.se_visible_web = true AND #{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
-    :order => "#{table_name}.created_on DESC"}
+      :include => [{:issues, :project}],
+      :conditions => "#{Project.table_name}.status = #{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public = true AND #{Issue.table_name}.se_visible_web = true AND #{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
+      :order => "#{table_name}.created_on DESC"}
 
   named_scope :all_quesiti_fs, {
-    :include => [:project, :issues],
-    :conditions => "#{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
-    :order => "#{table_name}.created_on DESC"}
+      :include => [:project, :issues],
+      :conditions => "#{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
+      :order => "#{table_name}.created_on DESC"}
 
+  #------------------------
   safe_attributes 'title',
                   'summary',
                   'description',
                   'status_id',
                   'causale'
+
+  def public_fs1
+     n= self.issues.all_public_fs.count.to_s
+      return n
+  end
+  def test_all_quesiti_fs
+    self.issues.all_quesiti_fs.count.to_s
+  end
+
 
   def status_fs
     if self.status_id.nil?
@@ -69,21 +79,38 @@ class News < ActiveRecord::Base
     else
       case self.status_id
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
-          "Richiesta in attesa, Modificabile"
+          "<h3>Il suo quesito verrà esaminato dalla redazione appena possibile.</h3><p>Se lo desidera puo' eliminarlo oppure apportare modifiche</p>"
         when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
-          "risposto con causale " #+ self.causale.to_s
+          "<h3>Abbiamo risposto al suo quesito.</h3><p>Grazie per averci contattato.</p>"
         when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
-          "Accettato con " + (self.issues.empty? ? " 0 risposte" : " " + self.issues.count.to_s + " risposte.")
+         # pub =  self.issues.all_public_fs.count
+         # nop =  self.issues.all_quesiti_fs.count
+          pub=2
+          nop=3
+          if nop == 0 #se non ha niente caso strano perchè si dovrebbe creare un articolo di risposta subito...
+            "<h3>Il suo quesito è stato accettato ma non ha avuto ancora risposta.</h3><p>Appena possibile le forniremo una risposta tramite uno o più articoli che trattano argomenti attinenti al suo quesito, grazie.</p>"
+          else
+            if pub == 0 #se non è stato pubblicato ...
+              "<h3>Risponderemo presto al suo quesito pubblicando " + (nop == 1 ? "un articolo." : nop.to_s  + " articoli.") + "</h3>"
+              "<p>Il suo quesito è stato giudicato di interesse collettivo, stiamo preparando " + (nop == 1 ? "un articolo" : nop.to_s  + " articoli") + "che tratteranno gli argomenti da lei richiesti. Grazie per la collaborazione.</p>"
+            else
+              n = nop - pub
+              "<h3>Abbiamo risposto al suo quesito pubblicando " + (pub == 1 ? "un articolo." : pub.to_s + " articoli.") + "</h3>"
+              "<p>Il suo quesito è stato giudicato di interesse collettivo, abbiamo quindi deciso di pubblicare " + (pub == 1 ? "un articolo" : pub.to_s  + " articoli") + "che trattano gli argomenti da lei richiesti. Grazie per la collaborazione.</p>"
+              if n > 0
+                "<p>E' in previsione l'uscita di " + (n == 1 ? "un ulteriore articolo" : "altri " + n.to_s  + " articoli") + " per rispondere a tutti gli argomenti da lei sollecitati, a presto.</p>"
+              end
+            end
+          end
         else
           "Status non conosciuto"
       end
     end
   end
 
-
   def get_state_css
     if self.status_id.nil?
-        "domand_wait"
+      "domand_wait"
     else
       case self.status_id
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
@@ -93,13 +120,15 @@ class News < ActiveRecord::Base
         when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
           "domand_ok"
         else
-        "domand_x"
+          "domand_x"
       end
     end
   end
+
+
   def status_fs_number
     if self.status_id.nil?
-        FeeConst::QUESITO_STATUS_WAIT
+      FeeConst::QUESITO_STATUS_WAIT
     else
       case self.status_id
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
@@ -107,7 +136,32 @@ class News < ActiveRecord::Base
         when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
           FeeConst::QUESITO_STATUS_FAST_REPLY
         when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
-          self.issues.empty? ? 3 : 4
+          if self.issues.empty?
+            3
+          else
+            4
+          end
+        else
+          9
+      end
+    end
+  end
+
+  def status_fs_icons_fe
+    if self.status_id.nil?
+      "<div class='fs-quesiti-status-icon fs-quesiti-status-1'></div>"
+    else
+      case self.status_id
+        when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
+          "<div class='fs-quesiti-status-icon fs-quesiti-status-1'></div>"
+        when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
+          "<div class='fs-quesiti-status-icon fs-quesiti-status-2'></div>"
+        when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
+          if self.issues.all_public_fs.count < 1
+            "<div class='fs-quesiti-status-icon fs-quesiti-status-3'></div>"
+          else
+            "<div class='fs-quesiti-status-icon fs-quesiti-status-4'></div>"
+          end
         else
           9
       end

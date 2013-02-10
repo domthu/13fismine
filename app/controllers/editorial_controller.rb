@@ -434,8 +434,9 @@ non usata?
     @quesito_news_stato_num = @quesito_news.status_fs_number
     #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
     @quesito_issues = @quesito_news.issues
-    #@quesito_issues = @quesito_news.issues_visible_fs --> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
     @quesito_issues_count = @quesito_issues.count
+    #@quesito_issues = @quesito_news.issues_visible_fs --> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
+
   end
 
   #Show del singolo quesito. Attenzione l'id passato è quello dell'articolo
@@ -567,7 +568,9 @@ non usata?
       @id = params[:id].to_i
       #@quesito_news = News.all_public_fs.find(@id)
       #solo i quesiti di FeeConst::QUESITO_KEY
-      @quesito_news = News.all_quesiti_fs.find(@id)
+# dominiqe questa non va mi blocca la visualizzazione della show la rimuovo temporaneamente
+      # @quesito_news = News.all_quesiti_fs.find(@id)
+      @quesito_news = News.find(@id)
       #In application_contoller
       check_quesito_privacy_fs
     #rescue ActiveRecord::RecordNotFound

@@ -1343,23 +1343,23 @@ right: -14px;   */
     float: right;
 }
 
-.fs-quesiti-status-0 {
+.fs-quesiti-status-1 {
     background-position: 0 0;
 }
 
-.fs-quesiti-status-1 {
+.fs-quesiti-status-2 {
     background-position: 0 -75px;
 }
 
-.fs-quesiti-status-2 {
+.fs-quesiti-status-3 {
     background-position: 0 -150px;
 }
 
-.fs-quesiti-status-3 {
+.fs-quesiti-status-4 {
     background-position: 0 -225px;
 }
 
-.fs-quesiti-status-4 {
+.fs-quesiti-status-5 {
     background-position: 0 -300px;
 }
 
