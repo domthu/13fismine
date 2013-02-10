@@ -39,6 +39,23 @@
 </div>
 <br />
 
+<% if @news.is_quesito? %>
+
+  <div id="question" style="margin-bottom:16px;">
+  <h3 class="<%= @news.get_state_css %>"><%= @news.status_fs %></h3>
+  <% if @news.is_online? %>
+    <%= textilizable(@news.causale) %>
+  <% end %>
+  </div>
+
+  <div id="responses" style="margin-bottom:16px;">
+  <h3 class="responses"><%= l(:list_quesiti_response, :num => @news.issues.count) %></h3>
+  <% @news.issues.each do |issue| %>
+
+  <% end if @news.issues.any? %>
+  </div>
+<% end %>
+
 <div id="comments" style="margin-bottom:16px;">
 <h3 class="comments"><%= l(:label_comment_plural) %></h3>
 <% @comments.each do |comment| %>

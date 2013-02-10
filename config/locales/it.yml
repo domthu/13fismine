@@ -1452,6 +1452,7 @@ it:
   list_articoli: Lista articoli
   details_articolo: Dettaglio di un articolo
   list_quesiti: Lista quesiti
+  list_quesiti_response:  Lista risposte (%{num}) al quesito
   details_quesito: Dettaglio di un quesito
   list_sezioni: Lista categorie articoli
   details_sezione: Dettaglio di una categoria articoli

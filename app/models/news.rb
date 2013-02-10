@@ -40,9 +40,22 @@ class News < ActiveRecord::Base
       :conditions => Project.allowed_to_condition(args.shift || User.current, :view_news, *args)
   } }
 
+=begin
+<<<<<<< HEAD
   named_scope :issues_visible_fs,
               :include => [{:issue => :project}],
               :conditions => ["#{Project.table_name}.status=#{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public => true AND #{Issue.table_name}.se_visible_web => true"]
+=======
+=end
+  named_scope :all_public_fs, {
+    :include => [{:issues, :project}],
+    :conditions => "#{Project.table_name}.status = #{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public = true AND #{Issue.table_name}.se_visible_web = true AND #{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
+    :order => "#{table_name}.created_on DESC"}
+
+  named_scope :all_quesiti_fs, {
+    :include => [:project, :issues],
+    :conditions => "#{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
+    :order => "#{table_name}.created_on DESC"}
 
   safe_attributes 'title',
                   'summary',
@@ -58,18 +71,35 @@ class News < ActiveRecord::Base
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
           "Richiesta in attesa, Modificabile"
         when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
-          "risposto : " + self.causale.to_s
+          "risposto con causale " #+ self.causale.to_s
         when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
-          "Accettato " + (self.issues.empty? ? " 0 risposta" : " " + self.issues.count.to_s + " risposte.")
+          "Accettato con " + (self.issues.empty? ? " 0 risposte" : " " + self.issues.count.to_s + " risposte.")
         else
           "Status non conosciuto"
       end
     end
   end
 
+
+  def get_state_css
+    if self.status_id.nil?
+        "domand_wait"
+    else
+      case self.status_id
+        when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
+          "domand_wait"
+        when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
+          "domand_ko"
+        when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
+          "domand_ok"
+        else
+        "domand_x"
+      end
+    end
+  end
   def status_fs_number
     if self.status_id.nil?
-      FeeConst::QUESITO_STATUS_WAIT
+        FeeConst::QUESITO_STATUS_WAIT
     else
       case self.status_id
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
@@ -96,8 +126,25 @@ class News < ActiveRecord::Base
     end
   end
 
+
   def visible?(user=User.current)
     !user.nil? && user.allowed_to?(:view_news, project)
+  end
+
+  def is_quesito?
+    if self.project.identifier == FeeConst::QUESITO_KEY
+      true
+    else
+      false
+    end
+  end
+
+  def is_online?
+    if self.status_id == FeeConst::QUESITO_STATUS_FAST_REPLY
+      true
+    else
+      false
+    end
   end
 
   # returns latest news for projects visible by user

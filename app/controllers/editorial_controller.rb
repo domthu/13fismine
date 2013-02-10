@@ -8,6 +8,7 @@ class EditorialController < ApplicationController
   before_filter :find_optional_project, :only => [:ricerca]
   before_filter :correct_user, :only => [:articolo, :quesito_full]
   before_filter :enabled_user, :only => [:articolo, :quesito_full]
+  before_filter :find_quesito_fs, :only => [:quesito_destroy, :quesito_edit, :quesito_show]
 
   helper :messages
   include MessagesHelper
@@ -18,14 +19,8 @@ class EditorialController < ApplicationController
   def home
     @xbanner = GroupBanner.find(:all, :order => 'priorita DESC', :conditions => ["se_visibile = 1"])
     @base_url = params[:pages]
-#    @last_editorial = Project.visible.find(:all, :order => 'lft')
-#    @p = Project.find(:first, :order => 'created_on DESC')
-#    @projects = Project.all.compact.uniq
-#    @link_project = Project.find_by_identifier($1) || Project.find_by_name($1)
     @block_projects = Project.latest_fs
     @projects = Project.latest_fs
-# @issues = Issue.latest_fs
-# Paginate results
     case params[:format]
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
@@ -33,13 +28,11 @@ class EditorialController < ApplicationController
         @limit = 5
         @offset= 25
     end
-# --> sandro debug zona
     @top_menu = TopMenu.find(:first, :conditions => 'id =1')
     @topsection_ids = TopSection.find(:all,
                                       :select => 'distinct id',
                                       :conditions => ["top_menu_id =  ?", @top_menu.id]
     )
-# -->
     @issues_count = Issue.all_public_fs.count
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
     @issues = Issue.all_public_fs.all(
@@ -181,7 +174,11 @@ non usata?
 
   def edizione
     @id = params[:id].to_i
-    @project = Project.find_public(@id)
+    if @id.nil?
+      flash[:notice] = l(:notice_not_authorized)
+      return redirect_to({:action => 'home'})
+    end
+    @project = Project.all_public_fs.find_public(@id)
     if @project.nil?
       flash[:notice] = l(:notice_not_authorized)
       return redirect_to({:action => 'home'})
@@ -189,14 +186,16 @@ non usata?
       @issues = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
       @block_projects = Project.latest_fs
     end
+  rescue ActiveRecord::RecordNotFound
+      render_404
   end
 
   def edizione_newsletter
     #Newsletter  grafica della newsletter
     @id = params[:id].to_i
-    @project = Project.find_public(@id)
+    @project = Project.all_public_fs.find_public(@id)
     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-    @prj= Project.find_by_id params[:id].to_i
+    @prj= Project.all_public_fs.find_by_id params[:id].to_i
   end
 
   def edizione_smtp
@@ -367,14 +366,16 @@ non usata?
           # flash[:notice] = l(:notice_successful_create)
           flash[:notice] = fading_flash_message("I suo quesito è stato registrato grazie.", 7)
           redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
-          # redirect_to :controller => 'news', :action => 'index', :project_id => @project
+          #redirect_to :controller => 'news', :action => 'index', :project_id => @project
         else
           flash.now[:notice] =  'Bah... qualcosa è andato storto!'
         end
       end
     end
 
+  #Il dato @quesito_news viene caricato dentro il before_filter
   def quesito_edit
+=begin
     @id = params[:id].to_i
       @news = News.find(@id)
       # @news.safe_attributes = params[:quesito]
@@ -393,26 +394,48 @@ non usata?
        end
              redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @news
   end
-   def quesito_destroy
-     @quesito_news = News.destroy(params[:id])
-         flash[:notice] = fading_flash_message("Il suo quesito è stato rimosso.", 7)
-          # flash[:notice] =  'quesito rimosso!'
-         redirect_to :controller => 'editorial', :action => 'quesiti_my'
-     end
+=end
+
+    # @quesito_news.safe_attributes = params[:quesito]
+    @quesito_news.title = 'Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
+    @quesito_news.summary = params[:summary]
+    @quesito_news.description = params[:description]
+    if request.post?
+      if @quesito_news.save
+        flash[:notice] = fading_flash_message(l(:notice_successful_update),7)
+      else
+        flash[:notice] =  'qualcosa è andato storto!'
+      end
+    end
+    redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @quesito_news
+  end
+
+  #Il dato @quesito_news viene caricato dentro il before_filter
+  def quesito_destroy
+    #verificare che l'utente sia un admin o un se stesso
+    if @quesito_news.author == User.current || User.current.admin?
+      @quesito_news.destroy   #@quesito_news = News.destroy(params[:id])
+      flash[:notice] = fading_flash_message("Il suo quesito è stato rimosso.", 7)
+      # flash[:notice] =  'quesito rimosso!'
+    else
+      flash[:error] = fading_flash_message("Solo l'utente che ha creato il quesito può eliminarlo", 15)
+    end
+    redirect_to :controller => 'editorial', :action => 'quesiti_my'
+  end
+
   #Show del singolo quesito. Attenzione l'id passato è quello della NEWS
   # Viene passato un id che corrisponde alla news = domanda fatta dal cliente
   #REQUEST
+  #Il dato @quesito_news viene caricato dentro il before_filter
   def quesito_show
-                         @id = params[:id].to_i
     #1 news sola
-    @news = News.find(@id)
     @quesito_news = News.find(@id)  # unless !@id.nil?
     @quesito_news_stato = @quesito_news.status_fs
     @quesito_news_stato_num = @quesito_news.status_fs_number
     #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
-    #@quesito_issues = @quesito_news.issue unless !@quesito_news.nil?
-    @quesito_issues = @quesito_news.issues_visible_fs  unless !@quesito_news.nil?
-    @quesito_issues_count = @quesito_issues.count  unless  !@quesito_news.nil?
+    @quesito_issues = @quesito_news.issues
+    #@quesito_issues = @quesito_news.issues_visible_fs --> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
+    @quesito_issues_count = @quesito_issues.count
   end
 
   #Show del singolo quesito. Attenzione l'id passato è quello dell'articolo
@@ -539,32 +562,44 @@ non usata?
 #end
 
   private
-  def find_optional_project
-    return true unless params[:id]
-    @project = Project.find(params[:id])
-    check_project_privacy
-  rescue ActiveRecord::RecordNotFound
-    render_404
-  end
 
-  def correct_user
-    reroute_log() unless User.current.logged?
-    #reroute_auth() unless User.current.isfee?(params[:id])
-  end
+    def find_quesito_fs
+      @id = params[:id].to_i
+      #@quesito_news = News.all_public_fs.find(@id)
+      #solo i quesiti di FeeConst::QUESITO_KEY
+      @quesito_news = News.all_quesiti_fs.find(@id)
+      #In application_contoller
+      check_quesito_privacy_fs
+    #rescue ActiveRecord::RecordNotFound
+    #  render_404
+    end
 
-  def reroute_log()
-    flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
-    redirect_to(signin_path)
-  end
+    def find_optional_project
+      return true unless params[:id]
+      @project = Project.all_public_fs.find(params[:id])
+      check_project_privacy
+    rescue ActiveRecord::RecordNotFound
+      render_404
+    end
 
-  def enabled_user
-    reroute_auth() unless User.current.isfee?(params[:id])
-  end
+    def correct_user
+      reroute_log() unless User.current.logged?
+      #reroute_auth() unless User.current.isfee?(params[:id])
+    end
 
-  def reroute_auth()
-    flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
-    flash[:error] = "Abbonamento non valido (utente)..."
-    redirect_to(unauthorized_path)
-  end
+    def reroute_log()
+      flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
+      redirect_to(signin_path)
+    end
+
+    def enabled_user
+      reroute_auth() unless User.current.isfee?(params[:id])
+    end
+
+    def reroute_auth()
+      flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
+      flash[:error] = "Abbonamento non valido (utente)..."
+      redirect_to(unauthorized_path)
+    end
 
 end
