@@ -2,6 +2,23 @@
   <% if @issues && @issues.any? %>
       <% @issues.each do |articolo| %>
           <!-- qui è l'inserimento dell'articolo -->
+          <article class="fs-article">
+            <div class="fs-convegni-border">
+              <div class="fs-quesiti-data">  <span>
+               Quesito di:<%= User.current.firstname %></span>
+                <span class="fs-quesiti-data-data"><%= I18n.localize(@quesito_news.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+              </div>
+              <div class="fs-quesiti-wrapper">
+                <div class="fs-quesiti-gravatar"> <%= gravatar_for(@quesito_news.author) unless !@quesito_news.author %>
+                </div>
+                <span style="font-weight: bold;"><%= @quesito_news.summary %> </span>
+
+                <p><%= @quesito_news.description %> </p>
+                <br/> &nbsp;
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </article>
           <ARTICLE class="fs-post fs-article">
             <% if articolo %>
                 <div class="fs-postmetadataheader">

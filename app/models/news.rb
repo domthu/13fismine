@@ -53,7 +53,7 @@ class News < ActiveRecord::Base
       :order => "#{table_name}.created_on DESC"}
 
   named_scope :all_quesiti_fs, {
-      :include => [:project, :issues],
+      :include => [{:project, :issues}],
       :conditions => "#{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
       :order => "#{table_name}.created_on DESC"}
 
@@ -65,15 +65,17 @@ class News < ActiveRecord::Base
                   'causale'
 
   def public_fs1
-     n= self.issues.all_public_fs.count.to_s
-      return n
+  self.issues.all_public_fs.count.to_s
+
   end
+
   def test_all_quesiti_fs
     self.issues.all_quesiti_fs.count.to_s
   end
 
 
-  def status_fs
+  def quesito_status_fs_text
+
     if self.status_id.nil?
       "Richiesta in attesa, Modificabile"
     else
@@ -83,27 +85,44 @@ class News < ActiveRecord::Base
         when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
           "<h3>Abbiamo risposto al suo quesito.</h3><p>Grazie per averci contattato.</p>"
         when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
-         # pub =  self.issues.all_public_fs.count
-         # nop =  self.issues.all_quesiti_fs.count
-          pub=2
-          nop=3
+          pub = self.issues.all_public_fs.count
+          nop = self.issues.count
           if nop == 0 #se non ha niente caso strano perchè si dovrebbe creare un articolo di risposta subito...
             "<h3>Il suo quesito è stato accettato ma non ha avuto ancora risposta.</h3><p>Appena possibile le forniremo una risposta tramite uno o più articoli che trattano argomenti attinenti al suo quesito, grazie.</p>"
           else
             if pub == 0 #se non è stato pubblicato ...
-              "<h3>Risponderemo presto al suo quesito pubblicando " + (nop == 1 ? "un articolo." : nop.to_s  + " articoli.") + "</h3>"
-              "<p>Il suo quesito è stato giudicato di interesse collettivo, stiamo preparando " + (nop == 1 ? "un articolo" : nop.to_s  + " articoli") + "che tratteranno gli argomenti da lei richiesti. Grazie per la collaborazione.</p>"
+              "<h3>Risponderemo presto al suo quesito pubblicando " + (nop == 1 ? "un articolo." : nop.to_s + " articoli.") + "</h3>
+              <p>Il suo quesito è stato giudicato di interesse collettivo, stiamo preparando " + (nop == 1 ? "un articolo" : nop.to_s + " articoli") + " per rispondere alle sue domande.</p>"
             else
               n = nop - pub
-              "<h3>Abbiamo risposto al suo quesito pubblicando " + (pub == 1 ? "un articolo." : pub.to_s + " articoli.") + "</h3>"
-              "<p>Il suo quesito è stato giudicato di interesse collettivo, abbiamo quindi deciso di pubblicare " + (pub == 1 ? "un articolo" : pub.to_s  + " articoli") + "che trattano gli argomenti da lei richiesti. Grazie per la collaborazione.</p>"
+              s = "<h3>Abbiamo risposto al suo quesito pubblicando " + (pub == 1 ? "un articolo." : pub.to_s + " articoli.") + "</h3>
+              <p>Il suo quesito è stato giudicato di interesse collettivo, abbiamo quindi deciso di pubblicare " + (pub == 1 ? "un articolo" : pub.to_s + " articoli") + " per rispondere alle sue domande. "
               if n > 0
-                "<p>E' in previsione l'uscita di " + (n == 1 ? "un ulteriore articolo" : "altri " + n.to_s  + " articoli") + " per rispondere a tutti gli argomenti da lei sollecitati, a presto.</p>"
+                s += " E' in previsione l'uscita di <span style='text-decoration:underline;'> " + (n == 1 ? "un ulteriore articolo" : "altri " + n.to_s + " articoli") + "</span> per rispondere a tutti gli argomenti da lei sollecitati, a presto!. "
               end
+              s += "</p>"
+              return s
             end
           end
         else
           "Status non conosciuto"
+      end
+    end
+  end
+
+  def quesito_status_fs_number
+    if self.status_id.nil?
+      FeeConst::QUESITO_STATUS_WAIT
+    else
+      case self.status_id
+        when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
+          FeeConst::QUESITO_STATUS_WAIT
+        when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
+          FeeConst::QUESITO_STATUS_FAST_REPLY
+        when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
+          FeeConst::QUESITO_STATUS_ISSUES_REPLY
+        else
+          9
       end
     end
   end
@@ -125,29 +144,7 @@ class News < ActiveRecord::Base
     end
   end
 
-
-  def status_fs_number
-    if self.status_id.nil?
-      FeeConst::QUESITO_STATUS_WAIT
-    else
-      case self.status_id
-        when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
-          FeeConst::QUESITO_STATUS_WAIT
-        when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
-          FeeConst::QUESITO_STATUS_FAST_REPLY
-        when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
-          if self.issues.empty?
-            3
-          else
-            4
-          end
-        else
-          9
-      end
-    end
-  end
-
-  def status_fs_icons_fe
+  def get_state_icons_fe
     if self.status_id.nil?
       "<div class='fs-quesiti-status-icon fs-quesiti-status-1'></div>"
     else
@@ -201,12 +198,12 @@ class News < ActiveRecord::Base
     end
   end
 
-  # returns latest news for projects visible by user
+# returns latest news for projects visible by user
   def self.latest(user = User.current, count = 5)
     find(:all, :limit => count, :conditions => Project.allowed_to_condition(user, :view_news), :include => [:author, :project], :order => "#{News.table_name}.created_on DESC")
   end
 
-  # returns latest news for public area
+# returns latest news for public area
   def self.latest_fs(user = User.current, count = 5)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
     #:conditions => Project.is_public == true  -->  method missing
@@ -225,4 +222,5 @@ class News < ActiveRecord::Base
   def add_author_as_watcher
     Watcher.create(:watchable => self, :user => author)
   end
+
 end

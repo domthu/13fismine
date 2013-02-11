@@ -430,13 +430,14 @@ non usata?
   def quesito_show
     #1 news sola
     @quesito_news = News.find(@id)  # unless !@id.nil?
-    @quesito_news_stato = @quesito_news.status_fs
-    @quesito_news_stato_num = @quesito_news.status_fs_number
+    @quesito_news_stato = @quesito_news.quesito_status_fs_text
+    @quesito_news_stato_num = @quesito_news.quesito_status_fs_number
     #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
-    @quesito_issues = @quesito_news.issues
-    @quesito_issues_count = @quesito_issues.count
-    #@quesito_issues = @quesito_news.issues_visible_fs --> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
 
+   # @quesito_issues = @quesito_news.issues
+
+    @quesito_issues = @quesito_news.issues.all_public_fs #--> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
+    @quesito_issues_count = @quesito_issues.count
   end
 
   #Show del singolo quesito. Attenzione l'id passato è quello dell'articolo

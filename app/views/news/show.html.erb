@@ -42,7 +42,7 @@
 <% if @news.is_quesito? %>
 
   <div id="question" style="margin-bottom:16px;">
-  <h3 class="<%= @news.get_state_css %>"><%= @news.status_fs %></h3>
+  <h3 class="<%= @news.get_state_css %>"><%= @news.quesito_status_fs_text %></h3>
   <% if @news.is_online? %>
     <%= textilizable(@news.causale) %>
   <% end %>

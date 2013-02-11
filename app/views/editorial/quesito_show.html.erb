@@ -7,8 +7,8 @@
               <div class="fs-layout-cell layout-item-0" style="width: 99%">
                 <% case @quesito_news_stato_num
                      when 1 %> <!--ATTESA / MODIFICABILE -->
-                  <%= @quesito_news.status_fs_icons_fe %>
-                    <%= @quesito_news.status_fs %>
+                  <%= @quesito_news.get_state_icons_fe %>
+                    <%= @quesito_news.quesito_status_fs_text %>
                     <% form_tag({:controller => "editorial", :action => "quesito_edit", :id => @quesito_news.id, :method => "post"}, :class => "input", :id => "fs-quesito-new") do %>
                         <div>
                           <label>Oggetto </label>
@@ -19,64 +19,39 @@
                           <span>  <%= text_area_tag :description, @quesito_news.description, :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
                         </div>
                         <div id="fs-form-quesito-new-btn">
-                                                  <%= link_to 'Elimina', { :action => 'quesito_destroy',:id=>@quesito_news.id }, :class => "fs-giallo-button", :confirm => 'Confermi la cancellazione del quesito?' %> &nbsp;
+                           <%= link_to 'Elimina', { :action => 'quesito_destroy',:id=>@quesito_news.id }, :class => "fs-giallo-button", :confirm => 'Confermi la cancellazione del quesito?' %> &nbsp;
                           <%= submit_tag 'Salva le modifiche', :class => "fs-giallo-button", :confirm => 'Confermi le modifiche?' %> &nbsp;
                           <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>
                         </div>
                     <% end %>
                 <% when 2 %> <!-- RISPOSTA FAST -->
-                    <div style="min-height:77px;">
-                      <%= @quesito_news.status_fs_icons_fe %>
-                      <%= @quesito_news.status_fs %>
-                      </div>
-                    <% form_tag({}, :class => "input", :id => "fs-quesito-new") do %>
-                        <div>
-                          <label>Oggetto: </label>
-                          <span>  <%= text_area_tag :summary, @quesito_news.summary, :rows => 2, :cols => 25, :disabled => true %>  </span>
-                        </div>
-                        <div>
-                          <label>Quesito: </label>
-                          <span>  <%= text_area_tag :description, @quesito_news.description, :rows => 10, :cols => 25, :disabled => true %>  </span>
-                        </div>
-                        <div>
-                          <label style="color:red; font-weight: bold;">Risposta:</label>
-                          <span>  <%= text_area_tag :causale, @quesito_news.causale, :rows => 15, :cols => 25, :disabled => true,:class=>"causale" %>  </span>
-                        </div>
-                        <div id="fs-form-quesito-new-btn">
-                          <%= link_to('Indietro', quesiti_my_path, :class => "fs-rosso-button") %>
-                        </div>
-                    <% end %>
-
-                <% when 3 %>  <!-- ACCETTATO SENZA RISPOSTA ARTICOLO -->
-                    <%= @quesito_news.status_fs_icons_fe %>
-                                          <%= @quesito_news.status_fs %>
-                    <% form_tag({}, :class => "input", :id => "fs-quesito-new") do %>
-                        <div>
-                          <label>Oggetto </label>
-                          <span>  <%= text_area_tag :summary, @quesito_news.summary, :rows => 2, :cols => 25, :disabled => true %>  </span>
-                        </div>
-                        <div>
-                          <label>Quesito </label>
-                          <span>  <%= text_area_tag :description, @quesito_news.description, :rows => 10, :cols => 25, :disabled => true %>  </span>
-                        </div>
-                          <div id="fs-form-quesito-new-btn">
-                          <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>
-                        </div>
-                    <% end %>
-                <% when 4 %> <!-- ACCETTATO CON RISPOSTA ARTICOLO -->
-                    <%= @quesito_news.status_fs_icons_fe %>
-                                          <%= @quesito_news.status_fs %>
-                       <% if @quesito_news.causale  %>
-                          <h5>La redazione : </h5>
+                    <%= @quesito_news.get_state_icons_fe %>
+                     <%= @quesito_news.quesito_status_fs_text %>
+                     <% if @quesito_news.causale  %>
+                      <%= render :partial => 'quesito', :locals => {:quesito_news => @quesito_news} %>
+                         <h5> Risposta : </h5>
                        <p><%= @quesito_news.causale %>  </p>
-                           <% end %>
+                      <% end %>
 
-                       <%= render :partial => 'quesito', :locals => {:quesito_news => @quesito_news} %>
-                    <%= render :partial => 'articoli', :locals => {:issues => @quesito_issues , :issues_pages => 1, :issues_count => 2} %>
+                   <% when 3 %>  <!-- ACCETTATO  -->
+                    <%= @quesito_news.get_state_icons_fe %>
+                     <%= @quesito_news.quesito_status_fs_text %>
+                    <%= render :partial => 'quesito', :locals => {:quesito_news => @quesito_news} %>
+                     <% if @quesito_news.causale  %>
+
+                         <h5> Messaggio dalla redazione : </h5>
+                       <p><%= @quesito_news.causale %>  </p>
+                      <% end %>
+                    <br >/>
+                      <%= render :partial => 'quesito_reply', :locals => {:issues => @quesito_issues} %>
+
+
+
+                    <h4 > debug @quesito_issues? = <%= @quesito_issues.to_s  %> id: <%= @quesito_issues.id.to_s  %></h4>
+                    <h4 > debug @quesito_issues.any? = <%= @quesito_issues.any?.to_s  %> </h4>
                     <h4 > debug quanti articoli? = <%= @quesito_issues_count.to_s  %> </h4>
+                    <h4> debug quanti fs1? = <%= @quesito_news.public_fs1 %> id news? <%= @quesito_news.id.to_s %> </h4>
 
-                    <h1> debug quanti fs1? = <%= @quesito_news.public_fs1 %> </h1>
-                    <h1> debug quanti test_all_quesiti_fs? = <%= @quesito_news.test_all_quesiti_fs %> </h1>
                 <% when 9 %> <!-- STATO NON DETERMINATO -->
                     <h2><%= @quesito_news_stato_num.to_s %></h2>
                 <% else %>
@@ -93,8 +68,12 @@
         </div>
         <br/>
       </article>
-      <br/>
 
+      <br/>
+      <% if @quesito_news_stato_num  > 1%>
+      <p style="text-align: center;">
+      <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>  </p>
+          <% end %>
       <div class="clearfix"></div>
     </div>
 <% else %>

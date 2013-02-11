@@ -1274,7 +1274,6 @@ right: -14px;   */
     width: 98%;
 
 }
-
 .fs-quesiti-data {
     background: -moz-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
     background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.65)));
@@ -1283,42 +1282,60 @@ right: -14px;   */
     background: -ms-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
     background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#00000000', endColorstr = '#a6000000', GradientType = 1);
-
-    position: relative;
-    right: 1px;
-    display: block;
+   position: relative;
     height: 24px;
-    border-radius: 1px;
-    text-align: right;
-    color: #ffffff;
     font-family: 'Allerta', arial, sans-serif;
     font-size: 12px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    line-height: 1em;
+    margin: 6px auto;
     width: auto;
     font-weight: bold;
-
+  border:1px solid #d3d6f1;
+    padding: 3px 7px 0;
 }
 
-.fs-quesiti-data span {
-    display: inline-block;
-    position: relative;
-    margin: 5px 5px 0 0;
-
-}
-.fs-quesiti-data span.fs-quesiti-data-left {
-    display: inline-block;
-    position: relative;
-   float:left;
-    margin: 5px 0 0 5px;
-    color: #000000;
-
+.fs-quesiti-data span.fs-quesiti-data-data {
+    display: inline;
+    color: #ffffff;
+    float: right;
 }
 
+.fs-quesiti-data-reply {
+    background: -moz-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgb(0, 57, 115) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgb(0, 57, 115)));
+    background: -webkit-linear-gradient(left, rgba(0, 57, 115, 0) 0%, rgb(0, 57, 115) 100%);
+    background: -o-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgb(0, 57, 115) 100%);
+    background: -ms-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgb(0, 57, 115) 100%);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 57, 115) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#00000000', endColorstr = '#00397300', GradientType = 1);
+   position: relative;
+    height: 24px;
+    font-family: 'Allerta', arial, sans-serif;
+    font-size: 12px;
+    margin: 6px auto;
+    width: auto;
+    font-weight: bold;
+  border:1px solid #d3d6f1;
+    padding: 3px 7px 0;
+}
+
+.fs-quesiti-data-reply span.fs-quesiti-data-reply {
+    display: inline;
+    color: #ffffff;
+    float: right;
+}
+.fs-quesiti-data-reply span.fs-quesiti-data-data {
+    display: inline;
+    color: #ffffff;
+    float: right;
+}
+.fs-quesiti-reply-img{
+    margin: 0 10px 5px;
+  float:left;
+width:auto;
+}
 .fs-quesiti-list {
     font-weight: bold;
-    color: #333333;
+    color: #ffdc00;
     padding: 5px 0 5px 10px;
 }
 
@@ -1341,6 +1358,7 @@ right: -14px;   */
     width: 100px;
     height: 75px;
     float: right;
+    margin: -6px 0 0 15px;
 }
 
 .fs-quesiti-status-1 {
@@ -1383,11 +1401,10 @@ right: -14px;   */
 }
 
 .fs-quesiti-gravatar {
-    height: 80px;
-    width: 80px;
+    height: 50px;
+    width: 50px;
     float: left;
-    border: 2px solid #808080;
-    margin: 0 10px 10px -6px;
+                    margin: 0 10px 10px -6px;
     padding: 6px;
     overflow: hidden;
 }
@@ -2933,7 +2950,6 @@ button.fs-giallo-inline-button {
     -webkit-background-origin: border !important;
     -moz-background-origin: border !important;
     background-origin: border-box !important;
-    background-color: #5f9ea0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;

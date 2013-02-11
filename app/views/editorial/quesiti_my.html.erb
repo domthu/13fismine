@@ -14,7 +14,7 @@
                     <span><%= I18n.localize(item.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
                   </div>
                   <div class="fs-quesiti-list">
-                    <%= link_to(item.status_fs_icons_fe, :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
+                    <%= link_to(item.get_state_icons_fe, :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
                     <span> <%= link_to(h(item.summary), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %></span>
                     <p>
                       <%= link_to(h(smart_truncate(item.description, 120)), :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>
