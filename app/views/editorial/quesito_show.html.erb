@@ -42,14 +42,16 @@
                          <h5> Messaggio dalla redazione : </h5>
                        <p><%= @quesito_news.causale %>  </p>
                       <% end %>
-                    <br >/>
+                    <br />
                       <%= render :partial => 'quesito_reply', :locals => {:issues => @quesito_issues} %>
 
 
 
                     <h4 > debug @quesito_issues? = <%= @quesito_issues.to_s  %> id: <%= @quesito_issues.id.to_s  %></h4>
                     <h4 > debug @quesito_issues.any? = <%= @quesito_issues.any?.to_s  %> </h4>
-                    <h4 > debug quanti articoli? = <%= @quesito_issues_count.to_s  %> </h4>
+                    <h4 > debug quanti articoli pubblicati? = <%= @quesito_issues_count.to_s  %> </h4>
+                    <h4 > debug quanti articoli pubblicati e non? = <%= @quesito_issues_all_count.to_s  %> </h4>
+
                     <h4> debug quanti fs1? = <%= @quesito_news.public_fs1 %> id news? <%= @quesito_news.id.to_s %> </h4>
 
                 <% when 9 %> <!-- STATO NON DETERMINATO -->

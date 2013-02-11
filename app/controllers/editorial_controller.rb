@@ -36,8 +36,8 @@ class EditorialController < ApplicationController
     @issues_count = Issue.all_public_fs.count
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
     @issues = Issue.all_public_fs.all(
-      :limit => @issues_pages.items_per_page,
-      :offset => @issues_pages.current.offset)
+        :limit => @issues_pages.items_per_page,
+        :offset => @issues_pages.current.offset)
     #Issue.visible.on_active_project.watched_by(user.id).recently_updated.with_limit(10)
 
     respond_to do |format|
@@ -47,18 +47,6 @@ class EditorialController < ApplicationController
       format.api
 
     end
-    #MariaCristina Non mostrare i quesiti nella home page
-    #@news = News.latest_fs
-    #<div class="splitcontentleft">
-    #  <% if @news.any? %>
-    #  <div class="news box">
-    #  <h3><%=l(:label_news_latest)%></h3>
-    #    <%= render :partial => 'news/news', :collection => @news %>
-    #    <%= link_to l(:label_news_view_all), :action => 'quesiti' %>
-    #  </div>
-    #  <% end %>
-    #  <%= call_hook(:view_welcome_index_left, :projects => @projects) %>
-    #</div>
   end
 
   def top_menu
@@ -80,8 +68,8 @@ class EditorialController < ApplicationController
     end
     #@top_sections = TopSection.find(:all,
     @topsection_ids = TopSection.find(:all,
-      :select => 'distinct id',
-      :conditions => ["se_visibile = 1 AND se_home_menu = 0 AND top_menu_id =  ?", @top_menu.id]
+                                      :select => 'distinct id',
+                                      :conditions => ["se_visibile = 1 AND se_home_menu = 0 AND top_menu_id =  ?", @top_menu.id]
     )
     #@topsection_ids = @top_sections.select(:id).uniq
     # Paginate results
@@ -97,8 +85,8 @@ class EditorialController < ApplicationController
 
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
     @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.se_home_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).all(
-      :limit => @issues_pages.items_per_page,
-      :offset => @issues_pages.current.offset)
+        :limit => @issues_pages.items_per_page,
+        :offset => @issues_pages.current.offset)
 
     respond_to do |format|
       format.html {
@@ -117,12 +105,12 @@ class EditorialController < ApplicationController
                                # @topsection_id = params[:topsection_id]
     @topsection_key = params[:topsection_key]
     @topsection = TopSection.find(:first, :conditions => ["top_sections.`key` = ?", @topsection_key])
-    #flash[:notice] = l(:notice_missing_parameters) + " -->  @section_id="+ @topsection.id.to_s   + @topsection_key
-    # if @topsection_id.nil?
-    #         flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
-    #         redirect_to :action => 'home'
-    #         return
-    #     end
+                               #flash[:notice] = l(:notice_missing_parameters) + " -->  @section_id="+ @topsection.id.to_s   + @topsection_key
+                               # if @topsection_id.nil?
+                               #         flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
+                               #         redirect_to :action => 'home'
+                               #         return
+                               #     end
     if @topsection.nil?
       flash[:notice] = l(:notice_missing_parameters) + " --> 3 @section_id="+ @topsection.id.to_s
       redirect_to :action => 'home'
@@ -138,10 +126,10 @@ class EditorialController < ApplicationController
     end
     @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).count()
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    #Kapao riompe la paginazione @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).with_limit(@issues_pages.items_per_page).with_offset(@issues_pages.current.offset)
+                               #Kapao riompe la paginazione @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).with_limit(@issues_pages.items_per_page).with_offset(@issues_pages.current.offset)
     @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).all(
-    :limit => @issues_pages.items_per_page,
-    :offset => @issues_pages.current.offset)
+        :limit => @issues_pages.items_per_page,
+        :offset => @issues_pages.current.offset)
 
     respond_to do |format|
       format.html {
@@ -187,7 +175,7 @@ non usata?
       @block_projects = Project.latest_fs
     end
   rescue ActiveRecord::RecordNotFound
-      render_404
+    render_404
   end
 
   def edizione_newsletter
@@ -235,8 +223,8 @@ non usata?
     @issues_count =Issue.all_public_fs.solo_convegni.count()
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
     @convegni = Issue.all_public_fs.solo_convegni.all(
-       :limit => @issues_pages.items_per_page,
-       :offset => @issues_pages.current.offset)
+        :limit => @issues_pages.items_per_page,
+        :offset => @issues_pages.current.offset)
 
     respond_to do |format|
       format.html {
@@ -248,9 +236,9 @@ non usata?
   end
 
   def evento_prenotazione
-    @reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id],:num_persone => params[:num_persone],:msg => params[:msg])
+    @reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id], :num_persone => params[:num_persone], :msg => params[:msg])
 
-      redirect_back_or_default({:action => 'evento', :id => params[:id].to_i})
+    redirect_back_or_default({:action => 'evento', :id => params[:id].to_i})
 
   end
 
@@ -278,12 +266,12 @@ non usata?
         :conditions => "#{Issue.table_name}.due_date >=' #{DateTime.now.to_date}'")
 
     if @conv_prossimo.nil?
-        @conv_futuri
+      @conv_futuri
     else
       @cid = @conv_prossimo.id
       @conv_futuri = Issue.all_public_fs.solo_convegni.all(
-        :order => 'due_date ASC',
-        :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
+          :order => 'due_date ASC',
+          :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
     end
   end
 
@@ -291,8 +279,8 @@ non usata?
     @backurl = request.url
     #solo per test copia di convegno
     @conv_passati = Issue.all_public_fs.solo_convegni.all(
-         :order => 'due_date DESC',
-         :conditions => "due_date <' #{DateTime.now.to_date}'")
+        :order => 'due_date DESC',
+        :conditions => "due_date <' #{DateTime.now.to_date}'")
 
     @conv_prossimo = Issue.all_public_fs.solo_convegni.first(
         :order => 'due_date ASC',
@@ -303,9 +291,9 @@ non usata?
     else
       @cid = @conv_prossimo.id #  = if @conv_prossimo.id.nil? ? 0 : @conv_prossimo.id ; end
       @conv_futuri = Issue.all_public_fs.solo_convegni.all(
-        :order => 'due_date ASC',
-        :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
-      #reservations
+          :order => 'due_date ASC',
+          :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
+                               #reservations
       @reservation_new =Reservation.new
       @rcount = Reservation.count(:conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
       @reservation =Reservation.find(:first, :conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
@@ -316,17 +304,17 @@ non usata?
 
   # -----------------  CONVEGNI / EVENTI  (fine)   ------------------
 
-#domthu permission :front_end_quesito, :editorial => :quesito_nuovo, :require => :loggedin
-#add permission to control permission action
-#Admin e power_user sono definiti da campi della tabella User
-#RUOLI
-#MANAGER --> ok
-#REDATTORE --> ok
-#ABBONATO --> ok
-#Anomimo --> KAPPAO
-#GUEST --> KAPPAO
-#SCADUTI --> KAPPAO
-#ARCHIVIATI --> KAPPAO
+  #domthu permission :front_end_quesito, :editorial => :quesito_nuovo, :require => :loggedin
+  #add permission to control permission action
+  #Admin e power_user sono definiti da campi della tabella User
+  #RUOLI
+  #MANAGER --> ok
+  #REDATTORE --> ok
+  #ABBONATO --> ok
+  #Anomimo --> KAPPAO
+  #GUEST --> KAPPAO
+  #SCADUTI --> KAPPAO
+  #ARCHIVIATI --> KAPPAO
 
   # -----------------       QUESITI    (inizio)        ------------------
 
@@ -337,11 +325,11 @@ non usata?
 
   #Lista dei quesiti (NEWS) dell'utente
   def quesiti_my
-   # if User.current = nil
-   #   redirect_to(login_url) && return
-   # end
+    # if User.current = nil
+    #   redirect_to(login_url) && return
+    # end
     @quesiti_news = User.current.my_quesiti
-        #if User.current = nil
+    #if User.current = nil
     #   redirect_to(login_url) && return
     # end
   end
@@ -363,48 +351,26 @@ non usata?
     @news.comments_count = 0
     if request.post?
       if @news.save
-          # flash[:notice] = l(:notice_successful_create)
-          flash[:notice] = fading_flash_message("I suo quesito è stato registrato grazie.", 7)
-          redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
-          #redirect_to :controller => 'news', :action => 'index', :project_id => @project
-        else
-          flash.now[:notice] =  'Bah... qualcosa è andato storto!'
-        end
+        # flash[:notice] = l(:notice_successful_create)
+        flash[:notice] = fading_flash_message("I suo quesito è stato registrato grazie.", 7)
+        redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
+        #redirect_to :controller => 'news', :action => 'index', :project_id => @project
+      else
+        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
       end
     end
+  end
 
   #Il dato @quesito_news viene caricato dentro il before_filter
   def quesito_edit
-=begin
-    @id = params[:id].to_i
-      @news = News.find(@id)
-      # @news.safe_attributes = params[:quesito]
-        @news.title = "bla"#User.current.quesito_new_default_title
-        @news.summary = params[:summary]
-        @news.description = params[:description]
-        @news.comments_count = 0
-       if request.post?
-         if @news.save
-           flash[:notice] = fading_flash_message(l(:notice_successful_create),7)
-          # redirect_to :controller => 'news', :action => 'index', :project_id => @project
-         else
-           flash[:notice] =  'qualcosa è andato storto!'
-          # render :action => 'new'
-         end
-       end
-             redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @news
-  end
-=end
-
-    # @quesito_news.safe_attributes = params[:quesito]
-    @quesito_news.title = 'Quesito posto dall\'utente [n°' +  User.current.id.to_s + '] ' + User.current.firstname + ' ' +  User.current.lastname
+    @news.title = @news.quesito_new_default_title(User.current)
     @quesito_news.summary = params[:summary]
     @quesito_news.description = params[:description]
     if request.post?
       if @quesito_news.save
-        flash[:notice] = fading_flash_message(l(:notice_successful_update),7)
+        flash[:notice] = fading_flash_message(l(:notice_successful_update), 7)
       else
-        flash[:notice] =  'qualcosa è andato storto!'
+        flash[:notice] = 'qualcosa è andato storto!'
       end
     end
     redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @quesito_news
@@ -414,7 +380,7 @@ non usata?
   def quesito_destroy
     #verificare che l'utente sia un admin o un se stesso
     if @quesito_news.author == User.current || User.current.admin?
-      @quesito_news.destroy   #@quesito_news = News.destroy(params[:id])
+      @quesito_news.destroy #@quesito_news = News.destroy(params[:id])
       flash[:notice] = fading_flash_message("Il suo quesito è stato rimosso.", 7)
       # flash[:notice] =  'quesito rimosso!'
     else
@@ -429,13 +395,13 @@ non usata?
   #Il dato @quesito_news viene caricato dentro il before_filter
   def quesito_show
     #1 news sola
-    @quesito_news = News.find(@id)  # unless !@id.nil?
+    @quesito_news = News.find(@id) # unless !@id.nil?
     @quesito_news_stato = @quesito_news.quesito_status_fs_text
     @quesito_news_stato_num = @quesito_news.quesito_status_fs_number
-    #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
+                                   #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
 
-   # @quesito_issues = @quesito_news.issues
-
+                                   # @quesito_issues = @quesito_news.issues
+    @quesito_issues_all_count = @quesito_news.issues.count # testing
     @quesito_issues = @quesito_news.issues.all_public_fs #--> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
     @quesito_issues_count = @quesito_issues.count
   end
@@ -443,12 +409,34 @@ non usata?
   #Show del singolo quesito. Attenzione l'id passato è quello dell'articolo
   # Viene passato un id che corrisponde all'articolo = risposta di un quesito cliente
   #RESPONSE(s)
-  def quesito_full
-    @id = params[:id].to_i
-    #1 issue-articolo sola
-    @quesito_issue = Issue.find(@id) unless !@id.nil?
-    #1 news sola
-    @quesito_news = @quesito_issue.quesito_news unless !@quesito_art.nil?
+  def quesiti_all
+
+    case params[:format]
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        @limit = 5
+        @offset= 25
+    end
+
+    @quesiti_news_count = News.all_quesiti_fs.count
+    @quesiti_issues_count = News.all_public_fs.all.count
+
+
+      @quesiti_news_pages = Paginator.new self, @quesiti_news_count, @limit, params['page']
+    @quesiti_news = News.all(
+        :limit => @quesiti_news_pages.items_per_page,
+        :offset => @quesiti_news_pages.current.offset)
+                                                                   #Issue.visible.on_active_project.watched_by(user.id).recently_updated.with_limit(10)
+   # @quesiti_issues = News.issues.all_public_fs #--> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
+   # @quesiti_issues_count = @quesiti_issues.count
+    respond_to do |format|
+      format.html {
+        render :layout => !request.xhr?
+      }
+      format.api
+    end
+
   end
 
 # -----------------       QUESITI    (fine)        ------------------
@@ -565,45 +553,45 @@ non usata?
 
   private
 
-    def find_quesito_fs
-      @id = params[:id].to_i
-      #@quesito_news = News.all_public_fs.find(@id)
-      #solo i quesiti di FeeConst::QUESITO_KEY
-# dominiqe questa non va mi blocca la visualizzazione della show la rimuovo temporaneamente
-      # @quesito_news = News.all_quesiti_fs.find(@id)
-      @quesito_news = News.find(@id)
-      #In application_contoller
-      check_quesito_privacy_fs
+  def find_quesito_fs
+    @id = params[:id].to_i
+    #@quesito_news = News.all_public_fs.find(@id)
+    #solo i quesiti di FeeConst::QUESITO_KEY
+    # dominiqe questa non va mi blocca la visualizzazione della show la rimuovo temporaneamente
+    # @quesito_news = News.all_quesiti_fs.find(@id)
+    @quesito_news = News.find(@id)
+    #In application_contoller
+    check_quesito_privacy_fs
     #rescue ActiveRecord::RecordNotFound
     #  render_404
-    end
+  end
 
-    def find_optional_project
-      return true unless params[:id]
-      @project = Project.all_public_fs.find(params[:id])
-      check_project_privacy
-    rescue ActiveRecord::RecordNotFound
-      render_404
-    end
+  def find_optional_project
+    return true unless params[:id]
+    @project = Project.all_public_fs.find(params[:id])
+    check_project_privacy
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
 
-    def correct_user
-      reroute_log() unless User.current.logged?
-      #reroute_auth() unless User.current.isfee?(params[:id])
-    end
+  def correct_user
+    reroute_log() unless User.current.logged?
+    #reroute_auth() unless User.current.isfee?(params[:id])
+  end
 
-    def reroute_log()
-      flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
-      redirect_to(signin_path)
-    end
+  def reroute_log()
+    flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
+    redirect_to(signin_path)
+  end
 
-    def enabled_user
-      reroute_auth() unless User.current.isfee?(params[:id])
-    end
+  def enabled_user
+    reroute_auth() unless User.current.isfee?(params[:id])
+  end
 
-    def reroute_auth()
-      flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
-      flash[:error] = "Abbonamento non valido (utente)..."
-      redirect_to(unauthorized_path)
-    end
+  def reroute_auth()
+    flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
+    flash[:error] = "Abbonamento non valido (utente)..."
+    redirect_to(unauthorized_path)
+  end
 
 end

@@ -64,7 +64,7 @@ class News < ActiveRecord::Base
                   'status_id',
                   'causale'
 
-  def public_fs1
+  def public_fs_issues
   self.issues.all_public_fs.count.to_s
 
   end
@@ -92,7 +92,7 @@ class News < ActiveRecord::Base
           else
             if pub == 0 #se non è stato pubblicato ...
               "<h3>Risponderemo presto al suo quesito pubblicando " + (nop == 1 ? "un articolo." : nop.to_s + " articoli.") + "</h3>
-              <p>Il suo quesito è stato giudicato di interesse collettivo, stiamo preparando " + (nop == 1 ? "un articolo" : nop.to_s + " articoli") + " per rispondere alle sue domande.</p>"
+              <p>Il suo quesito è stato giudicato di interesse collettivo, per questo stiamo preparando  <span style='text-decoration:underline;'> " + (nop == 1 ? "un articolo" : nop.to_s + " articoli") + "</span> che risponderà alle sue domande e sarà pubblicato in una delle prossime edizioni, grazie a presto!  .</p>"
             else
               n = nop - pub
               s = "<h3>Abbiamo risposto al suo quesito pubblicando " + (pub == 1 ? "un articolo." : pub.to_s + " articoli.") + "</h3>
