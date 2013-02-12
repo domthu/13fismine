@@ -28,7 +28,7 @@
                     <%= @quesito_news.get_state_icons_fe %>
                      <%= @quesito_news.quesito_status_fs_text %>
                      <% if @quesito_news.causale  %>
-                      <%= render :partial => 'quesito', :locals => {:quesito_news => @quesito_news} %>
+                      <%= render :partial => 'quesito', :locals => {:q => @quesito_news} %>
                          <h5> Risposta : </h5>
                        <p><%= @quesito_news.causale %>  </p>
                       <% end %>
@@ -36,7 +36,7 @@
                    <% when 3 %>  <!-- ACCETTATO  -->
                     <%= @quesito_news.get_state_icons_fe %>
                      <%= @quesito_news.quesito_status_fs_text %>
-                    <%= render :partial => 'quesito', :locals => {:quesito_news => @quesito_news} %>
+                    <%= render :partial => 'quesito', :locals => {:q => @quesito_news} %>
                      <% if @quesito_news.causale  %>
 
                          <h5> Messaggio dalla redazione : </h5>

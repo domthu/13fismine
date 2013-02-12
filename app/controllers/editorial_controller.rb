@@ -143,16 +143,15 @@ class EditorialController < ApplicationController
   def articolo
     #singolo articolo
     @id = params[:article_id].to_i
-    @articolo= Issue.find(@id)
+    @articolo= Issue.all_public_fs.find(@id )
     @section_id = @articolo.section_id
+    if @articolo.news_id
+    @quesito = News.all_quesiti_fs.find_by_id(@articolo.news_id)
+    end
+
   end
 
-=begin
-non usata?
-  def articoli
-     @issues2 = Issue.latest_fs
-  end
-=end
+
 
   # -----------------  ARTICOLO  (fine)   ------------------
   # -----------------  EDIZIONI /NEWSLETTER  (inizio)  ------------------
@@ -415,21 +414,16 @@ non usata?
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
       else
-        @limit = 5
+        @limit = 3
         @offset= 25
     end
 
-    @quesiti_news_count = News.all_quesiti_fs.count
-    @quesiti_issues_count = News.all_public_fs.all.count
-
-
-      @quesiti_news_pages = Paginator.new self, @quesiti_news_count, @limit, params['page']
-    @quesiti_news = News.all(
+    @quesiti_news_count = News.all_public_fs.count
+     @quesiti_news_pages = Paginator.new self, @quesiti_news_count, @limit, params['page']
+    @quesiti_news = News.all_public_fs(
         :limit => @quesiti_news_pages.items_per_page,
         :offset => @quesiti_news_pages.current.offset)
-                                                                   #Issue.visible.on_active_project.watched_by(user.id).recently_updated.with_limit(10)
-   # @quesiti_issues = News.issues.all_public_fs #--> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
-   # @quesiti_issues_count = @quesiti_issues.count
+
     respond_to do |format|
       format.html {
         render :layout => !request.xhr?

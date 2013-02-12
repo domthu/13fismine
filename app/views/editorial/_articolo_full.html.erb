@@ -67,6 +67,12 @@
           </div>
         </div>
         <%= link_to "Ritorna ...", '/editoriale/' + @articolo.section.top_section.top_menu.key + '/'+ @articolo.section.top_section.key, :class => "fs-back" %>
+        <h3><%=  @articolo.news_id.to_s %></h3>
+        <% if !@articolo.news_id.nil?  %>
+         <%= render :partial => 'quesito' , :locals => {:q => @quesito}  %>
+        <% end %>
+
+
         <!--
         <div class="fs-comments">
           <span class="fs-postcommentsicon"> Scrivi un commento </span>::<span class="fs-postcommentsicon"> Leggi i commenti </span>

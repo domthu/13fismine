@@ -1,12 +1,11 @@
 <% if User.current && User.current.logged? %>
-    <div class="fs-layout-cell fs-content clearfix">
+    <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
       <article class="fs-post fs-article">
         <div class="fs-postcontent fs-postcontent-0 clearfix">
           <div class="fs-content-layout">
             <div class="fs-content-layout-row">
               <div class="fs-layout-cell layout-item-0" style="width: 99%">
                 <% if @quesiti_news && @quesiti_news.any? %>
-
                     <% @quesiti_news.each do |qnews| %>
                         <%= qnews.get_state_icons_fe %>
                         <%# qnews.quesito_status_fs_text %>
@@ -20,18 +19,11 @@
                             <p><%= qnews.causale %>  </p>
                         <% end %>
                         <br/>
-                        <%# render :partial => 'quesito_reply', :locals => {:quesito_issues => @quesito_issues} %>
+                        <%=render :partial => 'quesito_reply', :locals => {:quesito_issues => @quesito_issues , :id => qnews.id} %>
 
-                        <!--
-                        <h4> debug @quesito_issues? = <%= @quesito_issues.to_s %>
-                          id: <%# @quesito_issues.id.to_s %></h4>-->
-                        <h4> debug @quesito_issues.any? = <%# @quesito_issues.any?.to_s %> </h4>
-                        <h4> debug quanti articoli pubblicati? = <%= @quesito_issues_count.to_s %> </h4>
-                        <h4> debug quanti articoli pubblicati e non? = <%= @quesito_issues_all_count.to_s %> </h4>
-
-
-                       <h4>id news? <%= qnews.id.to_s %> </h4>
-
+                        <h4> debug quanti articoli pubblicati? = <%= @quesiti_news_count.to_s %> </h4>
+                        <h4> debug quanti articoli pubblicati e non? = <%= @quesiti_news_all_count.to_s %> </h4>
+                        <h4>id news? <%= qnews.id.to_s %> </h4>
                     <% end %>
                 <% else %>
                     <%= render :text => "mah... non ci sono quesiti?!?" + @quesiti_news.count.to_s %>
@@ -46,14 +38,18 @@
 
       <br/>
       <%# if @quesiti_news_stato_num  > 1%>
-      <p style="text-align: center;">
-        <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>  </p>
-      <%# end %>
+
       <div class="clearfix"></div>
-    </div>     <br/>
-    <div class="clearfix"></div>
+
+
+        <br/>
+
     <p class="pagination"><%= pagination_links_full(@quesiti_news_pages, @quesiti_news_count) %></p>
     <br/>
+    <p style="text-align: center;">
+      <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>  </p>
+    <%# end %>
+    </div>
 <% else %>
     <h2 style="color:red;">
       Gentile utente per porre quesiti a fiscosport occorre essere autenticati </h2>

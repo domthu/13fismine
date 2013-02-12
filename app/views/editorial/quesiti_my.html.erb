@@ -11,7 +11,7 @@
             <% @quesiti_news.each do |item| %>
                 <div class="fs-convegni-border">
                   <div class="fs-quesiti-data">
-                    <span><%= I18n.localize(item.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+                    <span class="fs-quesiti-data-data"><%= I18n.localize(item.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
                   </div>
                   <div class="fs-quesiti-list">
                     <%= link_to(item.get_state_icons_fe, :controller => 'editorial', :action => "quesito_show", :id => item.id, :escape => false) %>

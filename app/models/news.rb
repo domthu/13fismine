@@ -49,7 +49,7 @@ class News < ActiveRecord::Base
 =end
   named_scope :all_public_fs, {
       :include => [{:issues, :project}],
-      :conditions => "#{Project.table_name}.status = #{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public = true AND #{Issue.table_name}.se_visible_web = true AND #{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
+      :conditions => "#{Project.table_name}.status = #{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public = true AND #{Issue.table_name}.se_visible_web = true AND #{Project.table_name}.identifier <> '#{FeeConst::QUESITO_KEY}'",
       :order => "#{table_name}.created_on DESC"}
 
   named_scope :all_quesiti_fs, {
@@ -169,7 +169,7 @@ class News < ActiveRecord::Base
     if user.nil?
       'Utente non identificato '
     else
-      s = 'Quesito posto dall\'utente [n°'
+      s =  'QUESITO_' + DateTime.now.strftime("%y%m%d%") + '_UTENTE[n°'
       s += User.current.id.to_s + '] '
       s += User.current.firstname? ? User.current.firstname.to_s : ''
       s += User.current.lastname? ? User.current.lastname.to_s : ''

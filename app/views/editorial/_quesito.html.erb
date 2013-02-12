@@ -1,15 +1,15 @@
+
 <article class="fs-article">
   <div class="fs-convegni-border">
     <div class="fs-quesiti-data">  <span>
-     Quesito di: <%= @quesito_news.author.firstname %></span>
-      <span class="fs-quesiti-data-data"><%= I18n.localize(@quesito_news.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+     Quesito di: <%= q.author unless !q.author %></span>
+      <span class="fs-quesiti-data-data"><%= I18n.localize(q.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
     </div>
     <div class="fs-quesiti-wrapper">
-      <div class="fs-quesiti-gravatar"> <%= gravatar_for(@quesito_news.author) unless !@quesito_news.author %>
+      <div class="fs-quesiti-gravatar"> <%= gravatar_for(q.author) unless !q.author %>
       </div>
-      <span style="font-weight: bold;"><%= @quesito_news.summary %> </span>
-
-      <p><%= @quesito_news.description %> </p>
+      <span style="font-weight: bold;"><%= q.summary %> </span>
+      <p><%= q.description %> </p>
       <br/> &nbsp;
     </div>
   </div>
