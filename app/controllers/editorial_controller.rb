@@ -143,15 +143,13 @@ class EditorialController < ApplicationController
   def articolo
     #singolo articolo
     @id = params[:article_id].to_i
-    @articolo= Issue.all_public_fs.find(@id )
+    @articolo= Issue.all_public_fs.find(@id)
     @section_id = @articolo.section_id
     if @articolo.news_id
-    @quesito = News.all_quesiti_fs.find_by_id(@articolo.news_id)
+      @quesito = News.all_quesiti_fs.find_by_id(@articolo.news_id)
     end
 
   end
-
-
 
   # -----------------  ARTICOLO  (fine)   ------------------
   # -----------------  EDIZIONI /NEWSLETTER  (inizio)  ------------------
@@ -206,7 +204,6 @@ class EditorialController < ApplicationController
         @limit = 5
         @offset= 25
     end
-
 #    @topsection = TopSection.find(:first, :conditions => ["top_sections.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID])
 #    @issues_count =Issue.all.count(
 #        :conditions => ["#{TopSection.table_name}.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID]
@@ -216,8 +213,6 @@ class EditorialController < ApplicationController
 #       :conditions => [" #{TopSection.table_name}.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID],
 #       :limit => @issues_pages.items_per_page,
 #       :offset => @issues_pages.current.offset)
-
-
     @topsection = TopSection.find_convegno(:first)
     @issues_count =Issue.all_public_fs.solo_convegni.count()
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
@@ -318,19 +313,10 @@ class EditorialController < ApplicationController
   # -----------------       QUESITI    (inizio)        ------------------
 
   #Lista di tutti quesiti (ISSUE) che hanno avvuto una risposta positiva e pubblicata
-  def quesiti
-    @quesiti_art = Issue.quesiti
-  end
 
   #Lista dei quesiti (NEWS) dell'utente
   def quesiti_my
-    # if User.current = nil
-    #   redirect_to(login_url) && return
-    # end
     @quesiti_news = User.current.my_quesiti
-    #if User.current = nil
-    #   redirect_to(login_url) && return
-    # end
   end
 
   def quesito_new
@@ -351,7 +337,7 @@ class EditorialController < ApplicationController
     if request.post?
       if @news.save
         # flash[:notice] = l(:notice_successful_create)
-        flash[:notice] = fading_flash_message("I suo quesito è stato registrato grazie.", 7)
+        flash[:notice] = fading_flash_message("Il suo quesito è stato registrato grazie.", 7)
         redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
         #redirect_to :controller => 'news', :action => 'index', :project_id => @project
       else
@@ -394,7 +380,7 @@ class EditorialController < ApplicationController
   #Il dato @quesito_news viene caricato dentro il before_filter
   def quesito_show
     #1 news sola
-    @quesito_news = News.find(@id) # unless !@id.nil?
+    @quesito_news = News.find(@id)  unless !@id.nil?
     @quesito_news_stato = @quesito_news.quesito_status_fs_text
     @quesito_news_stato_num = @quesito_news.quesito_status_fs_number
                                    #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
@@ -414,23 +400,23 @@ class EditorialController < ApplicationController
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
       else
-        @limit = 3
+        @limit = 10
         @offset= 25
     end
 
     @quesiti_news_count = News.all_public_fs.count
-     @quesiti_news_pages = Paginator.new self, @quesiti_news_count, @limit, params['page']
-    @quesiti_news = News.all_public_fs(
+    @quesiti_news_pages = Paginator.new self, @quesiti_news_count, @limit, params['page']
+    @quesiti_news = News.all_public_fs.all(
         :limit => @quesiti_news_pages.items_per_page,
         :offset => @quesiti_news_pages.current.offset)
-
     respond_to do |format|
       format.html {
         render :layout => !request.xhr?
       }
       format.api
     end
-
+    #@issues = @quesiti_news.issues.all_public_fs
+    #@ic = issues.count
   end
 
 # -----------------       QUESITI    (fine)        ------------------

@@ -559,6 +559,7 @@ margin-left:-1px;*/
     column-count: 2;
     column-gap: 2em;
     column-rule: 1px solid #bfbfbf;
+    padding-bottom: 5px;
 }
 
 .fs-image-caption-wrapper {
@@ -1397,14 +1398,14 @@ width:auto;
 }
 
 .fs-quesiti-wrapper {
-    padding: 0 11px 5px 11px;
+    padding: 0 10px;
 }
 
 .fs-quesiti-gravatar {
     height: 50px;
     width: 50px;
     float: left;
-                    margin: 0 10px 10px -6px;
+    margin: -5px 10px 10px -10px;
     padding: 6px;
     overflow: hidden;
 }

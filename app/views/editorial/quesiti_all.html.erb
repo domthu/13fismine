@@ -16,8 +16,11 @@
                         <div class="fs-quesiti-wrapper">
                           <div class="fs-quesiti-gravatar"> <%= gravatar_for(q.author) unless !q.author %>
                           </div>
-                          <span><%= smart_truncate(q.summary,252) %> </span>
+                          <span style="font-weight: bold; font-size: 0.9em;"><%= smart_truncate(q.summary,125) %> </span>
+                          <p style="font-size: 0.9em;"><%= smart_truncate(q.description,225) %> </p>
                           <%= link_to('Visualizza',url_for(:controller => 'editorial', :action => "quesito_show", :id => q.id), :class => "fs-vuoto-inline-button", :style => "float:right; margin:-5px 10px 0 0;")%>
+                        <!-- %>  <h3> debug issues? <%# @issues  %>  conta =<%# @ic.to_s  %>    </h3>  -->
+                          <%# link_to('Articolo',url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => q.section.top_section.top_menu.key, :topsection_key => q.section.top_section.key, :article_id => q.id.to_s, :article_slug => h(truncate(q.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button", :style => "float:right; margin:-5px 10px 0 0;")%>
                           <br/> &nbsp;
                         </div>
                       </div>
@@ -34,8 +37,7 @@
         </div>
         <br/>
       </article>
-
-      <br/>
+     <br/>
       <%# if @quesiti_news_stato_num  > 1%>
 
       <div class="clearfix"></div>

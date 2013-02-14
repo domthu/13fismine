@@ -21,19 +21,16 @@
           <span style="font-style: italic ;">Pubblicato in: </span>
           <div class="fs-art-sezione-full">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %>
           </div>
-            <%= link_to('Articolo',url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button", :style => "float:right; margin:-5px 10px 0 0;")%>
+          <%= link_to('Articolo', url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button", :style => "float:right; margin:-5px 10px 0 0;") %>
           <div class="fs-postheader-full">      <%= articolo.subject %>  </div>
         </div>
         <div class="fs-quesiti-wrapper">
-
           <span style="font-weight: bold;"><%= articolo.summary %> </span>
-
           <p><%= articolo.description %> </p>
           <br/> &nbsp;
         </div>
       </div>
       <div class="clearfix"></div>
     </article>
-
 <% end %>
 
