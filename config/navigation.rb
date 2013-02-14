@@ -10,7 +10,7 @@ SimpleNavigation::Configuration.run do |navigation|
   navigation.items do |menu_generale|
     menu_generale.item :key_home, 'Home', editorial_path do |primary|
       primary.item :editoriale, 'Editoriale', editorial_path , :highlights_on => %r(/edizion)
-      @top_menus = TopMenu.find(:all)
+      @top_menus = TopMenu.find(:all, :conditions => ["se_visibile = 1"])
 
       @top_menus.each do |tmn|
 
@@ -22,7 +22,7 @@ SimpleNavigation::Configuration.run do |navigation|
                      :highlights_on => :subpath do |sub_nav1|
 
           #map.topsection_page '/editorial/:topmenu_key/sezione/:topsection_id',
-          @top_sections = TopSection.find(:all, :conditions => ["top_menu_id = ?", tmn.id])
+          @top_sections = TopSection.find(:all, :conditions => ["top_menu_id = #{tmn.id} AND hidden_menu = 0"])
           @top_sections.each do |ts|
             sub_nav1.item tmn.key + ts.id.to_s, ts.name, '/editoriale/' + tmn.key + '/' + ts.key,
                           :highlights_on => %r(/#{tmn.key}\/#{ts.key})

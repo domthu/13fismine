@@ -12,11 +12,11 @@
                         <%# render :partial => 'quesito', :locals => {:quesito_news => qnews} %>
                         <%= qnews.summary %>
 
-                        <% if qnews.causale %>
+                        <% if qnews.reply %>
 
                             <h5> Messaggio dalla redazione : </h5>
 
-                            <p><%= qnews.causale %>  </p>
+                            <p><%= qnews.reply %>  </p>
                         <% end %>
                         <br/>
                         <%=render :partial => 'quesito_reply', :locals => {:quesito_issues => @quesito_issues , :id => qnews.id} %>

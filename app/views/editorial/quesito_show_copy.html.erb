@@ -45,7 +45,7 @@
                         </div>
                         <div>
                           <label style="color:red; font-weight: bold;">Risposta:</label>
-                          <span>  <%= text_area_tag :causale, @quesito_news.causale, :rows => 15, :cols => 25, :disabled => true,:class=>"causale" %>  </span>
+                          <span>  <%= text_area_tag :reply, @quesito_news.reply, :rows => 15, :cols => 25, :disabled => true,:class=>"reply" %>  </span>
                         </div>
                         <div id="fs-form-quesito-new-btn">
                           <%= link_to('Indietro', quesiti_my_path, :class => "fs-rosso-button") %>
@@ -73,9 +73,9 @@
                     <div style="min-height:76px;">
                     <div class="fs-quesiti-status-icon fs-quesiti-status-4"></div>
                        <h3>Il suo quesito è stato accettato ed ha avuto queste risposte.</h3>
-                       <% if @quesito_news.causale  %>
+                       <% if @quesito_news.reply  %>
                           <h5>La redazione : </h5>
-                       <p><%= @quesito_news.causale %>  </p>
+                       <p><%= @quesito_news.reply %>  </p>
                            <% end %>
                     </div>
                        <%= render :partial => 'quesito', :locals => {:quesito_news => @quesito_news} %>

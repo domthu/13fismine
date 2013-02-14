@@ -62,7 +62,7 @@ class News < ActiveRecord::Base
                   'summary',
                   'description',
                   'status_id',
-                  'causale'
+                  'reply'
 
   def public_fs_issues
   self.issues.all_public_fs.count.to_s

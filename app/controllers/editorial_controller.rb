@@ -69,7 +69,7 @@ class EditorialController < ApplicationController
     #@top_sections = TopSection.find(:all,
     @topsection_ids = TopSection.find(:all,
                                       :select => 'distinct id',
-                                      :conditions => ["se_visibile = 1 AND se_home_menu = 0 AND top_menu_id =  ?", @top_menu.id]
+                                      :conditions => ["se_visibile = 1 AND hidden_menu = 0 AND top_menu_id =  ?", @top_menu.id]
     )
     #@topsection_ids = @top_sections.select(:id).uniq
     # Paginate results
@@ -81,10 +81,10 @@ class EditorialController < ApplicationController
         @offset= 25
     end
 
-    @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.se_home_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).count()
+    @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).count()
 
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.se_home_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).all(
+    @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).all(
         :limit => @issues_pages.items_per_page,
         :offset => @issues_pages.current.offset)
 
