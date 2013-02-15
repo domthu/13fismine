@@ -81,21 +81,21 @@ class News < ActiveRecord::Base
     else
       case self.status_id
         when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
-          "<h3>Il suo quesito verrà esaminato dalla redazione appena possibile.</h3><p>Se lo desidera puo' eliminarlo oppure apportare modifiche</p>"
+          "<h3 class=" + self.get_state_css + ">Il suo quesito verrà esaminato dalla redazione appena possibile.</h3><p>Se lo desidera puo' eliminarlo oppure apportare modifiche</p>"
         when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
-          "<h3>Abbiamo risposto al suo quesito.</h3><p>Grazie per averci contattato.</p>"
+          "<h3 class=" + self.get_state_css + ">Abbiamo risposto al suo quesito.</h3><p>Grazie per averci contattato.</p>"
         when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
           pub = self.issues.all_public_fs.count
           nop = self.issues.count
           if nop == 0 #se non ha niente caso strano perchè si dovrebbe creare un articolo di risposta subito...
-            "<h3>Il suo quesito è stato accettato ma non ha avuto ancora risposta.</h3><p>Appena possibile le forniremo una risposta tramite uno o più articoli che trattano argomenti attinenti al suo quesito, grazie.</p>"
+            "<h3 class=" + self.get_state_css + ">Il suo quesito è stato accettato ma non ha avuto ancora risposta.</h3><p>Appena possibile le forniremo una risposta tramite uno o più articoli che trattano argomenti attinenti al suo quesito, grazie.</p>"
           else
             if pub == 0 #se non è stato pubblicato ...
-              "<h3>Risponderemo presto al suo quesito</h3>
+              "<h3 class=" + self.get_state_css + ">Risponderemo presto al suo quesito</h3>
               <p>Il suo quesito è stato preso in considerazione, stiamo preparando " + (nop == 1 ? "una risposta alla sua domanda" : nop.to_s + " risposte alle sue domande") + ", grazie a presto!  .</p>"
             else
               n = nop - pub
-              s = "<h3>Abbiamo risposto al suo quesito pubblicando " + (pub == 1 ? "un articolo." : pub.to_s + " articoli.") + "</h3>
+              s = "<h3 class=" + self.get_state_css + ">Abbiamo risposto al suo quesito pubblicando " + (pub == 1 ? "un articolo." : pub.to_s + " articoli.") + "</h3>
               <p>Il suo quesito è stato giudicato di interesse collettivo, abbiamo quindi deciso di pubblicare " + (pub == 1 ? "un articolo" : pub.to_s + " articoli") + " per rispondere alle sue domande. "
               if n > 0
                 s += " E' in previsione l'uscita di <span style='text-decoration:underline;'> " + (n == 1 ? "un ulteriore articolo" : "altri " + n.to_s + " articoli") + "</span> per rispondere a tutti gli argomenti da lei sollecitati, a presto!. "

@@ -82,33 +82,33 @@
         <%= f.error_messages %>
         <%= f.hidden_field :project_id, :value => @news.project.id %>
         <%= f.hidden_field :news_id, :value => @news.id %>
-        <%= f.submit 'Assegna uno o più collaboratori per rispondere' %>
+        <%= f.submit 'Assegna uno o più collaboratori per rispondere' unless (!User.current.admin? ||  !User.current.ismanager?) %>
         <p id="watchers_form"><label><%= l(:label_newmembers) %></label>
         <% @news.project.users.sort.each do |user| -%>
           <label class="floating"><%= check_box_tag 'watcher_user_ids[]', user.id, false %> <%=h user %></label>
         <% end %>
-        <%= f.submit 'Assegna uno o più collaboratori per rispondere' %>
-    <% end -%>
-    </p>
+        </p>
+        <%= f.submit 'Assegna uno o più collaboratori per rispondere' unless (!User.current.admin? ||  !User.current.ismanager?) %>
+      <% end -%>
     <% end %>
   </div>
 
   <div class="box tabular">
     <div id="question" style="margin-bottom:16px;">
-    <h3 class="<%= @news.get_state_css %>"><%= @news.quesito_status_fs_text %></h3>
-    <% if @news.is_online? %>
-      <%= textilizable(@news.reply) %>
-    <% end %>
+      <%= @news.quesito_status_fs_text %>
+      <% if @news.is_online? %>
+        <%= textilizable(@news.reply) %>
+      <% end %>
     </div>
 
     <div id="responses" style="margin-bottom:16px;">
-    <h3 class="responses"><%= l(:list_quesiti_response, :num => @news.issues.count) %></h3>
-    <% @news.issues.each do |issue| %>
-      <div class="risposta">
-        <b><%= link_to_issue(issue, :project => true) %></b>
-        <%= textilizable(issue.summary) %>
-      </div>
-    <% end if @news.issues.any? %>
+      <h3 class="responses"><%= l(:list_quesiti_response, :num => @news.issues.count) %></h3>
+      <% @news.issues.each do |issue| %>
+        <div class="risposta">
+          <b><%= link_to_issue(issue, :project => true) %></b>
+          <%= textilizable(issue.summary) %>
+        </div>
+      <% end if @news.issues.any? %>
     </div>
   </div>
 </div>
