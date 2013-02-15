@@ -51,7 +51,10 @@
   <div id="responses" style="margin-bottom:16px;">
   <h3 class="responses"><%= l(:list_quesiti_response, :num => @news.issues.count) %></h3>
   <% @news.issues.each do |issue| %>
-
+    <div class="risposta">
+      <b><%= link_to_issue(issue, :project => true) %></b>
+      <%= textilizable(issue.summary) %>
+    </div>
   <% end if @news.issues.any? %>
   </div>
 <% end %>

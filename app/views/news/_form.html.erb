@@ -5,11 +5,11 @@
 <p><%= f.text_area :description, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
 
 <% if @news.is_quesito? %>
-<h3 class="<%= @news.get_state_css %>"><%= @news.quesito_status_fs_text %></h3>
-<p><%= f.text_field :title, :required => true, :size => 60 %></p>
-<p><%= f.text_area :reply, :cols => 80, :rows => 4 %></p>
-<%= wikitoolbar_for 'news_reply' %>
-</div>
+  <h3 class="<%= @news.get_state_css %>"><%= @news.quesito_status_fs_text %></h3>
+  <p><%= f.text_field :title, :required => true, :size => 60 %></p>
+  <p><%= f.text_area :reply, :cols => 80, :rows => 4 %></p>
+  <%= wikitoolbar_for 'news_reply' %>
 <% end %>
 
+</div>
 <%= wikitoolbar_for 'news_description' %>

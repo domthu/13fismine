@@ -29,7 +29,7 @@ class Issue < ActiveRecord::Base
   belongs_to :category, :class_name => 'IssueCategory', :foreign_key => 'category_id'
   #domthu20120516
   belongs_to :section, :class_name => 'Section', :foreign_key => 'section_id'
-  belongs_to :quesito_news, :class_name => 'News', :foreign_key => 'news_id', :include => [:news, :author]
+  belongs_to :quesito_news, :class_name => 'News', :foreign_key => 'news_id', :include => [:author]
 
   #belongs_to :top_section, :through => 'Section'
   def top_section

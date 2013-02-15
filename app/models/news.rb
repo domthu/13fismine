@@ -183,11 +183,7 @@ class News < ActiveRecord::Base
   end
 
   def is_quesito?
-    if self.project.identifier == FeeConst::QUESITO_KEY
-      true
-    else
-      false
-    end
+    !self.project.nil? && self.project.identifier == FeeConst::QUESITO_KEY
   end
 
   def is_online?
