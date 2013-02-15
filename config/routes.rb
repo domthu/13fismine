@@ -283,6 +283,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'news/:id/comments', :controller => 'comments', :action => 'create', :conditions => {:method => :post}
   map.connect 'news/:id/comments/:comment_id', :controller => 'comments', :action => 'destroy', :conditions => {:method => :delete}
 
+  map.assign_collaboratore 'news/assign', :controller => 'news', :action => 'assign'
+
   map.resources :projects, :member => {
     :copy => [:get, :post],
     :settings => :get,

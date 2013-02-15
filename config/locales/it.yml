@@ -161,6 +161,7 @@ it:
   notice_successful_update: Modifica effettuata.
   notice_successful_delete: Eliminazione effettuata.
   notice_successful_connection: Connessione effettuata.
+  notice_successful_assigned: Assegnazione collaborati effettuata.
   notice_file_not_found: La pagina desiderata non esiste o è stata rimossa.
   notice_locking_conflict: Le informazioni sono state modificate da un altro utente.
   notice_not_authorized: Non sei autorizzato ad accedere a questa pagina.
@@ -170,6 +171,7 @@ it:
 
   error_scm_not_found: "La risorsa e/o la versione non esistono nel repository."
   error_scm_command_failed: "Si è verificato un errore durante l'accesso al repository: %{value}"
+  error_none_assigned: "Dovete selezionare almeno un elemento dalla lista."
 
   mail_subject_lost_password: "Password %{value}"
   mail_body_lost_password: 'Per cambiare la password, usa il seguente collegamento:'
@@ -378,6 +380,8 @@ it:
   label_report_plural: Report
   label_news: Quesito
   field_news: Da quesito?
+  field_reply: Risposta veloce
+  label_reply: Risposta veloce
   label_news_new: Poni un quesito
   label_news_my: I miei quesiti
   label_news_plural: Quesiti
@@ -1445,6 +1449,8 @@ it:
   button_renew: --> Rinnovo
   button_expired: --> Scaduto
   button_archivied: --> Archiviato
+  news_assign_not_allowed: Non siete abilitato a assegnare collaboratori.
+  none_found_news: Non è stato trovato il quesito
 
 #EDITORIAL
   list_edizioni: Lista edizioni
