@@ -17,7 +17,7 @@
 
 <table class="attributes">
 <tr>
-    <th class="status"><%=l(:field_section)%>:</th><td class="status"><%= h(@issue.section.full_name) %></td>
+    <th class="status"><%=l(:field_section)%>:</th><td class="status"><%= h(@issue.section.full_name) unless @issue.section.nil? %></td>
     <th class="status"><%=l(:field_news)%>:</th><td class="status"><%= link_to @issue.quesito_news.abbr_name, news_path(@issue.quesito_news) unless @issue.quesito_news.nil? %></td>
 </tr>
 <tr>
