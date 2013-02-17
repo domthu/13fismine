@@ -33,7 +33,11 @@ class Issue < ActiveRecord::Base
 
   #belongs_to :top_section, :through => 'Section'
   def top_section
-    self.section.top_section #+ "::" + self.section
+    if self.section.nil?
+      nil
+    else
+      self.section.top_section #+ "::" + self.section
+    end
   end
   def top_section_key
     if (self.section.nil?)
@@ -44,6 +48,37 @@ class Issue < ActiveRecord::Base
       else
         self.section.top_section.key
       end
+    end
+  end
+
+  def section_name
+    if self.section.nil?
+      ""
+    else
+      self.section.to_s
+      #self.section.name
+      #self.section.sezione
+    end
+  end
+  def section_full_name
+    if self.section.nil?
+      ""
+    else
+      self.section.full_name
+    end
+  end
+
+  def is_quesito?
+    if self.quesito_news.nil?
+      false
+    else
+      self.quesito_news.is_quesito?
+    end
+  end
+
+  def quesito_control
+    if self.is_quesito? && self.is_issue_reply? && self.quesito_news.issues.count <= 1
+      self.quesito_news.set_satus(1)
     end
   end
 

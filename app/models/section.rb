@@ -17,13 +17,17 @@ class Section < ActiveRecord::Base
   named_scope :all_with_topsection, :include => :top_section, :order => "#{TopSection.table_name}.sezione_top, #{Section.table_name}.sezione"
 
   def to_s
-    sezione.to_s
+    sezione
   end
 
   alias :name :to_s
 
   def full_name
-    top_section.to_s + "::" + sezione.to_s
+    if top_section.nil?
+      sezione
+    else
+      top_section.to_s + "::" + sezione
+    end
   end
 
 end

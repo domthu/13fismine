@@ -20,6 +20,7 @@
 module NewsHelper
 
   include FeesHelper
+  include IssuesHelper
 
   def default_quesito_name(user=User.current)
     s = "QUESITO N. " + user.id.to_s

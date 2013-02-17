@@ -17,7 +17,7 @@
 
 <table class="attributes">
 <tr>
-    <th class="status"><%=l(:field_section)%>:</th><td class="status"><%= h(@issue.section.full_name) unless @issue.section.nil? %></td>
+    <th class="status"><%=l(:field_section)%>:</th><td class="status"><%= h(@issue.section_full_name) unless @issue.section.nil? %></td>
     <th class="status"><%=l(:field_news)%>:</th><td class="status"><%= link_to @issue.quesito_news.abbr_name, news_path(@issue.quesito_news) unless @issue.quesito_news.nil? %></td>
 </tr>
 <tr>
@@ -117,6 +117,30 @@
 <% end %>
 
 </div>
+
+<%# inserire qui la risposta veloce %>
+<% if @issue.is_quesito? %>
+<div class="details">
+  <div class="box tabular">
+    <div id="question" style="margin-bottom:16px;">
+      <%= "Stato del quesito: " + @issue.quesito_news.quesito_status_fs_text %>
+      <%= link_to @issue.quesito_news.abbr_name, news_path(@issue.quesito_news) %>
+      <%= textilizable(@issue.quesito_news.summary) %>
+    </div>
+e<hr />
+  <%= "Stato del quesito: " + @issue.quesito_news.quesito_status_fs_text %>
+    <div id="responses" style="margin-bottom:16px;">
+      <h3 class="responses"><%= l(:quesito_risposta_rapida, :num => @issue.quesito_news.id.to_s) %></h3>
+
+<% if @issue.description? %>
+      PULSANTE DI RISPOSTA RAPIDA
+<% else %>
+  <p>per creare una <span style="color: red;">risposta rapida*</span> o generare un articolo che andrà a finire su una edizione allora dovete prima scrivere la risposta nel campo <b><%= l(:field_description) %></b> </p>
+<% end %>
+    </div>
+  </div>
+</div>
+<% end %>
 
 <% if @changesets.present? %>
 <div id="issue-changesets">

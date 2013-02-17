@@ -276,6 +276,7 @@ class IssuesController < ApplicationController
     end
     @issues.each do |issue|
       begin
+        issue.reload.quesito_control
         issue.reload.destroy
       rescue ::ActiveRecord::RecordNotFound # raised by #reload if issue no longer exists
         # nothing to do, issue was already deleted (eg. by a parent)

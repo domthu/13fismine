@@ -7,8 +7,13 @@
 <% if @news.is_quesito? %>
   <%= @news.quesito_status_fs_text %>
   <p><%= f.text_field :title, :required => true, :size => 60 %></p>
-  <p><%= f.text_area :reply, :cols => 80, :rows => 4 %></p>
-  <%= wikitoolbar_for 'news_reply' %>
+  <%# if !@news.is_fast_reply? %>
+    <p><%= textilizable(@news.reply) %></p>
+  <%# else
+    <p><%= f.text_area :reply, :cols => 80, :rows => 4 %></p>
+    <%# wikitoolbar_for 'news_reply' %>
+  <%# end %>
+
 <% end %>
 
 </div>

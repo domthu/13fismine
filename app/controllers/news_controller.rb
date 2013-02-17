@@ -18,6 +18,8 @@
 class NewsController < ApplicationController
   default_search_scope :news
   model_object News
+  include FeesHelper
+
   before_filter :find_model_object, :except => [:new, :create, :index]
   before_filter :find_project_from_association, :except => [:new, :create, :index, :assign]
   before_filter :find_project, :only => [:new, :create, :assign]
@@ -116,6 +118,7 @@ class NewsController < ApplicationController
                 #new_issue.copy_from(issue)
                 new_issue.project_id = @news.project.id
                 new_issue.news_id = @news.id
+                new_issue.section_id = FeeConst::QUESITO_SECTION_ID
                 new_issue.assigned_to_id = collaboratore.id
                 new_issue.author = collaboratore
                 new_issue.watcher_user_ids = @watcher_user_ids
@@ -131,6 +134,9 @@ class NewsController < ApplicationController
                 else
                   flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + l(:notice_successful_assigned) + @watcher_user_ids.count.to_s
                 end
+                #Aggiorno lo stato della news
+                @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
+                @news.save
             }
           else
             flash[:errors] = l(:news_assign_not_allowed)

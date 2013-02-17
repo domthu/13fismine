@@ -380,8 +380,8 @@ it:
   label_report_plural: Report
   label_news: Quesito
   field_news: Da quesito?
-  field_reply: Risposta veloce
-  label_reply: Risposta veloce
+  field_reply: Risposta rapida
+  label_reply: Risposta rapida
   label_news_new: Poni un quesito
   label_news_my: I miei quesiti
   label_news_plural: Quesiti
@@ -579,6 +579,7 @@ it:
   button_watch: Osserva
   button_unwatch: Dimentica
   button_reply: Rispondi
+  button_news_fast_reply: Risposta rapida
   button_archive: Archivia
   button_unarchive: Ripristina
   button_reset: Reimposta
@@ -1458,7 +1459,8 @@ it:
   list_articoli: Lista articoli
   details_articolo: Dettaglio di un articolo
   list_quesiti: Lista quesiti
-  list_quesiti_response:  Lista risposte (%{num}) al quesito
+  list_quesiti_response: Lista risposte (%{num}) al quesito
+  quesito_risposta_rapida: Risposta rapida al quesito N°(%{num})
   details_quesito: Dettaglio di un quesito
   list_sezioni: Lista categorie articoli
   details_sezione: Dettaglio di una categoria articoli

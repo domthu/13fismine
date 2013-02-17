@@ -186,12 +186,26 @@ class News < ActiveRecord::Base
     !self.project.nil? && self.project.identifier == FeeConst::QUESITO_KEY
   end
 
-  def is_online?
-    if self.status_id == FeeConst::QUESITO_STATUS_FAST_REPLY
-      true
+  def set_satus(limit)
+    #se il campo reply è valorizzatto allora forziamo lo status
+    if !self.reply.nil? && self.reply != ''
+      self.status_id == FeeConst::QUESITO_STATUS_FAST_REPLY
     else
-      false
+      if !self.issues.nil? && self.issues.count > limit
+        self.status_id == FeeConst::QUESITO_STATUS_ISSUES_REPLY
+      else
+        self.status_id == FeeConst::QUESITO_STATUS_WAIT
+      end
     end
+    self.save
+  end
+
+  def is_fast_reply?
+    self.status_id == FeeConst::QUESITO_STATUS_FAST_REPLY #&& self.reply != ''
+  end
+
+  def is_issue_reply?
+    self.status_id == FeeConst::QUESITO_STATUS_ISSUES_REPLY
   end
 
 # returns latest news for projects visible by user

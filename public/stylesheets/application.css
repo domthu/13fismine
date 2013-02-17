@@ -964,6 +964,7 @@ padding-bottom: 3px;
 .icon-unprotected  { background-image: url(../images/ico/unprotected.gif); }
 .icon-globe  { background-image: url(../images/ico/globe.png); }
 .icon-pic  { background-image: url(../images/ico/pic.png); }
+.icon-news_fast_reply  { background-image: url(../images/ico/ticket_edit.png); }
 
 img.gravatar {
     padding: 2px;
