@@ -102,7 +102,7 @@ class NewsController < ApplicationController
   def assign
     #find_project reccupera il progetto associato
     #if params[:watcher_user_ids].is_a?(Hash)
-    if !@news.nil?
+    if !@news.nil? && @news.project.identifier == FeeConst::QUESITO_KEY
       #if params[:watcher_user_ids] && params[:watcher_user_ids].is_a?(Hash)
       if params[:watcher_user_ids] #&& params[:watcher_user_ids].is_a?(Hash)
         #if User.current.allowed_to?(:add_issue_watchers, @news.project)

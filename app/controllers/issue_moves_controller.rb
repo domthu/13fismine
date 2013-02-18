@@ -18,9 +18,13 @@
 class IssueMovesController < ApplicationController
   menu_item :issues
 
+  include FeesHelper  #Domthu  FeeConst
+  #include ActionView::Helpers::UrlHelper #use link_to in controller
+
   default_search_scope :issues
   before_filter :find_issues, :check_project_uniqueness
-  before_filter :authorize
+  before_filter :authorize   #add permission for fast_reply  and save role
+
 
   def new
     prepare_for_issue_move
@@ -59,6 +63,80 @@ class IssueMovesController < ApplicationController
       return
     end
   end
+
+
+  #Filter chain halted as [:authorize] rendered_or_redirected.
+  def fast_reply
+    @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category, :section, :quesito_news])
+    #Domthu [:project, :tracker, :status, :author, :priority, :category])
+    puts "###################################################################à"
+    flash[:notice] = "Procedura risposta veloce"
+    if !@issue.nil? && @issue.is_quesito?
+      if User.current.admin? ||  User.current.ismanager? || authorize_for('issues', 'edit')
+      #KAPPAO @issue.visible?
+        if @issue.description?
+          @news = @issue.quesito_news
+          if !@news.nil?
+            if @news.is_quesito?
+              #controllare che la news possa andare in risposta veloce
+              # solo se non ci sono altri issue con campo descrizione già attive
+              can_delete = true
+              @news.issues.each { |issue|
+                if issue.description? && @issue.id != issue.id
+                  can_delete = false
+                  #flash[:notice] += "</br>" + l(:alert_another_responses, :link => link_to(issue), :author => issue.author)
+                  flash[:notice] += "</br>" + l(:alert_another_responses, :link => issue.to_s, :author => issue.author)
+                  if issue.project.identifier != FeeConst::QUESITO_KEY && issue.se_visibile_web && !@news.is_issue_reply?
+                    #se ho già un articolo pubblicato su una
+                    @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
+                    @news.save
+                    redirect_to :action => 'show', :id => @issue.id
+                    return
+                  end
+                end
+              }
+
+              if can_delete
+                #chiedere sandro? se usiamo il campo reply o description
+                @news.description = @issue.description
+                @news.reply = @issue.description
+                #Aggiorno lo stato della news
+                @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
+                @news.save
+                flash[:notice] += "</br></br>Quesito: " + l(:notice_successful_update) + "</br>"
+
+                #elimina le issue di lavoro temporraneo
+                @news.issues.each_with_index { |del_issue, i |
+                  flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author)
+                  del_issue.destroy
+                }
+                flash[:notice] += "Risposta: " + l(:fast_reply_done)
+                redirect_to :controller => 'news', :action => 'show', :id => @news.id
+
+              else
+                flash[:errors] = l(:cannot_fast_reply_other_issues)
+              end
+            else
+              flash[:errors] = l(:is_not_quesito)
+            end
+          else
+            flash[:errors] = l(:none_found_news)
+          end
+        else
+          flash[:errors] = l(:empty_description)
+        end
+      else
+        flash[:errors] = l(:issue_fastreply_not_allowed)
+        #deny_access
+        #return
+      end
+      redirect_to :controller => 'issues', :action => 'show', :id => @issue.id
+    else
+      flash[:errors] = l(:none_found_issue)
+      redirect_to :controller => 'issues', :action => 'index'
+    end
+  end
+
 
   private
 

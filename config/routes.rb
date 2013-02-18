@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reservations
 
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "top_menus"
+#rake routes | grep -r "reply"
 
   map.resources :top_menus
 
@@ -284,6 +284,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'news/:id/comments/:comment_id', :controller => 'comments', :action => 'destroy', :conditions => {:method => :delete}
 
   map.assign_collaboratore 'news/assign', :controller => 'news', :action => 'assign'
+  #map.fast_reply 'issues/fast_reply', :controller => 'issues', :action => 'fast_reply'
+  map.fast_reply 'quesito/fast_reply', :controller => 'issue_move', :action => 'fast_reply'
 
   map.resources :projects, :member => {
     :copy => [:get, :post],

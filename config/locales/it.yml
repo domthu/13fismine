@@ -382,6 +382,10 @@ it:
   field_news: Da quesito?
   field_reply: Risposta rapida
   label_reply: Risposta rapida
+  label_reply_members: Altri collaboratori che potrebbero rispondere oltre a te
+  label_reply_article: Pubblica risposta come articolo
+  label_fast_reply: Rispondi senza generare articolo
+  no_reply_actualy: Nessuna risposta attualmente
   label_news_new: Poni un quesito
   label_news_my: I miei quesiti
   label_news_plural: Quesiti
@@ -580,6 +584,7 @@ it:
   button_unwatch: Dimentica
   button_reply: Rispondi
   button_news_fast_reply: Risposta rapida
+  button_issue_reply_article: Pubblica spostando in quindicinale
   button_archive: Archivia
   button_unarchive: Ripristina
   button_reset: Reimposta
@@ -1452,6 +1457,14 @@ it:
   button_archivied: --> Archiviato
   news_assign_not_allowed: Non siete abilitato a assegnare collaboratori.
   none_found_news: Non è stato trovato il quesito
+  none_found_issue: Non è stato trovato la risposta
+  empty_description: Inserire una risposta nel campo descrizione ed eseguire di nuovo
+  issue_fastreply_not_allowed: Non siete abilitato alla gestione della risposta rapida
+  is_not_quesito: "L'oggetto non è di tipo quesito-risposta"
+  fast_reply_done: La risposta è stata
+  cannot_fast_reply_other_issues: "Non è possibile eseguire la risposta veloce perchè ci sono altre risposte in corso di elaborazione. Vedi la lista degli altri autori qui sotto, mettetevi d'accordo e svuotate i campi descrizione per continuare"
+  alert_another_responses: "risposta in corso da parte di %{author}. Contattalo e vedi la sua risposta al link: %{link}"
+  deleted_issue: "Eliminato la risposta di %{author}. %{name}"
 
 #EDITORIAL
   list_edizioni: Lista edizioni

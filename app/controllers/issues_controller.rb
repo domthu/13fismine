@@ -19,11 +19,11 @@ class IssuesController < ApplicationController
   menu_item :new_issue, :only => [:new, :create]
   default_search_scope :issues
 
-  before_filter :find_issue, :only => [:show, :edit, :update]
+  before_filter :find_issue, :only => [:show, :edit, :update] #Domthu , :fast_reply
   before_filter :find_issues, :only => [:bulk_edit, :bulk_update, :move, :perform_move, :destroy]
   before_filter :check_project_uniqueness, :only => [:move, :perform_move]
   before_filter :find_project, :only => [:new, :create]
-  before_filter :authorize, :except => [:index]
+  before_filter :authorize, :except => [:index] #Domthu , :fast_reply
   before_filter :find_optional_project, :only => [:index]
   before_filter :check_for_default_issue_status, :only => [:new, :create]
   before_filter :build_new_issue_from_params, :only => [:new, :create]
@@ -295,7 +295,8 @@ private
     @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category, :section, :quesito_news])
     #Domthu [:project, :tracker, :status, :author, :priority, :category])
     unless @issue.visible?
-      deny_access
+      flash[:errors] = l(:empty_description)
+      #deny_access
       return
     end
     @project = @issue.project
@@ -309,6 +310,7 @@ private
   rescue ActiveRecord::RecordNotFound
     render_404
   end
+
   def find_quesito
     news_id = (params[:issue] && params[:issue][:news_id]) || params[:news_id]
     #repeat

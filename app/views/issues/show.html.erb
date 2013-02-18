@@ -120,20 +120,54 @@
 
 <%# inserire qui la risposta veloce %>
 <% if @issue.is_quesito? %>
-<div class="details">
-  <div class="box tabular">
+<div class="box details">
+  <div class="">
     <div id="question" style="margin-bottom:16px;">
       <%= "Stato del quesito: " + @issue.quesito_news.quesito_status_fs_text %>
       <%= link_to @issue.quesito_news.abbr_name, news_path(@issue.quesito_news) %>
       <%= textilizable(@issue.quesito_news.summary) %>
     </div>
-e<hr />
-  <%= "Stato del quesito: " + @issue.quesito_news.quesito_status_fs_text %>
+<hr />
     <div id="responses" style="margin-bottom:16px;">
       <h3 class="responses"><%= l(:quesito_risposta_rapida, :num => @issue.quesito_news.id.to_s) %></h3>
 
 <% if @issue.description? %>
-      PULSANTE DI RISPOSTA RAPIDA
+  <% if @issue.quesito_news.is_issue_reply? %>
+    <%#  PULSANTE DI RISPOSTA RAPIDA
+    Kappao Couldn't find News with ID=0
+    /home/dom/rails/13fismine/app/controllers/editorial_controller.rb:542:in `find_quesito_fs' %>
+    <%# form_for @issue, :url => fast_reply_path do |f_r| %>
+    <% form_for @issue, :url => {:controller => 'issue_moves', :action => 'fast_reply', :id => @issue} do |f_r| %>
+      <%= f_r.error_messages %>
+      <%= f_r.hidden_field :id, :value => @issue.id %>
+      <h2><%= l(:label_fast_reply) %></h2>
+      <% if authorize_for('issues', 'fast_reply') || User.current.admin? || User.current.ismanager? %>
+      <%= f_r.submit l(:button_news_fast_reply)  %>
+      <% end  %>
+
+      <% if @issue.quesito_news.issues.count > 1 %>
+        <p><label><b><%= l(:label_reply_members) %></label></b>
+        <ul>
+        <% @issue.quesito_news.issues.each do |other_issue|
+            if other_issue.id != @issue.id %>
+            <li><%= link_to other_issue %> ==> <%= link_to other_issue.author %></li>
+        <% end
+        end %>
+        </ul>
+        </p>
+      <% end  %>
+
+    <% end %>
+  <% end %>
+  <hr>
+  <% form_for @issue, :url =>  {:controller => 'issue_moves', :action => 'new', :id => @issue} do |f2| %>
+    <h2><%= l(:label_reply_article) %></h2>
+<%# map.permission :move_issues, {:issue_moves => [:new, :create], :issues => [:fast_reply]}, :require => :loggedin      authorize_for('issue_moves', 'new') %>
+    <% if authorize_for('issues', 'fast_reply') || User.current.admin? || User.current.ismanager? %>
+      <%= f2.submit l(:button_issue_reply_article) %>
+    <% end %>
+  <% end %>
+
 <% else %>
   <p>per creare una <span style="color: red;">risposta rapida*</span> o generare un articolo che andrà a finire su una edizione allora dovete prima scrivere la risposta nel campo <b><%= l(:field_description) %></b> </p>
 <% end %>

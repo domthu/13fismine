@@ -31,57 +31,6 @@ class Issue < ActiveRecord::Base
   belongs_to :section, :class_name => 'Section', :foreign_key => 'section_id'
   belongs_to :quesito_news, :class_name => 'News', :foreign_key => 'news_id', :include => [:author]
 
-  #belongs_to :top_section, :through => 'Section'
-  def top_section
-    if self.section.nil?
-      nil
-    else
-      self.section.top_section #+ "::" + self.section
-    end
-  end
-  def top_section_key
-    if (self.section.nil?)
-      FeeConst::TOP_SECTION_DEFAULT
-    else
-      if (self.section.top_section.nil?)
-        FeeConst::TOP_SECTION_DEFAULT
-      else
-        self.section.top_section.key
-      end
-    end
-  end
-
-  def section_name
-    if self.section.nil?
-      ""
-    else
-      self.section.to_s
-      #self.section.name
-      #self.section.sezione
-    end
-  end
-  def section_full_name
-    if self.section.nil?
-      ""
-    else
-      self.section.full_name
-    end
-  end
-
-  def is_quesito?
-    if self.quesito_news.nil?
-      false
-    else
-      self.quesito_news.is_quesito?
-    end
-  end
-
-  def quesito_control
-    if self.is_quesito? && self.is_issue_reply? && self.quesito_news.issues.count <= 1
-      self.quesito_news.set_satus(1)
-    end
-  end
-
   has_many :journals, :as => :journalized, :dependent => :destroy
   has_many :time_entries, :dependent => :delete_all
   has_and_belongs_to_many :changesets, :order => "#{Changeset.table_name}.committed_on ASC, #{Changeset.table_name}.id ASC"
@@ -169,6 +118,59 @@ class Issue < ActiveRecord::Base
       else
         '1=0'
       end
+    end
+  end
+
+
+  #belongs_to :top_section, :through => 'Section'
+  def top_section
+    if self.section.nil?
+      nil
+    else
+      self.section.top_section #+ "::" + self.section
+    end
+  end
+  def top_section_key
+    if (self.section.nil?)
+      FeeConst::TOP_SECTION_DEFAULT
+    else
+      if (self.section.top_section.nil?)
+        FeeConst::TOP_SECTION_DEFAULT
+      else
+        self.section.top_section.key
+      end
+    end
+  end
+
+  def section_name
+    if self.section.nil?
+      ""
+    else
+      self.section.to_s
+      #self.section.name
+      #self.section.sezione
+    end
+  end
+  def section_full_name
+    if self.section.nil?
+      ""
+    else
+      self.section.full_name
+    end
+  end
+
+  def is_quesito?
+    if self.quesito_news.nil?
+      false
+    else
+      #domthu L'articolo deve essere nel progetto QUESITO_KEY per essere considerato sottoposto ai mecanismi di gestione quesito
+      self.quesito_news.is_quesito? && self.project.identifier == FeeConst::QUESITO_KEY
+    end
+  end
+
+  def quesito_control
+    if self.is_quesito? && self.is_issue_reply? && self.quesito_news.issues.count <= 1
+      self.quesito_news.set_satus(1)
     end
   end
 
