@@ -27,11 +27,19 @@ module FeeConst
   QUESITO_KEY = "sys-quesiti"
 
   #TODO pass in settings
+
   QUESITO_SECTION_ID = 39 #Formula un quesito: Articolo con di default issue.section.top_section_id
   QUESITO_TOP_SECTION_ID = 19 	#Le risposte ai quesiti
 
   CONVEGNO_SECTION_ID = 26 #Convegni: Articolo con issue.section.top_section_id
   CONVEGNO_TOP_SECTION_ID = 9 #Convegni ed eventi
+
+  # Sandro , vorrei utilizzare solo le costanti TMENU qui sotto più globali
+  #in modo da ridurre la frantumazione del codice e la possibilità di errore
+  #evitando  QUESITO_SECTION_ID   QUESITO_TOP_SECTION_ID CONVEGNO_SECTION_ID  CONVEGNO_TOP_SECTION_ID
+  TMENU_QUESITI = 7
+  TMENU_NEWSPORT = 8
+  TMENU_CONVEGNI = 9
 
   #di sistema: Non si possono cancellare
   DEFAULT_SECTION = 5 #Approfondimenti

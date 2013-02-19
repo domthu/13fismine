@@ -559,9 +559,20 @@ margin-left:-1px;*/
     column-count: 2;
     column-gap: 2em;
     column-rule: 1px solid #bfbfbf;
+    padding: 5px 0;
+}
+.layout-item-2-lite {
+    -moz-column-count: 2;
+    -moz-column-gap: 2em;
+    -moz-column-rule: 1px solid #e6e6e6;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 2em;
+    -webkit-column-rule: 1px solid #e6e6e6;
+    column-count: 2;
+    column-gap: 2em;
+    column-rule: 1px solid #e6e6e6;
     padding-bottom: 5px;
 }
-
 .fs-image-caption-wrapper {
     padding: 5px 5px 5px 0;
     -webkit-box-sizing: border-box;

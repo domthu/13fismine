@@ -3,10 +3,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reservations
 
-  map.resources :reservations
-
-  map.resources :reservations
-
 #http://guides.rubyonrails.org/v2.3.11/routing.html
 #rake routes | grep -r "top_menus"
 
@@ -47,6 +43,8 @@ ActionController::Routing::Routes.draw do |map|
   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
   map.enti  '/enti_federazioni', :controller => 'editorial', :action => 'enti'
   map.lavora '/lavora_con_noi', :controller => 'editorial', :action => 'lavora'
+  map.profili '/chi-siamo', :controller => 'editorial', :action => 'profili'
+  map.profilo '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo'
   #-> Edizioni e Newletter (table: projects)-
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'

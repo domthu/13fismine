@@ -420,6 +420,12 @@ class EditorialController < ApplicationController
   end
 
 # -----------------       QUESITI    (fine)        ------------------
+# -----------------    CHI SIAMO    (inizio) [menu item] ------------------
+  def profili
+  @managers = User.users_profiles_all_managers
+  @authors = User.users_profiles_all_authors
+  end
+# -----------------    CHI SIAMO    (fine) [menu item] ------------------
 
   def contact
   end

@@ -52,8 +52,8 @@ class User < Principal
   has_one :preference, :dependent => :destroy, :class_name => 'UserPreference'
   has_one :rss_token, :class_name => 'Token', :conditions => "action='feeds'"
   has_one :api_token, :class_name => 'Token', :conditions => "action='api'"
+  has_one :user_profile, :class_name => 'UserProfile'
   belongs_to :auth_source
-
   #domthu20120916
   belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id'
   #domthu20120516
@@ -84,9 +84,13 @@ class User < Principal
 #  scope :status, lambda {|arg| arg.blank? ? {} : {:conditions => {:status => arg.to_i}} }
 # Active non-anonymous users scope
   named_scope :active, :conditions => "#{User.table_name}.status = #{STATUS_ACTIVE}"
+# users manager  e redattori in chi-siamo
+  named_scope :users_profiles_all_managers, :include => :user_profile,
+                :conditions => "#{User.table_name}.role_id = #{FeeConst::ROLE_MANAGER}"
+  named_scope :users_profiles_all_authors, :include => :user_profile,
+                :conditions => "#{User.table_name}.role_id = #{FeeConst::ROLE_AUTHOR}"
 
   acts_as_customizable
-
   attr_accessor :password, :password_confirmation
   attr_accessor :last_before_login_on
 # Prevents unauthorized assignments
