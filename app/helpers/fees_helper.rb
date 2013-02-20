@@ -37,10 +37,16 @@ module FeeConst
   # Sandro , vorrei utilizzare solo le costanti TMENU qui sotto più globali
   #in modo da ridurre la frantumazione del codice e la possibilità di errore
   #evitando  QUESITO_SECTION_ID   QUESITO_TOP_SECTION_ID CONVEGNO_SECTION_ID  CONVEGNO_TOP_SECTION_ID
+  #Top Menu fissi
   TMENU_QUESITI = 7
   TMENU_NEWSPORT = 8
   TMENU_CONVEGNI = 9
-
+  #User Profili  (voce menu => chi siamo)
+  PROFILO_FS_COLLABORATORE = 1
+  PROFILO_FS_RESPONSABILE = 2
+  PROFILO_FS_DIRETTORE = 3
+  PROFILO_FS_INVISIBILE = 4
+  #---------------------
   #di sistema: Non si possono cancellare
   DEFAULT_SECTION = 5 #Approfondimenti
   DEFAULT_TOP_SECTION =  3 #Approfondimenti

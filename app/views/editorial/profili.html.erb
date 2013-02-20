@@ -1,44 +1,60 @@
-<div style="width: 100%">
-  <div class="fs-layout-cell post-layout-item-2" style="max-width: 640px; border-right: solid 10px transparent;">
+<div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
+  <article class="fs-post fs-article"> <!--#contenitore -->
     <div class="fs-content-layout-row">
       <div class="fs-layout-cell post-layout-item-3" style="width: 50%">
         <article class="fs-post fs-article clearfix">
-
-          <h3 class="fs-postheader">DIRETTORI (RUOLO MANAGER) </h3>
-          <%  @managers.each do |item| %>
-          <div>
-            <%# image_tag("/images/commons/m1.png", :alt => "Stefano Andreani", :height => "115", :class => "fs-lightbox") %>
-            <p><span style="font-weight: bold;"> <%= item.firstname + ' ' + item.lastname   %></span><br/>
-              <span style="font-style: italic;">  </span></p>
-          </div>
-         <% end %>
+          <h3 class="fs-postheader">DIRETTORI DI REDAZIONE </h3>
+          <% @direttori.each do |item| %>
+              <div class="fs-chisiamo-item">
+                <%= link_to image_tag("/images/commons/m1.png", :alt => item.firstname + ' ' + item.lastname, :height => "75", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show" %>
+                <p><span style="font-weight: bold;">  <%= item.firstname + ' ' + item.lastname %></span><br/>
+                  <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
+              </div>
+          <% end %>
         </article>
-
-        <br />&nbsp; <br />
-        <article class="fs-post fs-article clearfix">
-          <%= link_to("1a versione statica", chisiamo_path ,:class=> "fs-giallo-button"  )%>
-        </article>
-
-         </div>
+        <br/>&nbsp; <br/>
+      </div>
       <div class="fs-layout-cell post-layout-item-3 clearfix" style="width: 50%">
         <article class="fs-post fs-article clearfix">
-
-          <h3 class="fs-postheader">REDATTORI (ruolo Author) </h3>
-          <%  @authors.each do |item| %>
-          <div >
-            <%# image_tag("/images/commons/m1.png", :alt => "Stefano Andreani", :height => "115", :class => "fs-lightbox") %>
-            <p><span style="font-weight: bold;"> <%= item.firstname + ' ' + item.lastname   %></span><br/>
-              <span style="font-style: italic;"> </span></p>
-
-         <% end %>
-          </div>
+          <h3 class="fs-postheader">RESPONSABILI DI REDAZIONE </h3>
+          <% @responsabili.each do |item| %>
+              <div class="fs-chisiamo-item">
+                <%= link_to image_tag("/images/commons/m1.png", :alt => item.firstname + ' ' + item.lastname, :height => "75", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show" %>
+                <p><span style="font-weight: bold;">  <%= item.firstname + ' ' + item.lastname %></span><br/>
+                  <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
+              </div>
+          <% end %>
         </article>
-
+        <br/>&nbsp; <br/>
       </div>
     </div>
-  </div>
+    <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
+      <div class="post-layout-item-3">
+        <article class="fs-post fs-article">
+          <h3 class="fs-postheader">COLLABORATORI DELLA REDAZIONE </h3>
+          <% @responsabili.each do |item| %>
+              <div class="fs-chisiamo-item">
+                <%= link_to image_tag("/images/commons/m1.png", :alt => item.firstname + ' ' + item.lastname, :height => "75", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show" %>
+                <p><span style="font-weight: bold;">  <%= item.firstname + ' ' + item.lastname %></span><br/>
+                  <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
+              </div>
+          <% end %>
+          <% @users.each do |item| %>
+              <div class="fs-chisiamo-item">
+                <%= link_to image_tag("/images/commons/m1.png", :alt => item.firstname + ' ' + item.lastname, :height => "75", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show" %>
+                <p><span style="font-weight: bold;">  <%= item.firstname + ' ' + item.lastname %></span><br/>
+                  <span style="font-style: italic;"> collaboratore </span></p>
+              </div>
+          <% end %>
+        </article>
+        <br/>&nbsp; <br/>
+      </div>
+    </div>
+  </article>
+  <%= link_to("1a versione statica", chisiamo_path, :class => "fs-giallo-button") %>
+</div>
 
 <%# render :partial => 'blocco_sidebar1' %>
 
-  <%= render :partial => 'blocco_sidebar1' %>
-</div>
+<%= render :partial => 'blocco_sidebar1' %>
+

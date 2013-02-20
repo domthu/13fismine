@@ -36,10 +36,10 @@ class Issue < ActiveRecord::Base
     self.section.top_section #+ "::" + self.section
   end
   def top_section_key
-    if (self.section.nil?)
+    if self.section.nil?
       FeeConst::TOP_SECTION_DEFAULT
     else
-      if (self.section.top_section.nil?)
+      if self.section.top_section.nil?
         FeeConst::TOP_SECTION_DEFAULT
       else
         self.section.top_section.key
@@ -110,6 +110,14 @@ class Issue < ActiveRecord::Base
   after_save :reschedule_following_issues, :update_nested_set_attributes, :update_parent_attributes, :create_journal
   after_destroy :update_parent_attributes
 
+
+  def user_has_profile(usr = nil)
+   if usr == nil #UserProfile.users_profiles_all(:first, :condition => " user_id =#{usr}").count  > 0
+     true
+   else
+     false
+   end
+ end
   # returns latest issues for public area
   def self.latest_fs(user = User.current, count = 5)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]

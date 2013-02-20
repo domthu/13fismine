@@ -1,0 +1,36 @@
+<div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
+  <article class="fs-post fs-article">
+    <div class="fs-content-layout-row">
+      <% @users.each do |item| %>
+      <div class="fs-layout-cell post-layout-item-3" style="width: 50%">
+        <article class="fs-post fs-article clearfix">
+
+          <h3 class="fs-postheader">DIRETTORI (RUOLO MANAGER) </h3>
+
+              <h3><%= @ha_profilo.to_s %></h3>
+              <div>
+                <%# image_tag("/images/commons/m1.png", :alt => "Stefano Andreani", :height => "115", :class => "fs-lightbox") %>
+                <p><span style="font-weight: bold;"> <%= item.firstname + ' ' + item.lastname %></span><br/>
+
+                  <span style="font-style: italic;">  </span></p>
+              </div>
+          <% end %>
+        </article>
+
+        <br/>&nbsp; <br/>
+        <article class="fs-post fs-article clearfix">
+          <%= link_to("1a versione statica", chisiamo_path, :class => "fs-giallo-button") %>
+        </article>
+
+      </div>
+      <div class="fs-layout-cell post-layout-item-3 clearfix" style="width: 50%">
+
+      </div>
+    </div>
+   </article>
+</div>
+
+<%# render :partial => 'blocco_sidebar1' %>
+
+<%= render :partial => 'blocco_sidebar1' %>
+

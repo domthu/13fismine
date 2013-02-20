@@ -85,11 +85,8 @@ class User < Principal
 # Active non-anonymous users scope
   named_scope :active, :conditions => "#{User.table_name}.status = #{STATUS_ACTIVE}"
 # users manager  e redattori in chi-siamo
-  named_scope :users_profiles_all_managers, :include => :user_profile,
-                :conditions => "#{User.table_name}.role_id = #{FeeConst::ROLE_MANAGER}"
-  named_scope :users_profiles_all_authors, :include => :user_profile,
-                :conditions => "#{User.table_name}.role_id = #{FeeConst::ROLE_AUTHOR}"
-
+  named_scope :users_profiles_all, :include => :user_profile,
+                :conditions => "#{User.table_name}.role_id = #{FeeConst::ROLE_MANAGER} OR #{User.table_name}.role_id = #{FeeConst::ROLE_AUTHOR}"
   acts_as_customizable
   attr_accessor :password, :password_confirmation
   attr_accessor :last_before_login_on
@@ -128,9 +125,12 @@ class User < Principal
     {:conditions => ["#{User.table_name}.role_id = ?", role_id]}
   }
 
+
+
   def my_quesiti
     News.all(:conditions  => ['author_id = ?', self.id], :order => "created_on DESC")
   end
+
 
   #Utente è affiliato ad una Sigla-TipoOrganizzazione
   def sigla_tipo()
