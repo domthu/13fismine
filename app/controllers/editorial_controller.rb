@@ -435,18 +435,14 @@ class EditorialController < ApplicationController
     end
   end
 
-  def profilo_new()
+  def profilo_new
 
-      @news = UserProfile.new(:project => @project, :author => User.current)
-      @news.safe_attributes = params[:quesito]
-      @news.title = @news.quesito_new_default_title(User.current)
-      @news.status_id = FeeConst::QUESITO_STATUS_WAIT
-      @news.comments_count = 0
+      @u_profile = UserProfile.new(params[:user_profile])
       if request.post?
-        if @news.save
+        if @u_profile.save
           # flash[:notice] = l(:notice_successful_create)
-          flash[:notice] = fading_flash_message("Il suo quesito è stato registrato grazie.", 7)
-          redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
+          flash[:notice] = fading_flash_message("Il suo profilo è stato registrato grazie.", 7)
+          redirect_to :controller => 'editorial', :action => 'profili' #, :id => @u_profile
           #redirect_to :controller => 'news', :action => 'index', :project_id => @project
         else
           flash.now[:notice] = 'Bah... qualcosa è andato storto!'
