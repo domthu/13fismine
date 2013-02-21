@@ -1,4 +1,5 @@
 <h1>New user_profile</h1>
+
 <!--
 <% form_tag({:controller => "editorial", :action => "profilo_create", :method => "post"}, :class => "input", :id => "fs-quesito-new") do %>
     <div id="fs-form-profiles-img">
@@ -14,61 +15,83 @@
 <% end %>
 -->
 
-<% form_for @u_profile, :url => {:action => "profilo_create"} do |f| %>
+<% form_for @u_profile, :url => {:action => "profilo_new"} do |f| %>
     <%= f.error_messages %>
-    <%= f.hidden_field :user_id , :value=> :params[uid] %>
-    <h2><%= :params[uid] %> </h2>
-   <!--
+    <%= f.hidden_field :user_id, :value => params[:uid] %>
+
+    <h2><%= params[:uid] %> </h2>
+
+    <div class="fs-profiles-sx">
+      <p>
+        <%= f.label :immagine_url %><br/>
+        <%= f.text_field :immagine_url %>
+      </p>
+
+      <p>
+        <%= f.label :fs_qualifica %><br/>
+        <%= f.text_field :fs_qualifica %>
+      </p>
+    </div>
+    <div class="fs-profiles-cx">
+      <p>
+        <%= f.label :fs_tel %><br/>
+        <%= f.text_field :fs_tel %>
+      </p>
+
+      <p>
+        <%= f.label :fs_fax %><br/>
+        <%= f.text_field :fs_fax %>
+      </p>
+
+      <p>
+        <%= f.label :fs_skype %><br/>
+        <%= f.text_field :fs_skype %>
+      </p>
+
+      <p>
+        <%= f.label :fs_mail %><br/>
+        <%= f.text_field :fs_mail %>
+      </p>
+
+      <p>
+        <%= f.label :external_url %><br/>
+        <%= f.text_field :external_url %>
+      </p>
+    </div>
+    <div class="fs-profiles-dx">
+      <p>
+        <%= f.label :display_in %><br/>
+        <%= select_tag(:display_in, '<option value="1">Collaboratori</option>,<option value="2">Responsabili</option>,<option value="3">Direttori</option>,<option value="4">Non Visualizzato</option>') %>
+      </p>
+      <div >
+        <label><%= radio_button_tag 'display_in', 1,true %> <%= 'Collaboratori' %></label><br />
+     <label><%= radio_button_tag 'display_in', 2 %> <%= 'Responsabili' %></label><br />
+     <label><%= radio_button_tag 'display_in', 3  %> <%= 'Direttori' %></label> <br />
+        <label><%= radio_button_tag 'display_in', 4 %> <%= 'Non Visibile' %></label><br /></div>
+
+
+      <p>
+        <%= f.submit 'Create' %>
+      </p>
+
+      <%= link_to 'Back', user_profiles_path %>
+    </div>
+    <div class="cleared"></div>
     <p>
 
-      <%= f.label :user_id %><br/>
-      <%= f.text_field :user_id %>
-    </p>
-    -->
-    <p>
-      <%= f.label :titoli %><br/>
-      <%= f.text_area :titoli %>
+    <p><%= f.text_area :titoli,
+                       :cols => 20,
+                       :rows => 5,
+                       :accesskey => accesskey(:edit),
+                       :class => 'wiki-edit' %>
     </p>
     <p>
-      <%= f.label :curriculum %><br/>
+      <%= f.label l(:label_curriculum) %><br/>
       <%= f.text_area :curriculum %>
     </p>
-    <p>
-      <%= f.label :immagine_url %><br/>
-      <%= f.text_field :immagine_url %>
-    </p>
-    <p>
-      <%= f.label :external_url %><br/>
-      <%= f.text_field :external_url %>
-    </p>
-    <p>
-      <%= f.label :fs_qualifica %><br/>
-      <%= f.text_field :fs_qualifica %>
-    </p>
-    <p>
-      <%= f.label :fs_tel %><br/>
-      <%= f.text_field :fs_tel %>
-    </p>
-    <p>
-      <%= f.label :fs_fax %><br/>
-      <%= f.text_field :fs_fax %>
-    </p>
-    <p>
-      <%= f.label :fs_skype %><br/>
-      <%= f.text_field :fs_skype %>
-    </p>
-    <p>
-      <%= f.label :fs_mail %><br/>
-      <%= f.text_field :fs_mail %>
-    </p>
-    <p>
-      <%= f.label :display_in %><br/>
-      <%= select_tag(:display_in, '<option value="1">Collaboratori</option>,<option value="2">Responsabili</option>,<option value="3">Direttori</option>,<option value="4">Non Visualizzato</option>') %>
-    </p>
 
-    <p>
-      <%= f.submit 'Create' %>
-    </p>
+
 <% end %>
+<%= wikitoolbar_for 'user_profile_curriculum' %>
+<%= wikitoolbar_for 'curriculum' %>
 
-<%= link_to 'Back', user_profiles_path %>

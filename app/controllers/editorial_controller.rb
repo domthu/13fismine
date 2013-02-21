@@ -1,5 +1,5 @@
 class EditorialController < ApplicationController
-  layout 'editorial'
+  layout 'editorial' ,:except => [:profilo_new]
   #before_filter :require_admin
   helper :sort
   include SortHelper
@@ -448,6 +448,7 @@ class EditorialController < ApplicationController
           flash.now[:notice] = 'Bah... qualcosa è andato storto!'
         end
       end
+      render :layout => "editorial_edit"
   end
 # -----------------    CHI SIAMO    (fine) [menu item] ------------------
 

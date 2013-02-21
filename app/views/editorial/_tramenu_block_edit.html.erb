@@ -1,0 +1,13 @@
+
+<div id="fs-tramenu-blocco4">
+  <% if User.current && User.current.logged? %>
+<h2> Pagina di modifica profilo </h2>
+      <h1> Pagina di modifica profilo </h1>
+  <% else %>
+      <h2> Pagina di modifica profilo </h2>
+      <h1> Pagina di modifica profilo </h1>
+  <% end %>
+</div>
+<div id="fs-tramenu-blocco3">
+  <%= render :partial => 'tramenu_login' %>
+</div>

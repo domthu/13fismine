@@ -52,7 +52,7 @@
                 <%= link_to image_tag("/images/commons/m1.png", :alt => item.firstname + ' ' + item.lastname, :height => "80", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_new", :uid => item.id %>
                 <p>
                   <span style="font-weight: bold;">  <%= link_to((item.firstname + ' ' + item.lastname), :controller => "editorial", :action => "profilo_new", :uid => item.id) %></span><br/>
-                  <span style="font-style: italic;"> Collaboratore </span></p>
+                  <span style="font-style: italic;">[ <%= item.id.to_s %> <%= item.role_id == 4 ? 'Collaboratore':'Admin' %> ]</span></p>
               </div>
           <% end %>
           <div class="clearfix"></div>

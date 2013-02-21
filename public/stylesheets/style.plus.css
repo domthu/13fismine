@@ -316,7 +316,12 @@
 }
 
 /*  fine  3 -  -  -  -  -  -   tramenu   terzo blocco   -  -  -  -  -  -  */
-
+#fs-tramenu-blocco4 {
+    width: 70%;
+    height: 125px;
+    display: block;
+    float: left;
+}
 /* pagina chi siamo */
 h3.fs-postheader {
     color: #45535d;
@@ -1438,6 +1443,30 @@ right: -14px;   */
 }
 
 /* =========================== fine quesiti  ============================= */
+/* ===================== inizio chi siamo (user profiles)  ===================== */
+.fs-profiles-sx{
+ width: 25%;
+    padding: 10px;
+    border: solid 1px #dcdcdc;
+    float:left;
+}
+.fs-profiles-cx{
+ width: 45%;
+    padding: 10px;
+    border: solid 1px #9bc6dc;
+    float:left;
+}
+.fs-profiles-dx{
+    padding: 10px;
+    border: solid 1px #dcd075;
+    float:left;
+}
+
+
+
+
+
+/* ===================== fine  chi siamo (user profiles)  ===================== */
 /* inizio slide */
 .fs-slidecontainerslideshutterstock_1 {
     position: relative;
