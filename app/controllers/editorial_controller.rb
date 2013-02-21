@@ -1,5 +1,5 @@
 class EditorialController < ApplicationController
-  layout 'editorial' ,:except => [:profilo_new]
+  layout 'editorial', :except => [:profilo_new]
   #before_filter :require_admin
   helper :sort
   include SortHelper
@@ -380,12 +380,12 @@ class EditorialController < ApplicationController
   #Il dato @quesito_news viene caricato dentro il before_filter
   def quesito_show
     #1 news sola
-    @quesito_news = News.find(@id)  unless !@id.nil?
+    @quesito_news = News.find(@id) unless !@id.nil?
     @quesito_news_stato = @quesito_news.quesito_status_fs_text
     @quesito_news_stato_num = @quesito_news.quesito_status_fs_number
-                                   #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
+    #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
 
-                                   # @quesito_issues = @quesito_news.issues
+    # @quesito_issues = @quesito_news.issues
     @quesito_issues_all_count = @quesito_news.issues.count # testing
     @quesito_issues = @quesito_news.issues.all_public_fs #--> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
     @quesito_issues_count = @quesito_issues.count
@@ -421,35 +421,41 @@ class EditorialController < ApplicationController
 
 # -----------------       QUESITI    (fine)        ------------------
 # -----------------    CHI SIAMO    (inizio) [menu item] ------------------
+
   def profili
-  @users = User.users_profiles_all(:conditions => ["id NOT IN (?)", UserProfile.all.id])
+    @users = User.users_profiles_all(:conditions => ["id NOT IN (?)", UserProfile.all.id])
+    # @has_profile = UserProfile.user_has_profile(@users)
+    @collaboratori = UserProfile.profiles_display_collaboratori
+    @responsabili = UserProfile.profiles_display_responsabili
+    @direttori = UserProfile.profiles_display_direttori
 
- # @has_profile = UserProfile.user_has_profile(@users)
-  @collaboratori = UserProfile.profiles_display_collaboratori
-  @responsabili = UserProfile.profiles_display_responsabili
-  @direttori = UserProfile.profiles_display_direttori
-
-  @profiles_count = UserProfile.users_profiles_all.count
-  if   @profiles_count > 0
-    @profiles = UserProfile.users_profiles_all
+    @profiles_count = UserProfile.users_profiles_all.count
+    if   @profiles_count > 0
+      @profiles = UserProfile.users_profiles_all
     end
+  end
+
+  def profilo_show
+    @id = params[:id].to_i
+    @user_profile = UserProfile.find_by_id(@id)
   end
 
   def profilo_new
 
-      @u_profile = UserProfile.new(params[:user_profile])
-      if request.post?
-        if @u_profile.save
-          # flash[:notice] = l(:notice_successful_create)
-          flash[:notice] = fading_flash_message("Il suo profilo è stato registrato grazie.", 7)
-          redirect_to :controller => 'editorial', :action => 'profili' #, :id => @u_profile
-          #redirect_to :controller => 'news', :action => 'index', :project_id => @project
-        else
-          flash.now[:notice] = 'Bah... qualcosa è andato storto!'
-        end
+    @u_profile = UserProfile.new(params[:user_profile])
+    if request.post?
+      if @u_profile.save
+        # flash[:notice] = l(:notice_successful_create)
+        flash[:notice] = fading_flash_message("Il suo profilo è stato registrato grazie.", 7)
+        redirect_to :controller => 'editorial', :action => 'profilo_show' , :id => @u_profile.id
+        #redirect_to :controller => 'news', :action => 'index', :project_id => @project
+      else
+        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
       end
-      render :layout => "editorial_edit"
+    end
+    render :layout => "editorial_edit"
   end
+
 # -----------------    CHI SIAMO    (fine) [menu item] ------------------
 
   def contact

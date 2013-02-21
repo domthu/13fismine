@@ -1,20 +1,76 @@
 <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
   <article class="fs-post fs-article">
     <div class="fs-content-layout-row">
-      <% @users.each do |item| %>
       <div class="fs-layout-cell post-layout-item-3" style="width: 50%">
         <article class="fs-post fs-article clearfix">
+          <div class="fs-profiles-sx">
+            <p>
+              <b> Photo </b>
+              <%= image_tag @user_profile.photo.url %>
+              <br >              <%= h @user_profile.photo %>
+            </p>
 
-          <h3 class="fs-postheader">DIRETTORI (RUOLO MANAGER) </h3>
+            <p>
+              <b> Immagine url </b>
+              <%= h @user_profile.immagine_url %>
+            </p>
 
-              <h3><%= @ha_profilo.to_s %></h3>
-              <div>
-                <%# image_tag("/images/commons/m1.png", :alt => "Stefano Andreani", :height => "115", :class => "fs-lightbox") %>
-                <p><span style="font-weight: bold;"> <%= item.firstname + ' ' + item.lastname %></span><br/>
+            <p>
+              <b> Qualifica </b>
+              <%= h @user_profile.fs_qualifica %>
+            </p>
+          </div>
+          <div class="fs-profiles-cx">
+            <p>
+              <b> telefono </b>
+              <%= h @user_profile.fs_tel %>
+            </p>
 
-                  <span style="font-style: italic;">  </span></p>
-              </div>
-          <% end %>
+            <p>
+              <b> fax </b>
+              <%= h @user_profile.fs_fax %>
+            </p>
+
+            <p>
+              <b> skype </b>
+              <%= h @user_profile.fs_skype %>
+            </p>
+
+            <p>
+              <b> e-mail </b>
+              <%= h @user_profile.fs_mail %>
+            </p>
+
+            <p>
+              <b> url esterno </b>
+              <%= h @user_profile.external_url %>
+            </p>
+          </div>
+          <div class="fs-profiles-dx">
+            <p>
+              <b> Mostra in ... </b>
+              <%= select_tag(:display_in, '<option value="1">Collaboratori</option>,<option value="2">Responsabili</option>,<option value="3">Direttori</option>,<option value="4">Non Visualizzato</option>') %>
+            </p>
+
+            <div>
+              <b> Mostra in ... </b>
+              <label><%= radio_button_tag 'display_in', 1, true %> <%= 'Collaboratori' %></label><br/>
+              <label><%= radio_button_tag 'display_in', 2 %> <%= 'Responsabili' %></label><br/>
+              <label><%= radio_button_tag 'display_in', 3 %> <%= 'Direttori' %></label> <br/>
+              <label><%= radio_button_tag 'display_in', 4 %> <%= 'Non Visibile' %></label><br/></div>
+          </div>
+          <div class="cleared"></div>
+
+          <b> titoli </b>
+
+          <p><%= h @user_profile.titoli %>
+          </p>
+
+          <p>
+            <b> Curriculum </b>
+            <%= h @user_profile.curriculum %>
+          </p>
+
         </article>
 
         <br/>&nbsp; <br/>
@@ -27,7 +83,7 @@
 
       </div>
     </div>
-   </article>
+  </article>
 </div>
 
 <%# render :partial => 'blocco_sidebar1' %>

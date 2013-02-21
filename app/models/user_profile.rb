@@ -1,5 +1,8 @@
 class UserProfile < ActiveRecord::Base
+  has_attached_file :photo
   belongs_to :user
+  attr_accessor :image_file_name, :image_content_type, :image_file_size, :image_updated_at
+
   named_scope :users_profiles_all, :include => :user,
               :conditions => "#{User.table_name}.role_id = #{FeeConst::ROLE_MANAGER} OR #{User.table_name}.role_id = #{FeeConst::ROLE_AUTHOR}"
 

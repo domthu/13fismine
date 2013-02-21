@@ -46,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   map.profili '/chi-siamo', :controller => 'editorial', :action => 'profili'
   map.profilo '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo'
   map.profilo_new '/chi-siamo/nuovo_profilo/:id', :controller => 'editorial', :action => 'profilo_new'
+  map.profilo_show '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo_show'
   #-> Edizioni e Newletter (table: projects)-
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
