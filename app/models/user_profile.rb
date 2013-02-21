@@ -35,4 +35,5 @@ class UserProfile < ActiveRecord::Base
 
     self.users_profiles_all(:first, :condition => " display_in =#{FeeConst::PROFILO_FS_DIRETTORE}")
   end
+
 end

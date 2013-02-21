@@ -52,7 +52,20 @@ class UserProfilesController < ApplicationController
       end
     end
   end
+  def create_profile
 
+    @user_profile = UserProfile.new(params[:user_profile])
+    if request.post?
+      if @user_profile.save
+        # flash[:notice] = l(:notice_successful_create)
+        flash[:notice] = fading_flash_message("Il suo profilo è stato registrato grazie.", 7)
+        redirect_to :controller => 'editorial', :action => 'profilo_show' , :id => @user_profile.id
+        #redirect_to :controller => 'news', :action => 'index', :project_id => @project
+      else
+        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
+      end
+    end
+    end
   # PUT /user_profiles/1
   # PUT /user_profiles/1.xml
   def update

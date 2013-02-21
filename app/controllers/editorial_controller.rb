@@ -439,23 +439,25 @@ class EditorialController < ApplicationController
     @id = params[:id].to_i
     @user_profile = UserProfile.find_by_id(@id)
   end
-
   def profilo_new
-
-    @u_profile = UserProfile.new(params[:user_profile])
+    render :layout => "editorial_edit"
+  end
+=begin
+  def profilo_create
+    render :layout => "editorial_edit"
+    @user_profile = UserProfile.new(params[:user_profile])
     if request.post?
-      if @u_profile.save
+      if @user_profile.save
         # flash[:notice] = l(:notice_successful_create)
         flash[:notice] = fading_flash_message("Il suo profilo è stato registrato grazie.", 7)
-        redirect_to :controller => 'editorial', :action => 'profilo_show' , :id => @u_profile.id
+        redirect_to :controller => 'editorial', :action => 'profilo_show' , :id => @user_profile.id
         #redirect_to :controller => 'news', :action => 'index', :project_id => @project
       else
         flash.now[:notice] = 'Bah... qualcosa è andato storto!'
       end
     end
-    render :layout => "editorial_edit"
-  end
-
+    end
+=end
 # -----------------    CHI SIAMO    (fine) [menu item] ------------------
 
   def contact
