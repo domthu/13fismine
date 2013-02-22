@@ -1465,6 +1465,7 @@ it:
   cannot_fast_reply_other_issues: "Non è possibile eseguire la risposta veloce perchè ci sono altre risposte in corso di elaborazione. Vedi la lista degli altri autori qui sotto, mettetevi d'accordo e svuotate i campi descrizione per continuare"
   alert_another_responses: "risposta in corso da parte di %{author}. Contattalo e vedi la sua risposta al link: %{link}"
   deleted_issue: "Eliminato la risposta di %{author}. %{name}"
+  cannot_delete_related_news: "Non si puo cancella questo quesito perchè si sono <b>(%{num})</b> articoli legati."
 
 #EDITORIAL
   list_edizioni: Lista edizioni

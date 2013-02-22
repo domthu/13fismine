@@ -19,6 +19,7 @@ class NewsController < ApplicationController
   default_search_scope :news
   model_object News
   include FeesHelper
+  #Kappao include ActionView::Helpers::UrlHelper #use link_to in controller
 
   before_filter :find_model_object, :except => [:new, :create, :index]
   before_filter :find_project_from_association, :except => [:new, :create, :index, :assign]
@@ -155,8 +156,19 @@ class NewsController < ApplicationController
   end
 
   def destroy
-    @news.destroy
-    redirect_to :action => 'index', :project_id => @project
+    #control if exists some issues
+    if @news.issues.empty? || @news.issues.count <= 0
+      @news.destroy
+      redirect_to :action => 'index', :project_id => @project
+    else
+      flash[:notice] = l(:cannot_delete_related_news, :num =>  @news.issues.count)
+      @news.issues.each_with_index { |issue, i |
+        #Kappao include ActionView::Helpers::UrlHelper #use link_to in controller
+        #flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + link_to_issue(issue)
+        flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + issue.to_s
+      }
+      redirect_to :action => 'show', :id => @news
+    end
   end
 
 private
