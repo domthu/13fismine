@@ -43,12 +43,7 @@ ActionController::Routing::Routes.draw do |map|
   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
   map.enti  '/enti_federazioni', :controller => 'editorial', :action => 'enti'
   map.lavora '/lavora_con_noi', :controller => 'editorial', :action => 'lavora'
-  map.profili '/chi-siamo', :controller => 'editorial', :action => 'profili'
-  map.profilo_new '/chi-siamo/nuovo_profilo', :controller => 'editorial', :action => 'profilo_new'
-  map.profilo_show '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo_show'
-  map.connect '/nuovo_profilo', :controller => 'user_profiles', :action => 'create_profile' , :conditions => {:method => :post}
-
-  #-> Edizioni e Newletter (table: projects)-
+   #-> Edizioni e Newletter (table: projects)-
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
   map.edizione_newsletter '/edizione_newsletter/:id', :controller => 'editorial', :action => 'edizione_newsletter'
@@ -70,6 +65,26 @@ ActionController::Routing::Routes.draw do |map|
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.abbonamenti 'account/register', :controller => 'account', :action => 'register'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
+
+  map.with_options :controller => 'editorial' , :conditions => {:method => :get} do |user_profiles_views|
+      user_profiles_views.connect '/chi-siamo', :action => 'profili_all'
+      user_profiles_views.connect '/chi-siamo/profilo/new', :action => 'profilo_new'
+      user_profiles_views.connect '/chi-siamo/profilo/:id', :action => 'profilo_show'
+      user_profiles_views.connect '/chi-siamo/profilo/edit/:id', :action => 'profilo_edit'
+    end
+  map.with_options :controller => 'user_profiles' , :conditions => {:method => :post} do |user_profiles_actions|
+      user_profiles_actions.connect '/profilo', :action => 'create_profile'
+      user_profiles_actions.connect '/profilo', :action => 'update_profile'
+    end
+=begin
+
+  map.profili_all '/chi-siamo', :controller => 'editorial', :action => 'profili_all'
+   map.profilo_new '/chi-siamo/nuovo_profilo', :controller => 'editorial', :action => 'profilo_new'
+   map.profilo_show '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo_show'
+   map.profilo_edit '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo_edit'
+   map.connect '/profilo', :controller => 'user_profiles', :action => 'create_profile' , :conditions => {:method => :post}
+   map.connect '/profilo', :controller => 'user_profiles', :action => 'update_profile' , :conditions => {:method => :post}
+=end
 
 #Map menu
 

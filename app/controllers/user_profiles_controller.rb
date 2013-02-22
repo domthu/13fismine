@@ -52,6 +52,7 @@ class UserProfilesController < ApplicationController
       end
     end
   end
+  # sandro sotto  -- per non usare i metodi di default in caso si voglia utilizzare i default in redmine
   def create_profile
 
     @user_profile = UserProfile.new(params[:user_profile])
@@ -65,7 +66,23 @@ class UserProfilesController < ApplicationController
         flash.now[:notice] = 'Bah... qualcosa è andato storto!'
       end
     end
+  end
+
+  def update_profile
+    @user_profile = UserProfile.find(params[:id])
+
+    respond_to do |format|
+      if @user_profile.update_attributes(params[:user_profile])
+        flash[:notice] = fading_flash_message("Il suo profilo è stato aggiornato grazie.", 7)
+        redirect_to :controller => 'editorial', :action => 'profilo_show' , :id => @user_profile.id
+        format.xml  { head :ok }
+      else
+       # format.html { render :action => "edit" }
+        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
+        format.xml  { render :xml => @user_profile.errors, :status => :unprocessable_entity }
+      end
     end
+  end
   # PUT /user_profiles/1
   # PUT /user_profiles/1.xml
   def update

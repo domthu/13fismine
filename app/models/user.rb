@@ -79,24 +79,16 @@ class User < Principal
   #has_one :reference, :class_name => 'Organization', :dependent => :nullify
   has_many :references, :class_name => 'Organization', :dependent => :nullify
   has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
-
-#  scope :logged, :conditions => "#{User.table_name}.status <> #{STATUS_ANONYMOUS}"
-#  scope :status, lambda {|arg| arg.blank? ? {} : {:conditions => {:status => arg.to_i}} }
-# Active non-anonymous users scope
-  named_scope :active, :conditions => "#{User.table_name}.status = #{STATUS_ACTIVE}"
-# users manager  e redattori in chi-siamo
-  named_scope :users_profiles_all, :include => :user_profile,
-                :conditions => "#{User.table_name}.role_id = #{FeeConst::ROLE_MANAGER} OR #{User.table_name}.role_id = #{FeeConst::ROLE_AUTHOR}"
   acts_as_customizable
   attr_accessor :password, :password_confirmation
   attr_accessor :last_before_login_on
-# Prevents unauthorized assignments
+  # Prevents unauthorized assignments
   attr_protected :login, :admin, :password, :password_confirmation, :hashed_password
 
   validates_presence_of :login, :firstname, :lastname, :mail, :if => Proc.new { |user| !user.is_a?(AnonymousUser) }
   validates_uniqueness_of :login, :if => Proc.new { |user| !user.login.blank? }, :case_sensitive => false
   validates_uniqueness_of :mail, :if => Proc.new { |user| !user.mail.blank? }, :case_sensitive => false
-# Login must contain lettres, numbers, underscores only
+  # Login must contain lettres, numbers, underscores only
   validates_format_of :login, :with => /^[a-z0-9_\-@\.]*$/i
   validates_length_of :login, :maximum => 30
   validates_length_of :firstname, :lastname, :maximum => 30
@@ -109,7 +101,7 @@ class User < Principal
   before_create :set_mail_notification
   before_save :update_hashed_password
   before_destroy :remove_references_before_destroy
-
+  #--------------------- NAMED SCOPES --------------
   named_scope :in_group, lambda { |group|
     group_id = group.is_a?(Group) ? group.id : group.to_i
     {:conditions => ["#{User.table_name}.id IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id]}
@@ -118,17 +110,23 @@ class User < Principal
     group_id = group.is_a?(Group) ? group.id : group.to_i
     {:conditions => ["#{User.table_name}.id NOT IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id = ?)", group_id]}
   }
-
   #ricerca utente apartenente ad un gruppo
   named_scope :in_role, lambda { |role|
     role_id = role.is_a?(Role) ? role.id : role.to_i
     {:conditions => ["#{User.table_name}.role_id = ?", role_id]}
   }
-
-
+  scope :logged, :conditions => "#{User.table_name}.status <> #{STATUS_ANONYMOUS}"
+  #  scope :status, lambda {|arg| arg.blank? ? {} : {:conditions => {:status => arg.to_i}} }
+  # Active non-anonymous users scope
+  named_scope :active, :conditions => "#{User.table_name}.status = #{STATUS_ACTIVE}"
+  # users manager  e redattori in chi-siamo
+  named_scope :users_profiles_all, :include => :user_profile,
+              :conditions => "#{User.table_name}.role_id = #{FeeConst::ROLE_MANAGER} OR #{User.table_name}.role_id = #{FeeConst::ROLE_AUTHOR}"
+  named_scope :who_without_profile, :conditions => "(#{User.table_name}.id NOT IN (SELECT user_profiles.user_id as id from user_profiles))"
+  #-----------------------------------------------
 
   def my_quesiti
-    News.all(:conditions  => ['author_id = ?', self.id], :order => "created_on DESC")
+    News.all(:conditions => ['author_id = ?', self.id], :order => "created_on DESC")
   end
 
 
@@ -159,20 +157,23 @@ class User < Principal
 #      :asso_id => self.asso_id}])  #.to_s
     end
   end
+
   def associazione_affiliata()
-     if self.asso_id.nil? || self.asso.nil? || self.asso_id == 0
-       nil
-     else
-       Asso.find(:all, :include => [:organization => :cross_organization], :conditions => ["id =  ?", self.asso_id])
-     end
-  end
-  def associazione_banner()
-      if self.asso_id.nil? || self.asso.nil?
-        nil
-      else
-        Asso.find(:all, :include => [:cross_groups => :group_banner ], :conditions => ["id =  ?", self.asso_id])
-      end
+    if self.asso_id.nil? || self.asso.nil? || self.asso_id == 0
+      nil
+    else
+      Asso.find(:all, :include => [:organization => :cross_organization], :conditions => ["id =  ?", self.asso_id])
     end
+  end
+
+  def associazione_banner()
+    if self.asso_id.nil? || self.asso.nil?
+      nil
+    else
+      Asso.find(:all, :include => [:cross_groups => :group_banner], :conditions => ["id =  ?", self.asso_id])
+    end
+  end
+
   def pubblicita()
     if self.asso_id.nil? || self.asso.nil?
       nil
@@ -387,6 +388,7 @@ class User < Principal
       true
     end
   end
+
   #endregion ROLE * USER
 
   def set_mail_notification

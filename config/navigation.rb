@@ -46,7 +46,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     end
     @tmenu_ns = TopMenu.find_by_id(FeeConst::TMENU_NEWSPORT.to_s)
-    menu_generale.item :key_2, 'Chi Siamo', profili_path
+    menu_generale.item :key_2, 'Chi Siamo', '/chi-siamo'
     menu_generale.item :key_3, 'Servizi alle Associazioni', servizi_path
     menu_generale.item :key_5, 'Lavora con Noi', lavora_path
     menu_generale.item :key_6, 'Eventi e Convegni', eventi_path

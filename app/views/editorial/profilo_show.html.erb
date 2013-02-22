@@ -6,7 +6,7 @@
           <div class="fs-profiles-sx">
             <p>
               <b> Photo </b>
-              <%= image_tag @user_profile.photo.url %>
+              <%= image_tag @user_profile.photo.url(:medium) %>
             </p>
 
             <p>
@@ -56,8 +56,12 @@
               <label><%= radio_button_tag 'display_in', 1, true %> <%= 'Collaboratori' %></label><br/>
               <label><%= radio_button_tag 'display_in', 2 %> <%= 'Responsabili' %></label><br/>
               <label><%= radio_button_tag 'display_in', 3 %> <%= 'Direttori' %></label> <br/>
-              <label><%= radio_button_tag 'display_in', 4 %> <%= 'Non Visibile' %></label><br/></div>
+              <label><%= radio_button_tag 'display_in', 4 %> <%= 'Non Visibile' %></label><br/>
+            </div>
+            <p>  <%= button_to("modifica", :action => 'profilo_edit', :id=> @user_profile.id , :class=>"fs-giallo-button") %></p>
+
           </div>
+
           <div class="cleared"></div>
 
           <b> titoli </b>
@@ -75,6 +79,7 @@
         <br/>&nbsp; <br/>
         <article class="fs-post fs-article clearfix">
           <%= link_to("1a versione statica", chisiamo_path, :class => "fs-giallo-button") %>
+          <%= link_to("1a versione statica",  :action => 'profilo_edit', :id=> @user_profile.id , :class => "fs-giallo-button") %>
         </article>
 
       </div>

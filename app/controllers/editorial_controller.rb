@@ -422,13 +422,12 @@ class EditorialController < ApplicationController
 # -----------------       QUESITI    (fine)        ------------------
 # -----------------    CHI SIAMO    (inizio) [menu item] ------------------
 
-  def profili
-    @users = User.users_profiles_all(:conditions => ["id NOT IN (?)", UserProfile.all.id])
-    # @has_profile = UserProfile.user_has_profile(@users)
-    @collaboratori = UserProfile.profiles_display_collaboratori
-    @responsabili = UserProfile.profiles_display_responsabili
-    @direttori = UserProfile.profiles_display_direttori
-
+  def profili_all
+    @users =User.users_profiles_all.who_without_profile
+    @has_profile = UserProfile.user_has_profile?(@users)
+    @collaboratori = UserProfile.users_profiles_all.collaboratori
+    @responsabili = UserProfile.users_profiles_all.responsabili
+    @direttori = UserProfile.users_profiles_all.direttori
     @profiles_count = UserProfile.users_profiles_all.count
     if   @profiles_count > 0
       @profiles = UserProfile.users_profiles_all
@@ -439,9 +438,16 @@ class EditorialController < ApplicationController
     @id = params[:id].to_i
     @user_profile = UserProfile.find_by_id(@id)
   end
+
+  def profilo_edit
+    @id = params[:id].to_i
+    @user_profile = UserProfile.find_by_id(@id)
+  end
+
   def profilo_new
     render :layout => "editorial_edit"
   end
+
 =begin
   def profilo_create
     render :layout => "editorial_edit"
