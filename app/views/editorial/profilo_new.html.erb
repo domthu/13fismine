@@ -1,6 +1,6 @@
 
-<% form_for :user_profile, @user_profile, :url => {:controller=> 'user_profiles', :action => "create_profile"} ,:html => { :multipart => true } do |f| %>
-         <%= f.hidden_field :user_id, :value => params[:uid] %>
+<% form_for :user_profile, @user_profile, :url => {:controller=> 'user_profiles', :action => "pcreate"} ,:html => { :multipart => true } do |f| %>
+         <%= f.hidden_field :user_id, :value => params[:id] %>
     <div class="fs-profiles-sx">
       <p>
         <%= f.label :photo %>

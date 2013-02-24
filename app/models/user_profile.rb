@@ -1,13 +1,17 @@
 class UserProfile < ActiveRecord::Base
   belongs_to :user
+  # formatted as an array of options, option being an array of key, value
+  #OPTIONS = [['Collaboratore', FeeConst::PROFILO_FS_COLLABORATORE], ['Responsabile', FeeConst::PROFILO_FS_RESPONSABILE], ['Direttore', FeeConst::PROFILO_FS_DIRETTORE]]
+  #validates_inclusion_of :display_in, :in => OPTIONS
   attr_accessor :image_file_name, :image_content_type, :image_file_size, :image_updated_at
+=begin
   has_attached_file :photo, :styles => {:medium => "175x175>"},
-                    :url => "/assets/products/:id/:style/:basename.:extension",
+                    :url => "/images/users/profiles/:id/:style/:basename.:extension",
                     :path => ":rails_root/public/images/users/profiles/:id/:style/:basename.:extension"
   has_attached_file :photo, :styles => {:small => "75x75>"},
-                    :url => "/assets/products/:id/:style/:basename.:extension",
+                    :url => "/images/users/profiles/:id/:style/:basename.:extension",
                     :path => ":rails_root/public/images/users/profiles/:id/:style/:basename.:extension"
-
+=end
 
   named_scope :users_profiles_all, :include => :user,
               :conditions => "(#{User.table_name}.role_id = #{FeeConst::ROLE_MANAGER} OR #{User.table_name}.role_id = #{FeeConst::ROLE_AUTHOR})"

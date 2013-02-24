@@ -5,8 +5,8 @@ class UserProfilesGroups < ActiveRecord::Migration
     add_column :user_profiles, :fs_fax, :string, :limit => 25
     add_column :user_profiles, :fs_skype, :string, :limit => 65
     add_column :user_profiles, :fs_mail, :string, :limit => 65
-    add_column :user_profiles, :display_in, :boolean, {:default => 1, :null => false}
-    change_column :top_sections, :hidden_menu , :boolean, {:default => 0}
+    add_column :user_profiles, :display_in, :integer, {:limit =>1, :default => 1, :null => false}
+    change_column :top_sections, :hidden_menu , :integer, {:limit =>1, :default => 0, :null => false}
   end
 
   def self.down

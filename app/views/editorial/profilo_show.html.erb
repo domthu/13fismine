@@ -1,12 +1,16 @@
-<div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
-  <article class="fs-post fs-article">
+<div class="fs-layout-cell fs-content clearfix">
+  <% if flash[:notice] %>
+      <div id="fs-flash-notice"><%= notice %> </div>
+  <% end %>
+  <div class="fs-content-layout post-layout-item-0" style="width: 99%">
     <div class="fs-content-layout-row">
-      <div class="fs-layout-cell post-layout-item-3" style="width: 50%">
-        <article class="fs-post fs-article clearfix">
+      <div class="fs-layout-cell post-layout-item-3" style="width: 100%">
+        <article class="fs-post-profile fs-article">
+
           <div class="fs-profiles-sx">
             <p>
               <b> Photo </b>
-              <%= image_tag @user_profile.photo.url(:medium) %>
+              <%# image_tag @user_profile.photo.url(:medium) %>
             </p>
 
             <p>
@@ -46,19 +50,16 @@
             </p>
           </div>
           <div class="fs-profiles-dx">
-            <p>
-              <b> Mostra in ... </b>
-              <%= select_tag(:display_in, '<option value="1">Collaboratori</option>,<option value="2">Responsabili</option>,<option value="3">Direttori</option>,<option value="4">Non Visualizzato</option>') %>
-            </p>
-
             <div>
-              <b> Mostra in ... </b>
-              <label><%= radio_button_tag 'display_in', 1, true %> <%= 'Collaboratori' %></label><br/>
-              <label><%= radio_button_tag 'display_in', 2 %> <%= 'Responsabili' %></label><br/>
-              <label><%= radio_button_tag 'display_in', 3 %> <%= 'Direttori' %></label> <br/>
-              <label><%= radio_button_tag 'display_in', 4 %> <%= 'Non Visibile' %></label><br/>
+              <b> Mostra in ... </b> &nbsp;<br />
+              <label><%= radio_button_tag 'display_in',1,@user_profile.display_in == 1 ? true : false, :disabled => true %> <%= 'Collaboratori' %></label><br/>
+              <label><%= radio_button_tag 'display_in',2,@user_profile.display_in == 2 ? true : false, :disabled => true %> <%= 'Responsabili' %></label><br/>
+              <label><%= radio_button_tag 'display_in',3,@user_profile.display_in == 3 ? true : false, :disabled => true %> <%= 'Direttori' %></label> <br/>
+              <label><%= radio_button_tag 'display_in',4,@user_profile.display_in == 4 ? true : false, :disabled => true %> <%= 'Non Visibile' %></label><br/>
+              <br /> &nbsp;
             </div>
-            <p>  <%= button_to("modifica", :action => 'profilo_edit', :id=> @user_profile.id , :class=>"fs-giallo-button") %></p>
+
+            <p>  <%= link_to("modifica", profile_edit_path(@user_profile) , :class=>"fs-giallo-button") %></p>
 
           </div>
 
@@ -77,17 +78,15 @@
         </article>
 
         <br/>&nbsp; <br/>
-        <article class="fs-post fs-article clearfix">
+        <article class="fs-post-profile fs-article">
           <%= link_to("1a versione statica", chisiamo_path, :class => "fs-giallo-button") %>
-          <%= link_to("1a versione statica",  :action => 'profilo_edit', :id=> @user_profile.id , :class => "fs-giallo-button") %>
+
         </article>
 
       </div>
-      <div class="fs-layout-cell post-layout-item-3 clearfix" style="width: 50%">
 
-      </div>
-    </div>
-  </article>
+  </div>
+  </div>
 </div>
 
 <%# render :partial => 'blocco_sidebar1' %>

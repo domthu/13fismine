@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contracts
 
   map.resources :templates
-  map.resources :example
+
   map.resources :reservations
   #  under are only for testing
   map.connect 'edizionex/:id', :controller => 'editorial', :action => 'edizione_smtp'
@@ -56,6 +56,14 @@ ActionController::Routing::Routes.draw do |map|
   map.quesito_new '/quesito_new', :controller => 'editorial', :action => 'quesito_new'
   map.quesito_create '/quesito_create', :controller => 'editorial', :action => 'quesito_create'
   map.quesiti_my '/quesiti_my', :controller => 'editorial', :action => 'quesiti_my'
+  #-> Quesiti (table: user_profiles)-
+  map.profiles_all '/chi-siamo',:controller => 'editorial', :action => 'profili_all'
+  map.profile_new '/chi-siamo/profilo/new', :controller => 'editorial', :action => 'profilo_new'
+  map.profile_show '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo_show'
+  map.profile_edit '/chi-siamo/profilo/:id/edit', :controller => 'editorial', :action => 'profilo_edit'
+  map.profile_create '/chi-siamo/profilo/create', :controller => 'editorial', :action => 'profilo_create'
+  map.profile_update '/chi-siamo/profilo/:id/update', :controller => 'editorial', :action => 'profilo_update'
+
     #to match override act_as_event after search
   #map.edizioneid '/editoriale/newsletter/:id', :controller => 'editorial', :action => 'edizione'
   #map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
@@ -65,7 +73,7 @@ ActionController::Routing::Routes.draw do |map|
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.abbonamenti 'account/register', :controller => 'account', :action => 'register'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
-
+=begin
   map.with_options :controller => 'editorial' , :conditions => {:method => :get} do |user_profiles_views|
       user_profiles_views.connect '/chi-siamo', :action => 'profili_all'
       user_profiles_views.connect '/chi-siamo/profilo/new', :action => 'profilo_new'
@@ -76,14 +84,6 @@ ActionController::Routing::Routes.draw do |map|
       user_profiles_actions.connect '/profilo', :action => 'create_profile'
       user_profiles_actions.connect '/profilo', :action => 'update_profile'
     end
-=begin
-
-  map.profili_all '/chi-siamo', :controller => 'editorial', :action => 'profili_all'
-   map.profilo_new '/chi-siamo/nuovo_profilo', :controller => 'editorial', :action => 'profilo_new'
-   map.profilo_show '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo_show'
-   map.profilo_edit '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo_edit'
-   map.connect '/profilo', :controller => 'user_profiles', :action => 'create_profile' , :conditions => {:method => :post}
-   map.connect '/profilo', :controller => 'user_profiles', :action => 'update_profile' , :conditions => {:method => :post}
 =end
 
 #Map menu

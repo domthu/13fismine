@@ -3,15 +3,18 @@
       <div id="fs-flash-notice"><%= notice %> </div>
   <% end %>
   <div>
-    <%= link_to("1a versione statica", chisiamo_path, :class => "fs-giallo-button") %></div>
+    <%= link_to("1a versione statica", chisiamo_path, :class => "fs-giallo-button") %> <br />
+    <h2><%= @users.count.to_s %></h2>
+    </div>
+
   <div class="fs-content-layout post-layout-item-0" style="width: 99%">
     <div class="fs-content-layout-row">
       <div class="fs-layout-cell post-layout-item-3" style="width: 50%">
+
         <article class="fs-post-profile fs-article">
           <h3 class="fs-postheader">DIRETTORI DI REDAZIONE </h3>
 
-          <h2><%= @u1.to_s %></h2>
-          <h3><%= @u2.to_s %></h3>
+
           <% @direttori.each do |item| %>
               <div class="fs-chisiamo-item">
                 <%= link_to image_tag("/images/commons/m1.png", :alt => item.user.firstname + ' ' + item.user.lastname, :height => "75", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show", :id => item.id %>

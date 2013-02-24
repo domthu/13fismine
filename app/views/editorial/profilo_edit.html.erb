@@ -1,76 +1,72 @@
-<% form_for :user_profile, @user_profile, :url => {:controller=> 'user_profiles', :action => "create_profile"} ,:html => { :multipart => true } do |f| %>
-         <%= f.hidden_field :user_id, :value => params[:uid] %>
+<%# form_tag({:action => :update}, {:method => :put})form_tag({:action => controller.action_name, :id => @project, :path => to_path_param(@path), :rev => ''}, {:method => :get, :id => 'revision_selector'}) do -%>
+
+<% form_tag({:action => "profilo_edit", :id => @user_profile, :method => :post}, :html => {:multipart => true}) do %>
+    <%= hidden_field_tag :user_id, @user_profile.user_id %>
     <div class="fs-profiles-sx">
       <p>
-        <%= f.label :photo %>
-        <%= f.file_field :photo %>
-      </p>
-      <p>
-        <%= f.label :immagine_url %><br/>
-        <%= f.text_field :immagine_url %>
+        <%# label_tag :photo %>
+        <%# f.file_field :photo %>
       </p>
 
       <p>
-        <%= f.label :fs_qualifica %><br/>
-        <%= f.text_field :fs_qualifica %>
+        <%= label_tag :immagine_url %><br/>
+        <%= text_field_tag :immagine_url, @user_profile.immagine_url %>
+      </p>
+
+      <p>
+        <%= label_tag :fs_qualifica %><br/>
+        <%= text_field_tag :fs_qualifica, @user_profile.fs_qualifica %>
       </p>
     </div>
     <div class="fs-profiles-cx">
       <p>
-        <%= f.label :fs_tel %><br/>
-        <%= f.text_field :fs_tel %>
+        <%= label_tag :fs_tel %><br/>
+        <%= text_field_tag :fs_tel, @user_profile.fs_tel %>
       </p>
 
       <p>
-        <%= f.label :fs_fax %><br/>
-        <%= f.text_field :fs_fax %>
+        <%= label_tag :fs_fax %><br/>
+        <%= text_field_tag :fs_fax, @user_profile.fs_fax %>
       </p>
 
       <p>
-        <%= f.label :fs_skype %><br/>
-        <%= f.text_field :fs_skype %>
+        <%= label_tag :fs_skype %><br/>
+        <%= text_field_tag :fs_skype, @user_profile.fs_skype %>
       </p>
 
       <p>
-        <%= f.label :fs_mail %><br/>
-        <%= f.text_field :fs_mail %>
+        <%= label_tag :fs_mail %><br/>
+        <%= text_field_tag :fs_mail, @user_profile.fs_mail %>
       </p>
 
       <p>
-        <%= f.label :external_url %><br/>
-        <%= f.text_field :external_url %>
+        <%= label_tag :external_url %><br/>
+        <%= text_field_tag :external_url, @user_profile.external_url %>
       </p>
     </div>
     <div class="fs-profiles-dx">
-      <p>
-        <%= f.label :display_in %><br/>
-        <%= select_tag(:display_in, '<option value="1">Collaboratori</option>,<option value="2">Responsabili</option>,<option value="3">Direttori</option>,<option value="4">Non Visualizzato</option>') %>
-      </p>
-      <div >
-        <label><%= radio_button_tag 'display_in', 1,true %> <%= 'Collaboratori' %></label><br />
-     <label><%= radio_button_tag 'display_in', 2 %> <%= 'Responsabili' %></label><br />
-     <label><%= radio_button_tag 'display_in', 3  %> <%= 'Direttori' %></label> <br />
-        <label><%= radio_button_tag 'display_in', 4 %> <%= 'Non Visibile' %></label><br /></div>
 
+      <div>
+        <b> Mostra in ...  <%= @user_profile.display_in.to_s %></b> &nbsp;<br/>
+        <label><%= radio_button_tag :display_in, 1, @user_profile.display_in == 1 %> <%= 'Collaboratori' %></label><br/>
+        <label><%= radio_button_tag :display_in, 2, @user_profile.display_in == 2 %> <%= 'Responsabili' %></label><br/>
+        <label><%= radio_button_tag :display_in, 3, @user_profile.display_in == 3 %> <%= 'Direttori' %></label><br/>
+        <label><%= radio_button_tag :display_in, 4, @user_profile.display_in == 4 %> <%= 'Non Visibile' %></label><br/>
+        <br/> &nbsp;
+      </div>
 
-      <p>
-        <%= f.submit 'Aggiorna' %>
-      </p>
+      <p>  <%= submit_tag "salva", :action => 'profilo_edit', :class => "fs-giallo-button" %></p>
 
-      <%= link_to 'Back', user_profiles_path %>
     </div>
     <div class="cleared"></div>
     <p>
-
-    <p><%= f.text_area :titoli,
-                       :cols => 20,
-                       :rows => 5,
-                       :accesskey => accesskey(:edit),
-                       :class => 'wiki-edit' %>
+      <%= label_tag l(:label_titoli) %><br/>
+    <p>
+      <%= text_area_tag :titoli, @user_profile.titoli, :cols => 20, :rows => 4, :class => 'wiki-edit' %>
     </p>
     <p>
-      <%= f.label l(:label_curriculum) %><br/>
-      <%= f.text_area :curriculum %>
+      <%= label_tag l(:label_curriculum) %><br/>
+      <%= text_area_tag :curriculum,  @user_profile.curriculum, :cols => 20, :rows => 6, :class => 'wiki-edit' %>
     </p>
 
 
