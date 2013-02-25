@@ -1,12 +1,42 @@
 
 class ReservationsController < ApplicationController
-   # GET /reservations
+  layout 'admin'
+
+  before_filter :require_admin
+
+  helper :sort
+  include SortHelper
+
+  # GET /reservations
   # GET /reservations.xml
   def index
-    @reservations = Reservation.all
+    #@reservations = Reservation.all
+    #respond_to do |format|
+    #  format.html # index.html.erb
+    #  format.xml  { render :xml => @reservations }
+    #end
+
+    #Sorting
+    sort_init 'issue'
+    sort_update 'User' => 'users.login',
+                'Issue' => 'issues.subject',
+                'num_persone' => 'num_persone',
+                'prezzo' => 'prezzo',
+                'msg' => 'msg'
 
     respond_to do |format|
-      format.html # index.html.erb
+      #ovverride for paging format.html # index.html.erb
+      format.html {
+        # Paginate results
+        @reservation_count = Reservation.all.count
+        @reservation_pages = Paginator.new self, @reservation_count, per_page_option, params['page']
+        @reservations = Reservation.find(:all,
+                          :order => sort_clause,
+                          :limit  =>  @reservation_pages.items_per_page,
+                          :include => [{:issue => :project}, :user],
+                          :offset =>  @reservation_pages.current.offset)
+        render :layout => !request.xhr?
+      }
       format.xml  { render :xml => @reservations }
     end
   end

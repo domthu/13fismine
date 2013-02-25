@@ -21,7 +21,7 @@ class CrossOrganizationsController < ApplicationController
                 'type_organization' => 'type_organization',
                 'sigla' => 'sigla',
                 'se_visibile' => 'se_visibile'
-  
+
     respond_to do |format|
       #ovverride for paging format.html # index.html.erb
       format.html {

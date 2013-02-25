@@ -1,28 +1,47 @@
-<p>
-  <b>User:</b>
-  <%=h @reservation.user_id %>
-</p>
+<div class="contextual">
+<%= link_to(l(:button_edit), edit_reservation_path(@reservation), :class => 'icon icon-edit') if User.current.admin? %>
+<%= link_to(l(:button_delete),
+      reservation_path(@reservation),
+      :confirm => l(:text_are_you_sure),
+      :method => :delete,
+      :class => 'icon icon-del') if User.current.admin? %>
+</div>
+<h2><%= link_to l(:label_reservation_plural), reservations_path %> &#187; <%=h @reservation %></h2>
 
-<p>
-  <b>Issue:</b>
-  <%=h @reservation.issue_id %>
-</p>
+<div class="splitcontentleft">
+  <fieldset class="box tabular">
+    <legend><%=l(:label_reservation)%></legend>
+    <p>
+      <%= avatar(@reservation.user, :size => "14") %><%= link_to h(@reservation.user.login), edit_user_path(@reservation.user) %>
+    </p>
+    <p>
+      <%#h link_to h(@reservation.issue), preview_issue_path(:project_id => @reservation.issue.project, :id => @reservation.issue) %>
+      <%=h link_to h(@reservation.issue), issue_path(@reservation.issue) %>
+    </p>
+    <p>
+        <%= l(:label_num_persone) %>: <%=h @reservation.num_persone %>
+    </p>
+    <p>
+        <%= l(:label_prezzo) %>: <%=h @reservation.prezzo %>
+    </p>
+    <p>
+        <%= l(:label_msg) %>: <%=h @reservation.msg %>
+    </p>
+  </fieldset>
+</div>
 
-<p>
-  <b>num_persone:</b>
-  <%=h @reservation.num_persone %>
-</p>
-
-<p>
-  <b>prezzo:</b>
-  <%=h @reservation.prezzo %>
-</p>
-
-<p>
-  <b>msg:</b>
-  <%=h @reservation.msg %>
-</p>
-
-
-<%= link_to 'Edit', edit_reservation_path(@reservation) %> |
-<%= link_to 'Back', reservations_path %>
+<div class="splitcontentright">
+  <fieldset class="box tabular">
+    <legend><%=l(:label_other_reservation_plural_from_issue)%></legend>
+    <% if @reservation.issue.reservations.any? %>
+      <%= l(:label_total) %>: <%= h @reservation.issue.reservations.count %>
+      <ul>
+        <% @reservation.issue.reservations.each do |other_reservation| %>
+          <li><%= link_to other_reservation, other_reservation %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+    <% end %>
+  </fieldset>
+</div>

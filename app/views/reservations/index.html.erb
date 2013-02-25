@@ -1,28 +1,38 @@
-<h1>Listing reservations</h1>
+<div class="contextual">
+<%= link_to l(:label_reservation_new), new_reservation_path, :class => 'icon icon-add' %>
+</div>
 
-<table>
-  <tr>
-    <th>User</th>
-    <th>Issue</th>
-    <th>num_persone</th>
-    <th>prezzo</th>
-    <th>msg</th>
-  </tr>
+<h2><%= l(:label_reservation_plural) %></h2>
 
+<% if @reservations.any? %>
+<div class="autoscroll">
+<table class="list reservations">
+  <thead><tr>
+  <%= sort_header_tag('User', :title => l(:label_user), :style => 'width: 20%;text-align:left;')%>
+  <%= sort_header_tag('Issue', :title => l(:label_issue), :style => 'width: 20%;text-align:left;')%>
+  <%= sort_header_tag('num_persone', :title => l(:label_num_persone), :style => 'width: 10%;')%>
+  <%= sort_header_tag('prezzo', :title => l(:label_num_persone), :style => 'width: 10%;')%>
+  <%= sort_header_tag('msg', :title => l(:label_issue), :style => 'width: 30%;text-align:left;')%>
+  <th style='width: 5%;'></th>
+  <th style='width: 5%;'></th>
+  </tr></thead>
+  <tbody>
 <% @reservations.each do |reservation| %>
-  <tr>
-    <td><%=h reservation.user_id %></td>
-    <td><%=h reservation.issue_id %></td>
-    <td><%=h reservation.num_persone %></td>
-    <td><%=h reservation.prezzo %></td>
+  <tr class="<%= cycle 'odd', 'even' %>">
+    <td class="username"><%= avatar(reservation.user, :size => "14") %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
+    <td><%=h link_to h(reservation.issue), preview_issue_path(:project_id => reservation.issue.project, :id => reservation.issue) %></td>
+    <td align="center"><%=h reservation.num_persone %></td>
+    <td align="center"><%=h reservation.prezzo %></td>
     <td><%=h reservation.msg %></td>
-    <td><%= link_to 'Show', reservation %></td>
-    <td><%= link_to 'Edit', edit_reservation_path(reservation) %></td>
-    <td><%= link_to 'Destroy', reservation, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td class="buttons"><%= link_to('', edit_reservation_path(reservation), :class => 'icon icon-edit') if User.current.admin? %></td>
+    <td class="buttons"><%= link_to ('', reservation, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
   </tr>
 <% end %>
 </table>
+</div>
 
-<br />
+<p class="pagination"><%= pagination_links_full @reservation_pages, @reservation_count %></p>
 
-<%= link_to 'New reservation', new_reservation_path %>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

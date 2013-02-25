@@ -1257,6 +1257,23 @@ it:
   field_se_prenotazione: Gestione convegno?
   field_impressions_history: Storico impressione
 
+#ISSUE --> CONVEGNO
+  label_reservation: Prenotazione
+  label_convegno: Convegno
+  label_date: Data reg.
+  label_num_persone: N° persone
+  label_num_persone_abrv: N°
+  label_prezzo: Prezzo
+  label_msg: Messaggio rilasciato
+  convegno_prenotazioni: Lista delle prenotazioni (%{num}) registrate
+  label_prenotazioni_none: Nessuna prenotazione registrata
+  label_reservation_plural: Lista delle prenotazioni ai convegni
+  label_reservation_new: Crea nuova prenotazione
+  field_num_persone: Numero persone
+  field_prezzo: Prezzo
+  field_msg: Messaggio
+  label_other_reservation_plural_from_issue: Altre prenotazioni per questo convegno
+
 #ISSUE --> ATTIVITA
   label_se_visible_web: Visibile Web?
   label_se_visible_data: Visibile Data?

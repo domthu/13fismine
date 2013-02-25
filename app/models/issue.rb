@@ -159,6 +159,34 @@ class Issue < ActiveRecord::Base
     end
   end
 
+  def is_convegno?
+    if self.section.nil?
+      false
+    else
+      self.section_id == FeeConst::CONVEGNO_SECTION_ID
+    end
+  end
+
+  def convegno_status_fs_text
+    if !self.is_convegno?
+      "Non è un convegno"
+    else
+      cnt = self.reservations.nil? ? "0" : self.reservations.count.to_s
+      today = Date.today
+      if self.due_date.is_a?(Date)
+        evento = self.due_date.to_date
+        if (today > evento)
+          "<h3 class='domand_ko'>Convegno passato. Scaduto da " +  distance_of_date_in_words(today, evento) + "</h3><p>La partecipazione prevista era di " + cnt + " persone</p>"
+        else
+          #"<h3 class='domand_wait'>Il convegno avverà fra " + distance_of_time_in_words(evento.time, Time.now) + "</h3><p>La partecipazione prevista finora è di " + cnt + " persone</p>"
+          "<h3 class='domand_wait'>Il convegno avverà fra " + distance_of_date_in_words(evento, today) + "</h3><p>La partecipazione prevista finora è di " + cnt + " persone</p>"
+        end
+      else
+        "Data del convegno non riconosciuta: " + self.due_date.to_s
+      end
+    end
+  end
+
   def is_quesito?
     if self.quesito_news.nil?
       false

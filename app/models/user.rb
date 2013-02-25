@@ -236,6 +236,7 @@ class User < Principal
       Rails.logger.info("isfee OK ABBONATO  #{self}")
       return true
     end
+
     if self.isrenewing?
       #TODO Elabore date from scadenza compared with today
       #Control if must be set as FeeConst::ROLE_EXPIRED
@@ -285,7 +286,9 @@ class User < Principal
       elsif (today < self.scadenza)
         #IN_SCADENZA
         #str << ensure_role(_usr, FeeConst::ROLE_RENEW, "ABBONATO in scadenza", old_state)
-        "scade fra " << distance_of_time_in_words(scadeil.time, Time.now)
+        #"scade fra " << distance_of_time_in_words(scadeil.time, Time.now)
+        #private method `time' called for Mon, 01 Apr 2013:Date
+        "scade fra " << distance_of_date_in_words(scadeil, today)
       else
         #  FeeConst::ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
         #str << ensure_role(_usr, FeeConst::ROLE_EXPIRED, "EXPIRED", old_state)

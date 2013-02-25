@@ -381,7 +381,7 @@ module Redmine
         unless issue.leaf?
           # for CJK
           truncate_length = ( l(:general_pdf_encoding).upcase == "UTF-8" ? 90 : 65 )
-  
+
           pdf.SetFontStyle('B',9)
           pdf.RDMCell(35+155,5, l(:label_subtask_plural) + ":", "LTR")
           pdf.Ln
@@ -401,7 +401,7 @@ module Redmine
         unless relations.empty?
           # for CJK
           truncate_length = ( l(:general_pdf_encoding).upcase == "UTF-8" ? 80 : 60 )
-  
+
           pdf.SetFontStyle('B',9)
           pdf.RDMCell(35+155,5, l(:label_related_issues) + ":", "LTR")
           pdf.Ln
@@ -489,6 +489,31 @@ module Redmine
             pdf.Ln
           end
         end
+
+        if issue.reservations.any?
+          pdf.SetFontStyle('B',9)
+          pdf.RDMCell(190,5, l(:label_reservation_plural), "B")
+          pdf.Ln
+          pdf.SetFontStyle('B',8)
+          pdf.RDMCell(30,5, l(:label_user))
+          pdf.RDMCell(30,5, l(:label_email))
+          pdf.RDMCell(10,5, l(:label_num_persone_abrv), "C")
+          pdf.RDMCell(15,5, l(:label_prezzo), "R")
+          pdf.RDMCell(40,5, l(:label_data_scadenza))
+          pdf.RDMCell(65,5, l(:label_msg))
+          pdf.Ln
+          for reservation in issue.reservations
+            pdf.SetFontStyle('',8)
+            pdf.RDMCell(30,5, reservation.user.name)
+            pdf.RDMCell(30,5, reservation.user.mail)
+            pdf.RDMCell(10,5, reservation.num_persone.to_s,0,0,"C")
+            pdf.RDMCell(15,5, reservation.prezzo.to_s,0,0,"R")
+            pdf.RDMCell(40,5, format_date(reservation.user.scadenza))
+            pdf.RDMCell(65,5, reservation.msg)
+            pdf.Ln
+          end
+        end
+
         pdf.Output
       end
 
