@@ -1,11 +1,13 @@
+<%# form_for :user_profile, @user_profile, :url => {:controller=> 'user_profiles', :action => "pcreate"} ,:html => { :multipart => true } do |f| %>
 
-<% form_for :user_profile, @user_profile, :url => {:controller=> 'user_profiles', :action => "pcreate"} ,:html => { :multipart => true } do |f| %>
-         <%= f.hidden_field :user_id, :value => params[:id] %>
+<% form_for :user_profile, @user_profile, :url => {:action => "profilo_create"}, :html => {:multipart => true} do |f| %>
+    <%= f.hidden_field :user_id, :value => params[:id] %>
     <div class="fs-profiles-sx">
       <p>
         <%= f.label :photo %>
         <%= f.file_field :photo %>
       </p>
+
       <p>
         <%= f.label :immagine_url %><br/>
         <%= f.text_field :immagine_url %>
@@ -43,37 +45,31 @@
       </p>
     </div>
     <div class="fs-profiles-dx">
+        <div>
+          <b> Mostra in ... </b> &nbsp;<br/>
+          <label><%= f.radio_button :display_in, 1 %> <%= 'Collaboratori' %></label><br/>
+          <label><%= f.radio_button :display_in, 2 %> <%= 'Responsabili' %></label><br/>
+          <label><%= f.radio_button :display_in, 3 %> <%= 'Direttori' %></label> <br/>
+          <label><%= f.radio_button :display_in, 4 %> <%= 'Non Visibile' %></label><br/>
+          <br/> &nbsp;
+        </div>
+        <p>  <%= submit_tag "crea", :class => "fs-rosso-button" %></p>
+
+      </div>
+      <div class="cleared"></div>
       <p>
-        <%= f.label :display_in %><br/>
-        <%= select_tag(:display_in, '<option value="1">Collaboratori</option>,<option value="2">Responsabili</option>,<option value="3">Direttori</option>,<option value="4">Non Visualizzato</option>') %>
-      </p>
-      <div >
-        <label><%= radio_button_tag 'display_in', 1,true %> <%= 'Collaboratori' %></label><br />
-     <label><%= radio_button_tag 'display_in', 2 %> <%= 'Responsabili' %></label><br />
-     <label><%= radio_button_tag 'display_in', 3  %> <%= 'Direttori' %></label> <br />
-        <label><%= radio_button_tag 'display_in', 4 %> <%= 'Non Visibile' %></label><br /></div>
 
+      <p><%= f.text_area :titoli,
+                         :cols => 20,
+                         :rows => 5,
+                         :accesskey => accesskey(:edit),
+                         :class => 'wiki-edit' %>
+      </p>
 
       <p>
-        <%= f.submit 'Create' %>
+        <%= f.label l(:label_curriculum) %><br/>
+        <%= f.text_area :curriculum %>
       </p>
-
-      <%= link_to 'Back', user_profiles_path %>
-    </div>
-    <div class="cleared"></div>
-    <p>
-
-    <p><%= f.text_area :titoli,
-                       :cols => 20,
-                       :rows => 5,
-                       :accesskey => accesskey(:edit),
-                       :class => 'wiki-edit' %>
-    </p>
-    <p>
-      <%= f.label l(:label_curriculum) %><br/>
-      <%= f.text_area :curriculum %>
-    </p>
-
 
 <% end %>
 <%= wikitoolbar_for 'user_profile_curriculum' %>

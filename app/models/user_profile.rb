@@ -1,5 +1,12 @@
 class UserProfile < ActiveRecord::Base
   belongs_to :user
+  after_update :reprocess
+    has_attached_file :photo, :styles => { :s => "75x75>" },
+      :url => "users/profiles/:id/:style/:basename.:extension",
+      :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension"
+  has_attached_file :photo, :styles => { :l => "200x200>" },
+    :url => "users/profiles/:id/:style/:basename.:extension",
+    :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension"
   # formatted as an array of options, option being an array of key, value
   #OPTIONS = [['Collaboratore', FeeConst::PROFILO_FS_COLLABORATORE], ['Responsabile', FeeConst::PROFILO_FS_RESPONSABILE], ['Direttore', FeeConst::PROFILO_FS_DIRETTORE]]
   #validates_inclusion_of :display_in, :in => OPTIONS
@@ -29,5 +36,7 @@ class UserProfile < ActiveRecord::Base
       true
     end
   end
-
+  def reprocess
+     self.photo.reprocess!
+   end
 end

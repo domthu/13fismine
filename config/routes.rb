@@ -61,7 +61,7 @@ ActionController::Routing::Routes.draw do |map|
   map.profile_new '/chi-siamo/profilo/new', :controller => 'editorial', :action => 'profilo_new'
   map.profile_show '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo_show'
   map.profile_edit '/chi-siamo/profilo/:id/edit', :controller => 'editorial', :action => 'profilo_edit'
-  map.profile_create '/chi-siamo/profilo/create', :controller => 'editorial', :action => 'profilo_create'
+  map.profile_destroy '/chi-siamo/profilo/:id/destroy', :controller => 'editorial', :action => 'profilo_destroy'
   map.profile_update '/chi-siamo/profilo/:id/update', :controller => 'editorial', :action => 'profilo_update'
 
     #to match override act_as_event after search

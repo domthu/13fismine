@@ -68,39 +68,21 @@ class UserProfilesController < ApplicationController
       end
     end
   end
-  def pcreate
+  def p_test_da_cancellarecreate
       @user_profile = UserProfile.new(params[:user_profile])
-
       respond_to do |format|
         if @user_profile.save
-          flash[:notice] = fading_flash_message("Il suo profilo è stato creato." ,5)
-           format.html { redirect_to :controller=>'editorial', :action => 'profilo_show', :id => @user_profile.id }
+           format.html { redirect_to(profile_show_path(@user_profile),:notice => fading_flash_message("Il suo profilo è stato creato." ,5))}
           #format.html { redirect_to(co@user_profile, :notice => 'UserProfile was successfully created.') }
           #format.xml  { render :xml => @user_profile, :status => :created, :location => @user_profile }
         else
-          format.html { render :controller=>'editorial',:action => "new" }
+          format.html { render :controller=>'editorial',:action => "profilo_new" }
           format.xml  { render :xml => @user_profile.errors, :status => :unprocessable_entity }
         end
       end
     end
 
-    # PUT /user_profiles/1
-    # PUT /user_profiles/1.xml
-    def pupdate
-      @user_profile = UserProfile.find(params[:id])
 
-      respond_to do |format|
-        if @user_profile.update_attributes(params[:user_profile])
-          flash[:notice] = fading_flash_message("Il suo profilo è stato aggiornato." ,5)
-                     format.html { redirect_to :controller=>'editorial', :action => 'profilo_show', :id => @user_profile.id }
-         # format.html { redirect_to(@user_profile, :notice => 'UserProfile was successfully updated.') }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => @user_profile.errors, :status => :unprocessable_entity }
-        end
-      end
-    end
 
   # DELETE /user_profiles/1
   # DELETE /user_profiles/1.xml

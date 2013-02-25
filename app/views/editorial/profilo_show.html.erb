@@ -10,7 +10,9 @@
           <div class="fs-profiles-sx">
             <p>
               <b> Photo </b>
-              <%# image_tag @user_profile.photo.url(:medium) %>
+              <%= image_tag @user_profile.photo.url(:s) %>
+              <br/>
+              <%= image_tag @user_profile.photo.url(:l) %>
             </p>
 
             <p>

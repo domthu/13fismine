@@ -1,12 +1,20 @@
 <%# form_tag({:action => :update}, {:method => :put})form_tag({:action => controller.action_name, :id => @project, :path => to_path_param(@path), :rev => ''}, {:method => :get, :id => 'revision_selector'}) do -%>
 
-<% form_tag({:action => "profilo_edit", :id => @user_profile, :method => :post}, :html => {:multipart => true}) do %>
+<% form_tag({:action => "profilo_edit", :id => @user_profile, :method => :post}, :multipart => true) do %>
     <%= hidden_field_tag :user_id, @user_profile.user_id %>
     <div class="fs-profiles-sx">
       <p>
+        <%= label_tag :photo, "Photo" %>
+      <%= file_field_tag :photo %>
+       <% @user_profile.photo.reprocess!%>
         <%# label_tag :photo %>
         <%# f.file_field :photo %>
+
       </p>
+      <b> Photo </b>
+      <%= image_tag @user_profile.photo.url(:s) %>
+      <br/>
+      <%= image_tag @user_profile.photo.url(:l) %>
 
       <p>
         <%= label_tag :immagine_url %><br/>
@@ -71,6 +79,7 @@
 
 
 <% end %>
+<p>  <%= link_to("elimina profilo",profile_destroy_path(@user_profile.id), :class => "fs-rosso-button",:confirm =>"conferma?")%></p>
 <%= wikitoolbar_for 'user_profile_curriculum' %>
 <%= wikitoolbar_for 'curriculum' %>
 
