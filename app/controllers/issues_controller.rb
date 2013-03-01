@@ -164,9 +164,10 @@ class IssuesController < ApplicationController
     #domthu 20120710
     #@issue.summary =  (params[:summary].present? ? params[:summary] : '?')
     if @issue.se_prenotazione
-      #CONVEGNO_SECTION_ID = 26 #Convegni: Articolo con issue.section.top_section_id
-      #CONVEGNO_TOP_SECTION_ID = 9 #Convegni ed eventi
-      @issue.section_id = FeeConst::CONVEGNO_SECTION_ID
+      if (Section.all_convegni.count > 0)
+        #default FeeConst::TMENU_CONVEGNI
+        @issue.section_id = Section.all_convegni.first.id
+      end
     end
 
     if @issue.save
@@ -319,7 +320,10 @@ private
       #@quesito = News.find(@issue.news_id)
       @news = News.find(@issue.news_id)
       if @issue.new_record?
-        @issue.section_id = FeeConst::QUESITO_SECTION_ID
+        if (Section.all_quesiti.count > 0)
+          #default FeeConst::TMENU_QUESITO
+          @issue.section_id = Section.all_quesiti.first.id
+        end
         @issue.quesito_news = @news
       end
     end

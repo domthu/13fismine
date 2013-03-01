@@ -108,7 +108,11 @@ class TopMenusController < ApplicationController
       if @top_menu.id == FeeConst::DEFAULT_TOP_MENU
         flash[:error] = l(:error_can_not_delete_system, :name => "questo menu")
       else
-        @top_menu.destroy
+        if @top_menu.se_visibile == 0
+          flash[:error] = l(:error_can_not_delete_system, :name => "di sistema")
+        else
+          @top_menu.destroy
+        end
       end
     end
     respond_to do |format|

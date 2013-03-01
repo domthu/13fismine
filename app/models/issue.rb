@@ -171,7 +171,12 @@ class Issue < ActiveRecord::Base
     if self.section.nil?
       false
     else
-      self.section_id == FeeConst::CONVEGNO_SECTION_ID
+      if (Section.all_convegni.count > 0)
+        #default FeeConst::TMENU_CONVEGNI
+        Section.all_convegni.exists?(self.section_id)
+      else
+        false
+      end
     end
   end
 

@@ -1,4 +1,5 @@
 class Section < ActiveRecord::Base
+  include FeesHelper
 
   #domthu20120516
   belongs_to :top_section, :class_name => 'TopSection', :foreign_key => 'top_section_id'
@@ -15,6 +16,18 @@ class Section < ActiveRecord::Base
   validates_numericality_of :ordinamento, :allow_nil => true
 
   named_scope :all_with_topsection, :include => :top_section, :order => "#{TopSection.table_name}.sezione_top, #{Section.table_name}.sezione"
+
+  #TMENU_CONVEGNI = 9
+  named_scope :all_convegni,
+  :include => [{:top_section, :top_menu}],
+  :conditions => "#{TopMenu.table_name}.id = '#{FeeConst::TMENU_CONVEGNI}'",
+  :order => "#{TopSection.table_name}.sezione_top, #{Section.table_name}.sezione"
+
+  #TMENU_QUESITI = 7
+  named_scope :all_quesiti,
+  :include => [{:top_section, :top_menu}],
+  :conditions => "#{TopMenu.table_name}.id = '#{FeeConst::TMENU_QUESITI}'",
+  :order => "#{TopSection.table_name}.sezione_top, #{Section.table_name}.sezione"
 
   def to_s
     sezione

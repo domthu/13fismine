@@ -119,7 +119,10 @@ class NewsController < ApplicationController
                 #new_issue.copy_from(issue)
                 new_issue.project_id = @news.project.id
                 new_issue.news_id = @news.id
-                new_issue.section_id = FeeConst::QUESITO_SECTION_ID
+                if (Section.all_quesiti.count > 0)
+                  #default FeeConst::TMENU_QUESITO
+                  new_issue.section_id = Section.all_quesiti.first.id
+                end
                 new_issue.assigned_to_id = collaboratore.id
                 new_issue.author = collaboratore
                 new_issue.watcher_user_ids = @watcher_user_ids
