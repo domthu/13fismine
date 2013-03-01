@@ -495,21 +495,23 @@ module Redmine
           pdf.RDMCell(190,5, l(:label_reservation_plural), "B")
           pdf.Ln
           pdf.SetFontStyle('B',8)
-          pdf.RDMCell(30,5, l(:label_user))
-          pdf.RDMCell(30,5, l(:label_email))
+          pdf.RDMCell(35,5, l(:label_user))
+          pdf.RDMCell(35,5, l(:label_email))
+          pdf.RDMCell(20,5, l(:label_telefono))
           pdf.RDMCell(10,5, l(:label_num_persone_abrv), "C")
-          pdf.RDMCell(15,5, l(:label_prezzo), "R")
-          pdf.RDMCell(40,5, l(:label_data_scadenza))
-          pdf.RDMCell(65,5, l(:label_msg))
+          pdf.RDMCell(10,5, l(:label_prezzo), "R")
+          pdf.RDMCell(25,5, l(:label_data_scadenza))
+          pdf.RDMCell(55,5, l(:label_msg))
           pdf.Ln
           for reservation in issue.reservations
             pdf.SetFontStyle('',8)
-            pdf.RDMCell(30,5, reservation.user.name)
-            pdf.RDMCell(30,5, reservation.user.mail)
+            pdf.RDMCell(35,5, reservation.user.name)
+            pdf.RDMCell(35,5, reservation.user.mail)
+            pdf.RDMCell(20,5, reservation.user.telefono)
             pdf.RDMCell(10,5, reservation.num_persone.to_s,0,0,"C")
-            pdf.RDMCell(15,5, reservation.prezzo.to_s,0,0,"R")
-            pdf.RDMCell(40,5, format_date(reservation.user.scadenza))
-            pdf.RDMCell(65,5, reservation.msg)
+            pdf.RDMCell(10,5, reservation.prezzo.to_s,0,0,"R")
+            pdf.RDMCell(25,5, format_date(reservation.user.scadenza))
+            pdf.RDMCell(55,5, smart_truncate(reservation.msg, 40))
             pdf.Ln
           end
         end
