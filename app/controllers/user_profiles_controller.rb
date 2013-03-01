@@ -68,19 +68,6 @@ class UserProfilesController < ApplicationController
       end
     end
   end
-  def p_test_da_cancellarecreate
-      @user_profile = UserProfile.new(params[:user_profile])
-      respond_to do |format|
-        if @user_profile.save
-           format.html { redirect_to(profile_show_path(@user_profile),:notice => fading_flash_message("Il suo profilo è stato creato." ,5))}
-          #format.html { redirect_to(co@user_profile, :notice => 'UserProfile was successfully created.') }
-          #format.xml  { render :xml => @user_profile, :status => :created, :location => @user_profile }
-        else
-          format.html { render :controller=>'editorial',:action => "profilo_new" }
-          format.xml  { render :xml => @user_profile.errors, :status => :unprocessable_entity }
-        end
-      end
-    end
 
 
 

@@ -1,16 +1,16 @@
 class UserProfile < ActiveRecord::Base
   belongs_to :user
   after_update :reprocess
-  has_attached_file :photo, :styles => { :s => "75x75>" },
-      :url => "users/profiles/:id/:style/:basename.:extension",
-      :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension"
-  has_attached_file :photo, :styles => { :l => "200x200>" },
-    :url => "users/profiles/:id/:style/:basename.:extension",
-    :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension"
+  has_attached_file :photo, :styles => {:s => "75x75>"},
+                    :url => "users/profiles/:id/:style/:basename.:extension",
+                    :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension"
+  has_attached_file :photo, :styles => {:l => "200x200>"},
+                    :url => "users/profiles/:id/:style/:basename.:extension",
+                    :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension"
   # formatted as an array of options, option being an array of key, value
   #OPTIONS = [['Collaboratore', FeeConst::PROFILO_FS_COLLABORATORE], ['Responsabile', FeeConst::PROFILO_FS_RESPONSABILE], ['Direttore', FeeConst::PROFILO_FS_DIRETTORE]]
   #validates_inclusion_of :display_in, :in => OPTIONS
-  attr_accessor :image_file_name, :image_content_type, :image_file_size, :image_updated_at
+  #attr_accessor :photo_file_name, :photo_content_type, :photo_file_size, :photo_updated_at
 =begin
   has_attached_file :photo, :styles => {:medium => "175x175>"},
                     :url => "/images/users/profiles/:id/:style/:basename.:extension",
@@ -36,7 +36,8 @@ class UserProfile < ActiveRecord::Base
       true
     end
   end
+
   def reprocess
-     self.photo.reprocess!
-   end
+    self.photo.reprocess!
+  end
 end

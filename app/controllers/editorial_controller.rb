@@ -432,30 +432,30 @@ class EditorialController < ApplicationController
   def profilo_edit
     @id = params[:id].to_i
     @user_profile = UserProfile.find_by_id(@id)
-           if request.post?
-
-             if @user_profile.update_attributes(:user_id => params[:user_id], :photo => params[:photo], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel],:fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar],:fs_skype=> params[:fs_skype], :fs_mail => params[:fs_mail], :external_url=> params[:external_url], :titoli=> params[:titoli], :curriculum=> params[:curriculum])
-            # @user_profile.save
-            @user_profile.photo.reprocess!
-            flash[:notice] = fading_flash_message("mah ??? " + params[:photo].to_s,5)
-            else
-            flash[:notice] = 'qualcosa è andato storto!'
-            end
-          redirect_to  :action => 'profilo_show', :id => @user_profile
-        end
- end
+    if request.post?
+      if @user_profile.update_attributes(:user_id => params[:user_id], :photo => params[:photo], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
+        #@user_profile.photo.reprocess!
+        # @user_profile.save
+        flash[:notice] = fading_flash_message("mah ??? " + params[:photo].to_s, 5)
+      else
+        flash[:notice] = 'qualcosa è andato storto!'
+      end
+      redirect_to :action => 'profilo_show', :id => @user_profile
+    end
+  end
 
   def profilo_new
     render :layout => "editorial_edit"
   end
-    # sandro sotto  -- per non usare i metodi di default in caso si voglia utilizzare i default in redmine
+
+# sandro sotto  -- per non usare i metodi di default in caso si voglia utilizzare i default in redmine
   def profilo_create
     @user_profile = UserProfile.new(params[:user_profile])
     if request.post?
       if @user_profile.save
         # flash[:notice] = l(:notice_successful_create)
-        flash[:notice] = fading_flash_message("Il suo profilo è stato creato." ,5)
-               redirect_to(profile_show_path(@user_profile.id))
+        flash[:notice] = fading_flash_message("Il suo profilo è stato creato.", 5)
+        redirect_to(profile_show_path(@user_profile.id))
 
         #redirect_to :controller => 'news', :action => 'index', :project_id => @project
       else
@@ -471,23 +471,24 @@ class EditorialController < ApplicationController
       UserProfile(@user_profile).photo.reprocess!
       if @user_profile.update_attributes(params[:user_profile])
 
-       flash[:notice] = fading_flash_message("Il suo profilo è stato aggiornato." ,5)
-        format.html { redirect_to  :action => 'profilo_show', :id => @user_profile.id }
-        format.xml  { head :ok }
+        flash[:notice] = fading_flash_message("Il suo profilo è stato aggiornato.", 5)
+        format.html { redirect_to :action => 'profilo_show', :id => @user_profile.id }
+        format.xml { head :ok }
       else
-       # format.html { render :action => "edit" }
+        # format.html { render :action => "edit" }
         flash.now[:notice] = 'Bah... qualcosa è andato storto!'
-        format.xml  { render :xml => @user_profile.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @user_profile.errors, :status => :unprocessable_entity }
       end
     end
   end
+
   def profilo_destroy
     @user_profile = UserProfile.find(params[:id])
     @user_profile.destroy
 
     respond_to do |format|
       format.html { redirect_to(profiles_all_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 

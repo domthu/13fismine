@@ -6,19 +6,21 @@
       <p>
         <%= label_tag :photo, "Photo" %>
         <%= file_field_tag :photo %>
-        <% @user_profile.photo.reprocess! %>
+        <%= @user_profile.photo.reprocess! %>
         <%# label_tag :photo %>
         <%# f.file_field :photo %>
 
       </p>
+      <p>
       <b> Photo </b>
       <%= image_tag @user_profile.photo.url(:s) %>
       <br/>
       <%= image_tag @user_profile.photo.url(:l) %>
-      <p>
-        <label><%= radio_button_tag :use_gravatar ,1, @user_profile.use_gravatar == 1 %> <%= 'Usa mail su Gravatar' %></label><br/>
-        <label><%= radio_button_tag :use_gravatar ,0, @user_profile.use_gravatar == 0 %> <%= 'Usa tua immagine Avatar' %></label><br/>
       </p>
+        <div>
+        <label><%= radio_button_tag :use_gravatar ,true, @user_profile.use_gravatar? %> <%= 'Usa mail su Gravatar' %></label><br/>
+        <label><%= radio_button_tag :use_gravatar ,false, !@user_profile.use_gravatar? %> <%= 'Usa tua immagine Avatar' %></label><br/>
+      </div>
 
       <p>
         <%= label_tag :fs_qualifica %><br/>
