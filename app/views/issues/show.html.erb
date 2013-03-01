@@ -179,6 +179,9 @@
 <% if @issue.is_convegno? %>
 <div class="box details">
   <div id="convegno" style="margin-bottom:16px;">
+    <div class="contextual">
+    <%= link_to l(:label_reservation_new), new_reservation_path, :class => 'icon icon-add' %>
+    </div>
     <%= "Stato del convegno: " + @issue.convegno_status_fs_text %>
   </div>
   <hr />
@@ -209,7 +212,7 @@
             <td><%= format_date(reservation.created_at) %></td>
             <td align="center"><%=h reservation.num_persone %></td>
             <td align="center"><%=h reservation.prezzo %></td>
-            <td><%=h reservation.msg %></td>
+            <td><%=h smart_truncate(reservation.msg, 100) %></td>
             <td class="buttons"><%= link_to('', edit_reservation_path(reservation), :class => 'icon icon-edit') if User.current.admin? %>
             <%= link_to('', reservation_path(reservation), :class => 'icon icon-show') if !User.current.admin? %>
             </td>
@@ -220,11 +223,13 @@
           <td></td>
           <td class="total center"><%=h @issue.reservations.count.to_s %></td>
           <td></td>
-          <td class="total center"><%=h @issue.reservations.sum(:num_persone).to_f %></td>
+          <td class="total center"><%=h @issue.reservations.sum(:num_persone).to_s %></td>
           <td class="total center"><%=  @issue.reservations.sum(:prezzo).to_f %></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td colspan="3">
+            <% other_formats_links do |f| %>
+              <%= f.link_to 'PDF' %>
+            <% end %>
+          </td>
         </tr>
       </table>
       </div>
