@@ -1,5 +1,5 @@
 class EditorialController < ApplicationController
-  layout 'editorial'
+  layout 'editorial', :except => [:profilo_new]
   #before_filter :require_admin
   helper :sort
   include SortHelper
@@ -380,12 +380,12 @@ class EditorialController < ApplicationController
   #Il dato @quesito_news viene caricato dentro il before_filter
   def quesito_show
     #1 news sola
-    @quesito_news = News.find(@id)  unless !@id.nil?
+    @quesito_news = News.find(@id) unless !@id.nil?
     @quesito_news_stato = @quesito_news.quesito_status_fs_text
     @quesito_news_stato_num = @quesito_news.quesito_status_fs_number
-                                   #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
+    #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
 
-                                   # @quesito_issues = @quesito_news.issues
+    # @quesito_issues = @quesito_news.issues
     @quesito_issues_all_count = @quesito_news.issues.count # testing
     @quesito_issues = @quesito_news.issues.all_public_fs #--> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
     @quesito_issues_count = @quesito_issues.count
@@ -420,6 +420,105 @@ class EditorialController < ApplicationController
   end
 
 # -----------------       QUESITI    (fine)        ------------------
+# -----------------    CHI SIAMO    (inizio) [menu item] ------------------
+
+  def profili_all
+    @users =User.users_profiles_all.who_without_profile
+    @has_profile = UserProfile.user_has_profile?(@users)
+    @collaboratori = UserProfile.users_profiles_all.collaboratori
+    @responsabili = UserProfile.users_profiles_all.responsabili
+    @direttori = UserProfile.users_profiles_all.direttori
+    @profiles_count = UserProfile.users_profiles_all.count
+    if   @profiles_count > 0
+      @profiles = UserProfile.users_profiles_all
+    end
+  end
+
+  def profilo_show
+    @id = params[:id].to_i
+    @user_profile = UserProfile.find_by_id(@id)
+  end
+
+  def profilo_edit
+    @id = params[:id].to_i
+    @user_profile = UserProfile.find_by_id(@id)
+           if request.post?
+
+             if @user_profile.update_attributes(:user_id => params[:user_id], :photo => params[:photo], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel],:fs_fax => params[:fs_fax], :immagine_url => params[:immagine_url],:fs_skype=> params[:fs_skype], :fs_mail => params[:fs_mail], :external_url=> params[:external_url], :titoli=> params[:titoli], :curriculum=> params[:curriculum])
+            # @user_profile.save
+            @user_profile.photo.reprocess!
+            flash[:notice] = fading_flash_message("mah ??? " + params[:photo].to_s,5)
+            else
+            flash[:notice] = 'qualcosa è andato storto!'
+            end
+          redirect_to  :action => 'profilo_show', :id => @user_profile
+        end
+ end
+
+  def profilo_new
+    render :layout => "editorial_edit"
+  end
+    # sandro sotto  -- per non usare i metodi di default in caso si voglia utilizzare i default in redmine
+  def profilo_create
+    @user_profile = UserProfile.new(params[:user_profile])
+    if request.post?
+      if @user_profile.save
+        # flash[:notice] = l(:notice_successful_create)
+        flash[:notice] = fading_flash_message("Il suo profilo è stato creato." ,5)
+               redirect_to(profile_show_path(@user_profile.id))
+
+        #redirect_to :controller => 'news', :action => 'index', :project_id => @project
+      else
+        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
+      end
+    end
+  end
+
+
+  def profilo_update
+    @user_profile = UserProfile.find(params[:id])
+    respond_to do |format|
+      UserProfile(@user_profile).photo.reprocess!
+      if @user_profile.update_attributes(params[:user_profile])
+
+       flash[:notice] = fading_flash_message("Il suo profilo è stato aggiornato." ,5)
+        format.html { redirect_to  :action => 'profilo_show', :id => @user_profile.id }
+        format.xml  { head :ok }
+      else
+       # format.html { render :action => "edit" }
+        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
+        format.xml  { render :xml => @user_profile.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  def profilo_destroy
+    @user_profile = UserProfile.find(params[:id])
+    @user_profile.destroy
+
+    respond_to do |format|
+      format.html { redirect_to(profiles_all_url) }
+      format.xml  { head :ok }
+    end
+  end
+
+
+=begin
+  def profilo_create
+    render :layout => "editorial_edit"
+    @user_profile = UserProfile.new(params[:user_profile])
+    if request.post?
+      if @user_profile.save
+        # flash[:notice] = l(:notice_successful_create)
+        flash[:notice] = fading_flash_message("Il suo profilo è stato registrato grazie.", 7)
+        redirect_to :controller => 'editorial', :action => 'profilo_show' , :id => @user_profile.id
+        #redirect_to :controller => 'news', :action => 'index', :project_id => @project
+      else
+        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
+      end
+    end
+    end
+=end
+# -----------------    CHI SIAMO    (fine) [menu item] ------------------
 
   def contact
   end

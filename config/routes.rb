@@ -3,10 +3,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reservations
 
-  map.resources :reservations
-
-  map.resources :reservations
-
 #http://guides.rubyonrails.org/v2.3.11/routing.html
 #rake routes | grep -r "reply"
 
@@ -17,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contracts
 
   map.resources :templates
-  map.resources :example
+
   map.resources :reservations
   #  under are only for testing
   map.connect 'edizionex/:id', :controller => 'editorial', :action => 'edizione_smtp'
@@ -47,7 +43,7 @@ ActionController::Routing::Routes.draw do |map|
   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
   map.enti  '/enti_federazioni', :controller => 'editorial', :action => 'enti'
   map.lavora '/lavora_con_noi', :controller => 'editorial', :action => 'lavora'
-  #-> Edizioni e Newletter (table: projects)-
+   #-> Edizioni e Newletter (table: projects)-
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
   map.edizione_newsletter '/edizione_newsletter/:id', :controller => 'editorial', :action => 'edizione_newsletter'
@@ -60,6 +56,14 @@ ActionController::Routing::Routes.draw do |map|
   map.quesito_new '/quesito_new', :controller => 'editorial', :action => 'quesito_new'
   map.quesito_create '/quesito_create', :controller => 'editorial', :action => 'quesito_create'
   map.quesiti_my '/quesiti_my', :controller => 'editorial', :action => 'quesiti_my'
+  #-> Quesiti (table: user_profiles)-
+  map.profiles_all '/chi-siamo',:controller => 'editorial', :action => 'profili_all'
+  map.profile_new '/chi-siamo/profilo/new', :controller => 'editorial', :action => 'profilo_new'
+  map.profile_show '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo_show'
+  map.profile_edit '/chi-siamo/profilo/:id/edit', :controller => 'editorial', :action => 'profilo_edit'
+  map.profile_destroy '/chi-siamo/profilo/:id/destroy', :controller => 'editorial', :action => 'profilo_destroy'
+  map.profile_update '/chi-siamo/profilo/:id/update', :controller => 'editorial', :action => 'profilo_update'
+
     #to match override act_as_event after search
   #map.edizioneid '/editoriale/newsletter/:id', :controller => 'editorial', :action => 'edizione'
   #map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
@@ -69,6 +73,18 @@ ActionController::Routing::Routes.draw do |map|
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.abbonamenti 'account/register', :controller => 'account', :action => 'register'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
+=begin
+  map.with_options :controller => 'editorial' , :conditions => {:method => :get} do |user_profiles_views|
+      user_profiles_views.connect '/chi-siamo', :action => 'profili_all'
+      user_profiles_views.connect '/chi-siamo/profilo/new', :action => 'profilo_new'
+      user_profiles_views.connect '/chi-siamo/profilo/:id', :action => 'profilo_show'
+      user_profiles_views.connect '/chi-siamo/profilo/edit/:id', :action => 'profilo_edit'
+    end
+  map.with_options :controller => 'user_profiles' , :conditions => {:method => :post} do |user_profiles_actions|
+      user_profiles_actions.connect '/profilo', :action => 'create_profile'
+      user_profiles_actions.connect '/profilo', :action => 'update_profile'
+    end
+=end
 
 #Map menu
 
