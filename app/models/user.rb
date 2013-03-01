@@ -19,6 +19,7 @@ require "digest/sha1"
 
 class User < Principal
   include Redmine::SafeAttributes
+  include ActionView::Helpers::DateHelper
   #include FeesHelper  #Kappao cyclic include detected
   #include FeeConst
 
