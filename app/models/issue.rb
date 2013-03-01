@@ -86,13 +86,22 @@ class Issue < ActiveRecord::Base
   }
   named_scope :all_public_fs, {:include => [:project, :quesito_news, :author, {:section => :top_section}], :order => 'updated_on DESC', :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{Issue.table_name}.updated_on DESC"}
   named_scope :with_filter, lambda {|filter| { :conditions => merge_conditions(filter) } }
-  named_scope :solo_convegni, :conditions => merge_conditions("#{TopSection.table_name}.id = " + FeeConst::CONVEGNO_TOP_SECTION_ID.to_s)
+  named_scope :solo_convegni, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_CONVEGNI.to_s)
+  named_scope :solo_newsport, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_NEWSPORT.to_s)
 
   before_create :default_assign
   before_save :close_duplicates, :update_done_ratio_from_issue_status
   after_save :reschedule_following_issues, :update_nested_set_attributes, :update_parent_attributes, :create_journal
   after_destroy :update_parent_attributes
 
+
+  def user_has_profile(usr = nil)
+   if usr == nil #UserProfile.users_profiles_all(:first, :condition => " user_id =#{usr}").count  > 0
+     true
+   else
+     false
+   end
+ end
   # returns latest issues for public area
   def self.latest_fs(user = User.current, count = 5)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
@@ -120,7 +129,6 @@ class Issue < ActiveRecord::Base
       end
     end
   end
-
 
   #belongs_to :top_section, :through => 'Section'
   def top_section

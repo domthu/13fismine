@@ -1,0 +1,8 @@
+<%= f.error_messages %>
+
+<div class="box tabular">
+  <p><%= f.text_field :sezione, :label => :field_description, :required => true, :size => 60 %></p>
+  <p><%= f.select :top_section_id, (TopSection.all.collect {|c| [c.name, c.id]}), :include_blank => true, :required => true, :size => 60, :title => l(:label_top_section) %></p>
+  <p><%= f.text_field :ordinamento, :label => :field_ordinamento, :size => 3 %></p>
+  <p><%= f.check_box :protetto, :label => :label_protetto %></p>
+</div>

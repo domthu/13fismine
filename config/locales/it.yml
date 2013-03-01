@@ -1169,9 +1169,10 @@ it:
   label_top_section_new: Nuova Sezione
   label_ordinamento: Ord.
   label_se_visibile: Visibile?
+  label_se_visibile_menu_arts: Visibile nel menu articoli?
   label_immagine: immagine
   label_style: style
-  label_key: chiave
+  label_key: Chiave
   field_sezione_top: Descrizione Sezione
   field_ordinamento: Ordinamento
   field_se_visibile: Visibile
@@ -1524,3 +1525,6 @@ it:
   field_privacy_accept: "Accetto l'informativa sulla privacy"
   field_condition: "Condizioni di utilizzo"
   field_condition_readed: "Ho letto le condizioni per l'uso"
+ # user_profiles
+  field_curriculum: 'Curriculum'
+  label_curriculum: 'il Curriculum'

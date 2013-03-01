@@ -44,6 +44,7 @@
                    :rows => (@issue.description.blank? ? 10 : [[10, @issue.description.length / 50].max, 100].min),
                    :accesskey => accesskey(:edit),
                    :class => 'wiki-edit' %></p>
+
 </div>
 
 <% if @issue.new_record? %>
@@ -63,3 +64,4 @@
 <%# wikitoolbar_for 'issue_subject' %>
 <%= wikitoolbar_for 'issue_summary' %>
 <%= wikitoolbar_for 'issue_description' %>
+

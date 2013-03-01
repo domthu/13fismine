@@ -28,7 +28,7 @@ class TopSection < ActiveRecord::Base
   #validates_presence_of :key
   validates_length_of :key, :maximum => 4000
 
-  named_scope :find_convegno, :conditions => "id = " + FeeConst::CONVEGNO_TOP_SECTION_ID.to_s
+  named_scope :find_convegno, :conditions => "top_menu_id = " + FeeConst::TMENU_CONVEGNI.to_s
 
   def to_s
     sezione_top.to_s

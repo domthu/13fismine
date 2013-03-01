@@ -2,7 +2,7 @@
 <html dir="ltr" lang="en-EN" xmlns="http://www.w3.org/1999/html">
 <head><!-- Created by DomThu & SPecchiaSoft -->
    <meta charset="utf-8"/>
-  <title>FiscoSport (v0.8) <%= h html_title %></title>
+  <title>FiscoSport (v0.0.9) <%= h html_title %></title>
   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width"/>
   <meta name="description" content="<%= Redmine::Info.app_name %>"/>
   <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
@@ -26,24 +26,28 @@
   <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
+
+  <%#= javascript_heads %>
   <%# javascript_include_tag "jquery/jquery-1.8.2.min.js"%>
-  <%=javascript_include_tag "jquery.js"%>
+
+  <%= javascript_include_tag "jquery.js"%>
+
   <%#= javascript_include_tag "jquery/jquery-1.7.1.min.js" %>
-  <%#= javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
+  <%# javascript_include_tag "jquery/jquery-1.9.1.min.js" %>
   <%# javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
   <%#stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
   <%#javascript_include_tag "src/jquery-1.3.2.js" %>
   <%= javascript_include_tag "src/jquery.color.js" %>
-  <%=javascript_include_tag "src/jquery-glowing.js" %>
-  <%=javascript_include_tag "src/text_ticker.js" %>
+  <%= javascript_include_tag "src/jquery-glowing.js" %>
+  <%= javascript_include_tag "src/text_ticker.js" %>
   <%= javascript_include_tag "dynamic-font-resize.js" %>
+
   <%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
   <%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
   <%= stylesheet_link_tag 'jquery-ui-rewrite.css', :media => 'all' %>
   <%= javascript_include_tag "script.js" %>
   <%= javascript_include_tag "script.responsive.js" %>
   <%= javascript_include_tag "jquery.carouFredSel-6.1.0.js" %>
-
   <script type="text/javascript">
       //$(function () {
       $(document).ready(function() {
@@ -97,6 +101,9 @@
       });
 
   </script>
+  <!-- page specific tags -->
+  <%= yield :header_tags -%>
+    <!-- end page specific tags -->
 
 </head>
 <body>

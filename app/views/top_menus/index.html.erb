@@ -10,6 +10,7 @@
   <%= sort_header_tag('descrizione', :title => l(:label_top_menu), :style => 'width: 80%;text-align:left;')%>
   <%= sort_header_tag('ordinamento', :title => l(:label_ordinamento), :style => 'color:red; width: 10%;')%>
   <%= sort_header_tag('key', :title => l(:label_key), :style => 'color:red; width: 10%;')%>
+    <%= sort_header_tag('visibile?', :title => l(:label_se_visibile), :style => 'color:red; width: 10%;')%>
   <th style='width: 5%;'></th>
   <th style='width: 5%;'></th>
   </tr></thead>
@@ -19,6 +20,7 @@
     <td><%= link_to h(top_menu), top_menu_path(top_menu) %></td>
     <td align="center"><%=h top_menu.order %></td>
     <td ><%=h top_menu.key %></td>
+    <td><%=h top_menu.se_visibile == 0 ? 'no':'si'%></td>
     <td class="buttons"><%= link_to('', edit_top_menu_path(top_menu), :class => 'icon icon-edit') if User.current.admin? %></td>
     <td class="buttons"><%= link_to ('', top_menu, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
   </tr>

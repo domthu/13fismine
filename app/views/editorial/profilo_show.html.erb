@@ -1,0 +1,97 @@
+<div class="fs-layout-cell fs-content clearfix">
+  <% if flash[:notice] %>
+      <div id="fs-flash-notice"><%= notice %> </div>
+  <% end %>
+  <div class="fs-content-layout post-layout-item-0" style="width: 99%">
+    <div class="fs-content-layout-row">
+      <div class="fs-layout-cell post-layout-item-3" style="width: 100%">
+        <article class="fs-post-profile fs-article">
+
+          <div class="fs-profiles-sx">
+            <p>
+              <b> Photo </b>
+              <%= image_tag @user_profile.photo.url(:s) %>
+              <br/>
+              <%=image_tag @user_profile.photo.url(:l) %>
+            </p>
+
+            <p>
+              <b> Immagine url </b>
+              <%= h @user_profile.use_gravatar %>
+            </p>
+
+            <p>
+              <b> Qualifica </b>
+              <%= h @user_profile.fs_qualifica %>
+            </p>
+          </div>
+          <div class="fs-profiles-cx">
+            <p>
+              <b> telefono </b>
+              <%= h @user_profile.fs_tel %>
+            </p>
+
+            <p>
+              <b> fax </b>
+              <%= h @user_profile.fs_fax %>
+            </p>
+
+            <p>
+              <b> skype </b>
+              <%= h @user_profile.fs_skype %>
+            </p>
+
+            <p>
+              <b> e-mail </b>
+              <%= h @user_profile.fs_mail %>
+            </p>
+
+            <p>
+              <b> url esterno </b>
+              <%= h @user_profile.external_url %>
+            </p>
+          </div>
+          <div class="fs-profiles-dx">
+            <div>
+              <b> Mostra in ... </b> &nbsp;<br />
+              <label><%= radio_button_tag 'display_in',1,@user_profile.display_in == 1 ? true : false, :disabled => true %> <%= 'Collaboratori' %></label><br/>
+              <label><%= radio_button_tag 'display_in',2,@user_profile.display_in == 2 ? true : false, :disabled => true %> <%= 'Responsabili' %></label><br/>
+              <label><%= radio_button_tag 'display_in',3,@user_profile.display_in == 3 ? true : false, :disabled => true %> <%= 'Direttori' %></label> <br/>
+              <label><%= radio_button_tag 'display_in',4,@user_profile.display_in == 4 ? true : false, :disabled => true %> <%= 'Non Visibile' %></label><br/>
+              <br /> &nbsp;
+            </div>
+
+            <p>  <%= link_to("modifica", profile_edit_path(@user_profile) , :class=>"fs-giallo-button") %></p>
+
+          </div>
+
+          <div class="cleared"></div>
+
+          <b> titoli </b>
+
+          <p><%= h @user_profile.titoli %>
+          </p>
+
+          <p>
+            <b> Curriculum </b>
+            <%= h @user_profile.curriculum %>
+          </p>
+
+        </article>
+
+        <br/>&nbsp; <br/>
+        <article class="fs-post-profile fs-article">
+          <%= link_to("1a versione statica", chisiamo_path, :class => "fs-giallo-button") %>
+
+        </article>
+
+      </div>
+
+  </div>
+  </div>
+</div>
+
+<%# render :partial => 'blocco_sidebar1' %>
+
+<%= render :partial => 'blocco_sidebar1' %>
+

@@ -23,7 +23,9 @@
     <p>
         <%= l(:label_key) %>: <%=h @top_menu.key %>
     </p>
-
+    <p>
+    <%= l(:label_se_visibile_menu_arts) %>: &nbsp; <%=h @top_menu.se_visibile == 0 ? 'no':'si' %>
+    </p>
   </fieldset>
 </div>
 

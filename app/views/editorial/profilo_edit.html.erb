@@ -1,0 +1,85 @@
+<%# form_tag({:action => :update}, {:method => :put})form_tag({:action => controller.action_name, :id => @project, :path => to_path_param(@path), :rev => ''}, {:method => :get, :id => 'revision_selector'}) do -%>
+
+<% form_tag({:action => "profilo_edit", :id => @user_profile, :method => :post}, :multipart => true) do %>
+    <%= hidden_field_tag :user_id, @user_profile.user_id %>
+    <div class="fs-profiles-sx">
+      <p>
+        <%= label_tag :photo, "Photo" %>
+      <%= file_field_tag :photo %>
+       <% @user_profile.photo.reprocess!%>
+        <%# label_tag :photo %>
+        <%# f.file_field :photo %>
+
+      </p>
+      <b> Photo </b>
+      <%= image_tag @user_profile.photo.url(:s) %>
+      <br/>
+      <%= image_tag @user_profile.photo.url(:l) %>
+
+      <p>
+        <%= label_tag :immagine_url %><br/>
+        <%= text_field_tag :immagine_url, @user_profile.immagine_url %>
+      </p>
+
+      <p>
+        <%= label_tag :fs_qualifica %><br/>
+        <%= text_field_tag :fs_qualifica, @user_profile.fs_qualifica %>
+      </p>
+    </div>
+    <div class="fs-profiles-cx">
+      <p>
+        <%= label_tag :fs_tel %><br/>
+        <%= text_field_tag :fs_tel, @user_profile.fs_tel %>
+      </p>
+
+      <p>
+        <%= label_tag :fs_fax %><br/>
+        <%= text_field_tag :fs_fax, @user_profile.fs_fax %>
+      </p>
+
+      <p>
+        <%= label_tag :fs_skype %><br/>
+        <%= text_field_tag :fs_skype, @user_profile.fs_skype %>
+      </p>
+
+      <p>
+        <%= label_tag :fs_mail %><br/>
+        <%= text_field_tag :fs_mail, @user_profile.fs_mail %>
+      </p>
+
+      <p>
+        <%= label_tag :external_url %><br/>
+        <%= text_field_tag :external_url, @user_profile.external_url %>
+      </p>
+    </div>
+    <div class="fs-profiles-dx">
+
+      <div>
+        <b> Mostra in ...  <%= @user_profile.display_in.to_s %></b> &nbsp;<br/>
+        <label><%= radio_button_tag :display_in, 1, @user_profile.display_in == 1 %> <%= 'Collaboratori' %></label><br/>
+        <label><%= radio_button_tag :display_in, 2, @user_profile.display_in == 2 %> <%= 'Responsabili' %></label><br/>
+        <label><%= radio_button_tag :display_in, 3, @user_profile.display_in == 3 %> <%= 'Direttori' %></label><br/>
+        <label><%= radio_button_tag :display_in, 4, @user_profile.display_in == 4 %> <%= 'Non Visibile' %></label><br/>
+        <br/> &nbsp;
+      </div>
+
+      <p>  <%= submit_tag "salva", :action => 'profilo_edit', :class => "fs-giallo-button" %></p>
+
+    </div>
+    <div class="cleared"></div>
+    <p>
+      <%= label_tag l(:label_titoli) %><br/>
+    <p>
+      <%= text_area_tag :titoli, @user_profile.titoli, :cols => 20, :rows => 4, :class => 'wiki-edit' %>
+    </p>
+    <p>
+      <%= label_tag l(:label_curriculum) %><br/>
+      <%= text_area_tag :curriculum,  @user_profile.curriculum, :cols => 20, :rows => 6, :class => 'wiki-edit' %>
+    </p>
+
+
+<% end %>
+<p>  <%= link_to("elimina profilo",profile_destroy_path(@user_profile.id), :class => "fs-rosso-button",:confirm =>"conferma?")%></p>
+<%= wikitoolbar_for 'user_profile_curriculum' %>
+<%= wikitoolbar_for 'curriculum' %>
+
