@@ -9,8 +9,8 @@
       </p>
 
       <p>
-        <%= f.label :immagine_url %><br/>
-        <%= f.text_field :immagine_url %>
+        <label><%= f.radio_button :use_gravatar, true %> <%= 'Usa mail su Gravatar' %></label><br/>
+        <label><%= f.radio_button :use_gravatar, false %> <%= 'Usa tua immagine Avatar' %></label><br/>
       </p>
 
       <p>

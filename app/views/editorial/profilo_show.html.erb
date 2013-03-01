@@ -12,12 +12,12 @@
               <b> Photo </b>
               <%= image_tag @user_profile.photo.url(:s) %>
               <br/>
-              <%= image_tag @user_profile.photo.url(:l) %>
+              <%=image_tag @user_profile.photo.url(:l) %>
             </p>
 
             <p>
               <b> Immagine url </b>
-              <%= h @user_profile.immagine_url %>
+              <%= h @user_profile.use_gravatar %>
             </p>
 
             <p>
