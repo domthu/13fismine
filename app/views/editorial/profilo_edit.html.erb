@@ -5,8 +5,8 @@
     <div class="fs-profiles-sx">
       <p>
         <%= label_tag :photo, "Photo" %>
-      <%= file_field_tag :photo %>
-       <% @user_profile.photo.reprocess!%>
+        <%= file_field_tag :photo %>
+        <% @user_profile.photo.reprocess! %>
         <%# label_tag :photo %>
         <%# f.file_field :photo %>
 
@@ -15,10 +15,9 @@
       <%= image_tag @user_profile.photo.url(:s) %>
       <br/>
       <%= image_tag @user_profile.photo.url(:l) %>
-
       <p>
-        <%= label_tag :immagine_url %><br/>
-        <%= text_field_tag :immagine_url, @user_profile.immagine_url %>
+        <label><%= radio_button_tag :use_gravatar ,1, @user_profile.use_gravatar == 1 %> <%= 'Usa mail su Gravatar' %></label><br/>
+        <label><%= radio_button_tag :use_gravatar ,0, @user_profile.use_gravatar == 0 %> <%= 'Usa tua immagine Avatar' %></label><br/>
       </p>
 
       <p>
@@ -74,12 +73,12 @@
     </p>
     <p>
       <%= label_tag l(:label_curriculum) %><br/>
-      <%= text_area_tag :curriculum,  @user_profile.curriculum, :cols => 20, :rows => 6, :class => 'wiki-edit' %>
+      <%= text_area_tag :curriculum, @user_profile.curriculum, :cols => 20, :rows => 6, :class => 'wiki-edit' %>
     </p>
 
 
 <% end %>
-<p>  <%= link_to("elimina profilo",profile_destroy_path(@user_profile.id), :class => "fs-rosso-button",:confirm =>"conferma?")%></p>
+<p>  <%= link_to("elimina profilo", profile_destroy_path(@user_profile.id), :class => "fs-rosso-button", :confirm => "conferma?") %></p>
 <%= wikitoolbar_for 'user_profile_curriculum' %>
 <%= wikitoolbar_for 'curriculum' %>
 
