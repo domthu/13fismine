@@ -204,22 +204,12 @@ class EditorialController < ApplicationController
         @limit = 5
         @offset= 25
     end
-#    @topsection = TopSection.find(:first, :conditions => ["top_sections.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID])
-#    @issues_count =Issue.all.count(
-#        :conditions => ["#{TopSection.table_name}.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID]
-#    )
-#    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-#    @convegni = Issue.all(
-#       :conditions => [" #{TopSection.table_name}.id = ?", FeeConst::CONVEGNO_TOP_SECTION_ID],
-#       :limit => @issues_pages.items_per_page,
-#       :offset => @issues_pages.current.offset)
     @topsection = TopSection.find_convegno(:first)
     @issues_count =Issue.all_public_fs.solo_convegni.count()
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
     @convegni = Issue.all_public_fs.solo_convegni.all(
         :limit => @issues_pages.items_per_page,
         :offset => @issues_pages.current.offset)
-
     respond_to do |format|
       format.html {
         render :layout => !request.xhr?
