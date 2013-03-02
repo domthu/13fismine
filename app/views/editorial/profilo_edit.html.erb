@@ -6,15 +6,13 @@
       <p>
         <%= label_tag :photo, "Photo" %>
         <%= file_field_tag :photo %>
-        <%= @user_profile.photo.reprocess! %>
+        <%# @user_profile.photo.reprocess! %>
         <%# label_tag :photo %>
         <%# f.file_field :photo %>
 
       </p>
       <p>
       <b> Photo </b>
-      <%= image_tag @user_profile.photo.url(:s) %>
-      <br/>
       <%= image_tag @user_profile.photo.url(:l) %>
       </p>
         <div>

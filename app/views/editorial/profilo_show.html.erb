@@ -9,10 +9,13 @@
 
           <div class="fs-profiles-sx">
             <p>
-              <b> Photo </b>
+              <b> Photo small </b>
               <%= image_tag @user_profile.photo.url(:s) %>
-              <br/>
-              <%=image_tag @user_profile.photo.url(:l) %>
+            </p>
+
+            <p>
+              <b> Photo large </b>
+              <%= image_tag @user_profile.photo.url(:l) %>
             </p>
 
             <p>
@@ -53,15 +56,16 @@
           </div>
           <div class="fs-profiles-dx">
             <div>
-              <b> Mostra in ... </b> &nbsp;<br />
-              <label><%= radio_button_tag 'display_in',1,@user_profile.display_in == 1 ? true : false, :disabled => true %> <%= 'Collaboratori' %></label><br/>
-              <label><%= radio_button_tag 'display_in',2,@user_profile.display_in == 2 ? true : false, :disabled => true %> <%= 'Responsabili' %></label><br/>
-              <label><%= radio_button_tag 'display_in',3,@user_profile.display_in == 3 ? true : false, :disabled => true %> <%= 'Direttori' %></label> <br/>
-              <label><%= radio_button_tag 'display_in',4,@user_profile.display_in == 4 ? true : false, :disabled => true %> <%= 'Non Visibile' %></label><br/>
-              <br /> &nbsp;
+              <b> Mostra in ... </b> &nbsp;<br/>
+              <label><%= radio_button_tag 'display_in', 1, @user_profile.display_in == 1 ? true : false, :disabled => true %> <%= 'Collaboratori' %></label><br/>
+              <label><%= radio_button_tag 'display_in', 2, @user_profile.display_in == 2 ? true : false, :disabled => true %> <%= 'Responsabili' %></label><br/>
+              <label><%= radio_button_tag 'display_in', 3, @user_profile.display_in == 3 ? true : false, :disabled => true %> <%= 'Direttori' %></label>
+              <br/>
+              <label><%= radio_button_tag 'display_in', 4, @user_profile.display_in == 4 ? true : false, :disabled => true %> <%= 'Non Visibile' %></label><br/>
+              <br/> &nbsp;
             </div>
 
-            <p>  <%= link_to("modifica", profile_edit_path(@user_profile) , :class=>"fs-giallo-button") %></p>
+            <p>  <%= link_to("modifica", profile_edit_path(@user_profile), :class => "fs-giallo-button") %></p>
 
           </div>
 
@@ -87,7 +91,7 @@
 
       </div>
 
-  </div>
+    </div>
   </div>
 </div>
 

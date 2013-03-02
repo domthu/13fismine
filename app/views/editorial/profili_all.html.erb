@@ -33,6 +33,7 @@
           <% @responsabili.each do |item| %>
               <div class="fs-chisiamo-item">
                 <%= link_to image_tag("/images/commons/m1.png", :alt => item.user.firstname + ' ' + item.user.lastname, :height => "75", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show", :id => item.id %>
+                  <%=  image_tag(item.photo.url(:l))  %>
                 <p>
                   <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
                   <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
