@@ -322,6 +322,7 @@
     display: block;
     float: left;
 }
+
 /* pagina chi siamo */
 h3.fs-postheader {
     color: #45535d;
@@ -1444,28 +1445,41 @@ right: -14px;   */
 
 /* =========================== fine quesiti  ============================= */
 /* ===================== inizio chi siamo (user profiles)  ===================== */
-.fs-profiles-sx{
- width: 25%;
+.fs-profiles-sx {
+    width: 30%;
     padding: 10px;
-    border: solid 1px #dcdcdc;
-    float:left;
+    float: left;
+
 }
-.fs-profiles-cx{
- width: 45%;
+.fs-profiles-us {
+    width: 61%;
     padding: 10px;
-    border: solid 1px #9bc6dc;
-    float:left;
+    float:right;
+
 }
-.fs-profiles-dx{
+.fs-profiles-cx {
     padding: 10px;
-    border: solid 1px #dcd075;
-    float:left;
+    width: 61%;
+    float: right;
+
 }
 
+.fs-profiles-dx {
+    padding: 10px;
+    width: 30%;
+    float: left;
+}
 
-
-
-
+.fs-profiles-sx p, .fs-profiles-cx p, .fs-profiles-dx p {
+    font-size: 13px;
+}
+.fs-profiles-sx span, .fs-profiles-cx span, .fs-profiles-dx span {
+    font-weight: bold;
+}
+.fs-profiles-labels{
+    font-weight: bold;
+    font-size: 13px;
+}
 /* ===================== fine  chi siamo (user profiles)  ===================== */
 /* inizio slide */
 .fs-slidecontainerslideshutterstock_1 {
