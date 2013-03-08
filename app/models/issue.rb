@@ -18,6 +18,7 @@
 class Issue < ActiveRecord::Base
   include Redmine::SafeAttributes
   include FeesHelper
+  has_image  #vedi config/initializers/paperclip.rb
 
   belongs_to :project
   belongs_to :tracker
