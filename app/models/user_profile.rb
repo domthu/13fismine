@@ -1,12 +1,12 @@
 class UserProfile < ActiveRecord::Base
   belongs_to :user
   after_update :reprocess
-  has_photo  #vedi config/initializers/paperclip.rb
-#  has_attached_file :photo, :styles => {:l => ["200x200>", :png, :jpg],
-#                                        :s => ["75x75>", :png, :jpg]},
-#                    :url => "users/profiles/:id/:style/:basename.:extension",
-#                    :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension",
-#                    :default_url => "users/profiles/:style/missing.png"
+ # has_photo  #vedi config/initializers/paperclip.rb
+  has_attached_file :photo, :styles => {:l => ["200x200>", :png, :jpg],
+                                        :s => ["75x75>", :png, :jpg]},
+                    :url => "users/profiles/:id/:style/:basename.:extension",
+                    :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension",
+                    :default_url => "users/profiles/:style/missing.png"
 
   # formatted as an array of options, option being an array of key, value
   #OPTIONS = [['Collaboratore', FeeConst::PROFILO_FS_COLLABORATORE], ['Responsabile', FeeConst::PROFILO_FS_RESPONSABILE], ['Direttore', FeeConst::PROFILO_FS_DIRETTORE]]

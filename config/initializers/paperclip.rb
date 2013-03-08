@@ -1,7 +1,7 @@
 require "paperclip/railtie"
 Paperclip::Railtie.insert
 =begin
-=end
+
 module HasAvatar
   STYLES_IMG = {:large => ["200x200#", :png, :jpg],
             :medium => ["100x100#", :png,:jpg],
@@ -16,7 +16,6 @@ module HasAvatar
   end
 
   module ClassMethods
-
     def has_image
       has_attached_file :image,
           PAPERCLIP_DEFAULTS.merge(
@@ -27,8 +26,7 @@ module HasAvatar
               :default_url => "articles/no-img.jpg"
           )
     end
-
-    def has_foto
+     def has_foto
       has_attached_file :photo,
           PAPERCLIP_DEFAULTS.merge(
               :styles => HasAvatar::STYLES_PHOTO,
@@ -43,3 +41,4 @@ module HasAvatar
 end
 
 ActiveRecord::Base.send :include, HasAvatar
+=end
