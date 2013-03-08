@@ -18,7 +18,16 @@
 class Issue < ActiveRecord::Base
   include Redmine::SafeAttributes
   include FeesHelper
-  has_image  #vedi config/initializers/paperclip.rb
+  #after_update :reprocess
+  #has_image  #vedi config/initializers/paperclip.rb
+  has_attached_file :photo, :styles => {:large => ["200x200#", :png, :jpg],
+                :medium => ["100x100#", :png,:jpg],
+                :small => ["70x70#", :png,:jpg],
+                :little => ["50x50#", :png,:jpg],
+                :tiny => ["24x24#", :png,:jpg]},
+                    :url => "users/profiles/:id/:style/:basename.:extension",
+                    :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension",
+                    :default_url => "users/profiles/:style/missing.png"
 
   belongs_to :project
   belongs_to :tracker
