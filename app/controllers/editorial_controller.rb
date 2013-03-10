@@ -430,18 +430,21 @@ class EditorialController < ApplicationController
   end
 
   def profilo_edit
+
     @id = params[:id].to_i
     @user_profile = UserProfile.find_by_id(@id)
     if request.post?
       if @user_profile.update_attributes(:user_id => params[:user_id], :photo => params[:photo], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
         #@user_profile.photo.reprocess!
         # @user_profile.save
-        flash[:notice] = fading_flash_message("mah ??? " + params[:photo].to_s, 5)
+        flash[:notice] = fading_flash_message("il tuo profilo è stato aggiornato." + params[:photo].to_s, 5)
       else
-        flash[:notice] = 'qualcosa è andato storto!'
+        flash[:notice] = 'mah ... qualcosa è andato storto!'
       end
       redirect_to :action => 'profilo_show', :id => @user_profile
+      return
     end
+    render :layout => "editorial_edit"
   end
 
   def profilo_new
