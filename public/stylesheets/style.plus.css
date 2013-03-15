@@ -336,7 +336,7 @@ h3.fs-postheader {
 
 .fs-chisiamo-item {
     width: 100%;
-    display: block;
+    float:left;
 }
 
 .fs-chisiamo-item img, .fs-chisiamo-item2 img {

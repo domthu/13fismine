@@ -2,34 +2,31 @@
   <% if flash[:notice] %>
       <div id="fs-flash-notice"><%= notice %> </div>
   <% end %>
-  <div>
-    <%= link_to("1a versione statica", chisiamo_path, :class => "fs-giallo-button") %> <br />
-    <h2><%= @users.count.to_s %></h2>
-    </div>
-
-  <div class="fs-content-layout post-layout-item-0" style="width: 99%">
+  <div class="fs-content-layout" style="width: 50%; float:left;">
     <div class="fs-content-layout-row">
-      <div class="fs-layout-cell post-layout-item-3" style="width: 50%">
-
+      <div class="fs-layout-cell post-layout-item-3">
         <article class="fs-post-profile fs-article">
           <h3 class="fs-postheader">DIRETTORI DI REDAZIONE </h3>
-
-
           <% @direttori.each do |item| %>
               <div class="fs-chisiamo-item">
-                <%= link_to image_tag(item.photo.url(:s), :alt => item.user.firstname + ' ' + item.user.lastname, :height => "75", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show", :id => item.id %>
+                <div>
+                  <%= link_to image_tag(item.photo.url(:s), :alt => item.user.firstname + ' ' + item.user.lastname, :height => "75", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show", :id => item.id %>
+                </div>
                 <p>
                   <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
                   <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
               </div>
           <% end %>
+          <div class="clearfix"></div>
         </article>
       </div>
-      <div class="fs-layout-cell post-layout-item-3" style="width: 50%">
+    </div>
+  </div>
+  <div class="fs-content-layout" style="width: 50%; float:left;">
+    <div class="fs-content-layout-row">
+      <div class="fs-layout-cell post-layout-item-3">
         <article class="fs-post-profile fs-article">
           <h3 class="fs-postheader">RESPONSABILI DI REDAZIONE </h3>
-
-
           <% @responsabili.each do |item| %>
               <div class="fs-chisiamo-item">
                 <%= link_to image_tag(item.photo.url(:s), :alt => item.user.firstname + ' ' + item.user.lastname, :height => "75", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show", :id => item.id %>
@@ -38,39 +35,38 @@
                   <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
               </div>
           <% end %>
+          <div class="clearfix"></div>
         </article>
       </div>
     </div>
   </div>
-  <div class="fs-content-layout post-layout-item-0" style="width: 99%">
-      <div class="fs-content-layout-row">
-        <div class="fs-layout-cell post-layout-item-3">
-          <article class="fs-post-profile fs-article">
-            <h3 class="fs-postheader">COLLABORATORI DELLA REDAZIONE </h3>
-            <% @collaboratori.each do |item| %>
-                <div class="fs-chisiamo-item2">
-                  <%= link_to image_tag(item.photo.url(:s), :alt => item.user.firstname + ' ' + item.user.lastname, :height => "80", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show", :id => item.id %>
-                  <p>
-                    <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
-                    <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
-                </div>
-            <% end %>
-            <% @users.each do |item| %>
-                <div class="fs-chisiamo-item2">
-                  <%= link_to image_tag("/images/commons/m1.png", :alt => item.firstname + ' ' + item.lastname, :height => "80", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_new", :id => item.id %>
-                  <p>
-                    <span style="font-weight: bold;">  <%= link_to((item.firstname + ' ' + item.lastname), :controller => "editorial", :action => "profilo_new", :id => item.id) %></span><br/>
+  <div class="fs-content-layout" style="width: 99%">
+    <div class="fs-content-layout-row">
+      <div class="fs-layout-cell post-layout-item-3">
+        <article class="fs-post-profile fs-article">
+          <h3 class="fs-postheader">COLLABORATORI DELLA REDAZIONE </h3>
+          <% @collaboratori.each do |item| %>
+              <div class="fs-chisiamo-item2">
+                <%= link_to image_tag(item.photo.url(:s), :alt => item.user.firstname + ' ' + item.user.lastname, :height => "80", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show", :id => item.id %>
+                <p>
+                  <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
+                  <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
+              </div>
+          <% end %>
+          <% @users.each do |item| %>
+              <div class="fs-chisiamo-item2">
+                <%= link_to image_tag("/images/commons/m1.png", :alt => item.firstname + ' ' + item.lastname, :height => "80", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_new", :id => item.id %>
+                <p>
+                  <span style="font-weight: bold;">  <%= link_to((item.firstname + ' ' + item.lastname), :controller => "editorial", :action => "profilo_new", :id => item.id) %></span><br/>
                     <span style="font-style: italic;">[ <%= item.id.to_s %> <%= item.role_id == 4 ? 'Collaboratore' :'Admin' %>
                       ]</span></p>
-                </div>
-            <% end %>
-            <div class="clearfix"></div>
-          </article>
-        </div>
+              </div>
+          <% end %>
+          <div class="clearfix"></div>
+        </article>
       </div>
-   </div>
+    </div>
   </div>
-
-
-  <%= render :partial => 'blocco_sidebar1' %>
+</div>
+<%= render :partial => 'blocco_sidebar1' %>
 
