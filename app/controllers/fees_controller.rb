@@ -233,7 +233,7 @@ class FeesController < ApplicationController
     ActionMailer::Base.raise_delivery_errors = true
     begin
       #lib/tasks/email.rake
-      #app/models/mailer.rb  -> def fee(user, type, setting_text)   fee e fee_url
+      #app/models/mailer.rb  -> def deliver_fee(user, type, setting_text)   fee e fee_url
       #app/invoice/views/_fee.text.erb
       #app/invoice/views/_fee.html.erb
       if @type == 'proposal'

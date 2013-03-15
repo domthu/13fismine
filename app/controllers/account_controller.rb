@@ -92,6 +92,8 @@ class AccountController < ApplicationController
     else
       @user = User.new(params[:user])
       @user.admin = false
+      #default role_id
+      @user.role_id = Fees::ROLE_REGISTERED
       #Collect fs custom data
 
       #Region Province Comune

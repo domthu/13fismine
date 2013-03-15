@@ -56,7 +56,8 @@ class User < Principal
   has_one :user_profile, :class_name => 'UserProfile'
   belongs_to :auth_source
   #domthu20120916
-  belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id'
+  belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id' #, :default => 9
+  # Fees::ROLE_REGISTERED
   #domthu20120516
   belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id'
 

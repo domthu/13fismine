@@ -138,7 +138,6 @@ module FeesHelper
 
       #FeeConst::ROLE_REGISTERED  --> FeeConst::ROLE_ABBONATO
       #FeeConst::ROLE_REGISTERED  --> FeeConst::ROLE_EXPIRED
-      #link_to( l(:button_registered), url.merge(:user => {:role_id => FeeConst::ROLE_REGISTERED}), :method => :put, :class => 'icon icon-reg')
       when 9
         str += link_to( l(:button_abbonato), url.merge(:user => {:role_id => FeeConst::ROLE_ABBONATO}), :method => :put, :class => 'icon icon-abbo') + link_to( l(:button_expired), url.merge(:user => {:role_id => FeeConst::ROLE_EXPIRED}), :method => :put, :class => 'icon icon-exp')
 
@@ -156,7 +155,8 @@ module FeesHelper
       when 8
         str += link_to( l(:button_expired), url.merge(:user => {:role_id => FeeConst::ROLE_EXPIRED}), :method => :put, :class => 'icon icon-exp')
       else
-        str += "Ruolo non conosciuto (" + user.role_id.to_s + ")"
+        #TODO http://localhost:3000/fees/update_role/18113?role_id=&user[role_id]=9
+        str += "Ruolo non conosciuto (" + user.role_id.to_s + ") " + link_to( l(:button_registered), url.merge(:user => {:role_id => FeeConst::ROLE_REGISTERED}), :method => :put, :class => 'icon icon-reg')
     end
     return str
   end
