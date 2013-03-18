@@ -1,23 +1,36 @@
-<%# form_tag({:action => :update}, {:method => :put})form_tag({:action => controller.action_name, :id => @project, :path => to_path_param(@path), :rev => ''}, {:method => :get, :id => 'revision_selector'}) do -%>
+<style>
+    .thumb {
+        height: 180px;
+        border: 1px solid #ededed;
+        margin: 10px 5px 0 0;
+    }
+</style>
+
+
 
 <% form_tag({:action => "profilo_edit", :id => @user_profile, :method => :post}, :multipart => true) do %>
     <%= hidden_field_tag :user_id, @user_profile.user_id %>
     <div class="fs-profiles-sx">
       <p>
         <%= label_tag :photo, "Photo" %>
-        <%= file_field_tag :photo %>
+        <%= file_field_tag :photo, :id => 'files', :onchange => "handleFileSelect('handleFileSelect, false'})"  %>
         <%# @user_profile.photo.reprocess! %>
         <%# label_tag :photo %>
         <%# f.file_field :photo %>
+        <!--
+    <input type="file" id="files" name="files[]"   />
+     <output id="list"></output>  -->
+      </p>
+       <%= '<output id="list"></output>' %>
 
+      <p id="fs-photo-edit">
+        <b> Photo </b>
+        <%= image_tag @user_profile.photo.url(:l) %>
       </p>
-      <p>
-      <b> Photo </b>
-      <%= image_tag @user_profile.photo.url(:l) %>
-      </p>
-        <div>
-        <label><%= radio_button_tag :use_gravatar ,true, @user_profile.use_gravatar? %> <%= 'Usa mail su Gravatar' %></label><br/>
-        <label><%= radio_button_tag :use_gravatar ,false, !@user_profile.use_gravatar? %> <%= 'Usa tua immagine Avatar' %></label><br/>
+
+      <div>
+        <label><%= radio_button_tag :use_gravatar, true, @user_profile.use_gravatar? %> <%= 'Usa mail su Gravatar' %></label><br/>
+        <label><%= radio_button_tag :use_gravatar, false, !@user_profile.use_gravatar? %> <%= 'Usa tua immagine Avatar' %></label><br/>
       </div>
 
       <p>
@@ -82,3 +95,37 @@
 <%= wikitoolbar_for 'user_profile_curriculum' %>
 <%= wikitoolbar_for 'curriculum' %>
 
+
+<script>
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+
+            // Only process image files.
+            if (!f.type.match('image.*')) {
+                continue;
+            }
+
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    // Render thumbnail.
+                   // var span = document.createElement('span');
+                    var span = document.getElementById('list');
+                    span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                        '" title="', escape(theFile.name), '"/>'].join('');
+                   document.getElementById('list').insertBefore(span, null);
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);
+        }
+        document.getElementById('fs-photo-edit').style.display='none';
+    }
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>

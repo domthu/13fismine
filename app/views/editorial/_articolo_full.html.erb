@@ -13,10 +13,16 @@
                     image_tag("/images/commons/sections/no-img.jpg")
                   end
                 else
-                  image_tag(articolo.immagine_url, :alt => h(truncate(articolo.subject, :length => 25)))
+                  if FileTest.exist?("#{RAILS_ROOT}/public/images/articles/images_url/#{articolo.immagine_url}")
+                    image_tag("/images/articles/images_url/#{articolo.immagine_url}", :alt => h(truncate(articolo.subject, :length => 25)))
+                else
+                    image_tag("/images/commons/sections/no-img.jpg")
+                  end
+
                 end
             %>
           </div>
+            <%#(FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")).to_s  +  "#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}" %>
           <div class="fs-postmetadata-full">
             <div class="fs-author">
               <div>  <%= gravatar_for(articolo.author) unless !articolo.author %><%= h articolo.author %>
@@ -56,24 +62,24 @@
             </div>
             <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
           </div>
-          <div class="fs-riassunto-full"> <p>
-            <%= h(smart_truncate(articolo.summary, 250)) %></p></div>
+          <div class="fs-riassunto-full"><p>
+            <%= textilizable(smart_truncate(articolo.summary, 250)) %></p></div>
 
         </div>
-        <div class="clearfix">&nbsp; <br /></div>
+        <div class="clearfix">&nbsp; <br/></div>
         <div class="fs-layout-cell layout-item-2">
           <div id="fs-articolo-full">
-            <%= @articolo.description %>
-            <br />
+            <%= textilizable(@articolo.description) %>
+            <br/>
           </div>
         </div>
         <div style="padding: 14px; text-align:center; border-top: solid 1px #bfbfbf;">
 
-        <%=link_to "Ritorna...", :back, :class => "fs-vuoto-inline-button" ,:style=> "float:none;" %>
+          <%= link_to "Ritorna...", :back, :class => "fs-vuoto-inline-button", :style => "float:none;" %>
         </div>
-          <% if  !@quesito.nil? %>
+        <% if  !@quesito.nil? %>
             <h4>L'articolo è stato ispirato da...</h4>
-         <%= render :partial => 'quesito' , :locals => {:q => @quesito}  %>
+            <%= render :partial => 'quesito', :locals => {:q => @quesito} %>
         <% end %>
 
 
