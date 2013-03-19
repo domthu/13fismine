@@ -1,6 +1,6 @@
 <style>
     .thumb {
-        height: 180px;
+        height: 120px;
         border: 1px solid #ededed;
         margin: 10px 5px 0 0;
     }
@@ -9,28 +9,29 @@
 
 
 <% form_tag({:action => "profilo_edit", :id => @user_profile, :method => :post}, :multipart => true) do %>
-    <%= hidden_field_tag :user_id, @user_profile.user_id %>
+    <%= hidden_field_tag :user_id, @user_profile.user %>
     <div class="fs-profiles-sx">
-      <p>
-        <%= label_tag :photo, "Photo" %>
-        <%= file_field_tag :photo, :id => 'files', :onchange => "handleFileSelect('handleFileSelect, false'})"  %>
-        <%# @user_profile.photo.reprocess! %>
-        <%# label_tag :photo %>
-        <%# f.file_field :photo %>
-        <!--
-    <input type="file" id="files" name="files[]"   />
-     <output id="list"></output>  -->
-      </p>
-       <%= '<output id="list"></output>' %>
 
+      <div id="fs-photo-edit" >
+      <% if @user_profile.use_gravatar? %>
+          <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:none;">' + image_tag(@user_profile.photo.url(:l)) + '</div>
+          <div id="fs-photo-edit-g" style="display=block;">' + gravatar_for(@user_profile.user, :size => 120) + ' </div>' %>
+      <% else %>
+          <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:block;">' + image_tag(@user_profile.photo.url(:l)) + '</div>
+          <div id="fs-photo-edit-g" style="display=none;">' + gravatar_for(@user_profile.user , :size => 120) + ' </div>' %>
+      <% end %>
+    </div>
+
+    <!--
       <p id="fs-photo-edit">
         <b> Photo </b>
-        <%= image_tag @user_profile.photo.url(:l) %>
+        <%# image_tag @user_profile.photo.url(:l) %>
       </p>
-
+      -->
       <div>
-        <label><%= radio_button_tag :use_gravatar, true, @user_profile.use_gravatar? %> <%= 'Usa mail su Gravatar' %></label><br/>
-        <label><%= radio_button_tag :use_gravatar, false, !@user_profile.use_gravatar? %> <%= 'Usa tua immagine Avatar' %></label><br/>
+        <label><%= radio_button_tag :use_gravatar, true, @user_profile.use_gravatar? ,:onchange => "funct_avatar('g')" %> <%= 'Usa profilo avatar su Gravatar.it' %></label><br/>
+        <label><%= radio_button_tag :use_gravatar, false, !@user_profile.use_gravatar? ,:onchange => "funct_avatar('a')" %> <%= 'Usa una tua immagine come avatar' %></label><br/>
+        <%= file_field_tag :photo, :id => 'files', :onchange => "handleFileSelect('handleFileSelect, false'})" %>
       </div>
 
       <p>
@@ -97,6 +98,30 @@
 
 
 <script>
+    // valori accettati 1= Immagine Avatar Papareclip , 0 = Immagine Gravatar , 2  = Nuova immagine upload
+    function funct_avatar(val) {
+        if (val == 'g') {
+            document.getElementById('fs-photo-edit-i').style.display = 'none';
+            document.getElementById('fs-photo-edit-a').style.display = 'none';
+            document.getElementById('fs-photo-edit-g').style.display = 'block';
+            alert("zero" + val);
+        }
+        else if (val == 'a') {
+            document.getElementById('fs-photo-edit-i').style.display = 'none';
+            document.getElementById('fs-photo-edit-a').style.display = 'block';
+            document.getElementById('fs-photo-edit-g').style.display = 'none';
+            alert("uno" + val);
+        }
+        else if (val == 'i') {
+            document.getElementById('fs-photo-edit-i').style.display = 'block';
+            document.getElementById('fs-photo-edit-a').style.display = 'none';
+            document.getElementById('fs-photo-edit-g').style.display = 'none';
+            document.getElementById('use_gravatar_false').checked = true;
+            document.getElementById('use_gravatar_true').checked = false;
+            document.getElementById('use_gravatar_false').setAttribute('checked', 'checked');
+        }
+
+    }
     function handleFileSelect(evt) {
         var files = evt.target.files; // FileList object
         // Loop through the FileList and render image files as thumbnails.
@@ -113,19 +138,18 @@
             reader.onload = (function (theFile) {
                 return function (e) {
                     // Render thumbnail.
-                   // var span = document.createElement('span');
-                    var span = document.getElementById('list');
+                    // var span = document.createElement('span');
+                    var span = document.getElementById('fs-photo-edit-i');
                     span.innerHTML = ['<img class="thumb" src="', e.target.result,
                         '" title="', escape(theFile.name), '"/>'].join('');
-                   document.getElementById('list').insertBefore(span, null);
+                    document.getElementById('fs-photo-edit-i').insertBefore(span, null);
                 };
             })(f);
 
             // Read in the image file as a data URL.
             reader.readAsDataURL(f);
         }
-        document.getElementById('fs-photo-edit').style.display='none';
+        funct_avatar('i');
     }
-
-    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+     document.getElementById('files').addEventListener('change', handleFileSelect, false);
 </script>

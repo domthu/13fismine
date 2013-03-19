@@ -368,6 +368,15 @@ h3.fs-postheader {
     margin-top: 7px;
 }
 
+#fs-photo-edit{
+    width: 300px;
+    display:table-cell;
+   vertical-align:middle;
+    text-align: center;
+    height: 180px;
+    padding: 0 50px;
+   border:dotted 1px #dcdcdc;
+}
 /* Post regole comuni */
 /*stilizzazione articolo in articolo_teaser */
 /*
