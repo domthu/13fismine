@@ -375,7 +375,10 @@ h3.fs-postheader {
     text-align: center;
     height: 180px;
     padding: 0 50px;
-   border:dotted 1px #dcdcdc;
+    border-bottom: solid 2px #dcdcdc;
+    border-right: solid 1px #dcdcdc;
+    border-left: solid 1px #dcdcdc;
+    border-top: solid 1px #e4e4e4;
 }
 /* Post regole comuni */
 /*stilizzazione articolo in articolo_teaser */
@@ -1492,6 +1495,43 @@ right: -14px;   */
     font-weight: bold;
     font-size: 13px;
 }
+
+/*edit mode */
+.fs-profiles-esx {
+    width: 31%;
+    padding: 10px;
+    float: left;
+
+}
+
+.fs-profiles-ecx {
+    padding: 10px;
+    width: 45%;
+    float: left;
+
+}
+
+.fs-profiles-edx {
+    padding: 10px;
+    width: 16%;
+    float: left;
+    text-align: center;
+}
+.fs-profiles-esx-btn{
+    width:91%;
+    margin-left: 5px;
+
+}
+.fs-profiles-edx .fs-profiles-radio-buttons  {
+    text-align: left;
+}
+.fs-profiles-esx p, .fs-profiles-ecx p, .fs-profiles-edx p {
+    font-size: 13px;
+}
+.fs-profiles-esx span, .fs-profiles-ecx span, .fs-profiles-edx span {
+    font-weight: bold;
+}
+
 /* ===================== fine  chi siamo (user profiles)  ===================== */
 /* inizio slide */
 .fs-slidecontainerslideshutterstock_1 {

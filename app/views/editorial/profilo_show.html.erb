@@ -9,8 +9,7 @@
           <div class="fs-profiles-sx">
             <p><%= image_tag @user_profile.photo.url(:l) %></p>
           </div>  <div class="fs-profiles-us">
-          <%= "<h2>" + ( @user_profile.user.lastname.nil? ? "nullo":"nonullo" ) + "</h2>" %>
-          <h3><%# @user_profile.user.firstname + ' ' + @user_profile.user.lastname %></h3>
+               <h3><%= (@user_profile.user.firstname unless !@user_profile.user.firstname) + ' ' +  (@user_profile.user.lastname unless !@user_profile.user.lastname) %></h3>
           <p><%= h @user_profile.fs_qualifica %></p>
            <p>&nbsp;</p>
           </div>

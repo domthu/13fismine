@@ -37,7 +37,11 @@ class UserProfile < ActiveRecord::Base
       true
     end
   end
-
+  def uploaded_file=(incoming_file)
+        self.filename = incoming_file.original_filename
+        self.content_type = incoming_file.content_type
+        self.data = incoming_file.read
+    end
   def reprocess
     self.photo.reprocess!
   end
