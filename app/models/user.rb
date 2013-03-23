@@ -127,6 +127,8 @@ class User < Principal
   named_scope :who_without_profile, :conditions => "(#{User.table_name}.id NOT IN (SELECT user_profiles.user_id as id from user_profiles))"
   #-----------------------------------------------
 
+
+
   def my_quesiti
     News.all(:conditions => ['author_id = ?', self.id], :order => "created_on DESC")
   end

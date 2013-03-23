@@ -1484,7 +1484,10 @@ right: -14px;   */
     width: 30%;
     float: left;
 }
-
+.fs-profiles-bt{
+    padding: 10px;
+    float:none;
+}
 .fs-profiles-sx p, .fs-profiles-cx p, .fs-profiles-dx p {
     font-size: 13px;
 }
@@ -1494,6 +1497,7 @@ right: -14px;   */
 .fs-profiles-labels{
     font-weight: bold;
     font-size: 13px;
+    margin-top: 10px;
 }
 
 /*edit mode */
@@ -1531,7 +1535,9 @@ right: -14px;   */
 .fs-profiles-esx span, .fs-profiles-ecx span, .fs-profiles-edx span {
     font-weight: bold;
 }
+.fs-my-avatar{
 
+}
 /* ===================== fine  chi siamo (user profiles)  ===================== */
 /* inizio slide */
 .fs-slidecontainerslideshutterstock_1 {

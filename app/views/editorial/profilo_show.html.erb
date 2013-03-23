@@ -7,33 +7,27 @@
       <div class="fs-layout-cell post-layout-item-3" style="width: 100%">
         <article class="fs-post-profile fs-article">
           <div class="fs-profiles-sx">
-            <p><%= image_tag @user_profile.photo.url(:l) %></p>
-          </div>  <div class="fs-profiles-us">
-               <h3><%= (@user_profile.user.firstname unless !@user_profile.user.firstname) + ' ' +  (@user_profile.user.lastname unless !@user_profile.user.lastname) %></h3>
-          <p><%= h @user_profile.fs_qualifica %></p>
-           <p>&nbsp;</p>
+            <%= @user_profile.my_avatar(:l) %>
+          </div>
+          <div class="fs-profiles-us">
+            <h3><%= (@user_profile.user.firstname unless !@user_profile.user.firstname) + ' ' + (@user_profile.user.lastname unless !@user_profile.user.lastname) %></h3>
+
+            <p><%= h @user_profile.fs_qualifica %></p>
+
+            <p>&nbsp;</p>
           </div>
           <div class="fs-profiles-cx">
             <p><span> telefono </span>
-            <%= h @user_profile.fs_tel %></p>
-            <p> <span> e-mail </span><%= h @user_profile.fs_mail %></p>
-            <p> <span> fax </span><%= h @user_profile.fs_fax %></p>
+              <%= h @user_profile.fs_tel %></p>
+
+            <p><span> e-mail </span><%= h @user_profile.fs_mail %></p>
+
+            <p><span> fax </span><%= h @user_profile.fs_fax %></p>
+
             <p><span> skype </span>  <%= h @user_profile.fs_skype %></p>
-           </div>
-          <!--
-          <div class="fs-profiles-dx">
-            <div>
-              <h5> Mostra in ... </h5> &nbsp;<br/>
-              <label><%= radio_button_tag 'display_in', 1, @user_profile.display_in == 1 ? true : false, :disabled => true %> <%= 'Collaboratori' %></label><br/>
-              <label><%= radio_button_tag 'display_in', 2, @user_profile.display_in == 2 ? true : false, :disabled => true %> <%= 'Responsabili' %></label><br/>
-              <label><%= radio_button_tag 'display_in', 3, @user_profile.display_in == 3 ? true : false, :disabled => true %> <%= 'Direttori' %></label>
-              <br/>
-              <label><%= radio_button_tag 'display_in', 4, @user_profile.display_in == 4 ? true : false, :disabled => true %> <%= 'Non Visibile' %></label><br/>
-              <br/> &nbsp;
-            </div>
           </div>
- -->
           <div class="cleared"></div>
+          <div class="fs-profiles-bt">
           <p class="fs-profiles-labels">Titoli </p>
 
           <p><%= h @user_profile.titoli %></p>
@@ -41,13 +35,14 @@
           <p class="fs-profiles-labels"> Curriculum </p>
 
           <p><%= h @user_profile.curriculum %></p>
+          </div>
         </article>
         <br/>&nbsp; <br/>
-        <% if User.current.ismanager? || (User.current.isauthor? && User.current == @user_profile)   %>
-        <article class="fs-post-profile fs-article">
-          <p style="text-align: center;">  <%= link_to("modifica", profile_edit_path(@user_profile), :class => "fs-giallo-button") %></p>
-        </article>
-            <% end %>
+        <% if User.current.ismanager? || (User.current.isauthor? && User.current == @user_profile) %>
+            <article class="fs-post-profile fs-article">
+              <p style="text-align: center;">  <%= link_to("modifica", profile_edit_path(@user_profile), :class => "fs-giallo-button") %></p>
+            </article>
+        <% end %>
       </div>
     </div>
   </div>
