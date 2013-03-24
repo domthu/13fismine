@@ -1536,7 +1536,10 @@ right: -14px;   */
     font-weight: bold;
 }
 .fs-my-avatar{
-
+    margin-right:10px;
+    margin-bottom: 5px;
+    display:block;
+    float:left;
 }
 /* ===================== fine  chi siamo (user profiles)  ===================== */
 /* inizio slide */
