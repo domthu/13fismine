@@ -94,11 +94,12 @@ class AccountController < ApplicationController
       @user.admin = false
       #default role_id
       @user.role_id = Fees::ROLE_REGISTERED
-      #Collect fs custom data
+      #di default non viene abilitato
 
+      #Collect fs custom data
       #Region Province Comune
       if (params[:user][:comune_id])
-        #puts "CCCCCCCCCCCCCCCCC #{params[:user][:comune_id]} CCCCCCCCCCC"
+        puts "CCCCCCCCCCCCCCCCC #{params[:user][:comune_id]} CCCCCCCCCCC"
         @user.comune_id = params[:user][:comune_id].to_i
         #INUTILE basta usare comune_id
         #retreive CAP, Città, ProvinceID
@@ -111,9 +112,13 @@ class AccountController < ApplicationController
       end
       #STEP3 CONI FSN
       if (params[:user][:asso_id])
-        params[:user][:organismo_id]
-        params[:user][:tiposigla_id]
-        params[:user][:asso_id]
+        puts "AAAAAAAAAAAAAAAA #{params[:user][:asso_id]} AAAAAAAAAAA"
+        @user.tiposigla_id = params[:user][:tiposigla_id]
+        @user.organismo_id = params[:user][:organismo_id]
+        @user.asso_id = params[:user][:asso_id]
+      end
+      if (params[:user][:mail])
+        @user.mail_fisco = params[:user][:mail]
       end
 
       @user.register
