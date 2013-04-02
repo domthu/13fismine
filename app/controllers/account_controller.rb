@@ -93,29 +93,69 @@ class AccountController < ApplicationController
       @user = User.new(params[:user])
       @user.admin = false
       #default role_id
-      @user.role_id = Fees::ROLE_REGISTERED
+      @user.role_id = FeeConst::ROLE_REGISTERED
       #di default non viene abilitato
 
       #Collect fs custom data
+#Parameters: {"user_asso_id"=>"41", "extra_organismo"=>"", "user_telefono"=>"123123123", "user_condition"=>"1", "extra"=>{"cross_id"=>"", "asso_id"=>""}, "commit"=>"Invia", "user_cross_organization_id"=>"1", "user_Town"=>"castelr", "action"=>"register", "password"=>"[FILTERED]", "user_fax"=>"213124123412", "user"=>{"codice"=>"123123123", "login"=>"domthu2", "soc"=>"", "mail"=>"dom.thual@gmail.com", "lastname"=>"thual", "num_reg_coni"=>"123123", "comune_id"=>"", "firstname"=>"dominique", "language"=>"it"}, "authenticity_token"=>"KjT8SLqtKJm23yzGzhC00MMQqSsq/JuZJTXYovMMz80=", "user_titolo"=>"Altro", "user_note"=>"qualcosa", "controller"=>"account", "user_indirizzo"=>"via monte vettore", "password_confirmation"=>"[FILTERED]", "user_Consensus"=>"1"}
+      #user firstname
+      #user lastname
+      #user mail
+      #user login
+      #user password
+      #user password_confirmation
+      #user language
+      #user condition =>"1"  --> forum_redattore
+      #user Consensus =>"1"  --> forum_notifica
+      #user titolo
+      #user reg_coni
+      #extra cross_id
+      #extra asso_id
+      #extra organismo
+      #user soc
+      #user comune_id
+      #user indirizzo
+      #user telefono
+      #user fax
+      #user codice
+      #user note
+
+      #user condition =>"1"  --> forum_redattore
+      #user Consensus =>"1"  --> forum_notifica
+      if !params[:user][:condition].nil? && params[:user][:condition] && !params[:user][:condition].blank?
+        @user.forum_redattore = params[:user][:condition]
+      end
+      if !params[:user][:Consensus].nil? && params[:user][:Consensus] && !params[:user][:Consensus].blank?
+        @user.forum_notifica = params[:user][:Consensus]
+      end
+
       #Region Province Comune
-      if (params[:user][:comune_id])
+      if !params[:user][:comune_id].nil? && params[:user][:comune_id] && !params[:user][:comune_id].blank?
         puts "CCCCCCCCCCCCCCCCC #{params[:user][:comune_id]} CCCCCCCCCCC"
         @user.comune_id = params[:user][:comune_id].to_i
         #INUTILE basta usare comune_id
         #retreive CAP, Città, ProvinceID
-        @Town = Comune.find(params[:user][:comune_id])
-        if @Town #province_id region_id	cap
-          @user.cap = @Town.cap
-          @user.prov = @Town.province_id
-          @user.prov = @Town.province.sigla
+        @Citta = Comune.find(params[:user][:comune_id])
+        if @Citta #province_id region_id	cap
+          @user.cap = @Citta.cap
+          @user.prov = @Citta.province.name + "(" + @Citta.province_id.to_s + ")"
         end
       end
-      #STEP3 CONI FSN
-      if (params[:user][:asso_id])
-        puts "AAAAAAAAAAAAAAAA #{params[:user][:asso_id]} AAAAAAAAAAA"
-        @user.tiposigla_id = params[:user][:tiposigla_id]
-        @user.organismo_id = params[:user][:organismo_id]
-        @user.asso_id = params[:user][:asso_id]
+      #STEP3 CONI FSN e Associazione
+      if ((params[:extra][:asso_id]) && (params[:extra][:cross_id]))
+        @user.asso_id = params[:extra][:asso_id].to_i
+        @user.cross_organization_id = params[:extra][:cross_id].to_i
+        #Region Province Comune --> inutile le abbiamo dentro la
+      else
+        if (params[:user][:asso_id])
+          puts "AAAAAAAAAAAAAAAA #{params[:user][:asso_id]} AAAAAAAAAAA"
+          #@user.tiposigla_id = params[:user][:tiposigla_id]
+          #@user.organismo_id = params[:user][:organismo_id]
+          @user.asso_id = params[:user][:asso_id].to_i
+        end
+        if (params[:user][:organization_id])
+          @user.cross_organization_id = params[:user][:organization_id].to_i
+        end
       end
       if (params[:user][:mail])
         @user.mail_fisco = params[:user][:mail]

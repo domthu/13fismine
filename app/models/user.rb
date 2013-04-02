@@ -56,8 +56,7 @@ class User < Principal
   has_one :user_profile, :class_name => 'UserProfile'
   belongs_to :auth_source
   #domthu20120916
-  belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id' #, :default => 9
-  # Fees::ROLE_REGISTERED
+  belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id' #, :default => FeeConst::ROLE_REGISTERED
   #domthu20120516
   belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id'
 
@@ -99,6 +98,12 @@ class User < Principal
   validates_confirmation_of :password, :allow_nil => true
   validates_inclusion_of :mail_notification, :in => MAIL_NOTIFICATION_OPTIONS.collect(&:first), :allow_blank => true
   validate :validate_password_length
+
+  #domthu 20130401 TODO rinominare ed riussare i campi
+  #user condition =>"1"  --> forum_redattore
+  #user Consensus =>"1"  --> forum_notifica
+  validates_inclusion_of :forum_notifica, :in => [true], :message => "Devi accettare le condizioni"
+  validates_inclusion_of :forum_redattore, :message => "Devi dare il tuo consenso", :in => [false] #, false]
 
   before_create :set_mail_notification
   before_save :update_hashed_password

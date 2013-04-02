@@ -1,5 +1,6 @@
 class ServicesController < ApplicationController
 
+  #Non usato perchè preferiamo una lista a discesa
   def Usertitle
     #Rails.logger.info("json Usertitle")
     @users = User.all(:limit => 5)
@@ -130,15 +131,17 @@ class ServicesController < ApplicationController
       }]
     end
     @json_towns = @towns.collect { |e|  {
-      :label => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: (#{e.asso.ragione_sociale})",
-      :value => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: (#{e.asso.ragione_sociale})",
-      :hiddenvalue => "#{e.id}"
+      :label => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.ragione_sociale}", 100),
+      :value => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.ragione_sociale}", 100),
+      :hiddenvalue_cross => "#{e.cross_organization.id}",
+      :hiddenvalue_asso => "#{e.id}"
       }
     }
     render :json => @json_towns.to_json
   end
 
   #TypeOrganization :: CrossOrganization :: organizations
+  #Non usato perchè preferiamo una lista a discesa
   def tiposigla
     @tmp = CrossOrganization.all(:limit => 5)
     if params[:term]
@@ -180,7 +183,7 @@ class ServicesController < ApplicationController
         :value => "Nessuna associazione per -#{params[:term]}-"
       }]
     end
-    @json_tmp = @tmp.collect { |e|  {:value => "Organismo #{e.ragione_sociale} (#{e.users.count()}) #{e.organization.cross_organization.type_organization.tipo} :: #{e.organization.cross_organization.sigla}" , :label => "#{e.id}"} }
+    @json_tmp = @tmp.collect { |e|  {:value => "Organismo " + smart_truncate("#{e.ragione_sociale}", 100) + " (#{e.users.count()}) #{e.organization.cross_organization.type_organization.tipo} :: #{e.organization.cross_organization.sigla}" , :label => "#{e.id}"} }
     render :json => @json_tmp.to_json
   end
 

@@ -34,113 +34,144 @@
     jQuery.ajaxSetup({
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
     });
-    var urldata = '<%= usertitle_path %>';
-    $("#userrole").autocomplete({
-            minLength: 2,
-            source: urldata,
-            focus: function(event, ui) {
-                $('#userrole').val(ui.value);
-                return false;
-            },
-            select: function(event, ui) {
-                $('#info').val(ui.item ?
-                    "Selected: " + ui.item.value + " aka " + ui.item.label :
-                    "Nessuna selezione, la ricerca era -" + this.value + "-");
-                if (ui.item && ui.item.value == "0") {
-                  //$("#userrole").val(this.value);
-                  $('#user_role_id').val("");
-                  return false;
-                }
-            },
-        })
-        .data( "autocomplete" )._renderItem = function( ul, item ) {
-            return $( "<li></li>" )
-                .data( "item.autocomplete", item )
-                .append( "<a>" + item.value + "</a>" )
-                .appendTo( ul );
-        };
+    //var urldata = '<%= usertitle_path %>';
+    //$("#userrole").autocomplete({
+    //    minLength: 2,
+    //    source: urldata,
+    //    focus: function(event, ui) {
+    //        $('#userrole').val(ui.value);
+    //        return false;
+    //    },
+    //    select: function(event, ui) {
+    //        $('#info').val(ui.item ?
+    //            "Selected: " + ui.item.value + " aka " + ui.item.label :
+    //            "Nessuna selezione, la ricerca era -" + this.value + "-");
+    //        if (ui.item && ui.item.value == "0") {
+    //          //$("#userrole").val(this.value);
+    //          $('#user_role_id').val("");
+    //          return false;
+    //        }
+    //    },
+    //})
+    //.data( "autocomplete" )._renderItem = function( ul, item ) {
+    //    return $( "<li></li>" )
+    //        .data( "item.autocomplete", item )
+    //        .append( "<a>" + item.value + "</a>" )
+    //        .appendTo( ul );
+    //};
 
-        //control uniqueness of email and login
-        $("#user_mail").keyup(function () {
-            if ((($(this).val() + "").length > 0) && ( isValidEmailAddress( $(this).val() ))) {
-                controlfield($("#user_mail").attr("id"), $(this).val());
-                if ($("#user_login").val() = '') {
-                  $("#user_login").val($(this).val())
-                }
+    //control uniqueness of email and login
+    $("#user_mail").keyup(function () {
+        //if ((($(this).val() + "").length > 0) && ( isValidEmailAddress( $(this).val() ))) {
+        //    controlfield($("#user_mail").attr("id"), $(this).val());
+        //    if ($("#user_login").val() = '') {
+        //      $("#user_login").val($(this).val())
+        //    }
+        //}
+        //else
+            HideAvaibility("user_mail");
+        //$("#user_login").val(this.val());
+    });
+    $('#user_mail').blur(function() {    //whenever you click off an input element
+        if ((($(this).val() + "").length > 0) && ( isValidEmailAddress( $(this).val() ))) {
+            controlfield($("#user_mail").attr("id"), $(this).val());
+            if ($("#user_login").val() = '') {
+              $("#user_login").val($(this).val())
             }
-            else
-                HideAvaibility("user_mail");
-            //$("#user_login").val(this.val());
-        });
-    $("#user_login").keyup(function () {
-        if (($(this).val() + "").length > 1) {
-            controlfield($("#user_login").attr("id"), $(this).val());
         }
-        else
+    });
+    $("#user_login").keyup(function () {
+        //if (($(this).val() + "").length > 1) {
+        //    controlfield($("#user_login").attr("id"), $(this).val());
+        //}
+        //else
             HideAvaibility("user_login");
     });
-    $("#usertiposigla").autocomplete({
-            minLength: 2,
-            source: '<%= tiposigla_path %>',
-            focus: function(event, ui) {
-                $('#usertiposigla').val(ui.value);
-                return false;
-            },
-            select: function(event, ui) {
-                $('#info').val(ui.item ?
-                    "Selected: " + ui.item.value + " aka " + ui.item.label :
-                    "Nessuna selezione, la ricerca era -" + this.value + "-");
-                if (ui.item && ui.item.value == "0") {
-                  $('#user_cross_organization_id').val("");
-                  return false;
-                }
-            },
-        })
-        .data( "autocomplete" )._renderItem = function( ul, item ) {
-            return $( "<li></li>" )
-                .data( "item.autocomplete", item )
-                .append( "<a>" + item.value + "</a>" )
-                .appendTo( ul );
-        };
-    $("#user_asso").autocomplete({
-            minLength: 2,
-            source: '<%= assosvc_path %>',
-            focus: function(event, ui) {
-                $('user_asso').val(ui.value);
-                return false;
-            },
-            select: function(event, ui) {
-                $('#info').val(ui.item ?
-                    "Selected: " + ui.item.value + " aka " + ui.item.label :
-                    "Nessuna selezione, la ricerca era -" + this.value + "-");
-                if (ui.item && ui.item.value == "0") {
-                  $('#user_asso_id').val("");
-                  return false;
-                }
-            },
-        })
-        .data( "autocomplete" )._renderItem = function( ul, item ) {
-            return $( "<li></li>" )
-                .data( "item.autocomplete", item )
-                .append( "<a>" + item.value + "</a>" )
-                .appendTo( ul );
-        };
+    $('#user_login').blur(function() {    //whenever you click off an input element
+      if (($(this).val() + "").length > 1) {
+          controlfield($("#user_login").attr("id"), $(this).val());
+      }
+    });
+    //<= hidden_field :user, :cross_organization_id %>
+    //<= text_field_tag('usertiposigla')  %>
+    //<small>Digitare almeno 2 caratteri per iniziare la ricerca</small></p>
+    //$("#usertiposigla").autocomplete({
+    //    minLength: 2,
+    //    source: '<%= tiposigla_path %>',
+    //    focus: function(event, ui) {
+    //        $('#usertiposigla').val(ui.value);
+    //        return false;
+    //    },
+    //    select: function(event, ui) {
+    //        $('#info').val(ui.item ?
+    //            "Selected: " + ui.item.value + " aka " + ui.item.label :
+    //            "Nessuna selezione, la ricerca era -" + this.value + "-");
+    //        if (ui.item && ui.item.value == "0") {
+    //          $('#user_cross_organization_id').val("");
+    //          return false;
+    //        }
+    //    },
+    //})
+    //.data( "autocomplete" )._renderItem = function( ul, item ) {
+    //    return $( "<li></li>" )
+    //        .data( "item.autocomplete", item )
+    //        .append( "<a>" + item.value + "</a>" )
+    //        .appendTo( ul );
+    //};
+    $("#user_cross_organization_id").on('change', function (ev) {
+      alert('changed usertiposigla --> TODO reload Associations?')
+    });
+    //<%= hidden_field :user, :asso_id %>
+    //<%= text_field_tag('user_asso')  %>
+    //<small>Digitare almeno 2 caratteri per iniziare la ricerca</small></p>
+    //$("#user_asso").autocomplete({
+    //        minLength: 2,
+    //        source: '<%= assosvc_path %>',
+    //        focus: function(event, ui) {
+    //            $('user_asso').val(ui.value);
+    //            return false;
+    //        },
+    //        select: function(event, ui) {
+    //            $('#info').val(ui.item ?
+    //                "Selected: " + ui.item.value + " aka " + ui.item.label :
+    //                "Nessuna selezione, la ricerca era -" + this.value + "-");
+    //            if (ui.item && ui.item.value == "0") {
+    //              $('#user_asso_id').val("");
+    //              return false;
+    //            }
+    //        },
+    //    })
+    //    .data( "autocomplete" )._renderItem = function( ul, item ) {
+    //        return $( "<li></li>" )
+    //            .data( "item.autocomplete", item )
+    //            .append( "<a>" + item.value + "</a>" )
+    //            .appendTo( ul );
+    //    };
     //Organismi use hiddenvalue
     $('#extra_organismo').autocomplete({
             source: '<%= organismi_path %>',
             select: function (event, ui) {
                 if (ui.item) {
-                    $('#extra_organismo_id').val(ui.item.hiddenvalue);
+                    $('#extra_cross_id').val(ui.item.hiddenvalue_cross);
+                    $('#extra_asso_id').val(ui.item.hiddenvalue_asso);
+                    //TODO riempire tutti campi del tab successivo?
                 }
                 return true;
             },
             minLength: 2
-        }).data("autocomplete")._renderItem = function (ul, item) {
-            return $("<li></li>")
-				    .data("item.autocomplete", item)
-				    .append("<a>" + item.label + "</a>")
-				    .appendTo(ul);
-        };
+    }).data("autocomplete")._renderItem = function (ul, item) {
+        return $("<li></li>")
+		    .data("item.autocomplete", item)
+		    .append("<a>" + item.label + "</a>")
+		    .appendTo(ul);
+    };
+    $('#extra_organismo').blur(function()     //whenever you click off an input element
+    {
+        if( !$(this).val() ) {                //if it is blank.
+            $('#extra_cross_id').val(''); //Clean
+            $('#extra_asso_id').val(''); //Clean
+        }
+    });
     var urlzone = '<%= zone_path %>';
     $('#user_Town').autocomplete({
             source: urlzone,
@@ -225,28 +256,6 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
     Informazione già presente nel server: Sei già registrato? Usi il <%= link_to l(:label_login), :signin %> per accedere di nuovo. Se hai problemi <%= link_to 'Contattaci', contatti_path %>.
     </div></p>
 
-    <p><label for="user_titolo" title="Presidente, Tesoriere, Professionista, Consigliere, Segretario, Delegato, Altro, Segretaria, Dirigente, Amministratore unico, Operatore, Libero professionista, Amministratore, Tecnico/Dirigente, Professionista-consigliere, Socio, Associato, Studente, Vice-presidente, Responsabile Amministrativo, Vice Presidente Regionale, Impiegata, Avvocato, Consulente, Responsabile" ><%=l(:field_titolo)%> <span class="required">*</span></label>
-    <%= select_tag :user_titolo, options_for_select([ "Presidente", "Tesoriere", "Professionista", "Consigliere", "Segretario", "Delegato", "Altro", "Segretaria", "Dirigente", "Amministratore unico", "Operatore", "Libero professionista", "Amministratore", "Tecnico/Dirigente", "Professionista-consigliere", "Socio", "Associato", "Studente", "Vice-presidente", "Responsabile Amministrativo", "Vice Presidente Regionale", "Impiegata", "Avvocato", "Consulente", "Responsabile" ], "Altro") %>
-
-
-    <p><label for="user_role_id"><%=l(:field_role)%> <span class="required">*</span></label>
-    <%= hidden_field :user, :role_id %>
-    <%= text_field_tag('userrole')  %></p>
-
-    <p><label for="user_comune_id"><%=l(:field_comune)%><span class="required">*</span></label>
-    <%= hidden_field :user, :comune_id %>
-    <%= text_field_tag('user_Town')  %>
-    <small>Digitare almeno 2 caratteri per iniziare la ricerca</small></p>
-
-  <p><label for="user_indirizzo"><%=l(:field_indirizzo)%></label>
-  <%= text_field_tag('user_indirizzo')  %></p>
-
-  <p><label for="user_telefono"><%=l(:field_telefono)%></label>
-  <%= text_field_tag('user_telefono')  %></p>
-
-  <p><label for="user_fax"><%=l(:field_fax)%></label>
-  <%= text_field_tag('user_fax')  %></p>
-
     </div>
 
 </fieldset>
@@ -291,61 +300,41 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
     Leggo le <a href='#' id='acondizioni'
         class='pri' onclick='Leggi(); return false;'><b>condizioni di utilizzo</b></a>
     </p>
-<div id="condizioni" title="Condizioni di utilizzo" class="hidden" style="overflow: hidden;">
-</div>
-<script type="text/javascript" language="javascript">
-    var that;
-    function Leggi() {
-        //clean it
-        //$("#condizioni").dialog("destroy")
-        //set new
-
-        $('#condizioni').dialog({
-            autoOpen: true,
-            width: 700,
-            height: 550,
-            resizable: true,
-            draggable: true,
-            title: 'Condizioni di utilizzo',
-            bgiframe: true,
-            modal: false,
-            open: function (event, ui) {
-                var url = '<%= condition_path %>';
-                $(this).load(url);
-                $('.ui-widget-overlay').bind('click', function() {
-                  $('#condizioni').dialog('close');
-                })
-            },
-            buttons: {
-              //close: function(ev, ui) {
-              //  //$(this).remove();
-              //  $('#condizioni').dialog("close");
-              //},
-              "Ho letto": function (ev, ui) {
-                  $('#user_condition').prop('checked', true);
-                  //$('#condizioni').dialog("close");
-                  //$(this).dialog("close");
-                  //$(this).dialog('close').remove();
-                  //$(that).dialog("close");
-                  //if ($( this ).is( ":ui-dialog" ) || $( this ).is( ":data(dialog)" ))
-                  //   $(this).dialog("close");
-                  //$(".ui-dialog-page").dialog("close");
-                  //$('#pops').dialog("close");
-                  //$("#condizioni").dialog().remove();
-                  //if( $("#condizioni").dialog("isOpen")===true ) {
-                  //  $("#condizioni").dialog("close");
-                  //}
-                  //$(this).dialog('destroy').remove()
-                  //that.hide();
-              }
-            }
-        });
-
-        that = $("#condizioni").dialog();
-    }
-</script>
   </div>
-
+  <div id="condizioni" title="Condizioni di utilizzo" class="hidden" style="overflow: hidden;">
+  </div>
+<script type="text/javascript" language="javascript">
+  var url_cond = '<%= condition_path %>';
+  function Leggi() {
+    $('#condizioni').dialog({
+        autoOpen: false,
+        width: 700,
+        height: 550,
+        resizable: true,
+        draggable: true,
+        title: 'Condizioni di utilizzo',
+        bgiframe: true,
+        modal: true,
+        open: function (event, ui) {
+            $(this).load(url_cond);
+            $('.ui-widget-overlay').bind('click', function() {
+              $('#condizioni').dialog('close');
+            })
+        },
+        buttons: {
+          "Ho letto": function (ev, ui) {
+              $('#user_condition').prop('checked', true);
+              $(this).dialog("close");
+          },
+            "Chiudi": function() {
+              $(this).dialog("close");
+          }
+        }
+    });
+    $("#condizioni").dialog('open');
+    return false;
+  }
+</script>
 
   <div class="box">
     <p><label for=""><%=l(:field_privacy)%> <span class="required">*</span></label>
@@ -355,87 +344,132 @@ La corretta indicazione del campo “affiliato a” permette di usufruire dell�
         class='pri' onclick='Inform(); return false;'><b>trattamento dei dati</b></a>
     </p>
 
-<div id="informativa" title="Informativa" class="hidden" style="overflow: hidden;">
-</div>
-<script type="text/javascript" language="javascript">
-    function Inform() {
-        //$("#informativa").dialog("open");
-
-        //clean it
-        //$("#informativa").dialog("destroy")
-        //set new
-        $('#informativa').dialog({
-            autoOpen: true,
-            width: 700,
-            show: "blind",
-            hide: "explode",
-            height: 550,
-            resizable: true,
-            draggable: true,
-            title: 'Informativa',
-            bgiframe: true,
-            modal: false,
-            open: function (event, ui) {
-                var url = '<%= privacy_path %>';
-                $(this).load(url);
-            },
-            buttons: {
-              "Acconsento": function () {
-                  //var that = this;
-                  $('#user_Consensus').prop('checked', true);
-                  //$('#informativa').dialog("close");
-                  //$(this).dialog("close");
-                  //$(that).dialog("close");
-                  //if( $("#informativa").dialog("isOpen")===true ) {
-                  //  $("#informativa").dialog("close");
-                  //}
-                  $(this).dialog('destroy').remove()
-                }
-            }
-        });
-    }
-</script>
   </div>
+  <div id="informativa" title="Informativa" class="hidden" style="overflow: hidden;">
+  </div>
+<script type="text/javascript" language="javascript">
+  var url_inf = '<%= privacy_path %>';
+  function Inform() {
+    $('#informativa').dialog({
+        autoOpen: false,
+        width: 700,
+        show: "blind",
+        hide: "explode",
+        height: 550,
+        resizable: true,
+        draggable: true,
+        title: 'Informativa',
+        bgiframe: true,
+        modal: true,
+        open: function (event, ui) {
+            $(this).load(url_inf);
+        },
+        buttons: {
+          "Acconsento": function () {
+              $('#user_Consensus').prop('checked', true);
+              $(this).dialog("close");
+            },
+            "Chiudi": function() {
+              $(this).dialog("close");
+            }
+        }
+    });
+
+    $("#informativa").dialog("open");
+    return false;
+  }
+</script>
 
 </fieldset>
 
 <fieldset class="" title="Affiliazione" style="display: none;">
-  <legend>Step3: Associato</legend>
+  <legend>Step3: identificazione Sigla :: organismo :: Associazione</legend>
   <div class="box">
+
+    <p><label for="user_titolo" title="Presidente, Tesoriere, Professionista, Consigliere, Segretario, Delegato, Altro, Segretaria, Dirigente, Amministratore unico, Operatore, Libero professionista, Amministratore, Tecnico/Dirigente, Professionista-consigliere, Socio, Associato, Studente, Vice-presidente, Responsabile Amministrativo, Vice Presidente Regionale, Impiegata, Avvocato, Consulente, Responsabile" ><%=l(:field_titolo)%> <span class="required">*</span></label>
+    <%= select_tag :user_titolo, options_for_select([ "Presidente", "Tesoriere", "Professionista", "Consigliere", "Segretario", "Delegato", "Altro", "Segretaria", "Dirigente", "Amministratore unico", "Operatore", "Libero professionista", "Amministratore", "Tecnico/Dirigente", "Professionista-consigliere", "Socio", "Associato", "Studente", "Vice-presidente", "Responsabile Amministrativo", "Vice Presidente Regionale", "Impiegata", "Avvocato", "Consulente", "Responsabile" ], "Altro") %>
 
     <p><label for="user_num_reg_coni"><%=l(:field_coni_number)%> <span class="required">*</span></label>
     <%= text_field 'user', 'num_reg_coni'  %></p>
 
 <hr class="dotted" />
 
-    <p><label for="user_codice"><%=l(:field_codice_segnalatore)%> <span class="required">*</span></label>
+    <h2>vedi se esiste il Sigla :: Organismo :: Associazione della tua attività.</h2>
+    <p><label for="extra_organismo"><%=l(:field_affiliato)%> <span class="required">*</span></label>
+    <%= hidden_field :extra, :cross_id %>
+    <%= hidden_field :extra, :asso_id %>
+    <%= text_field_tag('extra_organismo')  %>
+    <small>Digitare almeno 2 caratteri per iniziare la ricerca nelle associazione già registrate con le loro affiliazione. Se non trovi la tua associazione riempi i campi cui sotto nel passo successivo "<%=l(:field_new_asso)%>" in modo da inserire la tua associazione</small></p>
+
+<hr class="dotted" />
+
+    <h2>Non trovi la tua Sigla :: Organismo :: Associazione. Identificale cui sotto</h2>
+    <p><label for="user_cross_organization_id"><%=l(:field_sigla_organismo)%></label>
+    <p><%= select_tag :user_cross_organization_id, options_for_select(CrossOrganization.find(
+        :all,
+        :joins => [:type_organization],
+        :order => 'type_organizations.tipo, sigla'
+        ).collect {|c| ["#{c.type_organization.tipo} :: #{c.sigla}", c.id]}), :include_blank => true, :required => false, :title => l(:field_sigla_organismo) %></p>
+        <%#, :size => 10, :width => 600 %>
+    <%# TypeOrganization.all.sort.each do |tipo|  missing method sort %>
+    <% TypeOrganization.all.each do |tipo| %>
+      <p><small><%= tipo.descrizione %></small></p>
+    <% end %>
+
+<% #{e.organization.cross_organization.type_organization.tipo} :: #{e.organization.cross_organization.sigla} %>
+
+
+    <p><label for="user_asso_id"><%=l(:field_asso)%></label>
+    <p><%= select_tag :user_asso_id, options_for_select(Asso.find(
+        :all,
+        :include => [:users, {:organization => {:cross_organization => :type_organization}}],
+        :order => 'ragione_sociale'
+        ).collect {|e| [smart_truncate("Organismo #{e.ragione_sociale}", 100) + " (#{e.users.count()})", e.id]}), :include_blank => true, :required => false, :title => l(:field_asso_title) %></p>
+        <%#, :size => 10, :width => 600 %>
+
+  </div>
+</fieldset>
+
+<fieldset class="" title="Associazione" style="display: none;">
+  <legend>Step4: <%=l(:field_new_asso)%></legend>
+  <div class="box">
+
+    <h2>la tua associazione non sembra registrata. Compili i campi cui sotto per creare una sua scheda</h2>
+    <h4>Il team di FISCOSPORT provederà a contarti in un secondo momento per convalidare i campi. </h4>
+
+    <p><strong><label for="user_soc"><%=l(:field_asso_for)%></strong><span class="required">*</span></label>
+    <%= text_field 'user', 'soc'  %>
+    <small><%=l(:field_asso_title)%></small></p>
+
+    <p><strong><label for="user_comune_id"><%=l(:field_sigla_sede)%></strong>
+    <label for="user_comune_id"><%=l(:field_comune)%><span class="required">*</span></label>
+    <%= hidden_field :user, :comune_id %>
+    <%= text_field_tag('user_Town')  %>
+    <small>Digitare almeno 2 caratteri per iniziare la ricerca</small></p>
+
+    <p><label for="user_indirizzo"><%=l(:field_indirizzo)%></label>
+    <%= text_field_tag('user_indirizzo')  %></p>
+
+    <p><label for="user_telefono"><%=l(:field_telefono)%></label>
+    <%= text_field_tag('user_telefono')  %></p>
+
+    <p><label for="user_fax"><%=l(:field_fax)%></label>
+    <%= text_field_tag('user_fax')  %></p>
+
+<hr class="dotted" />
+
+    <h2>La tua associazione ti ha dato un codice promozionale? inserilo cui:</h2>
+    <p><label for="user_codice"><%=l(:field_codice_segnalatore)%></label>
     <%= text_field 'user', 'codice'  %></p>
 
-    <p><label for=""><%=l(:field_sigla_sede)%> <span class="required">*</span></label></p>
-    <p><label for="user_cross_organization_id"><%=l(:field_sigla_organismo)%><span class="required">*</span></label>
-    <%= hidden_field :user, :cross_organization_id %>
-    <%= text_field_tag('usertiposigla')  %>
-    <small>Digitare almeno 2 caratteri per iniziare la ricerca</small></p>
-
-    <p><label for="user_asso_id"><%=l(:field_asso)%><span class="required">*</span></label>
-    <%= hidden_field :user, :asso_id %>
-    <%= text_field_tag('user_asso')  %>
-    <small>Digitare almeno 2 caratteri per iniziare la ricerca</small></p>
-
-    <p><label for="user_soc"><%=l(:field_asso_title)%> <span class="required">*</span></label>
-    <%= text_field 'user', 'soc'  %></p>
-
-    <p><label for=""><%=l(:field_affiliato)%> <span class="required">*</span></label></p>
-    <p><label for="extra_organismo_id"><%=l(:field_asso_title)%><span class="required">*</span></label>
-    <%= hidden_field :extra, :organismo_id %>
-    <%= text_field_tag('extra_organismo')  %>
-    <small>Digitare almeno 2 caratteri per iniziare la ricerca</small></p>
-
-    <p><label for="user_note"><%=l(:field_com)%> <span class="required">*</span></label>
+<hr class="dotted" />
+    <%# ex user_annotazioni %>
+    <p><label for="user_note"><%=l(:field_com)%></label>
     <%= text_area_tag 'user_note', nil, :cols => 60, :rows => 10, :class => 'wiki-edit' %></p>
 
   </div>
 </fieldset>
+
 
 <div id="pops" title="" class="hidden" style="overflow: hidden;"></div>
 <%= submit_tag l(:button_submit), :class => "finish" %>
