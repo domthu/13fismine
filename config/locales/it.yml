@@ -177,6 +177,7 @@ it:
   mail_body_lost_password: 'Per cambiare la password, usa il seguente collegamento:'
   mail_subject_register: "Attivazione utente %{value}"
   mail_body_register: "Per attivare l'utente, usa il seguente collegamento:"
+  notice_user_not_found: "L'utente ricercato, con id %{id}, non esiste o è stato eliminato."
 
   gui_validation_error: 1 errore
   gui_validation_error_plural: "%{count} errori"
@@ -1299,6 +1300,51 @@ it:
 
   field_power_user:  Responsabile organismo associato
   field_users: Utenti
+  label_dati_plural: Dati FISCOSPORT
+  label_abbonamento_plural: Abbonamento
+  label_fatture_plural: Contabilità
+  label_storico_pagamento: Storico dei pagamenti
+  label_dati_pagamento: Dati di pagamento
+  label_emetti_fattura: Invia fattura
+  label_user_altridati_plural: Altri dati
+  label_contatti: "Contatti dell'abbonato"
+  label_localizazzione: Indirizzo
+  label_account: Credenziali
+  label_registration: Dati di registrazione
+
+  field_codice: (old) Codice
+  field_pwd: (old) Password
+  field_login_fisco: (old) login FISCOSPORT
+  field_mail_fisco: (old) email FISCOSPORT
+  field_soc: (old) società
+  field_note: (old) note
+  field_cap: (old) CAP
+  field_prov: (old) provincia
+  field_sede: (old) sede
+  field_telefono2: (old) 2nd telefono
+  field_mail2: (old)  2nd email
+  field_sez: (old) sezione
+  field_iva_: (old) IVA
+  field_codicefiscale: (old) Cofice Fiscale
+  field_partitaiva: (old) PIVA
+  field_registrato: (old) registrato?
+  field_num_reg_coni: (old) N° regionale CONI
+  field_abbonato: (old) Abbonato
+  field_conferma_registrazione: (old) Confermato registrazione?
+  field_disabilitato: (old) disabilitato?
+  field_forum_redattore: (old) Forum redattore?
+  field_forum_notifica: (old) Forum notifica?
+  field_data: (old) data
+  field_datascadenza: (old) data di scadenza
+  field_tariffa_precedente: (old) tariffa precedente
+  field_iva_precedente: (old) IVA precedente
+  field_pagamento_precedente: (old) pagamento precedente
+  field_data_ultimo_pagamento: (old) data ultimo pagamento
+  field_data_accredito: (old) data di accredito
+  field_anno_competenza: (old) anno di competenza
+  field_crediti: (old) Credito
+  field_annotazioni: (old) Annotazioni
+
 
 #Permission
   permission_access_back_end: Accedi al backEnd?

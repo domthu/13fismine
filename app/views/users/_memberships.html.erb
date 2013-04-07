@@ -8,7 +8,7 @@
     <th><%= l(:label_project) %></th>
     <th><%= l(:label_role_plural) %></th>
     <th style="width:15%"></th>
-      <%= call_hook(:view_users_memberships_table_header, :user => @user )%>
+    <%= call_hook(:view_users_memberships_table_header, :user => @user )%>
   </tr></thead>
   <tbody>
   <% @user.memberships.each do |membership| %>
@@ -23,7 +23,7 @@
                                     :html => { :id => "member-#{membership.id}-roles-form", :style => 'display:none;'}) do %>
         <p><% roles.each do |role| %>
         <label><%= check_box_tag 'membership[role_ids][]', role.id, membership.roles.include?(role),
-                                                           :disabled => membership.member_roles.detect {|mr| mr.role_id == role.id && !mr.inherited_from.nil?} %> <%=h role %></label><br />
+         :disabled => membership.member_roles.detect {|mr| mr.role_id == role.id && !mr.inherited_from.nil?} %> <%=h role %></label><br />
         <% end %></p>
         <%= hidden_field_tag 'membership[role_ids][]', '' %>
         <p><%= submit_tag l(:button_change) %>

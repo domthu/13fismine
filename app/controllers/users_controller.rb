@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin, :except => :show
-  before_filter :find_user, :only => [:show, :edit, :update, :destroy, :edit_membership, :destroy_membership]
+  before_filter :find_user, :only => [:show, :edit, :update, :destroy, :edit_membership, :destroy_membership, :edit_abbonamento, :edit_dati, :edit_fatture]
   accept_api_auth :index, :show, :create, :update, :destroy
 
   helper :sort
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
         render :layout => !request.xhr?
       }
       format.api
-    end	
+    end
   end
 
   def show
@@ -214,6 +214,67 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit_abbonamento
+    #@user.field = '...'
+    @user.save if request.post?
+    respond_to do |format|
+      if @user.valid?
+        format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'abbonamento' }
+        format.js {
+          render(:update) {|page|
+            page.replace_html "tab-content-abbonamento", :partial => 'users/abbonamento'
+          }
+        }
+      else
+        format.js {
+          render(:update) {|page|
+            page.alert(l(:notice_failed_to_save_members, :errors => @user.errors.full_messages.join(', ')))
+          }
+        }
+      end
+    end
+  end
+  def edit_dati
+    #@user.field = '...'
+    @user.save if request.post?
+    respond_to do |format|
+      if @user.valid?
+        format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'dati' }
+        format.js {
+          render(:update) {|page|
+            page.replace_html "tab-content-dati", :partial => 'users/dati'
+          }
+        }
+      else
+        format.js {
+          render(:update) {|page|
+            page.alert(l(:notice_failed_to_save_members, :errors => @user.errors.full_messages.join(', ')))
+          }
+        }
+      end
+    end
+  end
+  def edit_fatture
+    #@user.field = '...'
+    @user.save if request.post?
+    respond_to do |format|
+      if @user.valid?
+        format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'fatture' }
+        format.js {
+          render(:update) {|page|
+            page.replace_html "tab-content-fatture", :partial => 'users/fatture'
+          }
+        }
+      else
+        format.js {
+          render(:update) {|page|
+            page.alert(l(:notice_failed_to_save_members, :errors => @user.errors.full_messages.join(', ')))
+          }
+        }
+      end
+    end
+  end
+
   def destroy_membership
     @membership = Member.find(params[:membership_id])
     if request.post? && @membership.deletable?
@@ -235,6 +296,8 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
   rescue ActiveRecord::RecordNotFound
-    render_404
+    flash[:error] = l(:notice_user_not_found, {:id => params[:id]})
+    redirect_to :controller => 'users', :action => 'index'
+    render_404 #Verificare perchè non funziona
   end
 end

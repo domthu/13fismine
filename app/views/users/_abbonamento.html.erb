@@ -1,0 +1,62 @@
+<% form_for @user, :url => { :action => 'edit_abbonamento', :id => @user}, :builder => TabularFormBuilder do |f| %>
+
+  <div id="edit_dati_form">
+    <!--[form:user]-->
+    <div class="splitcontentleft">
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_user_altridati_plural)%></legend>
+
+        <p><%= f.date_select :data, :label => :field_data %></p>
+        <p><%= f.date_select :datascadenza, :label => :field_datascadenza %></p>
+
+      </fieldset>
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_asso_organization)%></legend>
+
+
+      </fieldset>
+
+    </div>
+    <div class="splitcontentright">
+
+      <fieldset class="box">
+        <legend><%=l(:label_contatti)%></legend>
+
+
+      </fieldset>
+
+    </div>
+  </div>
+  <div style="clear:left;"></div>
+  <!--[eoform:user]-->
+
+  <p><%= submit_tag l(:button_save) %></p>
+<% end %>
+
+  #domthu20120916
+  belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id' #, :default => FeeConst::ROLE_REGISTERED
+
+  belongs_to :asso, :class_name => 'Asso', :foreign_key => 'asso_id'
+
+  #l'utente può appartenere o non ad una organizzazione
+  #ATTENZIONE i 2 campi Sigla (ex Organismi) e Tipo organizzazione sono raddunati in una foreign_key
+  belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
+  #TODO: verificare ci potrebbe essere che alcuni associazione Sigla - Tipo non appare nella tabella CrossOrganization
+  # prova per i banner (sandro)
+  ##su cross_group.rb è :
+  #  belongs_to :user
+  #  belongs_to :group_banner
+  has_many :cross_groups
+  has_many :group_banners, :through => :cross_groups
+
+  #l'utente può essere il referente di una (o più) organizzazione
+  #2.7 Choosing Between belongs_to and has_one. La foreign key si trova sulla tabella che fa belongs_to
+  #Puo anche essere il power_user di un organization
+  #has_one :reference, :class_name => 'Organization', :dependent => :nullify
+  has_many :references, :class_name => 'Organization', :dependent => :nullify
+
+
+
+  has_many :invoices, :class_name => 'Invoice', :dependent => :destroy

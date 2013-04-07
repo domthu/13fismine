@@ -1,0 +1,81 @@
+<% form_for @user, :url => { :action => 'edit_dati', :id => @user}, :builder => TabularFormBuilder do |f| %>
+
+  <%= error_messages_for 'edit_dati' %>
+
+  <div id="edit_dati_form">
+    <!--[form:user]-->
+    <div class="splitcontentleft">
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_account)%></legend>
+
+        <p><%= f.text_field :codice, :label => :field_codice, :required => false, :size => 3  %></p>
+        <p><%= f.text_field :pwd, :label => :field_pwd, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :login_fisco, :label => :field_login_fisco, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :mail_fisco, :label => :field_mail_fisco, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :nome, :label => :field_nome, :required => false %></p>
+        <p><%= f.text_field :titolo, :label => :field_titolo, :required => false %></p>
+        <p><%= f.text_field :soc, :label => :field_soc, :required => false %></p>
+        <p><%= f.text_field :parent, :label => :field_parent, :required => false %></p>
+        <p><%= f.text_area :note, :label => :field_note, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+
+      </fieldset>
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_localizazzione)%></legend>
+
+        <p><%= f.text_field :indirizzo, :label => :field_indirizzo, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :cap, :label => :field_cap, :required => false, :size => 25  %></p>
+        <p><%= f.select :comune_id, (Comune.all.collect {|c| [c.name, c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_comune)  %></p>
+        <p><%= f.text_field :prov, :label => :field_prov, :required => false, :size => 25  %></p>
+
+      </fieldset>
+
+    </div>
+    <div class="splitcontentright">
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_contatti)%></legend>
+
+        <p><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_asso) %></p>
+        <% if @user.asso_id? %>
+          <p><%= link_to h(@user.asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %>  %></p>
+        <% end %>
+
+        <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [c.organizzazione + ' (' + c.sigla + ')', c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_cross_organization) %></p>
+
+
+        <p><%= f.text_field :sede, :label => :field_sede, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :telefono, :label => :field_telefono, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :fax, :label => :field_fax, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :telefono2, :label => :field_telefono2, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :mail2, :label => :field_mail2, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :sez, :label => :field_sez, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :iva_, :label => :field_iva_, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :codicefiscale, :label => :field_codicefiscale, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :partitaiva, :label => :field_partitaiva, :required => false, :size => 25  %></p>
+
+      </fieldset>
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_registration)%></legend>
+
+        <p><%= f.text_field :registrato, :label => :field_registrato, :required => false, :size => 25  %></p>
+        <p><%= f.text_field :num_reg_coni, :label => :field_num_reg_coni, :required => false, :size => 25  %></p>
+          <p><%= f.check_box :abbonato, :label => :field_abbonato  %> </p>
+          <p><%= f.check_box :conferma_registrazione, :label => :field_conferma_registrazione  %> </p>
+          <p><%= f.check_box :disabilitato, :label => :field_disabilitato  %> </p>
+          <p><%= f.check_box :power_user, :label => :field_power_user  %> </p>
+          <p><%= f.check_box :forum_redattore, :label => :field_forum_redattore  %> </p>
+          <p><%= f.check_box :forum_notifica, :label => :field_forum_notifica  %> </p>
+
+      </fieldset>
+    </div>
+  </div>
+  <div style="clear:left;"></div>
+  <!--[eoform:user]-->
+
+  <p><%= submit_tag l(:button_save) %></p>
+<% end %>
+
+<%= wikitoolbar_for 'note' %>
