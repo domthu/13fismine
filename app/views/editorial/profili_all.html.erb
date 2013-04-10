@@ -10,7 +10,7 @@
           <% @direttori.each do |item| %>
               <div class="fs-chisiamo-item">
                 <div>
-                  <%= link_to image_tag(item.photo.url(:s), :alt => item.user.firstname + ' ' + item.user.lastname, :height => "75", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_show", :id => item.id %>
+                  <%= link_to(item.my_avatar(:s), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
                 </div>
                 <p>
                   <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
