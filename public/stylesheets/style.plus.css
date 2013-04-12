@@ -978,7 +978,7 @@ right: -14px;   */
 .fs-convegni-block-head a:link, .fs-convegni-block-head a:visited {
     text-align: left;
     font-weight: bold;
-    color: #051078;
+    color: #242a71;
     line-height: 1em;
     text-decoration: none;
     margin: 2px 8px;
@@ -988,7 +988,7 @@ right: -14px;   */
 
 .fs-convegni-futuri {
     font-weight: bold;
-    padding: 0 15px 15px;
+    padding: 0 15px 5px 15px;
 }
 
 .fs-convegni-futuri a {
