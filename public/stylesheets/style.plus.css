@@ -336,7 +336,7 @@ h3.fs-postheader {
 
 .fs-chisiamo-item {
     width: 100%;
-    float:left;
+    float: left;
 }
 
 .fs-chisiamo-item img, .fs-chisiamo-item2 img {
@@ -368,10 +368,10 @@ h3.fs-postheader {
     margin-top: 7px;
 }
 
-#fs-photo-edit{
+#fs-photo-edit {
     width: 300px;
-    display:table-cell;
-   vertical-align:middle;
+    display: table-cell;
+    vertical-align: middle;
     text-align: center;
     height: 180px;
     padding: 0 50px;
@@ -380,6 +380,7 @@ h3.fs-postheader {
     border-left: solid 1px #dcdcdc;
     border-top: solid 1px #e4e4e4;
 }
+
 /* Post regole comuni */
 /*stilizzazione articolo in articolo_teaser */
 /*
@@ -723,7 +724,7 @@ margin-left:-1px;*/
     font-size: 16px;
     line-height: 22px;
     display: block;
-   font-weight: bold;
+    font-weight: bold;
 
 }
 
@@ -750,7 +751,7 @@ margin-left:-1px;*/
     box-sizing: border-box;
     float: left;
     width: 320px;
- /*   border: solid 1px #bfbfbf;    */
+    /*   border: solid 1px #bfbfbf;    */
     margin-right: 15px;
     position: relative;
     display: table-cell;
@@ -957,8 +958,8 @@ right: -14px;   */
     -moz-box-shadow: 0 0 3px 2px rgba(201, 50, 20, 0.9);
     box-shadow: 0 0 3px 2px rgba(238, 232, 170, 0.9);
     /* padding: 7px;                */
-    width: 100%;
-    margin-top: 7px;
+    width: 99%;
+    margin-top: 1px;
 }
 
 .fs-content .fs-postcontent-convegni {
@@ -970,16 +971,24 @@ right: -14px;   */
     text-decoration: none;
     font-size: 0.8em;
     text-align: left;
-    line-height: 1.2em;
-    margin: 5px;
+    line-height: 1em;
+    margin-bottom: 4px;
+}
+
+.fs-convegni-block-head a:link, .fs-convegni-block-head a:visited {
+    text-align: left;
+    font-weight: bold;
+    color: #051078;
+    line-height: 1em;
+    text-decoration: none;
+    margin: 2px 8px;
+    font-size: 0.8em;
+    display: table-cell;
 }
 
 .fs-convegni-futuri {
     font-weight: bold;
-}
-
-.fs-convegni-futuri {
-    font-weight: bold;
+    padding: 0 15px 15px;
 }
 
 .fs-convegni-futuri a {
@@ -1052,6 +1061,7 @@ right: -14px;   */
     margin-bottom: 6px;
     line-height: 1em;
     width: auto;
+    font-weight: bold;
 
 }
 
@@ -1069,6 +1079,7 @@ right: -14px;   */
     margin-bottom: 6px;
     line-height: 1em;
     width: auto;
+    font-weight: bold;
 
 }
 
@@ -1466,12 +1477,14 @@ right: -14px;   */
     float: left;
 
 }
+
 .fs-profiles-us {
     width: 61%;
     padding: 10px;
-    float:right;
+    float: right;
 
 }
+
 .fs-profiles-cx {
     padding: 10px;
     width: 61%;
@@ -1484,17 +1497,21 @@ right: -14px;   */
     width: 30%;
     float: left;
 }
-.fs-profiles-bt{
+
+.fs-profiles-bt {
     padding: 10px;
-    float:none;
+    float: none;
 }
+
 .fs-profiles-sx p, .fs-profiles-cx p, .fs-profiles-dx p {
     font-size: 13px;
 }
+
 .fs-profiles-sx span, .fs-profiles-cx span, .fs-profiles-dx span {
     font-weight: bold;
 }
-.fs-profiles-labels{
+
+.fs-profiles-labels {
     font-weight: bold;
     font-size: 13px;
     margin-top: 10px;
@@ -1521,26 +1538,32 @@ right: -14px;   */
     float: left;
     text-align: center;
 }
-.fs-profiles-esx-btn{
-    width:91%;
+
+.fs-profiles-esx-btn {
+    width: 91%;
     margin-left: 5px;
 
 }
-.fs-profiles-edx .fs-profiles-radio-buttons  {
+
+.fs-profiles-edx .fs-profiles-radio-buttons {
     text-align: left;
 }
+
 .fs-profiles-esx p, .fs-profiles-ecx p, .fs-profiles-edx p {
     font-size: 13px;
 }
+
 .fs-profiles-esx span, .fs-profiles-ecx span, .fs-profiles-edx span {
     font-weight: bold;
 }
-.fs-my-avatar{
-    margin-right:10px;
+
+.fs-my-avatar {
+    margin-right: 10px;
     margin-bottom: 5px;
-    display:block;
-    float:left;
+    display: block;
+    float: left;
 }
+
 /* ===================== fine  chi siamo (user profiles)  ===================== */
 /* inizio slide */
 .fs-slidecontainerslideshutterstock_1 {

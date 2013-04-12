@@ -33,6 +33,8 @@
                   <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %></span>
 
                   <p>
+
+
                     <%= link_to(h(smart_truncate(con.summary, 120)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>
                     <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :id => con.id, :escape => false), :class => "fs-giallo-inline-button" %></p>
                   <br/>
@@ -93,7 +95,9 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="fs-layout-cell layout-item-1">
-                  <%= @conv_prossimo.testo %>
+
+                  <div class="fs-resize-itm">
+                  <%= @conv_prossimo.description %></div>
                 </div>
                 <div class="fs-postmetadata-full-convegni">
                   <div class='fs-social'>

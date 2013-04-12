@@ -8,9 +8,11 @@
                   <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
                   <span class="fs-postdateicon" style="float:right;"><%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
                   <h5 class="fs-postheader">
-                    <%= link_to(h(articolo.subject),
-                                url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))
-                    %>
+                    <% if articolo.is_convegno? %>
+                        <%= link_to(h(articolo.subject), url_for(:controller => 'editorial', :action => "evento", :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))%>
+                    <% else %>
+                        <%= link_to(h(articolo.subject),url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))%>
+                    <% end %>
                   </h5>
                 </div>
                 <div class="fs-postcontent fs-postcontent-0 clearfix">
@@ -50,7 +52,11 @@
                     </div>
                     <%= textilizable(articolo.summary )%>
                     <br/>
-                    <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false) %>
+                    <% if articolo.is_convegno? %>
+                        <%= link_to('Continua...', url_for(:controller => 'editorial', :action => "evento", :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))%>
+                    <% else %>
+                        <%= link_to('Continua...',url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))%>
+                    <% end %>
                   </div>
                 </div>
             <% else %>

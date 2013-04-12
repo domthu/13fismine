@@ -140,7 +140,6 @@ class EditorialController < ApplicationController
       format.api
     end
   end
-
   # -----------------  ARTICOLO  (inizio)   ------------------
   def articolo
     #singolo articolo
@@ -150,7 +149,6 @@ class EditorialController < ApplicationController
     end
 
   end
-
   # -----------------  ARTICOLO  (fine)   ------------------
   # -----------------  EDIZIONI /NEWSLETTER  (inizio)  ------------------
   def edizioni

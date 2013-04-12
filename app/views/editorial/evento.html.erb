@@ -47,7 +47,8 @@
               </div>
               <div class="clearfix"></div>
               <div class="fs-layout-cell layout-item-1">
-                <%= @convegno.testo %>
+
+                <%= @convegno.description %>
               </div>
               <div class="fs-postmetadata-full-convegni">
                 <div class='fs-social'>
@@ -80,12 +81,13 @@
                     <a href="javascript:increaseFontSize()" id="increase" class="fs-resize-itm">A<sup>+</sup></a>
                     <a href="javascript:decreaseFontSize()" id="decrease" class="fs-resize-itm">a<sup>-</sup></a>
                   </div>
-                </div>
+                        </div>
                 <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
               </div>
               <div class="fs-convegni-prenota">
                 <%= render :partial => 'reservation' %>
               </div>
+
           <% else %>
               <br/>
 
