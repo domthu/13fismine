@@ -70,9 +70,9 @@
                     <%= link_to(h(smart_truncate(con.summary, 175)), url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %>
                   </div>
                   <%= link_to "Visualizza...", url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button" %>
-                  <br/> &nbsp;
                 </div>
                 <div class="clearfix"></div>
+                <br/> &nbsp;
               </div>
           <% end %>
         </article>
