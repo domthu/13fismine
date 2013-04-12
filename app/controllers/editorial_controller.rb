@@ -1,13 +1,15 @@
 class EditorialController < ApplicationController
-  layout 'editorial', :except => [:profilo_new]
+  layout 'editorial'#, :except => [:profilo_new]
   #before_filter :require_admin
   helper :sort
   include SortHelper
   include FeesHelper #ROLE_XXX  CONVEGNI_XXX QUESITO_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
-  before_filter :correct_user, :only => [:articolo, :quesito_full]
-  before_filter :enabled_user, :only => [:articolo, :quesito_full]
+  before_filter :find_articolo, :only => [:articolo]  #recupero articolo status
+  #before_filter :get_news, :only => [:news, :articolo_full]  #recupero articolo status
+  before_filter :correct_user_article, :only => [:articolo]  #LOGGATO O ARTICOLO LIBERO
+  before_filter :enabled_user_article, :only => [:articolo]  #ABBONATO E CONTENUTO PROTETTO
   before_filter :find_quesito_fs, :only => [:quesito_destroy, :quesito_edit, :quesito_show]
 
   helper :messages
@@ -142,8 +144,6 @@ class EditorialController < ApplicationController
   # -----------------  ARTICOLO  (inizio)   ------------------
   def articolo
     #singolo articolo
-    @id = params[:article_id].to_i
-    @articolo= Issue.all_public_fs.find(@id)
     @section_id = @articolo.section_id
     if @articolo.news_id
       @quesito = News.all_quesiti_fs.find_by_id(@articolo.news_id)
@@ -672,9 +672,22 @@ class EditorialController < ApplicationController
     render_404
   end
 
-  def correct_user
-    reroute_log() unless User.current.logged?
-    #reroute_auth() unless User.current.isfee?(params[:id])
+  def find_articolo
+    reroute_log() unless params[:article_id].nil?
+    @id = params[:article_id].to_i
+    @articolo= Issue.all_public_fs.find(@id)
+    puts "  --->  finded articolo"
+  rescue ActiveRecord::RecordNotFound
+    reroute_404()
+  end
+  def correct_user_article
+    puts "  -->  correct user passed"
+    reroute_log() unless (User.current.logged? || !@articolo.se_protetto)
+  end
+
+  def reroute_404()
+    flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
+    render_404
   end
 
   def reroute_log()
@@ -682,10 +695,13 @@ class EditorialController < ApplicationController
     redirect_to(signin_path)
   end
 
-  def enabled_user
-    reroute_auth() unless User.current.isfee?(params[:id])
+  def enabled_user_article
+    puts "  ->  enabled user passed"
+    if @articolo.se_protetto
+      puts "  ->  enabled user (if confition) passed"
+      reroute_auth() unless !User.current.isfee?(@articolo)
+    end
   end
-
   def reroute_auth()
     flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
     flash[:error] = "Abbonamento non valido (utente)..."

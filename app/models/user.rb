@@ -192,8 +192,13 @@ class User < Principal
   end
 
   #CALL this procedure from Frontend only
-  def isfee?(issueid = nil)
+  def isfee?(issue = nil)
     #return false
+    #Control issue status
+    if issue && !issue.se_protetto
+      return true
+    end
+
     #Control user status
     if self.locked?
       Rails.logger.info("isfee False is LOCKED  #{self}")
