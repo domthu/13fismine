@@ -102,8 +102,8 @@ class User < Principal
   #domthu 20130401 TODO rinominare ed riussare i campi
   #user condition =>"1"  --> forum_redattore
   #user Consensus =>"1"  --> forum_notifica
-  validates_inclusion_of :forum_notifica, :in => [true], :message => "Devi accettare le condizioni"
-  validates_inclusion_of :forum_redattore, :message => "Devi dare il tuo consenso", :in => [false] #, false]
+  #validates_inclusion_of :forum_notifica, :in => [true], :message => "Devi accettare le condizioni"
+  #validates_inclusion_of :forum_redattore, :message => "Devi dare il tuo consenso", :in => [false] #, false]
 
   before_create :set_mail_notification
   before_save :update_hashed_password

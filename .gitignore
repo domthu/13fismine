@@ -44,3 +44,7 @@ config/database.yml
 
 .rvmrc
 
+/config/environment.rb
+/config/environments/production.rb
+/lib/redmine/imap.rb
+/lib/redmine/pop3.rb

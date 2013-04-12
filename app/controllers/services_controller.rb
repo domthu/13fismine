@@ -131,8 +131,8 @@ class ServicesController < ApplicationController
       }]
     end
     @json_towns = @towns.collect { |e|  {
-      :label => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.ragione_sociale}", 100),
-      :value => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.ragione_sociale}", 100),
+      :label => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100),
+      :value => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100),
       :hiddenvalue_cross => "#{e.cross_organization.id}",
       :hiddenvalue_asso => "#{e.id}"
       }
