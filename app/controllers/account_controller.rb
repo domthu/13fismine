@@ -26,10 +26,10 @@ class AccountController < ApplicationController
 
   # Login request and validation
   def login
-    Rails.logger.info("login PARAMS: #{params.inspect}")
-    flash[:notice] = "==========login============="
+    #Rails.logger.info("login PARAMS: #{params.inspect}")
+    #flash[:notice] = "==========login============="
     if request.get?
-      flash[:notice] = "request.get --> logout_user"
+      #flash[:notice] = "request.get --> logout_user"
       logout_user
     else
       authenticate_user
@@ -66,6 +66,7 @@ class AccountController < ApplicationController
     else
       if request.post?
         user = User.find_by_mail(params[:mail])
+        user = User.find_by_login(params[:mail]) unless user
         # user not found in db
         (flash.now[:error] = l(:notice_account_unknown_email); return) unless user
         # user uses an external authentification
@@ -124,9 +125,15 @@ class AccountController < ApplicationController
       #user Consensus =>"1"  --> forum_notifica
       if !params[:user][:condition].nil? && params[:user][:condition] && !params[:user][:condition].blank?
         @user.forum_redattore = params[:user][:condition]
+      else
+        flash.now[:error] = l(:notice_register_must_condition);
+        return
       end
       if !params[:user][:Consensus].nil? && params[:user][:Consensus] && !params[:user][:Consensus].blank?
         @user.forum_notifica = params[:user][:Consensus]
+      else
+        flash.now[:error] = l(:notice_register_must_consensus);
+        return
       end
 
       #Region Province Comune

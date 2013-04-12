@@ -1577,9 +1577,11 @@ it:
   label_curriculum: 'il Curriculum'
   label_titoli: 'I titoli'
   label_display_in: 'Mostra in ...'
-  fs-external_ur: 'Url esterno'
+  fs_external_url: 'Url esterno'
   fs_mail: 'Email contatti su Fiscosport'
   fs_tel: 'Telefono per Fiscosport'
   fs_fax: 'Fax per Fiscosport'
   fs_skype: 'Skype account per Fiscosport'
   fs_qualifica: 'Qualifica o ruolo su Fiscosport (apparirà negli articoli)'
+  notice_register_must_condition: "Dovete dichiarare di avere letto le condizioni d'uso per continuare"
+  notice_register_must_consensus: "É necessario dare il consenso per la privacy"
