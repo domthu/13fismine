@@ -48,3 +48,4 @@ config/database.yml
 /config/environments/production.rb
 /lib/redmine/imap.rb
 /lib/redmine/pop3.rb
+/public/images/users/profile_*/*
