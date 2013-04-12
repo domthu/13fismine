@@ -1,7 +1,7 @@
 <%= f.error_messages %>
 
-<p style="display:none2;">  NON USARE f.codice sostituito da asso_id ==> 
-  <%=h (f.object.codice) %></p>
+<p style="display:none;">  NON USARE f.codice sostituito da asso_id ==>
+  <%=h (f.object.asso_id) %></p>
 
 <div class="box tabular">
   <p><%= f.select :asso_id, (Asso.all.collect {|c| [c.ragione_sociale, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_asso) %></p>

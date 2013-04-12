@@ -1573,5 +1573,13 @@ it:
   field_condition: "Condizioni di utilizzo"
   field_condition_readed: "Ho letto le condizioni per l'uso"
  # user_profiles
-  field_curriculum: 'Curriculum'
+ # field_curriculum: 'Curriculum'
   label_curriculum: 'il Curriculum'
+  label_titoli: 'I titoli'
+  label_display_in: 'Mostra in ...'
+  fs-external_ur: 'Url esterno'
+  fs_mail: 'Email contatti su Fiscosport'
+  fs_tel: 'Telefono per Fiscosport'
+  fs_fax: 'Fax per Fiscosport'
+  fs_skype: 'Skype account per Fiscosport'
+  fs_qualifica: 'Qualifica o ruolo su Fiscosport (apparirà negli articoli)'
