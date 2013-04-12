@@ -8,7 +8,7 @@ class UserProfile < ActiveRecord::Base
                                         :xs => ["50x50>", :png, :jpg]},
                     :url => "users/profile_:id/:style_:basename.:extension",
                     :path => "#{RAILS_ROOT}/public/images/users/profile_:id/:style_:basename.:extension",
-                    :default_url => "users/profiles/:style_no-img.jpg"
+                    :default_url => "commons/:style-no_avatar.jpg"
 
   named_scope :users_profiles_all, :include => :user,
               :conditions => "(#{User.table_name}.role_id = #{FeeConst::ROLE_MANAGER} OR #{User.table_name}.role_id = #{FeeConst::ROLE_AUTHOR})"
@@ -37,17 +37,20 @@ class UserProfile < ActiveRecord::Base
   end
 
   def my_gravatar_url(user, taglia)
-    default_url = "#{RAILS_ROOT}images/users/profiles/no_avatars.jpg"
+
     gravatar_id = Digest::MD5.hexdigest(user)
     case taglia
       when :l
+        default_url = "#{RAILS_ROOT}images/commons/l-no_avatar.jpg"
         "http://gravatar.com/avatar/#{gravatar_id.to_s}.png?s=120{CGI.escape(#{default_url})}"
       when :s
+        default_url = "#{RAILS_ROOT}images/commons/s-no_avatar.jpg"
         "http://gravatar.com/avatar/#{gravatar_id.to_s}.png?s=80{CGI.escape(#{default_url})}"
       when :xs
+        default_url = "#{RAILS_ROOT}images/commons/xs-no_avatar.jpg"
         "http://gravatar.com/avatar/#{gravatar_id.to_s}.png?s=50{CGI.escape(#{default_url})}"
       else
-        '<div class="fs-my-avatar"> <img src="/images/users/profiles/no_avatars.jpg" alt="mio-avatar"></div>'
+        '<div class="fs-my-avatar"> <img src="/images/commons/s-no_avatar.jpg" alt="mio-avatar"></div>'
     end
   end
 
