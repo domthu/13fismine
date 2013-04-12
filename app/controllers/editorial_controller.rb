@@ -7,7 +7,7 @@ class EditorialController < ApplicationController
 
   before_filter :find_optional_project, :only => [:ricerca]
   before_filter :find_articolo, :only => [:articolo]  #recupero articolo status
-  #before_filter :get_news, :only => [:news, :articolo_full]  #recupero articolo status
+#  #before_filter :get_news, :only => [:news, :articolo_full]  #recupero articolo status
   before_filter :correct_user_article, :only => [:articolo]  #LOGGATO O ARTICOLO LIBERO
   before_filter :enabled_user_article, :only => [:articolo]  #ABBONATO E CONTENUTO PROTETTO
   before_filter :find_quesito_fs, :only => [:quesito_destroy, :quesito_edit, :quesito_show]
@@ -143,6 +143,8 @@ class EditorialController < ApplicationController
 
   # -----------------  ARTICOLO  (inizio)   ------------------
   def articolo
+    @id = params[:article_id].to_i
+    @articolo= Issue.all_public_fs.find(@id)
     #singolo articolo
     @section_id = @articolo.section_id
     if @articolo.news_id
@@ -172,7 +174,7 @@ class EditorialController < ApplicationController
       @block_projects = Project.latest_fs
     end
   rescue ActiveRecord::RecordNotFound
-    render_404
+    reroute_404()
   end
 
   def edizione_newsletter
@@ -660,8 +662,8 @@ class EditorialController < ApplicationController
     @quesito_news = News.find(@id)
     #In application_contoller
     check_quesito_privacy_fs
-    #rescue ActiveRecord::RecordNotFound
-    #  render_404
+  rescue ActiveRecord::RecordNotFound
+    reroute_404()
   end
 
   def find_optional_project
@@ -669,25 +671,28 @@ class EditorialController < ApplicationController
     @project = Project.all_public_fs.find(params[:id])
     check_project_privacy
   rescue ActiveRecord::RecordNotFound
-    render_404
+    reroute_404()
   end
 
   def find_articolo
-    reroute_log() unless params[:article_id].nil?
+    return reroute_log() unless !params[:article_id].nil?
     @id = params[:article_id].to_i
+    #test render_404_fs
+    #@articolo= Issue.all_public_fs.find(242341234234234)
     @articolo= Issue.all_public_fs.find(@id)
-    puts "  --->  finded articolo"
   rescue ActiveRecord::RecordNotFound
-    reroute_404()
+    reroute_404("il contenuto cercato è stato rimosso...")
   end
   def correct_user_article
-    puts "  -->  correct user passed"
     reroute_log() unless (User.current.logged? || !@articolo.se_protetto)
   end
 
-  def reroute_404()
-    flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
-    render_404
+  def reroute_404(_message = nil)
+    #flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
+    flash[:notice] = "Problemi incontrati nel recupero dei dati..."
+    return render_404_fs({:message => _message}) unless _message.nil?
+    render_404_fs
+    #render_404
   end
 
   def reroute_log()
@@ -696,9 +701,7 @@ class EditorialController < ApplicationController
   end
 
   def enabled_user_article
-    puts "  ->  enabled user passed"
     if @articolo.se_protetto
-      puts "  ->  enabled user (if confition) passed"
       reroute_auth() unless !User.current.isfee?(@articolo)
     end
   end

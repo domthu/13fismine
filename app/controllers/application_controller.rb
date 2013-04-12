@@ -317,12 +317,6 @@ class ApplicationController < ActionController::Base
     return false
   end
 
-  def render_404(options={})
-   render_error({:message => :notice_file_not_found, :status => 404}.merge(options))
-    return false
-  end
-
-  # Renders an error response
   def render_error(arg)
     arg = {:message => arg} unless arg.is_a?(Hash)
 
@@ -333,6 +327,34 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html {
         render :template => 'common/error', :layout => use_layout, :status => @status
+      }
+      format.atom { head @status }
+      format.xml { head @status }
+      format.js { head @status }
+      format.json { head @status }
+    end
+  end
+
+  def render_404(options={})
+   render_error({:message => :notice_file_not_found, :status => 404}.merge(options))
+    return false
+  end
+  def render_404_fs(options={})
+   render_error_fs({:message => :notice_file_not_found, :status => 404}.merge(options))
+    return false
+  end
+
+  # Renders an error response
+  def render_error_fs(arg)
+    arg = {:message => arg} unless arg.is_a?(Hash)
+
+    @message = arg[:message]
+    @message = l(@message) if @message.is_a?(Symbol)
+    @status = arg[:status] || 500
+
+    respond_to do |format|
+      format.html {
+        render :template => 'common/error', :layout => 'editorial', :status => @status
       }
       format.atom { head @status }
       format.xml { head @status }
