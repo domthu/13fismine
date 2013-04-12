@@ -764,6 +764,7 @@ ul.fs-hmenu ul
 {
    display: table-cell;
    vertical-align: top;
+    text-align: justify;
 
 }
 

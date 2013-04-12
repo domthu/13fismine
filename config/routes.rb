@@ -48,7 +48,7 @@ ActionController::Routing::Routes.draw do |map|
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
   map.edizione_newsletter '/edizione_newsletter/:id', :controller => 'editorial', :action => 'edizione_newsletter'
   #-> Convegni ed Eventi ()topsection_id=9) -
-  map.evento '/evento/:id', :controller => 'editorial', :action => 'evento'
+  map.evento '/evento/:id/:slug', :controller => 'editorial', :action => 'evento'
   map.eventi '/eventi', :controller => 'editorial', :action => 'eventi'
   #-> Quesiti (table: news)-
   map.quesiti_all '/quesiti', :controller => 'editorial', :action => 'quesiti_all'

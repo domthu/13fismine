@@ -30,11 +30,10 @@
                         image_tag(con.immagine_url, :alt => h(truncate(con.subject, :length => 25)), :width => 100)
                       end
                   %>
-                  <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %></span>
-
+                  <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento",  :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %></span>
                   <p>
-                    <%= link_to(h(smart_truncate(con.summary, 120)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>
-                    <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :id => con.id, :escape => false), :class => "fs-giallo-inline-button" %></p>
+                    <%= link_to(h(smart_truncate(con.summary, 125)), :controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %>
+                    <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false), :class => "fs-giallo-inline-button" %></p>
                   <br/>
 
                 </div>
@@ -93,7 +92,8 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="fs-layout-cell layout-item-1">
-                  <%= @conv_prossimo.testo %>
+                  <div id="fs-articolo-full">
+                  <%= @conv_prossimo.description %></div> <br/> &nbsp;
                 </div>
                 <div class="fs-postmetadata-full-convegni">
                   <div class='fs-social'>
@@ -149,9 +149,9 @@
                 <div class="fs-content-layout-row">
 
                   <div class="fs-postheader fs-blockheader-edizioni fs-convegni-border" style="text-align: left;">
-                    <span><%= link_to(h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno)), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %> </span>
+                    <span><%= link_to(h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno)), :controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %> </span>
 
-                    <p class="event-tetx"><%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id, :escape => false) %>   </p>
+                    <p class="event-tetx"><%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %>   </p>
                   </div>
                 </div>
               </div>

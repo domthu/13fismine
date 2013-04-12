@@ -140,7 +140,6 @@ class EditorialController < ApplicationController
       format.api
     end
   end
-
   # -----------------  ARTICOLO  (inizio)   ------------------
   def articolo
     @id = params[:article_id].to_i
@@ -152,7 +151,6 @@ class EditorialController < ApplicationController
     end
 
   end
-
   # -----------------  ARTICOLO  (fine)   ------------------
   # -----------------  EDIZIONI /NEWSLETTER  (inizio)  ------------------
   def edizioni
