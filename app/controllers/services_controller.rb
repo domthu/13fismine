@@ -116,28 +116,52 @@ class ServicesController < ApplicationController
   # User -->  	asso_id 	cross_organization_id
   def organismi
     s =  params[:term] ? params[:term].to_s : ""
-    @towns = Organization.find(
+    page_limit =  params[:page_limit] ? params[:page_limit].to_i : 10
+    pagina =  params[:page] ? params[:page].to_i : 1
+    offset = pagina * page_limit;
+    totale = Organization.find(
       :all,
-      :limit => 10,
+      :include => [:asso, {:cross_organization => :type_organization}],
+      :conditions => ['type_organizations.tipo LIKE ? or cross_organizations.sigla LIKE ? or assos.ragione_sociale LIKE ?', "%#{s}%", "%#{s}%", "%#{s}%"]
+      ).count()
+
+    @FedOrgAsso = Organization.find(
+      :all,
       :include => [:asso, {:cross_organization => :type_organization}],
       :conditions => ['type_organizations.tipo LIKE ? or cross_organizations.sigla LIKE ? or assos.ragione_sociale LIKE ?', "%#{s}%", "%#{s}%", "%#{s}%"],
-      :order => 'type_organizations.tipo, cross_organizations.sigla, assos.ragione_sociale'
+      :order => 'type_organizations.tipo, cross_organizations.sigla, assos.ragione_sociale',
+      :limit => page_limit,
+      :offset => offset
     )
-    if (@towns.nil? or @towns.count < 1)
+
+    if (@FedOrgAsso.nil? or @FedOrgAsso.count < 1)
       return render :json => [{
         :label => "0",
         :value => "Nessun organismo associato per la ricerca -#{s}-",
         :hiddenvalue => "0"
       }]
     end
-    @json_towns = @towns.collect { |e|  {
+    @json_datas = @FedOrgAsso.collect { |e|  {
       :label => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100),
       :value => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100),
       :hiddenvalue_cross => "#{e.cross_organization.id}",
       :hiddenvalue_asso => "#{e.id}"
       }
     }
-    render :json => @json_towns.to_json
+    #page++
+    #format.json { render :json => @detail.errors, :status => :unprocessable_entity }
+    #format.json { render
+    #  :json => { 'results' => @json_datas.to_json, 'total' => totale },
+    #  :page => pagina
+    #}
+    #render :json => { :data => { :organismi => @json_datas.to_json, :total => totale }, :page => pagina.to_s }
+    render :json => {
+              :data => {
+                  :organismi => @json_datas.to_json,
+                  :total => totale
+              },
+              :page => pagina.to_s
+    }
   end
 
   #TypeOrganization :: CrossOrganization :: organizations

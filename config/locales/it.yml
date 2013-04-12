@@ -1565,7 +1565,7 @@ it:
   field_sigla_organismo: "Indica se fai parte di uno di questi organismi: "
   field_sigla_sede: "Con sede in:"
   field_coni_number: "Numero iscrizione registro CONI: "
-  field_username_as_email: "L'indirizzo e-mail sarà il Vostro UserName"
+  field_username_as_email: "Di default la tua login è uguale alla tua email. Hai la possibilità di personalizzare il tuo nome utente che userai con la password per identificarti sul sito"
   field_codice_segnalatore: "Codice Segnalatore/Promozione:"
   field_com: "Comunicazioni/Segnalazioni:"
   field_privacy: "Informativa sulla privacy"
