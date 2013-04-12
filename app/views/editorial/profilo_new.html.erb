@@ -1,77 +1,147 @@
-<%# form_for :user_profile, @user_profile, :url => {:controller=> 'user_profiles', :action => "pcreate"} ,:html => { :multipart => true } do |f| %>
+<%# form_tag({:action => :update}, {:method => :put})form_tag({:action => controller.action_name, :id => @project, :path => to_path_param(@path), :rev => ''}, {:method => :get, :id => 'revision_selector'}) do -%>
+<style>
+    .thumb {
+        height: 120px;
+        border: 1px solid #ededed;
+        margin: 10px 5px 0 0;
+    }
+</style>
 
-<% form_for :user_profile, @user_profile, :url => {:action => "profilo_create"}, :html => {:multipart => true} do |f| %>
-    <%= f.hidden_field :user_id, :value => params[:id] %>
-    <div class="fs-profiles-sx">
-      <p>
-        <%= f.label :photo %>
-        <%= f.file_field :photo %>
-      </p>
-
-      <p>
-        <label><%= f.radio_button :use_gravatar, true %> <%= 'Usa mail su Gravatar' %></label><br/>
-        <label><%= f.radio_button :use_gravatar, false %> <%= 'Usa tua immagine Avatar' %></label><br/>
-      </p>
-
-      <p>
-        <%= f.label :fs_qualifica %><br/>
-        <%= f.text_field :fs_qualifica %>
-      </p>
-    </div>
-    <div class="fs-profiles-cx">
-      <p>
-        <%= f.label :fs_tel %><br/>
-        <%= f.text_field :fs_tel %>
-      </p>
-
-      <p>
-        <%= f.label :fs_fax %><br/>
-        <%= f.text_field :fs_fax %>
-      </p>
-
-      <p>
-        <%= f.label :fs_skype %><br/>
-        <%= f.text_field :fs_skype %>
-      </p>
-
-      <p>
-        <%= f.label :fs_mail %><br/>
-        <%= f.text_field :fs_mail %>
-      </p>
-
-      <p>
-        <%= f.label :external_url %><br/>
-        <%= f.text_field :external_url %>
-      </p>
-    </div>
-    <div class="fs-profiles-dx">
-        <div>
-          <b> Mostra in ... </b> &nbsp;<br/>
-          <label><%= f.radio_button :display_in, 1 %> <%= 'Collaboratori' %></label><br/>
-          <label><%= f.radio_button :display_in, 2 %> <%= 'Responsabili' %></label><br/>
-          <label><%= f.radio_button :display_in, 3 %> <%= 'Direttori' %></label> <br/>
-          <label><%= f.radio_button :display_in, 4 %> <%= 'Non Visibile' %></label><br/>
-          <br/> &nbsp;
-        </div>
-        <p>  <%= submit_tag "crea", :class => "fs-rosso-button" %></p>
+<% form_tag({:action => "profilo_new",  :method => :post}, :multipart => true) do %>
+    <%= hidden_field_tag :user_id, @this_user.id %>
+    <div class="fs-profiles-esx">
+      <div id="fs-photo-edit">
+            <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:none;"></div>
+          <div id="fs-photo-edit-g" style="display:block;">' + gravatar_for(@this_user, :size => 120) + ' </div>' %>
 
       </div>
-      <div class="cleared"></div>
-      <p>
 
-      <p><%= f.text_area :titoli,
-                         :cols => 20,
-                         :rows => 5,
-                         :accesskey => accesskey(:edit),
-                         :class => 'wiki-edit' %>
+      <%# image_tag @user_profile.photo.url(:l) %>
+     <%= " id > " + @this_user.id.to_s  %>
+      <div class="fs-vuoto-inline-button  fs-profiles-esx-btn">
+        <label><%= radio_button_tag :use_gravatar, true,  :onchange => "funct_avatar('g')" %> <%= 'Usa mail su Gravatar' %></label><br/>
+        <label><%= radio_button_tag :use_gravatar, false, :onchange => "funct_avatar('a')" %> <%= 'Usa tua immagine Avatar' %></label><br/>
+        <%= file_field_tag :photo, :onchange => "handleFileSelect('handleFileSelect, false'})" %>
+      </div>
+    </div>
+    <div class="fs-profiles-ecx">
+      <p>
+        <%= label_tag :fs_qualifica %><br/>
+        <%= text_field_tag :fs_qualifica %>
       </p>
 
       <p>
-        <%= f.label l(:label_curriculum) %><br/>
-        <%= f.text_area :curriculum %>
+        <%= label_tag :fs_tel %><br/>
+        <%= text_field_tag :fs_te %>
       </p>
+
+      <p>
+        <%= label_tag :fs_fax %><br/>
+        <%= text_field_tag :fs_fax %>
+      </p>
+
+      <p>
+        <%= label_tag :fs_skype %><br/>
+        <%= text_field_tag :fs_skype %>
+      </p>
+
+      <p>
+        <%= label_tag :fs_mail %><br/>
+        <%= text_field_tag :fs_mail %>
+      </p>
+
+      <p>
+        <%= label_tag :fs_external_url %><br/>
+        <%= text_field_tag :external_url %>
+      </p>
+    </div>
+    <div class="fs-profiles-edx">
+
+      <div class="fs-profiles-radio-buttons">
+        <%= label_tag l(:label_display_in) %> &nbsp;<br/>
+        <label><%= radio_button_tag :display_in, 1  %> <%= 'Collaboratori' %></label><br/>
+        <label><%= radio_button_tag :display_in, 2 %> <%= 'Responsabili' %></label><br/>
+        <label><%= radio_button_tag :display_in, 3 %> <%= 'Direttori' %></label><br/>
+        <label><%= radio_button_tag :display_in, 4 %> <%= 'Non Visibile' %></label><br/>
+
+      </div>
+      <p style="padding:5px 0;"></p>
+
+      <p>  <%= submit_tag "crea", :action => 'profilo_edit', :class => "fs-giallo-button" %></p>
+
+      <p style="padding:5px 0;"> altrimenti</p>
+
+      <p>  <%= link_to "annulla", :back, :class => "fs-giallo-button", :style => "float:none;" %></p>
+
+    </div>
+    <div class="cleared"></div>
+    <p>
+      <%= label_tag l(:label_titoli) %><br/>
+      <%= text_area_tag :titoli,  :cols => 20, :rows => 4, :class => 'wiki-edit' %>
+    </p>
+
+    <p>
+      <%= label_tag l(:label_curriculum) %><br/>
+      <%= text_area_tag :curriculum, :cols => 20, :rows => 6, :class => 'wiki-edit' %>
+    </p>
+
 
 <% end %>
-<%= wikitoolbar_for 'user_profile_curriculum' %>
+
+<%= wikitoolbar_for 'titoli' %>
 <%= wikitoolbar_for 'curriculum' %>
 
+<script>
+    // valori accettati 1= Immagine Avatar Papareclip , 0 = Immagine Gravatar , 2  = Nuova immagine upload
+    function funct_avatar(val) {
+        if (val == 'g') {
+            document.getElementById('fs-photo-edit-i').style.display = 'none';
+            document.getElementById('fs-photo-edit-a').style.display = 'none';
+            document.getElementById('fs-photo-edit-g').style.display = 'block';
+        }
+        else if (val == 'a') {
+            document.getElementById('fs-photo-edit-i').style.display = 'none';
+            document.getElementById('fs-photo-edit-a').style.display = 'block';
+            document.getElementById('fs-photo-edit-g').style.display = 'none';
+        }
+        else if (val == 'i') {
+            document.getElementById('fs-photo-edit-i').style.display = 'block';
+            document.getElementById('fs-photo-edit-a').style.display = 'none';
+            document.getElementById('fs-photo-edit-g').style.display = 'none';
+            document.getElementById('use_gravatar_false').checked = true;
+            document.getElementById('use_gravatar_true').checked = false;
+            document.getElementById('use_gravatar_false').setAttribute('checked', 'checked');
+        }
+
+    }
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+
+            // Only process image files.
+            if (!f.type.match('image.*')) {
+                continue;
+            }
+
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    // Render thumbnail.
+                    // var span = document.createElement('span');
+                    var span = document.getElementById('fs-photo-edit-i');
+                    span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                        '" title="', escape(theFile.name), '"/>'].join('');
+                    document.getElementById('fs-photo-edit-i').insertBefore(span, null);
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);
+        }
+        funct_avatar('i');
+    }
+    document.getElementById('photo').addEventListener('change', handleFileSelect, false);
+</script>

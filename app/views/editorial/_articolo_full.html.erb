@@ -1,5 +1,5 @@
 <% if articolo %>
-    <% if User.current && User.current.logged? && User.current.isfee?(articolo.id) %>
+    <% if articolo %>
         <div class="fs-postmetadataheader">
           <div class="fs-art-sezione-full">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></div>
           <div class="fs-postheader-full">      <%= @articolo.subject %>  </div>

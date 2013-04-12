@@ -27,7 +27,7 @@ class Issue < ActiveRecord::Base
                 :tiny => ["24x24#", :png,:jpg]},
                     :url => "users/profiles/:id/:style/:basename.:extension",
                     :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension",
-                    :default_url => "users/profiles/:style/missing.png"
+                    :default_url => "commons/:style-no_avatar.jpg"
 
   belongs_to :project
   belongs_to :tracker

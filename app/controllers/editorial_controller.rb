@@ -1,13 +1,15 @@
 class EditorialController < ApplicationController
-  layout 'editorial', :except => [:profilo_new]
+  layout 'editorial'#, :except => [:profilo_new]
   #before_filter :require_admin
   helper :sort
   include SortHelper
   include FeesHelper #ROLE_XXX  CONVEGNI_XXX QUESITO_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
-  before_filter :correct_user, :only => [:articolo, :quesito_full]
-  before_filter :enabled_user, :only => [:articolo, :quesito_full]
+  before_filter :find_articolo, :only => [:articolo]  #recupero articolo status
+  #before_filter :get_news, :only => [:news, :articolo_full]  #recupero articolo status
+  before_filter :correct_user_article, :only => [:articolo]  #LOGGATO O ARTICOLO LIBERO
+  before_filter :enabled_user_article, :only => [:articolo]  #ABBONATO E CONTENUTO PROTETTO
   before_filter :find_quesito_fs, :only => [:quesito_destroy, :quesito_edit, :quesito_show]
 
   helper :messages
@@ -142,8 +144,6 @@ class EditorialController < ApplicationController
   # -----------------  ARTICOLO  (inizio)   ------------------
   def articolo
     #singolo articolo
-    @id = params[:article_id].to_i
-    @articolo= Issue.all_public_fs.find(@id)
     @section_id = @articolo.section_id
     if @articolo.news_id
       @quesito = News.all_quesiti_fs.find_by_id(@articolo.news_id)
@@ -440,9 +440,9 @@ class EditorialController < ApplicationController
         # if @user_profile.update_attributes(:user_id => params[:user_id], :photo => params[:photo], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
         #@user_profile.photo.reprocess!
         # @user_profile.save
-        flash[:notice] = fading_flash_message("il tuo profilo è stato aggiornato." + (params[:photo].nil? ? " nullo " :"non nullo") + "/" + params[:photo].to_s + "\n u-id >" + params[:user_id] + "\n p-id >" + params[:id], 5)
+        flash[:notice] = fading_flash_message("il tuo profilo è stato aggiornato.", 5)
       else
-        flash[:notice] = 'mah ... qualcosa è andato storto!'
+        flash[:notice] = 'mmmhhh ... qualcosa è andato storto!'
       end
       redirect_to :action => 'profilo_show', :id => @user_profile
       return
@@ -451,8 +451,29 @@ class EditorialController < ApplicationController
   end
 
   def profilo_new
+    @uid= params[:id]
+    @this_user = User.find_by_id(@uid)
+    #render :layout => "editorial_edit"
+   # ----
+    if request.post? #  flash[:notice] = fading_flash_message("il photo." + params[:photo].to_s + "\n uid >" + params[:user_id] + "\n pid >" + params[:id], 5)
+      @user_profile = UserProfile.new(:user_id => params[:user_id], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
+      if @user_profile.save
+        if !params[:photo].nil?
+          @user_profile.update_attributes(:photo => params[:photo])
+        end
+        # if @user_profile.update_attributes(:user_id => params[:user_id], :photo => params[:photo], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
+        #@user_profile.photo.reprocess!
+        # @user_profile.save
+        flash[:notice] = fading_flash_message("il tuo profilo è stato creato.", 5)
+      else
+        flash[:notice] = 'mmmhhh ... qualcosa è andato storto!'
+      end
+      redirect_to :action => 'profilo_show', :id => @user_profile
+      return
+    end
     render :layout => "editorial_edit"
   end
+
 
 # sandro sotto  -- per non usare i metodi di default in caso si voglia utilizzare i default in redmine
   def profilo_create
@@ -471,6 +492,7 @@ class EditorialController < ApplicationController
   end
 
 
+=begin
   def profilo_update
     @user_profile = UserProfile.find(params[:id])
     respond_to do |format|
@@ -487,7 +509,7 @@ class EditorialController < ApplicationController
       end
     end
   end
-
+=end
   def profilo_destroy
     @user_profile = UserProfile.find(params[:id])
     @user_profile.destroy
@@ -650,9 +672,22 @@ class EditorialController < ApplicationController
     render_404
   end
 
-  def correct_user
-    reroute_log() unless User.current.logged?
-    #reroute_auth() unless User.current.isfee?(params[:id])
+  def find_articolo
+    reroute_log() unless params[:article_id].nil?
+    @id = params[:article_id].to_i
+    @articolo= Issue.all_public_fs.find(@id)
+    puts "  --->  finded articolo"
+  rescue ActiveRecord::RecordNotFound
+    reroute_404()
+  end
+  def correct_user_article
+    puts "  -->  correct user passed"
+    reroute_log() unless (User.current.logged? || !@articolo.se_protetto)
+  end
+
+  def reroute_404()
+    flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
+    render_404
   end
 
   def reroute_log()
@@ -660,10 +695,13 @@ class EditorialController < ApplicationController
     redirect_to(signin_path)
   end
 
-  def enabled_user
-    reroute_auth() unless User.current.isfee?(params[:id])
+  def enabled_user_article
+    puts "  ->  enabled user passed"
+    if @articolo.se_protetto
+      puts "  ->  enabled user (if confition) passed"
+      reroute_auth() unless !User.current.isfee?(@articolo)
+    end
   end
-
   def reroute_auth()
     flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
     flash[:error] = "Abbonamento non valido (utente)..."
