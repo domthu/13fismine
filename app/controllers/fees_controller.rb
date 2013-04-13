@@ -25,6 +25,8 @@ class FeesController < ApplicationController
 
   def index
     #@msg[] << ""
+    #__User_all = User.all()
+
     if params['verify'].to_i == 1
       @msg = ["---Verificazione degli utenti---"]
       #_ArrStr = Array.new
@@ -199,7 +201,7 @@ class FeesController < ApplicationController
 
 
   def abbonamenti
-    @username = params[:user] ? params[:user].to_i : ''
+    @username = params[:username] ? params[:username].to_s : ''
     @users = User.find_by_api_key(@username)
     @role = params[:role] ? params[:role].to_i : 1
     @users_role = User.all(:conditions => {:role_id => @role}, :include => :role)
@@ -293,7 +295,7 @@ class FeesController < ApplicationController
       end
     end
   rescue ::ActionController::RedirectBackError
-    redirect_to :controller => 'users', :action => 'edit', :id => @user
+    redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => abbonamento
   end
 
 

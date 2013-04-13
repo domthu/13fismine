@@ -559,6 +559,9 @@ it:
   button_login: Entra
   button_submit: Invia
   button_save: Salva
+  button_save_abbonamento: Salva abbonamento
+  button_save_dati: Salva dati
+  button_save_fatture: Salva fatture
   button_check_all: Seleziona tutti
   button_uncheck_all: Deseleziona tutti
   button_delete: Elimina
@@ -937,6 +940,9 @@ it:
   field_principal: Principale
   label_my_page_block: La mia pagina di blocco
   notice_failed_to_save_members: "Impossibile salvare il membro(i): %{errors}."
+  notice_failed_to_save_abbonamento: "Impossibile salvare l'abbonamento per l'utente(i): %{errors}."
+  notice_failed_to_save_dati: "Impossibile salvare i dati per l'utente(i): %{errors}."
+  notice_failed_to_save_fatture: "Impossibile salvare la fattura per l'utente(i): %{errors}."
   text_zoom_out: Riduci ingrandimento
   text_zoom_in: Aumenta ingrandimento
   notice_unable_delete_time_entry: Impossibile eliminare il valore time log.

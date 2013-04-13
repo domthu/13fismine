@@ -26,6 +26,11 @@ class Role < ActiveRecord::Base
     ['own', :label_issues_visibility_own]
   ]
 
+  include FeesHelper  #Kappao cyclic include detected
+  #domthu use Role.find_all_fs
+  named_scope :all_fs, { :conditions =>  ["id in (?)", FeeConst::ROLES], :order => 'position' }
+
+
   #named_scope :givable, { :conditions => "builtin = 0", :order => 'position' }
   #Domthu authorized only managers and authors and admin
   givable_roles = [0,3,4]

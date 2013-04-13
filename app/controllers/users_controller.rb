@@ -18,9 +18,11 @@
 class UsersController < ApplicationController
   layout 'admin'
 
-  before_filter :require_admin, :except => :show
-  before_filter :find_user, :only => [:show, :edit, :update, :destroy, :edit_membership, :destroy_membership, :edit_abbonamento, :edit_dati, :edit_fatture]
+#  before_filter :require_admin, :except => :show
+  before_filter :require_admin, :except => [:show, :edit_abbonamento]
+  before_filter :find_user, :only =>  [:show, :edit, :update, :destroy, :edit_membership, :destroy_membership]
   accept_api_auth :index, :show, :create, :update, :destroy
+  before_filter :only_find_user, :only =>  [:edit_dati, :edit_abbonamento, :edit_fatture]
 
   helper :sort
   include SortHelper
@@ -205,6 +207,8 @@ class UsersController < ApplicationController
           }
         }
       else
+        puts "============ERROR=======UsersControllerUsersController --> edit_membershipedit_membershipedit_membership"
+
         format.js {
           render(:update) {|page|
             page.alert(l(:notice_failed_to_save_members, :errors => @membership.errors.full_messages.join(', ')))
@@ -214,28 +218,37 @@ class UsersController < ApplicationController
     end
   end
 
+  #via js
+  #Processing UsersController#edit_abbonamento (for 127.0.0.1 at 2013-04-14 01:03:25) [POST]
+  #Parameters: {"action"=>"edit_abbonamento", "authenticity_token"=>"Knv0S/k6tu3QFWJpAzQrqyjizsmv1gHls+rtN2kOpYA=", "id"=>"17542", "controller"=>"users", "commit"=>"Salva abbonamento", "user"=>{"data(1i)"=>"2012", "data(2i)"=>"2", "role_id"=>"3", "data(3i)"=>"20", "datascadenza(1i)"=>"2013", "datascadenza(2i)"=>"3", "datascadenza(3i)"=>"21"}}
   def edit_abbonamento
-    #@user.field = '...'
+    puts "EDIT ABBONAMENTO (" + request.post?.to_s + ")" #+ params
+    @user.data = params[:user][:data] if params[:user][:data]
+    @user.datascadenza = params[:user][:datascadenza] if params[:user][:datascadenza]
     @user.save if request.post?
+    puts "EDIT ABBONAMENTO SAVED data/datascadenza[" + @user.data.to_s + "/" + @user.datascadenza.to_s + "]"
     respond_to do |format|
       if @user.valid?
         format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'abbonamento' }
         format.js {
           render(:update) {|page|
             page.replace_html "tab-content-abbonamento", :partial => 'users/abbonamento'
+            page.visual_effect(:highlight, "abbonamento-#{@user.id}")
           }
         }
       else
+        puts "============ERROR=======UsersControllerUsersController --> edit_abbonamentoedit_abbonamentoedit_abbonamento"
         format.js {
           render(:update) {|page|
-            page.alert(l(:notice_failed_to_save_members, :errors => @user.errors.full_messages.join(', ')))
+            page.alert(l(:notice_failed_to_save_abbonamento, :errors => @user.errors.full_messages.join(', ')))
           }
         }
       end
     end
   end
+  #via js
   def edit_dati
-    #@user.field = '...'
+    @user.safe_attributes = params[:user]
     @user.save if request.post?
     respond_to do |format|
       if @user.valid?
@@ -243,19 +256,22 @@ class UsersController < ApplicationController
         format.js {
           render(:update) {|page|
             page.replace_html "tab-content-dati", :partial => 'users/dati'
+            page.visual_effect(:highlight, "dati-#{@user.id}")
           }
         }
       else
+        puts "============ERROR=======UsersControllerUsersController --> edit_datiedit_datiedit_dati"
         format.js {
           render(:update) {|page|
-            page.alert(l(:notice_failed_to_save_members, :errors => @user.errors.full_messages.join(', ')))
+            page.alert(l(:notice_failed_to_save_dati, :errors => @user.errors.full_messages.join(', ')))
           }
         }
       end
     end
   end
+  #via js
   def edit_fatture
-    #@user.field = '...'
+    @user.safe_attributes = params[:user]
     @user.save if request.post?
     respond_to do |format|
       if @user.valid?
@@ -263,12 +279,14 @@ class UsersController < ApplicationController
         format.js {
           render(:update) {|page|
             page.replace_html "tab-content-fatture", :partial => 'users/fatture'
+            page.visual_effect(:highlight, "fatture-#{@user.id}")
           }
         }
       else
+        puts "============ERROR=======UsersControllerUsersController --> edit_fattureedit_fattureedit_fatture"
         format.js {
           render(:update) {|page|
-            page.alert(l(:notice_failed_to_save_members, :errors => @user.errors.full_messages.join(', ')))
+            page.alert(l(:notice_failed_to_save_fatture, :errors => @user.errors.full_messages.join(', ')))
           }
         }
       end
@@ -289,6 +307,7 @@ class UsersController < ApplicationController
   private
 
   def find_user
+    puts "find_userfind_userfind_userfind_userfind_userfind_userfind_userfind_userfind_userfind_userfind_userfind_user"
     if params[:id] == 'current'
       require_login || return
       @user = User.current
@@ -298,6 +317,15 @@ class UsersController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     flash[:error] = l(:notice_user_not_found, {:id => params[:id]})
     redirect_to :controller => 'users', :action => 'index'
-    render_404 #Verificare perchè non funziona
+    render_404
+  end
+
+  def only_find_user
+    puts "*******************************only_find_user***************************"
+    @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = l(:notice_user_not_found, {:id => params[:id]})
+    redirect_to :controller => 'users', :action => 'index'
+    render_404
   end
 end

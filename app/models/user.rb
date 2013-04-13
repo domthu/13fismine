@@ -802,6 +802,8 @@ class User < Principal
                   'custom_field_values',
                   'custom_fields',
                   'identity_url'
+#                  'data',
+#                  'datascadenza'
 
   safe_attributes 'status',
                   'auth_source_id',
