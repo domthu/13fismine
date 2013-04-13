@@ -700,13 +700,15 @@ class EditorialController < ApplicationController
 
   def enabled_user_article
     if @articolo.se_protetto
-      reroute_auth() unless !User.current.isfee?(@articolo)
+      reroute_auth() unless User.current.isfee?(@articolo)
     end
   end
   def reroute_auth()
     flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
     flash[:error] = "Abbonamento non valido (utente)..."
-    redirect_to(unauthorized_path)
+    redirect_to(signin_path)
+
+    #redirect_to(unauthorized_path)
   end
 
 end

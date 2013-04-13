@@ -52,12 +52,8 @@
                     </div>
                     <%= textilizable(articolo.summary )%>
                     <br/>
-                    <% if articolo.is_convegno? %>
-                        <%= link_to('Continua...', url_for(:controller => 'editorial', :action => "evento", :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))%>
-                    <% else %>
-                        <%= link_to('Continua...',url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))%>
-                    <% end %>
-                  </div>
+                    <%=	link_to_articolo(articolo,:title => 'Continua ...', :class=> "fs-blu-button") %>
+                         </div>
                 </div>
             <% else %>
                 <br/>
