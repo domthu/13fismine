@@ -3201,23 +3201,23 @@ button.fs-vuoto-inline2-button {
     border: 2px solid;
 }
 
-div.flash {margin-top: 8px;}
+span.flash, div.flash {margin-top: 8px;}
 
-div.flash.error, #errorExplanation {
+span.flash.error, div.flash.error, #errorExplanation {
     background: url(../images/exclamation.png) 8px 50% no-repeat;
     background-color: #ffe3e3;
     border-color: #dd0000;
     color: #880000;
 }
 
-div.flash.notice {
+span.flash.notice, div.flash.notice {
     background: url(../images/true.png) 8px 5px no-repeat;
     background-color: #dfffdf;
     border-color: #9fcf9f;
     color: #005f00;
 }
 
-div.flash.warning {
+span.flash.warning, div.flash.warning {
   background: url(../images/warning.png) 8px 5px no-repeat;
     background-color: #FFEBC1;
     border-color: #FDBF3B;
@@ -3234,3 +3234,5 @@ div.flash.warning {
 
 #errorExplanation ul { font-size: 0.9em;}
 #errorExplanation h2, #errorExplanation p { display: none; }
+.dotted {border: dotted 1px #765400, padding: 10%; width: 60%;}
+.hide{display: none;}

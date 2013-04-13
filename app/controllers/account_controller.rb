@@ -98,7 +98,7 @@ class AccountController < ApplicationController
       #di default non viene abilitato
 
       #Collect fs custom data
-#Parameters: {"user_asso_id"=>"41", "extra_organismo"=>"", "user_telefono"=>"123123123", "user_condition"=>"1", "extra"=>{"cross_id"=>"", "asso_id"=>""}, "commit"=>"Invia", "user_cross_organization_id"=>"1", "user_Town"=>"castelr", "action"=>"register", "password"=>"[FILTERED]", "user_fax"=>"213124123412", "user"=>{"codice"=>"123123123", "login"=>"domthu2", "soc"=>"", "mail"=>"dom.thual@gmail.com", "lastname"=>"thual", "num_reg_coni"=>"123123", "comune_id"=>"", "firstname"=>"dominique", "language"=>"it"}, "authenticity_token"=>"KjT8SLqtKJm23yzGzhC00MMQqSsq/JuZJTXYovMMz80=", "user_titolo"=>"Altro", "user_note"=>"qualcosa", "controller"=>"account", "user_indirizzo"=>"via monte vettore", "password_confirmation"=>"[FILTERED]", "user_Consensus"=>"1"}
+#Parameters: {"user_asso_id"=>"41", "extra_organismo"=>"", "user_telefono"=>"123123123", "user_se_condition"=>"1", "extra"=>{"cross_id"=>"", "asso_id"=>""}, "commit"=>"Invia", "user_cross_organization_id"=>"1", "user_Town"=>"castelr", "action"=>"register", "password"=>"[FILTERED]", "user_fax"=>"213124123412", "user"=>{"codice"=>"123123123", "login"=>"domthu2", "soc"=>"", "mail"=>"dom.thual@gmail.com", "lastname"=>"thual", "num_reg_coni"=>"123123", "comune_id"=>"", "firstname"=>"dominique", "language"=>"it"}, "authenticity_token"=>"KjT8SLqtKJm23yzGzhC00MMQqSsq/JuZJTXYovMMz80=", "user_titolo"=>"Altro", "user_note"=>"qualcosa", "controller"=>"account", "user_indirizzo"=>"via monte vettore", "password_confirmation"=>"[FILTERED]", "user_se_privacy"=>"1"}
       #user firstname
       #user lastname
       #user mail
@@ -106,8 +106,8 @@ class AccountController < ApplicationController
       #user password
       #user password_confirmation
       #user language
-      #user condition =>"1"  --> forum_redattore
-      #user Consensus =>"1"  --> forum_notifica
+      #user se_condition =>"1"
+      #user se_privacy =>"1"
       #user titolo
       #user reg_coni
       #extra cross_id
@@ -121,16 +121,14 @@ class AccountController < ApplicationController
       #user codice
       #user note
 
-      #user condition =>"1"  --> forum_redattore
-      #user Consensus =>"1"  --> forum_notifica
-      if !params[:user][:condition].nil? && params[:user][:condition] && !params[:user][:condition].blank?
-        @user.forum_redattore = params[:user][:condition]
+      if !params[:user][:se_condition].nil? && params[:user][:se_condition] && !params[:user][:se_condition].blank?
+        @user.se_condition = params[:user][:se_condition]
       else
         flash.now[:error] = l(:notice_register_must_condition);
         return
       end
-      if !params[:user][:Consensus].nil? && params[:user][:Consensus] && !params[:user][:Consensus].blank?
-        @user.forum_notifica = params[:user][:Consensus]
+      if !params[:user][:se_privacy].nil? && params[:user][:se_privacy] && !params[:user][:se_privacy].blank?
+        @user.se_privacy = params[:user][:se_privacy]
       else
         flash.now[:error] = l(:notice_register_must_consensus);
         return
@@ -138,7 +136,7 @@ class AccountController < ApplicationController
 
       #Region Province Comune
       if !params[:user][:comune_id].nil? && params[:user][:comune_id] && !params[:user][:comune_id].blank?
-        puts "CCCCCCCCCCCCCCCCC #{params[:user][:comune_id]} CCCCCCCCCCC"
+        #puts "CCCCCCCCCCCCCCCCC #{params[:user][:comune_id]} CCCCCCCCCCC"
         @user.comune_id = params[:user][:comune_id].to_i
         #INUTILE basta usare comune_id
         #retreive CAP, Città, ProvinceID

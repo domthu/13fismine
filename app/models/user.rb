@@ -99,11 +99,9 @@ class User < Principal
   validates_inclusion_of :mail_notification, :in => MAIL_NOTIFICATION_OPTIONS.collect(&:first), :allow_blank => true
   validate :validate_password_length
 
-  #domthu 20130401 TODO rinominare ed riussare i campi
-  #user condition =>"1"  --> forum_redattore
-  #user Consensus =>"1"  --> forum_notifica
-  #validates_inclusion_of :forum_notifica, :in => [true], :message => "Devi accettare le condizioni"
-  #validates_inclusion_of :forum_redattore, :message => "Devi dare il tuo consenso", :in => [false] #, false]
+  #domthu
+  #validates_inclusion_of :se_privacy, :in => [true], :message => "Devi accettare le condizioni"
+  #validates_inclusion_of :se_condition, :message => "Devi dare il tuo consenso", :in => [false] #, false]
 
   before_create :set_mail_notification
   before_save :update_hashed_password

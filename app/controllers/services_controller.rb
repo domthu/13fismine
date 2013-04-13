@@ -40,9 +40,9 @@ class ServicesController < ApplicationController
   end
 
   def emailctrl
-    Rails.logger.info("json emailctrl")
+    #Rails.logger.info("json emailctrl")
     if params[:term] && params[:field]
-      Rails.logger.info("json emailctrl #{params[:term]} per field #{params[:field]}")
+      #Rails.logger.info("json emailctrl #{params[:term]} per field #{params[:field]}")
       case params[:field]
         when 'user_mail'
           @users = User.count(:conditions => ['mail = ?', "#{params[:term]}"])
@@ -142,10 +142,13 @@ class ServicesController < ApplicationController
       }]
     end
     @json_datas = @FedOrgAsso.collect { |e|  {
-      :label => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100),
-      :value => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100),
+      :id => e.id,
+      :value => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100).html_safe,
+      :label => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100).html_safe,
+
       :hiddenvalue_cross => "#{e.cross_organization.id}",
       :hiddenvalue_asso => "#{e.id}"
+      #:text => "#{e.cross_organization.type_organization.tipo}"
       }
     }
     #page++
@@ -156,13 +159,15 @@ class ServicesController < ApplicationController
     #}
     #render :json => { :data => { :organismi => @json_datas.to_json, :total => totale }, :page => pagina.to_s }
     render :json => {
-              :data => {
-                  :organismi => @json_datas.to_json,
-                  :total => totale
-              },
-              :page => pagina.to_s
+         :organismi => @json_datas, #@json_datas.to_json Kappao lato Javascript non riesce a ricostruire l'array peché è una stringa
+         :total => totale,
+         :page => pagina
     }
   end
+#select2 rule:  Array of result objects. The default renderers expect objects with id and text keys. The id attribute is required, even if custom renderers are used.
+#[{"title":"CONI","id":26},{"title":"CONI","id":29},{"title":"CONI","id":31},{"title":"CONI","id":28},{"title":"CONI","id":33},{"title":"CONI","id":30},{"title":"CONI","id":37},{"title":"CONI","id":36},{"title":"CONI","id":38}]
+
+#  [{"title":"CONI :: PROVINCIALE :: FISCOSPORT S.R.L.","hiddenvalue_cross":"1","hiddenvalue_asso":"26","text":"CONI :: PROVINCIALE :: FISCOSPORT S.R.L."},{"title":"CONI :: PROVINCIALE :: RAG. PIETRO CANTA - Commercialista in Imperia Consulente Regionale Fiscosport Liguria Progetto \"il consulente per ...","hiddenvalue_cross":"1","hiddenvalue_asso":"29","text":"CONI :: PROVINCIALE :: RAG. PIETRO CANTA - Commercialista in Imperia Consulente Regionale Fiscosport Liguria Progetto \"il consulente per ..."},{"title":"CONI :: PROVINCIALE :: RAG. PIETRO CANTA - Commercialista in Imperia Consulente Regionale Fiscosport Liguria Progetto \"il consulente per ...","hiddenvalue_cross":"1","hiddenvalue_asso":"31","text":"CONI :: PROVINCIALE :: RAG. PIETRO CANTA - Commercialista in Imperia Consulente Regionale Fiscosport Liguria Progetto \"il consulente per ..."},{"title":"CONI :: PROVINCIALE :: STUDIO RAG. PIETRO CANTA - Commercialista in Imperia Consulente fiscale del C.P. CONI di Imperia e Consulente ...","hiddenvalue_cross":"1","hiddenvalue_asso":"28","text":"CONI :: PROVINCIALE :: STUDIO RAG. PIETRO CANTA - Commercialista in Imperia Consulente fiscale del C.P. CONI di Imperia e Consulente ..."},{"title":"CONI :: PROVINCIALE :: STUDIO RAG. PIETRO CANTA - Commercialista in Imperia Consulente Regionale Fiscosport Liguria Progetto \"il ...","hiddenvalue_cross":"1","hiddenvalue_asso":"33","text":"CONI :: PROVINCIALE :: STUDIO RAG. PIETRO CANTA - Commercialista in Imperia Consulente Regionale Fiscosport Liguria Progetto \"il ..."},{"title":"CONI :: PROVINCIALE :: STUDIO SIDERI \u0026 Associati progetto \"il consulente per le associazioni\" per la prov. di SIENA","hiddenvalue_cross":"1","hiddenvalue_asso":"30","text":"CONI :: PROVINCIALE :: STUDIO SIDERI \u0026 Associati progetto \"il consulente per le associazioni\" per la prov. di SIENA"},{"title":"CONI :: REGIONALE :: COMITATO REGIONALE FRIULI VENEZIA GIULIA Scuola Regionale dello Sport del Friuli Venezia Giulia","hiddenvalue_cross":"2","hiddenvalue_asso":"37","text":"CONI :: REGIONALE :: COMITATO REGIONALE FRIULI VENEZIA GIULIA Scuola Regionale dello Sport del Friuli Venezia Giulia"},{"title":"CONI :: REGIONALE :: CONI - Comitati Provinciali di Bolzano e Trento","hiddenvalue_cross":"2","hiddenvalue_asso":"36","text":"CONI :: REGIONALE :: CONI - Comitati Provinciali di Bolzano e Trento"},{"title":"CONI :: REGIONALE :: FISCOSPORT SRL","hiddenvalue_cross":"2","hiddenvalue_asso":"38","text":"CONI :: REGIONALE :: FISCOSPORT SRL"}]
 
   #TypeOrganization :: CrossOrganization :: organizations
   #Non usato perchè preferiamo una lista a discesa
