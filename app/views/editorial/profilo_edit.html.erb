@@ -6,6 +6,7 @@
         margin: 10px 5px 0 0;
     }
 </style>
+<%= include_yui_editor_if_used %>
 
 <% form_tag({:action => "profilo_edit", :id => @user_profile, :method => :post}, :multipart => true) do %>
     <%= hidden_field_tag :user_id, @user_profile.user_id %>
@@ -84,19 +85,19 @@
     <div class="cleared"></div>
     <p>
       <%= label_tag l(:label_titoli) %><br/>
-      <%= text_area_tag :titoli, @user_profile.titoli, :cols => 20, :rows => 4, :class => 'wiki-edit' %>
+      <%= text_area_tag :titoli, @user_profile.titoli, :cols => 20, :rows => 30, :class => 'rich_text_editor'  %>
     </p>
 
     <p>
       <%= label_tag l(:label_curriculum) %><br/>
-      <%= text_area_tag :curriculum, @user_profile.curriculum, :cols => 20, :rows => 6, :class => 'wiki-edit' %>
+      <%= text_area_tag :curriculum, @user_profile.curriculum , :cols => 20, :rows => 30, :class => 'rich_text_editor'  %>
     </p>
 
 
 <% end %>
 
-<%= wikitoolbar_for 'titoli' %>
-<%= wikitoolbar_for 'curriculum' %>
+<%# wikitoolbar_for 'titoli' %>
+<%# wikitoolbar_for 'curriculum' %>
 
 <script>
     // valori accettati 1= Immagine Avatar Papareclip , 0 = Immagine Gravatar , 2  = Nuova immagine upload
@@ -130,9 +131,7 @@
             if (!f.type.match('image.*')) {
                 continue;
             }
-
             var reader = new FileReader();
-
             // Closure to capture the file information.
             reader.onload = (function (theFile) {
                 return function (e) {
@@ -144,7 +143,6 @@
                     document.getElementById('fs-photo-edit-i').insertBefore(span, null);
                 };
             })(f);
-
             // Read in the image file as a data URL.
             reader.readAsDataURL(f);
         }

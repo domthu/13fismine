@@ -1804,7 +1804,7 @@ pre
    text-decoration: underline;
    color: #0088B9;
 }
-
+ /*
 .fs-postdateicon:before
 {
    content:url('/images/template/postdateicon.png');
@@ -1818,7 +1818,7 @@ pre
 }
 .opera .fs-postdateicon:before
 {
-   /* Vertical-align:middle in Opera doesn't need additional offset */
+   /* Vertical-align:middle in Opera doesn't need additional offset
     bottom: 0;
 }
 
@@ -1835,10 +1835,10 @@ pre
 }
 .opera .fs-postauthoricon:before
 {
-   /* Vertical-align:middle in Opera doesn't need additional offset */
+   /* Vertical-align:middle in Opera doesn't need additional offset *
     bottom: 0;
 }
-
+*/
 .fs-postediticon:before
 {
    content:url('/images/template/postediticon.png');
