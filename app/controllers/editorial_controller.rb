@@ -16,6 +16,7 @@ class EditorialController < ApplicationController
   include MessagesHelper
 
   caches_action :robots
+  uses_yui_editor
 
   #HOME > TOP_MENU > TOP_SECTION > SECTION > ARTICOLO
   def home
@@ -447,7 +448,7 @@ class EditorialController < ApplicationController
       redirect_to :action => 'profilo_show', :id => @user_profile
       return
     end
-    render :layout => "editorial_edit"
+   # render :layout => "editorial_edit"
   end
 
   def profilo_new
