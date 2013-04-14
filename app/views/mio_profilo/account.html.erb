@@ -76,6 +76,45 @@
   <%= render :partial => 'users/preferences' %>
 </fieldset>
 
+
+<fieldset class="box tabular">
+  <legend><%=l(:label_asso_organization)%></legend>
+  <div class="fs-logged2 fs-blockcontent ">
+    <ul>
+      <% if User.current.associazione_affiliata %>
+          <li>
+            Associato a: <br /> <%= link_to h(User.current.associazione_affiliata), asso_path(User.current.associazione_affiliata) %>
+          </li>
+      <% else %>
+          <% if User.current.sigla_tipo() %>
+              <li>
+                Affiliato a:<br /> <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()) %>
+              </li>
+          <% end %>
+      <% end %>
+      <% if User.current.responsable? && User.current.responsable_of
+           User.current.responsable_of.each do |organismo| %>
+              <li>
+                  <%= link_to h(organismo), organismo_path(organismo) %>
+              </li>
+          <% end
+             end %>
+      <li>
+        <%= link_to l(:label_logout), :signout %>
+      </li>
+    </ul>
+
+    <div class="fs-logged2-ico">
+      <% if User.current.organization() %>
+          <%= image_tag "/images/banners/assos/#{ User.current.asso.logo}", :width => 50, :height => 50, :border => 0 %>
+      <% else %>
+          <%= image_tag "/images/ico/fs.png", :width => 50, :height => 50, :border => 0 %>
+      <% end %>
+    </div>
+  </div>
+</fieldset>
+
+
 </div>
 <% end %>
 

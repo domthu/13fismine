@@ -2,47 +2,46 @@
     <p class="fs-tramenu-blockheader x-granata">Utente:&nbsp; <%= User.current.name() %></p>
     <div class="fs-blockcontent fs-logged1">
 
-      <% if User.current && User.current.user_profile %>
+      <% if User.current.user_profile %>
         <%= User.current.user_profile.my_avatar(:xs) %>
       <% else %>
-        <%= gravatar_for(User.current) unless !User.current %>
+        <%= gravatar_for(User.current) %>
       <% end %>
       <ul>
-        <% if User.current && User.current.canbackend? %>
-            <li>
-              <%= link_to "== Accesso FISMINE ==", root_path %>
-            </li>
-            <li>
-              <%= link_to l(:label_my_page), :controller => 'my', :action => 'page' %>
-            </li>
-            <li>
-              <%= link_to l(:label_my_account), :controller => 'my', :action => 'account' %>
-            </li>
-        <% else %>
-            <li>
-              <%= link_to "==> Panello di controllo (FISMINE)==>", root_path %>
-            </li>
-            <li>
-              <%= link_to l(:label_my_page), :controller => 'mio_profilo', :action => 'account' %>
-            </li>
-        <% end %>
+      <% if User.current.canbackend? %>
+        <li>
+          <%= link_to "== Accesso FISMINE ==",  { :controller => 'activities', :action => 'index' } %>
+        </li>
+        <li>
+          <%= link_to l(:label_my_page), :controller => 'my', :action => 'page' %>
+        </li>
+        <li>
+          <%= link_to l(:label_my_account), :controller => 'my', :action => 'account' %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to "==> Panello di controllo (FISMINE)==>", root_path %>
+        </li>
+        <li>
+          <%= link_to l(:label_my_page), :controller => 'mio_profilo', :action => 'account' %>
+        </li>
+      <% end %>
       </ul>
     </div>
     <div class="fs-logged2 fs-blockcontent ">
       <ul>
-
-        <% if User.current && User.current.associazione_affiliata %>
+        <% if User.current.associazione_affiliata %>
             <li>
               Associato a: <br /> <%= link_to h(User.current.associazione_affiliata), asso_path(User.current.associazione_affiliata) %>
             </li>
         <% else %>
-            <% if User.current && User.current.sigla_tipo() %>
+            <% if User.current.sigla_tipo() %>
                 <li>
                   Affiliato a:<br /> <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()) %>
                 </li>
             <% end %>
         <% end %>
-        <% if User.current && User.current.responsable? && User.current.responsable_of
+        <% if User.current.responsable? && User.current.responsable_of
              User.current.responsable_of.each do |organismo| %>
                 <li>
                     <%= link_to h(organismo), organismo_path(organismo) %>
@@ -55,7 +54,7 @@
       </ul>
 
       <div class="fs-logged2-ico">
-        <% if User.current && User.current.organization() %>
+        <% if User.current.organization() %>
             <%= image_tag "/images/banners/assos/#{ User.current.asso.logo}", :width => 50, :height => 50, :border => 0 %>
         <% else %>
             <%= image_tag "/images/ico/fs.png", :width => 50, :height => 50, :border => 0 %>

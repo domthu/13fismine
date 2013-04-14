@@ -1,8 +1,7 @@
-
 <div id="fs-tramenu-blocco1">
 <% if User.current && User.current.logged? %>
   <% if User.current.canbackend? %>
-    <%= link_to '====Accesso al backend====', home_path %>
+    <%= link_to '====Accesso al backend====',  { :controller => 'activities', :action => 'index' } %>
   <% else %>
           <p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">La tua offerta riservata!</p>
            Qui si possono mettere offerte riservate all'utente loggato per il rinnovo abbonamento o altro <br />SCADENZA: <%# getdate(User.current.scadenza) %> <%= User.current.scadenza_fra  %>,  <%= due_date_distance_in_words(User.current.scadenza) %>

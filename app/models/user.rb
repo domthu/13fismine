@@ -21,7 +21,7 @@ class User < Principal
   include Redmine::SafeAttributes
   include ActionView::Helpers::DateHelper
   #include FeesHelper  #Kappao cyclic include detected
-  #include FeeConst
+  include FeeConst
   include ApplicationHelper #getdate
 
   # Account statuses
@@ -267,17 +267,22 @@ class User < Principal
   end
 
   def canbackend?
+    puts "self.canbackend?(" + self.role_id.to_s + ")"
+    if self.admin?
+      #Rails.logger.info("redmine canbackend OK is admin #{self}")
+      return true
+    end
     #FEE INSTALLATION
     if Setting.fee?
-      if (self.ismanager? || self.isauthor?)
+      if (FeeConst::AUTHORED_ROLES.include? self.role_id)
+        puts "AUTHORED_ROLES(" + self.role_id.to_s + ")"
+        return true
+      end
+      if (self.ismanager? || self.isauthor?  )
         #Rails.logger.info("fee canbackend OK is staff #{self}")
         return true
       end
-    else
-      if self.admin?
-        #Rails.logger.info("redmine canbackend OK is admin #{self}")
-        return true
-      end
+    #else
     end
     return false
   end
