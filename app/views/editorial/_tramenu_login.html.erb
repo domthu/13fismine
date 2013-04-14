@@ -2,8 +2,11 @@
     <p class="fs-tramenu-blockheader x-granata">Utente:&nbsp; <%= User.current.name() %></p>
     <div class="fs-blockcontent fs-logged1">
 
-      <%# gravatar_for(User.current) unless !User.current %>
-         <%= User.current.user_profile.my_avatar(:xs) %>
+      <% if User.current && User.current.user_profile %>
+        <%= User.current.user_profile.my_avatar(:xs) %>
+      <% else %>
+        <%= gravatar_for(User.current) unless !User.current %>
+      <% end %>
       <ul>
         <% if User.current && User.current.canbackend? %>
             <li>
@@ -90,5 +93,3 @@
       <% end %>
     </div>
 <% end %>
-
-
