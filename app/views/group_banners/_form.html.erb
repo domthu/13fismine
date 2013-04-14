@@ -1,5 +1,5 @@
 <%= f.error_messages %>
-
+<%= include_yui_editor_if_used %>
 <div class="box tabular">
   <p><%= f.text_field :espositore, :label => :field_espositore, :required => true %></p>
   <p><%= f.text_field :url, :label => :field_url, :required => true, :size => 80 %></p>
@@ -10,8 +10,9 @@
   <p><%= f.text_field :impressions, :label => :field_impressions, :size => 3 %></p>
   <p><%= f.text_field :clicks, :label => :field_clicks, :size => 3 %></p>
   <p><%= f.text_area :didascalia, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+  <p>    <%= f.text_area :didascalia, :class => 'rich_text_editor' %>  </p>
   <p><%= f.check_box :se_prima_pagina, :label => :field_se_prima_pagina %></p>
   <p><%= f.text_field :impressions_history, :label => :field_impressions_history, :size => 3 %></p>
 </div>
 
-<%= wikitoolbar_for 'didascalia' %>
+<%# wikitoolbar_for 'didascalia' %>

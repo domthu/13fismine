@@ -144,7 +144,7 @@
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">
-          <%= render_flash_messages %>
+
           <%= yield %>
         </div>
       </div>
@@ -158,7 +158,8 @@
 
   </div>
   <div class="fs-page-footer">
-
+    <%= render_flash_messages %>
+    <div class="clearfix"></div>
     <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank">Privacy </a> | site created by collaborations.</span>
   </div>
 </div>

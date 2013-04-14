@@ -421,6 +421,7 @@ h3.fs-postheader {
     display: inline-block;
     position: relative;
     font-variant: small-caps;
+    padding: 0 4px;
 }
 
 .fs-art-sezione {
@@ -508,9 +509,7 @@ margin-left:-1px;*/
 
 .fs-layout-cell .layout-item-0 {
     color: #000000;
-    padding-right: 10px;
-    padding-left: 10px;
-    vertical-align: middle;
+    padding: 0 20px 20px;
     text-align: justify;
 
 }
@@ -650,7 +649,7 @@ margin-left:-1px;*/
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    border: 1px solid rgb(255, 122, 114);
+    border: 2px solid rgb(255, 122, 114);
     margin-left: -5px;
     position: relative;
     z-index: 1;
@@ -721,8 +720,8 @@ margin-left:-1px;*/
 }
 
 .fs-riassunto-full {
-    font-size: 16px;
-    line-height: 22px;
+    font-size: 15px;
+    line-height: 20px;
     display: block;
     font-weight: bold;
 
@@ -770,10 +769,10 @@ margin-left:-1px;*/
 .fs-postheader-full {
     color: #000000;
     margin-bottom: 10px;
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 1.2em;
     font-family: Arial, Helvetica, Sans-Serif;
-    font-weight: normal;
+    font-weight: bold;
     font-style: normal;
     text-align: left;
 }
@@ -802,7 +801,7 @@ margin-left:-1px;*/
     font-size: 12px;
     line-height: 22px;
     font-family: Arial, Helvetica, Sans-Serif;
-    margin: 0 auto;
+    margin: 0 auto 15px;
     display: inline-block;
     text-transform: uppercase;
 
@@ -3234,5 +3233,8 @@ span.flash.warning, div.flash.warning {
 
 #errorExplanation ul { font-size: 0.9em;}
 #errorExplanation h2, #errorExplanation p { display: none; }
-.dotted {border: dotted 1px #765400, padding: 10%; width: 60%;}
+.dotted {border: dotted 1px #765400; padding: 10%; width: 60%;}
 .hide{display: none;}
+
+
+
