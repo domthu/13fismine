@@ -206,6 +206,18 @@ module ApplicationHelper
     end
   end
 
+  #domthu generate a string in FeesHelper
+  def getdate(data)
+    if data.nil?
+      return "?"
+    elsif !data.is_a?(Date)
+      return "?.." << data.to_s
+    else
+      #return data.to_date.strftime("%y%m%d%H%M ")
+      return data.to_date.strftime("%Y %b(%m) %d")
+    end
+  end
+
   def render_page_hierarchy(pages, node=nil, options={})
     content = ''
     if pages[node]

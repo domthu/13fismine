@@ -22,6 +22,7 @@ class User < Principal
   include ActionView::Helpers::DateHelper
   #include FeesHelper  #Kappao cyclic include detected
   #include FeeConst
+  include ApplicationHelper #getdate
 
   # Account statuses
   STATUS_ANONYMOUS = 0

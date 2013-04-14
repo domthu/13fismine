@@ -1,3 +1,37 @@
+<%# javascript_include_tag "jquery/jquery-1.8.0.min.js" %>
+<%# javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
+<%# stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
+<%# javascript_include_tag "jquery/jquery.validate.min.js"%>
+<%# javascript_include_tag "jquery/jquery.validate.unobtrusive.min.js"%>
+<%= javascript_include_tag "jquery/jquery.stepy.min.js"%>
+<%= stylesheet_link_tag 'jquery/jquery.stepy.css', :media => 'all' %>
+<%= javascript_include_tag "jquery/select2.min.js"%>
+<%= stylesheet_link_tag 'jquery/select2.css' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#user_language').select2({
+      width: '50%',
+      placeholder: "Lingua preferita",
+      allowClear: true
+    });
+    $('#user_mail_notification').select2({
+      width: '50%',
+      placeholder: "Quando avvisarmi.",
+      allowClear: true
+    });
+    //$('#pref_time_zone').select2({
+    //  width: '50%',
+    //  placeholder: "Seleziona il tuo fuso orario",
+    //  allowClear: true
+    //});
+    //$('#pref_comments_sorting').select2({
+    //  width: '50%',
+    //  placeholder: "Come vengono rappresenti i miei comenti.",
+    //  allowClear: true
+    //});
+</script>
+
 <div class="contextual">
 <%= link_to(l(:button_change_password), {:action => 'password'}, :class => 'icon icon-passwd') if @user.change_password_allowed? %>
 <%= call_hook(:view_my_account_contextual, :user => @user)%>
@@ -30,13 +64,13 @@
 <%= submit_tag l(:button_save) %>
 </div>
 
-<div class="splitcontentright">
+<div class="splitcontentright hide">
 <fieldset class="box">
   <legend><%=l(:field_mail_notification)%></legend>
   <%= render :partial => 'users/mail_notifications' %>
 </fieldset>
 
-<fieldset class="box tabular">
+<fieldset class="box tabular hide">
   <legend><%=l(:label_preferences)%></legend>
   <%= render :partial => 'users/preferences' %>
 </fieldset>

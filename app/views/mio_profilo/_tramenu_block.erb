@@ -1,10 +1,11 @@
+
 <div id="fs-tramenu-blocco1">
 <% if User.current && User.current.logged? %>
   <% if User.current.canbackend? %>
     <%= link_to '====Accesso al backend====', home_path %>
   <% else %>
           <p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">La tua offerta riservata!</p>
-           Qui si possono mettere offerte riservate all'utente loggato per il rinnovo abbonamento o altro <br />SCADENZA: <%= getdate(User.current.scadenza) %> -- <%= User.current.scadenza_fra  %>
+           Qui si possono mettere offerte riservate all'utente loggato per il rinnovo abbonamento o altro <br />SCADENZA: <%# getdate(User.current.scadenza) %> <%= User.current.scadenza_fra  %>,  <%= due_date_distance_in_words(User.current.scadenza) %>
     <% if User.current.isregistered? %>
       Periodo di prova. fatto il ... scade il ... Verificare se ha confermato email?
     <% end %>
@@ -29,10 +30,10 @@
     <%= render :partial => 'tramenu_prova'  %>
 <% end %>
 </div>
-<div id="fs-tramenu-blocco2">
+<div id="fs-tramenu-blocco2" >
 <% if User.current && User.current.logged? %>
-      <!-- qui c'è la richiesta di MCristina per personalizzare i banners in base all'utente loggato -->
-      <%= render :partial => 'tramenu_assos'  %>
+    <!-- qui c'è la richiesta di MCristina per personalizzare i banners in base all'utente loggato -->
+    <%= render :partial => 'tramenu_assos'  %>
 <% else %>
     <%= render :partial => 'tramenu_assos'  %>
 <% end %>
