@@ -71,17 +71,17 @@ module FeesHelper
 #  map.permission :access_back_end, :welcome => :index, :require => :loggedin
 #  map.permission :front_end_quesito, :editorial => :quesito_nuovo, :require => :loggedin
 
-  #generate a string
-  def getdate(data)
-    if data.nil?
-      return "?"
-    elsif !data.is_a?(Date)
-      return "?.." << data.to_s
-    else
-      #return data.to_date.strftime("%y%m%d%H%M ")
-      return data.to_date.strftime("%Y %b(%m) %d")
-    end
-  end
+  #generate a string in ApplicationHelper
+#  def getdate(data)
+#    if data.nil?
+#      return "?"
+#    elsif !data.is_a?(Date)
+#      return "?.." << data.to_s
+#    else
+#      #return data.to_date.strftime("%y%m%d%H%M ")
+#      return data.to_date.strftime("%Y %b(%m) %d")
+#    end
+#  end
 
   def fee_roles_options_for_select(selected)
     options_for_select([[l(:label_all), ''],

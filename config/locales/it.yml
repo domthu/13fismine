@@ -481,7 +481,8 @@ it:
   label_sort_lower: Giù
   label_sort_lowest: Sposta in fondo
   label_roadmap: Roadmap
-  label_roadmap_due_in: "Da ultimare in %{value}"
+  #label_roadmap_due_in: "Da ultimare in %{value}"
+  label_roadmap_due_in: "Scadrà fra %{value}"
   label_roadmap_overdue: "%{value} di ritardo"
   label_roadmap_no_issues: Nessun articolo per questa versione
   label_search: Ricerca
