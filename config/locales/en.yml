@@ -6,9 +6,16 @@ en:
       # Use the strftime parameters for formats.
       # When no format has been given, it uses default.
       # You can provide other formats here if you like!
-      default: "%m/%d/%Y"
-      short: "%b %d"
-      long: "%B %d, %Y"
+      #default: "%m/%d/%Y"
+      #short: "%b %d"
+      #long: "%B %d, %Y"
+      default: "%d-%m-%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+      only_day: "%e"
+      mese_anno: "%b %Y"
+      giorno_mese_anno: "%d %b %Y"
+      giorno_settimana: "%A"
 
     day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
     abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
@@ -17,19 +24,32 @@ en:
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
     abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
     # Used in date_select and datime_select.
+    #order:
+    #  - :year
+    #  - :month
+    #  - :day
     order:
-      - :year
-      - :month
-      - :day
+    - :day
+    - :month
+    - :year
 
   time:
     formats:
-      default: "%m/%d/%Y %I:%M %p"
-      time: "%I:%M %p"
+      #default: "%m/%d/%Y %I:%M %p"
+      #time: "%I:%M %p"
+      default: "%a %d %b %Y, %H:%M:%S %z"
+      time: "%H:%M"
       short: "%d %b %H:%M"
-      long: "%B %d, %Y %H:%M"
-    am: "am"
-    pm: "pm"
+      #long: "%B %d, %Y %H:%M"
+      long: "%d %B %Y %H:%M"
+      only_second: "%S"
+
+      datetime:
+        formats:
+          default: "%d-%m-%YT%H:%M:%S%Z"
+
+    am: 'am'
+    pm: 'pm'
 
   datetime:
     distance_in_words:
@@ -70,10 +90,17 @@ en:
 
   number:
     format:
-      separator: "."
-      delimiter: ""
+      #separator: "."
+      #delimiter: ""
+      separator: ','
+      delimiter: '.'
       precision: 3
 
+    currency:
+      format:
+        unit: '£'
+        precision: 2
+        format: '%n %u'
     human:
       format:
         delimiter: ""
@@ -84,7 +111,7 @@ en:
           byte:
             one: "Byte"
             other: "Bytes"
-          kb: "kB"
+          kb: "KB"
           mb: "MB"
           gb: "GB"
           tb: "TB"
@@ -171,6 +198,13 @@ en:
   notice_issue_done_ratios_updated: Issue done ratios updated.
   notice_gantt_chart_truncated: "The chart was truncated because it exceeds the maximum number of items that can be displayed (%{max})"
   notice_issue_successful_create: "Issue %{id} created."
+  #Verificare Dom  
+  notice_user_not_found: "L'utente ricercato, con id %{id}, non esiste o è stato eliminato."
+  notice_ensure_identifier: "Attenzione: abbiamo provato ad impostare in automatico l'identificatore dell'edizione. Verifica che non sia veramente univoco prima di continuare. Usi la lista delle ultime edizioni registrate"
+  notice_failed_to_save_abbonamento: "Impossibile salvare l'abbonamento per l'utente(i): %{errors}."
+  notice_failed_to_save_dati: "Impossibile salvare i dati per l'utente(i): %{errors}."
+  notice_failed_to_save_fatture: "Impossibile salvare la fattura per l'utente(i): %{errors}."
+  notice_successful_assigned: Assegnazione collaborati effettuata.
 
   error_can_t_load_default_data: "Default configuration could not be loaded: %{value}"
   error_scm_not_found: "The entry or revision was not found in the repository."
@@ -192,6 +226,9 @@ en:
   error_unable_to_connect: "Unable to connect (%{value})"
   error_attachment_too_big: "This file cannot be uploaded because it exceeds the maximum allowed file size (%{max_size})"
   warning_attachments_not_saved: "%{count} file(s) could not be saved."
+  #Verificare Dom  
+  error_none_assigned: "Dovete selezionare almeno un elemento dalla lista."
+  error_can_not_remove_role_for_fee_management: Questo ruolo è in uso nella gestione degli abbonamenti e non può essere eliminato.
 
   mail_subject_lost_password: "Your %{value} password"
   mail_body_lost_password: 'To change your password, click on the following link:'
@@ -317,6 +354,7 @@ en:
   field_root_directory: Root directory
   field_cvsroot: CVSROOT
   field_cvs_module: Module
+  field_active: Active
 
   setting_app_title: Application title
   setting_app_subtitle: Application subtitle
@@ -377,6 +415,8 @@ en:
   setting_gantt_items_limit: Maximum number of items displayed on the gantt chart
   setting_issue_group_assignment: Allow issue assignment to groups
   setting_default_issue_start_date_to_creation_date: Use current date as start date for new issues
+  #domthu verify
+  setting_welcome_text_fs: "Testo di benvenuto lato abbonati: sul sito pubblico"
 
   permission_add_project: Create project
   permission_add_subprojects: Create subprojects
@@ -470,6 +510,15 @@ en:
   label_issue_note_added: Note added
   label_issue_status_updated: Status updated
   label_issue_priority_updated: Priority updated
+  #Dom verifica
+  label_projects_view_all: Percori tutte le edizioni
+  label_issues_view_all: Vedi tutti articoli
+  label_issue_from_news: articolo generato da quesito
+  label_issues_latest: Ultimi articoli
+  label_username_lost: Username dimenticata
+  label_help_user: Manuale
+  label_activity_plural: Attività
+
   label_document: Document
   label_document_new: New document
   label_document_plural: Documents
@@ -559,6 +608,18 @@ en:
   label_news_view_all: View all news
   label_news_added: News added
   label_news_comment_added: Comment added to a news
+
+  #Dom verifica
+  field_news: Da quesito?
+  field_reply: Risposta rapida
+  label_reply: Risposta rapida
+  label_reply_members: Altri collaboratori che potrebbero rispondere oltre a te
+  label_reply_article: Pubblica risposta come articolo
+  label_fast_reply: Rispondi senza generare articolo
+  no_reply_actualy: Nessuna risposta attualmente
+  label_news_my: I miei quesiti
+
+
   label_settings: Settings
   label_overview: Overview
   label_version: Version
@@ -670,6 +731,7 @@ en:
   label_sort_lower: Move down
   label_sort_lowest: Move to bottom
   label_roadmap: Roadmap
+  #label_roadmap_due_in:
   label_roadmap_due_in: "Due in %{value}"
   label_roadmap_overdue: "%{value} late"
   label_roadmap_no_issues: No issues for this version
@@ -879,15 +941,21 @@ en:
   button_edit_section: Edit this section
   button_export: Export
 
+#dom verify
+  button_save_abbonamento: Salva abbonamento
+  button_save_dati: Salva dati
+  button_save_fatture: Salva fatture
+  button_news_fast_reply: Risposta rapida
+  button_issue_reply_article: Pubblica spostando in quindicinale
+
   status_active: active
   status_registered: registered
   status_locked: locked
 
+
   version_status_open: open
   version_status_locked: locked
   version_status_closed: closed
-
-  field_active: Active
 
   text_select_mail_notifications: Select actions for which email notifications should be sent.
   text_regexp_info: eg. ^[A-Z0-9]+$
@@ -927,6 +995,7 @@ en:
   text_time_logged_by_changeset: "Applied in changeset %{value}."
   text_issues_destroy_confirmation: 'Are you sure you want to delete the selected issue(s)?'
   text_issues_destroy_descendants_confirmation: "This will also delete %{count} subtask(s)."
+
   text_time_entries_destroy_confirmation: 'Are you sure you want to delete the selected time entr(y/ies)?'
   text_select_project_modules: 'Select modules to enable for this project:'
   text_default_administrator_account_changed: Default administrator account changed
@@ -986,6 +1055,7 @@ en:
   enumeration_doc_categories: Document categories
   enumeration_activities: Activities (time tracking)
   enumeration_system_activity: System Activity
+
   description_filter: Filter
   description_search: Searchfield
   description_choose_project: Projects
@@ -1004,3 +1074,555 @@ en:
   description_date_range_interval: Choose range by selecting start and end date
   description_date_from: Enter start date
   description_date_to: Enter end date
+
+#Add to project
+  field_search_key: Chiave di ricerca
+  label_search_key: tags
+
+  field_summary: Sommario
+  label_summary: Sommario
+  field_cross_group: AssoGRPO
+  field_Invoice: Fattura
+  field_Date_from: Valido dal
+  field_Date_to: fino al
+
+  label_invoice: Fattura
+  label_invoice_plural: Fatture
+  label_invoice_new: Nuova fattura
+
+  label_numero_fattura: Numero fattura
+  label_data_fattura: Data fattura
+  label_sezione: Sezione
+  label_anno: Anno
+  label_tariffa: Tariffa
+  label_sconto: Sconto
+  label_iva: IVA
+  label_pagamento: Pagamento
+
+  field_numero_fattura: N° fattura
+  field_data_fattura: Data fattura
+  field_sezione: Sezione
+  field_anno: Anno
+  field_tariffa: Tariffa
+  field_sconto: Sconto
+  field_iva: IVA
+  field_pagamento: Pagamento
+
+# asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
+# asso (Categoria utente) ha tanti utenti
+  #label_asso: Socio
+  label_asso: Cat. Utente
+  label_asso_full: Categoria Utente
+  label_asso_plural: Cat. Utenti
+  label_asso_new: Nuova categoria utente
+
+  field_cross_group: Banner utente
+  #label_cross_group: Banner utente
+  label_cross_group: <- Cat.-Banner ->
+  label_cross_group_plural: Banner Utenti
+  label_cross_group_new: Nuovo banner per utente
+
+  field_group_banner: Banner
+  label_group_banner: Banner
+  label_group_banner_plural: Banners
+  label_group_banner_new: Nuovo banner
+  label_group_banner_associated_asso: Categorie utenti associate
+  label_group_banner_associated_asso_none: Nessuna categoria utente associata
+  label_cross_groups_from_group_banner: "Associazione Banner Utente (Banner <--> Categoria) per questo banner"
+
+# asso (Categoria utente) ha tanti organismi
+#Organismo associato collegato a type_organization, asso, e sigla
+  label_organization: Org. associato
+  label_organization_plural: Org. asso.
+  label_organization_new: Nuovo organismo associato
+  label_organization_plural_long: Organismo associato
+
+  label_type_organization: Org. tipo
+  label_type_organization_plural: Org. tipi
+  label_type_organization_new: Nuovo tipo di organismo
+  label_type_organization_plural_long: Tipi di organismo
+
+  #label_cross_organization: Sigla
+  label_cross_organization: <- Sigla ->
+  label_cross_organization_plural: Sigle
+  label_cross_organization_new: Nuova sigla
+  label_other_cross_organization_sametype: Altre sigle correlate
+  label_other_organization_sametype: Altre organismi associati correlati
+  label_other_organization_none: Nessun organismo associato
+
+  label_tipo: "Tipo dell'organismo"
+  label_descrizione: Descrizione
+  label_organizzazione: Organizzazione
+  label_sigla: Sigla
+  label_type_organization: Tipo organizzazione
+
+  field_tipo: "Tipo dell'organismo"
+  field_descrizione: Descrizione
+  field_organizzazione: Organizzazione
+  field_sigla: Sigla
+  field_type_organization: Tipo organizzazione
+
+  label_richiedinumeroregistrazione: Richiedi N° di Registrazione
+  label_data_scadenza: Data scadenza
+  label_nota: Note
+  label_region: Regione
+  label_province: Provincia
+  label_comune: Comune
+  label_testo2: Testo 2
+  label_testo3: Testo 3
+  label_numero1: Numero 1
+  label_numero2: Numero 2
+  label_numero3: Numero 3
+  label_data1: Data 1
+  label_data2: Data 2
+  label_data3: Data 3
+  label_flag1: Flag 1
+  label_flag2: Flag 2
+  label_flag3: Flag 3
+
+  field_cross_organization: Sigla
+  field_richiedinumeroregistrazione: Richiedi N° Reg.
+  field_data_scadenza: Data scadenza
+  field_nota: Note
+  field_region: Regione
+  field_province: Provincia
+  field_comune: Comune
+  field_nota: Note
+  field_region: Regione
+  field_province: Provincia
+  field_comune: Comune
+  field_testo2: Testo 2
+  field_testo3: Testo 3
+  field_numero1: Numero 1
+  field_numero2: Numero 2
+  field_numero3: Numero 3
+  field_data1: Data 1
+  field_data2: Data 2
+  field_data3: Data 3
+  field_flag1: Flag 1
+  field_flag2: Flag 2
+  field_flag3: Flag 3
+
+#top_section
+  label_top_section: Sezione
+  field_top_section: Sezione
+  label_top_section_plural: Sezioni
+  label_top_section_plural_from_menu: Sezioni che dipendono del menu
+  label_top_section_new: Nuova Sezione
+  label_ordinamento: Ord.
+  label_se_visibile: Visibile?
+  label_se_visibile_menu_arts: Visibile nel menu articoli?
+  label_immagine: immagine
+  label_style: style
+  label_key: Chiave
+  field_sezione_top: Descrizione Sezione
+  field_ordinamento: Ordinamento
+  field_se_visibile: Visibile
+  field_immagine: Immagine
+  field_style: Foglio di stile
+  field_key: chiave
+  notice_top_section_successful_create: Sezione %{id} creata
+  error_can_not_delete_topsection_unless_sections: "Non è possibile eliminare una sezione a lei sono legate dellle sotto sezione..."
+#top_menu
+  label_top_menu: menu
+  label_top_menu_plural: lista dei menu
+  label_top_menu_new: Nuovo menu
+  field_top_menu: menu
+  error_can_not_delete_top_menu_unless_topsections: "Non è possibile eliminare un menu finchè è associato ad sezioni top..."
+  error_can_not_delete_system: "Non è possibile eliminare %{name}, perchè serve come default al sistema. Solo modifica accettata. "
+#section
+  label_section: Sotto sezione
+  field_section: Sotto sezione
+  label_section_plural: Sotto sezioni
+  label_section_new: Nuova sotto sezione
+  label_protetto: Privato
+  error_can_not_delete_section_unless_issues: "Non è possibile eliminare una sotto sezione finchè è legata a degli articoli..."
+  label_sections_from_top_section: "Sotto sezioni legate alla sezione "
+# asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
+# asso (Categoria utente) ha tanti utenti
+# asso ha uno (o più) Organismi Associati NON ha asso.organization_id?
+  field_asso: Categoria utente
+  label_asso: Cat. Utente
+  label_asso_plural: Categorie utenti
+  label_asso_new: Nuova categoria utente
+  label_asso_associated_group_banner: Banner associati
+  label_asso_associated_group_banner_none: Nessun banner associato
+
+  label_ragione_sociale: Ragione sociale
+  label_email: Email
+  label_indirizzo: Indirizzo
+  label_presidente: Presidente
+  label_referente: Referente
+  label_consulente: Consulente
+  label_logo: Logo
+  label_telefono: Telefono
+  label_telefono_alt: Telefono alternativo
+  label_fax: Fax
+  label_comunicazioni: Comunicazioni
+  label_email_alt: Email alternativo
+
+  field_ragione_sociale: Ragione sociale
+  field_email: Email
+  field_indirizzo: Indirizzo
+  field_presidente: Presidente
+  field_referente: Referente
+  field_consulente: Consulente
+  field_logo: Logo
+  field_telefono: Telefono
+  field_telefono_alt: Telefono alternativo
+  field_fax: Fax
+  field_comunicazioni: Comunicazioni
+  field_email_alt: Email alternativo
+
+  label_espositore: Espositore
+  label_url: Url
+  label_priorita: Priorita
+  label_posizione: Posizione
+  label_se_visibile: Visibile?
+  label_banner: Banner
+  label_impressions: Impressions
+  label_clicks: Clicks
+  label_didascalia: Didascalia
+  label_se_prima_pagina: promosso in prima pagina
+  label_se_prenotazione: Gestione convegno?
+  label_impressions_history: Storico impressione
+
+  field_espositore: Espositore
+  field_url: Url
+  field_priorita: Priorita
+  field_posizione: Posizione
+  field_se_visibile: Visibile?
+  field_banner: Banner
+  field_impressions: Impressions
+  field_clicks: Clicks
+  field_didascalia: Didascalia
+  field_se_prima_pagina: promosso in prima pagina
+  field_se_prenotazione: Gestione convegno?
+  field_impressions_history: Storico impressione
+
+#ISSUE --> CONVEGNO
+  label_reservation: Prenotazione
+  label_convegno: Convegno
+  label_date: Data reg.
+  label_num_persone: N° persone
+  label_num_persone_abrv: N°
+  label_prezzo: Prezzo
+  label_msg: Messaggio rilasciato
+  convegno_prenotazioni: Lista delle prenotazioni (%{num}) registrate
+  label_prenotazioni_none: Nessuna prenotazione registrata
+  label_reservation_plural: Lista delle prenotazioni ai convegni
+  label_reservation_new: Crea nuova prenotazione
+  field_num_persone: Numero persone
+  field_prezzo: Prezzo
+  field_msg: Messaggio
+  label_other_reservation_plural_from_issue: Altre prenotazioni per questo convegno
+
+#ISSUE --> ATTIVITA
+  label_se_visible_web: Visibile Web?
+  label_se_visible_data: Visibile Data?
+  label_se_visible_newsletter: Visibile Mail?
+  label_se_protetto: Protetto?
+  field_se_visible_web: Visibile Web?
+  field_se_visible_data: Visibile Data?
+  field_se_visible_newsletter: Visibile Mail?
+  field_se_protetto: Protetto?
+  label_issue_plural_from_section: "Articoli legati alla sezione"
+  label_address_map: Geo posizione
+  field_address_map: Geo posizione
+
+#User
+  label_power_user: Resp. Asso.
+  label_users: Utenti
+  label_user_invoices: "Altre fatture legate all'utente"
+  label_organization_user_asso: Referenti org. asso correlati
+  label_cross_organization_user_asso: Sigla utente
+  label_asso_organization: Organismo associato
+  label_asso_organization_none: Nessun organismo associato
+
+  field_power_user:  Responsabile organismo associato
+  field_users: Utenti
+  label_dati_plural: Dati FISCOSPORT
+  label_abbonamento_plural: Abbonamento
+  label_fatture_plural: Contabilità
+  label_storico_pagamento: Storico dei pagamenti
+  label_dati_pagamento: Dati di pagamento
+  label_emetti_fattura: Invia fattura
+  label_user_altridati_plural: Altri dati
+  label_contatti: "Contatti dell'abbonato"
+  label_localizazzione: Indirizzo
+  label_account: Credenziali
+  label_registration: Dati di registrazione
+
+  field_codice: (old) Codice
+  field_pwd: (old) Password
+  field_login_fisco: (old) login FISCOSPORT
+  field_mail_fisco: (old) email FISCOSPORT
+  field_soc: (old) società
+  field_note: (old) note
+  field_cap: (old) CAP
+  field_prov: (old) provincia
+  field_sede: (old) sede
+  field_telefono2: (old) 2nd telefono
+  field_mail2: (old)  2nd email
+  field_sez: (old) sezione
+  field_iva_: (old) IVA
+  field_codicefiscale: (old) Cofice Fiscale
+  field_partitaiva: (old) PIVA
+  field_registrato: (old) registrato?
+  field_num_reg_coni: (old) N° regionale CONI
+  field_abbonato: (old) Abbonato
+  field_conferma_registrazione: (old) Confermato registrazione?
+  field_disabilitato: (old) disabilitato?
+  field_forum_redattore: (old) Forum redattore?
+  field_forum_notifica: (old) Forum notifica?
+  field_data: (old) data
+  field_datascadenza: (old) data di scadenza
+  field_tariffa_precedente: (old) tariffa precedente
+  field_iva_precedente: (old) IVA precedente
+  field_pagamento_precedente: (old) pagamento precedente
+  field_data_ultimo_pagamento: (old) data ultimo pagamento
+  field_data_accredito: (old) data di accredito
+  field_anno_competenza: (old) anno di competenza
+  field_crediti: (old) Credito
+  field_annotazioni: (old) Annotazioni
+
+
+#Permission
+  permission_access_back_end: Accedi al backEnd?
+  permission_front_end_quesito: Poni quesito in FrontEnd?
+  label_public_site_home: Prima pagina
+  label_contact: Contatti
+  label_aboutus: Chi siamo
+  label_poniquesito: Richiedi
+  label_home_fs: Prima pagina
+  label_workon: Lavora con noi
+
+#Fee
+  label_fee: Abbonamento
+  label_fee_plural: Abbonamenti
+  fee_not_abilitated: Gestione abbonamento non abilitata
+  setting_register_days: Giorni abilitazione
+  label_register_days: "Numero di giorni di abilitazione per un utente che si è appena registrato ed ha dichiarato di far parte di un Organismo Associato. passato questi finestra di tempo l'utente verà disabilitato dal motore se non è stato confermato dal power-user, se non è stato abilitato dall'amministratore p se non ha contrattao abbonamenti durante il periodo di prova."
+  setting_renew_days: Giorni prima del rilancio
+  label_renew_days: "Numero di giorni prima dello scadere dell'abbonamento. Passato questo momento il motore inviera un email all'abbonato per invitarlo a rinnovare il suo abbonamento in scadenza."
+  setting_fee_bcc_recipients: Emails in ascolto
+  label_fee_bcc_recipients: Lista delle email da mettere in bcc per le persone in ascolto degli email inviati (ruolo amministratore ed segretaria). Serve principalmente per seguire quello che invia il motore in automatico.
+  setting_emails_fee_proposal: Email di proposta abbonamenti
+  label_emails_fee_proposal: "Template di composizione email per propore ad uno o più utenti i possibili abbonamenti in corso. Segue un link alla pagina degli abbonamenti."
+  setting_emails_fee_renew: Email di rinovo abbonamento
+  label_emails_fee_renew: "Template di composizione email per invitare un utente ad rinnovare il proprio abbonamento di prossima scadenza. "
+  setting_emails_fee_register_asso: Conferma nuovo membro associativo
+  label_emails_fee_register_asso: "Template inviato al power_user di un organismo associato in seguito alla registrazione di un nuovo utente che si auto dichiara membro. Questo messaggio invita il power_user ad confermare o no questo utente usando un apposito link in basso alla pagina."
+  setting_fee_thanks: Email di ringraziamento pagamento ricevuto
+  label_fee_thanks: "Template per confermare il ricevuto pagamento ed ringrazziare l'abbonato del rinnovo."
+  label_send_test_email_fee_thanks: Invia email di prova Ringrazio(me stesso)
+  label_send_test_email_fee_asso: Invia email di prova al PowerUser(me stesso)
+  label_send_test_email_fee_confirm: Invia email di prova Conferma
+  label_send_test_email_fee_renew: Invia email di prova Rilancio
+  setting_info_fs: Fiscosport informa
+  label_info_fs: "Fiscosport informa"
+  setting_info_promoted_fs: Promosso in front page
+  label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporranea "
+
+#Deliver_fee  type
+  proposal: Abbonamenti disponibili
+  thanks: Pagamento ricevuto, grazie
+  asso: Conferma registrazione nuovo membro
+  renew: Rinnova abbonamento
+
+#Application menu FS
+#18, 'Comunicati stampa', 0
+  label_stampa: Stampa
+  field_stampa: Comunicati stampa
+#10, 'Le newsletters', 0
+  label_newsletters: Newsletters
+  field_newsletters: Le newsletters
+###16, 'Progetto Fiscosport', 1
+  label_prjfisco: Progetto
+  field_prjfisco: Progetto Fiscosport
+###29, 'Revisione newsletter', 1
+  label_revnews: Revisione
+  field_revnews: Revisione newsletter
+###24, 'Tariffe Utenti', 1
+  label_feeusr: Tariffe
+  field_feeusr: Tariffe Utenti
+###4, 'Convegni ed eventi', 3
+  label_evt: Eventi
+  field_evt: Convegni ed eventi
+###14, 'News dal mondo sportivo ', 4
+  label_newssport: News
+  field_newssport: News dal mondo sportivo
+###12, 'Le risposte ai quesiti', 4
+  label_respreq: Quesiti
+  field_respreq: Le risposte ai quesiti
+###25, 'Le dichiarazioni', 5
+  label_declare: Dichiarazioni
+  field_declare: Le dichiarazioni
+###23, 'Casi pratici ', 6
+  label_usecase: Casi
+  field_usecase: Casi pratici
+###19, 'Circolari e risoluzioni', 8
+  label_risolve: Circolari
+  field_risolve: Circolari e risoluzioni
+###15, 'Normativa', 8
+  label_law: Normativa
+  field_law: Normativa
+###5, 'Giurisprudenza', 8
+  label_guild: Giurisprudenza
+  field_guild: Giurisprudenza
+###9, 'Lavoro e previdenza', 9
+  label_welfare: Lavoro
+  field_welfare: Lavoro e previdenza
+###7, 'La modulistica', 9
+  label_moduli: Modulistica
+  field_moduli: La modulistica
+###11, 'Le pillole di Fiscosport', 10
+  label_pillole: Pillole
+  field_pillole: Le pillole di Fiscosport
+###28, 'I nuovi consulenti/collaboratori Fiscosport', 10
+  label_newmembers: Collaboratori
+  field_newmembers: I nuovi consulenti/collaboratori Fiscosport
+###2, 'Ultima ora', 10
+  label_lasthour: Ultima ora
+  field_lasthour: Ultima ora
+###13, 'Lo scadenzario', 11
+  label_cadence: Scadenzario
+  field_cadence: Lo scadenzario
+###26, 'Agenzia delle Entrate', 12
+  label_agenda: AE
+  field_agenda: Agenzia delle Entrate
+###21, '5 per mille', 12
+  label_cinquepermille: 5/oo
+  field_cinquepermille: 5 per mille
+###17, 'Rassegna stampa', 13
+  label_primapagina: Stampa
+  field_primapagina: Rassegna stampa
+###6, 'Guide e Vademecum', 15
+  label_guide: Vademecum
+  field_guide: Guide e Vademecum
+###1, 'Approfondimenti', 18
+  label_understand: Approfondimenti
+  field_understand: Approfondimenti
+###22, 'Registro CONI', 19
+  label_regconi: CONI
+  field_regconi: Registro CONI
+###27, 'Attualità_', 25
+  label_actual: Attualità
+  field_actual: Attualità
+###8, 'La redazione', 26
+  label_redaction: Redazione
+  field_redaction: La redazione
+###20, 'UTILITY', 99
+  label_utility: Utilità
+  field_utility: UTILITY
+###3, 'Comunicazioni FORUM', 99
+  label_comforum: Forum
+  field_comforum: Comunicazioni FORUM
+
+#ABBONAMENTI
+  label_abbo_plural: Abbonamenti
+  label_abbo: Abbonamento
+  field_abbo: Abbonamento
+  list_abbonamenti: Lista abbonati
+  list_archiviati: Lista utenti archiviati
+  list_privati: Lista abbonati privati
+  list_associati: Lista membri di organismi associati
+  email_fee: pagina di gestione delle email per abbonamento
+  invia_fatture: Pagina di invio delle fattture
+  list_pagamento: Lista pagamenti --> Invoices list?
+  list_paganti: Lista dei paganti
+  list_registrati: Lista dei registrati
+  list_scaduti: Lista dei scaduti
+  control_fee: Gestione abbonamenti --> Pannello di controllo
+  stato_utenze: Stato delle utenze FISCOSPORT
+  button_verify: Verifica
+  who_pay: Paganti
+  associations: Associazioni
+  affiliati: Affiliati (Non paganti)
+  siglatipo: Sigla e Tipi organismi
+  notice_setting_fee_not_allowed: La gestione degli abbonamenti non è abilitata
+  label_person: Persona
+  field_registration_date: Registrazione
+  role_manager: Responsabile
+  role_author: Redattore, collaboratore
+  role_vip: Invitato
+  role_abbonato: Abbonato
+  role_registered: Registrato
+  role_renew: Rinnovo, In scadenza
+  role_expired: Scaduto
+  role_archivied: Archiviato
+  button_admin: --> Admin
+  button_manager: --> Responsabile
+  button_author: --> Redattore
+  button_vip: --> Invitato
+  button_abbonato: --> Abbonato
+  button_registered: --> Registrato
+  button_renew: --> Rinnovo
+  button_expired: --> Scaduto
+  button_archivied: --> Archiviato
+  news_assign_not_allowed: Non siete abilitato a assegnare collaboratori.
+  none_found_news: Non è stato trovato il quesito
+  none_found_issue: Non è stato trovato la risposta
+  empty_description: Inserire una risposta nel campo descrizione ed eseguire di nuovo
+  issue_fastreply_not_allowed: Non siete abilitato alla gestione della risposta rapida
+  is_not_quesito: "L'articolo non è di tipo quesito-risposta"
+  fast_reply_done: La risposta è stata
+  cannot_fast_reply_other_issues: "Non è possibile eseguire la risposta veloce perchè ci sono altre risposte in corso di elaborazione. Vedi la lista degli altri autori qui sotto, mettetevi d'accordo e svuotate i campi descrizione per continuare"
+  alert_another_responses: "risposta in corso da parte di %{author}. Contattalo e vedi la sua risposta al link: %{link}"
+  deleted_issue: "Eliminato la risposta di %{author}. %{name}"
+  cannot_delete_related_news: "Non si puo cancella questo quesito perchè si sono <b>(%{num})</b> articoli legati."
+
+#EDITORIAL
+  list_edizioni: Lista edizioni
+  details_edizione: Dettaglio di un edizione => NEWSLETTER
+  list_articoli: Lista articoli
+  details_articolo: Dettaglio di un articolo
+  list_quesiti: Lista quesiti
+  list_quesiti_response: Lista risposte (%{num}) al quesito
+  quesito_risposta_rapida: Risposta rapida al quesito N°(%{num})
+  details_quesito: Dettaglio di un quesito
+  list_sezioni: Lista categorie articoli
+  details_sezione: Dettaglio di una categoria articoli
+  poniquesito: Immetti un quesito a FISCOSPORT
+  contact: Contatti Merce Dolci
+  about: Chi siamo?
+  help: Bisogno di aiuto?
+  results: Risultati
+  label_issues_by_section: Lista articoli legati alla sezione
+  notice_missing_parameters: La pagina non puo essere caricata per mancanza di informazione
+  orderedby_updated_desc: Ordinamento per data di ultimo salvataggio decrescente
+  orderedby_created_desc: Ordinamento per data di creazione decrescente
+
+#notice_email_sent: "Una email è stata spedita a %{value}"
+  unauthorized: Non autorizzato ad accedere al contenuto
+
+#REGISTER
+  field_titolo: "Nella qualità di:"
+  field_nome: "Il Sottoscritto:"
+  field_asso_for: "Per conto di: "
+  field_asso_title: "Indicare la ragione sociale se trattasi di associazione, studio, altro ..."
+  field_new_asso: Nuova associazione
+  field_affiliato: "Affiliato a:"
+  field_sigla_organismo: "Indica se fai parte di uno di questi organismi: "
+  field_sigla_sede: "Con sede in:"
+  field_coni_number: "Numero iscrizione registro CONI: "
+  field_username_as_email: "Di default la tua login è uguale alla tua email. Hai la possibilità di personalizzare il tuo nome utente che userai con la password per identificarti sul sito"
+  field_codice_segnalatore: "Codice Segnalatore/Promozione:"
+  field_com: "Comunicazioni/Segnalazioni:"
+  field_se_privacy: "Informativa sulla privacy"
+  field_se_privacy_accept: "Accetto l'informativa sulla privacy"
+  field_se_condition: "Condizioni di utilizzo"
+  field_se_condition_readed: "Ho letto le condizioni per l'uso"
+ # user_profiles
+ # field_curriculum: 'Curriculum'
+  label_curriculum: 'il Curriculum'
+  label_titoli: 'I titoli'
+  label_display_in: 'Mostra in ...'
+  fs_external_url: 'Url esterno'
+  fs_mail: 'Email contatti su Fiscosport'
+  fs_tel: 'Telefono per Fiscosport'
+  fs_fax: 'Fax per Fiscosport'
+  fs_skype: 'Skype account per Fiscosport'
+  fs_qualifica: 'Qualifica o ruolo su Fiscosport (apparirà negli articoli)'
+  notice_register_must_condition: "Dovete dichiarare di avere letto le condizioni d'uso per continuare"
+  notice_register_must_consensus: "É necessario dare il consenso per la privacy"
