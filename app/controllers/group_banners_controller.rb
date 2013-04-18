@@ -1,5 +1,5 @@
 class GroupBannersController < ApplicationController
-  uses_yui_editor
+  #uses_yui_editor
   #(:only => [:new, :create, :edit, :update])  , :selector => 'blog_post'
   layout 'admin'
 

@@ -8,9 +8,19 @@
       <fieldset class="box tabular">
         <legend><%=l(:label_user_altridati_plural)%></legend>
 
-        <p><%= f.date_select :data, :label => :field_data %></p>
-        <p><%= f.date_select :datascadenza, :label => :field_datascadenza %></p>
+        <p><%= f.text_field :tariffa_precedente, :label => :field_tariffa_precedente, :required => false, :size => 5  %></p>
+        <%=l(:field_data)%> <%= format_date @user.data %>
+        <p>
+          <%# f.date_select :data, :label => :field_data %>
+          <%= f.text_field :data, :label => l(:field_data), :size => 10 %><%= calendar_for('user_data') %>
+        </p>
+        <%=l(:field_datascadenza)%> <%= format_date @user.datascadenza %>
+        <p>
+          <%# f.date_select :datascadenza, :label => :field_datascadenza %>
+          <%= f.text_field :datascadenza, :label => l(:field_datascadenza), :size => 10 %><%= calendar_for('user_datascadenza') %>
+        </p>
 
+<p></p>
         <p><label><%= l(:label_role) %></label><strong>
         <% roles_fs.each do |role| %>
           <%= radio_button_tag 'user[role_id]', role.id, (role.id == @user.role_id) %> <%=h role %>

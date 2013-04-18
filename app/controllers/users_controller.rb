@@ -223,8 +223,11 @@ class UsersController < ApplicationController
   #Parameters: {"action"=>"edit_abbonamento", "authenticity_token"=>"Knv0S/k6tu3QFWJpAzQrqyjizsmv1gHls+rtN2kOpYA=", "id"=>"17542", "controller"=>"users", "commit"=>"Salva abbonamento", "user"=>{"data(1i)"=>"2012", "data(2i)"=>"2", "role_id"=>"3", "data(3i)"=>"20", "datascadenza(1i)"=>"2013", "datascadenza(2i)"=>"3", "datascadenza(3i)"=>"21"}}
   def edit_abbonamento
     puts "EDIT ABBONAMENTO (" + request.post?.to_s + ")" #+ params
+
+    @user.tariffa_precedente = params[:user][:tariffa_precedente] if params[:user][:tariffa_precedente]
     @user.data = params[:user][:data] if params[:user][:data]
     @user.datascadenza = params[:user][:datascadenza] if params[:user][:datascadenza]
+    @user.role_id = params[:user][:role_id] if params[:user][:role_id]
     @user.save if request.post?
     puts "EDIT ABBONAMENTO SAVED data/datascadenza[" + @user.data.to_s + "/" + @user.datascadenza.to_s + "]"
     respond_to do |format|
