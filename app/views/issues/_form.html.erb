@@ -1,3 +1,4 @@
+
 <%= call_hook(:view_issues_form_details_top, { :issue => @issue, :form => f }) %>
 
 <div id="issue_descr_fields" >
@@ -37,13 +38,13 @@
                    :cols => 20,
                    :rows => (@issue.summary.blank? ? 5 : [[5, @issue.summary.length / 50].max, 50].min),
                    :accesskey => accesskey(:edit),
-                   :class => 'wiki-edit' %></p>
+                   :style => 'width:300px;' %></p>
 
 <p><%= f.text_area :description,
                    :cols => 60,
                    :rows => (@issue.description.blank? ? 10 : [[10, @issue.description.length / 50].max, 100].min),
                    :accesskey => accesskey(:edit),
-                   :class => 'wiki-edit' %></p>
+                   :class => 'rich_text_editor' %></p>
 
 </div>
 
@@ -60,8 +61,8 @@
 <% end %>
 
 <%= call_hook(:view_issues_form_details_bottom, { :issue => @issue, :form => f }) %>
-
+<%= include_yui_editor_if_used %>
 <%# wikitoolbar_for 'issue_subject' %>
-<%= wikitoolbar_for 'issue_summary' %>
-<%= wikitoolbar_for 'issue_description' %>
+<%# wikitoolbar_for 'issue_summary' %>
+<%# wikitoolbar_for 'issue_description' %>
 
