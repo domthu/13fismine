@@ -1712,7 +1712,7 @@ pre
 .fs-postheader
 {
    color: #003548;
-   margin: 5px 0;
+   margin: 12px 0;
    font-size: 18px;
    font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
@@ -1767,17 +1767,21 @@ pre
 .fs-postheadericons a:visited,
 .fs-postheadericons a:hover
 {
-   font-size: 11px;
+   font-size: 13px;
    font-family: Arial, Helvetica, Sans-Serif;
-   text-align: center;
-   color: #0088B9;
+   text-align: left;
+    font-weight: bold;
+    color: #004977;
+    display:block;
+    line-height: 1.5em;
 }
 
 .fs-postheadericons
 {
-   padding: 1px;
+   padding: 6px;
 }
 
+/*
 .fs-postheadericons a, .fs-postheadericons a:link
 {
    font-family: Arial, Helvetica, Sans-Serif;
@@ -1821,24 +1825,17 @@ pre
    /* Vertical-align:middle in Opera doesn't need additional offset
     bottom: 0;
 }
-
-.fs-postauthoricon:before
+*/
+.fs-postauthoricon
 {
-   content:url('/images/template/postauthoricon.png');
-   margin:4px 0 4px 6px;
-   position:relative;
    display:inline-block;
-   vertical-align:middle;
-   font-size:0;
-   line-height:0;
-   bottom: auto;
 }
 .opera .fs-postauthoricon:before
 {
-   /* Vertical-align:middle in Opera doesn't need additional offset *
+   /* Vertical-align:middle in Opera doesn't need additional offset */
     bottom: 0;
 }
-*/
+
 .fs-postediticon:before
 {
    content:url('/images/template/postediticon.png');

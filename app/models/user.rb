@@ -54,7 +54,7 @@ class User < Principal
   has_one :preference, :dependent => :destroy, :class_name => 'UserPreference'
   has_one :rss_token, :class_name => 'Token', :conditions => "action='feeds'"
   has_one :api_token, :class_name => 'Token', :conditions => "action='api'"
-  has_one :user_profile, :class_name => 'UserProfile'
+  has_one :user_profile, :dependent => :destroy, :class_name => 'UserProfile'
   belongs_to :auth_source
   #domthu20120916
   belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id' #, :default => FeeConst::ROLE_REGISTERED
