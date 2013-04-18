@@ -29,7 +29,7 @@ class Issue < ActiveRecord::Base
                     :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension",
                     :default_url => "commons/:style-no_avatar.jpg"
 
-  belongs_to :project
+    belongs_to :project
   belongs_to :tracker
   belongs_to :status, :class_name => 'IssueStatus', :foreign_key => 'status_id'
   belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
@@ -94,7 +94,7 @@ class Issue < ActiveRecord::Base
       :conditions => Query.merge_conditions(query.statement)
     }
   }
-  named_scope :all_public_fs, {:include => [:project, :quesito_news, :author, {:section => :top_section}], :order => 'updated_on DESC', :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{Issue.table_name}.updated_on DESC"}
+  named_scope :all_public_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}], :order => 'updated_on DESC', :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{Issue.table_name}.updated_on DESC"}
   named_scope :with_filter, lambda {|filter| { :conditions => merge_conditions(filter) } }
   named_scope :solo_convegni, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_CONVEGNI.to_s)
   named_scope :solo_newsport, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_NEWSPORT.to_s)

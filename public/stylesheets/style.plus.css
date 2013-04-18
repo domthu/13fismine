@@ -469,13 +469,21 @@ margin-left:-1px;*/
 
 .fs-post-access-ok:before {
     content: url('/images/template/post-access-ok.png');
-    margin-right: 6px;
+    margin-right: 1px;
+    bottom: auto;
+}
+
+.fs-post-access-ok {
+    font-weight: normal;
+    text-align: left;
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    font-size: 0;
-    line-height: 0;
+    font-size: 0.9em;
+    font-style: italic;
+    line-height: 0em;
     bottom: auto;
+    color: #4ACFFF;
 }
 
 .opera .fs-post-access-ok:before {
@@ -483,18 +491,27 @@ margin-left:-1px;*/
     bottom: 0;
 }
 
-.fs-post-access-no:before {
+.fs-post-access-ko:before {
     content: url('/images/template/post-access-no.png');
     margin-right: 6px;
+    bottom: auto;
+
+}
+
+.fs-post-access-ko {
+    font-weight: normal;
+    text-align: left;
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    font-size: 0;
-    line-height: 0;
+    font-size: 0.9em;
+    font-style: italic;
+    line-height: 0em;
     bottom: auto;
+    color: #b22222;
 }
 
-.opera .fs-post-access-no:before {
+.opera .fs-post-access-ko:before {
     /* Vertical-align:middle in Opera doesn't need additional offset */
     bottom: 0;
 }
@@ -602,19 +619,20 @@ margin-left:-1px;*/
 
 .fs-image-caption-wrapper {
     padding: 5px 5px 5px 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     float: left;
     width: 210px;
+
 }
 
-.fs-image-caption-wrapper img {
+.fs-image-caption-wrapper-img img {
     margin: 0 !important;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    width: 200px;
+    max-width: 190px;
+}
+.fs-image-caption-wrapper-img{
+    margin-bottom: 10px;
 }
 
 .fs-image-caption-wrapper div.fs-collage {
@@ -631,26 +649,24 @@ margin-left:-1px;*/
 }
 
 .fs-postmetadatafooter-ok {
-    background: #ffffff;
-    background: rgba(255, 255, 255, 0.60);
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    border: 1px solid rgba(104, 215, 255, 0.3);
-    margin-left: -5px;
+    background: rgba(220, 244, 237, 0.48);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #4ACFFF;
+    margin-left: -18px;
     position: relative;
     z-index: 1;
     padding: 1px;
 }
 
 .fs-postmetadatafooter-ko {
-    background: #ffffff;
-    background: rgba(255, 255, 255, 0.60);
+    background: #FDFFCA;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    border: 2px solid rgb(255, 122, 114);
-    margin-left: -5px;
+    border: 1px solid rgb(255, 122, 114);
+    margin-left: -18px;
     position: relative;
     z-index: 1;
     padding: 1px;
@@ -1556,11 +1572,60 @@ right: -14px;   */
     font-weight: bold;
 }
 
-.fs-my-avatar {
-    margin-right: 10px;
-    margin-bottom: 5px;
-    display: block;
-    float: left;
+.fs-my-avatar-xs {
+    height: 32px;
+    width: 32px;
+    margin: 0;
+    background: transparent;
+    -webkit-box-shadow: 0 0 4px 2px rgb(110, 110, 110);
+    -moz-box-shadow: 0 0 4px 2px rgb(110, 110, 110);
+    box-shadow: 0 0 4px 2px rgb(110, 110, 110);
+    -webkit-border-radius: 1px;
+    -opera-border-radius: 1px;
+    -moz-border-radius: 1px;
+    display: inline-block;
+}
+
+.fs-my-avatar-s {
+    padding: 3px;
+    height: 50px;
+    height: 50px;
+    background: transparent;
+    -webkit-box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 2px 2px rgba(117, 117, 117, 0.20);
+    -webkit-border-radius: 1px;
+    -opera-border-radius: 1px;
+    -moz-border-radius: 1px;
+    display: inline-block;
+}
+
+.fs-my-avatar-m {
+    padding: 3px;
+    height: 80px;
+    background: transparent;
+    -webkit-box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 2px 2px rgba(117, 117, 117, 0.20);
+    -webkit-border-radius: 1px;
+    -opera-border-radius: 1px;
+    -moz-border-radius: 1px;
+}
+
+.fs-my-avatar-l {
+    padding: 3px;
+    height: 200px;
+    background: transparent;
+    -webkit-box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 2px 2px rgba(117, 117, 117, 0.20);
+    -webkit-border-radius: 1px;
+    -opera-border-radius: 1px;
+    -moz-border-radius: 1px;
+}
+
+.fs-my-avatar img {
+    border: solid 2px #ffa238;
 }
 
 /* ===================== fine  chi siamo (user profiles)  ===================== */
@@ -1693,14 +1758,10 @@ right: -14px;   */
     -webkit-border-radius: 30%;
     -moz-border-radius: 30%;
     border-radius: 30%;
-
-    border: 1px solid #006185;
-
-    margin: 0 10px 0 0;
-
-    width: 7px;
-
-    height: 7px;
+       border: 1px solid #006185;
+       margin: 0 10px 0 0;
+       width: 7px;
+       height: 7px;
 }
 
 .fs-slidenavigatorslideshutterstock_1 > a:hover {
@@ -3200,7 +3261,9 @@ button.fs-vuoto-inline2-button {
     border: 2px solid;
 }
 
-span.flash, div.flash {margin-top: 8px;}
+span.flash, div.flash {
+    margin-top: 8px;
+}
 
 span.flash.error, div.flash.error, #errorExplanation {
     background: url(../images/exclamation.png) 8px 50% no-repeat;
@@ -3217,11 +3280,11 @@ span.flash.notice, div.flash.notice {
 }
 
 span.flash.warning, div.flash.warning {
-  background: url(../images/warning.png) 8px 5px no-repeat;
+    background: url(../images/warning.png) 8px 5px no-repeat;
     background-color: #FFEBC1;
     border-color: #FDBF3B;
     color: #A6750C;
-  text-align: left;
+    text-align: left;
 }
 
 .nodata, .warning {
@@ -3231,10 +3294,23 @@ span.flash.warning, div.flash.warning {
     color: #A6750C;
 }
 
-#errorExplanation ul { font-size: 0.9em;}
-#errorExplanation h2, #errorExplanation p { display: none; }
-.dotted {border: dotted 1px #765400; padding: 10%; width: 60%;}
-.hide{display: none;}
+#errorExplanation ul {
+    font-size: 0.9em;
+}
+
+#errorExplanation h2, #errorExplanation p {
+    display: none;
+}
+
+.dotted {
+    border: dotted 1px #765400;
+    padding: 10%;
+    width: 60%;
+}
+
+.hide {
+    display: none;
+}
 
 
 

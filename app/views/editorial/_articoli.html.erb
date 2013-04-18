@@ -9,54 +9,66 @@
                   <span class="fs-postdateicon" style="float:right;"><%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
                   <h5 class="fs-postheader">
                     <% if articolo.is_convegno? %>
-                        <%= link_to(h(articolo.subject), url_for(:controller => 'editorial', :action => "evento", :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))%>
+                        <%= link_to(h(articolo.subject), url_for(:controller => 'editorial', :action => "evento", :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false)) %>
                     <% else %>
-                        <%= link_to(h(articolo.subject),url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))%>
+                        <%= link_to(h(articolo.subject), url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false)) %>
                     <% end %>
                   </h5>
                 </div>
                 <div class="fs-postcontent fs-postcontent-0 clearfix">
                   <div class="fs-content-layout-wrapper layout-item-0">
                     <div class="fs-image-caption-wrapper">
-                      <%= if articolo.immagine_url.nil?
-                            if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
-                              image_tag("/images/commons/sections/#{articolo.top_section.immagine}")
+                      <div class="fs-image-caption-wrapper-img">
+                        <%= if articolo.immagine_url.nil?
+                              if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
+                                image_tag("/images/commons/sections/#{articolo.top_section.immagine}")
+                              else
+                                image_tag("/images/commons/sections/no-img.jpg")
+                              end
                             else
-                              image_tag("/images/commons/sections/no-img.jpg")
+                              if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
+                                image_tag(articolo.immagine_url, :alt => h(truncate(articolo.subject, :length => 25)))
+                              else
+                                image_tag("/images/commons/sections/no-img.jpg")
+                              end
                             end
-                          else
-                            if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
-                            image_tag(articolo.immagine_url, :alt => h(truncate(articolo.subject, :length => 25)))
-                            else
-                              image_tag("/images/commons/sections/no-img.jpg")
-                            end
-                          end
-                      %>
+                        %></div>
                       <% if articolo.se_protetto %>
                           <div class="fs-postmetadatafooter-ko">
-                            <div class="fs-postheadericons fs-metadata-icons">
-                              <p class="fs-postauthoricon"><%= h articolo.author %></p>
-
-                              <p class="fs-post-access-no">Articolo riservato agli abbonati</p>
+                            <div class="fs-postheadericons">
+                              <% if !articolo.author.user_profile.nil? %>
+                                  <span style="margin-right:6px;"><%= articolo.author.user_profile.my_avatar(:xs) %> </span>
+                              <% else %>
+                                  <span style="margin-right:6px; width: 32px; display: inline-block;">Di:</span>
+                              <% end %>
+                              <span class="fs-postauthoricon"> <%= h articolo.author %></span>
+                              <p class="fs-post-access-ko">Articolo riservato agli abbonati</p>
                             </div>
                           </div>
                       <% else %>
                           <div class="fs-postmetadatafooter-ok">
-                            <div class="fs-postheadericons fs-metadata-icons">
-                              <p class="fs-postauthoricon"><%= h articolo.author %></p>
-
+                            <div class="fs-postheadericons">
+                              <% if !articolo.author.user_profile.nil? %>
+                                  <span style="margin-right:6px;"><%= articolo.author.user_profile.my_avatar(:xs) %> </span>
+                              <% else %>
+                                  <span style="margin-right:6px; width: 32px; display: inline-block;">Di:</span>
+                              <% end %>
+                              <span class="fs-postauthoricon"> <%= h articolo.author %></span>
                               <p class="fs-post-access-ok">Articolo consultabile liberamente</p>
                             </div>
                           </div>
                       <% end %>
                     </div>
-                    <%= textilizable(articolo.summary )%>
-                    <br/>
-                    <%=	link_to_articolo(articolo,:title => 'Continua ...', :class=> "fs-blu-button") %>
-                         </div>
+                    <%= h(articolo.summary) %>
+                    <br /> &nbsp; <br />
+                     <p style="text-align: center;">
+                    <%= link_to_articolo(articolo, :title => 'Continua ...', :class => "fs-blu-button") %></p>
+                  </div>
                 </div>
             <% else %>
                 <br/>
+
+
                 <p class="nodata"><%= l(:label_no_data) %></p>
                 <br/>
             <% end %>
@@ -74,6 +86,7 @@
 
       <p class="nodata"><%= l(:label_no_data) %></p>
       <br/>
-  <% end %><div class="clearfix"></div>
+  <% end %>
+  <div class="clearfix"></div>
 </div>
 

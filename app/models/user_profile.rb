@@ -4,8 +4,9 @@ class UserProfile < ActiveRecord::Base
   belongs_to :user
   after_update :reprocess
   has_attached_file :photo, :styles => {:l => ["200x200>", :png, :jpg],
-                                        :s => ["80x80>", :png, :jpg],
-                                        :xs => ["50x50>", :png, :jpg]},
+                                        :m => ["80x80>", :png, :jpg],
+                                        :s => ["48x48>", :png, :jpg],
+                                        :sx =>["32x32>", :png, :jpg]},
                     :url => "users/profile_:id/:style_:basename.:extension",
                     :path => "#{RAILS_ROOT}/public/images/users/profile_:id/:style_:basename.:extension",
                     :default_url => "commons/:style-no_avatar.jpg"
@@ -21,36 +22,44 @@ class UserProfile < ActiveRecord::Base
 
   def my_avatar(taglia) #'l per large  ecc
     if self.use_gravatar
-      '<div class="fs-my-avatar"> <img src="' + my_gravatar_url(self.user.mail.downcase, taglia) + '" alt="mio-avatar"></div>'
+      '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="' + my_gravatar_url(self.user.mail.downcase, taglia) + '" alt="mio-avatar"></div>'
     else
       case taglia
         when :l
-          '<div class="fs-my-avatar"> <img src="/images/' + self.photo.url(:l) + '" alt="mio-avatar"></div>'
+          '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/' + self.photo.url(:l) + '" alt="mio-avatar"></div>'
+        when :m
+          '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/' + self.photo.url(:m) + '" alt="mio-avatar"></div>'
         when :s
-          '<div class="fs-my-avatar"> <img src="/images/' + self.photo.url(:s) + '" alt="mio-avatar"></div>'
+          '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/' + self.photo.url(:s) + '" alt="mio-avatar"></div>'
         when :xs
-          '<div class="fs-my-avatar"> <img src="/images/' + self.photo.url(:xs) + '" alt="mio-avatar"></div>'
+          '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/' + self.photo.url(:xs) + '" alt="mio-avatar"></div>'
         else
-          '<div class="fs-my-avatar"> <img src="/images/users/profiles/no_avatars.jpg" alt="mio-avatar"></div>'
+          '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/commons/' + taglia.to_s + '-no_avatar.jpg" alt="mio-avatar"></div>'
       end
     end
   end
 
-  def my_gravatar_url(user, taglia)
+  def merde
+    return "hhhho che dici???"
+  end
 
+  def my_gravatar_url(user, taglia)
     gravatar_id = Digest::MD5.hexdigest(user)
     case taglia
       when :l
-        default_url = "#{RAILS_ROOT}images/commons/l-no_avatar.jpg"
+        default_url = "#{RAILS_ROOT}images/commons/" + taglia.to_s + "-no_avatar.jpg"
         "http://gravatar.com/avatar/#{gravatar_id.to_s}.png?s=120{CGI.escape(#{default_url})}"
-      when :s
-        default_url = "#{RAILS_ROOT}images/commons/s-no_avatar.jpg"
+      when :m
+        default_url = "#{RAILS_ROOT}images/commons/" + taglia.to_s + "-no_avatar.jpg"
         "http://gravatar.com/avatar/#{gravatar_id.to_s}.png?s=80{CGI.escape(#{default_url})}"
-      when :xs
-        default_url = "#{RAILS_ROOT}images/commons/xs-no_avatar.jpg"
+      when :s
+        default_url = "#{RAILS_ROOT}images/commons/" + taglia.to_s + "-no_avatar.jpg"
         "http://gravatar.com/avatar/#{gravatar_id.to_s}.png?s=50{CGI.escape(#{default_url})}"
+      when :xs
+        default_url = "#{RAILS_ROOT}images/commons/" + taglia.to_s + "-no_avatar.jpg"
+        "http://gravatar.com/avatar/#{gravatar_id.to_s}.png?s=32{CGI.escape(#{default_url})}"
       else
-        '<div class="fs-my-avatar"> <img src="/images/commons/s-no_avatar.jpg" alt="mio-avatar"></div>'
+        '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/commons/' + taglia.to_s + '-no_avatar.jpg" alt="mio-avatar"></div>'
     end
   end
 
