@@ -3,9 +3,9 @@ module YuiEditor
   BUTTONS = %w{fontname fontsize bold italic underline subscript superscript forecolor backcolor removeformat hiddenelements justifyleft justifycenter justifyright justifyfull heading indent outdent insertunorderedlist insertorderedlist createlink insertimage}
 
 
-uses_yui_editor({
-  javascript_base_uri => File.dirname(__FILE__); #+ '/lib/acts_as_watchable';
-})
+#uses_yui_editor({
+#  javascript_base_uri => File.dirname(__FILE__); #+ '/lib/acts_as_watchable';
+#})
 #public/javascripts/yui
 #public/javascripts/css
 
@@ -132,7 +132,7 @@ JAVASCRIPT
 #
 #       # this was adding an extra /li at the end of uls (see http://sourceforge.net/tracker/index.php?func=detail&aid=1926238&group_id=165715&atid=836476)
 #       js << "YAHOO.widget.Editor.prototype.filter_invalid_lists = function(html) { return html; };\n"
-#
+# =>
       result << javascript_tag(js)
 
       result

@@ -8,6 +8,7 @@
 </div>
 <h2><%= link_to l(:label_group_banner_plural), group_banners_path %> &#187; <%=h @group_banner %></h2>
 
+<div >
 <div class="splitcontentleft">
   <fieldset class="box tabular">
     <legend><%=l(:label_group_banner)%></legend>
@@ -40,21 +41,6 @@
         <%= l(:label_clicks) %>: <%=h @group_banner.clicks %>
     </p>
     <p>
-      <%= l(:label_didascalia) %>:
-<hr />HTML<br />
-      <div class="html">
-        <% unless @group_banner.didascalia.nil? %>
-          <%= @group_banner.didascalia.html_safe %>
-        <% end %>
-      </div>
-<hr />
-<hr />textilizable<br />
-      <div class="wiki">
-        <%= textilizable(@group_banner.didascalia) %>
-      </div>
-<hr />
-    </p>
-    <p>
         <%= check_box_tag '', 1, @group_banner.se_prima_pagina, :disabled => 'disabled'  %> <%= l(:label_se_prima_pagina) %>
     </p>
     <p>
@@ -77,9 +63,7 @@
       <p class="nodata"><%= l(:label_no_data) %></p>
     <% end %>
   </fieldset>
-</div>
 
-<div class="splitcontentright">
     <fieldset class="box tabular">
       <legend><%=l(:label_group_banner_associated_asso)%></legend>
         <% if @group_banner.assos.any? %>
@@ -100,3 +84,21 @@
         <% end %>
     </fieldset>
 </div>
+
+</div>
+<div style="clear:both;"></div>
+<div >
+    <p>
+      <%= l(:label_didascalia) %>:
+    </p>
+    <p>
+      <div class="html">
+        <% unless @group_banner.didascalia.nil? %>
+          <%= @group_banner.didascalia.html_safe %>
+        <% end %>
+      </div>
+      <div class="wiki hide">
+        <%# textilizable(@group_banner.didascalia) %>
+      </div>
+    </p>
+</div>    
