@@ -14,8 +14,8 @@
 
 <script type="text/javascript" charset="utf-8">
 (function() {
-    var Dom = YAHOO.util.Dom,
-        Event = YAHOO.util.Event;
+
+    var state = 'off';
 
     var myConfig = {
         handleSubmit: true,
@@ -26,16 +26,20 @@
         focusAtStart: true
     };
 
-    var state = 'off';
-    YAHOO.log('Set state to off..', 'info', 'example');
+    var Dom = YAHOO.util.Dom,
+        Event = YAHOO.util.Event;
 
-    YAHOO.log('Create the Editor..', 'info', 'example');
+</script>
+
+<script type="text/javascript" charset="utf-8">
+
+function init_yui_editor_fs(id_textarea, myconfig)
+
     var myEditor = new YAHOO.widget.Editor('group_banner_didascalia', myConfig);
     myEditor.on('toolbarLoaded', function() {
         var codeConfig = {
             type: 'push', label: 'Edit HTML Code', value: 'editcode'
         };
-        YAHOO.log('Create the (editcode) Button', 'info', 'example');
         this.toolbar.addButtonToGroup(codeConfig, 'insertitem');
 
         this.toolbar.on('editcodeClick', function() {
@@ -45,8 +49,6 @@
             if (state == 'on') {
                 state = 'off';
                 this.toolbar.set('disabled', false);
-                YAHOO.log('Show the Editor', 'info', 'example');
-                YAHOO.log('Inject the HTML from the textarea into the editor', 'info', 'example');
                 this.setEditorHTML(ta.value);
                 if (!this.browser.ie) {
                     this._setDesignMode('on');
@@ -58,9 +60,7 @@
                 this._focusWindow();
             } else {
                 state = 'on';
-                YAHOO.log('Show the Code Editor', 'info', 'example');
                 this.cleanHTML();
-                YAHOO.log('Save the Editors HTML', 'info', 'example');
                 Dom.addClass(iframe, 'editor-hidden');
                 Dom.removeClass(ta, 'editor-hidden');
                 this.toolbar.set('disabled', true);
@@ -73,7 +73,6 @@
         }, this, true);
 
         this.on('cleanHTML', function(ev) {
-            YAHOO.log('cleanHTML callback fired..', 'info', 'example');
             this.get('element').value = ev.html;
         }, this, true);
 
@@ -92,7 +91,7 @@
     }, myEditor, true);
     myEditor.render();
 
-})();
+}
 
 </script>
 
