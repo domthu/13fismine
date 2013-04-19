@@ -8,6 +8,7 @@
 </div>
 <h2><%= link_to l(:label_asso_plural), assos_path %> &#187; <%=h @asso %></h2>
 
+
 <div class="splitcontentleft">
   <fieldset class="box tabular">
     <legend><%=l(:label_asso_full)%></legend>
@@ -47,18 +48,6 @@
         <%= l(:label_fax) %>: <%=h @asso.fax %>
     </p>
     <p>
-      <%= l(:label_comunicazioni) %>:
-      <div class="html">
-        <% unless @asso.comunicazioni.nil? %>
-          <%= @asso.comunicazioni.html_safe %>
-        <% end %>
-      </div>
-<--html safe----------------------------------------------------------------------textilizable-->
-      <div class="wiki">
-        <%= textilizable(@asso.comunicazioni) %>
-      </div>
-    </p>
-    <p>
         <%= l(:label_email_alt) %>: <%=h @asso.email_alt %>
     </p>
   </fieldset>
@@ -84,9 +73,7 @@
           <%=l(:label_asso_associated_group_banner_none)%>
         <% end %>
     </fieldset>
-</div>
 
-<div class="splitcontentright">
     <fieldset class="box tabular">
       <legend><%=l(:label_asso_organization)%></legend>
         <% unless @asso.organization.nil? %>
@@ -96,4 +83,17 @@
           <%=l(:label_asso_organization_none)%>
         <% end %>
     </fieldset>
+</div>
+
+<div style="clear:both;"></div>
+<div>
+ <fieldset class="htmldraft">
+      <legend><%= l(:label_comunicazioni) %>:</legend>
+      <% unless @asso.comunicazioni.nil? %>
+        <%= @asso.comunicazioni.html_safe %>
+      <% end %>
+      <div class="wiki hide">
+        <%# textilizable(@asso.comunicazioni) %>
+      </div>
+  </fieldset>
 </div>

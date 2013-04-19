@@ -18,22 +18,20 @@
     <% end %>
     </p>
     <p>
-      <%= l(:label_descrizione) %>:
-<hr />HTML<br />
-      <div class="html">
-        <% unless @type_organization.descrizione.nil? %>
-          <%= @type_organization.descrizione.html_safe %>
-        <% end %>
-      </div>
-<hr />
-<hr />textilizable<br />
-      <div class="wiki">
-        <%= textilizable(@type_organization.descrizione) %>
-      </div>
-<hr />
-    </p>
-    <p>
       <%= l(:label_priorita) %>: <%=h @type_organization.priorita %>
     </p>
+  </fieldset>
+</div>
+
+<div style="clear:both;"></div>
+<div >
+ <fieldset class="htmldraft">
+      <legend><%= l(:label_descrizione) %>:</legend>
+      <% unless @type_organization.descrizione.nil? %>
+        <%= @type_organization.descrizione.html_safe %>
+      <% end %>
+      <div class="wiki hide">
+        <%# textilizable(@type_organization.descrizione) %>
+      </div>
   </fieldset>
 </div>

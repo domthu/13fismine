@@ -61,39 +61,36 @@
 </table>
 
 <% if @issue.summary? -%>
-<hr />
-
-  <p><strong><%=l(:field_summary)%></strong></p>
-  <div class="html" style="display: none;">
-    <% unless @issue.summary.nil? %>
-      <%= @issue.summary.html_safe %>
-    <% end %>
-<--html safe----------------------------------------------------------------------textilizable-->
-  </div>
-  <div class="wiki">
-  <%= textilizable @issue, :summary, :attachments => @issue.attachments %>
-  </div>
+ <p><strong><%=l(:field_summary)%></strong></p>
+ <fieldset class="htmldraft">
+      <legend></legend>
+      <% unless @issue.summary.nil? %>
+        <%= @issue.summary.html_safe %>
+      <% end %>
+      <div class="wiki hide">
+        <%# textilizable(@issue.summary) %>
+      </div>
+  </fieldset>
 <% end %>
 
 <% if @issue.description? || @issue.attachments.any? -%>
-<hr />
-<% if @issue.description? %>
-  <div class="contextual">
-  <%= link_to_remote_if_authorized(l(:button_quote), { :url => {:controller => 'journals', :action => 'new', :id => @issue} }, :class => 'icon icon-comment') %>
-  </div>
-
   <p><strong><%=l(:field_description)%></strong></p>
-  <div class="html" style="display: none;">
-    <% unless @issue.description.nil? %>
-      <%= @issue.description.html_safe %>
-    <% end %>
-<--html safe----------------------------------------------------------------------textilizable-->
-  </div>
-  <div class="wiki">
-  <%= textilizable @issue, :description, :attachments => @issue.attachments %>
-  </div>
-<% end %>
-<%= link_to_attachments @issue %>
+  <% if @issue.description? %>
+    <div class="contextual">
+    <%= link_to_remote_if_authorized(l(:button_quote), { :url => {:controller => 'journals', :action => 'new', :id => @issue} }, :class => 'icon icon-comment') %>
+    </div>
+
+   <fieldset class="htmldraft">
+        <legend></legend>
+        <% unless @issue.description.nil? %>
+          <%= @issue.description.html_safe %>
+        <% end %>
+        <div class="wiki hide">
+          <%# textilizable(@issue.description) %>
+        </div>
+    </fieldset>
+  <% end %>
+  <%= link_to_attachments @issue %>
 <% end -%>
 
 <%= call_hook(:view_issues_show_description_bottom, :issue => @issue) %>

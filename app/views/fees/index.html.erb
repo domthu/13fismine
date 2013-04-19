@@ -13,39 +13,63 @@
   #ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore tutti uguali</p>
 <p class="invitato"><b>[<%= @name_invitati_count %>]</b>ROLE_VIP            = 10 #Invitato Gratuito</p>
     </blockquote>
-<hr>
+  </fieldset>
+
+  <fieldset class="box tabular">
+    <legend>Admin</legend>
     <h5>
       <p class="admin">Amministratori <b><%= @name_admin_count %></b></p>
     </h5>
     <% @name_admin.each do |usr| %>
       <div class="icon icon-admin"><%= link_to usr, user_path(usr) %></div>
     <% end %>
-<hr>
+  </fieldset>
+
+  <fieldset class="box tabular">
+    <legend>Manager</legend>
     <h5>
       <p class="power_user">Manager (=power_user): <b><%= @name_manager_count %></b></p>
     </h5>
     <% @name_manager.each do |usr| %>
       <div class="icon icon-man"><%= link_to usr, user_path(usr) %></div>
     <% end %>
-<hr>
+  </fieldset>
+
+  <fieldset class="box tabular">
+    <legend>Redattori</legend>
     <h5>
       <p class="redattore">Redattori: <b><%= @name_author_count %></b></p>
     </h5>
     <% @name_author.each do |usr| %>
       <div class="icon icon-auth"><%= link_to usr, user_path(usr) %></div>
     <% end %>
-<hr>
+  </fieldset>
+
+  <fieldset class="box tabular">
+    <legend>VIP</legend>
     <h5>
       <p class="invitato">VIP: <b><%= @name_invitati_count %></b>
     </h5>
     <% @name_invitati.each do |usr| %>
       <div class="icon icon-vip"><%= link_to usr, user_path(usr) %></div>
     <% end %>
-<hr>
   </fieldset>
+
 </div>
 
 <div class="splitcontentright">
+
+  <fieldset class="box tabular">
+    <legend><%=l(:siglatipo)%></legend>
+    <h5>
+      Categoria Utenti: Cross organizations ed utenti
+    </h5>
+    <ul>
+      <li>Numero di cross organismi: <b><%= @num_organismi %></b></li>
+      <li>Numero di utenti che si riferiscono: <b><%= @num_members %></b></li>
+    </ul>
+  </fieldset>
+
   <fieldset class="box tabular">
     <legend>Ruoli sottoposti a controllo di abbonamento (manuale ed automatico)&nbsp;<b>Totali: <%= @num_controlled_TOTAL %></b></legend>
     <blockquote>
@@ -56,9 +80,7 @@
 <p class="archivied"><b>[<%= @num_archiviati %>]</b>ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)</p>
     </blockquote>
   </fieldset>
-</div>
 
-<div class="splitcontentright">
   <fieldset class="box tabular">
     <legend><%=l(:affiliati)%>&nbsp;<b>Totali: <%= @num_associated_TOTAL %></b></legend>
     <ul>
@@ -74,9 +96,7 @@
       <li class="icon icon-arc"><b>[<%= @num_Associated_ARCHIVIED %>]</b> associati archiviati </li>
     </ul>
   </fieldset>
-</div>
 
-<div class="splitcontentright">
   <fieldset class="box tabular">
     <legend><%=l(:who_pay)%>&nbsp;<b>Totali: <%= @num_privati_TOTAL %></b></legend>
     <ul>
@@ -91,9 +111,7 @@
       <li class="icon icon-arc"><b>[<%= @num_privati_ARCHIVIED %>]</b> privati archiviati </li>
     </ul>
   </fieldset>
-</div>
 
-<div class="splitcontentright">
   <fieldset class="box tabular">
     <legend>Utenti senza ruolo: <b><%= @num_no_role %></b></legend>
     <% form_tag({:action => 'index', :verify => 1}, :class => "tabular") do %>
@@ -111,19 +129,5 @@
       </div>
       <br />
     <% end %>
-  </fieldset>
-</div>
-
-
-<div class="splitcontentleft">
-  <fieldset class="box tabular">
-    <legend><%=l(:siglatipo)%></legend>
-    <h5>
-      Categoria Utenti: Cross organizations ed utenti
-    </h5>
-    <ul>
-      <li>Numero di cross organismi: <b><%= @num_organismi %></b></li>
-      <li>Numero di utenti che si riferiscono: <b><%= @num_members %></b></li>
-    </ul>
   </fieldset>
 </div>

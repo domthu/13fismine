@@ -8,7 +8,6 @@
 </div>
 <h2><%= link_to l(:label_group_banner_plural), group_banners_path %> &#187; <%=h @group_banner %></h2>
 
-<div >
 <div class="splitcontentleft">
   <fieldset class="box tabular">
     <legend><%=l(:label_group_banner)%></legend>
@@ -85,20 +84,15 @@
     </fieldset>
 </div>
 
-</div>
 <div style="clear:both;"></div>
 <div >
-    <p>
-      <%= l(:label_didascalia) %>:
-    </p>
-    <p>
-      <div class="html">
-        <% unless @group_banner.didascalia.nil? %>
-          <%= @group_banner.didascalia.html_safe %>
-        <% end %>
-      </div>
+ <fieldset class="htmldraft">
+      <legend><%= l(:label_didascalia) %>:</legend>
+      <% unless @group_banner.didascalia.nil? %>
+        <%= @group_banner.didascalia.html_safe %>
+      <% end %>
       <div class="wiki hide">
         <%# textilizable(@group_banner.didascalia) %>
       </div>
-    </p>
-</div>    
+  </fieldset>
+</div>
