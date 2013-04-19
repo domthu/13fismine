@@ -202,7 +202,7 @@ it:
   notice_issue_done_ratios_updated: La percentuale degli articoli completati è aggiornata.
   notice_gantt_chart_truncated: Il grafico è stato troncato perchè eccede il numero di oggetti (%{max}) da visualizzare
   notice_issue_successful_create: Articolo %{id} creato.
-  #Verificare Dom  
+  #Verificare Dom
   notice_user_not_found: "L'utente ricercato, con id %{id}, non esiste o è stato eliminato."
   notice_ensure_identifier: "Attenzione: abbiamo provato ad impostare in automatico l'identificatore dell'edizione. Verifica che non sia veramente univoco prima di continuare. Usi la lista delle ultime edizioni registrate"
   notice_failed_to_save_abbonamento: "Impossibile salvare l'abbonamento per l'utente(i): %{errors}."
@@ -230,7 +230,7 @@ it:
   error_unable_to_connect: Impossibile connettersi (%{value})
   error_attachment_too_big: Questo file non può essere caricato in quanto la sua dimensione supera la massima consentita (%{max_size})
   warning_attachments_not_saved: "%{count} file non possono essere salvati."
-  #Verificare Dom  
+  #Verificare Dom
   error_none_assigned: "Dovete selezionare almeno un elemento dalla lista."
   error_can_not_remove_role_for_fee_management: Questo ruolo è in uso nella gestione degli abbonamenti e non può essere eliminato.
 
@@ -421,7 +421,7 @@ it:
   setting_default_issue_start_date_to_creation_date: "Usa la data corrente come data d'inizio per i nuovi articoli"
   #domthu verify
   setting_welcome_text_fs: "Testo di benvenuto lato abbonati: sul sito pubblico"
-  
+
   permission_add_project: Crea edizione
   permission_add_subprojects: Crea sottoedizioni
   permission_edit_project: Modifica edizioni
@@ -622,6 +622,9 @@ it:
   label_fast_reply: Rispondi senza generare articolo
   no_reply_actualy: Nessuna risposta attualmente
   label_news_my: I miei quesiti
+  label_no_referente: "Non c'è un referente"
+  label_no_soci: "Non ci sono utenti associati"
+
 
   label_settings: Impostazioni
   label_overview: Panoramica
@@ -1120,6 +1123,7 @@ it:
   label_asso_full: Categoria Utente
   label_asso_plural: Cat. Utenti
   label_asso_new: Nuova categoria utente
+  label_assos_users: Utenti soci
 
   field_cross_group: Banner utente
   #label_cross_group: Banner utente
