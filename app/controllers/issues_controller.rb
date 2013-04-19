@@ -18,9 +18,6 @@
 class IssuesController < ApplicationController
   menu_item :new_issue, :only => [:new, :create]
   default_search_scope :issues
-  # sandro barra YUI
-  uses_yui_editor
-
   before_filter :find_issue, :only => [:show, :edit, :update] #Domthu , :fast_reply
   before_filter :find_issues, :only => [:bulk_edit, :bulk_update, :move, :perform_move, :destroy]
   before_filter :check_project_uniqueness, :only => [:move, :perform_move]

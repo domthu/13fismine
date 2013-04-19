@@ -1,5 +1,4 @@
-
-<%= call_hook(:view_issues_form_details_top, { :issue => @issue, :form => f }) %>
+ <%= call_hook(:view_issues_form_details_top, { :issue => @issue, :form => f }) %>
 
 <div id="issue_descr_fields" >
 <% if @issue.safe_attribute_names.include?('is_private') %>
@@ -61,7 +60,6 @@
 <% end %>
 
 <%= call_hook(:view_issues_form_details_bottom, { :issue => @issue, :form => f }) %>
-<%= include_yui_editor_if_used %>
 <%# wikitoolbar_for 'issue_subject' %>
 <%# wikitoolbar_for 'issue_summary' %>
 <%# wikitoolbar_for 'issue_description' %>
