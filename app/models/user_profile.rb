@@ -39,8 +39,13 @@ class UserProfile < ActiveRecord::Base
     end
   end
 
-  def merde
-    return "hhhho che dici???"
+  def get_user_profile_id(usr = nil)
+    uid = self.users_profiles_all(:first, :conditions => " user_id =#{usr.id}")
+    if uid.nil?
+         0
+    else
+      return uid.id
+    end
   end
 
   def my_gravatar_url(user, taglia)
