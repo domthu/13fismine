@@ -2,9 +2,7 @@ class GroupBannersController < ApplicationController
   #uses_yui_editor
   #(:only => [:new, :create, :edit, :update])  , :selector => 'blog_post'
   layout 'admin'
-
   before_filter :require_admin
-
   helper :sort
   include SortHelper
 

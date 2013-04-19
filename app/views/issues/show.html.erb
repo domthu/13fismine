@@ -146,7 +146,7 @@
       <% end  %>
 
       <% if @issue.quesito_news.issues.count > 1 %>
-        <p><label><b><%= l(:label_reply_members) %></label></b>
+        <p><label><b><%= l(:label_reply_members) %></b></label>
         <ul>
         <% @issue.quesito_news.issues.each do |other_issue|
             if other_issue.id != @issue.id %>
