@@ -2,30 +2,30 @@
     <p class="fs-tramenu-blockheader x-granata">Utente:&nbsp; <%= User.current.name() %></p>
     <div class="fs-blockcontent fs-login-logged">
         <% if User.current.user_profile %>
-        <div id='fs-login-avatar'>
-             <div class="fs-login"><%= User.current.user_profile.my_avatar(:xs) %>
-             </div>
-           <% end %>
-           <% if User.current.canbackend? %>
-                  <div class="fs-login" id="fs-login-txt">
+            <div id='fs-login-avatar'>
+                <div class="fs-login"><%= User.current.user_profile.my_avatar(:xs) %>
+                </div>
+        <% end %>
+        <% if User.current.canbackend? %>
+                <div class="fs-login" id="fs-login-txt">
                     <%= link_to "Accesso FISMINE", url_for(:controller => 'activities', :action => 'index'), :class => 'fs-vuoto-inline3-button' %>
-                    <br/>
+                        <br/>
                     <% @uid = User.current.user_profile %>
-                    <% if !@uid.nil? %>
-                        <%= link_to "Profilo Pubblico", url_for(:controller => 'editorial', :action => 'profilo_show', :id => @uid), :class => 'fs-vuoto-inline3-button' %>
-                    <% else %>
-                        <%= link_to "Nuovo Profilo", url_for(:controller => 'editorial', :action => 'profilo_new'), :class => 'fs-vuoto-inline3-button' %>
-                    <% end %>
-                  </div>
-                  <div class="fs-login">
+                        <% if !@uid.nil? %>
+                            <%= link_to "Profilo Pubblico", url_for(:controller => 'editorial', :action => 'profilo_show', :id => @uid), :class => 'fs-vuoto-inline3-button' %>
+                        <% else %>
+                            <%= link_to "Nuovo Profilo", url_for(:controller => 'editorial', :action => 'profilo_new'), :class => 'fs-vuoto-inline3-button' %>
+                        <% end %>
+                </div>
+                <div class="fs-login">
                     <%= link_to l(:label_logout), :signout, :class => 'fs-vuoto-inline3-button', :id => "fs-login-exit" %>
-                  </div>
-           <% else %>
-                  <div class="fs-login">
+                </div>
+        <% else %>
+                 <div class="fs-login">
                     <%= link_to l(:label_my_page), :controller => 'mio_profilo', :action => 'account' %>
-                  </div>
-           <% end %>
-           <div class="fs-logged2">
+                 </div>
+        <% end %>
+                <div class="fs-logged2">
                 <% if User.current.associazione_affiliata %>
                     <div class="fs-login" id="fs-login2-txt">
                       <span> Associato a:</span>
@@ -39,16 +39,16 @@
                         </div>
                     <% end %>
                 <% end %>
-                <!--
-                <% if User.current.responsable? && User.current.responsable_of
-                                 User.current.responsable_of.each do |organismo| %>
-                      <div class="fs-login" id="fs-login2-txt">
-                        <span> Responsabile di:</span>
-                          <%= link_to h(organismo), organismo_path(organismo) %>
-                    <% end
-                       end %>
-              </ul>
-              <div class="fs-logged2-ico"> -->
+                            <!--
+                            <% if User.current.responsable? && User.current.responsable_of
+                                    User.current.responsable_of.each do |organismo| %>
+                                  <div class="fs-login" id="fs-login2-txt">
+                                    <span> Responsabile di:</span>
+                                      <%= link_to h(organismo), organismo_path(organismo) %>
+                                    <% end
+                             end %>
+                          </ul>
+                            <div class="fs-logged2-ico"> -->
                 <% if User.current.organization() %>
                     <div class="fs-login" id="fs-login2-asso">
                       <%= image_tag "/images/banners/assos/#{ User.current.asso.logo}", :width => 50, :height => 50, :border => 0 %>
@@ -58,12 +58,13 @@
                       <%= image_tag "/images/ico/fs.png", :width => 50, :height => 50, :border => 0 %>
                     </div>
                 <% end %>
-           </div>
-        </div>
-        <% else %>
+                </div>
+            </div>
+    </div>
+<% else %>
             <p class="fs-tramenu-blockheader x-granata">Accesso Utenti Abbonati</p>
             <div class="fs-blockcontent">
-              <% form_tag({:controller => 'account', :action => 'login'}, :method => 'post') do %>
+                <% form_tag({:controller => 'account', :action => 'login'}, :method => 'post') do %>
                   <%= back_url_hidden_field_tag %>
                   <fieldset class="input" style="border:none; margin-top:-7px; ">
                     <div id="fs-form-login">
@@ -82,13 +83,14 @@
                     </div>
                     <input type="submit" value="Accedi" name="login" id="fs-form-login-btn" class="fs-button"/>
                   </fieldset>
-        <% end %>
-        <%= javascript_tag "$('#username').focus();" %>
-        <% if Setting.lost_password? %>
-                  <div class='fs-pass'>
-                    <%= link_to l(:label_password_lost), :controller => 'account', :action => 'lost_password' %>
-                  </div>
-        <% end %>
-    </div>
+                <% end %>
+                <%= javascript_tag "$('#username').focus();" %>
+                <% if Setting.lost_password? %>
+                          <div class='fs-pass'>
+                            <%= link_to l(:label_password_lost), :controller => 'account', :action => 'lost_password' %>
+                          </div>
+                <% end %>
+            </div>
+
     <% end %>
-</div>
+
