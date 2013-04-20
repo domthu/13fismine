@@ -18,14 +18,14 @@
       <br />
     <% end %>
     </p>
-    <p class="<%= 'power_user' unless @organization.havePowerUser %>">
+    <p class="<%= 'power_user' unless @organization.havePowerUser? %>">
       <%= l(:label_user) %>: <%= link_to h(@organization.user), user_path(@organization.user, :id => @organization.user_id) %>
     </p>
     <p>
       <%= l(:label_cross_organization) %>: <%= link_to h(@organization.cross_organization), cross_organization_path(@organization.cross_organization, :id => @organization.cross_organization_id) %>
     </p>
     <p>
-        <%= check_box_tag '', 1, @organization.richiedinumeroregistrazione, :disabled => 'disabled'  %> <%= l(:label_richiedinumeroregistrazione) %>  
+        <%= check_box_tag '', 1, @organization.richiedinumeroregistrazione, :disabled => 'disabled'  %> <%= l(:label_richiedinumeroregistrazione) %>
     </p>
     <p>
       <%=l(:label_data_scadenza)%>: <%= format_date(@organization.data_scadenza) %>
@@ -48,24 +48,24 @@
     <p>
       <%= l(:label_testo3) %>: <%=h @organization.testo3 %>
     </p>
-    <p>
-      <%= l(:label_numero1) %>: 
+    <p class="hide">
+      <%= l(:label_numero1) %>:
       <div class="wiki">
-        <%= textilizable(@organization.numero1) %>
+        <%# textilizable(@organization.numero1) %>
       </div>
     </p>
-    <p>
-      <%= l(:label_numero2) %>: 
+    <p class="hide">
+      <%= l(:label_numero2) %>:
       <div class="wiki">
-        <%= textilizable(@organization.numero2) %>
+        <%# textilizable(@organization.numero2) %>
       </div>
     </p>
-    <p>
-      <%= l(:label_numero3) %>: 
+    <p class="hide">
+      <%= l(:label_numero3) %>:
       <div class="wiki">
-        <%= textilizable(@organization.numero3) %>
+        <%# textilizable(@organization.numero3) %>
       </div>
-    </p>    
+    </p>
     <p>
       <%=l(:label_data1)%>: <%= format_date(@organization.data1) %>
     </p>
@@ -76,13 +76,98 @@
       <%=l(:label_data3)%>: <%= format_date(@organization.data3) %>
     </p>
     <p>
-        <%= check_box_tag '', 1, @organization.flag1, :disabled => 'disabled'  %> <%= l(:label_flag1) %>  
+        <%= check_box_tag '', 1, @organization.flag1, :disabled => 'disabled'  %> <%= l(:label_flag1) %>
     </p>
     <p>
-        <%= check_box_tag '', 1, @organization.flag2, :disabled => 'disabled'  %> <%= l(:label_flag2) %>  
+        <%= check_box_tag '', 1, @organization.flag2, :disabled => 'disabled'  %> <%= l(:label_flag2) %>
     </p>
     <p>
-        <%= check_box_tag '', 1, @organization.flag3, :disabled => 'disabled'  %> <%= l(:label_flag3) %>  
+        <%= check_box_tag '', 1, @organization.flag3, :disabled => 'disabled'  %> <%= l(:label_flag3) %>
     </p>
+  </fieldset>
+</div>
+
+<div class="splitcontentright">
+  <fieldset class="box tabular">
+    <legend><%=l(:label_referente) %></legend>
+    <% if @organization.referente %>
+    <p>
+      <%= link_to h(@organization.referente) unless User.current.admin? %>
+      <%= link_to h(@organization.referente), edit_user_path(:id => @organization.referente) unless !User.current.admin? %>
+    </p>
+    <p>
+        <%= check_box_tag '', 0, @organization.havePowerUser?, :disabled => 'disabled'  %> <%= l(:label_power_user) %>
+    </p>
+    <% else %>
+      <p class="nodata"><%= l(:label_no_referente) %></p>
+    <% end %>
+  </fieldset>
+
+  <fieldset class="box tabular">
+    <legend><%=l(:label_assos_users)%></legend>
+    <% associati = @organization.GetAssociati %>
+    <% if associati.any? %>
+      <%= l(:label_total) %>:<strong class="total center"><%= h associati.count %></strong>
+      <table class="list users">
+        <thead>
+          <th><%= l(:label_user) %></th>
+          <th><%= l(:field_due_date) %></th>
+          <th>Power</th>
+        </thead>
+        <tbody>
+        <% associati.each do |user| %>
+          <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
+            <td class="user">
+              <%= link_to_user user unless User.current.admin? %>
+              <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
+            </td>
+            <td>
+              <%= format_date(user.scadenza) %>
+            </td>
+            <td>
+              <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled'  %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="nodata"><%= l(:label_no_soci) %></p>
+    <% end %>
+  </fieldset>
+</div>
+
+<div style="clear:both;"></div>
+<div >
+ <fieldset class="htmldraft">
+      <legend><%= l(:label_numero1) %>:</legend>
+      <% unless @organization.numero1.nil? %>
+        <%= @organization.numero1.html_safe %>
+      <% end %>
+      <div class="wiki hide">
+        <%# textilizable(@organization.numero1) %>
+      </div>
+  </fieldset>
+</div>
+<div >
+ <fieldset class="htmldraft">
+      <legend><%= l(:label_numero2) %>:</legend>
+      <% unless @organization.numero2.nil? %>
+        <%= @organization.numero2.html_safe %>
+      <% end %>
+      <div class="wiki hide">
+        <%# textilizable(@organization.numero2) %>
+      </div>
+  </fieldset>
+</div>
+<div >
+ <fieldset class="htmldraft">
+      <legend><%= l(:label_numero3) %>:</legend>
+      <% unless @organization.numero3.nil? %>
+        <%= @organization.numero3.html_safe %>
+      <% end %>
+      <div class="wiki hide">
+        <%# textilizable(@organization.numero3) %>
+      </div>
   </fieldset>
 </div>

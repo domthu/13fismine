@@ -29,7 +29,7 @@ class Issue < ActiveRecord::Base
                     :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension",
                     :default_url => "commons/:style-no_avatar.jpg"
 
-    belongs_to :project
+  belongs_to :project
   belongs_to :tracker
   belongs_to :status, :class_name => 'IssueStatus', :foreign_key => 'status_id'
   belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'

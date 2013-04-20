@@ -29,12 +29,19 @@ class Organization < ActiveRecord::Base
 
   alias :name :to_s
 
-#  def havePowerUser?
-#    !self.referente.blank && self.referente.power_user
-#  end 
+  def havePowerUser?
+    #!self.referente.nil? && self.referente.power_user
+    self.referente && self.referente.power_user
+  end
 
   def scadenza
     return self.data_scadenza
-  end 
+  end
+
+  def GetAssociati
+    if self.asso_id || self.asso
+      User.all(:conditions => {:asso_id => self.id})
+    end
+  end
 
 end
