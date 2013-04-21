@@ -9,7 +9,7 @@
           <h3 class="fs-postheader">DIRETTORI DI REDAZIONE </h3>
           <% @direttori.each do |item| %>
               <div class="fs-chisiamo-item">
-                   <%= link_to(item.my_avatar(:s), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
+                   <%= link_to(item.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
                  <p>
                   <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
                   <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
@@ -27,7 +27,7 @@
           <h3 class="fs-postheader">RESPONSABILI DI REDAZIONE </h3>
           <% @responsabili.each do |item| %>
               <div class="fs-chisiamo-item">
-                <%= link_to(item.my_avatar(:s), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
+                <%= link_to(item.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
                 <p>
                   <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
                   <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
@@ -45,7 +45,7 @@
           <h3 class="fs-postheader">COLLABORATORI DELLA REDAZIONE </h3>
           <% @collaboratori.each do |item| %>
               <div class="fs-chisiamo-item2">
-                <%= link_to(item.my_avatar(:s), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
+                <%= link_to(item.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
                 <p>
                   <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
                   <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
@@ -53,7 +53,7 @@
           <% end %>
           <% @users.each do |item| %>
               <div class="fs-chisiamo-item2">
-                <%= link_to image_tag("/images/commons/s-no_avatar.jpg", :alt => item.firstname + ' ' + item.lastname, :height => "80", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_new", :id => item.id %>
+                <%= link_to image_tag("/images/commons/m-no_avatar.jpg", :alt => item.firstname + ' ' + item.lastname, :height => "80", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_new", :id => item.id %>
                 <p>
                   <span style="font-weight: bold;">  <%= link_to((item.firstname + ' ' + item.lastname), :controller => "editorial", :action => "profilo_new", :id => item.id) %></span><br/>
                     <span style="font-style: italic;">[ <%= item.id.to_s %> <%= item.role_id == 4 ? 'Collaboratore' :'Admin' %>

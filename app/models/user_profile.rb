@@ -3,10 +3,10 @@ class UserProfile < ActiveRecord::Base
   require 'digest'
   belongs_to :user
   after_update :reprocess
-  has_attached_file :photo, :styles => {:l => ["200x200>", :png, :jpg],
-                                        :m => ["80x80>", :png, :jpg],
-                                        :s => ["48x48>", :png, :jpg],
-                                        :sx =>["32x32>", :png, :jpg]},
+  has_attached_file :photo, :styles => {:l => ["200x200", :png, :jpg],
+                                        :m => ["80x80", :png, :jpg],
+                                        :s => ["48x48", :png, :jpg],
+                                        :sx =>["32x32", :png, :jpg]},
                     :url => "users/profile_:id/:style_:basename.:extension",
                     :path => "#{RAILS_ROOT}/public/images/users/profile_:id/:style_:basename.:extension",
                     :default_url => "commons/:style-no_avatar.jpg"
