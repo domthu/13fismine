@@ -1,9 +1,9 @@
 class TopSection < ActiveRecord::Base
-  has_attached_file :image, :styles => {:xs => "32x32#", :m => "155x100>", :l => "310x155>"},
+  has_attached_file :image, :styles => {:xs => "32x32#", :m => "155x155>", :l => "310x155>"},
                     :url  => :url_image ,
                     :path => :path_image ,
                     :default_url => "commons/:style_no-image.png"
-  validates_attachment_size :image, :less_than => 1.megabytes
+  validates_attachment_size :image, :less_than => 200.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
  #validates_attachment_presence :image
   include FeesHelper  #Domthu  FeeConst
