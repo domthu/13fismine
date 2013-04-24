@@ -1,10 +1,43 @@
 <%= f.error_messages %>
-
 <div class="box tabular">
+  <p><%= f.select :top_menu_id, (TopMenu.all.collect { |c| [c.description, c.id] }), :include_blank => false, :required => true, :size => 60, :title => l(:label_top_menu) %></p>
+
   <p><%= f.text_field :sezione_top, :label => :field_top_section, :required => true, :size => 60 %></p>
-  <p><%= f.text_field :ordinamento, :label => :field_ordinamento, :size => 3 %></p>
-  <p><%= f.text_field :immagine, :label => :field_immagine %></p>
-  <p><%= f.text_field :key, :label => :field_key %></p>
+
+  <p><%= f.text_field :key, :label => :field_key %> <span style="font-size: 0.8em;"> * solo caratteri minuscoli separati da trattino </span></p>
+
   <p><%= f.check_box :se_visibile, :label => :field_se_visibile %></p>
-  <p><%= f.select :top_menu_id, (TopMenu.all.collect {|c| [c.description, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_top_menu) %></p>
+
+  <p><%= f.text_field :ordinamento, :label => :field_ordinamento, :size => 3 %></p>
+
+  <p><%= f.file_field :image, :label => :field_immagine %> </p>
+
+  <p id="prev" style="height: 150px;"> <%= image_tag @top_section.image.url(:m) %></p>
 </div>
+<script type="text/javascript">
+    function handleFileSelect(evt) {
+       var files = evt.target.files; // FileList object
+// Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+// Only process image files.
+            if (!f.type.match('image.*')) {
+                continue;
+            }
+            var reader = new FileReader();
+// Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {
+// Render thumbnail.
+// var span = document.createElement('span');
+                    var span = document.getElementById('prev');
+                    span.innerHTML = ['<img src="', e.target.result,
+                        '" title="', escape(theFile.name), '"/>'].join('');
+                    document.getElementById('prev').insertBefore(span, null);
+                };
+            })(f);
+// Read in the image file as a data URL.
+            reader.readAsDataURL(f);
+        }
+    }
+    document.getElementById('top_section_image').addEventListener('change', handleFileSelect, false);
+</script>

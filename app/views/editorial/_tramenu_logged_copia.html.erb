@@ -1,0 +1,31 @@
+<h4> In caso di utente loggato in questo spazio si puo' visulizzare la scadenza dell'abbonamento la proposta di rinnovo
+  o altro contenuto ...</h4>
+<% if User.current.asso && User.current.asso_id > 0   %>
+    <h5> <%=  User.current.asso.logo %> </h5>
+
+    <h5> <%=  User.current.pubblicita.count %> </h5>
+    <h3> <%#   User.current.associazione.logo %></h3>
+<% end %>
+
+STATO: <%= get_status_role(User.current) %>
+--  SCADENZA: <%= getdate(User.current.scadenza) %>
+<!-- TODO dominique-help errore della linea sotto errore: undefined method `distance_of_date_in_words' -->
+<%# User.current.scadenza_fra %>
+<% if User.current.isregistered? %>
+    Periodo di prova. fatto il ... scade il ... Verificare se ha confermato email?
+<% end %>
+<% if User.current.isabbonato? %>
+    Il tuo abbonamento scade il <%= User.current.scadenza %>
+<% end %>
+<% if User.current.isrenewing? %>
+    Sei normalmente abbonato. Il tuo abbonamento scade fra <%= User.current.scadenza_fra %>&nbsp;<%= link_to 'Rinnovalo', contatti_path %>
+<% end %>
+<% if User.current.isexpired? %>
+    SIAMO SPIACENTI però il tuo abbonamento è scaduto.
+    <%= link_to 'Rinnovalo', contatti_path %>
+<% end %>
+<% if User.current.isarchivied? %>
+    SIAMO SPIACENTI però non hai più accesso a questo editoriale
+    <%= link_to 'Contattaci', contatti_path %>
+<% end %>
+

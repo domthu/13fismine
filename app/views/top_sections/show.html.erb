@@ -1,58 +1,53 @@
 <div class="contextual">
-<%= link_to(l(:button_edit), edit_top_section_path(@top_section), :class => 'icon icon-edit') if User.current.admin? %>
-<%= link_to(l(:button_delete),
-      top_section_path(@top_section),
-      :confirm => l(:text_are_you_sure),
-      :method => :delete,
-      :class => 'icon icon-del') if User.current.admin? %>
+  <%= link_to(l(:button_edit), edit_top_section_path(@top_section), :class => 'icon icon-edit') if User.current.admin? %>
+  <%= link_to(l(:button_delete),
+              top_section_path(@top_section),
+              :confirm => l(:text_are_you_sure),
+              :method => :delete,
+              :class => 'icon icon-del') if User.current.admin? %>
 </div>
-<h2><%= link_to l(:label_top_section_plural), top_sections_path %> &#187; <%=h @top_section %></h2>
-
+<h2><%= link_to l(:label_top_section_plural), top_sections_path %> &#187; <%= h @top_section %></h2>
 <div class="splitcontentleft">
   <fieldset class="box tabular">
-    <legend><%=l(:label_top_section)%></legend>
+    <legend><%= l(:label_top_section) %></legend>
     <p>
-    <% unless @top_section.sezione_top.blank? %>
-        <em><%= l(:label_nome) %>: <%=h @top_section.sezione_top %></em>
-        <br />
-    <% end %>
+      <%= l(:label_top_menu) %>: <%= link_to @top_section.top_menu.description, top_menu_path(@top_section.top_menu) %>
     </p>
+
     <p>
-        <%= l(:label_ordinamento) %>: <%=h @top_section.ordinamento %>
-    </p>
-    <p>
-        <%= l(:label_immagine) %>: <%=h @top_section.immagine %>
-    </p>
-    <p>
-    <%= l(:label_key) %>:
-    </p>
-    <div class="html">
-      <% unless @top_section.key.nil? %>
-        <%#= @top_section.key.html_safe %>
-        <div class="wiki">
-            <%= textilizable(@top_section.key) %>
-        </div>
+      <% unless @top_section.sezione_top.blank? %>
+          Sezione top: <em><%= h @top_section.sezione_top %></em>
+          <br/>
       <% end %>
-    </div>
-    <p>
-        <%= l(:label_top_menu) %>: <%= link_to @top_section.top_menu.description, top_menu_path(@top_section.top_menu) %>
     </p>
+
     <p>
-        <%= check_box_tag l(:label_se_visibile), 1, @top_section.se_visibile, :disabled => 'disabled'  %> <%= l(:label_se_visibile) %>
+      <%= l(:label_ordinamento) %>: <%= h @top_section.ordinamento %>
+    </p>
+
+    <p>
+      <%= l(:label_key) %>: <%= @top_section.key %>
+    </p>
+
+    <p>
+      <%= check_box_tag l(:label_se_visibile), 1, @top_section.se_visibile, :disabled => 'disabled' %> <%= l(:label_se_visibile) %>
+    </p>
+
+    <p>
+      <%= image_tag @top_section.image.url(:m) %>
     </p>
   </fieldset>
 </div>
-
 <div class="splitcontentright">
   <fieldset class="box tabular">
-    <legend><%=l(:label_sections_from_top_section)%></legend>
+    <legend><%= l(:label_sections_from_top_section) %></legend>
     <% if @top_section.sections.any? %>
-      <%= l(:label_total) %>: <%= h @top_section.sections.count %>
-      <ul>
-        <% @top_section.sections.each do |section| %>
-          <li><%=h link_to section, section %></li>
-        <% end %>
-      </ul>
+        <%= l(:label_total) %>: <%= h @top_section.sections.count %>
+        <ul>
+          <% @top_section.sections.each do |section| %>
+              <li><%= h link_to section, section %></li>
+          <% end %>
+        </ul>
     <% else %>
         <p class="nodata"><%= l(:label_no_data) %></p>
     <% end %>

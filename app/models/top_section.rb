@@ -1,9 +1,12 @@
 class TopSection < ActiveRecord::Base
-
+  has_attached_file :image, :styles => {:xs => "32x32#", :m => "155x100>", :l => "310x155>"},
+                    :url  => :url_image ,
+                    :path => :path_image ,
+                    :default_url => "commons/:style_no-image.png"
+  validates_attachment_size :image, :less_than => 1.megabytes
+  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
+ #validates_attachment_presence :image
   include FeesHelper  #Domthu  FeeConst
-
-  #domthu20120516
-  #has_many :sections, :dependent => :destroy
   has_many :sections, :foreign_key => 'top_section_id', :dependent => :nullify
   has_many :issues, :through => :sections
   belongs_to :top_menu, :class_name => 'TopMenu', :foreign_key => 'top_menu_id'
@@ -12,6 +15,7 @@ class TopSection < ActiveRecord::Base
   validates_presence_of :sezione_top
   validates_uniqueness_of :sezione_top, :case_sensitive => false
   validates_length_of :sezione_top, :maximum => 100
+  validates_presence_of :key , :maximum => 60
 
   #integer
   validates_presence_of :ordinamento
@@ -20,8 +24,7 @@ class TopSection < ActiveRecord::Base
   #boolean
   #validates_presence_of :se_visibile
   #validates_presence_of :hidden_menu
-
-  #file
+   #file
   #validates_presence_of :immagine
 
   #text-area? CSS? HTML area
@@ -35,6 +38,13 @@ class TopSection < ActiveRecord::Base
   end
 
   alias :name :to_s
+  private
 
+  def url_image
+    "commons/top_sections/:id:style_#{self.key}.:extension"
+  end
+  def path_image
+    "#{RAILS_ROOT}/public/images/commons/top_sections/:id:style_#{self.key}.:extension"
+  end
 
 end
