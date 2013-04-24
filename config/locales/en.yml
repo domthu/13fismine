@@ -1145,6 +1145,15 @@ en:
   label_type_organization_new: Nuovo tipo di organismo
   label_type_organization_plural_long: Tipi di organismo
 
+  label_have_organization: Org. associato?
+  label_no_organization: "L'utente non fa parte di un organismo associato"
+  label_is_responsable: é responsabile?
+  label_not_responsable: "L'utente non gestisce organismi associati"
+  label_have_asso: Cat. Utente
+  label_no_asso: "L'utente non fa parte di un organismo associato"
+  label_have_sigla_tipo: Sigla
+  label_no_sigla_tipo: "L'utente non fa parte di una sigla organismo"
+
   #label_cross_organization: Sigla
   label_cross_organization: <- Sigla ->
   label_cross_organization_plural: Sigle

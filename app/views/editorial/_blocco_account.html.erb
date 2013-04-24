@@ -27,20 +27,25 @@ logged? (<%= User.current.logged? % >)<br />
         <%= link_to l(:label_my_page), :controller => 'mio_profilo', :action => 'account' %>
       </li>
     <% end %>
+    <% if User.current && User.current.associazione_affiliata() %>
+      <li>
+        ASSOCIAZIONE: <%= link_to h(User.current.associazione_affiliata()), asso_path(User.current.associazione_affiliata()) %>
+      </li>
+    <% end %>
     <% if User.current && User.current.sigla_tipo() %>
       <li>
-        AFFILIATO: <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()) %>
+        CROSS ORGANIZATION: <%= link_to h(User.current.sigla_tipo()), cross_organization_path (User.current.sigla_tipo()) %>
       </li>
     <% end %>
     <% if User.current && User.current.organization() %>
       <li>
-        CROSS ORGANIZATION: <%= link_to h(User.current.organization()), cross_organization_path(User.current.organization()) %>
+        ORGANISMO: <%= link_to h(User.current.organization()), organization_path(User.current.organization()) %>
       </li>
     <% end %>
     <% if User.current && User.current.responsable? && User.current.responsable_of
       User.current.responsable_of.each do |organismo| %>
       <li>
-        <%= link_to h(organismo), organismo_path(organismo) %>
+        <%= link_to h(organismo), organization_path(organismo) %>
       </li>
     <% end
     end %>

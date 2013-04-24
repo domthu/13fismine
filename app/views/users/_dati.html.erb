@@ -13,6 +13,7 @@
         <p><%= f.text_field :pwd, :label => :field_pwd, :required => false, :size => 25  %></p>
         <p><%= f.text_field :login_fisco, :label => :field_login_fisco, :required => false, :size => 25  %></p>
         <p><%= f.text_field :mail_fisco, :label => :field_mail_fisco, :required => false, :size => 25  %></p>
+        <p><%= f.check_box :conferma_registrazione, :label => :field_conferma_registrazione  %> </p>
         <p><%= f.text_field :nome, :label => :field_nome, :required => false %></p>
         <p><%= f.text_field :titolo, :label => :field_titolo, :required => false %></p>
         <p><%= f.text_field :soc, :label => :field_soc, :required => false %></p>
@@ -37,14 +38,6 @@
       <fieldset class="box tabular">
         <legend><%=l(:label_contatti)%></legend>
 
-        <p><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_asso) %></p>
-        <% if @user.asso_id? %>
-          <p><%= link_to h(@user.asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %>  %></p>
-        <% end %>
-
-        <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [c.organizzazione + ' (' + c.sigla + ')', c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_cross_organization) %></p>
-
-
         <p><%= f.text_field :sede, :label => :field_sede, :required => false, :size => 25  %></p>
         <p><%= f.text_field :telefono, :label => :field_telefono, :required => false, :size => 25  %></p>
         <p><%= f.text_field :fax, :label => :field_fax, :required => false, :size => 25  %></p>
@@ -63,7 +56,6 @@
         <p><%= f.text_field :registrato, :label => :field_registrato, :required => false, :size => 25  %></p>
         <p><%= f.text_field :num_reg_coni, :label => :field_num_reg_coni, :required => false, :size => 25  %></p>
           <p><%= f.check_box :abbonato, :label => :field_abbonato  %> </p>
-          <p><%= f.check_box :conferma_registrazione, :label => :field_conferma_registrazione  %> </p>
           <p><%= f.check_box :disabilitato, :label => :field_disabilitato  %> </p>
           <p><%= f.check_box :se_condition, :label => :field_se_condition  %> </p>
           <p><%= f.check_box :se_privacy, :label => :field_se_privacy  %> </p>

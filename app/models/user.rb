@@ -148,8 +148,9 @@ class User < Principal
     end
   end
 
+
   #Organismo associato: Utente è associato. Non paga. Paga il responsabile power_user
-  #Asso e Organization sono tabelle 1<-->1
+  #Asso e Organization sono tabelle 1<-->1 quindo si usa il asso_id per cercare nella tabella Organisation
   def organization()
     if self.asso_id.nil? || self.asso.nil?
       nil
@@ -164,6 +165,7 @@ class User < Principal
     end
   end
 
+  #ASSOCIAZIONE
   def associazione_affiliata()
     if self.asso_id.nil? || self.asso.nil? || self.asso_id == 0
       nil

@@ -5,20 +5,76 @@
     <!--[form:user]-->
     <div class="splitcontentleft">
 
+
       <fieldset class="box">
         <legend><%=l(:label_gest_privato)%></legend>
+          <%= gravatar_for(User.current) unless !User.current %>
 
+          <p class="">
+            <label><%= l(:label_have_sigla_tipo) %></label>
+            <span>
+              <% if User.current && User.current.associazione_affiliata() %>
+                  ASSOCIAZIONE: <%= link_to h(User.current.associazione_affiliata()), asso_path(User.current.associazione_affiliata()) %>
+              <% else %>
+                <%= l(:label_no_asso) %>
+              <% end %>
+            </span>
+          </p>
+
+          <p class="">
+            <label><%= l(:label_have_organization) %></label>
+            <span>
+              <% if User.current && User.current.organization() %>
+                  <%= link_to h(User.current.organization()), organization_path(User.current.organization()) %>
+              <% else %>
+                  <%= l(:label_no_organization) %>
+              <% end %>
+            </span>
+          </p>
+
+          <p class="">
+            <label><%= l(:label_is_responsable) %></label>
+            <span>
+              <% if User.current && User.current.responsable? && User.current.responsable_of
+                User.current.responsable_of.each do |organismo| %>
+                  <%= link_to h(organismo), organization_path(organismo) %>
+              <% end
+              else %>
+                <%= l(:label_not_responsable) %>
+              <% end %>
+            </span>
+          </p>
+
+          <p><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_asso) %></p>
+        <% if @user.asso_id? %>
+          <p><%= link_to h(@user.asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %>  %></p>
+        <% end %>
 
       </fieldset>
 
       <fieldset class="box tabular">
         <legend><%=l(:label_gest_organismo)%></legend>
+
           <p><%= f.check_box :power_user, :label => :field_power_user, :title => 'power user' %> </p>
+
           <p class="">
             <label for="refe"><%= l(:label_is_referente) %></label>
             <span class="<%= 'total' unless !@user.is_referente? %>">
             <%= check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
           </p>
+
+          <p class="">
+            <label for="siglatipo"><%= l(:label_have_sigla_tipo) %></label> </p>
+          <p class="">
+            <span><% if User.current && User.current.sigla_tipo() %>
+                <%= link_to h(User.current.sigla_tipo()), cross_organization_path (User.current.sigla_tipo()) %>
+              <% else %>
+                <%= l(:label_no_sigla_tipo) %>
+              <% end %>
+            </span>
+          </p>
+
+        <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [c.organizzazione + ' (' + c.sigla + ')', c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_cross_organization) %></p>
 
       </fieldset>
 
@@ -28,12 +84,12 @@
         <legend><%=l(:label_scadenza_ruolo)%></legend>
 
         <p><%= f.text_field :tariffa_precedente, :label => :field_tariffa_precedente, :required => false, :size => 5  %></p>
-        <%=l(:field_data)%> <%= format_date @user.data %>
+        <p><%=l(:field_data)%> <%= format_date @user.data %></p>
         <p>
           <%# f.date_select :data, :label => :field_data %>
           <%= f.text_field :data, :label => l(:field_data), :size => 10 %><%= calendar_for('user_data') %>
         </p>
-        <%=l(:field_datascadenza)%> <%= format_date @user.datascadenza %>
+        <p><%=l(:field_datascadenza)%> <%= format_date @user.datascadenza %></p>
         <p>
           <%# f.date_select :datascadenza, :label => :field_datascadenza %>
           <%= f.text_field :datascadenza, :label => l(:field_datascadenza), :size => 10 %><%= calendar_for('user_datascadenza') %>

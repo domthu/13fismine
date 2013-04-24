@@ -88,17 +88,17 @@
       <% else %>
           <% if User.current.sigla_tipo() %>
               <li>
-                Affiliato a:<br /> <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()) %>
+                Affiliato a:<br /> <%= link_to h(User.current.sigla_tipo()), cross_organization_path(User.current.sigla_tipo()) %>
               </li>
           <% end %>
       <% end %>
       <% if User.current.responsable? && User.current.responsable_of
            User.current.responsable_of.each do |organismo| %>
               <li>
-                  <%= link_to h(organismo), organismo_path(organismo) %>
+                  <%= link_to h(organismo), organization_path(organismo) %>
               </li>
           <% end
-             end %>
+      end %>
       <li>
         <%= link_to l(:label_logout), :signout %>
       </li>

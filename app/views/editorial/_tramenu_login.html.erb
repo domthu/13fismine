@@ -35,7 +35,7 @@
                     <% if User.current.sigla_tipo() %>
                         <div class="fs-login" id="fs-login2-txt">
                           <span> Affilato a:</span><br/>
-                          <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()) %>
+                          <%= link_to h(User.current.sigla_tipo()), cross_organization_path(User.current.sigla_tipo()) %>
                         </div>
                     <% end %>
                 <% end %>
@@ -92,4 +92,3 @@
                 <% end %>
             </div>
     <% end %>
-
