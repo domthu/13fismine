@@ -472,7 +472,7 @@ class EditorialController < ApplicationController
       redirect_to :action => 'profilo_show', :id => @user_profile
       return
     end
-    render :layout => "editorial_edit"
+   # render :layout => "editorial_edit"
   end
 
 

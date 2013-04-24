@@ -146,6 +146,23 @@
     margin-left: 5px;
 
 }
+.fs-tramenu1-logged{
+    border: 0;
+    border-collapse: separate;
+    -webkit-background-origin: border !important;
+    -moz-background-origin: border !important;
+    background-origin: border-box !important;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.3);
+    -moz-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.3);
+    box-shadow: 0 2px 5px rgba(50, 50, 50, 0.3);
+    width: 290px;
+    height: 90px;
+    display: block;
+
+}
 
 /*  fine 1  -  -  -  -  -  -   tramenu   primo blocco a sx -  -  -  -  -  -  */
 /*  inizio 2 -  -  -  -  -  -   tramenu   secondo blocco a sx -  -  -  -  -  -  */
@@ -221,6 +238,7 @@
     top: 10px;
 }
 
+
 /*  fine 2  -  -  -  -  -  -   tramenu   secondo blocco  -  -  -  -  -  -  */
 /*  inizio 3 -  -  -  -  -  -   tramenu   terzo blocco   -  -  -  -  -  -  */
 #fs-tramenu-blocco3 {
@@ -280,22 +298,28 @@
     color: #5f0100;
     position: relative;
 }
+.fs-login-logged{
+    border: 0;
+    border-collapse: separate;
+    -webkit-background-origin: border !important;
+    -moz-background-origin: border !important;
+    background-origin: border-box !important;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.3);
+    -moz-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.3);
+    box-shadow: 0 2px 5px rgba(50, 50, 50, 0.3);
+    width: 250px;
+    display: block;
 
-.fs-logged2 {
-    width: 100%;
-    border: dotted 1px #d2b48c;
 }
-
-.fs-logged2 ul {
-    width: 200px;
+.fs-logged2 {
+    margin-top: 3px;
+    padding: 3px 0 0 6px;
+    display: block;
     float: left;
 }
-
-.fs-logged2 ul li {
-    font-style: italic;
-    text-align: left;
-}
-
 .fs-logged2 a,
 .fs-logged2 a:link,
 .fs-logged2 a:visited,
@@ -304,15 +328,37 @@
     font-style: normal;
     text-align: left;
 }
-
-.fs-logged2-ico {
-    float: right;
-    width: 60px;
+#fs-login2-txt{
+width:175px;
+    float:left;
 }
 
-.fs-logged1 {
-    height: 50px;
+#fs-login2-asso{
+    width:50px;
+    float:left;
+}
+
+#fs-login-avatar {
     overflow: hidden;
+    display: table-row;
+}
+
+.fs-login {
+    margin: 0 3px;
+    float: left;
+    display: table-cell;
+}
+
+#fs-login-txt {
+    width: 146px;
+    margin: 0 9px;
+}
+
+#fs-login-exit {
+    line-height: 28px;
+    float: left;
+    display: table-cell;
+    padding: 3px 4px;
 }
 
 /*  fine  3 -  -  -  -  -  -   tramenu   terzo blocco   -  -  -  -  -  -  */
@@ -631,7 +677,8 @@ margin-left:-1px;*/
     box-sizing: border-box;
     max-width: 190px;
 }
-.fs-image-caption-wrapper-img{
+
+.fs-image-caption-wrapper-img {
     margin-bottom: 10px;
 }
 
@@ -1555,7 +1602,7 @@ right: -14px;   */
 }
 
 .fs-profiles-esx-btn {
-    width: 91%;
+    width: 93%;
     margin-left: 5px;
 
 }
@@ -1603,6 +1650,7 @@ right: -14px;   */
 .fs-my-avatar-m {
     padding: 3px;
     height: 80px;
+    width: 80px;
     background: transparent;
     -webkit-box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.2);
@@ -1627,6 +1675,13 @@ right: -14px;   */
 .fs-my-avatar img {
     border: solid 2px #ffa238;
 }
+#fs-profilo label{
+ color: #2C4056;
+    line-height: 1.5em;
+    font-weight: bold;
+}
+
+
 
 /* ===================== fine  chi siamo (user profiles)  ===================== */
 /* inizio slide */
@@ -1758,10 +1813,10 @@ right: -14px;   */
     -webkit-border-radius: 30%;
     -moz-border-radius: 30%;
     border-radius: 30%;
-       border: 1px solid #006185;
-       margin: 0 10px 0 0;
-       width: 7px;
-       height: 7px;
+    border: 1px solid #006185;
+    margin: 0 10px 0 0;
+    width: 7px;
+    height: 7px;
 }
 
 .fs-slidenavigatorslideshutterstock_1 > a:hover {
@@ -3252,6 +3307,58 @@ button.fs-vuoto-inline2-button {
     font-style: italic;
 
 }
+/* inline per il login in alto */
+
+.fs-vuoto-inline3-button {
+    border: 0;
+    border-collapse: separate;
+    -webkit-background-origin: border !important;
+    -moz-background-origin: border !important;
+    background-origin: border-box !important;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.3);
+    -moz-box-shadow: 0 2px 5px rgba(50, 50, 50, 0.3);
+    box-shadow: 0 2px 5px rgba(50, 50, 50, 0.3);
+    padding: 1px;
+    margin: 0 auto;
+    font-variant: normal;
+    font-style: italic;
+    font-size: 0.8em;
+    width: 100%;
+    color: #000000;
+}
+
+a.fs-vuoto-inline3-button,
+a.fs-vuoto-inline3-button:link,
+a:link.fs-vuoto-inline3-button:link,
+body a.fs-vuoto-inline3-button:link,
+a.fs-vuoto-inline-button3:visited,
+body a.fs-vuoto-inline-button3:visited,
+input.fs-vuoto-inline-button3,
+button.fs-vuoto-inline-button3 {
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    cursor: pointer;
+    text-indent: 0;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    font-variant: normal;
+    font-style: italic;
+    font-size: 0.8em;
+    width: 100%;
+    color: #000000;
+
+}
+
+
+
 
 /***** Flash & error messages ****/
 #errorExplanation, div.flash, .nodata, .warning {

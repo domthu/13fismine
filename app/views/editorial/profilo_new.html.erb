@@ -6,22 +6,20 @@
         margin: 10px 5px 0 0;
     }
 </style>
-
-<% form_tag({:action => "profilo_new",  :method => :post}, :multipart => true) do %>
+<div id="fs-profilo">
+  <h3 style="text-align: center;"><%= @this_user %></h3>
+<% form_tag({:action => "profilo_new", :method => :post}, :multipart => true) do %>
     <%= hidden_field_tag :user_id, @this_user.id %>
     <div class="fs-profiles-esx">
       <div id="fs-photo-edit">
-            <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:none;"></div>
+        <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:none;"></div>
           <div id="fs-photo-edit-g" style="display:block;">' + gravatar_for(@this_user, :size => 120) + ' </div>' %>
-
       </div>
-
-      <%# image_tag @user_profile.photo.url(:l) %>
-     <%= " id > " + @this_user.id.to_s  %>
       <div class="fs-vuoto-inline-button  fs-profiles-esx-btn">
-        <label><%= radio_button_tag :use_gravatar, true,  :onchange => "funct_avatar('g')" %> <%= 'Usa mail su Gravatar' %></label><br/>
+        <label><%= radio_button_tag :use_gravatar, true, :onchange => "funct_avatar('g')" %> <%= 'Usa mail su Gravatar' %></label><br/>
         <label><%= radio_button_tag :use_gravatar, false, :onchange => "funct_avatar('a')" %> <%= 'Usa tua immagine Avatar' %></label><br/>
         <%= file_field_tag :photo, :onchange => "handleFileSelect('handleFileSelect, false'})" %>
+        <h6>nb: usa un'immagine quadrata sarà ridimensionata a 200px per 200px </h6>
       </div>
     </div>
     <div class="fs-profiles-ecx">
@@ -59,13 +57,12 @@
 
       <div class="fs-profiles-radio-buttons">
         <%= label_tag l(:label_display_in) %> &nbsp;<br/>
-        <label><%= radio_button_tag :display_in, 1  %> <%= 'Collaboratori' %></label><br/>
+        <label><%= radio_button_tag :display_in, 1, true %> <%= 'Collaboratori' %></label><br/>
         <label><%= radio_button_tag :display_in, 2 %> <%= 'Responsabili' %></label><br/>
         <label><%= radio_button_tag :display_in, 3 %> <%= 'Direttori' %></label><br/>
         <label><%= radio_button_tag :display_in, 4 %> <%= 'Non Visibile' %></label><br/>
-
       </div>
-      <p style="padding:5px 0;"></p>
+      <p style="padding:10px 0;"></p>
 
       <p>  <%= submit_tag "crea", :action => 'profilo_edit', :class => "fs-giallo-button" %></p>
 
@@ -75,22 +72,59 @@
 
     </div>
     <div class="cleared"></div>
-    <p>
-      <%= label_tag l(:label_titoli) %><br/>
-      <%= text_area_tag :titoli,  :cols => 20, :rows => 4, :class => 'wiki-edit' %>
-    </p>
+    <div class="yui-skin-sam">
+      <%= label_tag l(:label_titoli) %>
+      <br/>
 
-    <p>
-      <%= label_tag l(:label_curriculum) %><br/>
-      <%= text_area_tag :curriculum, :cols => 20, :rows => 6, :class => 'wiki-edit' %>
-    </p>
+      <p><%= text_area_tag :titoli, :name => 'titoli', :required => false, :cols => 120, :rows => 15 %>  </p>
+    </div>
+    <div class="yui-skin-sam">
+      <%= label_tag l(:label_curriculum) %>
+      <br/>
 
-
+      <p><%= text_area_tag :curriculum, :name => 'curriculum', :required => false, :cols => 120, :rows => 15 %>  </p>
+    </div>
 <% end %>
+</div>
 
-<%= wikitoolbar_for 'titoli' %>
-<%= wikitoolbar_for 'curriculum' %>
+<% content_for :header_yui do %>
+    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
+    <%= javascript_include_tag "yui/element-min.js" %>
+    <%= javascript_include_tag "yui/container_core-min.js" %>
+    <%= javascript_include_tag "yui/menu-min.js" %>
+    <%= javascript_include_tag "yui/button-min.js" %>
+    <%= javascript_include_tag "yui/editor-min.js" %>
+    <%= javascript_include_tag "yui/yui_fs.js" %>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+    (function () {
+        var myConfig1 = {
+            handleSubmit:true,
+            height:'200px',
+            width:'95%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:true,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        var myEditor1 = init_yui_editor_fs('titoli', myConfig1);
+        var myConfig2 = {
+            handleSubmit:true,
+            height:'400px',
+            width:'95%',
+            animate:true,
+            dompath:true,
+            focusAtStart:true
+        };
+        init_yui_editor_fs('curriculum', myConfig2);
+    })
+            ();
 
+</script>
 <script>
     // valori accettati 1= Immagine Avatar Papareclip , 0 = Immagine Gravatar , 2  = Nuova immagine upload
     function funct_avatar(val) {
