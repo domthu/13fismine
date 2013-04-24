@@ -63,6 +63,7 @@ class FeesController < ApplicationController
     @name_invitati_count = @name_invitati.count
     @num_uncontrolled_TOTAL = @name_manager_count + @name_author_count + @name_invitati_count
 
+
     #BY CLIENT ROLE
     #  FeeConst::ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
     #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
@@ -81,6 +82,7 @@ class FeesController < ApplicationController
     #@num_power_user = User.all(:conditions => {:power_user => 1}).count
     #User member of ASSOCIATION
     @num_Associations =  Asso.all.count
+    @referee = User.all(:conditions => 'id IN ? ')
     #questi utenti non pagano. Paga l'associazione (organismo associato)
     #@num_Associated_COUNT =  User.all(:conditions => {:asso_id => !nil}).count
     @num_Associated_COUNT =  User.all(:conditions => 'asso_id IS NOT NULL').count

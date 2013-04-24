@@ -87,6 +87,7 @@
       <li>ASSOCIAZIONE Numero di organismi associati: <b><%= @num_Associations %></b></li>
       <li>ASSOCIATI NON PAGANTI: Numero di membri (soci) <b> <%= @num_Associated_COUNT %></b></li>
     </ul>
+    <br>
     Dettaglio dello stato degli Utenti associati e quindi Non paganti
     <ul>
       <li class="icon icon-abbo"><b>[<%= @num_Associated_ABBONATO %>]</b> associati con abbonamento valido</li>
@@ -95,6 +96,39 @@
       <li class="icon icon-exp"><b>[<%= @num_Associated_EXPIRED %>]</b> associati con abbonamento scaduto </li>
       <li class="icon icon-arc"><b>[<%= @num_Associated_ARCHIVIED %>]</b> associati archiviati </li>
     </ul>
+  </fieldset>
+
+  <fieldset class="box tabular">
+    <legend><%=l(:label_assos_referee)%></legend>
+    <%=l(:label_assos_referee_help)%>
+    <% if @referee.any? %>
+      <%= l(:label_total) %>:<strong class="total center"><%= h @referee.count %></strong>
+      <table class="list users">
+        <thead>
+          <th><%= l(:label_user) %></th>
+          <th><%= l(:field_due_date) %></th>
+          <th>Power</th>
+        </thead>
+        <tbody>
+        <% @referee.each do |user| %>
+          <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
+            <td class="user">
+              <%= link_to_user user unless User.current.admin? %>
+              <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
+            </td>
+            <td>
+              <%= format_date(user.scadenza) %>
+            </td>
+            <td>
+              <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled'  %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="nodata"><%= l(:label_no_referee) %></p>
+    <% end %>
   </fieldset>
 
   <fieldset class="box tabular">

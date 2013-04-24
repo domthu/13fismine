@@ -5,8 +5,27 @@
     <!--[form:user]-->
     <div class="splitcontentleft">
 
+      <fieldset class="box">
+        <legend><%=l(:label_gest_privato)%></legend>
+
+
+      </fieldset>
+
       <fieldset class="box tabular">
-        <legend><%=l(:label_user_altridati_plural)%></legend>
+        <legend><%=l(:label_gest_organismo)%></legend>
+          <p><%= f.check_box :power_user, :label => :field_power_user, :title => 'power user' %> </p>
+          <p class="">
+            <label for="refe"><%= l(:label_is_referente) %></label>
+            <span class="<%= 'total' unless !@user.is_referente? %>">
+            <%= check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
+          </p>
+
+      </fieldset>
+
+    </div>
+    <div class="splitcontentright">
+      <fieldset class="box tabular">
+        <legend><%=l(:label_scadenza_ruolo)%></legend>
 
         <p><%= f.text_field :tariffa_precedente, :label => :field_tariffa_precedente, :required => false, :size => 5  %></p>
         <%=l(:field_data)%> <%= format_date @user.data %>
@@ -27,21 +46,6 @@
           <br />
         <% end %>
         </strong></p>
-      </fieldset>
-
-      <fieldset class="box tabular">
-        <legend><%=l(:label_asso_organization)%></legend>
-
-
-      </fieldset>
-
-    </div>
-    <div class="splitcontentright">
-
-      <fieldset class="box">
-        <legend><%=l(:label_contatti)%></legend>
-
-
       </fieldset>
 
     </div>

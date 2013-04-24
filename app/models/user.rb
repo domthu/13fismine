@@ -291,6 +291,10 @@ class User < Principal
     return self.asso.nil?
   end
 
+  def is_referente?
+    return (Organization.all(:conditions => {:user_id => self.id}).count > 0)
+  end
+
   #Return friendly String
   def scadenza_fra
     scadeil = self.scadenza
