@@ -20,6 +20,10 @@ class AddAttachmentsImageToSection < ActiveRecord::Migration
     add_column :group_banners, :image_content_type, :string
     add_column :group_banners, :image_file_size, :integer
     add_column :group_banners, :image_updated_at, :datetime
+    add_column :issues, :image_file_name, :string
+    add_column :issues, :image_content_type, :string
+    add_column :issues, :image_file_size, :integer
+    add_column :issues, :image_updated_at, :datetime
   end
 
   def self.down
@@ -39,9 +43,13 @@ class AddAttachmentsImageToSection < ActiveRecord::Migration
     remove_column :assos, :image_content_type
     remove_column :assos, :image_file_size
     remove_column :assos, :image_updated_at
-    add_column :group_banners, :image_file_name, :string
-    add_column :group_banners, :image_content_type, :string
-    add_column :group_banners, :image_file_size, :integer
-    add_column :group_banners, :image_updated_at, :datetime
+    remove_column :group_banners, :image_file_name
+    remove_column :group_banners, :image_content_type
+    remove_column :group_banners, :image_file_size
+    remove_column :group_banners, :image_updated_at
+    remove_column :issues, :image_file_name
+    remove_column :issues, :image_content_type
+    remove_column :issues, :image_file_size
+    remove_column :issues, :image_updated_at
   end
 end
