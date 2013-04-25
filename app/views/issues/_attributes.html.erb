@@ -18,7 +18,6 @@
   <% end %>
 </p>
 
-
 <p><%= f.select :priority_id, (@priorities.collect {|p| [p.name, p.id]}), {:required => true}, :disabled => !@issue.leaf? %></p>
 <p><%= f.select :assigned_to_id, principals_options_for_select(@issue.assignable_users, @issue.assigned_to), :include_blank => true %></p>
 <% unless @project.issue_categories.empty? %>
@@ -41,7 +40,6 @@
 </p>
 <% end %>
 </div>
-
 <div class="splitcontentright">
 <% if User.current.allowed_to?(:manage_subtasks, @project) %>
 <p id="parent_issue"><%= f.text_field :parent_issue_id, :size => 10 %></p>

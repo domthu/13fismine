@@ -1,7 +1,6 @@
 <h2><%= link_to l(:label_top_section_plural), top_sections_path %> &#187; <%= l(:label_top_section_new) %></h2>
 <% labelled_form_for @top_section, :html => {:multipart => true} do |f| %>
     <%= render :partial => 'form', :locals => {:f => f} %>
-    <p><label><%= l(:label_attachment_plural) %></label><%= render :partial => 'attachments/form' %></p>
     <p>
       <%= f.submit l(:button_create) %>
       <%= f.submit l(:button_create_and_continue), :name => 'continue' %>

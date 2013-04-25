@@ -20,14 +20,12 @@ class Issue < ActiveRecord::Base
   include FeesHelper
   #after_update :reprocess
   #has_image  #vedi config/initializers/paperclip.rb
-  has_attached_file :photo, :styles => {:large => ["200x200#", :png, :jpg],
-                :medium => ["100x100#", :png,:jpg],
-                :small => ["70x70#", :png,:jpg],
-                :little => ["50x50#", :png,:jpg],
-                :tiny => ["24x24#", :png,:jpg]},
-                    :url => "users/profiles/:id/:style/:basename.:extension",
-                    :path => "#{RAILS_ROOT}/public/images/users/profiles/:id/:style/:basename.:extension",
-                    :default_url => "commons/:style-no_avatar.jpg"
+  has_attached_file :image, :styles => {:m => "155x155>", :l => "310x155>"},
+                    :url  => :url_image ,
+                    :path => :path_image ,
+                    :default_url => "commons/:style_no-image.png"
+  validates_attachment_size :image, :less_than => 200.kilobytes
+  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 
   belongs_to :project
   belongs_to :tracker
