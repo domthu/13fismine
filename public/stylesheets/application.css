@@ -1107,7 +1107,26 @@ h2 img { vertical-align:middle; }
 .total{font-weight: bold;color: #2C4056; background-color:#FFFFDD; padding: 5px;}
 .htmldraft{padding:20px; margin-top: 1em; background: url(../images/draft.png)}
 .hide{display: none;}
-
+/* sandro per implementazione paperclip e yui */
 #buttons-inline div{
     display: inline-block;
+}
+.splitcontents-3box{
+    float: left;
+    width: 33%;
+}
+.splitcontents-3box p label {
+                         font-size: 0.9em;
+    margin-left: -155px;
+    /* width of labels. Should be smaller than left column to create some right margin */
+    width: 150px;
+}
+
+.splitcontents-3box p select {
+}
+
+
+.splitcontents-3box p {
+    width: 100%;
+    padding-left: 145px;
 }
