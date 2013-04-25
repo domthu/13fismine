@@ -21,23 +21,21 @@
 <p style="display:none;">On ne fait pas d'omelette sans casser des oeufs
 <= f.text_field :subject, :size => 80, :required => true ></p>
 <p><%= f.text_area :subject,
-                   :cols => 20,
+                   :cols => 88,
                    :rows => (@issue.subject.blank? ? 2 : [[2, @issue.subject.length / 50].max, 20].min),
-                   :accesskey => accesskey(:edit),
-                   :class => 'wiki-edit' %></p>
-
+                   :accesskey => accesskey(:edit) %></p>    <%#	    :class => 'wiki-edit' %>%>
+  <p><%= f.text_area :summary,
+                     :cols => 88,
+                     :rows => (@issue.summary.blank? ? 3 : [[3, @issue.summary.length / 50].max, 30].min),
+                     :accesskey => accesskey(:edit) %></p>
 <div id="attributes" class="attributes">
   <%= render :partial => 'issues/attributes' %>
   <%#, :locals => {:project => @project, :issue => @issue}%>
 </div>
-<p><%= f.text_area :summary,
-                   :cols => 20,
-                   :rows => (@issue.summary.blank? ? 5 : [[5, @issue.summary.length / 50].max, 50].min),
-                   :accesskey => accesskey(:edit),
-                   :style => 'width:300px;' %></p>
+
 
 <p><%= f.text_area :description,
-                   :cols => 60,
+                   :cols => 88,
                    :rows => (@issue.description.blank? ? 10 : [[10, @issue.description.length / 50].max, 100].min),
                    :accesskey => accesskey(:edit),
                    :class => 'rich_text_editor' %></p>

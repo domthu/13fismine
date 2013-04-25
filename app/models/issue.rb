@@ -21,8 +21,8 @@ class Issue < ActiveRecord::Base
   #after_update :reprocess
   #has_image  #vedi config/initializers/paperclip.rb
   has_attached_file :image, :styles => {:m => "155x155>", :l => "310x155>"},
-                    :url  => :url_image ,
-                    :path => :path_image ,
+                    :url  => "articoli/:id:style.:extension",
+                    :path => "#{RAILS_ROOT}/public/images/articoli/:id:style.:extension",
                     :default_url => "commons/:style_no-image.png"
   validates_attachment_size :image, :less_than => 200.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
