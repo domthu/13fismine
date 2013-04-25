@@ -1368,12 +1368,15 @@ en:
   label_account: Credenziali
   label_registration: Dati di registrazione
   label_scadenza_ruolo: Gestione Ruolo <--> Scadenza
-  label_is_referente: è referente? (resp.)
+  label_is_referente: è responsabile?
   label_gest_privato: Privato == Pagante
-  label_gest_organismo: Organismo == Pagante
+  label_gest_organismo: Organismo associato == Utente non paga
   label_assos_referee: Responsabili organismi
-  label_assos_referee_help: Lista dei referenti di organismi associato
+  label_assos_referee_help: Lista dei responsabili di organismi associati
   label_no_referee: Nessun responsabile trovato
+  label_referee_list_assos: Responsabile di associazioni
+  label_have_referee: Ha responsabilità?
+
 
   field_codice: (old) Codice
   field_pwd: (old) Password

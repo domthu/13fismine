@@ -1,6 +1,7 @@
 <% roles_fs = Role.all_fs %>
 <% remote_form_for(:user, :url => { :action => 'edit_abbonamento', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
 
+<% __asso = @user.associazione_affiliata() %>
   <p><%= submit_tag l(:button_save_abbonamento) %></p>
   <div id="edit_dati_form">
     <!--[form:user]-->
@@ -31,17 +32,48 @@
 
       </fieldset>
 
+      <fieldset class="box tabular">
+        <legend><%=l(:label_is_referente)%></legend>
+
+          <p><%= f.check_box :power_user, :label => :field_power_user, :title => 'power user' %> </p>
+
+          <p class="">
+            <label for="refe"><%= l(:label_have_referee) %></label>
+            <span class="<%= 'total' if @user.is_referente? %>">
+            <%= check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
+          </p>
+
+          <p class="">
+            <label><%= l(:label_referee_list_assos) %></label>
+
+            <span>
+              <% if @user.responsable? && @user.responsable_of && @user.responsable_of.count > 0 %>
+                <span><%= l(:label_total) %>:<strong class="total center"><%= h @user.responsable_of.count %></strong><%= l(:label_list_responsable_for)%></span>
+                <ul>
+                <% @user.responsable_of.sort_by(&:data_scadenza).reverse.each do |organismo| %>
+                  <li><%= link_to h(organismo), organization_path(organismo) %></li>
+                <% end %>
+                </ul>
+              <%else %>
+                <%= l(:label_not_responsable) %>
+              <% end %>
+            </span>
+          </p>
+
+      </fieldset>
 
       <fieldset class="box tabular">
         <legend><%=l(:label_gest_organismo)%></legend>
 
+          <div class="asso-select"><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => 'cambia asso' %></div>
+
           <p class="">
             <label><%= l(:label_have_asso) %></label>
             <span>
-              <% if @user.associazione_affiliata() %>
-                  <%= link_to h(@user.associazione_affiliata()), asso_path(@user.associazione_affiliata()) %>
+              <% if __asso %>
+                  <%= link_to h(__asso), asso_path(__asso) %>
                 <%# if @user.asso_id? %>
-                  <%# link_to h(@user.asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %>
+                  <%# link_to h(__asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %>
                 <%# end %>
               <% else %>
                 <%= l(:label_no_asso) %>
@@ -60,31 +92,18 @@
             </span>
           </p>
 
-
-          <div class="asso-select"><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_asso) %></div>
-
-<% if @user.associazione_affiliata() %>
-
-          <p><%= f.check_box :power_user, :label => :field_power_user, :title => 'power user' %> </p>
-          <p class="">
-            <label for="refe"><%= l(:label_is_referente) %></label>
-            <span class="<%= 'total' unless !@user.is_referente? %>">
-            <%= check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
-          </p>
+<% if __asso %>
 
           <p class="">
-            <label><%= l(:label_is_responsable) %></label>
-            <span>
-              <% if @user.responsable? && @user.responsable_of %>
-                <small><%= l(:label_list_responsable_for)%></small>
-                <% @user.responsable_of.each do |organismo| %>
-                  <%= link_to h(organismo), organization_path(organismo) %>
-              <% end
-              else %>
-                <%= l(:label_not_responsable) %>
-              <% end %>
-            </span>
-          </p>
+          <label><%=l(:label_referente) %></label><span>
+            <%# if __asso.organization.referente %>
+            <% if @user.asso.organization.referente %>
+              <%= link_to h(@user.asso.organization.referente) unless User.current.admin? %>
+              <%= link_to h(@user.asso.organization.referente), edit_user_path(:id => @user.asso.organization.referente) unless !User.current.admin? %>
+            <% else %>
+              <em class="nodata"><%= l(:label_no_referente) %></em>
+            <% end %>
+          </span></p>
 
       </fieldset>
 
@@ -120,7 +139,6 @@
           <p class="nodata"><%= l(:label_no_soci) %></p>
         <% end %>
 <% end %>
-
       </fieldset>
 
     </div>
@@ -148,6 +166,7 @@
           <br />
         <% end %>
         </strong></p>
+        <p><%=l(:field_role)%>: <%= @user.role_id.to_s %></p>
       </fieldset>
 
     </div>

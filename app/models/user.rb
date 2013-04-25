@@ -81,7 +81,9 @@ class User < Principal
   #has_one :reference, :class_name => 'Organization', :dependent => :nullify
   has_many :references, :class_name => 'Organization', :dependent => :nullify
   has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
+
   acts_as_customizable
+
   attr_accessor :password, :password_confirmation
   attr_accessor :last_before_login_on
   # Prevents unauthorized assignments
@@ -336,9 +338,18 @@ class User < Principal
     return self.asso.nil?
   end
 
+  #l'utente gesctisce almeno un Organization (Association)
   def is_referente?
     return (Organization.all(:conditions => {:user_id => self.id}).count > 0)
   end
+  def responsable?
+    return !self.references.nil?
+  end
+  #List of Organization the user is power user
+  def responsable_of
+    self.references
+  end
+
 
   #Return friendly String
   def scadenza_fra
@@ -402,17 +413,6 @@ class User < Principal
       return self.cross_organization.name
     end
   end
-
-
-  def responsable?
-    return self.references.nil?
-  end
-
-  #List of Organization the user is power user
-  def responsable_of
-    self.references
-  end
-
 
   #region ROLE * USER
   def ismanager?

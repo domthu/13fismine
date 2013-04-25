@@ -1353,16 +1353,16 @@ it:
   field_address_map: Geo posizione
 
 #User
-  label_power_user: Resp. Asso.
+  label_power_user: Power user (Resp. asso.?)
   label_users: Utenti
   label_user_invoices: "Altre fatture legate all'utente"
-  label_organization_user_asso: Referenti org. asso correlati
+  label_organization_user_asso: Resp. org. asso correlati
   label_cross_organization_user_asso: "Sigla: lista utenti federati"
   label_cross_organization_user_asso_none: nessun utente registrato per questa federazione
   label_asso_organization: Organismo associato
   label_asso_organization_none: Nessun organismo associato
 
-  field_power_user:  Responsabile organismo associato
+  field_power_user: Power user (Resp. asso.?)
   field_users: Utenti
   label_dati_plural: Dati FISCOSPORT
   label_abbonamento_plural: Abbonamento
@@ -1376,12 +1376,14 @@ it:
   label_account: Credenziali
   label_registration: Dati di registrazione
   label_scadenza_ruolo: Gestione Ruolo <--> Scadenza
-  label_is_referente: è referente? (resp.)
+  label_is_referente: è responsabile?
   label_gest_privato: Privato == Pagante
   label_gest_organismo: Organismo associato == Utente non paga
   label_assos_referee: Responsabili organismi
-  label_assos_referee_help: Lista dei referenti di organismi associato
+  label_assos_referee_help: Lista dei responsabili di organismi associati
   label_no_referee: Nessun responsabile trovato
+  label_referee_list_assos: Responsabile di associazioni
+  label_have_referee: Ha responsabilità?
 
   field_codice: (old) Codice
   field_pwd: (old) Password

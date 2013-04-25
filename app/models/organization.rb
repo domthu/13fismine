@@ -1,5 +1,7 @@
 class Organization < ActiveRecord::Base
 
+  include ApplicationHelper #get_short_date
+
   #domthu20120516
   #has_many :users, :dependent => :nullify
   belongs_to :user
@@ -18,12 +20,15 @@ class Organization < ActiveRecord::Base
   #TODO: verificare ci potrebbe essere che alcuni associazione Sigla - Tipo non appare nella tabella CrossOrganization
   # idem for User
 
+
   def to_s
     str = "[" << self.id.to_s << "] "
     str << (self.cross_organization.nil?  ? "" : self.cross_organization.name)
-    str << (self.asso.nil? ? "" : "(" << self.asso.name << ")")
-    str << (self.region.nil? ? "" : self.region.name)
-    str << (self.province.nil? ? "" : self.province.name)
+    #str << (self.asso.nil? ? "" : " (" << self.asso.name << ") ")
+    str << " - " + get_short_date(self.data_scadenza)
+    str << (self.region.nil? ? "" : " - " + self.region.name)
+    str << (self.province.nil? ? "" : ", " + self.province.name)
+    str << (self.comune.nil? ? "" : ", " + self.comune.name)
     return str
   end
 
@@ -36,6 +41,10 @@ class Organization < ActiveRecord::Base
 
   def scadenza
     return self.data_scadenza
+  end
+
+  def scadenza_format
+
   end
 
   def GetAssociati

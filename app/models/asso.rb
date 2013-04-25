@@ -45,12 +45,11 @@ class Asso < ActiveRecord::Base
 #  end
 
   def to_s
-#    if defined?(ragione_sociale) and !(ragione_sociale.nil?)
-#      ragione_sociale #.to_s
-#    else
-#      "jean"
-#    end
-    ragione_sociale
+    str = "[" << self.id.to_s << "] "
+    str << (self.ragione_sociale.blank?  ? "?" : self.ragione_sociale)
+    str << (self.presidente.blank? ? "" : " (" + self.presidente + ")")
+    return str
+
   end
 
   alias :name :to_s
