@@ -6,68 +6,20 @@
     <div class="splitcontentleft">
 
 
-      <fieldset class="box">
-        <legend><%=l(:label_gest_privato)%></legend>
-          <%= gravatar_for(User.current) unless !User.current %>
-
-          <p class="">
-            <label><%= l(:label_have_sigla_tipo) %></label>
-            <span>
-              <% if User.current && User.current.associazione_affiliata() %>
-                  ASSOCIAZIONE: <%= link_to h(User.current.associazione_affiliata()), asso_path(User.current.associazione_affiliata()) %>
-              <% else %>
-                <%= l(:label_no_asso) %>
-              <% end %>
-            </span>
-          </p>
-
-          <p class="">
-            <label><%= l(:label_have_organization) %></label>
-            <span>
-              <% if User.current && User.current.organization() %>
-                  <%= link_to h(User.current.organization()), organization_path(User.current.organization()) %>
-              <% else %>
-                  <%= l(:label_no_organization) %>
-              <% end %>
-            </span>
-          </p>
-
-          <p class="">
-            <label><%= l(:label_is_responsable) %></label>
-            <span>
-              <% if User.current && User.current.responsable? && User.current.responsable_of
-                User.current.responsable_of.each do |organismo| %>
-                  <%= link_to h(organismo), organization_path(organismo) %>
-              <% end
-              else %>
-                <%= l(:label_not_responsable) %>
-              <% end %>
-            </span>
-          </p>
-
-          <p><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_asso) %></p>
-        <% if @user.asso_id? %>
-          <p><%= link_to h(@user.asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %>  %></p>
-        <% end %>
-
-      </fieldset>
-
       <fieldset class="box tabular">
-        <legend><%=l(:label_gest_organismo)%></legend>
-
-          <p><%= f.check_box :power_user, :label => :field_power_user, :title => 'power user' %> </p>
-
+        <legend><%=l(:label_gest_privato)%></legend>
+          <div class="contextual">
+            <%= gravatar_for(@user) unless !@user %>
+          </div>
           <p class="">
-            <label for="refe"><%= l(:label_is_referente) %></label>
-            <span class="<%= 'total' unless !@user.is_referente? %>">
-            <%= check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
+            <label><%= l(:label_localizazzione) %></label>
+            <span><%= @user.getLocalization() %></span>
           </p>
 
           <p class="">
-            <label for="siglatipo"><%= l(:label_have_sigla_tipo) %></label> </p>
-          <p class="">
-            <span><% if User.current && User.current.sigla_tipo() %>
-                <%= link_to h(User.current.sigla_tipo()), cross_organization_path (User.current.sigla_tipo()) %>
+            <label for="siglatipo"><%= l(:label_have_sigla_tipo) %></label>
+            <span><% if @user.sigla_tipo() %>
+                <%= link_to h(@user.sigla_tipo()), cross_organization_path (@user.sigla_tipo()) %>
               <% else %>
                 <%= l(:label_no_sigla_tipo) %>
               <% end %>
@@ -79,8 +31,72 @@
 
       </fieldset>
 
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_gest_organismo)%></legend>
+
+          <p class="">
+            <label><%= l(:label_have_sigla_tipo) %></label>
+            <span>
+              <% if @user.associazione_affiliata() %>
+                  ASSOCIAZIONE: <%= link_to h(@user.associazione_affiliata()), asso_path(@user.associazione_affiliata()) %>
+              <% else %>
+                <%= l(:label_no_asso) %>
+              <% end %>
+            </span>
+          </p>
+
+          <p class="">
+            <label><%= l(:label_have_organization) %></label>
+            <span>
+              <% if @user.organization() %>
+                  <%= link_to h(@user.organization()), organization_path(@user.organization()) %>
+              <% else %>
+                  <%= l(:label_no_organization) %>
+              <% end %>
+            </span>
+          </p>
+
+
+          <p><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_asso) %></p>
+        <% if @user.asso_id? %>
+          <p><%= link_to h(@user.asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %></p>
+        <% end %>
+
+
+
+      </fieldset>
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_gest_organismo)%></legend>
+
+
+          <p><%= f.check_box :power_user, :label => :field_power_user, :title => 'power user' %> </p>
+          <p class="">
+            <label for="refe"><%= l(:label_is_referente) %></label>
+            <span class="<%= 'total' unless !@user.is_referente? %>">
+            <%= check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
+          </p>
+
+          <p class="">
+            <label><%= l(:label_is_responsable) %></label>
+            <span>
+              <% if @user.responsable? && @user.responsable_of
+                @user.responsable_of.each do |organismo| %>
+                  <%= link_to h(organismo), organization_path(organismo) %>
+              <% end
+              else %>
+                <%= l(:label_not_responsable) %>
+              <% end %>
+            </span>
+          </p>
+
+
+      </fieldset>
+
     </div>
     <div class="splitcontentright">
+
       <fieldset class="box tabular">
         <legend><%=l(:label_scadenza_ruolo)%></legend>
 

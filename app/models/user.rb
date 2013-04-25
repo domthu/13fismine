@@ -135,6 +135,17 @@ class User < Principal
     News.all(:conditions => ['author_id = ?', self.id], :order => "created_on DESC")
   end
 
+  def getLocalization()
+    str = ""
+    str += self.indirizzo + "<br />" unless self.indirizzo.blank?
+    if self.comune_id && self.comune
+      str += self.comune.cap + " " unless !self.comune.cap
+      str += self.comune.name
+      str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
+      str += "<br />" + self.comune.province.region.name unless self.comune.province.region.nil?
+    end
+    return (str.nil? || str.blank?)  ? "-" : str
+  end
 
   #Utente è affiliato ad una Sigla-TipoOrganizzazione
   def sigla_tipo()

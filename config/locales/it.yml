@@ -1373,7 +1373,7 @@ it:
   label_scadenza_ruolo: Gestione Ruolo <--> Scadenza
   label_is_referente: è referente? (resp.)
   label_gest_privato: Privato == Pagante
-  label_gest_organismo: Organismo == Pagante
+  label_gest_organismo: Organismo associato == Utente non paga
   label_assos_referee: Responsabili organismi
   label_assos_referee_help: Lista dei referenti di organismi associato
   label_no_referee: Nessun responsabile trovato
