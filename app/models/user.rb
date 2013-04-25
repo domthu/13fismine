@@ -813,13 +813,55 @@ class User < Principal
                   'language',
                   'custom_field_values',
                   'custom_fields',
-                  'identity_url'
-#                  'data',
-#                  'datascadenza'
+                  'identity_url',
+                  'codice',
+                  'pwd',
+                  'login_fisco',
+                  'mail_fisco',
+                  'nome',
+                  'titolo',
+                  'soc',
+                  'parent',
+                  'note',
+                  'indirizzo',
+                  'cap',
+                  'comune_id',
+                  'prov',
+                  'sede',
+                  'telefono',
+                  'fax',
+                  'telefono2',
+                  'mail2',
+                  'sez',
+                  'iva',
+                  'codicefiscale',
+                  'num_reg_coni',
+                  'se_condition',
+                  'se_privacy'
+
 
   safe_attributes 'status',
                   'auth_source_id',
+                  'data',
+                  'datascadenza',
+                  'asso_id',
+                  'role_id',
+                  'cross_organization_id',
+                  'tariffa_precedente',
+                  'power_user',
+                  'conferma_registrazione',
+                  'abbonato',
+                  'disabilitato',
+                  'iva_precedente',
+                  'pagamento_precedente',
+                  'data_ultimo_pagamento',
+                  'data_accredito',
+                  'anno_competenza',
+                  'crediti',
+                  'annotazioni',
                   :if => lambda { |user, current_user| current_user.admin? }
+
+
 
   safe_attributes 'group_ids',
                   :if => lambda { |user, current_user| current_user.admin? && !user.new_record? }

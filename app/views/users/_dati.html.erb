@@ -1,4 +1,5 @@
-<% form_for @user, :url => { :action => 'edit_dati', :id => @user}, :builder => TabularFormBuilder do |f| %>
+<% remote_form_for(:user, :url => { :action => 'edit_dati', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
+<%# form_for @user, :url => { :action => 'edit_dati', :id => @user}, :builder => TabularFormBuilder do |f| %>
 
   <%= error_messages_for 'edit_dati' %>
 

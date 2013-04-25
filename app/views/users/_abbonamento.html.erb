@@ -74,7 +74,8 @@
             </span>
           </p>
 
-        <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [c.organizzazione + ' (' + c.sigla + ')', c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_cross_organization) %></p>
+        <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [c.organizzazione + ' (' + c.sigla + ')', c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_cross_organization) %><small>l'utente può appartenere o non ad una organizzazione. I 2 campi Sigla (ex Organismi) e Tipo organizzazione sono raddunati in una foreign_key
+</small></p>
 
       </fieldset>
 
@@ -112,13 +113,7 @@
   <p><%= submit_tag l(:button_save_abbonamento) %></p>
 <% end %>
 
-  #domthu20120916
-  belongs_to :role, :class_name => 'Role', :foreign_key => 'role_id' #, :default => FeeConst::ROLE_REGISTERED
 
-  belongs_to :asso, :class_name => 'Asso', :foreign_key => 'asso_id'
-
-  #l'utente può appartenere o non ad una organizzazione
-  #ATTENZIONE i 2 campi Sigla (ex Organismi) e Tipo organizzazione sono raddunati in una foreign_key
   belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
   #TODO: verificare ci potrebbe essere che alcuni associazione Sigla - Tipo non appare nella tabella CrossOrganization
   # prova per i banner (sandro)
