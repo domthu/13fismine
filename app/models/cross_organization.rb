@@ -8,6 +8,9 @@ class CrossOrganization < ActiveRecord::Base
   has_many :users #, :dependent => :nullify
   belongs_to :type_organization, :class_name => 'TypeOrganization', :foreign_key => 'type_organization_id'
 
+  #named_scope :federati, :order => "#{User.table_name}.status = #{STATUS_ACTIVE}"
+  #, :conditions => "#{User.table_name}.status = #{STATUS_ACTIVE}"
+
   #validation on uniqueness on two attributes
   validates_uniqueness_of :sigla, :scope => :type_organization_id
   #rails 3 validates :zipcode, :uniqueness => {:scope => :recorded_at}

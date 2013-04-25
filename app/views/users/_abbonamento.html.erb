@@ -1,6 +1,7 @@
 <% roles_fs = Role.all_fs %>
 <% remote_form_for(:user, :url => { :action => 'edit_abbonamento', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
 
+  <p><%= submit_tag l(:button_save_abbonamento) %></p>
   <div id="edit_dati_form">
     <!--[form:user]-->
     <div class="splitcontentleft">
@@ -26,8 +27,7 @@
             </span>
           </p>
 
-        <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [c.organizzazione + ' (' + c.sigla + ')', c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_cross_organization) %><small>l'utente può appartenere o non ad una organizzazione. I 2 campi Sigla (ex Organismi) e Tipo organizzazione sono raddunati in una foreign_key
-</small></p>
+
 
       </fieldset>
 
@@ -36,10 +36,13 @@
         <legend><%=l(:label_gest_organismo)%></legend>
 
           <p class="">
-            <label><%= l(:label_have_sigla_tipo) %></label>
+            <label><%= l(:label_have_asso) %></label>
             <span>
               <% if @user.associazione_affiliata() %>
-                  ASSOCIAZIONE: <%= link_to h(@user.associazione_affiliata()), asso_path(@user.associazione_affiliata()) %>
+                  <%= link_to h(@user.associazione_affiliata()), asso_path(@user.associazione_affiliata()) %>
+                <%# if @user.asso_id? %>
+                  <%# link_to h(@user.asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %>
+                <%# end %>
               <% else %>
                 <%= l(:label_no_asso) %>
               <% end %>
@@ -58,18 +61,9 @@
           </p>
 
 
-          <p><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_asso) %></p>
-        <% if @user.asso_id? %>
-          <p><%= link_to h(@user.asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %></p>
-        <% end %>
+          <div class="asso-select"><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_asso) %></div>
 
-
-
-      </fieldset>
-
-      <fieldset class="box tabular">
-        <legend><%=l(:label_gest_organismo)%></legend>
-
+<% if @user.associazione_affiliata() %>
 
           <p><%= f.check_box :power_user, :label => :field_power_user, :title => 'power user' %> </p>
           <p class="">
@@ -81,8 +75,9 @@
           <p class="">
             <label><%= l(:label_is_responsable) %></label>
             <span>
-              <% if @user.responsable? && @user.responsable_of
-                @user.responsable_of.each do |organismo| %>
+              <% if @user.responsable? && @user.responsable_of %>
+                <small><%= l(:label_list_responsable_for)%></small>
+                <% @user.responsable_of.each do |organismo| %>
                   <%= link_to h(organismo), organization_path(organismo) %>
               <% end
               else %>
@@ -91,6 +86,40 @@
             </span>
           </p>
 
+      </fieldset>
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_assos_users)%></legend>
+        <% associati = @user.asso.users %>
+        <% if associati.any? %>
+          <%= l(:label_total) %>:<strong class="total center"><%= h associati.count %></strong>
+          <table class="list users">
+            <thead>
+              <th style="text-align:left;"><%= l(:label_user) %></th>
+              <th style="text-align:left;"><%= l(:field_due_date) %></th>
+              <th style="text-align:left;"><i class="icon icon-man" title="Power user, responsabile"></i></th>
+            </thead>
+            <tbody>
+            <% associati.sort_by(&:lastname).each do |user| %>
+              <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
+                <td class="user icon<%= user.icon() %>">
+                  <%= link_to_user user unless User.current.admin? %>
+                  <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
+                </td>
+                <td>
+                  <%= format_date(user.scadenza) %>
+                </td>
+                <td>
+                  <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled'  %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="nodata"><%= l(:label_no_soci) %></p>
+        <% end %>
+<% end %>
 
       </fieldset>
 
@@ -122,6 +151,7 @@
       </fieldset>
 
     </div>
+
   </div>
   <div style="clear:left;"></div>
   <!--[eoform:user]-->

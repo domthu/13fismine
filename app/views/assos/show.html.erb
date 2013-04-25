@@ -12,77 +12,112 @@
 <div class="splitcontentleft">
   <fieldset class="box tabular">
     <legend><%=l(:label_asso_full)%></legend>
-    <p>
-        <em><%= l(:label_ragione_sociale) %>: <%=h @asso.ragione_sociale %></em>
-    </p>
-    <p>
-    <% unless @asso.organization.blank? %>
-      <%= link_to(h(@asso.organization.to_s), organization_path(@asso.organization), :class => 'icon icon-summary') %>
-    <% end %>
-    </p>
-    <p>
-        <%= l(:label_indirizzo) %>: <%=h @asso.indirizzo %>
-    </p>
-    <p>
-        <%= l(:label_email) %>: <%=h @asso.email %>
-    </p>
-    <p>
-        <%= l(:label_presidente) %>: <%=h @asso.presidente %>
-    </p>
-    <p>
-        <%= l(:label_referente) %>: <%=h @asso.referente %>
-    </p>
-    <p>
-        <%= l(:label_consulente) %>: <%=h @asso.consulente %>
-    </p>
-    <p>
-        <%= l(:label_logo) %>: <%=h @asso.logo %>
-    </p>
-    <p>
-        <%= l(:label_telefono) %>: <%=h @asso.telefono %>
-    </p>
-    <p>
-        <%= l(:label_telefono_alt) %>: <%=h @asso.telefono_alt %>
-    </p>
-    <p>
-        <%= l(:label_fax) %>: <%=h @asso.fax %>
-    </p>
-    <p>
-        <%= l(:label_email_alt) %>: <%=h @asso.email_alt %>
-    </p>
+    <p><label><%= l(:label_ragione_sociale) %></label><span>
+        <em><%=h @asso.ragione_sociale %></em>
+    </span></p>
+    <p><label>
+        <%= l(:label_indirizzo) %></label><span><%=h @asso.indirizzo %>
+    </span></p>
+    <p><label>
+        <%= l(:label_email) %></label><span><%=h @asso.email %>
+    </span></p>
+    <p><label>
+        <%= l(:label_presidente) %></label><span><%=h @asso.presidente %>
+    </span></p>
+    <p><label>
+        <%= l(:label_referente) %></label><span><%=h @asso.referente %>
+    </span></p>
+    <p><label>
+        <%= l(:label_consulente) %></label><span><%=h @asso.consulente %>
+    </span></p>
+    <p><label>
+        <%= l(:label_logo) %></label><span><%=h @asso.logo %>
+    </span></p>
+    <p><label>
+        <%= l(:label_telefono) %></label><span><%=h @asso.telefono %>
+    </span></p>
+    <p><label>
+        <%= l(:label_telefono_alt) %></label><span><%=h @asso.telefono_alt %>
+    </span></p>
+    <p><label>
+        <%= l(:label_fax) %></label><span><%=h @asso.fax %>
+    </span></p>
+    <p><label>
+        <%= l(:label_email_alt) %></label><span><%=h @asso.email_alt %>
+    </span></p>
   </fieldset>
-</div>
 
-<div class="splitcontentright">
-    <fieldset class="box tabular">
-      <legend><%=l(:label_asso_associated_group_banner)%></legend>
-        <% if @asso.group_banners.any? %>
-        <table>
+  <fieldset class="box tabular">
+    <legend><%=l(:label_asso_organization)%></legend>
+      <% unless @asso.organization.nil? %>
+        <%= link_to(h(@asso.organization.name), organization_path(@asso.organization), :class => 'icon icon-summary') if User.current.admin?   %>
+        <%= h(@asso.organization.to_s) if !User.current.admin?   %>
+
+      <p class="<%= 'power_user' unless @asso.organization.havePowerUser? %>"><label>
+      <%= l(:label_manager) %></label><span class="icon<%= @asso.organization.user.icon() %>" ><%= link_to h(@asso.organization.user), user_path(@asso.organization.user, :id => @asso.organization.user_id) %>
+    </span></p>
+
+      <% else %>
+        <%=l(:label_asso_organization_none)%>
+      <% end %>
+  </fieldset>
+
+  <fieldset class="box tabular">
+    <legend><%=l(:label_asso_associated_group_banner)%></legend>
+      <% if @asso.group_banners.any? %>
+      <table>
+        <tr>
+          <th><%=l(:label_group_banner)%></th>
+        </tr>
+        <% @asso.group_banners.each do |related_banner| %>
           <tr>
-            <th><%=l(:label_group_banner)%></th>
+            <td class="buttons">
+              <%= link_to(h(related_banner.espositore), group_banner_path(related_banner), :class => 'icon icon-summary') if User.current.admin?   %>
+              <%= h(related_banner.espositore) if !User.current.admin?   %>
           </tr>
-          <% @asso.group_banners.each do |related_banner| %>
-            <tr>
-              <td class="buttons">
-                <%= link_to(h(related_banner.espositore), group_banner_path(related_banner), :class => 'icon icon-summary') if User.current.admin?   %>
-                <%= h(related_banner.espositore) if !User.current.admin?   %>
-            </tr>
-          <% end %>
-        </table>
-        <% else %>
-          <%=l(:label_asso_associated_group_banner_none)%>
         <% end %>
-    </fieldset>
+      </table>
+      <% else %>
+        <%=l(:label_asso_associated_group_banner_none)%>
+      <% end %>
+  </fieldset>
 
-    <fieldset class="box tabular">
-      <legend><%=l(:label_asso_organization)%></legend>
-        <% unless @asso.organization.nil? %>
-          <%= link_to(h(@asso.organization.name), organization_path(@asso.organization), :class => 'icon icon-summary') if User.current.admin?   %>
-          <%= h(@asso.organization.to_s) if !User.current.admin?   %>
-        <% else %>
-          <%=l(:label_asso_organization_none)%>
+</div>
+<div class="splitcontentright">
+
+  <fieldset class="box tabular">
+    <legend><%=l(:label_assos_users)%></legend>
+    <% associati = @asso.users %>
+    <% if associati.any? %>
+      <%= l(:label_total) %>:<strong class="total center"><%= h associati.count %></strong>
+      <table class="list users">
+        <thead>
+          <th style="text-align:left;"><%= l(:label_user) %></th>
+          <th style="text-align:left;"><%= l(:field_due_date) %></th>
+          <th style="text-align:left;"><i class="icon icon-man" title="Power user, responsabile"></i></th>
+        </thead>
+        <tbody>
+        <% associati.sort_by(&:lastname).each do |user| %>
+          <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
+            <td class="user icon<%= user.icon() %>">
+              <%= link_to_user user unless User.current.admin? %>
+              <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
+            </td>
+            <td>
+              <%= format_date(user.scadenza) %>
+            </td>
+            <td>
+              <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled'  %>
+            </td>
+          </tr>
         <% end %>
-    </fieldset>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="nodata"><%= l(:label_no_soci) %></p>
+    <% end %>
+  </fieldset>
+
 </div>
 
 <div style="clear:both;"></div>

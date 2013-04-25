@@ -279,6 +279,38 @@ class User < Principal
     end
   end
 
+  def icon()
+    str = ""
+    if self.admin?
+      str += " icon-admin"
+    end
+    if self.ismanager?
+      str += " icon-man"
+    end
+    if self.isauthor?
+      str += " icon-auth"
+    end
+    if self.isvip?
+      str += " icon-vip"
+    end
+    if self.isabbonato?
+      str += " icon-abbo"
+    end
+    if self.isregistered?
+      str += " icon-reg"
+    end
+    if self.isrenewing?
+      str += " icon-renew"
+    end
+    if self.isexpired?
+      str += " icon-exp"
+    end
+    if self.isarchivied?
+      str += " icon-arc"
+    end
+    return str
+  end
+
   def canbackend?
     puts "self.canbackend?(" + self.role_id.to_s + ")"
     if self.admin?
