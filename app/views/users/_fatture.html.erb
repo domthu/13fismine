@@ -2,7 +2,6 @@
 <%# form_for @user, :url => { :action => 'edit_fatture', :id => @user}, :builder => TabularFormBuilder do |f| %>
 
   <div id="edit_dati_form">
-newsletter_smtp
 
     <!--[form:user]-->
     <div class="splitcontentleft">
@@ -56,6 +55,6 @@ newsletter_smtp
   <p><%= submit_tag l(:button_save_fatture) %></p>
 <% end %>
 
-<%= wikitoolbar_for 'annotazioni' %>
-<%= wikitoolbar_for 'sconto_precedente' %>
-<%= wikitoolbar_for 'pagamento_precedente' %>
+<%# wikitoolbar_for 'annotazioni' %>
+<%# wikitoolbar_for 'sconto_precedente' %>
+<%# wikitoolbar_for 'pagamento_precedente' %>

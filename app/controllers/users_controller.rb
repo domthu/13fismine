@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   before_filter :require_admin, :except => [:show, :edit_abbonamento]
   before_filter :find_user, :only =>  [:show, :edit, :update, :destroy, :edit_membership, :destroy_membership]
   accept_api_auth :index, :show, :create, :update, :destroy
-  before_filter :only_find_user, :only =>  [:edit_dati, :edit_abbonamento, :edit_fatture]
+  before_filter :only_find_user, :only =>  [:edit_dati, :edit_abbonamento, :edit_fatture, :send_newsletter]
 
   helper :sort
   include SortHelper
@@ -207,8 +207,6 @@ class UsersController < ApplicationController
           }
         }
       else
-        puts "============ERROR=======UsersControllerUsersController --> edit_membershipedit_membershipedit_membership"
-
         format.js {
           render(:update) {|page|
             page.alert(l(:notice_failed_to_save_members, :errors => @membership.errors.full_messages.join(', ')))
@@ -220,10 +218,8 @@ class UsersController < ApplicationController
 
   #via js
   def edit_abbonamento
-    #puts "EDIT ABBONAMENTO (" + request.post?.to_s + ")" #+ params
     @user.safe_attributes = params[:user]
     @user.save if request.post?
-    #puts "EDIT ABBONAMENTO SAVED data/datascadenza[" + @user.data.to_s + "/" + @user.datascadenza.to_s + "]"
     respond_to do |format|
       if @user.valid?
         format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'abbonamento' }
@@ -234,7 +230,6 @@ class UsersController < ApplicationController
           }
         }
       else
-        #puts "============ERROR=======UsersControllerUsersController --> edit_abbonamentoedit_abbonamentoedit_abbonamento"
         format.js {
           render(:update) {|page|
             page.alert(l(:notice_failed_to_save_abbonamento, :errors => @user.errors.full_messages.join(', ')))
@@ -257,7 +252,6 @@ class UsersController < ApplicationController
           }
         }
       else
-        puts "============ERROR=======UsersControllerUsersController --> edit_datiedit_datiedit_dati"
         format.js {
           render(:update) {|page|
             page.alert(l(:notice_failed_to_save_dati, :errors => @user.errors.full_messages.join(', ')))
@@ -280,10 +274,42 @@ class UsersController < ApplicationController
           }
         }
       else
-        puts "============ERROR=======UsersControllerUsersController --> edit_fattureedit_fattureedit_fatture"
+        puts "============ERROR=======UsersController --> edit_fattureedit_fattureedit_fatture"
         format.js {
           render(:update) {|page|
             page.alert(l(:notice_failed_to_save_fatture, :errors => @user.errors.full_messages.join(', ')))
+          }
+        }
+      end
+    end
+  end
+
+  #via js
+  #in questa funzione possiamo
+  # 1 vedere anteprima della newsletter
+  # 2 inviare via email la newsletter
+  def send_newsletter
+
+    #@user.safe_attributes = params[:user]
+    #@user.save if request.post?
+    @edizione_id =  params[:news][:edizione_id].to_i if params[:news][:edizione_id].present?
+    @edizione = Issue.find(@edizione_id) if @edizione_id
+    @newsletter_smtp = @user.newsletter_smtp(@edizione)
+    @submit =
+    respond_to do |format|
+      if @user.valid?
+        format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'newsletter' }
+        format.js {
+          render(:update) {|page|
+            page.replace_html "tab-content-newsletter", :partial => 'users/newsletter'
+            page.visual_effect(:highlight, "newsletter-#{@user.id}")
+          }
+        }
+      else
+        puts "============ERROR=======UsersController --> send_newsletter "
+        format.js {
+          render(:update) {|page|
+            page.alert(l(:notice_failed_to_send_newsletter, :errors => @user.errors.full_messages.join(', ')))
           }
         }
       end
@@ -304,7 +330,7 @@ class UsersController < ApplicationController
   private
 
   def find_user
-    puts "find_userfind_userfind_userfind_userfind_userfind_userfind_userfind_userfind_userfind_userfind_userfind_user"
+    puts "========================find_userf========================"
     if params[:id] == 'current'
       require_login || return
       @user = User.current
