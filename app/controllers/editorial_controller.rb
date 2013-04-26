@@ -185,15 +185,6 @@ class EditorialController < ApplicationController
     @prj= Project.all_public_fs.find_by_id params[:id].to_i
   end
 
-  def edizione_smtp
-    #Newsletter spedita direttamente via smtp VIEW solo per test
-    @id = params[:id].to_i
-    @project = Project.find_public(@id)
-    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-    @news = @project.newsletter_smtp(User.current)
-    @prj= Project.find_by_id params[:id].to_i
-  end
-
   # -----------------  EDIZIONI /NEWSLETTER  (fine)  ------------------
 
   # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------

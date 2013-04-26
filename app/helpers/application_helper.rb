@@ -561,6 +561,48 @@ module ApplicationHelper
 
     text
   end
+  # Formats text according to system settings.
+  # 2 ways to call this method:
+  # * with a String: textilizable(text, options)
+  # * with an object and one of its attribute: textilizable(issue, :description, options)
+  def yuizable_fs(*args)
+    options = args.last.is_a?(Hash) ? args.pop : {}
+    case args.size
+    when 1
+      obj = options[:object]
+      text = args.shift
+    when 2
+      obj = args.shift
+      attr = args.shift
+      text = obj.send(attr).to_s
+    else
+      raise ArgumentError, 'invalid arguments to textilizable'
+    end
+    return '' if text.blank?
+    project = options[:project] || @project || (obj && obj.respond_to?(:project) ? obj.project : nil)
+    only_path = options.delete(:only_path) == false ? false : true
+
+    #il testo è già HTML
+    #text = Redmine::WikiFormatting.to_html(Setting.text_formatting, text, :object => obj, :attribute => attr)
+
+    @parsed_headings = []
+    @heading_anchors = {}
+    @current_section = 0 if options[:edit_section_links]
+
+    parse_sections(text, project, obj, attr, only_path, options)
+    text = parse_non_pre_blocks(text) do |text|
+      [:parse_inline_attachments, :parse_wiki_links, :parse_redmine_links, :parse_macros].each do |method_name|
+        send method_name, text, project, obj, attr, only_path, options
+      end
+    end
+    parse_headings(text, project, obj, attr, only_path, options)
+
+    if @parsed_headings.any?
+      replace_toc(text, @parsed_headings)
+    end
+
+    text
+  end
 
   def parse_non_pre_blocks(text)
     s = StringScanner.new(text)

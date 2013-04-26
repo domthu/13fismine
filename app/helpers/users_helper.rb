@@ -57,7 +57,8 @@ module UsersHelper
             {:name => 'memberships', :partial => 'users/memberships', :label => :label_project_plural},
             {:name => 'dati', :partial => 'users/dati', :label => :label_dati_plural},
             {:name => 'abbonamento', :partial => 'users/abbonamento', :label => :label_abbonamento_plural},
-            {:name => 'fatture', :partial => 'users/fatture', :label => :label_fatture_plural}
+            {:name => 'fatture', :partial => 'users/fatture', :label => :label_fatture_plural},
+            {:name => 'newsletter', :partial => 'users/newsletter', :label => :label_newsletters}
             ]
     if Group.all.any?
       tabs.insert 1, {:name => 'groups', :partial => 'users/groups', :label => :label_group_plural}

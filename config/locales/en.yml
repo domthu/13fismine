@@ -1651,3 +1651,9 @@ en:
   fs_qualifica: 'Qualifica o ruolo su Fiscosport (apparirà negli articoli)'
   notice_register_must_condition: "Dovete dichiarare di avere letto le condizioni d'uso per continuare"
   notice_register_must_consensus: "É necessario dare il consenso per la privacy"
+
+#EMAIL NEWSLETTER
+  label_send_newsletter: Invia quindicinale
+  button_send_newsletter: Invia quindicinale
+  label_user_list_newsletters: "Storico degli invii precedenti"
+  label_newsletter: Quindicinale
