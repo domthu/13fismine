@@ -44,7 +44,7 @@ class FeesController < ApplicationController
       #@msg << "dasjkdashdjkas==" + FeeConst::ROLE_MANAGER.to_s + "=="
     end
 
-    @num_no_role = User.all(:conditions => {:role_id => nil}).count
+    @num_no_role = User.all(:conditions => {:role_id => nil || 2}).count
 
     #Ruoli non sottoposti a controllo di abbonamento
     #FeeConst::ROLE_MANAGER        = 3  #Manager<br />
@@ -82,7 +82,10 @@ class FeesController < ApplicationController
     #@num_power_user = User.all(:conditions => {:power_user => 1}).count
     #User member of ASSOCIATION
     @num_Associations =  Asso.all.count
-    @referee = User.all(:conditions => 'id IN ? ')
+    #@referee = User.all(:conditions => ['id IN (?) ', Organization.all.select(:user_id).uniq.to_s])
+    #@referee = User.all(:conditions => ['id IN (?) ', Organization.all.uniq.pluck(:user_id)])
+    #@referee = User.all(:conditions => ['id IN (?) ', Organization.scoped(:select => "DISTINCT user_id").join(", ")])
+    @referee = User.find_by_sql("select * from users where id IN (select distinct user_id from organizations)")
     #questi utenti non pagano. Paga l'associazione (organismo associato)
     #@num_Associated_COUNT =  User.all(:conditions => {:asso_id => !nil}).count
     @num_Associated_COUNT =  User.all(:conditions => 'asso_id IS NOT NULL').count
@@ -125,7 +128,6 @@ class FeesController < ApplicationController
     #AFFILIATI ad una cross organization
     @num_organismi = CrossOrganization.all.count
     @num_members =  User.all(:conditions => {:cross_organization_id => !nil}).count
-
 
   end
 

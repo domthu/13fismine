@@ -966,6 +966,7 @@ padding-bottom: 3px;
 .icon-globe  { background-image: url(../images/ico/globe.png); }
 .icon-pic  { background-image: url(../images/ico/pic.png); }
 .icon-news_fast_reply  { background-image: url(../images/ico/ticket_edit.png); }
+.icon-adjust-min { padding-left: 40px; min-height:21px; }
 
 img.gravatar {
     padding: 2px;
@@ -1108,6 +1109,7 @@ h2 img { vertical-align:middle; }
 .total{font-weight: bold;color: #2C4056; background-color:#FFFFDD; padding: 5px;}
 .htmldraft{padding:20px; margin-top: 1em; background: url(../images/draft.png)}
 .hide{display: none;}
+div.asso-select{float:right; right:10px;}
 /* sandro per implementazione paperclip e yui */
 #buttons-inline div{
     display: inline-block;

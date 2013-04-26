@@ -1,20 +1,80 @@
 <% roles_fs = Role.all_fs %>
 <% remote_form_for(:user, :url => { :action => 'edit_abbonamento', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
 
+<% __asso = @user.associazione_affiliata() %>
+  <p><%= submit_tag l(:button_save_abbonamento) %></p>
   <div id="edit_dati_form">
     <!--[form:user]-->
     <div class="splitcontentleft">
 
 
-      <fieldset class="box">
+      <fieldset class="box tabular">
         <legend><%=l(:label_gest_privato)%></legend>
-          <%= gravatar_for(User.current) unless !User.current %>
+          <div class="contextual">
+            <%= gravatar_for(@user) unless !@user %>
+          </div>
+          <p class="">
+            <label><%= l(:label_localizazzione) %></label>
+            <span><%= @user.getLocalization() %></span>
+          </p>
 
           <p class="">
-            <label><%= l(:label_have_sigla_tipo) %></label>
+            <label for="siglatipo"><%= l(:label_have_sigla_tipo) %></label>
+            <span><% if @user.sigla_tipo() %>
+                <%= link_to h(@user.sigla_tipo()), cross_organization_path (@user.sigla_tipo()) %>
+              <% else %>
+                <%= l(:label_no_sigla_tipo) %>
+              <% end %>
+            </span>
+          </p>
+
+
+
+      </fieldset>
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_is_referente)%></legend>
+
+          <p><%= f.check_box :power_user, :label => :field_power_user, :title => 'power user' %> </p>
+
+          <p class="">
+            <label for="refe"><%= l(:label_have_referee) %></label>
+            <span class="<%= 'total' if @user.is_referente? %>">
+            <%= check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
+          </p>
+
+          <p class="">
+            <label><%= l(:label_referee_list_assos) %></label>
+
             <span>
-              <% if User.current && User.current.associazione_affiliata() %>
-                  ASSOCIAZIONE: <%= link_to h(User.current.associazione_affiliata()), asso_path(User.current.associazione_affiliata()) %>
+              <% if @user.responsable? && @user.responsable_of && @user.responsable_of.count > 0 %>
+                <span><%= l(:label_total) %>:<strong class="total center"><%= h @user.responsable_of.count %></strong><%= l(:label_list_responsable_for)%></span>
+                <ul>
+                <% @user.responsable_of.sort_by(&:data_scadenza).reverse.each do |organismo| %>
+                  <li><%= link_to h(organismo), organization_path(organismo) %></li>
+                <% end %>
+                </ul>
+              <%else %>
+                <%= l(:label_not_responsable) %>
+              <% end %>
+            </span>
+          </p>
+
+      </fieldset>
+
+      <fieldset class="box tabular">
+        <legend><%=l(:label_gest_organismo)%></legend>
+
+          <div class="asso-select"><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => 'cambia asso' %></div>
+
+          <p class="">
+            <label><%= l(:label_have_asso) %></label>
+            <span>
+              <% if __asso %>
+                  <%= link_to h(__asso), asso_path(__asso) %>
+                <%# if @user.asso_id? %>
+                  <%# link_to h(__asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %>
+                <%# end %>
               <% else %>
                 <%= l(:label_no_asso) %>
               <% end %>
@@ -24,63 +84,66 @@
           <p class="">
             <label><%= l(:label_have_organization) %></label>
             <span>
-              <% if User.current && User.current.organization() %>
-                  <%= link_to h(User.current.organization()), organization_path(User.current.organization()) %>
+              <% if @user.organization() %>
+                  <%= link_to h(@user.organization()), organization_path(@user.organization()) %>
               <% else %>
                   <%= l(:label_no_organization) %>
               <% end %>
             </span>
           </p>
 
-          <p class="">
-            <label><%= l(:label_is_responsable) %></label>
-            <span>
-              <% if User.current && User.current.responsable? && User.current.responsable_of
-                User.current.responsable_of.each do |organismo| %>
-                  <%= link_to h(organismo), organization_path(organismo) %>
-              <% end
-              else %>
-                <%= l(:label_not_responsable) %>
-              <% end %>
-            </span>
-          </p>
+<% if __asso %>
 
-          <p><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_asso) %></p>
-        <% if @user.asso_id? %>
-          <p><%= link_to h(@user.asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %>  %></p>
-        <% end %>
+          <p class="">
+          <label><%=l(:label_referente) %></label><span>
+            <%# if __asso.organization.referente %>
+            <% if @user.asso.organization.referente %>
+              <%= link_to h(@user.asso.organization.referente) unless User.current.admin? %>
+              <%= link_to h(@user.asso.organization.referente), edit_user_path(:id => @user.asso.organization.referente) unless !User.current.admin? %>
+            <% else %>
+              <em class="nodata"><%= l(:label_no_referente) %></em>
+            <% end %>
+          </span></p>
 
       </fieldset>
 
       <fieldset class="box tabular">
-        <legend><%=l(:label_gest_organismo)%></legend>
-
-          <p><%= f.check_box :power_user, :label => :field_power_user, :title => 'power user' %> </p>
-
-          <p class="">
-            <label for="refe"><%= l(:label_is_referente) %></label>
-            <span class="<%= 'total' unless !@user.is_referente? %>">
-            <%= check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
-          </p>
-
-          <p class="">
-            <label for="siglatipo"><%= l(:label_have_sigla_tipo) %></label> </p>
-          <p class="">
-            <span><% if User.current && User.current.sigla_tipo() %>
-                <%= link_to h(User.current.sigla_tipo()), cross_organization_path (User.current.sigla_tipo()) %>
-              <% else %>
-                <%= l(:label_no_sigla_tipo) %>
-              <% end %>
-            </span>
-          </p>
-
-        <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [c.organizzazione + ' (' + c.sigla + ')', c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_cross_organization) %><small>l'utente può appartenere o non ad una organizzazione. I 2 campi Sigla (ex Organismi) e Tipo organizzazione sono raddunati in una foreign_key
-</small></p>
-
+        <legend><%=l(:label_assos_users)%></legend>
+        <% associati = @user.asso.users %>
+        <% if associati.any? %>
+          <%= l(:label_total) %>:<strong class="total center"><%= h associati.count %></strong>
+          <table class="list users">
+            <thead>
+              <th style="text-align:left;"><%= l(:label_user) %></th>
+              <th style="text-align:left;"><%= l(:field_due_date) %></th>
+              <th style="text-align:left;"><i class="icon icon-man" title="Power user, responsabile"></i></th>
+            </thead>
+            <tbody>
+            <% associati.sort_by(&:lastname).each do |user| %>
+              <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
+                <td class="user icon<%= user.icon() %>">
+                  <%= link_to_user user unless User.current.admin? %>
+                  <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
+                </td>
+                <td>
+                  <%= format_date(user.scadenza) %>
+                </td>
+                <td>
+                  <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled'  %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="nodata"><%= l(:label_no_soci) %></p>
+        <% end %>
+<% end %>
       </fieldset>
 
     </div>
     <div class="splitcontentright">
+
       <fieldset class="box tabular">
         <legend><%=l(:label_scadenza_ruolo)%></legend>
 
@@ -103,9 +166,11 @@
           <br />
         <% end %>
         </strong></p>
+        <p><%=l(:field_role)%>: <%= @user.role_id.to_s %></p>
       </fieldset>
 
     </div>
+
   </div>
   <div style="clear:left;"></div>
   <!--[eoform:user]-->

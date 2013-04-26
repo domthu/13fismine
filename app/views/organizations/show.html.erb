@@ -11,80 +11,89 @@
 <div class="splitcontentleft">
   <fieldset class="box tabular">
     <legend><%=l(:label_organization)%></legend>
-    <p>
-    <% unless @organization.asso.ragione_sociale.blank? %>
-      <em><%= link_to h(@organization.asso.to_s), asso_path(@organization.asso, :id => @organization.asso_id) %>
-</em>
-      <br />
-    <% end %>
-    </p>
-    <p class="<%= 'power_user' unless @organization.havePowerUser? %>">
-      <%= l(:label_user) %>: <%= link_to h(@organization.user), user_path(@organization.user, :id => @organization.user_id) %>
-    </p>
-    <p>
-      <%= l(:label_cross_organization) %>: <%= link_to h(@organization.cross_organization), cross_organization_path(@organization.cross_organization, :id => @organization.cross_organization_id) %>
-    </p>
-    <p>
-        <%= check_box_tag '', 1, @organization.richiedinumeroregistrazione, :disabled => 'disabled'  %> <%= l(:label_richiedinumeroregistrazione) %>
-    </p>
-    <p>
-      <%=l(:label_data_scadenza)%>: <%= format_date(@organization.data_scadenza) %>
-    </p>
-    <p>
-      <%= l(:label_nota) %>: <%=h @organization.nota %>
-    </p>
-    <p>
-      <%= l(:label_region) %>: <%=h @organization.region %>
-    </p>
-    <p>
-      <%= l(:label_province) %>: <%=h @organization.province %>
-    </p>
-    <p>
-      <%= l(:label_comune) %>: <%=h @organization.comune %>
-    </p>
-    <p>
-      <%= l(:label_testo2) %>: <%=h @organization.testo2 %>
-    </p>
-    <p>
-      <%= l(:label_testo3) %>: <%=h @organization.testo3 %>
-    </p>
-    <p class="hide">
-      <%= l(:label_numero1) %>:
+
+    <p class="<%= 'power_user' unless @organization.havePowerUser? %>"><label>
+      <%= l(:label_manager) %></label><span class="icon<%= @organization.user.icon() %>" ><%= link_to h(@organization.user), user_path(@organization.user, :id => @organization.user_id) %>
+    </span></p>
+    <p><label><%= l(:label_richiedinumeroregistrazione) %></label><span>
+        <%= check_box_tag '', 1, @organization.richiedinumeroregistrazione, :disabled => 'disabled'  %>
+    </span></p>
+    <p><label>
+      <%=l(:label_data_scadenza)%></label><span><%= format_date(@organization.data_scadenza) %>
+    </span></p>
+    <p><label>
+      <%= l(:label_nota) %></label><span><%=h @organization.nota %>
+    </span></p>
+    <p><label>
+      <%= l(:label_region) %></label><span><%=h @organization.region %>
+    </span></p>
+    <p><label>
+      <%= l(:label_province) %></label><span><%=h @organization.province %>
+    </span></p>
+    <p><label>
+      <%= l(:label_comune) %></label><span><%=h @organization.comune %>
+    </span></p>
+    <p><label>
+      <%= l(:label_testo2) %></label><span><%=h @organization.testo2 %>
+    </span></p>
+    <p><label>
+      <%= l(:label_testo3) %></label><span><%=h @organization.testo3 %>
+    </span></p>
+    <p class="hide"><label><%= l(:label_numero1) %></label><span>
       <div class="wiki">
         <%# textilizable(@organization.numero1) %>
       </div>
-    </p>
-    <p class="hide">
-      <%= l(:label_numero2) %>:
+    </span></p>
+    <p class="hide"><label><%= l(:label_numero2) %></label><span>
       <div class="wiki">
         <%# textilizable(@organization.numero2) %>
       </div>
-    </p>
-    <p class="hide">
-      <%= l(:label_numero3) %>:
+    </span></p>
+    <p class="hide"><label><%= l(:label_numero3) %></label><span>
       <div class="wiki">
         <%# textilizable(@organization.numero3) %>
       </div>
-    </p>
-    <p>
-      <%=l(:label_data1)%>: <%= format_date(@organization.data1) %>
-    </p>
-    <p>
-      <%=l(:label_data2)%>: <%= format_date(@organization.data2) %>
-    </p>
-    <p>
-      <%=l(:label_data3)%>: <%= format_date(@organization.data3) %>
-    </p>
-    <p>
-        <%= check_box_tag '', 1, @organization.flag1, :disabled => 'disabled'  %> <%= l(:label_flag1) %>
-    </p>
-    <p>
-        <%= check_box_tag '', 1, @organization.flag2, :disabled => 'disabled'  %> <%= l(:label_flag2) %>
-    </p>
-    <p>
-        <%= check_box_tag '', 1, @organization.flag3, :disabled => 'disabled'  %> <%= l(:label_flag3) %>
-    </p>
+    </span></p>
+    <p><label>
+      <%=l(:label_data1)%></label><span><%= format_date(@organization.data1) %>
+    </span></p>
+    <p><label>
+      <%=l(:label_data2)%></label><span><%= format_date(@organization.data2) %>
+    </span></p>
+    <p><label>
+      <%=l(:label_data3)%></label><span><%= format_date(@organization.data3) %>
+    </span></p>
+    <p><label><%= l(:label_flag1) %></label><span>
+        <%= check_box_tag '', 1, @organization.flag1, :disabled => 'disabled'  %>
+    </span></p>
+    <p><label><%= l(:label_flag2) %></label><span>
+        <%= check_box_tag '', 1, @organization.flag2, :disabled => 'disabled'  %>
+    </span></p>
+    <p><label><%= l(:label_flag3) %></label><span>
+        <%= check_box_tag '', 1, @organization.flag3, :disabled => 'disabled'  %>
+    </span></p>
   </fieldset>
+
+  <fieldset class="box tabular">
+    <legend><%=l(:label_asso)%></legend>
+      <% unless @organization.asso.nil? %>
+        <%= link_to(h(@organization.asso.to_s), asso_path(@organization.asso), :class => 'icon icon-summary') if User.current.admin?   %>
+        <%= h(@organization.asso.to_s) if !User.current.admin?   %>
+      <% else %>
+        <%=l(:label_asso_none)%>
+      <% end %>
+  </fieldset>
+
+  <fieldset class="box tabular">
+    <legend><%=l(:label_cross_organization)%></legend>
+      <% unless @organization.cross_organization.nil? %>
+        <%= link_to(h(@organization.cross_organization.name), cross_organization_path(@organization.cross_organization), :class => 'icon icon-globe icon-adjust-min') if User.current.admin?   %>
+        <%= h(@organization.cross_organization.to_s) if !User.current.admin?   %>
+      <% else %>
+        <%=l(:label_cross_organization_none)%>
+      <% end %>
+  </fieldset>
+
 </div>
 
 <div class="splitcontentright">
@@ -110,14 +119,14 @@
       <%= l(:label_total) %>:<strong class="total center"><%= h associati.count %></strong>
       <table class="list users">
         <thead>
-          <th><%= l(:label_user) %></th>
-          <th><%= l(:field_due_date) %></th>
-          <th>Power</th>
+          <th style="text-align:left;"><%= l(:label_user) %></th>
+          <th style="text-align:left;"><%= l(:field_due_date) %></th>
+          <th style="text-align:left;"><i class="icon icon-man" title="Power user, responsabile"></i></th>
         </thead>
         <tbody>
-        <% associati.each do |user| %>
+        <% associati.sort_by(&:lastname).each do |user| %>
           <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
-            <td class="user">
+            <td class="user icon<%= user.icon() %>">
               <%= link_to_user user unless User.current.admin? %>
               <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
             </td>

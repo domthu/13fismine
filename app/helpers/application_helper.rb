@@ -217,6 +217,15 @@ module ApplicationHelper
       return data.to_date.strftime("%Y %b(%m) %d")
     end
   end
+  def get_short_date(data)
+    if data.nil?
+      return "?"
+    elsif !data.is_a?(Date)
+      return "?.." << data.to_s
+    else
+      return data.to_date.strftime("%Y %b ")
+    end
+  end
 
   def render_page_hierarchy(pages, node=nil, options={})
     content = ''

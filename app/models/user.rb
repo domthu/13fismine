@@ -81,7 +81,9 @@ class User < Principal
   #has_one :reference, :class_name => 'Organization', :dependent => :nullify
   has_many :references, :class_name => 'Organization', :dependent => :nullify
   has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
+
   acts_as_customizable
+
   attr_accessor :password, :password_confirmation
   attr_accessor :last_before_login_on
   # Prevents unauthorized assignments
@@ -135,6 +137,17 @@ class User < Principal
     News.all(:conditions => ['author_id = ?', self.id], :order => "created_on DESC")
   end
 
+  def getLocalization()
+    str = ""
+    str += self.indirizzo + "<br />" unless self.indirizzo.blank?
+    if self.comune_id && self.comune
+      str += self.comune.cap + " " unless !self.comune.cap
+      str += self.comune.name
+      str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
+      str += "<br />" + self.comune.province.region.name unless self.comune.province.region.nil?
+    end
+    return (str.nil? || str.blank?)  ? "-" : str
+  end
 
   #Utente è affiliato ad una Sigla-TipoOrganizzazione
   def sigla_tipo()
@@ -268,6 +281,38 @@ class User < Principal
     end
   end
 
+  def icon()
+    str = ""
+    if self.admin?
+      str += " icon-admin"
+    end
+    if self.ismanager?
+      str += " icon-man"
+    end
+    if self.isauthor?
+      str += " icon-auth"
+    end
+    if self.isvip?
+      str += " icon-vip"
+    end
+    if self.isabbonato?
+      str += " icon-abbo"
+    end
+    if self.isregistered?
+      str += " icon-reg"
+    end
+    if self.isrenewing?
+      str += " icon-renew"
+    end
+    if self.isexpired?
+      str += " icon-exp"
+    end
+    if self.isarchivied?
+      str += " icon-arc"
+    end
+    return str
+  end
+
   def canbackend?
     puts "self.canbackend?(" + self.role_id.to_s + ")"
     if self.admin?
@@ -293,9 +338,18 @@ class User < Principal
     return self.asso.nil?
   end
 
+  #l'utente gesctisce almeno un Organization (Association)
   def is_referente?
     return (Organization.all(:conditions => {:user_id => self.id}).count > 0)
   end
+  def responsable?
+    return !self.references.nil?
+  end
+  #List of Organization the user is power user
+  def responsable_of
+    self.references
+  end
+
 
   #Return friendly String
   def scadenza_fra
@@ -359,17 +413,6 @@ class User < Principal
       return self.cross_organization.name
     end
   end
-
-
-  def responsable?
-    return self.references.nil?
-  end
-
-  #List of Organization the user is power user
-  def responsable_of
-    self.references
-  end
-
 
   #region ROLE * USER
   def ismanager?

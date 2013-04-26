@@ -112,7 +112,7 @@
         <tbody>
         <% @referee.each do |user| %>
           <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
-            <td class="user">
+            <td class="user icon<%= user.icon() %>">
               <%= link_to_user user unless User.current.admin? %>
               <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
             </td>

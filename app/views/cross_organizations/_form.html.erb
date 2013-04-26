@@ -1,7 +1,7 @@
 <%= f.error_messages %>
 
 <div class="box tabular">
-  <p style="display:none2;">  NON USARE .organizzazione come stringa ==> 
+  <p style="display:none;">  NON USARE .organizzazione come stringa ==>
     <%= h f.object.organizzazione %>
   </p>
   <p><%= f.select :type_organization_id, (TypeOrganization.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_type_organization) %></p>
@@ -9,4 +9,3 @@
   <p><%= f.text_field :sigla, :label => :field_sigla, :size => 40  %></p>
   <p><%= f.check_box :se_visibile, :label => :label_se_visibile %></p>
 </div>
-

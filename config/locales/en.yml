@@ -1266,6 +1266,7 @@ en:
   label_presidente: Presidente
   label_referente: Referente
   label_consulente: Consulente
+  label_manager: Responsabile
   label_logo: Logo
   label_telefono: Telefono
   label_telefono_alt: Telefono alternativo
@@ -1279,6 +1280,7 @@ en:
   field_presidente: Presidente
   field_referente: Referente
   field_consulente: Consulente
+  field_manager: Responsabile
   field_logo: Logo
   field_telefono: Telefono
   field_telefono_alt: Telefono alternativo
@@ -1347,7 +1349,8 @@ en:
   label_users: Utenti
   label_user_invoices: "Altre fatture legate all'utente"
   label_organization_user_asso: Referenti org. asso correlati
-  label_cross_organization_user_asso: Sigla utente
+  label_cross_organization_user_asso: "Sigla: lista utenti federati"
+  label_cross_organization_user_asso_none: nessun utente registrato per questa federazione
   label_asso_organization: Organismo associato
   label_asso_organization_none: Nessun organismo associato
 
@@ -1365,12 +1368,15 @@ en:
   label_account: Credenziali
   label_registration: Dati di registrazione
   label_scadenza_ruolo: Gestione Ruolo <--> Scadenza
-  label_is_referente: è referente? (resp.)
+  label_is_referente: è responsabile?
   label_gest_privato: Privato == Pagante
-  label_gest_organismo: Organismo == Pagante
+  label_gest_organismo: Organismo associato == Utente non paga
   label_assos_referee: Responsabili organismi
-  label_assos_referee_help: Lista dei referenti di organismi associato
+  label_assos_referee_help: Lista dei responsabili di organismi associati
   label_no_referee: Nessun responsabile trovato
+  label_referee_list_assos: Responsabile di associazioni
+  label_have_referee: Ha responsabilità?
+
 
   field_codice: (old) Codice
   field_pwd: (old) Password
