@@ -42,10 +42,10 @@ class TopSection < ActiveRecord::Base
   private
 
   def url_image
-    "commons/top_sections/:id:style_#{self.key}.:extension"
+    "commons/sections/:id:style_#{self.key}.:extension"
   end
   def path_image
-    "#{RAILS_ROOT}/public/images/commons/top_sections/:id:style_#{self.key}.:extension"
+    "#{RAILS_ROOT}/public/images/commons/sections/:id:style_#{self.key}.:extension"
   end
 
 end
