@@ -1137,3 +1137,24 @@ div.asso-select{float:right; right:10px;}
  font-size: 0.8em;
     color: #afafaf;
   }
+textarea#issue_summary {
+   font-family: arial , sans-serif;
+    border: solid 1px #BBC6E0;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px;
+
+}
+textarea#issue_subject{
+ font-family: arial , sans-serif;
+    border: solid 1px #BBC6E0;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px;
+}
+#attributes{
+    border: dotted 1px #BBC6E0;
+    padding: 5px;
+    margin: 10px auto;
+    background-color: #ffffff;
+}

@@ -18,14 +18,12 @@
                                      :update => :attributes,
                                      :with => "Form.serialize('issue-form')" %>
 
-<p style="display:none;">On ne fait pas d'omelette sans casser des oeufs
-<= f.text_field :subject, :size => 80, :required => true ></p>
 <p><%= f.text_area :subject,
-                   :cols => 96,
+                   :cols => 109,
                    :rows => (@issue.subject.blank? ? 2 : [[2, @issue.subject.length / 50].max, 20].min),
                    :accesskey => accesskey(:edit) %></p>    <%#	    :class => 'wiki-edit' %>
   <p><%= f.text_area :summary,
-                     :cols => 96,
+                     :cols => 127,
                      :rows => (@issue.summary.blank? ? 3 : [[3, @issue.summary.length / 50].max, 30].min),
                      :accesskey => accesskey(:edit) %></p>
 <div id="attributes" class="attributes">
@@ -34,10 +32,12 @@
 </div>
 
 
-<p class="yui-skin-sam"><%= f.text_area :description,
-                   :cols => 96,
-                   :rows => (@issue.description.blank? ? 20 : [[20, @issue.description.length / 50].max, 120].min),
-                   :accesskey => accesskey(:edit) %></p>
+<div class="yui-skin-sam"><%= f.text_area :description,
+                   :cols => 128,
+                   :rows => (@issue.description.blank? ? 120 : [[20, @issue.description.length / 50].max, 120].min),
+                   :accesskey => accesskey(:edit),
+                   :id =>'issue_description_field',
+                   :label => '' %></div>
 
 </div>
 
@@ -73,8 +73,7 @@
      (function () {
          var myConfig1 = {
              handleSubmit:true,
-            height:'200px',
-             width:'95%',
+             /* height:'200px', width:'95%',*/
              resize:true,
              animate:true,
              dompath:true,
@@ -83,7 +82,7 @@
              removeLineBreaks:true,
              drag:true
          };
-         var myEditor1 = init_yui_editor_fs('issue_descr_fields', myConfig1);
+         var myEditor1 = init_yui_editor_fs('issue_description_field', myConfig1);
 
      })
   ();
