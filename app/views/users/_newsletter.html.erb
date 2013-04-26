@@ -13,7 +13,7 @@
     <!--[form:user]-->
     <div class="splitcontentleft">
       <fieldset class="box tabular">
-        <legend><%=l(:label_send_newsletter)%></legend>
+        <legend><%=l(:label_newsletter)%></legend>
 
         <p>
           <%= select_tag('project[id]', options_for_select(Project.all_public_fs(
@@ -37,8 +37,8 @@
   <div style="clear:left;"></div>
   <!--[eoform:user]-->
 
-  <p><%= submit_tag l(:button_send_newsletter) %></p>
-  <p><%= link_to_remote l(:label_preview),
+  <p><%= submit_tag l(:button_send_newsletter) %>
+  <%= link_to_remote l(:label_preview),
            { :url => preview_newsletter_path(:user_id => @user),
              :method => 'post',
              :update => 'news_preview',
@@ -47,23 +47,16 @@
            }, :accesskey => accesskey(:preview)
   %></p>
 
-<div style="clear:both;"></div>
-<div >
- <fieldset class="htmldraft">
-      <legend><%= l(:label_preview) %>:</legend>
-      <div id="news_preview" class="">
-        <p>
-          labelled_tabular_form_for :issue, @issue,
-                             :url => {:action => 'update', :id => @issue},
-                             :html => {:id => 'issue-form',
-                                       :class => nil,
-                                       :method => :put,
-                                       :multipart => true} do |f|
-        </p>
-        <p>
-        </p>
-      </div>
-  </fieldset>
-</div>
+  <div >
+   <fieldset class="htmldraft">
+        <legend><%= l(:label_preview) %>:</legend>
+        <div id="news_preview" class="">
+          <p>
+            Selezionare un Quindicinale ed cliccare su Anteprima
+          <p>
+          </p>
+        </div>
+    </fieldset>
+  </div>
 
 <% end %>

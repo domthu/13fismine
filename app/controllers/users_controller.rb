@@ -286,15 +286,21 @@ class UsersController < ApplicationController
 
   #via js
   #in questa funzione possiamo
-  # 1 vedere anteprima della newsletter
+  # 1 vedere anteprima della newsletter --> via preview_controller con remote_form_for
   # 2 inviare via email la newsletter
+  #Parameters: {"id"=>"17542", "action"=>"send_newsletter", "project"=>{"id"=>"308"}, "authenticity_token"=>"d0qcDDrxPu4tRQaWV0EQC9VO5f152OhGqfiIIb/K/d8=", "controller"=>"users", "_method"=>"put"}
   def send_newsletter
     puts "=============================send_newsletter"
-    #@user.safe_attributes = params[:user]
-    #@user.save if request.post?
-    @edizione_id =  params[:news][:edizione_id].to_i if params[:news][:edizione_id].present?
-    @edizione = Issue.find(@edizione_id) if @edizione_id
-    @newsletter_smtp = @user.newsletter_smtp(@edizione)
+    @id = ((params[:project] && params[:project][:id]) || params[:project_id]).to_i
+    @project= Project.all_public_fs.find_by_id(@id.to_i)
+    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    @htmlpartial = render_to_string(
+        :layout => false,
+        :partial => 'editorial/edizione_smtp',
+        :locals => { :id => @id, :project => @project, :art => @art, :user => @user }
+      )
+
+    #@htmlpartial = @user.newsletter_smtp(@edizione)
     @submit =
     respond_to do |format|
       if @user.valid?
@@ -302,6 +308,7 @@ class UsersController < ApplicationController
         format.js {
           render(:update) {|page|
             page.replace_html "tab-content-newsletter", :partial => 'users/newsletter'
+            page.replace_html "news_preview", @htmlpartial
             page.visual_effect(:highlight, "newsletter-#{@user.id}")
           }
         }
@@ -330,7 +337,6 @@ class UsersController < ApplicationController
   private
 
   def find_user
-    puts "========================find_userf========================"
     if params[:id] == 'current'
       require_login || return
       @user = User.current
