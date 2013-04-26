@@ -400,6 +400,7 @@ class Issue < ActiveRecord::Base
     'se_prenotazione',
     'address_map',
     'section_id',
+    'image',
     :if => lambda {|issue, user| issue.new_record? || user.allowed_to?(:edit_issues, issue.project) }
 
 #    add_column :issues, :se_sommario, :boolean, :default => 1

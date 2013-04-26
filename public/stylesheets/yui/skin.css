@@ -2272,7 +2272,7 @@ h2.yui-editor-skipheader, h3.yui-editor-skipheader {
 }
 
 .yui-skin-sam .yui-editor-container {
-    border: 1px solid #507AAA;
+    border: 1px solid #BBC6E0;
 }
 
 .yui-skin-sam .yui-toolbar-container {
@@ -4634,7 +4634,10 @@ body.yui-layout {
     padding: .25em .1em;
     zoom: 1;
 }
-
+.yui-editor-panel .bd div.yui-editor-body-cont label{
+   margin-left: 0;
+    text-align: left;
+}
 .yui-editor-panel .bd .gecko form {
     overflow: auto;
 }
@@ -6111,9 +6114,3 @@ a.ygtvspacer {
     left: -9999px;
     position: absolute;
 }
-textarea {
-    border: 0;
-    margin: 0;
-    padding: 0;
-}
-

@@ -18,14 +18,12 @@
                                      :update => :attributes,
                                      :with => "Form.serialize('issue-form')" %>
 
-<p style="display:none;">On ne fait pas d'omelette sans casser des oeufs
-<= f.text_field :subject, :size => 80, :required => true ></p>
 <p><%= f.text_area :subject,
-                   :cols => 88,
+                   :cols => 109,
                    :rows => (@issue.subject.blank? ? 2 : [[2, @issue.subject.length / 50].max, 20].min),
-                   :accesskey => accesskey(:edit) %></p>    <%#	    :class => 'wiki-edit' %>%>
+                   :accesskey => accesskey(:edit) %></p>    <%#	    :class => 'wiki-edit' %>
   <p><%= f.text_area :summary,
-                     :cols => 88,
+                     :cols => 127,
                      :rows => (@issue.summary.blank? ? 3 : [[3, @issue.summary.length / 50].max, 30].min),
                      :accesskey => accesskey(:edit) %></p>
 <div id="attributes" class="attributes">
@@ -34,11 +32,12 @@
 </div>
 
 
-<p><%= f.text_area :description,
-                   :cols => 88,
-                   :rows => (@issue.description.blank? ? 10 : [[10, @issue.description.length / 50].max, 100].min),
+<div class="yui-skin-sam"><%= f.text_area :description,
+                   :cols => 128,
+                   :rows => (@issue.description.blank? ? 120 : [[20, @issue.description.length / 50].max, 120].min),
                    :accesskey => accesskey(:edit),
-                   :class => 'rich_text_editor' %></p>
+                   :id =>'issue_description_field',
+                   :label => '' %></div>
 
 </div>
 
@@ -59,3 +58,33 @@
 <%# wikitoolbar_for 'issue_summary' %>
 <%# wikitoolbar_for 'issue_description' %>
 
+
+ <% content_for :header_yui do %>
+     <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+     <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
+     <%= javascript_include_tag "yui/element-min.js" %>
+     <%= javascript_include_tag "yui/container_core-min.js" %>
+     <%= javascript_include_tag "yui/menu-min.js" %>
+     <%= javascript_include_tag "yui/button-min.js" %>
+     <%= javascript_include_tag "yui/editor-min.js" %>
+     <%= javascript_include_tag "yui/yui_fs.js" %>
+ <% end %>
+ <script type="text/javascript" charset="utf-8">
+     (function () {
+         var myConfig1 = {
+             handleSubmit:true,
+             /* height:'200px', width:'95%',*/
+             resize:true,
+             animate:true,
+             dompath:true,
+             focusAtStart:false,
+             nodeChangeDelay:false,
+             removeLineBreaks:true,
+             drag:true
+         };
+         var myEditor1 = init_yui_editor_fs('issue_description_field', myConfig1);
+
+     })
+  ();
+
+ </script>
