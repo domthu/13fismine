@@ -15,10 +15,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :templates
 
   map.resources :reservations
+
   #  under are only for testing
-  map.connect 'edizionex/:id', :controller => 'editorial', :action => 'edizione_smtp'
   map.connect 'eventi/', :controller => 'editorial', :action => 'eventi'
+
   #----------------------------------------------------------------------------------
+
   #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
   #AJAX get usando JQuery UI autocomplete
   map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle', :conditions => {:method => [:get]}
@@ -237,6 +239,9 @@ ActionController::Routing::Routes.draw do |map|
   # Misc issue routes. TODO: move into resources
   map.auto_complete_issues '/issues/auto_complete', :controller => 'auto_completes', :action => 'issues', :conditions => { :method => :get }
   map.preview_issue '/issues/preview/:id', :controller => 'previews', :action => 'issue' # TODO: would look nicer as /issues/:id/preview
+  map.preview_articolo '/issues/articolo/:id', :controller => 'previews', :action => 'articolo'
+  map.preview_newsletter '/newsletter/:user_id', :controller => 'previews', :action => 'newsletter'
+
   map.issues_context_menu '/issues/context_menu', :controller => 'context_menus', :action => 'issues'
   map.issue_changes '/issues/changes', :controller => 'journals', :action => 'index'
   map.bulk_edit_issue 'issues/bulk_edit', :controller => 'issues', :action => 'bulk_edit', :conditions => { :method => :get }

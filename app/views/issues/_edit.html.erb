@@ -54,7 +54,7 @@
     <%# submit_tag l(:button_submit)  %>
     <%= submit_tag l(:button_edit) %>
     <%= link_to_remote l(:label_preview),
-                       { :url => preview_issue_path(:project_id => @project, :id => @issue),
+                       { :url => preview_articolo_path(:project_id => @project, :id => @issue),
                          :method => 'post',
                          :update => 'preview',
                          :with => 'Form.serialize("issue-form")',

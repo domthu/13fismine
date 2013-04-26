@@ -289,7 +289,7 @@ class UsersController < ApplicationController
   # 1 vedere anteprima della newsletter
   # 2 inviare via email la newsletter
   def send_newsletter
-
+    puts "=============================send_newsletter"
     #@user.safe_attributes = params[:user]
     #@user.save if request.post?
     @edizione_id =  params[:news][:edizione_id].to_i if params[:news][:edizione_id].present?
