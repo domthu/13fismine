@@ -1,4 +1,29 @@
 /* personalizzazioni */
+.fs-art-attachments{
+text-align: center;
+    padding: 10px 10%;
+    border-bottom : solid 1px grey;
+
+}
+.fs-art-attachments p{
+    text-align: left;
+    background-color: #e6e6fa;
+
+}
+.fs-art-attachments .size{
+    font-size: 0.8em;
+    color: #a9a9a9;
+    float: right;
+}
+.icon-attachment  {
+    background-image: url(../images/attachment.png);
+    background-position: 0% 50%;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+}
+
 /* menu per l'itente in cima */
 #top-menu-fe {
     display: block;

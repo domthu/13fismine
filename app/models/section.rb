@@ -1,5 +1,12 @@
 class Section < ActiveRecord::Base
   include FeesHelper
+  has_attached_file :image, :styles => {:xs => "32x32#", :m => "150x100#", :l => "300x200#"},
+                    :url  => "commons/sections/:id:style.:extension" ,
+                    :path => "#{RAILS_ROOT}/public/images/commons/sections/:id:style.:extension",
+                    :default_style => :l,
+                    :default_url => "commons/:style_no-image.png"
+  validates_attachment_size :image, :less_than => 200.kilobytes
+  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 
   #domthu20120516
   belongs_to :top_section, :class_name => 'TopSection', :foreign_key => 'top_section_id'
@@ -32,7 +39,6 @@ class Section < ActiveRecord::Base
   def to_s
     sezione
   end
-
   alias :name :to_s
 
   def full_name

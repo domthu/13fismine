@@ -20,7 +20,7 @@ class Issue < ActiveRecord::Base
   include FeesHelper
   #after_update :reprocess
   #has_image  #vedi config/initializers/paperclip.rb
-  has_attached_file :image, :styles => {:m => "155x155>", :l => "310x155>"},
+  has_attached_file :image, :styles => {:m => "150x100#", :l => "300x200#"},
                     :url  => "articoli/:id:style.:extension",
                     :path => "#{RAILS_ROOT}/public/images/articoli/:id:style.:extension",
                     :default_url => "commons/:style_no-image.png"

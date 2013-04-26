@@ -415,7 +415,7 @@ p.pagination {margin-top:8px;}
 margin: 0;
 padding: 3px 0 3px 0;
     /*padding-left: 180px;  width of left column containing the label elements */
-padding-left: 125px; /* width of left column containing the label elements */
+padding-left: 145px; /* width of left column containing the label elements */
 height: 1%;
 clear:left;
 }
@@ -1154,9 +1154,11 @@ textarea#issue_subject{
     font-weight: bold;
     padding: 5px;
 }
-#attributes{
+#attributes-box {
     border: dotted 1px #BBC6E0;
-    padding: 5px;
+    padding: 10px;
     margin: 10px auto;
     background-color: #ffffff;
+    float: left;
 }
+

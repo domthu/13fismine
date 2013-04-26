@@ -1,11 +1,13 @@
-<% if articolo %>
     <% if articolo %>
         <div class="fs-postmetadataheader">
           <div class="fs-art-sezione-full">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></div>
-          <div class="fs-postheader-full">      <%= @articolo.subject %>  </div>
+          <div class="fs-postheader-full">      <%= articolo.subject %>  </div>
         </div>
         <div style="width:100%;">
           <div class="fs-image-caption-wrapper-full">
+            <%=  image_tag artimage(articolo) %>
+
+  <!--
             <%= if articolo.immagine_url.nil?
                   if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
                     image_tag("/images/commons/sections/#{articolo.top_section.immagine}")
@@ -21,6 +23,7 @@
 
                 end
             %>
+  -->
           </div>
             <%#(FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")).to_s  +  "#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}" %>
           <div class="fs-postmetadata-full">
@@ -63,15 +66,20 @@
             <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
           </div>
           <div class="fs-riassunto-full"><p>
-            <%= textilizable(smart_truncate(articolo.summary, 250)) %></p></div>
+            <%= smart_truncate(articolo.summary, 250) %></p></div>
 
         </div>
         <div class="clearfix">&nbsp; <br/></div>
         <div class="fs-layout-cell layout-item-1">
           <div id="fs-articolo-full">
-            <%= raw(@articolo.description) %>
+            <%= raw(articolo.description) %>
             <br/>
           </div>
+        </div>
+        <div class="fs-attachments" >
+          <%# textilizable @notes, :attachments => @attachements, :object => @issue %>
+          <%#	parse_inline_attachments(text, project, obj, attr, only_path, options)  %>
+         <%= link_to_art_attachments(articolo, :author => false) %>
         </div>
         <div style="padding: 14px; text-align:center; border-top: solid 1px #bfbfbf;">
 
@@ -81,7 +89,6 @@
             <h4>L'articolo è stato ispirato da...</h4>
             <%= render :partial => 'quesito', :locals => {:q => @quesito} %>
         <% end %>
-
 
         <!--
         <div class="fs-comments">
@@ -94,8 +101,3 @@
         <br/>
     <% end %>
 
-<% else %>
-    <br/>
-    <p class="nodata"><%= l(:label_no_data) %></p>
-    <br/>
-<% end %>

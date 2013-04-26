@@ -21,6 +21,8 @@
           </p>
           <p><label><%= l(:label_se_visibile) %></label>
           <span><%= check_box_tag '', 1, @cross_organization.se_visibile, :disabled => 'disabled'  %></span></p>
+        <p>       <%= image_tag @cross_organization.image.url(:m) %></p>
+
   </fieldset>
 
   <fieldset class="box tabular">

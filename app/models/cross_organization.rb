@@ -1,4 +1,14 @@
 class CrossOrganization < ActiveRecord::Base
+  has_attached_file :image, :styles => {:l => ["200x200#", :png, :jpg],
+                                        :m => ["80x80#", :png, :jpg],
+                                        :s => ["48x48#", :png, :jpg],
+                                        :sx =>["32x32#", :png, :jpg]},
+                    :url  =>  "commons/organizations/:id:style.:extension" ,
+                    :path =>  "#{RAILS_ROOT}/public/images/commons/organizations/:id:style.:extension" ,
+                    :default_style => :l,
+                    :default_url => "commons/:style_no-image.png"
+  validates_attachment_size :image, :less_than => 200.kilobytes
+  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 
   #domthu20120516
   #ERROR undefined local variable or method `null' for #<Class:0xb656c5b4>
@@ -38,9 +48,8 @@ class CrossOrganization < ActiveRecord::Base
     #:co_id => self.id,
     #:asso_id => asso_id}]
     #)
-    Organization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", {
-    :co_id => self.id,
-    :asso_id => asso_id}]
-    )
+    Organization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", {:co_id => self.id, :asso_id => asso_id}])
   end
+
+
 end

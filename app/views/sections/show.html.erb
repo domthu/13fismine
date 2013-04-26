@@ -24,11 +24,10 @@
         <%= l(:label_ordinamento) %>: <%=h @section.ordinamento %>
     </p>
     <p>
-        <%= check_box_tag l(:label_protetto), 1, @section.protetto, :disabled => 'disabled'  %> <%= l(:label_protetto) %>
+      <%= image_tag @section.image.url(:m) %>
     </p>
   </fieldset>
 </div>
-
 
 <div class="splitcontentright">
   <fieldset class="box tabular">

@@ -29,6 +29,13 @@ module AttachmentsHelper
       render :partial => 'attachments/links', :locals => {:attachments => container.attachments, :options => options}
     end
   end
+  def link_to_art_attachments(container, options = {})
+    options.assert_valid_keys(:author)
+    if container.attachments.any?
+      options = {:deletable => container.attachments_deletable?, :author => true}.merge(options)
+      render :partial => 'attachments/art_links', :locals => {:attachments => container.attachments, :options => options}
+    end
+  end
 
   def render_api_attachment(attachment, api)
     api.attachment do

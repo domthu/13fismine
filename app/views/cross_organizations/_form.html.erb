@@ -1,11 +1,30 @@
 <%= f.error_messages %>
 
 <div class="box tabular">
-  <p style="display:none;">  NON USARE .organizzazione come stringa ==>
+  <p style="display:none;"> NON USARE .organizzazione come stringa ==>
     <%= h f.object.organizzazione %>
   </p>
-  <p><%= f.select :type_organization_id, (TypeOrganization.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_type_organization) %></p>
 
-  <p><%= f.text_field :sigla, :label => :field_sigla, :size => 40  %></p>
+  <p><%= f.select :type_organization_id, (TypeOrganization.all.collect { |c| [c.name, c.id] }), :include_blank => false, :required => true, :size => 60, :title => l(:label_type_organization) %></p>
+
+  <p><%= f.text_field :sigla, :label => :field_sigla, :size => 40 %></p>
+
   <p><%= f.check_box :se_visibile, :label => :label_se_visibile %></p>
+
+  <p><%= f.file_field :image, :label => :field_immagine %> </p>
+
+  <p id="prev" style="height: 100px;"> <%= image_tag @cross_organization.image.url(:m) %>   </p>
+
+  <p>
+  <ul style="font-size: 0.8em; color: #aeaeae; margin: 0 0 5px  11%;">
+    <li>
+      il rapporto tra larghezza e altezza dell'immagine sarà 1/1 (quadrato)
+    </li>
+    <li>
+      l'immagine verrà non deve superare i 200kb e di formato jpg/png
+    </li>
+  </ul>
 </div>
+<script type="text/javascript">
+    document.getElementById('cross_organization_image').addEventListener('change', handleFileSelect, false);
+</script>

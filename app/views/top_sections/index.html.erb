@@ -11,7 +11,7 @@
         <%= sort_header_tag('chiave', :title => l(:label_key), :style => 'width: 25%; text-align:left') %>
         <%= sort_header_tag('menu', :title => l(:label_top_menu), :style => 'width: 25%; text-align:left;') %>
         <%= sort_header_tag('ordinamento', :title => l(:label_ordinamento), :style => 'color:red; width: 5%;') %>
-        <%= sort_header_tag('se_visibile', :title => l(:label_se_visibile), :style => 'width: 5%;') %>
+        <%# sort_header_tag('se_visibile', :title => l(:label_se_visibile), :style => 'width: 5%;') %>
         <th style='width: 5%;'></th>
         <th style='width: 5%;'></th>
       </tr>
@@ -19,12 +19,12 @@
       <tbody>
       <% @top_sections.each do |top_section| %>
           <tr class="<%= cycle 'odd', 'even' %>">
-            <td> <%= image_tag top_section.image.url(:xs) %></td>
+            <td><%= image_tag top_section.image.url(:xs) %></td>
             <td><%= link_to h(top_section), top_section_path(top_section) %></td>
             <td align="left"><%= h top_section.key %></td>
             <td align="left"><%= link_to h(top_section.top_menu), top_menu_path(top_section.top_menu_id) %></td>
             <td align="center"><%= h top_section.ordinamento %></td>
-            <td align="center"><%= check_box_tag l(:label_private), 1, top_section.se_visibile, :disabled => 'disabled' %></td>
+  <!--          <td align="center"><%# check_box_tag l(:label_private), 1, top_section.se_visibile, :disabled => 'disabled' %></td> -->
             <td class="buttons"><%= link_to('', edit_top_section_path(top_section), :class => 'icon icon-edit') if User.current.admin? %></td>
             <td class="buttons"><%= link_to ('', top_section, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
           </tr>

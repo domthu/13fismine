@@ -7,6 +7,7 @@
 <% if @cross_organizations.any? %>
 <table class="list cross_organizations">
   <thead><tr>
+    <th style='width: 35px;'></th>
   <%= sort_header_tag('sigla', :title => l(:label_sigla), :style => 'color:red; width: 25%;')%>
   <%= sort_header_tag('type_organization', :title => l(:label_type_organization), :style => 'width: 30%;text-align:left;')%>
   <%= sort_header_tag('se_visibile', :title => l(:label_se_visibile), :style => 'width: 5%;')%>
@@ -16,6 +17,7 @@
   <tbody>
 <% @cross_organizations.each do |cross_organization| %>
   <tr class="<%= cycle 'odd', 'even' %>">
+    <td><%= image_tag cross_organization.image.url(:xs) %></td>
     <td><%= link_to h(cross_organization.sigla), cross_organization_path(cross_organization) %></td>
     <td><%= link_to h(cross_organization.type_organization), type_organization_path(cross_organization.type_organization, :id => cross_organization.type_organization_id) %></td>
     <td align="center"><%= check_box_tag '', 1, cross_organization.se_visibile, :disabled => 'disabled' %></td>

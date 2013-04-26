@@ -1,90 +1,92 @@
- <%= call_hook(:view_issues_form_details_top, { :issue => @issue, :form => f }) %>
-<div id="issue_descr_fields" >
-<% if @issue.safe_attribute_names.include?('is_private') %>
-<p style="float:right; margin-right:1em;">
-  <label class="inline" for="issue_is_private" id="issue_is_private_label"><%= f.check_box :is_private, :no_label => true %> <%= l(:field_is_private) %></label>
-</p>
-<% end %>
-
-<p><% if !@issue.new_record? && @issue.se_prenotazione %>
-    <%= f.select :section_id, [[@issue.section.full_name, @issue.section_id]], :include_blank => false, :required => true, :size => 100, :title => l(:label_section) %>
-  <% else %>
-    <%= f.select :section_id, (Section.all_with_topsection.collect {|c| [c.full_name, c.id]}), :include_blank => false, :required => true, :size => 100, :title => l(:label_section) %>
+<%= call_hook(:view_issues_form_details_top, {:issue => @issue, :form => f}) %>
+<div id="issue_descr_fields">
+  <% if @issue.safe_attribute_names.include?('is_private') %>
+      <p style="float:right; margin-right:1em;">
+        <label class="inline" for="issue_is_private" id="issue_is_private_label"><%= f.check_box :is_private, :no_label => true %> <%= l(:field_is_private) %></label>
+      </p>
   <% end %>
-</p>
 
-  <p><%= f.select :tracker_id, @project.trackers.collect {|t| [t.name, t.id]}, :required => true %></p>
-<%= observe_field :issue_tracker_id, :url => { :action => :new, :project_id => @project, :id => @issue },
-                                     :update => :attributes,
-                                     :with => "Form.serialize('issue-form')" %>
+  <p>
+    <% if !@issue.new_record? && @issue.se_prenotazione %>
+        <%= f.select :section_id, [[@issue.section.full_name, @issue.section_id]], :include_blank => false, :required => true, :size => 100, :title => l(:label_section) %>
+    <% else %>
+        <%= f.select :section_id, (Section.all_with_topsection.collect { |c| [c.full_name, c.id] }), :include_blank => false, :required => true, :size => 100, :title => l(:label_section) %>
+    <% end %>
+  </p>
 
-<p><%= f.text_area :subject,
-                   :cols => 109,
-                   :rows => (@issue.subject.blank? ? 2 : [[2, @issue.subject.length / 50].max, 20].min),
-                   :accesskey => accesskey(:edit) %></p>    <%#	    :class => 'wiki-edit' %>
+  <p><%= f.select :tracker_id, @project.trackers.collect { |t| [t.name, t.id] }, :required => true %></p>
+  <%= observe_field :issue_tracker_id, :url => {:action => :new, :project_id => @project, :id => @issue},
+                    :update => :attributes,
+                    :with => "Form.serialize('issue-form')" %>
+
+  <p><%= f.text_area :subject,
+                     :cols => 90,
+                     :rows => (@issue.subject.blank? ? 2 : [[2, @issue.subject.length / 50].max, 20].min),
+                     :accesskey => accesskey(:edit) %></p>    <%#	    :class => 'wiki-edit' %>
   <p><%= f.text_area :summary,
-                     :cols => 127,
-                     :rows => (@issue.summary.blank? ? 3 : [[3, @issue.summary.length / 50].max, 30].min),
+                     :cols => 105,
+                     :rows => (@issue.summary.blank? ? 4 : [[4, @issue.summary.length / 50].max, 30].min),
                      :accesskey => accesskey(:edit) %></p>
-<div id="attributes" class="attributes">
-  <%= render :partial => 'issues/attributes' %>
-  <%#, :locals => {:project => @project, :issue => @issue}%>
-</div>
+
+  <div id="attributes" class="attributes">
+    <%= render :partial => 'issues/attributes' %>
+    <%#, :locals => {:project => @project, :issue => @issue}%>
+  </div>
 
 
-<div class="yui-skin-sam"><%= f.text_area :description,
-                   :cols => 128,
-                   :rows => (@issue.description.blank? ? 120 : [[20, @issue.description.length / 50].max, 120].min),
-                   :accesskey => accesskey(:edit),
-                   :id =>'issue_description_field',
-                   :label => '' %></div>
-
+  <div class="yui-skin-sam"><%= f.text_area :description,
+                                            :cols => 90,
+                                            :rows => (@issue.description.blank? ? 120 : [[20, @issue.description.length / 50].max, 120].min),
+                                            :accesskey => accesskey(:edit),
+                                            :id => 'issue_description_field',
+                                            :label => '' %>
+  </div>
 </div>
 
 <% if @issue.new_record? %>
-<p id="attachments_form"><%= label_tag('attachments[1][file]', l(:label_attachment_plural))%><%= render :partial => 'attachments/form' %></p>
+    <p id="attachments_form"><%= label_tag('attachments[1][file]', l(:label_attachment_plural)) %><%= render :partial => 'attachments/form' %></p>
 <% end %>
 
 <% if @issue.new_record? && User.current.allowed_to?(:add_issue_watchers, @project) -%>
-<p id="watchers_form"><label><%= l(:label_issue_watchers) %></label>
-<% @issue.project.users.sort.each do |user| -%>
-<label class="floating"><%= check_box_tag 'issue[watcher_user_ids][]', user.id, @issue.watched_by?(user) %> <%=h user %></label>
-<% end -%>
-</p>
+    <p id="watchers_form"><label><%= l(:label_issue_watchers) %></label>
+      <% @issue.project.users.sort.each do |user| -%>
+          <label class="floating"><%= check_box_tag 'issue[watcher_user_ids][]', user.id, @issue.watched_by?(user) %> <%= h user %></label>
+      <% end -%>
+    </p>
 <% end %>
 
-<%= call_hook(:view_issues_form_details_bottom, { :issue => @issue, :form => f }) %>
+<%= call_hook(:view_issues_form_details_bottom, {:issue => @issue, :form => f}) %>
 <%# wikitoolbar_for 'issue_subject' %>
 <%# wikitoolbar_for 'issue_summary' %>
 <%# wikitoolbar_for 'issue_description' %>
 
 
- <% content_for :header_yui do %>
-     <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
-     <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
-     <%= javascript_include_tag "yui/element-min.js" %>
-     <%= javascript_include_tag "yui/container_core-min.js" %>
-     <%= javascript_include_tag "yui/menu-min.js" %>
-     <%= javascript_include_tag "yui/button-min.js" %>
-     <%= javascript_include_tag "yui/editor-min.js" %>
-     <%= javascript_include_tag "yui/yui_fs.js" %>
- <% end %>
- <script type="text/javascript" charset="utf-8">
-     (function () {
-         var myConfig1 = {
-             handleSubmit:true,
-             /* height:'200px', width:'95%',*/
-             resize:true,
-             animate:true,
-             dompath:true,
-             focusAtStart:false,
-             nodeChangeDelay:false,
-             removeLineBreaks:true,
-             drag:true
-         };
-         var myEditor1 = init_yui_editor_fs('issue_description_field', myConfig1);
+<% content_for :header_yui do %>
+    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
+    <%= javascript_include_tag "yui/element-min.js" %>
+    <%= javascript_include_tag "yui/container_core-min.js" %>
+    <%= javascript_include_tag "yui/menu-min.js" %>
+    <%= javascript_include_tag "yui/button-min.js" %>
+    <%= javascript_include_tag "yui/editor-min.js" %>
+    <%= javascript_include_tag "yui/yui_fs.js" %>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+    (function () {
+        var myConfig1 = {
+            handleSubmit:true,
+            /* height:'200px', width:'95%',*/
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        var myEditor1 = init_yui_editor_fs('issue_description_field', myConfig1);
 
-     })
-  ();
+    })
+            ();
 
- </script>
+</script>

@@ -4,7 +4,8 @@
 
   <p><%= f.text_field :sezione_top, :label => :field_top_section, :required => true, :size => 60 %></p>
 
-  <p><%= f.text_field :key, :label => :field_key %> <span style="font-size: 0.8em;"> * solo caratteri minuscoli separati da trattino </span></p>
+  <p><%= f.text_field :key, :label => :field_key %>
+    <span style="font-size: 0.8em;"> * solo caratteri minuscoli separati da trattino </span></p>
 
   <p><%= f.check_box :se_visibile, :label => :field_se_visibile %></p>
 
@@ -12,7 +13,20 @@
 
   <p><%= f.file_field :image, :label => :field_immagine %> </p>
 
-  <p id="prev" style="height: 150px;"> <%= image_tag @top_section.image.url(:m) %></p>
+  <p id="prev" style="height: 200px;"> <%= image_tag @top_section.image.url(:l) %>   </p>
+  <p>
+  <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
+    <li>
+      il rapporto tra larghezza e altezza dell'immagine sarà 3/2
+    </li>
+    <li>
+      l'immagine verrà ritagliata a 300px per 200px
+    </li>
+    <li>
+      l'immagine verrà non deve superare i 200kb  e di formato jpg/png/gif/bmp
+    </li>
+  </ul>
+
 </div>
 <script type="text/javascript">
     document.getElementById('top_section_image').addEventListener('change', handleFileSelect, false);

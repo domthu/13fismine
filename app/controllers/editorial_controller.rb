@@ -145,6 +145,7 @@ class EditorialController < ApplicationController
   def articolo
     @id = params[:article_id].to_i
     @articolo= Issue.all_public_fs.find(@id)
+    @attachements = @articolo.attachments
     #singolo articolo
     @section_id = @articolo.section_id
     if @articolo.news_id
