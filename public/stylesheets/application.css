@@ -1076,6 +1076,8 @@ h2 img { vertical-align:middle; }
 .icon-renew { background-image: url(../images/role/min_renew.jpg); padding-left: 30px; min-height:21px;}
 .icon-exp { background-image: url(../images/role/min_exp.jpg); padding-left: 26px;font-style: italic; min-height:21px;}
 .icon-arc { background-image: url(../images/role/min_arc.jpg); padding-left: 16px; font-style: italic; min-height:21px;}
+.icon-no-role { background-image: url(../images/exclamation.png); padding-left: 16px;}
+.icon-no-user { background-image: url(../images/bullet_delete.png); padding-left: 16px;}
 .description{color: ##2C4056; background-color:#FFFFFF; padding: 5px;} /*font-weight: bold; */
 .risposta{margin: 20px ;border: solid 1px blue; padding: 10px;}
 .fs-quesiti-status-icon {
