@@ -1,0 +1,71 @@
+<% remote_form_for(:user, :url => { :action => 'edit_newsletter', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
+
+  <div id="edit_newsletter_form">
+newsletter_smtp
+
+label_user_list_newsletters
+
+    <!--[form:user]-->
+    <div class="splitcontentleft">
+      <fieldset class="box tabular">
+        <legend><%=l(:label_dati_pagamento)%></legend>
+
+        <p><%= f.text_area :iva_precedente, :label => :field_iva_precedente, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+
+        <p>
+          <%= f.text_field :data_ultimo_pagamento, :label => l(:field_data_ultimo_pagamento), :size => 10 %><%= calendar_for('user_data_ultimo_pagamento') %>
+        </p>
+        <p>
+          <%# f.date_select :data_accredito, :label => :field_data_accredito %>
+          <%= f.text_field :data_accredito, :label => l(:field_data_accredito), :size => 10 %><%= calendar_for('user_data_accredito') %>
+        </p>
+        <p>
+          <%= f.select(:anno_competenza, dates.collect {|d| [d.to_s,d.to_s]}, {:include_blank => "Select", :selected => @user.anno_competenza.to_s }, {:class => "some_class"} )  %>
+        </p><%= @user.anno_competenza %>
+        <p><%= f.text_field :crediti, :label => :field_crediti, :required => false, :size => 3  %></p>
+
+      </fieldset>
+
+    </div>
+    <div class="splitcontentright">
+
+      <fieldset class="box">
+        <legend><%=l(:label_user_list_newsletters)%></legend>
+        Storico: Lista delle newsletter inviate precedentemente (fare Tabella)
+      </fieldset>
+
+    </div>
+  </div>
+  <div style="clear:left;"></div>
+  <!--[eoform:user]-->
+
+
+<div style="clear:both;"></div>
+<div >
+ <fieldset class="htmldraft">
+      <legend><%= l(:label_preview) %>:</legend>
+      <div id="news_preview" class="wiki">
+        <p>
+          labelled_tabular_form_for :issue, @issue,
+                             :url => {:action => 'update', :id => @issue},
+                             :html => {:id => 'issue-form',
+                                       :class => nil,
+                                       :method => :put,
+                                       :multipart => true} do |f|
+        </p>
+        <p>
+           link_to_remote l(:label_preview),
+                       { :url => preview_issue_path(:project_id => @project, :id => @issue),
+                         :method => 'post',
+                         :update => 'preview',
+                         :with => 'Form.serialize("issue-form")',
+                         :complete => "Element.scrollTo('preview')"
+                       }, :accesskey => accesskey(:preview)
+        </p>
+      </div>
+  </fieldset>
+</div>
+
+  <p><%= submit_tag l(:button_send_newsletter) %></p>
+  <p><%= submit_tag l(:button_preview) %></p>
+<% end %>

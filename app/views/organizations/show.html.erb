@@ -114,7 +114,7 @@
 
   <fieldset class="box tabular">
     <legend><%=l(:label_assos_users)%></legend>
-    <% associati = @organization.GetAssociati %>
+    <% associati = @organization.soci %>
     <% if associati.any? %>
       <%= l(:label_total) %>:<strong class="total center"><%= h associati.count %></strong>
       <table class="list users">

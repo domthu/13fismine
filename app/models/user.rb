@@ -285,30 +285,25 @@ class User < Principal
     str = ""
     if self.admin?
       str += " icon-admin"
-    end
-    if self.ismanager?
+    elsif self.ismanager?
       str += " icon-man"
-    end
-    if self.isauthor?
+    elsif self.isauthor?
       str += " icon-auth"
-    end
-    if self.isvip?
+    elsif self.isvip?
       str += " icon-vip"
-    end
-    if self.isabbonato?
+    elsif self.isabbonato?
       str += " icon-abbo"
-    end
-    if self.isregistered?
+    elsif self.isregistered?
       str += " icon-reg"
-    end
-    if self.isrenewing?
+    elsif self.isrenewing?
       str += " icon-renew"
-    end
-    if self.isexpired?
+    elsif self.isexpired?
       str += " icon-exp"
-    end
-    if self.isarchivied?
+    elsif self.isarchivied?
       str += " icon-arc"
+    else
+      #str += " icon-warning icon-adjust-min"
+      str += " icon-no-role"
     end
     return str
   end

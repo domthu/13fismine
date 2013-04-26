@@ -27,7 +27,7 @@
         <%= link_to organization.asso, asso_path(organization.asso) %>
     </td>
     <td><%= link_to h(organization.cross_organization), cross_organization_path(organization.cross_organization, :id => organization.cross_organization_id) %></td>
-    <td><%= link_to h(organization.user), user_path(organization.user, :id => organization.user_id, :class => "icon " + organization.user.icon() ) %></td>
+    <td><%= link_to(h(organization.user), user_path(organization.user, :id => organization.user_id), :class => "icon " + organization.user_icon() ) %></td>
     <td align="left"><%= format_date(organization.data_scadenza) %></td>
     <td align="center"><%= check_box_tag '', 1, organization.richiedinumeroregistrazione, :disabled => 'disabled' %></td>
     <td align="left"><%=h organization.comune %></td>

@@ -43,13 +43,21 @@ class Organization < ActiveRecord::Base
     return self.data_scadenza
   end
 
-  def scadenza_format
-
+  def user_icon()
+    if self.user
+      self.user.icon()
+    else #default
+      #' icon-warning icon-adjust-min'
+      ' icon-no-user'
+    end
   end
 
-  def GetAssociati
-    if self.asso_id || self.asso
-      User.all(:conditions => {:asso_id => self.id})
+
+  def soci
+    if self.asso_id && self.asso_id > 0
+      User.all(:conditions => {:asso_id => self.asso_id})
+    elsif self.asso
+      User.all(:conditions => {:asso_id => self.asso.id})
     end
   end
 
