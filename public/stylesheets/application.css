@@ -414,7 +414,8 @@ p.pagination {margin-top:8px;}
 .tabular p{
 margin: 0;
 padding: 3px 0 3px 0;
-padding-left: 180px; /* width of left column containing the label elements */
+    /*padding-left: 180px;  width of left column containing the label elements */
+padding-left: 125px; /* width of left column containing the label elements */
 height: 1%;
 clear:left;
 }
@@ -1116,16 +1117,21 @@ h2 img { vertical-align:middle; }
     width: 33%;
 }
 .splitcontents-3box p label {
-                         font-size: 0.9em;
+                         font-size: 0.8em;
     margin-left: -155px;
     /* width of labels. Should be smaller than left column to create some right margin */
     width: 150px;
 }
 
-.splitcontents-3box p select {
+.splitcontents-3box #prev img {
+    margin: auto;
+    display: block;
+    max-width: 355px;
 }
-
-
 .splitcontents-3box p {
     width: 100%;
     padding-left: 145px;                                          }
+#issue_image{
+ font-size: 0.8em;
+    color: #afafaf;
+  }
