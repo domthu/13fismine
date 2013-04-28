@@ -1,0 +1,90 @@
+<div class="fs-layout-cell fs-content clearfix">
+  <% if @issues && @issues.any? %>
+      <% @issues.each do |articolo| %>
+          <!-- qui è l'inserimento dell'articolo -->
+          <ARTICLE class="fs-post fs-article">
+            <% if articolo %>
+                <div class="fs-postmetadataheader">
+                  <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
+                  <span class="fs-postdateicon" style="float:right;"><%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
+                  <h5 class="fs-postheader">
+                        <%= link_to(h(articolo.subject), link_to_articolo(articolo)) %>
+                  </h5>
+                </div>
+                <div class="fs-postcontent fs-postcontent-0 clearfix">
+                  <div class="fs-content-layout-wrapper layout-item-0">
+                    <div class="fs-image-caption-wrapper">
+                      <div class="fs-image-caption-wrapper-img">
+                        <%=  image_tag art_image(articolo,:m) %>
+                      </div>
+                      <% if articolo.se_protetto %>
+                          <div class="fs-postmetadatafooter-ko">
+                            <div class="fs-postheadericons">
+                              <% if !articolo.author.user_profile.nil? %>
+                                  <span style="margin-right:6px;"><%= articolo.author.user_profile.my_avatar(:xs) %> </span>
+                              <% else %>
+                                  <span style="margin-right:6px; width: 32px; display: inline-block;">Di:</span>
+                              <% end %>
+                              <span class="fs-postauthoricon"> <%= h articolo.author %></span>
+                              <p class="fs-post-access-ko">Articolo riservato agli abbonati</p>
+                            </div>
+                          </div>
+                      <% else %>
+                          <div class="fs-postmetadatafooter-ok">
+                            <div class="fs-postheadericons">
+                              <% if !articolo.author.user_profile.nil? %>
+                                  <span style="margin-right:6px;"><%= articolo.author.user_profile.my_avatar(:xs) %> </span>
+                              <% else %>
+                                  <span style="margin-right:6px; width: 32px; display: inline-block;">Di:</span>
+                              <% end %>
+                              <span class="fs-postauthoricon"> <%= h articolo.author %></span>
+                              <p class="fs-post-access-ok">Articolo consultabile liberamente</p>
+                            </div>
+                          </div>
+                      <% end %>
+
+                    </div>
+
+                    <%= h(articolo.summary) %>
+                    <br /> &nbsp; <br />
+                     <p style="text-align: center;">
+                    <%= link_to_articolo(articolo, :title => 'Continua ...', :class => "fs-blu-button") %></p>
+                  </div>
+                  <div class="fs-postmetadatafooter-ko" style="width: 100%;">
+                                          <div class="fs-postheadericons">
+                                            <% if !articolo.author.user_profile.nil? %>
+                                                <span style="margin-right:6px;"><%= articolo.author.user_profile.my_avatar(:xs) %> </span>
+                                            <% else %>
+                                                <span style="margin-right:6px; width: 32px; display: inline-block;">Di:</span>
+                                            <% end %>
+                                            <span class="fs-postauthoricon"> <%= h articolo.author %></span>
+                                            <p class="fs-post-access-ko">Articolo riservato agli abbonati</p>
+                                            <%= link_to_articolo(articolo, :title => 'Continua ...', :class => "fs-blu-button") %></p>
+                                          </div>
+                                        </div>
+                </div>
+            <% else %>
+                <br/>
+
+
+                <p class="nodata"><%= l(:label_no_data) %></p>
+                <br/>
+            <% end %>
+          </ARTICLE>
+          <%# render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
+          <br/>
+      <% end %>
+      <br/>
+
+      <p class="pagination"><%= pagination_links_full(@issues_pages, @issues_count) %></p>
+      <br/>
+
+  <% else %>
+      <br/>
+
+      <p class="nodata"><%= l(:label_no_data) %></p>
+      <br/>
+  <% end %>
+  <div class="clearfix"></div>
+</div>
+

@@ -1,0 +1,39 @@
+@artsimilar
+<div class="fs-block clearfix">
+      <div class="fs-blockheader">
+        <h3 class="t">Articoli Simili</h3> <!-- <span style="font-size: 14px; font-weight: bold;">:(<%#@issues.count %>)</span> -->
+      </div>
+  <% if @artsimilar && @artsimilar.any? %>
+      <div class="fs-blockcontent">
+            <article class="fs-article">
+              <% @artsimilar.each do |articolo| %>
+                <div class="fs-content-layout">
+                  <div class="fs-content-layout-row">
+                    <div class="fs-layout-cell layout-item-3">
+                      <%= link_to(h(truncate(articolo.subject, :length => 50)), link_to_articolo(articolo) )  %>
+
+                       <%# articolo.section.issues.count %>
+                      <span class="fs-postauthoricon">
+                          <%= h articolo.author %>
+                        </span>
+                      <br/>
+
+                      <div class="fs-postcontent">
+                        <div class="fs-box-link">
+                        <%= link_to(h(smart_truncate(articolo.summary, 130)),
+                            link_to_articolo(articolo))
+                        %>
+                        <br/></div>  </div>
+                      <%# link_to "Continua... ", link_to_articolo(articolo) %>
+                      <p class="separticle"></p>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </article>
+      </div>
+  <% else %>
+      <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+
+</div>
