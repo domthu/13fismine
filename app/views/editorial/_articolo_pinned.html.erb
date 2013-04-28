@@ -6,7 +6,7 @@
       <div class="fs-layout-cell layout-item-0" style="width: 100%">
         <h6 class="fs-postheader">
           <%= link_to(h(truncate(articolo.subject, :length => 50)),
-                       url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))
+                       link_to_articolo(articolo))
           %>
         </h6>
          <%# articolo.section.issues.count %>
@@ -18,10 +18,10 @@
         <div class="fs-postcontent">
           <div class="fs-box-link">
           <%= link_to(h(smart_truncate(articolo.summary, 130)),
-              url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))
+              link_to_articolo(articolo))
           %>
           <br/></div>  </div>
-        <%# link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false) %>
+        <%# link_to "Continua... ", link_to_articolo(articolo) %>
         <p class="separticle"></p>
       </div>
     </div>

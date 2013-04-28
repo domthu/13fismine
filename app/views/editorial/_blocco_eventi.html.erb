@@ -14,7 +14,7 @@
               <span><%= I18n.localize(@conv_prossimo.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
             </div>
             <div class="fs-convegni-futuri">
-              <div class="fs-convegni-block-head">
+              <div class="fs-lateral-blocks-head">
                 <%= link_to(h(@conv_prossimo.subject), url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %> </div>
               <div class="fs-conv-block">
                 <%= if @conv_prossimo.immagine_url.nil?
@@ -50,7 +50,7 @@
                   <span><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
                 </div>
                 <div class="fs-convegni-futuri">
-                  <div class="fs-convegni-block-head">
+                  <div class="fs-lateral-blocks-head">
                     <%= link_to(h(con.subject), url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %> </div>
                   <div class="fs-conv-block">
                     <%= if con.immagine_url.nil?

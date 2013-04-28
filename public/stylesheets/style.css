@@ -115,7 +115,7 @@ ul.fs-vmenu a
 {
    font-family: Arial, Helvetica, Sans-Serif;
    text-decoration: none;
-   color: #006B92;
+   color: #016285;
 }
 
 .fs-postcontent  a:hover, .fs-postcontent a.hover
@@ -239,7 +239,7 @@ ul.fs-vmenu a
 
 .fs-postcontent h5
 {
-   color: #00678C;
+   color: #016285;
    margin: 10px 0 0;
    font-size: 14px;
    font-family:  Arial, Helvetica, Sans-Serif;
@@ -266,7 +266,7 @@ ul.fs-vmenu a
 
 .fs-postcontent h6
 {
-    color: #00678C;
+    color: #016285;
     margin: 10px 0 0;
     font-size: 16px;
     font-family:  Arial, Helvetica, Sans-Serif;
@@ -278,7 +278,7 @@ ul.fs-vmenu a
 
 .fs-blockcontent h6
 {
-    color: #00678C;
+    color: #016285;
     margin: 10px 0 0;
     font-size: 16px;
     font-family:  Arial, Helvetica, Sans-Serif;
@@ -290,7 +290,7 @@ ul.fs-vmenu a
     font-size: 16px;
     font-family:  Arial, Helvetica, Sans-Serif;
     text-decoration: none;
-    color: #00678C;
+    color: #016285;
 
   /* font-variant: small-caps;
    text-align: center;    */
@@ -454,7 +454,7 @@ text-transform: none;
 text-align: center;
   padding: 0;
   margin: 0;
-  color: #00435C !important;
+  color: #016285 !important;
  /* white-space: nowrap;       */
 }
 .fs-object375974515 h1,
@@ -1648,7 +1648,7 @@ label.fs-checkbox.fs-checked:after
    -webkit-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);
    -moz-box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);
    box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);
-   padding:7px;
+    padding: 2% 4%;
     width:98%;
     margin-top: 7px;
 }
@@ -1711,9 +1711,10 @@ pre
 
 .fs-postheader
 {
-   color: #003548;
+   color: #016285;
    margin: 12px 0;
-   font-size: 18px;
+   font-size: 15px;
+    line-height: 17px;
    font-family: Arial, Helvetica, Sans-Serif;
    font-weight: normal;
    font-style: normal;
@@ -1731,7 +1732,7 @@ pre
     font-size: 15px;
     line-height: 17px;
    font-family: Arial, Helvetica, Sans-Serif;
-    color: #004977;
+    color: #016285;
    font-weight: bold;
    font-style: normal;
     text-decoration: none;
@@ -1771,7 +1772,7 @@ pre
    font-family: Arial, Helvetica, Sans-Serif;
    text-align: left;
     font-weight: bold;
-    color: #004977;
+    color: #016285;
     display:block;
     line-height: 1.5em;
 }
@@ -1955,9 +1956,6 @@ blockquote p,
 {
    margin: 0;
 }
-.fs-postmetadataheader .fs-postheader {
- padding: 0 10px;
-}
 .fs-postfootericons,
 .fs-postfootericons a,
 .fs-postfootericons a:link,
@@ -2042,7 +2040,7 @@ blockquote p,
    padding:25px;
    margin:20px auto 0;
    position: relative;
-   color: #00678C;
+   color: #016285;
    font-size: 11px;
    font-family: Arial, Helvetica, Sans-Serif;
    text-align: center;

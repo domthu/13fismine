@@ -146,8 +146,18 @@ class EditorialController < ApplicationController
     @id = params[:article_id].to_i
     @articolo= Issue.all_public_fs.find(@id)
     @attachements = @articolo.attachments
+
     #singolo articolo
     @section_id = @articolo.section_id
+    @icount = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s).count()
+    if @icount > 3
+      @artsimilar = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s ).all(
+          :limit => 10)
+    else
+      @artsimilar = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @articolo.section.top_section.id.to_s ).all(
+          :limit => 10)
+    end
+
     if @articolo.news_id
       @quesito = News.all_quesiti_fs.find_by_id(@articolo.news_id)
     end

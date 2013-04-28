@@ -598,10 +598,17 @@ margin-left:-1px;*/
 
 .fs-layout-cell .layout-item-0 {
     color: #000000;
-    padding: 0 20px 20px;
     text-align: justify;
 
 }
+.layout-item-3 {
+    color: #000000;
+    padding: 0 6% 6%;
+    text-align: justify;
+    width: 100%;
+
+}
+
 
 .fs-content .fs-postcontent-2 .layout-item-1 {
     padding-right: 3px;
@@ -688,25 +695,19 @@ margin-left:-1px;*/
     column-rule: 1px solid #e6e6e6;
     padding-bottom: 5px;
 }
-
+/* serve solo se si sceglie la prima versione della lista articoli */
 .fs-image-caption-wrapper {
-    padding: 5px 5px 5px 0;
+    margin-right: 14px;
     float: left;
-    width: 210px;
+    width: 150px;
 
 }
 
-.fs-image-caption-wrapper-img img {
-    margin: 0 !important;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    max-width: 190px;
+.fs-image-caption-wrapper img {
+    margin: 0;
 }
 
-.fs-image-caption-wrapper-img {
-    margin-bottom: 10px;
-}
+
 
 .fs-image-caption-wrapper div.fs-collage {
     margin: 0 !important;
@@ -720,37 +721,88 @@ margin-left:-1px;*/
     text-align: center;
     margin: 0;
 }
+/* lista degli articoli box author */
+.fs-postmetadatafooter-author{
+    padding-left: 4px;
+    width: 100%;
+    font-size: 11px;
+    color: #003973;
+    font-weight: bold;
+}
+.fs-postmetadatafooter-author span{
+    display: table-cell;
+    vertical-align: middle;
+}
+.fs-postmetadatafooter-author-ko{
+    padding: 3px 0;
+    background-color: #fff3da;
+}
+.fs-postmetadatafooter-author-ok{
+    background-color: #daeaff;
+    padding: 3px 0;
+}
+.fs-postmetadatafooter-author-qualifica{
+  font-size: 0.8em;
+}
 
 .fs-postmetadatafooter-ok {
-    background: rgba(220, 244, 237, 0.48);
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-    border: 1px solid #4ACFFF;
-    margin-left: -18px;
+ background: url('/images/commons/free_ok.jpg')  no-repeat  top left;
+    margin-left: -4px;
+    width: 158px;
+    height: 32px;
+    display: table;
+ }
+.fs-postmetadatafooter-ko {
+ background: url('/images/commons/free_no.jpg')  no-repeat  top left;
+    margin-left: -4px;
+    width: 158px;
+    height: 32px;
+    display: table;
+}/*
+.fs-postmetadatafooter-ok {
+    width: 100%;
+    background: #016284;
+    color: #fff;
+    font-size: 11px;
+    font-family: Arial, Helvetica, Sans-Serif;
+    line-height: 16px;
+    font-variant: small-caps;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    border: 1px solid #fff;
+    margin: 0 auto;
+    display: inline-block;
     position: relative;
-    z-index: 1;
-    padding: 1px;
+    letter-spacing: -1px;
 }
+
+
 
 .fs-postmetadatafooter-ko {
     background: #FDFFCA;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    border: 1px solid rgb(255, 122, 114);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #FF7A72;
     margin-left: -18px;
     position: relative;
     z-index: 1;
     padding: 1px;
+    display: table;
 }
-
+*/
 .fs-author {
     border-bottom: 1px solid #d3d3d3;
-    display: block;
-    height: 50px;
+    height: 55px;
 }
-
+.fs-author span {
+ display: table-cell;
+    vertical-align: middle;
+}
 .fs-social {
     margin: 12px auto 0;
     width: 296px;
@@ -809,8 +861,8 @@ margin-left:-1px;*/
 }
 
 .fs-riassunto-full {
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 19px;
     display: block;
     font-weight: bold;
 
@@ -822,37 +874,31 @@ margin-left:-1px;*/
 
 .fs-postmetadata-full {
     background: #ffffff;
-    border-bottom: 1px solid #d3d3d3;
-    border-top: 3px solid #afafaf;
+    border-bottom: 1px solid #e7e7e7;
+    border-top: 1px solid #e7e7e7;
     margin-bottom: 10px;
     position: relative;
     float: left;
-    padding: 10px;
-    width: 285px;
-    display: block;
+    padding: 5px;
+    width: 300px;
+    display: table;
 }
 
 .fs-image-caption-wrapper-full {
-    padding: 7px 8px 7px 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     float: left;
-    width: 320px;
+    width: 300px;
     /*   border: solid 1px #bfbfbf;    */
     margin-right: 15px;
     position: relative;
     display: table-cell;
     vertical-align: middle;
-    text-align: center;
 }
 
 .fs-image-caption-wrapper-full img {
-    margin: 5px auto;
+    margin: 0 auto;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    max-width: 312px;
 }
 
 .fs-postheader-full {
@@ -1063,7 +1109,7 @@ right: -14px;   */
     margin-bottom: 4px;
 }
 
-.fs-convegni-block-head a:link, .fs-convegni-block-head a:visited {
+.fs-lateral-blocks-head a:link, .fs-lateral-blocks-head a:visited {
     text-align: left;
     font-weight: bold;
     color: #242a71;

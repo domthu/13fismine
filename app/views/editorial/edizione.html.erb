@@ -20,7 +20,7 @@
                   <span class="fs-postdateicon" style="float:right;"><%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
                   <h5 class="fs-postheader">
                     <%= link_to(h(smart_truncate(articolo.subject, 110)),
-                                url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false))
+                                link_to_articolo(articolo))
                     %>
                   </h5>
                 </div>
@@ -61,7 +61,7 @@
                     </div>
                     <%= articolo.summary %>
                     <br/>
-                    <%= link_to "Continua... ", url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug), :escape => false) %>
+                    <%= link_to "Continua... ", link_to_articolo(articolo) %>
                   </div>
                 </div>
 

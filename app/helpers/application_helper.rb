@@ -66,7 +66,7 @@ module ApplicationHelper
   def link_to_articolo(articolo, options={})
         title = options[:title]
         classe = options[:class]
-        if articolo.is_convegno?
+      if articolo.is_convegno?
          s = url_for(:controller => 'editorial', :action => 'evento', :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug))
       else
          s = url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug))
