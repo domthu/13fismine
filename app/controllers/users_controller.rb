@@ -274,7 +274,6 @@ class UsersController < ApplicationController
           }
         }
       else
-        puts "============ERROR=======UsersController --> edit_fattureedit_fattureedit_fatture"
         format.js {
           render(:update) {|page|
             page.alert(l(:notice_failed_to_save_fatture, :errors => @user.errors.full_messages.join(', ')))
@@ -290,18 +289,40 @@ class UsersController < ApplicationController
   # 2 inviare via email la newsletter
   #Parameters: {"id"=>"17542", "action"=>"send_newsletter", "project"=>{"id"=>"308"}, "authenticity_token"=>"d0qcDDrxPu4tRQaWV0EQC9VO5f152OhGqfiIIb/K/d8=", "controller"=>"users", "_method"=>"put"}
   def send_newsletter
-    puts "=============================send_newsletter"
     @id = ((params[:project] && params[:project][:id]) || params[:project_id]).to_i
     @project= Project.all_public_fs.find_by_id(@id.to_i)
     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    #@htmlpartial = @user.newsletter_smtp(@edizione)
     @htmlpartial = render_to_string(
         :layout => false,
         :partial => 'editorial/edizione_smtp',
         :locals => { :id => @id, :project => @project, :art => @art, :user => @user }
       )
 
-    #@htmlpartial = @user.newsletter_smtp(@edizione)
-    @submit =
+    act = params[:action]
+    @msg = ''
+    if act == 'send_newsletter'
+      raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
+      # Force ActionMailer to raise delivery errors so we can catch it
+      ActionMailer::Base.raise_delivery_errors = true
+      @msg = 'Invio newsletter. '
+      begin
+        #@test =  Mailer.test(@user)
+        #@test =  Mailer.deliver_account_activated(@user)
+        @test =  Mailer.deliver_newsletter(@user, @htmlpartial, @project)
+        #notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
+        #flash[:notice] = l(:notice_user_newsletter_email_sent)
+        @msg += l(:notice_user_newsletter_email_sent, :edizione => @project.name, :date => @project.data_al,  :user => user.to_s)
+        @msg += " Resultato => " + @test
+      rescue Exception => e
+        #@test =  Mailer.test(@user) private method `test' called for Mailer:Class
+        #@test =  Mailer.deliver_newsletter(@user, @htmlpartial, @project) uninitialized constant Mailer::Settings
+        #Mailer.deliver_account_activated(@user) undefined local variable or method `user' for #<UsersController:0xb63d3374>
+        @msg += l(:notice_email_error, e.message)
+      end
+      ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
+    end
+
     respond_to do |format|
       if @user.valid?
         format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'newsletter' }
@@ -310,10 +331,10 @@ class UsersController < ApplicationController
             page.replace_html "tab-content-newsletter", :partial => 'users/newsletter'
             page.replace_html "news_preview", @htmlpartial
             page.visual_effect(:highlight, "newsletter-#{@user.id}")
+            page.alert(@msg)
           }
         }
       else
-        puts "============ERROR=======UsersController --> send_newsletter "
         format.js {
           render(:update) {|page|
             page.alert(l(:notice_failed_to_send_newsletter, :errors => @user.errors.full_messages.join(', ')))
@@ -350,7 +371,6 @@ class UsersController < ApplicationController
   end
 
   def only_find_user
-    puts "*******************************only_find_user***************************"
     @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     flash[:error] = l(:notice_user_not_found, {:id => params[:id]})

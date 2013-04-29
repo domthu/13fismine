@@ -35,7 +35,7 @@ class FeesController < ApplicationController
       #    existing_regions = Region.all()
       for usr in User.all(:limit => 5) do
       #for usr in User.all() do
-        puts "user --> " + usr.id.to_s
+        #puts "user --> " + usr.id.to_s
         str = control_assign_role(usr)
         if !str.nil?
           @msg << str

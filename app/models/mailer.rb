@@ -19,6 +19,7 @@ require 'ar_condition'
 
 class Mailer < ActionMailer::Base
   layout 'mailer'
+  layout nil, :only =>  [:newsletter]
   helper :application
   helper :issues
   helper :custom_fields
@@ -299,6 +300,25 @@ class Mailer < ActionMailer::Base
     render_multipart('test', body)
   end
 
+  def newsletter(user, body_as_string, project)
+    #set_language_if_valid user.language
+    recipients user.mail
+    #mail_subject_newsletter: "%{compagny}: %{edizione} del %{date}"
+    subject l(:mail_subject_newsletter, :compagny => Setting.app_title, :edizione => project.name, :date => project.data_al)
+    #subject "invia questa mail"
+    #body :token => token,
+    #     :url => url_for(:controller => 'account', :action => 'activate', :token => token.value)
+    #render_multipart('register', body)
+
+    #content_type "multipart/alternative"
+    part :content_type => "text/html",
+         :body => body_as_string #render_message("#{method_name}.html.erb", body)
+
+    #usa views
+    #body :news => body_as_string, :fee_url => url_for(:controller => 'fees'), :app_title => Setting.app_title
+    #render_multipart('newsletter', body)
+  end
+
   # Builds a tmail object used to email fee management.
   #
   # Example:
@@ -317,7 +337,7 @@ class Mailer < ActionMailer::Base
     # => fee.text.erb
     # => fee.html.erb
     #render_multipart(type, body)
-    #TEMPLATE: 
+    #TEMPLATE:
     #'proposal'
     #'thanks'
     #'asso'
