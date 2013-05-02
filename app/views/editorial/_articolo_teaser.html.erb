@@ -4,9 +4,7 @@
       <div class="fs-postmetadataheader">
         <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
         <h5 class="fs-postheader">
-          <%= link_to(h(smart_truncate(articolo.subject, 110)),
-                       link_to_articolo(articolo))
-          %>
+          <%= link_to_articolo(articolo , :title=> h(smart_truncate(articolo.subject, 110))) %>
         </h5>
       </div>
       <div class="fs-postcontent fs-postcontent-0 clearfix">
@@ -22,7 +20,7 @@
                   %>
                 <%= articolo.summary %>
                 <br/>
-                <%= link_to "Continua... ", link_to_articolo(articolo) %>
+                <%=  link_to_articolo(articolo, :title=> "Continua... ",:class => "fs-vuoto-inline-button" ) %>
               </div>
             </div>
 

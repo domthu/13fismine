@@ -105,6 +105,9 @@ class Issue < ActiveRecord::Base
 
  # return rue if summary is equal to description for full article
   def hide_summary?
+    if self.nil?
+      return 0
+    end
     s1=  self.summary[0..125].gsub(/\s+/, "")
     s2= self.testo_no_format[0..125].gsub(/\s+/, "")
     s1[0..110].casecmp s2[0..110]

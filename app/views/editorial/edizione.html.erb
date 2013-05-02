@@ -19,9 +19,7 @@
                   <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
                   <span class="fs-postdateicon" style="float:right;"><%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
                   <h5 class="fs-postheader">
-                    <%= link_to(h(smart_truncate(articolo.subject, 110)),
-                                link_to_articolo(articolo))
-                    %>
+                    <%= link_to_articolo(articolo, :title=> h(smart_truncate(articolo.subject, 110))) %>
                   </h5>
                 </div>
                 <div class="fs-postcontent fs-postcontent-0 clearfix">
@@ -56,18 +54,14 @@
                             </div>
                           </div>
                       <% end %>
-
-
                     </div>
                     <%= articolo.summary %>
                     <br/>
-                    <%= link_to "Continua... ", link_to_articolo(articolo) %>
+                    <%=  link_to_articolo(articolo, :title=> link_to "Continua... " ) %>
                   </div>
                 </div>
-
             <% else %>
                 <br/>
-
                 <p class="nodata"><%= l(:label_no_data) %></p>
                 <br/>
             <% end %>
@@ -76,7 +70,6 @@
           <br/>
       <% end %>
       <br/>
-
       <p class="pagination"><%#pagination_links_full(@issues_pages, @issues_count) %></p>
       <br/>
 

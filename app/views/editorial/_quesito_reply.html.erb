@@ -21,7 +21,8 @@
           <span style="font-style: italic ;">Pubblicato in: </span>
           <div class="fs-art-sezione-full">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %>
           </div>
-          <%= link_to('Articolo', link_to_articolo(articolo), :class => "fs-vuoto-inline-button", :style => "float:right; margin:-5px 10px 0 0;") %>
+          <div  style="float:right; margin:-5px 10px 0 0;">
+          <%= link_to_articolo(articolo ,:title => 'Articolo', :class => "fs-vuoto-inline-button") %></div>
           <div class="fs-postheader-full">      <%= articolo.subject %>  </div>
         </div>
         <div class="fs-quesiti-wrapper">

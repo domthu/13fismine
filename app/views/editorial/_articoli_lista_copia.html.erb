@@ -8,7 +8,7 @@
                   <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
                   <span class="fs-postdateicon" style="float:right;"><%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
                   <h5 class="fs-postheader">
-                        <%= link_to(h(articolo.subject), link_to_articolo(articolo)) %>
+                        <%= link_to_articolo(articolo , :title  => h(articolo.subject) ) %>
                   </h5>
                 </div>
                 <div class="fs-postcontent fs-postcontent-0 clearfix">
@@ -58,7 +58,7 @@
                                                 <span style="margin-right:6px; width: 32px; display: inline-block;">Di:</span>
                                             <% end %>
                                             <span class="fs-postauthoricon"> <%= h articolo.author %></span>
-                                            <p class="fs-post-access-ko">Articolo riservato agli abbonati</p>
+                                            <p class="fs-post-access-ko">Articolo riservato agli abbonati
                                             <%= link_to_articolo(articolo, :title => 'Continua ...', :class => "fs-blu-button") %></p>
                                           </div>
                                         </div>

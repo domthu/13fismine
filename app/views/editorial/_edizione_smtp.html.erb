@@ -286,10 +286,8 @@
           <table width="560" border="0" cellpadding="0" cellspacing="0">
             <tr>
               <td width="560" height="33" align="right" valign="top">
-
-                <%= link_to(image_tag("/images/commons/btn_news_y.gif", :width => 107, :height => 29, :alt => 'vedi articolo'), link_to_articolo(articolo), :target => '_blank') %>
-
-              </td>
+                <%= link_to_articolo(articolo,:title=> image_tag("/images/commons/btn_news_y.gif", :width => 107, :height => 29, :alt => 'vedi articolo', :target => '_blank')) %>
+                 </td>
             </tr>
           </table>
         </td>

@@ -5,9 +5,7 @@
     <div class="fs-content-layout-row">
       <div class="fs-layout-cell layout-item-0" style="width: 100%">
         <h6 class="fs-postheader">
-          <%= link_to(h(truncate(articolo.subject, :length => 50)),
-                       link_to_articolo(articolo))
-          %>
+          <%=  link_to_articolo(articolo, :title => h(truncate(articolo.subject, :length => 50))) %>
         </h6>
          <%# articolo.section.issues.count %>
         <span class="fs-postauthoricon">
@@ -17,10 +15,10 @@
 
         <div class="fs-postcontent">
           <div class="fs-box-link">
-          <%= link_to(h(smart_truncate(articolo.summary, 130)),
-              link_to_articolo(articolo))
-          %>
-          <br/></div>  </div>
+          <%= link_to_articolo(articolo ,:title => h(smart_truncate(articolo.summary, 130))) %>
+          <br/>
+          </div>
+        </div>
         <%# link_to "Continua... ", link_to_articolo(articolo) %>
         <p class="separticle"></p>
       </div>
