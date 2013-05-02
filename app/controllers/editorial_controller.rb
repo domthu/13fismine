@@ -91,6 +91,8 @@ class EditorialController < ApplicationController
         :limit => @issues_pages.items_per_page,
         :offset => @issues_pages.current.offset)
 
+
+
     respond_to do |format|
       format.html {
         render :layout => !request.xhr?
@@ -103,6 +105,21 @@ class EditorialController < ApplicationController
   #map.sezione_page '/editorial/:topmenu_key/sezione/:topsection_id'
   #link_to sezione_page_url
   def top_sezione
+        #inizio box convegni
+    @conv_prossimo = Issue.all_public_fs.solo_convegni.first(
+           :order => 'due_date ASC',
+           :conditions => "#{Issue.table_name}.due_date >=' #{DateTime.now.to_date}'")
+
+       if @conv_prossimo.nil?
+         @conv_futuri
+       else
+         @cid = @conv_prossimo.id
+         @conv_futuri = Issue.all_public_fs.solo_convegni.all(
+             :order => 'due_date ASC',
+             :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
+       end
+       #fine box convegni
+
     @base_url = params[:pages] #request.path
     @key_url = params[:topmenu_key]
                                # @topsection_id = params[:topsection_id]

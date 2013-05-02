@@ -31,7 +31,7 @@
                      <% if @quesito_news.reply  %>
                       <%= render :partial => 'quesito', :locals => {:q => @quesito_news} %>
                          <h5> Risposta : </h5>
-                       <p><%= @quesito_news.reply %>  </p>
+                       <p><%= raw(@quesito_news.reply) %>  </p>
                       <% end %>
 
                    <% when 3 %>  <!-- ACCETTATO  -->
@@ -41,7 +41,7 @@
                     <%= render :partial => 'quesito', :locals => {:q => @quesito_news} %>
                      <% if @quesito_news.reply  %>
                          <h5> Messaggio dalla redazione : </h5>
-                       <p><%= @quesito_news.reply %>  </p>
+                       <p><%= raw(@quesito_news.reply) %>  </p>
                       <% end %>
                     <br />
                       <%= render :partial => 'quesito_reply', :locals => {:quesito_issues =>  @quesito_issues} %>
