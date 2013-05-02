@@ -1,5 +1,5 @@
 /* Utilizzare solo per media  media PRINT  */
-
+/*a:after { content:' [' attr(href) '] '}  */
 #fs-tramenu-wrapper, #navbar-container {
     display: none;
 }
@@ -19,4 +19,10 @@
 .fs-postmetadata-full {
     border:0 !important;
     width: 60%!important;
+}
+.fs-content-layout .fs-sidebar2 {
+    display: none !important;
+}
+.fs-articolo-full-bottom  {
+    display: none !important;
 }

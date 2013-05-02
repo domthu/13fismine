@@ -103,6 +103,12 @@ class Issue < ActiveRecord::Base
   after_destroy :update_parent_attributes
 
 
+ # return rue if summary is equal to description for full article
+  def hide_summary?
+    s1=  self.summary[0..125].gsub(/\s+/, "")
+    s2= self.testo_no_format[0..125].gsub(/\s+/, "")
+    s1[0..110].casecmp s2[0..110]
+     end
   def user_has_profile(usr = nil)
    if usr == nil #UserProfile.users_profiles_all(:first, :condition => " user_id =#{usr}").count  > 0
      true

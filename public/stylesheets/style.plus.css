@@ -1,4 +1,5 @@
 /* personalizzazioni */
+
 .fs-art-attachments{
 text-align: center;
     padding: 10px 10%;
@@ -941,7 +942,11 @@ margin-left:-1px;*/
     text-transform: uppercase;
 
 }
-
+.fs-articolo-full-bottom{
+  padding: 14px;
+    text-align:center;
+    border-top: solid 1px #bfbfbf;
+}
 .fs-box-link a,
 .fs-box-link a:link,
 .fs-box-link a:visited,
