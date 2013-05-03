@@ -16,32 +16,32 @@
 
     <br />
 
-<fieldset class="box"><legend><%= l(:setting_emails_fee_proposal) %></legend>
-<%= setting_text_area :template_fee_proposal, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<fieldset class="yui-skin-sam"><legend><%= l(:setting_emails_fee_proposal) %></legend>
+<%= setting_text_area :template_fee_proposal, :label => false, :rows => 5 %>
 <%= l(:label_emails_fee_proposal) %>
-<div style="float:right;">
+<div style="float:right;"  >
 <%= link_to l(:label_send_test_email_fee_confirm), :controller => 'fees', :action => 'email_fee', :params => { :type => 'proposal'} %>
 </div>
 </fieldset>
 
-<fieldset class="box"><legend><%= l(:setting_emails_fee_register_asso) %></legend>
-<%= setting_text_area :template_fee_register_asso, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<fieldset class="yui-skin-sam"><legend><%= l(:setting_emails_fee_register_asso) %></legend>
+<%= setting_text_area :template_fee_register_asso, :label => false, :rows => 5 %>
 <%= l(:label_emails_fee_register_asso) %>
 <div style="float:right;">
 <%= link_to l(:label_send_test_email_fee_asso), :controller => 'fees', :action => 'email_fee', :params => { :type => 'asso'} %>
 </div>
 </fieldset>
 
-<fieldset class="box"><legend><%= l(:setting_emails_fee_renew) %></legend>
-<%= setting_text_area :template_fee_renew, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<fieldset class="yui-skin-sam"><legend><%= l(:setting_emails_fee_renew) %></legend>
+<%= setting_text_area :template_fee_renew, :label => false,  :rows => 5 %>
 <%= l(:label_emails_fee_renew) %>
 <div style="float:right;">
 <%= link_to l(:label_send_test_email_fee_renew), :controller => 'fees', :action => 'email_fee', :params => { :type => 'renew'} %>
 </div>
 </fieldset>
 
-<fieldset class="box"><legend><%= l(:setting_fee_thanks) %></legend>
-<%= setting_text_area :template_fee_thanks, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<fieldset class="yui-skin-sam"><legend><%= l(:setting_fee_thanks) %></legend>
+<%= setting_text_area :template_fee_thanks, :label => false, :rows => 5 %>
 <%= l(:label_fee_thanks) %>
 <div style="float:right;">
 <%= link_to l(:label_send_test_email_fee_thanks), :controller => 'fees', :action => 'email_fee', :params => { :type => 'thanks'} %>
@@ -70,3 +70,68 @@
   <%= simple_format(l(:fee_not_abilitated)) %>
   </div>
 <% end %>
+<% content_for :header_yui do %>
+    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
+    <%= javascript_include_tag "yui/element-min.js" %>
+    <%= javascript_include_tag "yui/container_core-min.js" %>
+    <%= javascript_include_tag "yui/menu-min.js" %>
+    <%= javascript_include_tag "yui/button-min.js" %>
+    <%= javascript_include_tag "yui/editor-min.js" %>
+    <%= javascript_include_tag "yui/yui_fs.js" %>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+    (function () {
+        var myConfig1 = {
+            handleSubmit:true,
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:true,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_fee_proposal', myConfig1);
+
+        var myConfig2 = {
+            handleSubmit:true,
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_fee_register_asso', myConfig2);
+
+        var myConfig3 = {
+            handleSubmit:true,
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_fee_renew', myConfig3);
+
+        var myConfig4 = {
+            handleSubmit:true,
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_fee_thanks', myConfig4);
+    })
+
+            ();
+
+
+</script>

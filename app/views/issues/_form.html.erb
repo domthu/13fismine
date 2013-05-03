@@ -36,7 +36,7 @@
 
   <div class="yui-skin-sam"><%= f.text_area :description,
                                             :cols => 90,
-                                            :rows => (@issue.description.blank? ? 120 : [[20, @issue.description.length / 50].max, 120].min),
+                                            :rows => (@issue.description.blank? ? 75 : [[20, @issue.description.length / 50].max, 75].min),
                                             :accesskey => accesskey(:edit),
                                             :id => 'issue_description_field',
                                             :label => '' %>
