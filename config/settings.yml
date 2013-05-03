@@ -5,12 +5,12 @@
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -47,6 +47,8 @@ activity_days_default:
   default: 30
 per_page_options:
   default: '25,50,100'
+per_page_options_fs:
+  default: '5,10,15'
 mail_from:
   default: dom_thual@yahoo.fr
 bcc_recipients:
@@ -82,7 +84,7 @@ diff_max_lines_displayed:
   default: 1500
 enabled_scm:
   serialized: true
-  default: 
+  default:
   - Subversion
   - Darcs
   - Mercurial
@@ -110,7 +112,7 @@ commit_logtime_activity_id:
   format: int
   default: 0
 # autologin duration in days
-# 0 means autologin is disabled 
+# 0 means autologin is disabled
 autologin:
   format: int
   default: 0
@@ -130,7 +132,7 @@ default_issue_start_date_to_creation_date:
   default: 1
 notified_events:
   serialized: true
-  default: 
+  default:
   - issue_added
   - issue_updated
 mail_handler_body_delimiters:
@@ -138,10 +140,10 @@ mail_handler_body_delimiters:
 mail_handler_api_enabled:
   default: 0
 mail_handler_api_key:
-  default: 
+  default:
 issue_list_default_columns:
   serialized: true
-  default: 
+  default:
   - tracker
   - status
   - priority
@@ -156,7 +158,7 @@ default_projects_public:
   default: 1
 #default_projects_modules:
 #  serialized: true
-#  default: 
+#  default:
 #  - issue_tracking
 #  - time_tracking
 #  - news
@@ -169,7 +171,7 @@ default_projects_public:
 #  - gantt
 default_projects_modules:
   serialized: true
-  default: 
+  default:
   - issue_tracking
   - news
   - documents
@@ -197,7 +199,7 @@ emails_footer:
   default: |-
     Hai ricevuto questa notificazione perchè sei abbonato o sei coinvolto nella redazione.
     Per cambiare la gestione delle notificazione via nelle tue preferenze, clicca cui here: http://hostname/my/account
-gravatar_enabled:  
+gravatar_enabled:
   default: 0
 openid:
   default: 0
@@ -220,27 +222,27 @@ renew_days:
 fee_bcc_recipients:
   default: "dom_thual@yahoo.fr"
 template_fee_register_asso:
-  default: "Caro @@poweruser_username@@. Codice Fiscosport è @@poweruser_codice@@. 
+  default: "Caro @@poweruser_username@@. Codice Fiscosport è @@poweruser_codice@@.
     E stato fatta una nuova registrazione per l'utente @@uer_username@@ con codice @@user_codice@@
     Ti invitiamo ad usare uno dei due link cui sotto per confermare o disabilitare questa nuova registrazione
-    In caso di dubbio, contattaci al 0000 o via email. 
+    In caso di dubbio, contattaci al 0000 o via email.
     La squadra di Fiscosport
     @@logged_username@@
   "
 template_fee_renew:
-  default: "Caro @@user_username@@. Codice Fiscosport è @@user_codice@@. 
+  default: "Caro @@user_username@@. Codice Fiscosport è @@user_codice@@.
     Il tuo abbonamento scadrà prossimamente il @@user_scadenza@@
     Ti invitiamo a rinnovarlo.
-    Contattaci al 0000 o via email. 
-    Usi questa pagina per rinnovarlo da solo. 
+    Contattaci al 0000 o via email.
+    Usi questa pagina per rinnovarlo da solo.
     La squadra di Fiscosport
     @@logged_username@@
   "
 template_fee_thanks:
-  default: "Caro @@user_username@@. Il tuo codice Fiscosport è @@user_codice@@. 
-    Il tuo pagamento è stato coretttamente registrato. 
+  default: "Caro @@user_username@@. Il tuo codice Fiscosport è @@user_codice@@.
+    Il tuo pagamento è stato coretttamente registrato.
     L'abbonamento scadrà il @@user_scadenza@@
-    Ti ringraziamo della fiducia. 
+    Ti ringraziamo della fiducia.
     La squadra di Fiscosport
     @@logged_username@@
   "
@@ -253,3 +255,9 @@ info_fs:
   default: ""
 info_promoted_fs:
   default: 0
+template_privacy:
+  default: "Definire l'autorizzazione al trattamento dati
+  "
+template_condition:
+  default: "Definire le condizioni d'uso
+  "

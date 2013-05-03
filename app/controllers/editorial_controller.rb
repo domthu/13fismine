@@ -28,8 +28,9 @@ class EditorialController < ApplicationController
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
       else
-        @limit = 5
-        @offset= 25
+        #@limit = 5
+        #@offset= 25
+        @limit = per_page_option_fs
     end
     @top_menu = TopMenu.find(:first, :conditions => 'id =1')
     @topsection_ids = TopSection.find(:all,
@@ -38,9 +39,10 @@ class EditorialController < ApplicationController
     )
     @issues_count = Issue.all_public_fs.count
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+    @offset ||= @issues_pages.current.offset
     @issues = Issue.all_public_fs.all(
-        :limit => @issues_pages.items_per_page,
-        :offset => @issues_pages.current.offset)
+        :limit =>  @limit,
+        :offset => @offset)
     #Issue.visible.on_active_project.watched_by(user.id).recently_updated.with_limit(10)
 
     respond_to do |format|
@@ -80,18 +82,18 @@ class EditorialController < ApplicationController
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
       else
-        @limit = 5
-        @offset= 25
+        #@limit = 5
+        #@offset= 25
+        @limit = per_page_option_fs
     end
 
     @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).count()
 
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+    @offset ||= @issues_pages.current.offset
     @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).all(
-        :limit => @issues_pages.items_per_page,
-        :offset => @issues_pages.current.offset)
-
-
+        :limit => @limit,
+        :offset => @offset)
 
     respond_to do |format|
       format.html {
@@ -141,15 +143,17 @@ class EditorialController < ApplicationController
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
       else
-        @limit = 5
-        @offset= 25
+        #@limit = 5
+        #@offset= 25
+        @limit = per_page_option_fs
     end
     @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).count()
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
                                #Kapao riompe la paginazione @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).with_limit(@issues_pages.items_per_page).with_offset(@issues_pages.current.offset)
+    @offset ||= @issues_pages.current.offset
     @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).all(
-        :limit => @issues_pages.items_per_page,
-        :offset => @issues_pages.current.offset)
+        :limit => @limit,
+        :offset => @offset)
 
     respond_to do |format|
       format.html {
@@ -221,8 +225,9 @@ class EditorialController < ApplicationController
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
       else
-        @limit = 5
-        @offset= 25
+        #@limit = 5
+        #@offset= 25
+        @limit = per_page_option_fs
     end
     @topsection = TopSection.find_convegno(:first)
     @issues_count =Issue.all_public_fs.solo_convegni.count()
@@ -410,8 +415,9 @@ class EditorialController < ApplicationController
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
       else
-        @limit = 10
-        @offset= 25
+        #@limit = 5
+        #@offset= 25
+        @limit = per_page_option_fs
     end
 
     @quesiti_news_count = News.all_public_fs.count
