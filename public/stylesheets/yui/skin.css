@@ -6114,3 +6114,6 @@ a.ygtvspacer {
     left: -9999px;
     position: absolute;
 }
+.yui-skin-sam legend {
+    font-weight: bold;
+}

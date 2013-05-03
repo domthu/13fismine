@@ -41,7 +41,7 @@
 </fieldset>
 
 <fieldset class="yui-skin-sam"><legend><%= l(:setting_fee_thanks) %></legend>
-<%= setting_text_area :template_fee_thanks, :label => false, :rows => 5 %>
+<%= setting_text_area :template_fee_thanks, :label => false, :rows => 5  %>
 <%= l(:label_fee_thanks) %>
 <div style="float:right;">
 <%= link_to l(:label_send_test_email_fee_thanks), :controller => 'fees', :action => 'email_fee', :params => { :type => 'thanks'} %>

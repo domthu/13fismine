@@ -11,8 +11,7 @@
 <p><%= setting_select(:default_notification_option, User.valid_notification_options.collect {|o| [l(o.last), o.first.to_s]}) %></p>
 
 </div>
-
-<fieldset class="box" id="notified_events"><legend><%=l(:text_select_mail_notifications)%></legend>
+         <fieldset class="box" id="notified_events"><legend><%=l(:text_select_mail_notifications)%></legend>
 <%= hidden_field_tag 'settings[notified_events][]', '' %>
 <% @notifiables.each do |notifiable| %>
 <%= notification_field notifiable %>
@@ -20,19 +19,15 @@
 <% end %>
 <p><%= check_all_links('notified_events') %></p>
 </fieldset>
-
-<fieldset class="box"><legend><%= l(:setting_emails_header) %></legend>
-<%= setting_text_area :emails_header, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<fieldset  class="yui-skin-sam"><legend><%= l(:setting_emails_header) %></legend>
+<%= setting_text_area :emails_header, :label => false, :rows => 5 %>
 </fieldset>
-
-<fieldset class="box"><legend><%= l(:setting_emails_footer) %></legend>
-<%= setting_text_area :emails_footer, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<fieldset  class="yui-skin-sam"><legend><%= l(:setting_emails_footer) %></legend>
+<%= setting_text_area :emails_footer, :label => false, :rows => 5 %>
 </fieldset>
-
 <div style="float:right;">
 <%= link_to l(:label_send_test_email), :controller => 'admin', :action => 'test_email' %>
 </div>
-
 <%= submit_tag l(:button_save) %>
 <% end %>
 <% else %>
@@ -40,3 +35,44 @@
 <%= simple_format(l(:text_email_delivery_not_configured)) %>
 </div>
 <% end %>
+
+<% content_for :header_yui do %>
+    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
+    <%= javascript_include_tag "yui/element-min.js" %>
+    <%= javascript_include_tag "yui/container_core-min.js" %>
+    <%= javascript_include_tag "yui/menu-min.js" %>
+    <%= javascript_include_tag "yui/button-min.js" %>
+    <%= javascript_include_tag "yui/editor-min.js" %>
+    <%= javascript_include_tag "yui/yui_fs.js" %>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+    (function () {
+        var myConfig1 = {
+            handleSubmit:true,
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:true,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_emails_header', myConfig1);
+
+        var myConfig2 = {
+            handleSubmit:true,
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_emails_footer', myConfig2);
+    })
+            ();
+
+
+</script>
