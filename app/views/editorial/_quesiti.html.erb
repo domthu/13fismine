@@ -38,21 +38,15 @@
 
       <br/>
       <%# if @quesiti_news_stato_num  > 1%>
-
       <div class="clearfix"></div>
-
-
-        <br/>
-
-    <p class="pagination"><%= pagination_links_full(@quesiti_news_pages, @quesiti_news_count) %></p>
-    <br/>
-    <p style="text-align: center;">
-      <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>  </p>
+      <br/>
+      <p class="pagination"><%= pagination_links_full(@quesiti_news_pages, @quesiti_news_count, {}, true) %></p>
+      <br/>
+      <p style="text-align: center;">
+        <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>  </p>
     <%# end %>
     </div>
 <% else %>
     <h2 style="color:red;">
       Gentile utente per porre quesiti a fiscosport occorre essere autenticati </h2>
 <% end %>
-
-

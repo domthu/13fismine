@@ -2,6 +2,8 @@ class UserProfile < ActiveRecord::Base
   include GravatarHelper
   require 'digest'
   belongs_to :user
+  validates_uniqueness_of :user_id #, :scope => [:type, :project_id]
+
   after_update :reprocess
   has_attached_file :photo, :styles => {:l => ["200x200", :png, :jpg],
                                         :m => ["80x80", :png, :jpg],

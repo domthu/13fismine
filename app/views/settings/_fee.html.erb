@@ -48,6 +48,20 @@
 </div>
 </fieldset>
 
+<fieldset class="box"><legend><%= l(:setting_privacy) %></legend>
+<%= setting_text_area :template_privacy, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<%= l(:label_privacy) %>
+<div style="float:right;">
+</div>
+</fieldset>
+
+<fieldset class="box"><legend><%= l(:setting_condition) %></legend>
+<%= setting_text_area :template_condition, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<%= l(:label_condition) %>
+<div style="float:right;">
+</div>
+</fieldset>
+
 <%= submit_tag l(:button_save) %>
 <% end %>
 

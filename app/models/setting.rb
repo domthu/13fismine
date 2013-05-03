@@ -141,6 +141,10 @@ class Setting < ActiveRecord::Base
     per_page_options.split(%r{[\s,]}).collect(&:to_i).select {|n| n > 0}.sort
   end
 
+  def self.per_page_options_array_fs
+    per_page_options_fs.split(%r{[\s,]}).collect(&:to_i).select {|n| n > 0}.sort
+  end
+
   def self.openid?
     Object.const_defined?(:OpenID) && self[:openid].to_i > 0
   end
@@ -154,7 +158,7 @@ class Setting < ActiveRecord::Base
       clear_cache
     end
   end
-  
+
   # Clears the settings cache
   def self.clear_cache
     @cached_settings.clear

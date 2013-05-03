@@ -397,8 +397,8 @@ module ApplicationHelper
     Redmine::SyntaxHighlighting.highlight_by_filename(content, name)
   end
 
-
-  def pagination_links_full(paginator, count=nil, options={})# , path_prefix=nil)
+  #def pagination_links_full(paginator, count=nil, options={})# , path_prefix=nil)
+  def pagination_links_full(paginator, count=nil, options={}, is_fs=nil)# , path_prefix=nil)
     page_param = options.delete(:page_param) || :page
     per_page_links = options.delete(:per_page_links)
     url_param = params.dup
@@ -429,7 +429,7 @@ module ApplicationHelper
 
     unless count.nil?
       html << " (#{paginator.current.first_item}-#{paginator.current.last_item}/#{count})"
-      if per_page_links != false && links = per_page_links (paginator.items_per_page)
+      if per_page_links != false && links = per_page_links (paginator.items_per_page, nil, is_fs)
       #, :path_prefix => path_prefix)
 	      html << " | #{links}"
       end
@@ -438,8 +438,12 @@ module ApplicationHelper
     html.html_safe
   end
 
-  def per_page_links(selected=nil, path_prefix=nil)
-    links = Setting.per_page_options_array.collect do |n|
+  def per_page_links(selected=nil, path_prefix=nil, is_fs=nil)
+    _arr = Setting.per_page_options_array
+    if (is_fs)
+      _arr = Setting.per_page_options_array_fs
+    end
+    links = _arr.collect do |n|
       n == selected ? n : link_to_content_update(n, params.merge(:per_page => n), :path_prefix => path_prefix)
     end
     links.size > 1 ? l(:label_display_per_page, links.join(', ')) : nil

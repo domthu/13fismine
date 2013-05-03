@@ -45,7 +45,7 @@
 
         <br/>
 
-    <p class="pagination"><%= pagination_links_full(@quesiti_news_pages, @quesiti_news_count) %></p>
+    <p class="pagination"><%= pagination_links_full(@quesiti_news_pages, @quesiti_news_count, {}, true) %></p>
     <br/>
     <p style="text-align: center;">
       <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>  </p>
