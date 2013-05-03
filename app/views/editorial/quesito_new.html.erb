@@ -1,4 +1,5 @@
 <h1 style="display:none" xmlns="http://www.w3.org/1999/html">quesito</h1>
+<%= render_flash_messages %>
 <% if User.current && User.current.logged? %>
 
     <div class="fs-layout-cell fs-content clearfix">
@@ -20,15 +21,6 @@
 
                   <%# gravatar_for(User.current) %>
                 </div>
-                <% if flash[:notice] %>
-                <div id="fs-flash-notice"><%= notice %> </div>
-                 <% end %>
-                <% if flash[:warning] -%>
-                   <div id='warning'><%= flash[:warning] -%></div>
-                <% end -%>
-                <% if flash[:notice] -%>
-                  <div id='notice'><%= flash[:notice] -%></div>
-                <% end -%>
                 <% form_tag({:controller => "editorial", :action => "quesito_create", :method => "post"}, :class => "input", :id => "fs-quesito-new") do %>
                     <div>
                       <label>Oggetto </label>
@@ -41,7 +33,6 @@
                     <div id="fs-form-quesito-new-btn">
                       <%= submit_tag 'Invia', :class => "fs-giallo-button", :confirm => 'Confermi?' %>   </div>
                 <% end %>
-                <%= render :partial => 'flash' %>
               </div>
             </div>
           </div>
@@ -59,6 +50,3 @@
 
 <%= render :partial => 'blocco_sidebar1' %>
 <%#sidebar a destra %>
-
-
-

@@ -28,6 +28,7 @@ class AccountController < ApplicationController
   def login
     #Rails.logger.info("login PARAMS: #{params.inspect}")
     #flash[:notice] = "==========login============="
+    #flash[:error] = "==========??????????============="
     if request.get?
       #flash[:notice] = "request.get --> logout_user"
       logout_user
@@ -305,7 +306,7 @@ class AccountController < ApplicationController
       if (Setting.fee?)
         #TODO Controllare la scadenza se è di RUOLO
         str = control_assign_role(user)
-        Rails.logger.info("Loggin controllo ruolo: " + str)
+        Rails.logger.info("Login controllo ruolo: " + str)
       end
       Rails.logger.info("login ok membro")
       redirect_to(editorial_url)

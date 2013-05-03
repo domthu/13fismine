@@ -1450,6 +1450,12 @@ en:
   label_info_fs: "Fiscosport informa"
   setting_info_promoted_fs: Promosso in front page
   label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporranea "
+  setting_privacy: "Termine della privacy"
+  label_privacy: Documento che definisce il rilascio della privacy
+  setting_condition: "Regolamento degli abbonamenti"
+  label_condition: "Documento che definisce le condizioni d'uso"
+  setting_iscription: "Modalità per abbonarsi"
+  label_iscription: "Documento che elenca le modalità e i passi per l'iscrizione"
 
 #Deliver_fee  type
   proposal: Abbonamenti disponibili

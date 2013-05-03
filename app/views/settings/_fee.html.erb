@@ -62,6 +62,13 @@
 </div>
 </fieldset>
 
+<fieldset  class="yui-skin-sam"><legend><%= l(:setting_iscription) %></legend>
+<%= setting_text_area :template_iscription, :label => false, :rows => 5 %>
+<%= l(:label_iscription) %>
+<div style="float:right;">
+</div>
+</fieldset>
+
 <%= submit_tag l(:button_save) %>
 <% end %>
 
@@ -159,6 +166,20 @@
             drag:true
         };
         init_yui_editor_fs('settings_template_condition', myConfig6);
+
+        var myConfig7 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_iscription', myConfig7);
+
     })
 
   ();

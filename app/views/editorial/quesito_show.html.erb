@@ -1,3 +1,4 @@
+<%= render_flash_messages %>
 <% if User.current && User.current.logged? %>
     <div class="fs-layout-cell fs-content clearfix">
       <article class="fs-post fs-article">
@@ -51,7 +52,6 @@
                 <% else %>
                     case else???
                 <% end %>
-                <%= render :partial => 'flash' %>
               </div>
             </div>
           </div>
