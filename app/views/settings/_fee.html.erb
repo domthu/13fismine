@@ -48,15 +48,15 @@
 </div>
 </fieldset>
 
-<fieldset class="box"><legend><%= l(:setting_privacy) %></legend>
-<%= setting_text_area :template_privacy, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<fieldset class="yui-skin-sam"><legend><%= l(:setting_privacy) %></legend>
+<%= setting_text_area :template_privacy, :label => false, :rows => 5 %>
 <%= l(:label_privacy) %>
 <div style="float:right;">
 </div>
 </fieldset>
 
-<fieldset class="box"><legend><%= l(:setting_condition) %></legend>
-<%= setting_text_area :template_condition, :label => false, :class => 'wiki-edit', :rows => 5 %>
+<fieldset  class="yui-skin-sam"><legend><%= l(:setting_condition) %></legend>
+<%= setting_text_area :template_condition, :label => false, :rows => 5 %>
 <%= l(:label_condition) %>
 <div style="float:right;">
 </div>
@@ -123,6 +123,7 @@
 
         var myConfig4 = {
             handleSubmit:true,
+            width:'100%',
             resize:true,
             animate:true,
             dompath:true,
@@ -132,9 +133,35 @@
             drag:true
         };
         init_yui_editor_fs('settings_template_fee_thanks', myConfig4);
+
+        var myConfig5 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_privacy', myConfig5);
+
+        var myConfig6 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_condition', myConfig6);
     })
 
-            ();
+  ();
 
 
 </script>
