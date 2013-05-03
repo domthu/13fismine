@@ -1,18 +1,18 @@
 <div id="fs-tramenu-blocco1">
   <% if User.current && User.current.logged? %>
-      <%= render :partial => 'tramenu_logged' %>
+      <%= render :partial => 'editorial/tramenu_logged' %>
   <% else %>
-      <%= render :partial => 'tramenu_prova' %>
+      <%= render :partial => 'account/tramenu_prova' %>
   <% end %>
 </div>
 <div id="fs-tramenu-blocco2">
   <% if User.current && User.current.logged? %>
       <!-- qui c'è la richiesta di MCristina per personalizzare i banners in base all'utente loggato -->
-      <%= render :partial => 'tramenu_assos' %>
+      <%= render :partial => 'editorial/tramenu_assos' %>
   <% else %>
-      <%= render :partial => 'tramenu_assos' %>
+      <%= render :partial => 'editorial/tramenu_assos' %>
   <% end %>
 </div>
 <div id="fs-tramenu-blocco3">
-  <%= render :partial => 'tramenu_login' %>
+  <%= render :partial => 'account/tramenu_login' %>
 </div>
