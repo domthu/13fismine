@@ -8,10 +8,10 @@
 </div>
 
 <div class="box tabular settings">
-<p><%= setting_check_box :mail_handler_api_enabled,
+<p class="yui-skin-sam"><%= setting_check_box :mail_handler_api_enabled,
          :onclick => "if (this.checked) { Form.Element.enable('settings_mail_handler_api_key'); } else { Form.Element.disable('settings_mail_handler_api_key'); }"%></p>
 
-<p><%= setting_text_field :mail_handler_api_key, :size => 30,
+<p class="yui-skin-sam"><%= setting_text_field :mail_handler_api_key, :size => 30,
                                                  :id => 'settings_mail_handler_api_key',
                                                  :disabled => !Setting.mail_handler_api_enabled? %>
   <%= link_to_function l(:label_generate_key), "if ($('settings_mail_handler_api_key').disabled == false) { $('settings_mail_handler_api_key').value = randomKey(20) }" %>
@@ -21,3 +21,44 @@
 <%= submit_tag l(:button_save) %>
 
 <% end %>
+<% content_for :header_yui do %>
+    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
+    <%= javascript_include_tag "yui/element-min.js" %>
+    <%= javascript_include_tag "yui/container_core-min.js" %>
+    <%= javascript_include_tag "yui/menu-min.js" %>
+    <%= javascript_include_tag "yui/button-min.js" %>
+    <%= javascript_include_tag "yui/editor-min.js" %>
+    <%= javascript_include_tag "yui/yui_fs.js" %>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+    (function () {
+        var myConfig1 = {
+            handleSubmit:true,
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:true,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_emails_header', myConfig1);
+
+        var myConfig2 = {
+            handleSubmit:true,
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_emails_footer', myConfig2);
+    })
+
+            ();
+
+
+</script>
