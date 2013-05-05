@@ -85,6 +85,19 @@
           //Focus
           //< %= javascript_tag "$('#username').focus();" %>
           $('#username').focus();
+          //Scroll to top
+          $(window).scroll(function() {
+              if(jQuery(this).scrollTop() != 0) {
+                  jQuery('#toTop').fadeIn();
+              } else {
+                  jQuery('#toTop').fadeOut();
+              }
+          });
+
+          $('#toTop').click(function() {
+              jQuery('body,html').animate({scrollTop:0},800);
+          });
+
       });
   </script>
   <script type="text/javascript" charset="utf-8">
@@ -150,6 +163,7 @@
         </div>
       </div>
     </div>
+    <div id="toTop" style="display: block;"></div>
     <footer class="fs-footer clearfix">
       <p><a href="#">Link1</a> | <a href="#">Link2</a> | <a href="#">Link3</a></p>
 

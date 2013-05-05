@@ -1,11 +1,12 @@
 <%# @project= Project.all_public_fs.find_by_id params[:id].to_i project @art.count  %>
 <%# @prj.testuser(1010) %>
 <%# @prj.newsletter_smtp(1) %>
+<% defurl =  "http://" + Setting.host_name %>
 <style type="text/css" xmlns="http://www.w3.org/1999/html">
     /* Backgrounds */
     .email_background {
         width: 640px;
-        background: url('/images/commons/email_bg.jpg') repeat-y;
+        background: url('<%= defurl %>/images/commons/email_bg.jpg') repeat-y;
     }
     table td { padding: 0}
     .smtp{
@@ -28,7 +29,7 @@
   <td valign="bottom" height="40" align="center">
     <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
       La newsletter di Fiscosport, puoi consultare l'edizione
-      <%= link_to(@project.description ,  :controller=> 'editorial', :action=> 'edizione_newsletter',:id => @project.id  )  %>  direttamente online.
+      <%= link_to(@project.description, {:controller=> 'editorial', :action=> 'edizione_newsletter',:id => @project.id}, :class => "newwin", :target => '_blank') %> direttamente online.
       </font>
   </td>
 </tr>
@@ -37,19 +38,18 @@
     <table cellpadding="0" cellspacing="0" border="0" width="640" style="font-size:0;">
       <tr>
         <td>
-
-          <img src="/images/commons/top_fade.jpg" width="640" height="20" border="0"/>
+          <img src="<%= defurl %>/images/commons/top_fade.jpg" width="640" height="20" border="0"/>
         </td>
       </tr>
     </table>
   </td>
 </tr>
 <tr>
-  <td align="center" background="/images/commons/email_bg.jpg" class="email_background">
+  <td align="center" background="<%= defurl %>/images/commons/email_bg.jpg" class="email_background">
   </td>
 </tr>
 <tr>
-<td align="center" background="/images/commons/email_bg.jpg" class="email_background">
+<td align="center" background="<%= defurl %>/images/commons/email_bg.jpg" class="email_background">
 <!-- IMPORTANTE!   inizio contenuto   -->
 <!------------------------------------------------------------------------->
 <!-- Inizio sezione con logo e nomeutente -->
@@ -57,7 +57,8 @@
   <tr>
     <td width="242" height="110" align="left" valign="top">
       <!-- logo -->
-      <%= link_to image_tag("/images/commons/fiscosport_news.jpg", :border => 0, :controller => 'editorial', :action => 'home') %>
+
+      <a href="<%= defurl %>" target="_blank"><img src="<%= defurl %>/images/commons/fiscosport_news.jpg" border="0" height="106"/></a>
 
     <td align="left" valign="top">
       <!-- tabella di 2 righe per il testo -->
@@ -86,11 +87,11 @@
       <tr>
         <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
           <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:18px; font-weight: bold;">
-            Associato a:<%=User.current.cross_organization.organizzazione %>&nbsp;<%=User.current.cross_organization.sigla %>&nbsp;<%= link_to h(User.current.associazione_affiliata), asso_path(User.current.associazione_affiliata), :style => "text-decoration:none;" %>
+            Associato a:<%=User.current.cross_organization.organizzazione %>&nbsp;<%=User.current.cross_organization.sigla %>&nbsp;<%= link_to h(User.current.associazione_affiliata), asso_path(User.current.associazione_affiliata), :target => '_blank', :style => "text-decoration:none;" %>
           </font>
         </td>
         <td width="55" valign="bottom" align="right">
-          <%= image_tag "/images/banners/assos/#{ User.current.asso.logo}", :width => 50, :height => 50, :border => 0 %>
+          <img src="<%= defurl %>/images/banners/assos/#{ User.current.asso.logo}" width="50" height="50" border="0"/>
         </td>
       </tr>
     </table>
@@ -101,11 +102,11 @@
             <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
               <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:11px; color:#333333; line-height:18px; font-weight: bold;">
                 Affiliato
-                a: <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()), :style => "text-decoration:none;" %>
+                a: <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()), :target => '_blank', :style => "text-decoration:none;" %>
               </font>
             </td>
             <td width="55" valign="bottom" align="right">
-              <%= image_tag "/images/ico/fs.png", :width => 50, :height => 50, :border => 0 %>
+              <img src="<%= defurl %>/images/ico/fs.png" width="50" height="50" border="0"/>
             </td>
           </tr>
         </table>
@@ -115,12 +116,12 @@
 <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
   <tr>
     <td width="560" valign="bottom" bgcolor="#ffffff" height="6">
-      <%= image_tag "/images/commons/email_spacer_colors.jpg", :width => 560, :height => 6, :border => 0 %>
+      <img src="<%= defurl %>/images/commons/email_spacer_colors.jpg" width="560" height="6" border="0"/>
     </td>
   </tr>
   <tr>
     <td width="560" valign="bottom" bgcolor="#ffffff" height="35">
-      <%= image_tag "/images/commons/email_spacer.jpg", :width => 560, :height => 35, :border => 0 %>
+      <img src="<%= defurl %>/images/commons/email_spacer.jpg" width="560" height="35" border="0"/>
     </td>
   </tr>
 </table>
@@ -128,10 +129,10 @@
 <table width="560" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td width="100" align="right" valign="center" height="50">
-      <%= image_tag("/images/commons/indice_ico.jpg", :alt => 'Indice') %>
+      <img src="<%= defurl %>/images/commons/indice_ico.jpg" alt="Indice" border="0"/>
     </td>
     <td width="460" align="right" valign="center" height="50">
-      <%= image_tag("/images/commons/indice.jpg", :alt => 'Indice') %>
+      <img src="<%= defurl %>/images/commons/indice.jpg" alt="Indice" border="0"/>
     </td>
   </tr>
 </table>
@@ -154,8 +155,7 @@
               <table width="560" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td width="36" height="30" align="center" valign="top">
-                    <%= link_to image_tag("/images/ico/freg-y.png", :border => 0) %>
-
+                    <img src="<%= defurl %>/images/ico/freg-y.png" border="0"/>
                   </td>
                   <td width="524" align="left" valign="center" bgcolor="ffffff" style="border-top:solid 1px #f1e9b8;">
                     <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333; line-height:2em;">
@@ -178,7 +178,7 @@
             <tr>
               <td width="24" align="left" valign="center">
                 <a href="#<%= ancora %>">
-                  <%= image_tag("/images/ico/fred24-y.png", :border => 0) %>
+                  <img src="<%= defurl %>/images/ico/fred24-y.png" border="0"/>
                 </a>
               </td>
               <td width="536" align="left" valign="center">
@@ -209,7 +209,7 @@
   </tr>
   <tr>
     <td width="560" valign="bottom" bgcolor="#ffffff" height="35">
-      <%= image_tag "/images/commons/email_spacer.jpg", :width => 560, :height => 35, :border => 0 %>
+      <img src="<%= defurl %>/images/commons/email_spacer.jpg" width="560" height="35" border="0"/>
     </td>
   </tr>
 </table>
@@ -221,10 +221,10 @@
   </tr>
   <tr>
     <td width="100" align="right" valign="center" height="50">
-      <%= image_tag("/images/commons/sommario_ico.jpg", :alt => 'Sommario') %>
+      <img src="<%= defurl %>/images/commons/sommario_ico.jpg" border="0" alt="Sommario" />
     </td>
     <td width="460" align="right" valign="center" height="50">
-      <%= image_tag("/images/commons/sommario.jpg", :alt => 'Sommario') %>
+      <img src="<%= defurl %>/images/commons/sommario.jpg" border="0" alt="Sommario" />
     </td>
   </tr>
   <tr>
@@ -248,12 +248,12 @@
               <td width="120" align="left" valign="top" rowspan="2">
                 <%= if articolo.immagine_url.nil? || !(FileTest.exist?("#{RAILS_ROOT}/public/images/#{articolo.immagine_url}"))
                       if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
-                        image_tag("/images/commons/sections/#{articolo.top_section.immagine}", :width => 120, :id => ancora)
+                        "<img src='" + defurl + "/images/commons/sections/" + articolo.top_section.immagine + "' id='" + ancora + "' alt='" + truncate(articolo.subject, :length => 25) + "' width='120px' />"
                       else
-                        image_tag("/images/commons/sections/no-img.jpg", :width => 120, :id => ancora)
+                        "<img src='" + defurl + "/images/commons/sections/no-img.jpg' id='" + ancora + "' alt='" + truncate(articolo.subject, :length => 25) + "' width='120px' />"
                       end
                     else
-                      image_tag(articolo.immagine_url, :id => ancora, :alt => h(truncate(articolo.subject, :length => 25)))
+                      "<img src='" + defurl + "/" + articolo.immagine_url + "' id='" + ancora + "' alt='" + truncate(articolo.subject, :length => 25) + "' />"
                     end
                 %>
               </td>
@@ -268,7 +268,8 @@
               <!--  riga autore  -->
               <td width="440" align="right" valign="top">
                 <font style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:15px; text-decoration: underline; font-style: italic;">
-                  <strong> <%= image_tag("/images/ico/pen24.png", :border => 0) %> <%= articolo.author %> </strong>
+                  <strong>
+                    <img src="<%= defurl %>/images/ico/pen24.png" border="0"/> <%= articolo.author %> </strong>
                 </font>
               </td>
             </tr>
@@ -286,8 +287,8 @@
           <table width="560" border="0" cellpadding="0" cellspacing="0">
             <tr>
               <td width="560" height="33" align="right" valign="top">
-                <%= link_to_articolo(articolo,:title=> image_tag("/images/commons/btn_news_y.gif", :width => 107, :height => 29, :alt => 'vedi articolo', :target => '_blank')) %>
-                 </td>
+                <%= link_to_articolo(articolo, {:target => "_blank", :title=> "<img src='" + defurl + "/images/commons/btn_news_y.gif' width='107' height='29' alt='vedi articolo' />"}) %>
+             </td>
             </tr>
           </table>
         </td>
@@ -305,7 +306,7 @@
 </tr>
 <tr>
   <td>
-    <img src="/images/commons/bottom_fade.jpg" width="640" border="0" height="28"/>
+    <img src="<%= defurl %>/images/commons/bottom_fade.jpg" width="640" border="0" height="28"/>
   </td>
 </tr>
 <tr>

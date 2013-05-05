@@ -320,18 +320,23 @@ class Mailer < ActionMailer::Base
   end
 
   # Builds a tmail object used to email fee management.
-  #
+  # layouts/mailer.html.erb:<%= Setting.emails_header
   # Example:
   #   document_added(document) => tmail object
   #   Mailer.deliver_document_added(document) => sends an email to the document's project recipients
   def fee(user, type, setting_text)
+    #    * host_name  in settings.xml
+    #    * Setting.host_name
+    #    * Mailer.default_url_options
+    #    * Mailer.X-Redmine-Host
     #redmine_headers 'Project' => 'Abbonamento test'
     recipients user.mail
     subject "Fiscosport abbonamenti: [#{type}]"
     #body :document => document,
     #     :document_url => url_for(:controller => 'documents', :action => 'show', :id => document)
     #render_multipart('document_added', body)
-    body :fee_type => type, :fee_text => setting_text, :fee_url => url_for(:controller => 'fees')
+    #body :fee_type => type, :fee_text => setting_text, :fee_url => url_for(:controller => 'fees')
+    body :fee_type => type, :fee_text => setting_text, :fee_url => self.default_url_options
     render_multipart('fee', body)
     #domthu TODO
     # => fee.text.erb

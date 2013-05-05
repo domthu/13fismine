@@ -64,18 +64,22 @@ module ApplicationHelper
   end
 
   def link_to_articolo(articolo, options={})
-        title = options[:title]
-        classe = options[:class]
-      if articolo.is_convegno?
-         s = url_for(:controller => 'editorial', :action => 'evento', :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug))
-      else
-         s = url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug))
-      end
-      if  User.current.logged?
-        return link_to( title , s ,:class => classe, :escape => false )
-      else
-        return link_to(title, s ,:class => classe, :escape => false, :back_url =>  s )
-      end
+    title = options[:title] || "?"
+    classe = options[:class] || " "
+    target = options[:target] || "_self"
+    if articolo.is_convegno?
+       s = url_for(:controller => 'editorial', :action => 'evento', :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug))
+    else
+       s = url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug))
+    end
+    #escape? add extra html_option?
+    if User.current.logged?
+      #return link_to(title, s ,:class => classe, :escape => false, :target => target, :rel => "nofollow" )
+      return link_to(title, s ,:class => classe, :target => target, :rel => "nofollow" )
+    else
+      #return link_to(title, s ,:class => classe, :escape => false, :rel => "nofollow", :target => target, :back_url =>  s )
+      return link_to(title, s ,:class => classe, :target => target, :rel => "nofollow", :back_url =>  s )
+    end
   end
 
   # Displays a link to +issue+ with its subject.

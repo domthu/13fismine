@@ -3495,6 +3495,18 @@ span.flash.warning, div.flash.warning {
 .hide {
     display: none;
 }
-
-
-
+#toTop {
+    background: url('../images/toTop.png') no-repeat scroll 0 0 transparent;
+    bottom: 10px;
+    color: #333333;
+    cursor: pointer;
+    display: none;
+    font-family: verdana;
+    font-size: 11px;
+    height: 40px;
+    padding: 5px;
+    position: fixed;
+    right: 10px;
+    text-align: center;
+    width: 40px;
+}
