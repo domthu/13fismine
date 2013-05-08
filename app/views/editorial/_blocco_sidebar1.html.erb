@@ -12,6 +12,9 @@
   <% if !@articolo.nil? %>
     <%= render :partial => 'blocco_art_evidenziati' %>
      <%	end  %>
+  <% if current_page?(eventi_path) %>
+    <%= render :partial =>  'blocco_eventi_contact_me' %>
+     <% end %>
 
 </div>
 

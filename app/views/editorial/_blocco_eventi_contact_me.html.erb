@@ -1,0 +1,32 @@
+<div class=" ">
+  <div class="">
+    <div class="fs-bar fs-blockheader">
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#accordion-events-contact").accordion({heightStyle:"content", autoHeight:false, active:1 });
+        });
+    </script>
+    <div >
+      <div >
+
+        <div id="accordion-events-contact">
+          <div id="fs-events-contact"></div>
+
+            <% form_tag({:action => "profilo_contact",  :id => @user_profile, :method => :post}) do %>
+
+                    <%= text_area_tag 'message',"scrivi un messaggio qui ..." , :cols => 32, :rows => 10 %>
+              <br />
+
+                <p style="margin-top: 3px; margin-right: 30px; height: 30px;" >  <%= submit_tag "invia", :action => 'profilo_edit', :class => "fs-vuoto-inline-button" %></p>
+            <% end %>
+
+        </div>
+
+        <div class="cleared"></div>
+      </div>
+    </div>
+    <div class="cleared"></div>
+  </div>
+</div>

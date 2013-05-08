@@ -1,5 +1,60 @@
 /* rewrites jquery ui classes  */
 /*inizio  per edizioni */
+#accordion-events-contact .ui-accordion-header {
+margin: 0;
+padding: 0;
+}
+#accordion-events-contact .ui-helper-reset  {
+
+}
+
+#accordion-events-contact .ui-state-default   {
+    border: 0;
+     border-collapse: separate;
+     -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+     border-radius: 0;
+     -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+     box-shadow: none;
+     padding: 0;
+     margin: 0;
+     color: #FFFFFF;
+
+}
+#accordion-events-contact .ui-accordion-icons  {
+padding: 0;
+
+}
+#accordion-events-contact .ui-accordion-header-active   {
+
+}
+#accordion-events-contact .ui-state-active  {
+
+}
+#accordion-events-contact textarea {
+    width: inherit;
+
+    color: inherit!important;
+    font-size: 0.9em;
+    font-weight: normal;
+    padding: 5px;
+
+}
+
+#accordion-events-contact .ui-state-active .ui-icon {
+ background: none ;
+}
+#accordion-events-contact .ui-state-default .ui-icon {
+ background: none ;
+}
+
+
+
+
+
+
+
 
 .ui-widget input{
     font-family:  Arial, Helvetica, Sans-Serif;
@@ -116,7 +171,10 @@
     color: #Df0000;
     text-decoration: none
 }
-
+.ui-widget-content {
+    border: 0;
+    background: none;
+}
 /* fine per edizioni */
 /* ------------------------------------------------------------------------*/
 /* inizio  per EVENTI */

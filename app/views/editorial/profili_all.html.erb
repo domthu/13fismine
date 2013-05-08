@@ -2,7 +2,7 @@
   <% if flash[:notice] %>
       <div id="fs-flash-notice"><%= notice %> </div>
   <% end %>
-  <div class="fs-content-layout" style="width: 50%; float:left;">
+  <div class="fs-content-layout" style="width: 49%; float:left;">
     <div class="fs-content-layout-row">
       <div class="fs-layout-cell post-layout-item-3">
         <article class="fs-post-profile fs-article">
@@ -10,9 +10,10 @@
           <% @direttori.each do |item| %>
               <div class="fs-chisiamo-item">
                    <%= link_to(item.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
-                 <p>
+                <p>
                   <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
-                  <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
+                  <span style="font-style: italic;">  <%= item.fs_qualifica %> </span>
+               </p>
               </div>
           <% end %>
           <div class="clearfix"></div>
@@ -20,7 +21,7 @@
       </div>
     </div>
   </div>
-  <div class="fs-content-layout" style="width: 50%; float:left;">
+  <div class="fs-content-layout" style="width: 49%; float:left;">
     <div class="fs-content-layout-row">
       <div class="fs-layout-cell post-layout-item-3">
         <article class="fs-post-profile fs-article">
@@ -38,7 +39,7 @@
       </div>
     </div>
   </div>
-  <div class="fs-content-layout" style="width: 99%">
+  <div class="fs-content-layout" style="width: 98%">
     <div class="fs-content-layout-row">
       <div class="fs-layout-cell post-layout-item-3">
         <article class="fs-post-profile fs-article">

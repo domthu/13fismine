@@ -6,7 +6,11 @@
 </script>
 <link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
 <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
+  <div class="fs-content-layout" style="width: 99%; margin-top: 3px;">
+      <div class="fs-content-layout-row">
+        <div class="fs-layout-cell">
   <!-- accordion -->
+
   <div id="accordion-events">
     <!-- convegni futuri -->
     <% if @conv_futuri.nil? %>
@@ -160,9 +164,11 @@
         </article>
     <% end %>
   </div>
+        </div> </div> </div>
 </div>
 <div class="clearfix"></div>
 
 
 <%= render :partial => 'blocco_sidebar1' %>
+
 <%#sidebar a destra %>
