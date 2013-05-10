@@ -300,6 +300,13 @@ class Mailer < ActionMailer::Base
     render_multipart('test', body)
   end
 
+  def proposal_meeting (user, body_as_string)
+    recipients 'sandro@ks3000495.kimsufi.com'  #'segreteria@fiscosport.it'
+    subject 'Fiscosport > Proposta di convegno o di evento'
+    part :content_type => "text/html",
+         :body => 'div style="font-wheight:bold;"> User id:[' + user.id + '] Nome: ' + user +  '</div><br /> <hr> <p>'  + body_as_string + '</p>'
+  end
+
   def newsletter(user, body_as_string, project)
     #set_language_if_valid user.language
     recipients user.mail

@@ -1464,6 +1464,11 @@ it:
   setting_iscription: "Modalità per abbonarsi"
   label_iscription: "Documento che elenca le modalità e i passi per l'iscrizione"
 
+#Static pages in FE memorized in: settings/_projects
+  static_page_cosaoffriamo: "Pagina -> Cosa Offriamo"
+  static_page_lavoraconnoi: "Pagina -> Lavora con Noi"
+  static_page_progettofs: "Pagina -> Progetto Fiscosport"
+
 #Deliver_fee  type
   proposal: Abbonamenti disponibili
   thanks: Pagamento ricevuto, grazie

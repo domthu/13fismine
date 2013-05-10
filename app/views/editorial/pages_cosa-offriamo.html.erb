@@ -1,12 +1,13 @@
-    <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
-      <article class="fs-post fs-article">
-        <div class="fs-postcontent fs-postcontent-0 clearfix">
-          <div class="fs-content-layout">
-            <div class="fs-content-layout-row">
-              <div class="fs-layout-cell layout-item-0" style="width: 99%">
-                <p style="text-align: center;">
+<div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
+  <article class="fs-post fs-article">
+    <div class="fs-postcontent fs-postcontent-0 clearfix">
+      <div class="fs-content-layout">
+        <div class="fs-content-layout-row">
+          <div class="fs-layout-cell layout-item-0" style="width: 99%">
+            <%= raw(Setting.static_page_cosaoffriamo.html_safe) %>
+            <!--  <p style="text-align: center;">
 
-                <%= image_tag("/images/commons/servizi-fiscosport.jpg", :alt => "Servizi alle associazioni") %>
+                <%# image_tag("/images/commons/servizi-fiscosport.jpg", :alt => "Servizi alle associazioni") %>
                 </p>
                 <h3 class="fs-postheader">I NOSTRI SERVIZI ALLE ASSOCIAZIONI</h3>
                 <div class="layout-item-2-lite">
@@ -41,28 +42,17 @@
                 sostenere e supportare a 360 gradi le associazioni e le società sportive che ci seguono corrisponda il Vostro
                 gradimento per la nuova iniziativa!
                     </p>
+
                 <br/>
-                </div>
-              </div>
-            </div>
+                </div> -->
           </div>
         </div>
-        <br/>
-      </article>
-     <br/>
-      <%# if @quesiti_news_stato_num  > 1%>
-
-      <div class="clearfix"></div>
-
-
-        <br/>
-
-    <br/>
-    <p style="text-align: center;">
-      <%#link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>  </p>
-    <%# end %>
+      </div>
     </div>
-
-
+    <br/>
+  </article>
+  <br/>
+  <div class="clearfix"></div>
+</div>
 <%= render :partial => 'blocco_sidebar1' %>
 
