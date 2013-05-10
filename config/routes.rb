@@ -40,11 +40,11 @@ ActionController::Routing::Routes.draw do |map|
 
   # Named Routes for static pages.
   map.chisiamo '/chi_siamo', :controller => 'editorial', :action => 'chisiamo'
-  map.servizi '/servizi', :controller => 'editorial', :action => 'servizi'
+  map.cosaoffriamo '/cosa-offriamo', :controller => 'editorial', :action => 'pages_cosa-offriamo'
   map.contatti '/contatti', :controller => 'editorial', :action => 'contatti'
   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
-  map.enti  '/enti_federazioni', :controller => 'editorial', :action => 'enti'
-  map.lavora '/lavora_con_noi', :controller => 'editorial', :action => 'lavora'
+  map.progettofs  '/progetto-fiscosport', :controller => 'editorial', :action => 'pages_progetto-fs'
+  map.lavoraconnoi '/lavora-con-noi', :controller => 'editorial', :action => 'pages_lavora-con-noi'
    #-> Edizioni e Newletter (table: projects)-
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'

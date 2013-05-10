@@ -1457,6 +1457,10 @@ en:
   label_condition: "Documento che definisce le condizioni d'uso"
   setting_iscription: "Modalità per abbonarsi"
   label_iscription: "Documento che elenca le modalità e i passi per l'iscrizione"
+  # static pages memorized in: settings/_projects
+  static_page_cosaoffriamo: "Page -> Cosa Offriamo"
+  static_page_lavoraconnoi: "Page -> Lavora con Noi"
+  static_page_progettofs: "Page -> Progetto Fiscosport"
 
 #Deliver_fee  type
   proposal: Abbonamenti disponibili

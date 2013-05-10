@@ -1,24 +1,24 @@
 <% remote_form_for(
-      :user,
-      :url => { :action => 'send_newsletter', :id => @user},
-      :builder => TabularFormBuilder,
-      :html => {
-        :id => 'edit_newsletter_form',
-        :method => :put,
-        :multipart => true}
-      ) do |f| %>
+           :user,
+           :url => {:action => 'send_newsletter', :id => @user},
+           :builder => TabularFormBuilder,
+           :html => {
+                   :id => 'edit_newsletter_form',
+                   :method => :put,
+                   :multipart => true}
+   ) do |f| %>
 
-  <%#div id="edit_newsletter_form" %>
+    <%#div id="edit_newsletter_form" %>
 
     <!--[form:user]-->
     <div class="splitcontentleft">
       <fieldset class="box tabular">
-        <legend><%=l(:label_newsletter)%></legend>
+        <legend><%= l(:label_newsletter) %></legend>
 
         <p>
           <%= select_tag('project[id]', options_for_select(Project.all_public_fs(
-                  :order => 'created_on DESC'
-          ).collect {|ed| [ed.name, ed.id.to_s]}), :include_blank => "Selezionare una newsletter", :class => "some_class" )  %>
+                                                                   :order => 'created_on DESC'
+                                                           ).collect { |ed| [ed.name, ed.id.to_s] }), :include_blank => "Selezionare una newsletter", :class => "some_class") %>
         </p>
 
 
@@ -28,35 +28,36 @@
     <div class="splitcontentright">
 
       <fieldset class="box">
-        <legend><%=l(:label_user_list_newsletters)%></legend>
+        <legend><%= l(:label_user_list_newsletters) %></legend>
         Storico: Lista delle newsletter inviate precedentemente (fare Tabella)
       </fieldset>
 
     </div>
-  </div>
-  <div style="clear:left;"></div>
-  <!--[eoform:user]-->
+    </div>
+    <div style="clear:left;"></div>
+    <!--[eoform:user]-->
 
-  <p><%= submit_tag l(:button_send_newsletter) %>
-  <%= link_to_remote l(:label_preview),
-           { :url => preview_newsletter_path(:user_id => @user),
-             :method => 'post',
-             :update => 'news_preview',
-             :with => 'Form.serialize("edit_newsletter_form")',
-             :complete => "Element.scrollTo('news_preview')"
-           }, :accesskey => accesskey(:preview)
-  %></p>
+    <p><%= submit_tag l(:button_send_newsletter) %>
+      <%= link_to_remote l(:label_preview),
+                         {:url => preview_newsletter_path(:user_id => @user),
+                          :method => 'post',
+                          :update => 'news_preview',
+                          :with => 'Form.serialize("edit_newsletter_form")',
+                          :complete => "Element.scrollTo('news_preview')"
+                         }, :accesskey => accesskey(:preview)
+      %></p>
 
-  <div >
-   <fieldset class="htmldraft">
+    <div>
+      <fieldset class="htmldraft">
         <legend><%= l(:label_preview) %>:</legend>
         <div id="news_preview" class="">
           <p>
             Selezionare un Quindicinale ed cliccare su Anteprima
+
           <p>
           </p>
         </div>
-    </fieldset>
-  </div>
+      </fieldset>
+    </div>
 
 <% end %>

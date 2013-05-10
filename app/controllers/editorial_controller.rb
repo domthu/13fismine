@@ -310,6 +310,34 @@ class EditorialController < ApplicationController
     end
   end
 
+  def send_proposal_meeting
+      @user = User.current
+      @msg = params[:message]
+      @stat =''
+      raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
+      # Force ActionMailer to raise delivery errors so we can catch it
+      ActionMailer::Base.raise_delivery_errors = true
+      @stat = 'Invio newsletter. '
+      begin
+        @test =  Mailer.deliver_proposal_meeting(@user, @msg)
+        #notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
+        #flash[:notice] = l(:notice_user_newsletter_email_sent)
+        @stat += " Resultato: <br /><strong>" + @test + '</strong>'
+      rescue Exception => e
+        @msg += l(:notice_email_error, e.message)
+      end
+      ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
+
+      respond_to do |format|
+          format.js {
+            render(:update) {|page|
+             page.replace_html "user-response", @stat
+              page.alert(@stat)
+            }
+          }
+      end
+  end
+
 
   # -----------------  CONVEGNI / EVENTI  (fine)   ------------------
 
