@@ -12,6 +12,144 @@
                       Role.find_all_givable.collect {|r| [r.name, r.id.to_s]},
                       :blank => "--- #{l(:actionview_instancetag_blank_option)} ---" %></p>
 </div>
+   <div>
 
-<%= submit_tag l(:button_save) %>
+    <fieldset class="yui-skin-sam"><legend><%= l(:static_page_chisiamo) %></legend>
+      <%= setting_text_area :static_page_chisiamo, :label => false, :rows => 5 %>
+      <%= l(:static_page_chisiamo) %>
+      <div style="float:right;">
+      </div>
+    </fieldset>
+
+    <fieldset  class="yui-skin-sam"><legend><%= l(:static_page_cosaoffriamo) %></legend>
+      <%= setting_text_area :static_page_cosaoffriamo, :label => false, :rows => 5 %>
+      <%= l(:static_page_cosaoffriamo) %>
+      <div style="float:right;">
+      </div>
+    </fieldset>
+
+    <fieldset  class="yui-skin-sam"><legend><%= l(:static_page_lavoraconnoi) %></legend>
+      <%= setting_text_area :static_page_lavoraconnoi, :label => false, :rows => 5 %>
+      <%= l(:static_page_lavoraconnoi) %>
+      <div style="float:right;">
+      </div>
+    </fieldset>
+     <fieldset  class="yui-skin-sam"><legend><%= l(:static_page_progettofs) %></legend>
+       <%= setting_text_area :static_page_progettofs, :label => false, :rows => 5 %>
+       <%= l(:static_page_progettofs) %>
+       <div style="float:right;">
+       </div>
+     </fieldset>
+    </div>
+    <%= submit_tag l(:button_save) %>
 <% end %>
+
+<% content_for :header_yui do %>
+    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
+    <%= javascript_include_tag "yui/element-min.js" %>
+    <%= javascript_include_tag "yui/container_core-min.js" %>
+    <%= javascript_include_tag "yui/menu-min.js" %>
+    <%= javascript_include_tag "yui/button-min.js" %>
+    <%= javascript_include_tag "yui/editor-min.js" %>
+    <%= javascript_include_tag "yui/yui_fs.js" %>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+    (function () {
+        var myConfig1 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:true,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_fee_proposal', myConfig1);
+
+        var myConfig2 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_fee_register_asso', myConfig2);
+
+        var myConfig3 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_fee_renew', myConfig3);
+
+        var myConfig4 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_fee_thanks', myConfig4);
+
+        var myConfig5 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_privacy', myConfig5);
+
+        var myConfig6 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_condition', myConfig6);
+
+        var myConfig7 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_template_iscription', myConfig7);
+
+    })
+
+            ();
+
+
+</script>
