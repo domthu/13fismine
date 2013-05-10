@@ -1,3 +1,11 @@
+  <script type="text/javascript" charset="utf-8">
+      $(document).ready(function() {
+          // effetto sul testo di fade o slide
+          $('#tickGratis').list_ticker({speed:3000,effect:'fade'})
+      });
+
+  </script>
+
 <p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">Prova la newsletter gratis per 30 giorni!</p>
 <div id="fs-prova-gratis-fields">
   <% form_tag({:controller => 'editorial', :action => 'prova_gratis_ok'}, :method => :post) do %>
@@ -11,7 +19,7 @@
           <label class="fs-checkbox">
             <input type="checkbox" id="modlgn_remember" name="team_artist" value="yes" alt="Team Artist" checked="true"/>
           </label>
-          <ul id="fade" class="fs-prova-gratis-righe">
+          <ul id="tickGratis" class="fs-prova-gratis-righe">
             <li>Prova anche la demo di <a href="http://teamartist.com" target="_blank">Team Artist</a></li>
             <li> il software per le nostre associazioni. </li>
             <li>Promo: se ti iscrivi a FiscoSport...  </li>
@@ -26,5 +34,3 @@
       </div>
   <% end %>
 </div>
-
-

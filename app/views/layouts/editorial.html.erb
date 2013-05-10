@@ -71,15 +71,15 @@
               });
           };
           $("#carousel_assos_js").carouFredSel({
-              items				: 3,
+              items	 : 3,
               scroll : {
-                  items			: 3,
-                  easing			: "elastic",
-                  duration		: 2000,
+                  items			    : 3,
+                  easing			  : "elastic",
+                  duration		  : 2000,
                   pauseOnHover	: true
               }
           });
-          $("#carousel_assos_js").removeClass("hide");
+          $(".list_assos_carousel").removeClass("hide");
           // $("input[type=submit]").button();
 
           //Focus
@@ -98,19 +98,11 @@
               jQuery('body,html').animate({scrollTop:0},800);
           });
 
-      });
-  </script>
-  <script type="text/javascript" charset="utf-8">
-      $(document).ready(function() {
           $('.x-white').addGlow({ textColor: 'white', haloColor: '#aaa', radius: 100 });
           $('.x-blue').addGlow({ textColor: '#00f', haloColor: '#00f', radius: 100 });
           $('.x-yellow').addGlow({ textColor: '#F8DA00', haloColor: '#F8DA00', radius: 100 });
           $('.x-red').addGlow({ textColor: '#f00', haloColor: '#f00', radius: 100 });
           $('.x-granata').addGlow({ textColor: '#a03823', haloColor: '#a03823', radius: 100 });
-          $('*').bind('glow:started', console.info);
-          $('*').bind('glow:canceled', console.info);
-          // effetto sul testo di fade o slide
-          $('#fade').list_ticker({speed:3000,effect:'fade'})
 
       });
 

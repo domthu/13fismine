@@ -188,7 +188,7 @@ jQuery(function ($) {
     'use strict';
     // ie < 9 slider multiple background fix
     if (!jQuery.browser.msie || jQuery.browser.version > 8) return;
-    
+
     function split(str) {
         str = str.replace(/"/g, '').replace(/%20/g, '');
         return  str.split(/\s*,\s*/);
@@ -286,122 +286,6 @@ jQuery(function ($) {
         }
     });
 });
-jQuery(function () {
-    'use strict';
-    setHMenuOpenDirection({
-        container: "div.fs-menu2-sheet",
-        defaultContainer: "#fs-menu2-main",
-        menuClass: "fs-menu2-hmenu",
-        leftToRightClass: "fs-menu2-hmenu-left-to-right",
-        rightToLeftClass: "fs-menu2-hmenu-right-to-left"
-    });
-});
-
-var setHMenuOpenDirection = (function($) {
-    'use strict';
-    return (function(menuInfo) {
-        var defaultContainer = $(menuInfo.defaultContainer);
-        defaultContainer = defaultContainer.length > 0 ? defaultContainer = $(defaultContainer[0]) : null;
-
-        $("ul." + menuInfo.menuClass + ">li>ul").each(function () {
-            var submenu = $(this);
-
-            var submenuWidth = submenu.outerWidth();
-            var submenuLeft = submenu.offset().left;
-
-            var mainContainer = submenu.parents(menuInfo.container);
-            mainContainer = mainContainer.length > 0 ? mainContainer = $(mainContainer[0]) : null;
-
-            var container = mainContainer || defaultContainer;
-            if (container !== null) {
-                var containerLeft = container.offset().left;
-                var containerWidth = container.outerWidth();
-
-                if (submenuLeft + submenuWidth >= containerLeft + containerWidth) {
-                    /* right to left */
-                    submenu.addClass(menuInfo.rightToLeftClass).find("ul").addClass(menuInfo.rightToLeftClass);
-                } else if (submenuLeft <= containerLeft) {
-                    /* left to right */
-                    submenu.addClass(menuInfo.leftToRightClass).find("ul").addClass(menuInfo.leftToRightClass);
-                }
-            }
-        });
-    });
-})(jQuery);
-
-
-jQuery(window).load(menuExtendedCreate);
-function menuExtendedCreate() {
-    'use strict';
-    var sheet = jQuery(".fs-menu2-sheet");
-    var sheetLeft = sheet.offset().left;
-    var sheetWidth = sheet.width();
-    // reset
-    jQuery("#fs-menu2-menu-style").remove();
-
-    var styleStr = "";
-    jQuery("<style id=\"fs-menu2-menu-style\"></style>").appendTo('head');
-    var style = document.styleSheets[document.styleSheets.length - 1];
-
-    jQuery(".fs-menu2-hmenu>li").each(function(i, v) {
-        var itm = jQuery(this);
-        var subm = itm.children("ul");
-        if (subm.length === 0) {
-            return;
-        }
-
-        // reset
-        itm.removeClass("ext ext-r ext-l");
-        itm.css("width", "").find(".ext-off,.ext-m,.ext-l,.ext-r").remove();
-        subm.children("li").children("a").css("width", "");
-
-        var lw = 0, rw = 0;
-
-        if (typeof subm.attr("data-ext-l") !== "undefined" && typeof subm.attr("data-ext-r") !== "undefined") {
-            lw = parseInt(subm.attr("data-ext-l"), 10) + 7;
-            rw = parseInt(subm.attr("data-ext-r"), 10) + 7;
-            itm.addClass("ext-r").addClass("ext-l");
-        } else {
-            var ltr = !subm.hasClass("fs-menu2-hmenu-right-to-left");
-            itm.addClass(ltr ? "ext-r" : "ext-l");
-        }
-
-        var shadow = 7;
-        if (subm.length > 0) {
-            var lnk = itm.children("a");
-            var lnkWidth = lnk.outerWidth();
-            itm.css("width", Math.round(parseFloat(lnkWidth, 10)) + "px");
-            var menubarMargin = 1 * 2; // margin * 2 sides
-            var menubarBorder = 1 * 2; // border 1 side
-            var submWidth = subm.width() + shadow + menubarMargin + menubarBorder;
-            var w = submWidth - lnkWidth;
-            jQuery("<div class=\"ext-m\"></div>").insertBefore(lnk);
-            if (w < 0) {
-                var submA = subm.children("li").children("a");
-                var pL = parseInt(submA.css("padding-left").replace("px", ""), 10) || 0;
-                var pR = parseInt(submA.css("padding-right").replace("px", ""), 10) || 0;
-                var bL = parseInt(submA.css("border-left").replace("px", ""), 10) || 0;
-                var bR = parseInt(submA.css("border-right").replace("px", ""), 10) || 0;
-                subm.children("li").children("a").css("width", (lnkWidth - pL - pR - bL - bR) + "px");
-                submWidth = subm.width() + shadow + menubarMargin + menubarBorder;
-                w = submWidth - lnkWidth;
-            }
-            jQuery("<div class=\"ext-l\" style=\"width: " + (lw > 0 ? lw : Math.round(parseFloat(w, 10))) + "px;\"></div>").insertBefore(lnk);
-            jQuery("<div class=\"ext-r\" style=\"width: " + (rw > 0 ? rw : Math.round(parseFloat(w, 10))) + "px;\"></div>").insertBefore(lnk);
-            itm.addClass("ext");
-            if (style !== null && typeof style.insertRule !== "undefined") {
-                var cls = "fs-menu2-hmenu-item-" + i;
-                var selector = ".desktop ul.fs-menu2-hmenu>li." + cls + ":hover>ul:before";
-                var r = submWidth;
-                var b = subm.height() + (shadow * 2) + menubarBorder + menubarMargin;
-                var rule = "clip: rect(9px, " + Math.round(parseFloat(r, 10)) + "px, " + Math.round(parseFloat(b, 10)) + "px, -" + shadow + "px);";
-                itm.addClass(cls);
-                var rulesLen = typeof style.cssRules === "undefined" || style.cssRules === null ? 0 : style.cssRules.length;
-                style.insertRule(selector + '{' + rule + '}', rulesLen);
-            }
-        }
-    });
-}
 
 jQuery(function ($) {
     'use strict';
@@ -584,19 +468,19 @@ jQuery(function ($) {
     }
 });
 /**
-* @license 
+* @license
 * jQuery Tools 1.2.6 Mousewheel
-* 
+*
 * NO COPYRIGHTS OR LICENSES. DO WHAT YOU LIKE.
-* 
+*
 * http://flowplayer.org/tools/toolbox/mousewheel.html
-* 
-* based on jquery.event.wheel.js ~ rev 1 ~ 
+*
+* based on jquery.event.wheel.js ~ rev 1 ~
 * Copyright (c) 2008, Three Dub Media
-* http://threedubmedia.com 
+* http://threedubmedia.com
 *
 * Since: Mar 2010
-* Date:  
+* Date:
 */
 (function ($) {
     'use strict';
@@ -621,7 +505,7 @@ jQuery(function ($) {
     // shared event handler
     function wheelHandler(event) {
         /*jshint validthis:true*/
-        
+
         switch (event.type) {
 
             // FF2 has incorrect event positions
@@ -1008,7 +892,7 @@ jQuery(function () {
             if (!!next) {
                 result.push({ images: next.images, positions: getCssPositions(next.positions, nextItem) });
             }
-            
+
             if (direction === "next") {
                 result.reverse();
             }
@@ -1019,7 +903,7 @@ jQuery(function () {
         this.transition = function(container, on) {
             container.css($.support.transition.prefix + "transition", on ? transitionDuration + " ease-in-out background-position" : "");
         };
-        
+
         function getCssPositions(positions, offset) {
             var result = [];
             if (positions === undefined) {
@@ -1076,12 +960,12 @@ jQuery(function () {
             if ($.support.transition) {
                 nextItem.addClass(this.settings.direction);
                 tmp = nextItem.get(0).offsetHeight;
-                
+
                 activeItem.addClass(innerDirection);
                 nextItem.addClass(innerDirection);
-                
+
                 element.trigger("beforeSlide", children.length);
-                
+
                 element.one($.support.transition.event, function () {
                     nextItem.removeClass(slider.settings.direction)
                         .removeClass(innerDirection)
@@ -1095,11 +979,11 @@ jQuery(function () {
                 });
             } else {
                 element.trigger("beforeSlide", children.length);
-                
+
                 activeItem.removeClass("active");
                 nextItem.addClass("active");
                 active = false;
-                
+
                 element.trigger("afterSlide", children.length);
             }
 
@@ -1128,7 +1012,7 @@ jQuery(function () {
                     slider.to(index);
                 });
             }
-            
+
             if (activeIndex === index) {
                 return;
             }
@@ -1172,7 +1056,7 @@ jQuery(function () {
         this.moving = function () {
             return active;
         };
-        
+
         this.navigate(children.filter(".active"));
 
         if (this.settings.clickevents) {
@@ -1185,7 +1069,7 @@ jQuery(function () {
                 event.preventDefault();
             });
         }
-        
+
         if (this.settings.hover) {
             var slider = this;
             element.add(this.settings.navigator)
@@ -1207,7 +1091,7 @@ jQuery(function () {
                 data = new Slider(element, options);
                 element.data("slider", data);
             }
-            
+
             if (typeof arg === "string" && data[arg]) {
                 data[arg]();
             } else if (data.settings.auto && element.is(":visible")) {
