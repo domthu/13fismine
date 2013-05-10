@@ -1,0 +1,65 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+      // effetto sul testo di fade o slide
+      $('#tickGratis').list_ticker({speed:3000,effect:'fade'})
+      $("#user_firstname").prop('maxLength', 255);
+      $("#user_lastname").prop('maxLength', 255);
+      $("#user_mail").prop('maxLength', 255);
+
+      //privacy
+      $( "#ainf_prova" ).click(function(e){
+        Inform_page_prova(e);
+        return false
+      });
+      $('#inf_prova').dialog({
+        autoOpen: false,
+        width: 700,
+        show: "blind",
+        hide: "explode",
+        height: 550,
+        resizable: true,
+        draggable: true,
+        title: 'Informativa',
+        bgiframe: true,
+        modal: true,
+        open: function (event, ui) {
+            $(this).load(url_inf);
+        }
+      });
+
+  });
+  var url_inf = '<%= privacy_path %>';
+  function Inform_page_prova(e) {
+    $("#inf_prova").dialog("open");
+    return false;
+  }
+</script>
+<h2>Modulo di registrazione abbonamento dati utente formato 'wizard'</h2>
+<br/>
+<p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">Prova la newsletter gratis per <%= Setting.register_days %> giorni!</p>
+<% form_tag({:controller => 'account', :action => 'prova'}, :method => :post) do %>
+    <%= text_field 'user', 'firstname', :style => 'width:95%;', :placeholder => l(:field_firstname) + "..."  %>
+    <%= text_field 'user', 'lastname', :style => 'width:95%;', :placeholder => l(:field_lastname) + "..."  %>
+    <%= text_field 'user', 'mail', :style => 'width:95%;', :placeholder => l(:field_mail) + "..."  %>
+
+    <input type="submit" value="<%= l(:button_prova)%>" name="leggi_gratis" id="fs-prova-gratis-btn" class="fs-button"/>
+
+    <div id="fs-prova-gratis-info">
+      <div class="fs-prova-gratis-info">
+        <label class="fs-checkbox">
+          <input type="checkbox" id="modlgn_remember" name="team_artist" value="yes" alt="Team Artist" checked="true"/>
+        </label>
+        <ul id="tickGratis" class="fs-prova-gratis-righe">
+          <li>Prova anche la demo di <a href="http://teamartist.com" target="_blank">Team Artist</a></li>
+          <li> il software per le nostre associazioni. </li>
+          <li>Promo: se ti iscrivi a FiscoSport...  </li>
+           <li>-10% sul listino approfittane ora! <a href="http://teamartist.com" target="_blank">Scopri...</a></li>
+        </ul>
+        <div class="clearfix"></div>
+         <span title="Cliccando su '<%= l(:button_prova)%>' acconsenti esplicitamente al trattamento dei dati personali ai sensi del D.Lgs. 196/2003" >Cliccando su "<%= l(:button_prova)%>" acconsenti al <a href='#' id='ainf_prova' class='pri'><b>trattamento dati</b></a>
+         </span>
+      </div>
+    </div>
+<% end %>
+<div id="inf_prova" title="Informativa" class="hidden" style="overflow: hidden;">
+</div>

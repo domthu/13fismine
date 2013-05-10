@@ -1,18 +1,48 @@
-  <script type="text/javascript" charset="utf-8">
-      $(document).ready(function() {
-          // effetto sul testo di fade o slide
-          $('#tickGratis').list_ticker({speed:3000,effect:'fade'})
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      // effetto sul testo di fade o slide
+      $('#tickGratis').list_ticker({speed:3000,effect:'fade'})
+      $("#user_firstname").prop('maxLength', 255);
+      $("#user_lastname").prop('maxLength', 255);
+      $("#user_mail").prop('maxLength', 255);
+
+      //privacy
+      $( "#ainformativa_prova" ).click(function(e){
+        Inform_prova(e);
+        return false
+      });
+      $('#informativa_prova').dialog({
+        autoOpen: false,
+        width: 700,
+        show: "blind",
+        hide: "explode",
+        height: 550,
+        resizable: true,
+        draggable: true,
+        title: 'Informativa',
+        bgiframe: true,
+        modal: true,
+        open: function (event, ui) {
+            $(this).load(url_inf);
+        }
       });
 
-  </script>
+  });
+  var url_inf = '<%= privacy_path %>';
+  function Inform_prova(e) {
+    $("#informativa_prova").dialog("open");
+    return false;
+  }
+</script>
 
-<p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">Prova la newsletter gratis per 30 giorni!</p>
+<p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">Prova la newsletter gratis per <%= Setting.register_days %> giorni!</p>
 <div id="fs-prova-gratis-fields">
-  <% form_tag({:controller => 'editorial', :action => 'prova_gratis_ok'}, :method => :post) do %>
-      <span class="fs-prova-gratis-txt"><input type="text" value="Nome..."></span>
-      <span class="fs-prova-gratis-txt"><input type="text" value="Cognome..."></span>
-      <span class="fs-prova-gratis-txt"><input type="text" value="Email..."></span>
-      <input type="submit" value="Leggi Gratis!" name="leggi_gratis" id="fs-prova-gratis-btn" class="fs-button"/>
+  <% form_tag({:controller => 'account', :action => 'prova'}, :method => :post) do %>
+      <span class="fs-prova-gratis-txt"><%= text_field 'user', 'firstname', :style => 'width:95%;', :placeholder => l(:field_firstname) + "..."  %></span>
+      <span class="fs-prova-gratis-txt"><%= text_field 'user', 'lastname', :style => 'width:95%;', :placeholder => l(:field_lastname) + "..."  %></span>
+      <span class="fs-prova-gratis-txt"><%= text_field 'user', 'mail', :style => 'width:95%;', :placeholder => l(:field_mail) + "..."  %></span>
+
+      <input type="submit" value="<%= l(:button_prova)%>" name="leggi_gratis" id="fs-prova-gratis-btn" class="fs-button"/>
 
       <div id="fs-prova-gratis-info">
         <div class="fs-prova-gratis-info">
@@ -26,11 +56,11 @@
              <li>-10% sul listino approfittane ora! <a href="http://teamartist.com" target="_blank">Scopri...</a></li>
           </ul>
           <div class="clearfix"></div>
-           <span>
-             Cliccando su "Leggi Gratis" acconsenti esplicitamente al trattamento dei dati personali
-             ai sensi del D.Lgs. 196/2003, leggi l' <a href="">informativa</a>
+           <span title="Cliccando su '<%= l(:button_prova)%>' acconsenti esplicitamente al trattamento dei dati personali ai sensi del D.Lgs. 196/2003" >Cliccando su "<%= l(:button_prova)%>" acconsenti al <a href='#' id='ainformativa_prova' class='pri'><b>trattamento dati</b></a>
            </span>
         </div>
       </div>
   <% end %>
+</div>
+<div id="informativa_prova" title="Informativa" class="hidden" style="overflow: hidden;">
 </div>

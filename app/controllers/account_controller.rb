@@ -194,6 +194,14 @@ class AccountController < ApplicationController
     end
   end
 
+  def prova
+  #FeeConst::ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
+    @user = User.new(params[:user])
+    @user.admin = false
+    #default role_id
+    @user.role_id = FeeConst::ROLE_REGISTERED
+  end
+
   # Token based account activation
   def activate
     #domthu redirect_to(home_url) && return unless Setting.self_registration? && params[:token]
