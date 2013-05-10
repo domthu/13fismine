@@ -6,7 +6,33 @@
   <% if @issues && @issues.any? %>
       <div class="fs-blockcontent">
         <% for articolo in @issues %>
-            <%= render :partial => 'articolo_pinned', :locals => {:articolo => articolo} %>
+            <h1 style="display:none">__PARTIAL ARTICOLO PINNED chiamato da _blocco articoli evidenziati</h1>
+
+            <div class="fs-postcontent fs-postcontent-0 clearfix">
+              <div class="fs-content-layout">
+                <div class="fs-content-layout-row">
+                  <div class="fs-layout-cell layout-item-0" style="width: 100%">
+                    <h6 class="fs-postheader">
+                      <%=  link_to_articolo(articolo, :title => h(truncate(articolo.subject, :length => 50))) %>
+                    </h6>
+                    <%# articolo.section.issues.count %>
+                    <span class="fs-postauthoricon">
+            <%= h articolo.author %>
+          </span>
+                    <br/>
+
+                    <div class="fs-postcontent">
+                      <div class="fs-box-link">
+                        <%= link_to_articolo(articolo ,:title => h(smart_truncate(articolo.summary, 130))) %>
+                        <br/>
+                      </div>
+                    </div>
+                    <%# link_to "Continua... ", link_to_articolo(articolo) %>
+                    <p class="separticle"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
         <% end %>
         <br/>
         <%# link_to l(:label_issues_view_all), :action => 'articoli' %>

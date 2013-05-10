@@ -278,5 +278,19 @@ template_iscription:
   default: "Definire le modalità di iscrizione:
  Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque congue condimentum velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor lacinia nisi in sodales. Donec viverra euismod dolor, sit amet mattis justo ultricies a. Maecenas rutrum neque sem, eu laoreet diam. Mauris a lorem a lorem facilisis viverra. Proin sed tortor sem. Nam sed ipsum turpis. Duis tellus nisl, sagittis id bibendum sit amet, feugiat at sapien. Aliquam eget odio orci.
 
-Quisque sodales, enim in feugiat euismod, dui ipsum auctor ligula, vel vulputate ante augue porta leo. Ut convallis, est eu condimentum tristique, mi dui convallis ante, at aliquam nisl risus quis lectus. Quisque hendrerit augue sed odio tincidunt imperdiet. Phasellus scelerisque eleifend auctor. Aliquam erat volutpat. Morbi adipiscing mollis ipsum. Curabitur tincidunt placerat posuere. Nullam id velit massa. Nullam euismod leo non ante congue interdum. Donec et ante et risus pulvinar ullamcorper vel sed nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer scelerisque lectus suscipit nunc porttitor egestas. Proin eu euismod enim. Etiam non facilisis nunc. Cras eget est nunc.
+ Quisque sodales, enim in feugiat euismod, dui ipsum auctor ligula, vel vulputate ante augue porta leo. Ut convallis, est eu condimentum tristique, mi dui convallis ante, at aliquam nisl risus quis lectus. Quisque hendrerit augue sed odio tincidunt imperdiet. Phasellus scelerisque eleifend auctor. Aliquam erat volutpat. Morbi adipiscing mollis ipsum. Curabitur tincidunt placerat posuere. Nullam id velit massa. Nullam euismod leo non ante congue interdum. Donec et ante et risus pulvinar ullamcorper vel sed nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer scelerisque lectus suscipit nunc porttitor egestas. Proin eu euismod enim. Etiam non facilisis nunc. Cras eget est nunc.
   "
+static_page_chisiamo:
+  default: "Pagina chi siamo"
+  
+static_page_cosaoffriamo:
+  default: "Pagina cosa offriamo"
+  
+static_page_lavoraconnoi:
+  default: "Pagina lavora con noi"
+
+static_page_progettofs:
+  default: "Pagina progetto fiscosport"
+  
+
+
