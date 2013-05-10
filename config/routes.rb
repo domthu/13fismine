@@ -52,6 +52,8 @@ ActionController::Routing::Routes.draw do |map|
   #-> Convegni ed Eventi ()topsection_id=9) -
   map.evento '/evento/:id/:slug', :controller => 'editorial', :action => 'evento'
   map.eventi '/eventi', :controller => 'editorial', :action => 'eventi'
+  map.propose_evt 'propose_evt', :controller => 'editorial', :action => 'send_proposal_meeting', :conditions => {:method => [:post]}
+
   #-> Quesiti (table: news)-
   map.quesiti_all '/quesiti', :controller => 'editorial', :action => 'quesiti_all'
   map.quesito_show '/quesito/:id', :controller => 'editorial', :action => 'quesito_show'

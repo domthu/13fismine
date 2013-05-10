@@ -311,31 +311,52 @@ class EditorialController < ApplicationController
   end
 
   def send_proposal_meeting
-      @user = User.current
-      @msg = params[:message]
-      @stat =''
-      raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
-      # Force ActionMailer to raise delivery errors so we can catch it
-      ActionMailer::Base.raise_delivery_errors = true
-      @stat = 'Invio newsletter. '
-      begin
-        @test =  Mailer.deliver_proposal_meeting(@user, @msg)
-        #notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
-        #flash[:notice] = l(:notice_user_newsletter_email_sent)
-        @stat += " Resultato: <br /><strong>" + @test + '</strong>'
-      rescue Exception => e
-        @msg += l(:notice_email_error, e.message)
-      end
-      ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
+    @user = User.current.logged? ? User.current : User.anonymous
+    @msg = params[:body] if params[:body].present?
+    @email = params[:user_mail] if params[:user_mail].present?
+    if (!@email.nil? && @email.length > 0)
+      @user.mail = @email
+    else
+      @email = ''
+    end
 
-      respond_to do |format|
-          format.js {
-            render(:update) {|page|
-             page.replace_html "user-response", @stat
-              page.alert(@stat)
-            }
-          }
-      end
+    @stat =''
+    @errors = ''
+    raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
+    # Force ActionMailer to raise delivery errors so we can catch it
+    ActionMailer::Base.raise_delivery_errors = true
+    @stat = 'Invio email non riuscito '
+    begin
+      #Mailer.deliver_test(User.current)
+      @tmail = Mailer.deliver_proposal_meeting(@email, @user, @msg)
+      #notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
+      #flash[:notice] = l(:notice_user_newsletter_email_sent)
+      @stat = "Email inviato coretttamente: <br /><strong>" + @tmail.to_s + '</strong>'
+    rescue Exception => e
+      @errors += l(:notice_email_error, e.message)
+    end
+    ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
+
+    #prototype
+    #respond_to do |format|
+    #    format.js {
+    #      render(:update) {|page|
+    #       page.replace_html "user-response", @stat
+    #        page.alert(@stat)
+    #      }
+    #    }
+    #end
+    #Jquery
+
+    if (!@errors.nil? and @errors.length > 0)
+      return render :json => {
+        :success => false,
+        :response => @stat,
+        :errors => @errors
+      }
+    end
+
+    render :json => { :success => true, :response => @stat}
   end
 
 

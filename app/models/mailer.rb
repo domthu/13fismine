@@ -19,7 +19,7 @@ require 'ar_condition'
 
 class Mailer < ActionMailer::Base
   layout 'mailer'
-  layout nil, :only =>  [:newsletter]
+  layout nil, :only =>  [:newsletter, :proposal_meeting]
   helper :application
   helper :issues
   helper :custom_fields
@@ -300,11 +300,16 @@ class Mailer < ActionMailer::Base
     render_multipart('test', body)
   end
 
-  def proposal_meeting (user, body_as_string)
+  def proposal_meeting (email, user, body_as_string)
     recipients 'sandro@ks3000495.kimsufi.com'  #'segreteria@fiscosport.it'
     subject 'Fiscosport > Proposta di convegno o di evento'
-    part :content_type => "text/html",
-         :body => 'div style="font-wheight:bold;"> User id:[' + user.id + '] Nome: ' + user +  '</div><br /> <hr> <p>'  + body_as_string + '</p>'
+    if user.nil?
+      part :content_type => "text/html",
+           :body => '<div style="font-wheight:bold;"> Anonymous email:[' + email + '] </div><br /> <hr> <p>'  + body_as_string + '</p>'
+    else
+      part :content_type => "text/html",
+           :body => '<div style="font-wheight:bold;"> User id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /> <hr> <p>'  + body_as_string + '</p>'
+    end
   end
 
   def newsletter(user, body_as_string, project)

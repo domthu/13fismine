@@ -1,38 +1,45 @@
-<div class=" ">
-  <div class="">
-    <div class="fs-bar fs-blockheader">
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#accordion-events-contact").accordion({heightStyle:"content", autoHeight:false, active:1 });
+  });
 
-    </div>
-    <script>
-        $(document).ready(function () {
-            $("#accordion-events-contact").accordion({heightStyle:"content", autoHeight:false, active:1 });
-        });
-    </script>
-    <div >
-      <div >
+  var urlpropose = '<%= propose_evt_path %>';
+  function sendmail(){
+    $.post(urlpropose, { user_mail: $("#evtmail").val(), body: $("#message").val() },
+      function (data) {
+        data = data || {};
+        if (data.success) {
+            //OnSuccess
+            if (data.response) {
+                $("#user-response").html(data.response);
+            }
+        } else if (data.errors) {
+            $("#flash_error").html(data.errors);
+            $("#user-response").html(data.errors);
+            //showerrmsg(data.errors);
+        }
+      }
+    );
+  }
+</script>
 
-        <div id="accordion-events-contact">
-          <div id="fs-events-contact"></div>
-          <% remote_form_for(
-                     :user,
-                     :url => {:controller => 'editorial', :action => 'send_proposal_meeting'},
-                        :html => {
-                               :id=> 'user_send_mail',
-                             :method => :put,
-                             :multipart => true}
-             ) do  %>
-
-                    <%= text_area_tag 'message',"scrivi un messaggio qui ..." , :cols => 32, :rows => 10 %>
-              <br />
-
-                <p style="margin-top: 3px; margin-right: 30px; height: 30px;" >  <%= submit_tag "invia", :class => "fs-vuoto-inline-button" %></p>
-            <% end %>
-          <div id='user-response'></div>
-        </div>
-
-        <div class="cleared"></div>
-      </div>
-    </div>
-    <div class="cleared"></div>
-  </div>
+<div class="fs-bar fs-blockheader">
 </div>
+
+<div id="accordion-events-contact">
+  <div id="fs-events-contact"></div>
+  <span>
+  <p>
+  <% if User.current && User.current.logged? %>
+     <%= User.current.mail %>
+  <% else %>
+    <%= text_field_tag 'evtmail', "" , :placeholder => "La tua mail...", :size => 100 %>
+  <% end %>
+  </p>
+  <%= text_area_tag 'message',"scrivi un messaggio qui ..." , :cols => 32, :rows => 10 %>
+  <br />
+  <p style="margin-top: 3px; margin-right: 30px; height: 30px;" >  <%= submit_tag "invia", :class => "fs-vuoto-inline-button", :onclick => "sendmail();" %></p>
+   <div id='user-response'></div>
+  </span>
+</div>
+<div class="cleared"></div>

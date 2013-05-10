@@ -313,7 +313,7 @@ class UsersController < ApplicationController
         #notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
         #flash[:notice] = l(:notice_user_newsletter_email_sent)
         @msg += l(:notice_user_newsletter_email_sent, :edizione => @project.name, :date => @project.data_al,  :user => user.to_s)
-        @msg += " Resultato => " + @test
+        @msg += " Risultato => " + @test
       rescue Exception => e
         #@test =  Mailer.test(@user) private method `test' called for Mailer:Class
         #@test =  Mailer.deliver_newsletter(@user, @htmlpartial, @project) uninitialized constant Mailer::Settings
