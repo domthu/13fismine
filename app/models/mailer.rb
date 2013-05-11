@@ -305,6 +305,15 @@ class Mailer < ActionMailer::Base
     #recipients Setting.fee_email
     recipients 'sandro@ks3000495.kimsufi.com'
     subject 'Fiscosport > Proposta di convegno o di evento'
+    if user.anonymous?
+      part :content_type => "text/html",
+           :body => '<div style="font-weight:bold;"> Anonymous email:[' + email + '] </div><br /> <hr> <p>'  + body_as_string + '</p>'
+    else
+      part :content_type => "text/html",
+           :body => '<div style="font-weight:bold;"> User id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /> <hr> <p>'  + body_as_string + '</p>'
+    end
+
+=begin
     if user.nil?
       part :content_type => "text/html",
            :body => '<div style="font-wheight:bold;"> Anonymous email:[' + email + '] </div><br /> <hr> <p>'  + body_as_string + '</p>'
@@ -312,6 +321,7 @@ class Mailer < ActionMailer::Base
       part :content_type => "text/html",
            :body => '<div style="font-wheight:bold;"> User id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /> <hr> <p>'  + body_as_string + '</p>'
     end
+=end
   end
 
   def newsletter(user, body_as_string, project)

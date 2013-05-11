@@ -311,27 +311,26 @@ class EditorialController < ApplicationController
   end
 
   def send_proposal_meeting
-    @user = User.current.logged? ? User.current : User.anonymous
+    @user = (User.current && User.current.logged?) ? User.current : User.anonymous
     @msg = params[:body] if params[:body].present?
-    @email = params[:user_mail] if params[:user_mail].present?
-    if (!@email.nil? && @email.length > 0)
-      @user.mail = @email
+    #@email = params[:user_mail] if params[:user_mail].present?
+    if params[:user_mail].nil? || params[:user_mail].length < 5
+      @email = params[:user_mail]
     else
-      @email = ''
+      @email = '[no-email]'
     end
-
     @stat =''
     @errors = ''
     raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
     # Force ActionMailer to raise delivery errors so we can catch it
     ActionMailer::Base.raise_delivery_errors = true
-    @stat = 'Invio email non riuscito '
+    @stat = 'Invio email non riuscito <br />'
     begin
       #Mailer.deliver_test(User.current)
       @tmail = Mailer.deliver_proposal_meeting(@email, @user, @msg)
       #notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
       #flash[:notice] = l(:notice_user_newsletter_email_sent)
-      @stat = "Email inviato coretttamente: <br /><strong>" + @tmail.to_s + '</strong>'
+      @stat = 'Email inviato corettamente <br />'
     rescue Exception => e
       @errors += l(:notice_email_error, e.message)
     end

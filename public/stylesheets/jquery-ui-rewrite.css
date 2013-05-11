@@ -4,8 +4,8 @@
 margin: 0;
 padding: 0;
 }
-#accordion-events-contact .ui-helper-reset  {
-
+#accordion-events-contact .ui-accordion-content {
+ padding:0;
 }
 
 #accordion-events-contact .ui-state-default   {
