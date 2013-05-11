@@ -215,6 +215,8 @@ emails_header:
   default: '==========  Fiscosport notifica =========='
 fee:
   default: 1
+fee_email:
+  default: "segreteria@fiscosport.it"
 register_days:
   default: 30
 renew_days:
@@ -283,12 +285,9 @@ template_iscription:
 
 static_page_cosaoffriamo:
   default: "Pagina cosa offriamo"
-  
+
 static_page_lavoraconnoi:
   default: "Pagina lavora con noi"
 
 static_page_progettofs:
   default: "Pagina progetto fiscosport"
-  
-
-

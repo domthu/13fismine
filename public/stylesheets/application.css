@@ -1161,3 +1161,18 @@ textarea#issue_subject{
     background-color: #ffffff;
     float: left;
 }
+#toTop {
+    background: url('../images/toTop.png') no-repeat scroll 0 0 transparent;
+    bottom: 10px;
+    color: #333333;
+    cursor: pointer;
+    /*display: none;  ok con Jquery ma non con Prototype*/
+    font-family: verdana;
+    font-size: 11px;
+    height: 40px;
+    padding: 5px;
+    position: fixed;
+    right: 10px;
+    text-align: center;
+    width: 40px;
+}

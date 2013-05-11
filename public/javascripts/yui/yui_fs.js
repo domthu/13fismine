@@ -4,7 +4,9 @@ var Dom = YAHOO.util.Dom,
 //})();
 
 function init_yui_editor_fs(id_textarea, _myconfig) {
-
+//  Event.observe(window, 'load', load_yui_editor_fs(id_textarea, _myconfig));
+//}
+//function load_yui_editor_fs(id_textarea, _myconfig) {
     var myEditor = new YAHOO.widget.Editor(id_textarea, _myconfig);
     myEditor.on('toolbarLoaded', function() {
         var codeConfig = {

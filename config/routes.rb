@@ -77,6 +77,7 @@ ActionController::Routing::Routes.draw do |map|
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
   map.abbonamenti 'account/register', :controller => 'account', :action => 'register'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
+  map.prova_gratis 'prova_gratis', :controller => 'account', :action => 'prova', :conditions => {:method => [:post]}
 =begin
   map.with_options :controller => 'editorial' , :conditions => {:method => :get} do |user_profiles_views|
       user_profiles_views.connect '/chi-siamo', :action => 'profili_all'

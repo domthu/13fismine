@@ -394,9 +394,9 @@ var WarnLeavingUnsaved = Class.create({
     }
 });
 
-/* 
+/*
  * 1 - registers a callback which copies the csrf token into the
- * X-CSRF-Token header with each ajax request.  Necessary to 
+ * X-CSRF-Token header with each ajax request.  Necessary to
  * work with rails applications which have fixed
  * CVE-2011-0447
  * 2 - shows and hides ajax indicator
@@ -426,11 +426,6 @@ Ajax.Responders.register({
     }
 });
 
-function hideOnLoad() {
-    $$('.hol').each(function (el) {
-        el.hide();
-    });
-}
 /*funzione aggiunta per il preview di paperclip */
 
 function handleFileSelect(evt) {
@@ -457,4 +452,30 @@ function handleFileSelect(evt) {
         reader.readAsDataURL(f);
         }
 }
-    Event.observe(window, 'load', hideOnLoad);
+
+var statepos_fs = 'hidded';
+function scrolling_fs() {
+  var actualpos_fs = document.documentElement.scrollTop;
+  if ((actualpos_fs > 10 ) && (statepos_fs == 'hidded')) {
+    statepos_fs = 'showed';
+    //Element.show('toTop');
+    $('toTop').show('toTop');
+  }
+  if ((actualpos_fs < 10 ) && (statepos_fs == 'showed')) {
+    statepos_fs = 'hidded';
+    //Element.hide('toTop');
+    $('toTop').hide();
+  }
+}
+
+
+function hideOnLoad() {
+    $$('.hol').each(function (el) {
+        el.hide();
+    });
+    //Scroll to top
+    Event.observe(window, 'scroll', scrolling_fs);
+}
+
+    //Event.observe(window, 'load', hideOnLoad);
+    document.observe("dom:loaded", hideOnLoad);

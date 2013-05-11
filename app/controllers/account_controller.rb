@@ -86,6 +86,7 @@ class AccountController < ApplicationController
 
   # User self-registration
   def register
+    puts "********************REGISTER********************"
     #domthu redirect_to(home_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     if request.get?
@@ -194,12 +195,124 @@ class AccountController < ApplicationController
     end
   end
 
+  #via js
   def prova
   #FeeConst::ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
-    @user = User.new(params[:user])
+    @user = User.new(:language => Setting.default_language)
     @user.admin = false
+    @user.mail = params[:mail] if params[:mail].present?
+    @user.firstname = params[:firstname] if params[:firstname].present?
+    @user.lastname = params[:lastname] if params[:lastname].present?
+    @user.login = @user.mail
+    @user.random_password
+    @user.se_condition = true
+    @user.se_privacy = true
     #default role_id
     @user.role_id = FeeConst::ROLE_REGISTERED
+    @user.datascadenza = Date.today + Setting.register_days.to_i
+    #@user.mail_notification = 'selected'
+    #@user.mail_notification = 'only_my_events'
+    @user.annotazioni = "Prova gratis per " + @user.name + ", con email " + @user.mail + ", fatta il " + Date.today.to_s + ", per " + Setting.register_days.to_s + " giorni. Scadenza: " + @user.scadenza.to_s
+
+    @stat =''
+    @errors = ''
+    raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
+    # Force ActionMailer to raise delivery errors so we can catch it
+    ActionMailer::Base.raise_delivery_errors = true
+    @stat = 'Invio email non riuscito '
+    begin
+      @user.register
+      if @user.save
+        @stat = " Utente registrato"
+        self.logged_user = @user
+        # Sends an email to the administrators
+        Mailer.deliver_account_activation_request(@user)
+      else
+        @stat += "Tipo registrazione(" + Setting.self_registration + "). "
+        case Setting.self_registration
+        when '1'
+          @stat += " Utente registrato, in attesa della conferma email"
+          #register_by_email_activation(@user)
+          token = Token.new(:user => @user, :action => "register")
+          if @user.save and token.save
+            Mailer.deliver_register(token)
+            @stat += l(:notice_account_register_done)
+          else
+            @stat += " Conferma email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span>"
+          end
+
+        when '3' # Automatic activation
+          @stat += " Utente registrato automaticamente"
+          #register_automatically(@user)
+          @user.activate
+          @user.last_login_on = Time.now
+          if @user.save
+            self.logged_user = @user
+            @stat += l(:notice_account_activated)
+          else
+            @stat += " Creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente</span>"
+          end
+
+        else
+          @stat += " Utente NON registrato: richiede registrazione manuale da parte dell'amministratore"
+          #register_manually_by_administrator(@user)
+          if @user.save
+            # Sends an email to the administrators
+            Mailer.deliver_account_activation_request(user)
+            account_pending
+          else
+            @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
+          end
+
+        end
+      end
+      #htmlpartial = render_to_string(
+      #  :layout => false,
+      #  :partial => 'user/show',
+      #  :locals => { :user => @user }
+      #)
+      #htmlpartial = 'pippo'
+      #htmlpartial = getuserhtml(@user)
+      htmlpartial = ''
+      @tmail = Mailer.deliver_prova_gratis(@user, @stat + "<br />" + htmlpartial)
+      @stat += "Email inviato correttamente: <br /><strong>Verifichi la tua cassela postale e confermi la tua email</strong>"
+    rescue Exception => e
+      @errors += l(:notice_email_error, e.message)
+    end
+    ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
+
+    #prototype
+    #respond_to do |format|
+    #    format.js {
+    #      render(:update) {|page|
+    #       page.replace_html "user-response", @stat
+    #        page.alert(@stat)
+    #      }
+    #    }
+    #end
+    #Jquery
+    if (!@errors.nil? and @errors.length > 0)
+      return render :json => {
+        :success => false,
+        :response => @stat,
+        :errors => @errors
+      }
+    else
+      render :json => {
+        :success => true,
+        :response => @stat,
+        :errors => "errore: " + @errors}
+    end
+  end
+
+  def getuserhtml(user)
+      render_to_string(
+        :layout => false,
+        :controller => 'user',
+        :action => 'show',
+        :locals => { :user => user }
+      )
+      #  :partial => 'user/show',
   end
 
   # Token based account activation

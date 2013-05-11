@@ -1433,6 +1433,8 @@ en:
   label_register_days: "Numero di giorni di abilitazione per un utente che si è appena registrato ed ha dichiarato di far parte di un Organismo Associato. passato questi finestra di tempo l'utente verà disabilitato dal motore se non è stato confermato dal power-user, se non è stato abilitato dall'amministratore p se non ha contrattao abbonamenti durante il periodo di prova."
   setting_renew_days: Giorni prima del rilancio
   label_renew_days: "Numero di giorni prima dello scadere dell'abbonamento. Passato questo momento il motore inviera un email all'abbonato per invitarlo a rinnovare il suo abbonamento in scadenza."
+  setting_fee_email: Email(s) di ricezione
+  label_fee_email: "Lista delle email da mettere in To, ricevente per essere informato appena un utente si registra (attraverso la procedura Prova Gratis) o quando un utente richiede un convegno nella sua città."
   setting_fee_bcc_recipients: Emails in ascolto
   label_fee_bcc_recipients: Lista delle email da mettere in bcc per le persone in ascolto degli email inviati (ruolo amministratore ed segretaria). Serve principalmente per seguire quello che invia il motore in automatico.
   setting_emails_fee_proposal: Email di proposta abbonamenti

@@ -301,7 +301,9 @@ class Mailer < ActionMailer::Base
   end
 
   def proposal_meeting (email, user, body_as_string)
-    recipients 'sandro@ks3000495.kimsufi.com'  #'segreteria@fiscosport.it'
+    #recipients Setting.fee_bcc_recipients
+    #recipients Setting.fee_email
+    recipients 'sandro@ks3000495.kimsufi.com'
     subject 'Fiscosport > Proposta di convegno o di evento'
     if user.nil?
       part :content_type => "text/html",
@@ -361,10 +363,27 @@ class Mailer < ActionMailer::Base
     #'renew'
   end
 
+  def prova_gratis (user, body_as_string)
+    #recipients Setting.fee_bcc_recipients
+    #recipients Setting.fee_email
+    recipients 'dom_thual@yahoo.fr'
+    subject 'Fiscosport > Prova Gratis ' + user.name.html_safe + '' + user.mail.html_safe
+    part :content_type => "text/html",
+         :body => '<div style="font-wheight:bold;padding: 50px; color: blue; background-color:#eee;"> SI è appena registrato un utente id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /><hr><br /><p><h1>Login: '  + user.login + '</h1></p><br /><hr><br /><p><h1>Mail: '  + user.mail + '</h1></p><br /><hr><br /><p><h1>Scadenza: '  + user.scadenza.to_s + ' (' + user.scadenza_fra + ')</h1></p><div>' + body_as_string + '</div>'
+  end
+
   # Overrides default deliver! method to prevent from sending an email
   # with no recipient, cc or bcc
   def deliver!(mail = @mail)
     set_language_if_valid @initial_language
+    if Setting.fee?
+      if (recipients.nil? || recipients.empty?)
+        recipients Setting.fee_bcc_recipients
+      end
+      if (recipients.nil? || recipients.empty?)
+        recipients Setting.fee_email
+      end
+    end
     return false if (recipients.nil? || recipients.empty?) &&
                     (cc.nil? || cc.empty?) &&
                     (bcc.nil? || bcc.empty?)

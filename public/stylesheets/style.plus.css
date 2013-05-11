@@ -3538,3 +3538,33 @@ span.flash.warning, div.flash.warning {
     text-align: center;
     width: 40px;
 }
+
+/***** Ajax indicator ******/
+#ajax-indicator {
+position: absolute; /* fixed not supported by IE */
+background-color:#eee;
+background-image: url(../images/loadingCt.gif); /*loader-ajax*/
+background-repeat: no-repeat;
+height: 150px;
+background-position: center center;
+border: 1px solid #bbb;
+top:35%;
+left:40%;
+width:20%;
+font-weight:bold;
+text-align:center;
+padding:0.6em;
+z-index:100;
+opacity: 0.5;
+}
+
+html>body #ajax-indicator { position: fixed; }
+
+#ajax-indicator span {
+background-position: 0% 40%;
+background-repeat: no-repeat;
+background-image: url(../images/loading.gif); /*loader-ajax*/
+padding-left: 26px;
+vertical-align: bottom;
+
+}

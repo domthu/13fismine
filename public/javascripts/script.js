@@ -1130,3 +1130,15 @@ jQuery(function ($) {
     header.css('background-image', "url('images/header.jpg')".replace(/(url\(['"]?)/i, "$1" + path));
     header.css('background-position', "center top");
 });
+
+$(document).ready(function() {
+  $('#ajax-indicator')
+      .hide()  // hide it initially
+      .ajaxStart(function() {
+          $(this).show();
+      })
+      .ajaxStop(function() {
+          $(this).hide();
+      })
+  ;
+});

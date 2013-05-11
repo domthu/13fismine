@@ -358,7 +358,7 @@ class User < Principal
       if (today < renew_deadline)
         #ABBONATO
         #str << ensure_role(_usr, FeeConst::ROLE_ABBONATO, "ABBONATO", old_state)
-        "valido fino al" << getdate(scadeil)
+        "valido fino al " << getdate(scadeil)
       elsif (today < self.scadenza)
         #IN_SCADENZA
         #str << ensure_role(_usr, FeeConst::ROLE_RENEW, "ABBONATO in scadenza", old_state)
