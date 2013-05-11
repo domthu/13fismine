@@ -1,5 +1,17 @@
 <p class="fs-tramenu-blockheader x-granata">Sponsor</p>
 <div class="fs-blockcontent fs-tramenu1-logged">
-        <h1>posto per </h1>
-    <h1>banner</h1>
+  <% if  banners_tramenu.count > 0 %>
+      <ul id="carousel_tramenu_js">
+        <% banners_tramenu.each do |i| %>
+            <% if  i.url.nil? %>
+                <li>    <%= image_tag i.image.url(:tramenu) %> </li>
+            <% else %>
+                <li>  <%= link_to(image_tag(i.image.url(:tramenu)), i.url) %> </li>
+            <% end %>
+        <% end %>
+      </ul>
+      <div class="clearfix"></div>
+  <% else %>
+      <h3>nessun banner in questa zona </h3>
+  <% end %>
 </div>

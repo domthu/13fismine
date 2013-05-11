@@ -585,7 +585,7 @@ class ApplicationController < ActionController::Base
   def pick_layout(*args)
     api_request? ? nil : super
   end
-end
+
 
 def fading_flash_message(text, seconds=3)
  	text +
@@ -598,4 +598,5 @@ def fading_flash_message(text, seconds=3)
        	});
      	</script>
    	EOJS
+end
 end

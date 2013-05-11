@@ -2,7 +2,7 @@ class CrossOrganization < ActiveRecord::Base
   has_attached_file :image, :styles => {:l => ["200x200#", :png, :jpg],
                                         :m => ["80x80#", :png, :jpg],
                                         :s => ["48x48#", :png, :jpg],
-                                        :sx =>["32x32#", :png, :jpg]},
+                                        :xs =>["32x32#", :png, :jpg]},
                     :url  =>  "commons/organizations/:id:style.:extension" ,
                     :path =>  "#{RAILS_ROOT}/public/images/commons/organizations/:id:style.:extension" ,
                     :default_style => :l,
@@ -24,7 +24,8 @@ class CrossOrganization < ActiveRecord::Base
   #validation on uniqueness on two attributes
   validates_uniqueness_of :sigla, :scope => :type_organization_id
   #rails 3 validates :zipcode, :uniqueness => {:scope => :recorded_at}
-
+  named_scope :cross_organizations_all_logos,
+                :conditions => "#{CrossOrganization.table_name}.se_visibile = #{true} AND #{CrossOrganization.table_name}.image_file_name IS NOT NULL"
   ###NON USARE PIU organizzazione
   def to_s
     if (type_organization.nil?)
@@ -50,6 +51,4 @@ class CrossOrganization < ActiveRecord::Base
     #)
     Organization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", {:co_id => self.id, :asso_id => asso_id}])
   end
-
-
 end

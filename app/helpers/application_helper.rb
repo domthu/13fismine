@@ -1225,3 +1225,4 @@ def smart_truncate(text, char_limit)
     size>char_limit
   end.join(" ") +(text.size()>char_limit ? " "+ "..." : "" )
 end
+
