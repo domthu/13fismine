@@ -133,7 +133,7 @@ module FeesHelper
       #FeeConst::ROLE_ABBONATO  --> FeeConst::ROLE_RENEW
       #FeeConst::ROLE_ABBONATO  --> FeeConst::ROLE_EXPIRED
       #FeeConst::ROLE_ABBONATO  --> FeeConst::ROLE_VIP
-      when 6
+      when 6, 7
         str += link_to( l(:button_renew), url.merge(:user => {:role_id => FeeConst::ROLE_RENEW}), :method => :put, :class => 'icon icon-renew') + link_to( l(:button_expired), url.merge(:user => {:role_id => FeeConst::ROLE_EXPIRED}), :method => :put, :class => 'icon icon-exp') + link_to( l(:button_vip), url.merge(:user => {:role_id => FeeConst::ROLE_VIP}), :method => :put, :class => 'icon icon-vip')
 
       #FeeConst::ROLE_REGISTERED  --> FeeConst::ROLE_ABBONATO
