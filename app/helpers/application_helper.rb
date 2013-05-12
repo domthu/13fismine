@@ -1189,7 +1189,19 @@ module ApplicationHelper
   def to_path_param(path)
     path.to_s.split(%r{[/\\]}).select {|p| !p.blank?}
   end
-
+  # ------ BANNERS ------
+  def cross_org_logos
+    CrossOrganization.cross_organizations_all_logos
+  end
+  def banners_block_l
+    GroupBanner.banners_block_l
+  end
+  def banners_block_s
+    GroupBanner.banners_block_s
+  end
+  def banners_tramenu
+    GroupBanner.banners_tramenu
+  end
 #######################
   private
 

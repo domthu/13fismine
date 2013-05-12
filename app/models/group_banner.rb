@@ -1,15 +1,16 @@
 class GroupBanner < ActiveRecord::Base
-  has_attached_file :image, :styles => {:block_l => "256x216#", :block_s => "194x154#", :tramenu => "290x94#"},
+  # note for paperclip http://matthewhutchinson.net/2010/10/25/editing-file-uploads-with-a-paperclip-processor
+  has_attached_file :image, :styles => {:block_l => "256x215#", :block_s => "194x154#", :tramenu => "290x94#"},
                     :url => "commons/banners/:id:style.:extension",
                     :path => "#{RAILS_ROOT}/public/images/commons/banners/:id:style.:extension",
                     :default_url => "commons/:style_no-image.png"
   validates_attachment_size :image, :less_than => 200.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
-  #domthu20120516
+   #domthu20120516
   #http://guides.rubyonrails.org/v2.3.8/association_basics.html#choosing-between-belongs-to-and-has-one
   #2.8 Choosing Between has_many :through and has_and_belongs_to_many
   has_many :cross_groups, :dependent => :nullify
-  has_many :assos, :through => :cross_groups, :dependent => :delete_all
+  has_many :assos, :through => :cross_groups, :dependent => :nullify
 
   #string
   validates_presence_of :espositore

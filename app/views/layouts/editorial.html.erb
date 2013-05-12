@@ -48,7 +48,7 @@
   <%= stylesheet_link_tag 'jquery-ui-rewrite.css', :media => 'all' %>
   <%= javascript_include_tag "script.js" %>
   <%= javascript_include_tag "script.responsive.js" %>
-  <%= javascript_include_tag "jquery.carouFredSel-6.1.0.js" %>
+  <%= javascript_include_tag "jquery.carouFredSel-6.2.1-packed.js" %>
   <script type="text/javascript">
       //$(function () {
       $(document).ready(function() {
@@ -89,6 +89,22 @@
           		width		: 290,
           		height		: 94
           	}
+          });
+          $("#carousel_block_l_js").carouFredSel({
+          	height: 215,
+          	items: {
+          		visible: 1,
+          		start: "random",
+          		width: 256,
+          		height: 215
+          	},
+          	auto: {
+          		timeoutDuration: 3000,
+          		fx: "fade",
+          		duration: 2000
+          	},
+              pagination: "#block_l_js_pag",
+              keys: false
           });
           //$("#assos_carousel").removeClass("hide");
           // $("input[type=submit]").button();

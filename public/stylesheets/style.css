@@ -2365,7 +2365,7 @@ img.fs-lightbox-image.active
 
 .fs-content-layout .fs-sidebar1
 {
-   border-right:1px dotted #68D7FF;
+  /* border-right:1px dotted #68D7FF;    */
    margin:0 auto;
    width: 260px;
 }

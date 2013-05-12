@@ -4,6 +4,7 @@
   <p><%= f.text_field :espositore, :label => :field_espositore, :required => true %></p>
 
   <p><%= f.text_field :url, :label => :field_url, :required => true, :size => 80 %></p>
+
   <p><%= f.check_box :se_visibile, :label => :field_se_visibile %></p>
 
   <p><%= f.text_field :priorita, :label => :field_priorita, :size => 3 %></p>
@@ -17,7 +18,9 @@
   <p><%= f.text_field :clicks, :label => :field_clicks, :size => 3 %></p>
 
   <p><%= f.text_field :impressions_history, :label => :field_impressions_history, :size => 3 %></p>
+
   <p><%= f.check_box :se_prima_pagina, :label => :field_se_prima_pagina %></p>
+
   <p><%# f.text_area :didascalia, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
 
   <p><%# f.text_area :didascalia, :required => false, :cols => 60, :rows => 15, :class => 'rich_text_editor' %></p>
@@ -27,40 +30,40 @@
   </div>
   <hr/>
   <p>nuova versione banners e immagine</p>
-  <p> <%= f.select(:posizione, ['block_l','block_s','tramenu'], {}, { :class => '',:label=> :field_posizione}) %></p>
+
+  <p> <%= f.select(:posizione, ['block_l', 'block_s', 'tramenu'], {}, {:class => '', :label => :field_posizione}) %></p>
+
   <p><%= f.file_field :image, :label => :field_immagine %> </p>
-      <%  @sim = @group_banner.posizione.to_sym  %>
-  <%= @sim  %>
-    <p id="prev" style="max-height: 300px;"> <%= image_tag @group_banner.image.url(@sim) %>   </p>
-    <p>
-    <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
-      <li>
-        Immagini stili e misure:
+  <p id="prev" style="max-height: 300px;"> <%= image_tag @group_banner.image.url(:original) %>   </p>
+  <p>
+  <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
+    <li>
+      Immagini stili e misure:
 
-      </li>
-      <li>
-        blocco grande a sinistra: :block_l => "256x216#"
-      </li>
-      <li>
-        blocco piccolo come dentro un articolo: :block_s => "194x154#"
-      </li>
-      <li>
-        blocco tra i menu a destra :tramenu => "290x94#"
-      </li>
-      <li>
-        l'immagine verrà non deve superare i 200kb  e di formato jpg/png/gif/bmp
-      </li>
-    </ul>
+    </li>
+    <li>
+      blocco grande a sinistra: :block_l => "256x216#"
+    </li>
+    <li>
+      blocco piccolo come dentro un articolo: :block_s => "194x154#"
+    </li>
+    <li>
+      blocco tra i menu a destra :tramenu => "290x94#"
+    </li>
+    <li>
+      l'immagine verrà non deve superare i 200kb e di formato jpg/png/gif/bmp
+    </li>
+  </ul>
 
-  </div>
-  <script type="text/javascript">
-      document.getElementById('group_banner_image').addEventListener('change', handleFileSelect, false);
-  </script>
+</div>
+<script type="text/javascript">
+    document.getElementById('group_banner_image').addEventListener('change', handleFileSelect, false);
+</script>
 
 
 <% content_for :header_yui do %>
     <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
-    <%=	javascript_include_tag "yui/yahoo-dom-event.js" %>
+    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
     <%= javascript_include_tag "yui/element-min.js" %>
     <%= javascript_include_tag "yui/container_core-min.js" %>
     <%= javascript_include_tag "yui/menu-min.js" %>

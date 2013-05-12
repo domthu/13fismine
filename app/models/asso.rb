@@ -1,4 +1,14 @@
 class Asso < ActiveRecord::Base
+  has_attached_file :image, :styles => {:l => ["200x200#", :png, :jpg],
+                                        :m => ["80x80#", :png, :jpg],
+                                        :s => ["48x48#", :png, :jpg],
+                                        :xs =>["32x32#", :png, :jpg]},
+                    :url  =>  "commons/assos/:id:style.:extension" ,
+                    :path =>  "#{RAILS_ROOT}/public/images/commons/assos/:id:style.:extension" ,
+                    :default_style => :l,
+                    :default_url => "commons/:style_no-image.png"
+  validates_attachment_size :image, :less_than => 200.kilobytes
+  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 
   include FeesHelper  #ROLE_XXX  gedate
 

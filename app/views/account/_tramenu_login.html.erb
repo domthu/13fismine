@@ -11,7 +11,7 @@
       </div>
       <% if User.current.canbackend? %>
         <div class="fs-login" id="fs-login-txt">
-            <%= link_to "Accesso FISMINE", url_for(:controller => 'activities', :action => 'index' , :id => nil), :class => 'fs-vuoto-inline3-button' %>
+            <%= link_to "Accesso FISMINE", url_for(:controller => 'activities', :action => 'index' , :id => nil), :target =>'_blank',  :class => 'fs-vuoto-inline3-button' %>
                 <br/>
             <% @uid = User.current.user_profile %>
             <% if !@uid.nil? %>
