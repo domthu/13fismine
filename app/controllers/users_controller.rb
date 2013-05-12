@@ -209,7 +209,7 @@ class UsersController < ApplicationController
       else
         format.js {
           render(:update) {|page|
-            page.alert(l(:notice_failed_to_save_members, :errors => @membership.errors.full_messages.join(', ')))
+             page.alert(l(:notice_failed_to_save_members, :errors => @membership.errors.full_messages.join(', ')))
           }
         }
       end
