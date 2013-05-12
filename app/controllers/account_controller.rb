@@ -198,13 +198,13 @@ class AccountController < ApplicationController
   #via js
   def prova
   #FeeConst::ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
-    @user = User.new(:language => Setting.default_language)
+    @user = User.new(:language => Setting.default_language, :mail_notification => Setting.default_notification_option)
     @user.admin = false
     @user.mail = params[:mail] if params[:mail].present?
     @user.firstname = params[:firstname] if params[:firstname].present?
     @user.lastname = params[:lastname] if params[:lastname].present?
     @user.login = @user.mail
-    @user.random_password
+    @user.random_password  #    self.password = password & self.password_confirmation = password
     @user.se_condition = true
     @user.se_privacy = true
     #default role_id
@@ -216,18 +216,40 @@ class AccountController < ApplicationController
 
     @stat =''
     @errors = ''
+    if !@user.valid?
+      if !@user.errors.empty?
+        #@errors += @user.errors.join(', ') undefined method join
+        @errors += "<br />Errore completa: " + @user.errors.full_messages.join('<br />')
+      end
+      puts "********************Prova user not valid (" + @errors + ")********************"
+      #format.html { return redirect_to :controller => 'editorial', :action => 'prova', :user => @user }
+      #format.js {
+      return render :json => {
+          :success => false,
+          :response => @stat,
+          :errors => @errors
+        }
+      #}
+    end
+
     raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
     # Force ActionMailer to raise delivery errors so we can catch it
     ActionMailer::Base.raise_delivery_errors = true
     @stat = 'Invio email non riuscito '
     begin
-      @user.register
       if @user.save
+        puts "++++++++++++++++++Prova saved (" + @errors + ")++++++++++++++++"
+        @user.register #update_attribute
         @stat = " Utente registrato"
         self.logged_user = @user
         # Sends an email to the administrators
         Mailer.deliver_account_activation_request(@user)
       else
+        if !@user.errors.empty?
+          #@errors += @user.errors.join(', ') undefined method join
+          @errors += "<br />errore completa: " + @user.errors.full_messages.join('<br />')
+        end
+        puts "********************Prova user not saved! (" + @errors + ")********************"
         @stat += "Tipo registrazione(" + Setting.self_registration + "). "
         case Setting.self_registration
         when '1'
@@ -235,9 +257,11 @@ class AccountController < ApplicationController
           #register_by_email_activation(@user)
           token = Token.new(:user => @user, :action => "register")
           if @user.save and token.save
+            @user.register #verificare se farlo? update_attribute
             Mailer.deliver_register(token)
             @stat += l(:notice_account_register_done)
           else
+            puts "********************Prova self_registration 1 KAPPAO (" + @errors + ")********************"
             @stat += " Conferma email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span>"
           end
 
@@ -247,9 +271,11 @@ class AccountController < ApplicationController
           @user.activate
           @user.last_login_on = Time.now
           if @user.save
+            @user.register #verificare se farlo? update_attribute
             self.logged_user = @user
             @stat += l(:notice_account_activated)
           else
+            puts "********************Prova self_registration 3 KAPPAO (" + @errors + ")********************"
             @stat += " Creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente</span>"
           end
 
@@ -257,10 +283,12 @@ class AccountController < ApplicationController
           @stat += " Utente NON registrato: richiede registrazione manuale da parte dell'amministratore"
           #register_manually_by_administrator(@user)
           if @user.save
+            @user.register #verificare se farlo? update_attribute
             # Sends an email to the administrators
             Mailer.deliver_account_activation_request(user)
             account_pending
           else
+            puts "********************Prova self_registration other KAPPAO (" + @errors + ")********************"
             @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
           end
 
@@ -277,7 +305,7 @@ class AccountController < ApplicationController
       @tmail = Mailer.deliver_prova_gratis(@user, @stat + "<br />" + htmlpartial)
       @stat += "Email inviato correttamente: <br /><strong>Verifichi la tua cassela postale e confermi la tua email</strong>"
     rescue Exception => e
-      @errors += l(:notice_email_error, e.message)
+      @errors += "<span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
     end
     ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
 
@@ -305,6 +333,7 @@ class AccountController < ApplicationController
     end
   end
 
+  #unused double render in prova
   def getuserhtml(user)
       render_to_string(
         :layout => false,

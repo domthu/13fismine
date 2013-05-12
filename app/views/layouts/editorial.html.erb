@@ -174,10 +174,13 @@
       <%= render_navigation(:level => 2..3, :expand_all => true) %>
     </nav>
 
+    <div id="user-info">
+    <%= render_flash_messages %>
+    </div>
+
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">
-          <%= render_flash_messages %>
           <%= yield %>
         </div>
       </div>

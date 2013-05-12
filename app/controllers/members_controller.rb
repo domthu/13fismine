@@ -50,7 +50,7 @@ class MembersController < ApplicationController
           }
         }
       else
-        puts "============ERROR=======00MembersControllerMembersControllerMembersController --> newnewnewnewnewnew"
+        #puts "============ERROR=======00MembersControllerMembersControllerMembersController --> newnewnewnewnewnew"
         format.js {
           render(:update) {|page|
             errors = members.collect {|m|

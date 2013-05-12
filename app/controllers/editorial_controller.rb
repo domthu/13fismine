@@ -311,10 +311,12 @@ class EditorialController < ApplicationController
   end
 
   def send_proposal_meeting
-    @user = (User.current && User.current.logged?) ? User.current : User.anonymous
+#    puts "------------------User(" + User.current + ")------------------"
+#    @user = (User.current && User.current.logged?) ? User.current : User.anonymous
+#    puts "++++++++++++++++++User(" + @user.name + ")++++++++++++++++++"
     @msg = params[:body] if params[:body].present?
     #@email = params[:user_mail] if params[:user_mail].present?
-    if params[:user_mail].nil? || !params[:body].present? || params[:user_mail].length < 5
+    if params[:user_mail].nil? || !params[:user_mail].present? || params[:user_mail].length < 5
       @email = '[no-email]'
     else
       @email = params[:user_mail]
@@ -327,10 +329,11 @@ class EditorialController < ApplicationController
     @stat = 'Invio email non riuscito <br />'
     begin
       #Mailer.deliver_test(User.current)
-      @tmail = Mailer.deliver_proposal_meeting(@email, @user, @msg)
+      #@tmail = Mailer.deliver_proposal_meeting(@email, @user, @msg)
+      @tmail = Mailer.deliver_proposal_meeting(@email, User.current, @msg)
       #notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
       #flash[:notice] = l(:notice_user_newsletter_email_sent)
-      @stat = 'Email inviato corettamente <br />'
+      @stat = 'Email inviato correttamente <br />'
     rescue Exception => e
       @errors += l(:notice_email_error, e.message)
     end

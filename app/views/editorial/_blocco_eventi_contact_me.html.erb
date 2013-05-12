@@ -5,17 +5,17 @@
 
     var urlpropose = '<%= propose_evt_path %>';
     function sendmail() {
-        $.post(urlpropose, { user_mail:$("#evtmail").val(), body:$("#message").val() },
+        $.post(urlpropose, { user_mail:$("#evtmail").val(), body:$("#message").val(), authenticity_token: $("input[name='authenticity_token']").val(), back_url: $('#back_url').val() },
                 function (data) {
                     data = data || {};
                     if (data.success) {
                         //OnSuccess
                         if (data.response) {
-                            $("#user-response").html(data.response);
+                            $("#user-response").html("<div class='flash notice'>" + data.response + "</div>");
                         }
                     } else if (data.errors) {
                         $("#flash_error").html(data.errors);
-                        $("#user-response").html(data.errors);
+                        $("#user-response").html("<div class='flash error'>" + data.errors + "</div>");
                         //showerrmsg(data.errors);
                     }
                 }

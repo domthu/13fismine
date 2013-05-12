@@ -39,21 +39,21 @@
     var lastname = $('#lastname').val();
     var firstname = $('#firstname').val();
     var team_artist = $('#modlgn_remember').is(':checked');
-    $.post(urlprova, { mail: mail, lastname: lastname, firstname: firstname, team_artist: team_artist },
+    $.post(urlprova, { mail: mail, lastname: lastname, firstname: firstname, team_artist: team_artist, authenticity_token: $("input[name='authenticity_token']").val(), back_url: $('#back_url').val()  },
       function (data) {
         data = data || {};
         if (data.success) {
             //OnSuccess
             if (data.response) {
               $("#flash_notice").html(data.response);
-              //$("#user-response").html(data.response);
-              alert(data.response)
+              $("#user-info").html("<div class='flash notice'>" + data.response + "</div>");
+              //alert(data.response)
             }
         } else if (data.errors) {
             $("#flash_error").html(data.errors);
-            $("#flash_notice").html(data.response);
+            $("#user-info").html("<div class='flash error'>" + data.errors + "</div>");
             //showerrmsg(data.errors);
-            alert(data.errors)
+            //alert(data.errors)
         }
         else
           alert("La prova non è andata a buon fine: <br />" + data)

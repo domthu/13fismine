@@ -306,12 +306,12 @@ class Mailer < ActionMailer::Base
     #recipients 'sandro@ks3000495.kimsufi.com'
     #recipients 'domthu@ks3000495.kimsufi.com'
     subject 'Fiscosport > Proposta di convegno o di evento'
-    if user.anonymous?
-      part :content_type => "text/html",
-           :body => '<div style="font-weight:bold;"> Anonymous email:[' + email + '] </div><br /> <hr> <p>'  + body_as_string + '</p>'
-    else
+    if user.logged?
       part :content_type => "text/html",
            :body => '<div style="font-weight:bold;"> User id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /> <hr> <p>'  + body_as_string + '</p>'
+    else #user.anonymous?
+      part :content_type => "text/html",
+           :body => '<div style="font-weight:bold;"> Anonymous email:[' + email + '] </div><br /> <hr> <p>'  + body_as_string + '</p>'
     end
 
 =begin
