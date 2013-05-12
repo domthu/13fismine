@@ -314,10 +314,10 @@ class EditorialController < ApplicationController
     @user = (User.current && User.current.logged?) ? User.current : User.anonymous
     @msg = params[:body] if params[:body].present?
     #@email = params[:user_mail] if params[:user_mail].present?
-    if params[:user_mail].nil? || params[:user_mail].length < 5
-      @email = params[:user_mail]
-    else
+    if params[:user_mail].nil? || !params[:body].present? || params[:user_mail].length < 5
       @email = '[no-email]'
+    else
+      @email = params[:user_mail]
     end
     @stat =''
     @errors = ''
