@@ -1,0 +1,12 @@
+<% if Setting.info_promoted_fs && !Setting.info_fs.empty? %>
+  <div class="fs-block clearfix">
+    <div class="fs-blockheader">
+      <h3 class="t"><%= Setting.app_title %> informa: </h3>
+    </div>
+    <div class="fs-blockcontent">
+      <div id="fs_informa" class="fs-informna">
+        <%= Setting.info_fs %>
+      </div>
+    </div>
+  </div>
+<% end %>
