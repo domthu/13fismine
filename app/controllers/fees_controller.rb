@@ -33,8 +33,8 @@ class FeesController < ApplicationController
       #_ArrStr.push "---Init---"
       #User.each do |user|
       #    existing_regions = Region.all()
-      for usr in User.all(:limit => 5) do
-      #for usr in User.all() do
+      #for usr in User.all(:limit => 5) do
+      for usr in User.all() do
         #puts "user --> " + usr.id.to_s
         str = control_assign_role(usr)
         if !str.nil?
