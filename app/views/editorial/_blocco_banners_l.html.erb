@@ -1,0 +1,20 @@
+<div class="fs-block clearfix">
+  <div class="fs-blockheader">
+    <h3 class="t"></h3>
+  </div>
+    <% if  banners_block_l.count > 0  %>
+    <div class="banners_block_l_carousel" >
+      <div id="carousel_block_l_js">
+         <% banners_block_l.each do |i|  %>
+              <%=  image_tag i.image.url(:block_l) %>
+         <% end %>
+        <div class="clearfix"></div>
+      </div>
+  <!--
+      <div class="banners_block_l_pagination" id="block_l_js_pag"></div>
+    -->
+    </div> <!-- /image_carousel -->
+     <% else %>
+     <h3>nessun banner in questa posizione</h3>
+     <% end %>
+</div>
