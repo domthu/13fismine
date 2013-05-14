@@ -6,7 +6,7 @@
           <%= render :partial => 'blocco_eventi' %>
       <% end %>
   <% end %>
-  <%= render :partial => 'blocco_slide1' %>
+  <%=   render :partial => 'blocco_banners_l' %>
   <% unless @block_projects.nil? %>
       <%= render :partial => 'blocco_edizioni' %>
   <% end %>
@@ -16,5 +16,5 @@
   <% unless @articolo.nil? %>
       <%= render :partial => 'blocco_art_evidenziati' %>
   <% end %>
-  <%=   render :partial => 'blocco_banners_l' %>
+
 </div>
