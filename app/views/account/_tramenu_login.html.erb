@@ -94,7 +94,7 @@
               User.current.responsable_of.each do |organismo| %>
             <div class="fs-login" id="fs-login2-txt">
               <span> Responsabile di:</span>
-                <%= link_to h(organismo), organismo_path(organismo) %>
+                <%= link_to h(organismo), organization_path(organismo) %>
               <% end
        end %>
     </ul>
