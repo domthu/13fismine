@@ -17,7 +17,7 @@
             <% if !@uid.nil? %>
                 <%= link_to "Profilo Pubblico", url_for(:controller => 'editorial', :action => 'profilo_show', :id => @uid), :class => 'fs-vuoto-inline3-button' %>
             <% else %>
-                <%= link_to "Nuovo Profilo", url_for(:controller => 'editorial', :action => 'profilo_new', :id => @uid), :class => 'fs-vuoto-inline3-button' %>
+                <%= link_to "Nuovo Profilo", url_for(:controller => 'editorial', :action => 'profilo_new', :id => User.current.id), :class => 'fs-vuoto-inline3-button' %>
             <% end %>
         </div>
       <% else %>
