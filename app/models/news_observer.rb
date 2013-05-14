@@ -16,7 +16,19 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class NewsObserver < ActiveRecord::Observer
+  include Redmine::I18n #translation l(:words)
   def after_create(news)
-    Mailer.deliver_news_added(news) if Setting.notified_events.include?('news_added')
+    #Mailer.deliver_news_added(news) if Setting.notified_events.include?('news_added')
+    # Force ActionMailer to raise delivery errors so we can catch it
+    raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
+    ActionMailer::Base.raise_delivery_errors = true
+    begin
+      Mailer.deliver_news_added(news) if Setting.notified_events.include?('news_added')
+    rescue Exception => e
+      Rails.logger.error l(:notice_email_error, e.message) #if logger
+      #flash[:error] = l(:notice_email_error, e.message) undefined local variable or method `flash' for #<NewsObserver:0xb634f6a0>
+      #raise e
+    end
+    ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
   end
 end

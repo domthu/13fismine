@@ -86,7 +86,7 @@ class AccountController < ApplicationController
 
   # User self-registration
   def register
-    puts "********************REGISTER********************"
+    #puts "********************REGISTER********************"
     #domthu redirect_to(home_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     if request.get?
@@ -155,7 +155,7 @@ class AccountController < ApplicationController
         #Region Province Comune --> inutile le abbiamo dentro la
       else
         if (params[:user][:asso_id])
-          puts "AAAAAAAAAAAAAAAA #{params[:user][:asso_id]} AAAAAAAAAAA"
+          #puts "AAAAAAAAAAAAAAAA #{params[:user][:asso_id]} AAAAAAAAAAA"
           #@user.tiposigla_id = params[:user][:tiposigla_id]
           #@user.organismo_id = params[:user][:organismo_id]
           @user.asso_id = params[:user][:asso_id].to_i

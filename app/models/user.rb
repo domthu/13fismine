@@ -309,7 +309,7 @@ class User < Principal
   end
 
   def canbackend?
-    puts "self.canbackend?(" + self.role_id.to_s + ")"
+    #puts "self.canbackend?(" + self.role_id.to_s + ")"
     if self.admin?
       #Rails.logger.info("redmine canbackend OK is admin #{self}")
       return true
@@ -317,7 +317,7 @@ class User < Principal
     #FEE INSTALLATION
     if Setting.fee?
       if (FeeConst::AUTHORED_ROLES.include? self.role_id)
-        puts "AUTHORED_ROLES(" + self.role_id.to_s + ")"
+        #puts "AUTHORED_ROLES(" + self.role_id.to_s + ")"
         return true
       end
       if (self.ismanager? || self.isauthor?  )
@@ -498,9 +498,11 @@ class User < Principal
       # user is already in local database
       return nil if !user.active?
       if user.auth_source
+        #puts '**********************try_to_login by auth_source(' + login + ', ' + password + ')********************'
         # user has an external authentication method
         return nil unless user.auth_source.authenticate(login, password)
       else
+        #puts '**********************try_to_login by check_password(' + login + ', ' + password + ')********************'
         # authentication with local password
         return nil unless user.check_password?(password)
       end
@@ -602,6 +604,7 @@ class User < Principal
     if auth_source_id.present?
       auth_source.authenticate(self.login, clear_password)
     else
+      #puts '**********************try_to_login by check_password hash_password(' + clear_password + ', ' + hashed_password + ')********************'
       User.hash_password("#{salt}#{User.hash_password clear_password}") == hashed_password
     end
   end

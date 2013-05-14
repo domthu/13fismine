@@ -145,7 +145,10 @@ class Mailer < ActionMailer::Base
   def news_added(news)
     redmine_headers 'Project' => news.project.identifier
     message_id news
+    puts '*************** news_added recipients ' + news.recipients + '*************** '
     recipients news.recipients
+    #Errore in gmail. (Net::SMTPFatalError) 555 5.5.2 Syntax error
+    #mettere recipients in questo formato "nome utente <noreply@monaqasat.com>"
     subject "[#{news.project.name}] #{l(:label_news)}: #{news.title}"
     body :news => news,
          :news_url => url_for(:controller => 'news', :action => 'show', :id => news)
