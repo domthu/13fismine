@@ -36,7 +36,7 @@
 
   <div class="yui-skin-sam"><%= f.text_area :description,
                                             :cols => 90,
-                                            :rows => (@issue.description.blank? ? 75 : [[20, @issue.description.length / 50].max, 75].min),
+                                            :rows => (@issue.description.blank? ? 75 : [[125, @issue.description.length / 50].max, 100].min),
                                             :accesskey => accesskey(:edit),
                                             :id => 'issue_description_field',
                                             :label => '' %>
@@ -75,7 +75,8 @@
     (function () {
         var myConfig1 = {
             handleSubmit:true,
-            /* height:'200px', width:'95%',*/
+             height:'100%',
+            width:'99%',
             resize:true,
             animate:true,
             dompath:true,

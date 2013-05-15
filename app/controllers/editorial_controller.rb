@@ -445,9 +445,10 @@ class EditorialController < ApplicationController
   #REQUEST
   #Il dato @quesito_news viene caricato dentro il before_filter
   def quesito_show
+    @id = params[:id]
     #1 news sola
-    @quesito_news = News.find(@id) unless !@id.nil?
-    @quesito_news_stato = @quesito_news.quesito_status_fs_text
+    @quesito_news = News.all_quesiti_fs.find(@id)
+     @quesito_news_stato = @quesito_news.quesito_status_fs_text
     @quesito_news_stato_num = @quesito_news.quesito_status_fs_number
     #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
 
@@ -461,7 +462,6 @@ class EditorialController < ApplicationController
   # Viene passato un id che corrisponde all'articolo = risposta di un quesito cliente
   #RESPONSE(s)
   def quesiti_all
-
     case params[:format]
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit

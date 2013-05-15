@@ -44,8 +44,11 @@
                   </div>
                 </div>
                 <div class="fs-resize-box">
+                  <%=  link_to_function( image_tag('ico/printer-icon.png'), "javascript:print()") %>
+                <!--
                   <a href="javascript:increaseFontSize()" id="increase" class="fs-resize-itm">A<sup>+</sup></a>
                   <a href="javascript:decreaseFontSize()" id="decrease" class="fs-resize-itm">a<sup>-</sup></a>
+                  -->
                 </div>
               </div>
             </div>  <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
@@ -89,8 +92,7 @@
                 </div>
               </div>
               <div class="fs-resize-box">
-                <a href="javascript:increaseFontSize()" id="increase" class="fs-resize-itm">A<sup>+</sup></a>
-                <a href="javascript:decreaseFontSize()" id="decrease" class="fs-resize-itm">a<sup>-</sup></a>
+                <%=  link_to_function( image_tag('ico/printer-icon.png'), "javascript:print()") %>
               </div>
             </div>
           </div>  <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
@@ -103,7 +105,7 @@
     </div>
     <div class="clearfix">&nbsp; <br/></div>
     <div class="fs-layout-cell layout-item-1">
-      <div id="fs-articolo-full">
+      <div id="fs-articolo-full ">
         <%= raw(articolo.description) %>
         <br/>
       </div>
@@ -116,7 +118,7 @@
     <div class="fs-articolo-full-bottom">
 
       <%= link_to "Ritorna...", :back, :class => "fs-vuoto-inline-button", :style => "float:none;" , :id =>"btn" %>
-    <%=  link_to_function("Print this Page", "javascript:print()") %>
+
     </div>
     <% if  !@quesito.nil? %>
         <h4>L'articolo è stato ispirato da...</h4>

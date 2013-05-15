@@ -5,28 +5,23 @@
            Risposta di: <%= articolo.author.firstname %></span>
           <span class="fs-quesiti-data-data"><%= I18n.localize(articolo.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
         </div>
+        <div  style="text-align: center; margin:10px;">
+        <%= link_to_articolo(articolo ,:title => "Visualizzazione completa", :class => "fs-vuoto-inline-button") %>
+        </div>
+       <br />
+        <div class="clearfix"></div>
         <div class="fs-postmetadataheader">
           <div class="fs-quesiti-reply-img">
-            <%= if articolo.immagine_url.nil?
-                  if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
-                    image_tag("/images/commons/sections/#{articolo.top_section.immagine}", :width => 75)
-                  else
-                    image_tag("/images/commons/sections/no-img.jpg", :width => 75)
-                  end
-                else
-                  image_tag(articolo.immagine_url, :alt => h(truncate(articolo.subject, :length => 25)), :width => 75)
-                end
-            %>
+            <%= image_tag art_image(articolo, :m) %>
           </div>
           <span style="font-style: italic ;">Pubblicato in: </span>
           <div class="fs-art-sezione-full">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %>
           </div>
-          <div  style="float:right; margin:-5px 10px 0 0;">
-          <%= link_to_articolo(articolo ,:title => 'Articolo', :class => "fs-vuoto-inline-button") %></div>
+
           <div class="fs-postheader-full">      <%= articolo.subject %>  </div>
         </div>
         <div class="fs-quesiti-wrapper">
-          <span style="font-weight: bold;"><%= articolo.summary %> </span>
+          <span style="font-weight: bold;"> <%= articolo.summary unless articolo.hide_summary? %> </span>
           <p><%= articolo.description %> </p>
           <br/> &nbsp;
         </div>

@@ -85,6 +85,6 @@ class UserProfile < ActiveRecord::Base
   end
 
   def reprocess
-    self.photo.reprocess!
+    self.find('#').image.reprocess!
   end
 end

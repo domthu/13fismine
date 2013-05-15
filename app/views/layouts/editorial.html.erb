@@ -42,7 +42,6 @@
   <%= javascript_include_tag "src/jquery-glowing.js" %>
   <%= javascript_include_tag "src/text_ticker.js" %>
   <%= javascript_include_tag "dynamic-font-resize.js" %>
-
   <%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
   <%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
   <%= stylesheet_link_tag 'jquery-ui-rewrite.css', :media => 'all' %>
@@ -53,23 +52,6 @@
       //$(function () {
       $(document).ready(function() {
           'use strict';
-          if ($.fn.slider) {
-              $(".fs-slidecontainerslideshutterstock_1").each(function () {
-                  var slideContainer = $(this), tmp;
-                  var inner = $(".fs-slider-inner", slideContainer);
-                  var helper = null;
-                  inner.children().eq(0).addClass("active");
-                  slideContainer.slider({
-                      pause:2600,
-                      speed:600,
-                      repeat:true,
-                      animation:"fade",
-                      direction:"next",
-                      navigator:slideContainer.siblings(".fs-slidenavigatorslideshutterstock_1"),
-                      helper:helper
-                  });
-              });
-          };
           $("#carousel_assos_js").carouFredSel({
               items	 : 3,
               scroll : {
