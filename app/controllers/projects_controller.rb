@@ -54,7 +54,7 @@ class ProjectsController < ApplicationController
         #in the nested set would require changing the lft and rgt fields of a project
         #The lft, rgt and root_id columns used by the awesome_nested_set vendored with Redmine
         #=> prefered for last updated appears first
-        @projects = Project.visible.find(:all, :order => 'updated_on DESC, lft')
+        @projects = Project.visible.find(:all, :order => 'data_al DESC, updated_on DESC, lft')
       }
       format.api  {
         @offset, @limit = api_offset_and_limit
