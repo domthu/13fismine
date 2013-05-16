@@ -1,167 +1,200 @@
-<h2><%=l(:control_fee)%>. TOTALE UTENTI: <%= @num_users %></h2>
-  <div id="footer-menu" class="box">
-    <%= render_menu :menu_fee_fs %>
-  </div>
+<h2><%= l(:control_fee) %>. TOTALE UTENTI: <%= @num_users %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_fee_fs %>
+</div>
 
 <div class="splitcontentleft">
-  <fieldset class="box tabular">
+  <fieldset class="box">
     <legend>Ruoli non sottoposti a controllo di abbonamento&nbsp;<b>Totali: <%= @num_uncontrolled_TOTAL %></b></legend>
     <blockquote>
-<p class="admin"><b>[<%= @name_admin_count %>]</b>Amministratore del sito (interfaccia redmine)</p>
-<p class="power_user"><b>[<%= @name_manager_count %>]</b>ROLE_MANAGER        = 3  #Manager</p>
-<p class="redattore"><b>[<%= @name_author_count %>]</b>ROLE_AUTHOR         = 4  #Redattore<br />
-  #ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore tutti uguali</p>
-<p class="invitato"><b>[<%= @name_invitati_count %>]</b>ROLE_VIP            = 10 #Invitato Gratuito</p>
+      <p class="feeicon-l"><span class="admin"></span><b>[<%= @name_admin_count %>]</b>Amministratore del sito (interfaccia redmine)</p>
+
+      <p class="feeicon-l"><span class="power_user"></span><b>[<%= @name_manager_count %>]</b>ROLE_MANAGER = 3 #Manager</p>
+
+      <p class="feeicon-l"><span class="redattore"></span><b>[<%= @name_author_count %>]</b>ROLE_AUTHOR = 4 #Redattore<br/>
+        #ROLE_COLLABORATOR = 4 #ROLE_REDATTORE autore, redattore e collaboratore tutti uguali</p>
+
+      <p class="feeicon-l"><span class="invitato"></span><b>[<%= @name_invitati_count %>]</b>ROLE_VIP = 10 #Invitato Gratuito</p>
     </blockquote>
   </fieldset>
 
-  <fieldset class="box tabular">
+  <fieldset class="box">
     <legend>Admin</legend>
-    <h5>
-      <p class="admin">Amministratori <b><%= @name_admin_count %></b></p>
+    <h5 class="feeicon-l">
+      <span class="admin"></span>Amministratori <b><%= @name_admin_count %></b>
     </h5>
+    <br/>
     <% @name_admin.each do |usr| %>
-      <div class="icon icon-admin"><%= link_to usr, user_path(usr) %></div>
+        <div class="feeicon-s"><span class="icon-admin"></span><%= link_to usr, user_path(usr) %></div>
     <% end %>
   </fieldset>
 
-  <fieldset class="box tabular">
+  <fieldset class="box">
     <legend>Manager</legend>
-    <h5>
-      <p class="power_user">Manager (=power_user): <b><%= @name_manager_count %></b></p>
+    <h5 class="feeicon-l">
+      <span class="power_user"></span>Manager (=power_user): <b><%= @name_manager_count %></b>
     </h5>
+    <br/>
     <% @name_manager.each do |usr| %>
-      <div class="icon icon-man"><%= link_to usr, user_path(usr) %></div>
+        <div class="feeicon-s"><span class="icon-man"></span><%= link_to usr, user_path(usr) %></div>
     <% end %>
   </fieldset>
 
-  <fieldset class="box tabular">
+  <fieldset class="box">
     <legend>Redattori</legend>
-    <h5>
-      <p class="redattore">Redattori: <b><%= @name_author_count %></b></p>
+    <h5 class="feeicon-l">
+      <span class="redattore"></span>Redattori: <b><%= @name_author_count %></b>
     </h5>
+    <br/>
     <% @name_author.each do |usr| %>
-      <div class="icon icon-auth"><%= link_to usr, user_path(usr) %></div>
+        <div class="feeicon-s"><span class="icon-auth"></span><%= link_to usr, user_path(usr) %></div>
     <% end %>
   </fieldset>
 
-  <fieldset class="box tabular">
+  <fieldset class="box feeicons">
     <legend>VIP</legend>
-    <h5>
-      <p class="invitato">VIP: <b><%= @name_invitati_count %></b>
+    <h5 class="feeicon-l">
+      <span class="invitato"></span>VIP: <b><%= @name_invitati_count %></b>
     </h5>
+    <br/>
     <% @name_invitati.each do |usr| %>
-      <div class="icon icon-vip"><%= link_to usr, user_path(usr) %></div>
+        <div class="feeicon-s"><span class="icon-vip"></span><%= link_to usr, user_path(usr) %></div>
     <% end %>
   </fieldset>
+  <hr>
+  <br/>
 
-</div>
-
-<div class="splitcontentright">
-
+  <h2> Utenti soggetti ad abbonamento</h2>
   <fieldset class="box tabular">
-    <legend><%=l(:siglatipo)%></legend>
+    <legend><%= l(:siglatipo) %></legend>
     <h5>
       Categoria Utenti: Cross organizations ed utenti
     </h5>
+    <br/>
     <ul>
       <li>Numero di cross organismi: <b><%= @num_organismi %></b></li>
       <li>Numero di utenti che si riferiscono: <b><%= @num_members %></b></li>
     </ul>
   </fieldset>
 
-  <fieldset class="box tabular">
-    <legend>Ruoli sottoposti a controllo di abbonamento (manuale ed automatico)&nbsp;<b>Totali: <%= @num_controlled_TOTAL %></b></legend>
+  <fieldset class="box">
+    <legend>Ruoli sottoposti a controllo di abbonamento (manuale ed
+      automatico)&nbsp;<b>Totali: <%= @num_controlled_TOTAL %></b></legend>
+    <br />
     <blockquote>
-<p class="abbonato"><b>[<%= @num_abbonati %>]</b> ROLE_ABBONATO       = 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)</p>
-<p class="inscadenza"><b>[<%= @num_rinnovamento %>]</b>ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />Numero di abbonati in stato di rinnovamento (Scadenza - <%= Setting.renew_days%> giorni)</p>
-<p class="registrato"><b>[<%= @num_registrati %>]</b>ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />Con periodo di prova (Data di registrazione + <%= Setting.register_days%> giorni)</p>
-<p class="scaduto"><b>[<%= @num_scaduti %>]</b>ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza &lt; today</p>
-<p class="archivied"><b>[<%= @num_archiviati %>]</b>ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)</p>
+      <p class="feeicon-l"><span class="abbonato"></span><b>[<%= @num_abbonati %>]</b> ROLE_ABBONATO = 6 #Abbonato user.data_scadenza >
+        (today - Setting.renew_days)</p>
+
+      <p class="feeicon-l"><span class="inscadenza"></span><b>[<%= @num_rinnovamento %>]</b>ROLE_RENEW = 11 #Rinnovo: periodo prima della  scadenza dipende da Setting.renew_days<br/>Numero di abbonati in stato di rinnovamento (Scadenza
+        - <%= Setting.renew_days %> giorni)</p>
+
+      <p class="feeicon-l"><span class="registrato"></span><b>[<%= @num_registrati %>]</b>ROLE_REGISTERED = 9 #Ospite periodo di prova
+        durante Setting.register_days<br/>Con periodo di prova (Data di registrazione + <%= Setting.register_days %>
+        giorni)</p>
+
+      <p class="feeicon-l"><span class="scaduto"></span><b>[<%= @num_scaduti %>]</b>ROLE_EXPIRED = 7 #Scaduto: user.data_scadenza &lt;
+        today</p>
+
+      <p class="feeicon-l"><span class="archivied"></span><b>[<%= @num_archiviati %>]</b>ROLE_ARCHIVIED = 8 #Archiviato: bloccato: puo
+        uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)</p>
     </blockquote>
   </fieldset>
 
   <fieldset class="box tabular">
-    <legend><%=l(:affiliati)%>&nbsp;<b>Totali: <%= @num_associated_TOTAL %></b></legend>
+    <legend><%= l(:affiliati) %>&nbsp;<b>Totali: <%= @num_associated_TOTAL %></b></legend>
     <ul>
       <li>ASSOCIAZIONE Numero di organismi associati: <b><%= @num_Associations %></b></li>
       <li>ASSOCIATI NON PAGANTI: Numero di membri (soci) <b> <%= @num_Associated_COUNT %></b></li>
     </ul>
-    <br>
+
     Dettaglio dello stato degli Utenti associati e quindi Non paganti
-    <ul>
-      <li class="icon icon-abbo"><b>[<%= @num_Associated_ABBONATO %>]</b> associati con abbonamento valido</li>
-      <li class="icon icon-reg"><b>[<%= @num_Associated_REGISTERED %>]</b> associati in registrazione</li>
-      <li class="icon icon-renew"><b>[<%= @num_Associated_RENEW %>]</b> associati in rinnovo</li>
-      <li class="icon icon-exp"><b>[<%= @num_Associated_EXPIRED %>]</b> associati con abbonamento scaduto </li>
-      <li class="icon icon-arc"><b>[<%= @num_Associated_ARCHIVIED %>]</b> associati archiviati </li>
-    </ul>
+    <br /> <br />
+    <div class="feeicon-s"><span class="icon-abbo"></span><b>[<%= @num_Associated_ABBONATO %>]</b> associati con abbonamento valido
+    </div>
+    <div class="feeicon-s"><span class="icon-reg"></span><b>[<%= @num_Associated_REGISTERED %>]</b> associati in registrazione
+    </div>
+    <div class="feeicon-s"><span class="icon-renew"></span><b>[<%= @num_Associated_RENEW %>]</b> associati in rinnovo
+    </div>
+    <div class="feeicon-s"><span class="icon-exp"></span><b>[<%= @num_Associated_EXPIRED %>]</b> associati con abbonamento scaduto
+    </div>
+    <div class="feeicon-s"><span class="icon-arc"></span><b>[<%= @num_Associated_ARCHIVIED %>]</b> associati archiviati
+    </div>
+
   </fieldset>
 
   <fieldset class="box tabular">
-    <legend><%=l(:label_assos_referee)%></legend>
-    <%=l(:label_assos_referee_help)%>
+    <legend><%= l(:label_assos_referee) %></legend>
+    <%= l(:label_assos_referee_help) %>
     <% if @referee.any? %>
-      <%= l(:label_total) %>:<strong class="total center"><%= h @referee.count %></strong>
-      <table class="list users">
-        <thead>
+        <%= l(:label_total) %>:<strong class="total center"><%= h @referee.count %></strong>
+        <br />
+        <br />
+        <table class="list users feeicon-s" style="width:98%; border: none;">
+          <thead>
           <th><%= l(:label_user) %></th>
           <th><%= l(:field_due_date) %></th>
           <th>Power</th>
-        </thead>
-        <tbody>
-        <% @referee.each do |user| %>
-          <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
-            <td class="user icon<%= user.icon() %>">
-              <%= link_to_user user unless User.current.admin? %>
-              <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
-            </td>
-            <td>
-              <%= format_date(user.scadenza) %>
-            </td>
-            <td>
-              <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled'  %>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+          <% @referee.each do |user| %>
+              <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
+                <td><span class="user icon<%= user.icon() %>"></span>
+                  <%= link_to_user user unless User.current.admin? %>
+                  <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
+                </td>
+                <td>
+                  <%= format_date(user.scadenza) %>
+                </td>
+                <td>
+                  <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled' %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
     <% else %>
-      <p class="nodata"><%= l(:label_no_referee) %></p>
+        <p class="nodata"><%= l(:label_no_referee) %></p>
     <% end %>
   </fieldset>
 
   <fieldset class="box tabular">
-    <legend><%=l(:who_pay)%>&nbsp;<b>Totali: <%= @num_privati_TOTAL %></b></legend>
+    <legend><%= l(:who_pay) %>&nbsp;<b>Totali: <%= @num_privati_TOTAL %></b></legend>
     <ul>
       <li>PRIVATI PAGANTI: Numero di utenti senza affiliazione <b>: <%= @num_privati_COUNT %></b></li>
     </ul>
     Dettaglio dei privati paganti
-    <ul>
-      <li class="icon icon-abbo"><b>[<%= @num_privati_ABBONATO %>]</b> privati con abbonamento valido</li>
-      <li class="icon icon-reg"><b>[<%= @num_privati_REGISTERED %>]</b> privati in registrazione</li>
-      <li class="icon icon-renew"><b>[<%= @num_privati_RENEW %>]</b> privati in rinnovo</li>
-      <li class="icon icon-exp"><b>[<%= @num_privati_EXPIRED %>]</b> privati con abbonamento scaduto </li>
-      <li class="icon icon-arc"><b>[<%= @num_privati_ARCHIVIED %>]</b> privati archiviati </li>
-    </ul>
+    <br />
+
+    <div class="feeicon-s"><span class="icon icon-abbo"></span><b>[<%= @num_privati_ABBONATO %>]</b> privati con abbonamento valido
+    </div>
+    <div class="feeicon-s"><span class="icon icon-reg"></span><b>[<%= @num_privati_REGISTERED %>]</b> privati in registrazione
+    </div>
+    <div class="feeicon-s"><span class="icon icon-renew"></span><b>[<%= @num_privati_RENEW %>]</b> privati in rinnovo
+    </div>
+    <div class="feeicon-s"><span class="icon icon-exp"></span><b>[<%= @num_privati_EXPIRED %>]</b> privati con  abbonamento scaduto
+    </div>
+    <div class="feeicon-s"><span class="icon icon-arc"></span><b>[<%= @num_privati_ARCHIVIED %>]</b> privati archiviati
+    </div>
+
   </fieldset>
 
   <fieldset class="box tabular">
     <legend>Utenti senza ruolo: <b><%= @num_no_role %></b></legend>
     <% form_tag({:action => 'index', :verify => 1}, :class => "tabular") do %>
-      <%= submit_tag l(:button_verify) %>
+        <%= submit_tag l(:button_verify) %>
     <% end %>
     <% if !@msg.nil? && @msg.any? %>
-      <%= l(:results) %>
-      <div id="fs_informa" class="nodata">
-        <ul style="text-align: left;">
-          <% @msg.each_with_index do |say, index| %>
-            <%# index.to_s + ' - ' + say%>
-            <li><%= say %></li>
-          <% end %>
-        </ul>
-      </div>
-      <br />
+        <%= l(:results) %>
+        <div id="fs_informa" class="nodata">
+          <ul style="text-align: left;">
+            <% @msg.each_with_index do |say, index| %>
+                <%# index.to_s + ' - ' + say%>
+                <li><%= say %></li>
+            <% end %>
+          </ul>
+        </div>
+        <br/>
     <% end %>
   </fieldset>
+
 </div>

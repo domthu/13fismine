@@ -1051,7 +1051,8 @@ h2 img { vertical-align:middle; }
   overflow:hidden;
 }
 
-/*State Fee Roles*/
+/*State Fee Roles
+
 .admin{background: url(../images/role/admin.jpg) no-repeat 0% 50%; padding-left: 50px; min-height:55px;}
 .power_user{background: url(../images/role/man.jpg) no-repeat 0% 50%; padding-left: 45px; min-height:50px; }
 .redattore{background: url(../images/role/auth.jpg) no-repeat 0% 50%; padding-left: 48px; min-height:53px; }
@@ -1061,13 +1062,14 @@ h2 img { vertical-align:middle; }
 .inscadenza{background: url(../images/role/renew.jpg) no-repeat 0% 50%; padding-left: 64px; min-height:69px; }
 .scaduto{background: url(../images/role/exp.jpg) no-repeat 0% 50%; padding-left: 26px; font-style: italic; min-height:31px; }
 .archivied{background: url(../images/role/arc.jpg) no-repeat 0% 50%; padding-left: 16px; font-style: italic; min-height:21px; }
+*/
 .modified{
     box-shadow: 0 0 5px 0 red;
     -webkit-box-shadow: 0 0 5px 0 red;
     -moz-box-shadow: 0 0 5px 0 red;
 }
 .unchanged{font-size: 50%;}
-/*Action Fee Roles*/
+/*Action Fee Roles
 .icon-admin { background-image: url(../images/role/min_admin.jpg); padding-left: 40px; min-height:21px;}
 .icon-man { background-image: url(../images/role/min_man.jpg); padding-left: 40px; min-height:21px;}
 .icon-auth { background-image: url(../images/role/min_auth.jpg); padding-left: 40px; min-height:21px;}
@@ -1079,7 +1081,76 @@ h2 img { vertical-align:middle; }
 .icon-arc { background-image: url(../images/role/min_arc.jpg); padding-left: 16px; font-style: italic; min-height:21px;}
 .icon-no-role { background-image: url(../images/exclamation.png); padding-left: 16px;}
 .icon-no-user { background-image: url(../images/bullet_delete.png); padding-left: 16px;}
-.description{color: ##2C4056; background-color:#FFFFFF; padding: 5px;} /*font-weight: bold; */
+*/
+/* rewrite only for test ! vedi se ti piace */
+
+.feeicon-l span {
+    width:50px;
+    display:block;
+    float:left;
+    height:50px;
+    overflow: hidden;
+
+}
+.feeicon-l{
+    display:table-cell;
+    float:left;
+    min-height:50px;
+    vertical-align: middle;
+    width:100%;
+}
+.feeicon-s {
+    display:table-cell;
+    float:left;
+    min-height:30px;
+    vertical-align: middle;
+    width:98%;
+    padding-left: 10px;
+    border-bottom: solid 2px #fffaf0;
+
+}
+.feeicon-s span{
+    width:30px;
+    display:block;
+    float:left;
+    height:30px;
+    overflow: hidden;
+
+}
+.feeicon-s li {
+    display:table-cell;
+    float:left;
+    min-height:30px;
+    vertical-align: middle;
+    width:98%;
+    padding-left: 10px;
+}
+.admin{background: url(../images/ico/users.png) no-repeat 0 0;}
+.power_user{background: url(../images/ico/users.png) no-repeat 0 -50px;}
+.redattore{background: url(../images/ico/users.png) no-repeat 0 -100px;}
+.invitato{background: url(../images/ico/users.png) no-repeat 0 -150px;}
+.abbonato{background: url(../images/ico/users.png) no-repeat 0 -200px;}
+.registrato{background: url(../images/ico/users.png) no-repeat 0 -250px;}
+.inscadenza{background:  url(../images/ico/users.png) no-repeat 0 -300px;}
+.scaduto{background:  url(../images/ico/users.png) no-repeat 0 -350px;}
+.archivied{background:  url(../images/ico/users.png) no-repeat 0 -400px;}
+
+/*Action Fee Roles*/
+.icon-admin { background: url(../images/ico/users.png) no-repeat -50px -10px;}
+.icon-man { background: url(../images/ico/users.png) no-repeat -50px -60px;}
+.icon-auth { background: url(../images/ico/users.png) no-repeat -50px -110px; }
+.icon-vip { background: url(../images/ico/users.png) no-repeat -50px -160px; }
+.icon-abbo { background: url(../images/ico/users.png) no-repeat -50px -210px; }
+.icon-reg { background: url(../images/ico/users.png) no-repeat -50px -260px; }
+.icon-renew { background: url(../images/ico/users.png) no-repeat -50px -310px; }
+.icon-exp { background: url(../images/ico/users.png) no-repeat -50px -360px; }
+.icon-arc { background: url(../images/ico/users.png) no-repeat -50px -410px; }
+.icon-no-role { background: url(../images/ico/users.png) no-repeat -50px -460px; }
+.icon-no-user { background: url(../images/ico/users.png) no-repeat -50px -510px; }
+/*  fine rel rewrite
+
+
+.description{color: #2C4056; background-color:#FFFFFF; padding: 5px;} /*font-weight: bold; */
 .risposta{margin: 20px ;border: solid 1px blue; padding: 10px;}
 .fs-quesiti-status-icon {
     background-image: url('/images/commons/quesito-status.jpg');
