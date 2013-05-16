@@ -66,7 +66,9 @@
         <br/>
     <% end %>
     <br/>
+      <% if request.url.match('/edizion').nil? %>
     <p class="pagination"><%= pagination_links_full(@issues_pages, @issues_count, {}, true) %></p>
+         <%	 end %>
     <br/>
 
   <% else %>

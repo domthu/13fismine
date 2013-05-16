@@ -65,7 +65,7 @@ class News < ActiveRecord::Base
                   'reply'
 
   def public_fs_issues
-  self.issues.all_public_fs.count.to_s
+    self.issues.all_public_fs.count.to_s
 
   end
 
@@ -169,7 +169,7 @@ class News < ActiveRecord::Base
     if user.nil?
       'Utente non identificato '
     else
-      s =  'QUESITO_' + DateTime.now.strftime("%y%m%d") + '_UTENTE[n°'
+      s = 'QUESITO_' + DateTime.now.strftime("%y%m%d") + '_UTENTE[n°'
       s += User.current.id.to_s + '] '
       s += User.current.firstname? ? User.current.firstname.to_s : ''
       s += User.current.lastname? ? User.current.lastname.to_s : ''
