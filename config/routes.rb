@@ -75,7 +75,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.articoloid '/editoriale/articolo/:id', :controller => 'editorial', :action => 'articolo'
   #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
-  map.abbonamenti 'account/register', :controller => 'account', :action => 'register'
+  map.abbonamenti '/account/registrati', :controller => 'account', :action => 'register'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
   map.prova_gratis 'prova_gratis', :controller => 'account', :action => 'prova', :conditions => {:method => [:post]}
 =begin

@@ -31,7 +31,8 @@
   <%#= javascript_heads %>
   <%# javascript_include_tag "jquery/jquery-1.8.2.min.js"%>
 
-  <%= javascript_include_tag "jquery.js"%> <%#= javascript_include_tag "jquery/jquery-1.7.1.min.js" %>
+  <%= javascript_include_tag "jquery.js"%>
+  <%#= javascript_include_tag "jquery/jquery-1.7.1.min.js" %>
 
   <%#= javascript_include_tag "jquery/jquery-1.7.1.min.js" %>
   <%# javascript_include_tag "jquery/jquery-1.9.1.min.js" %>
@@ -112,14 +113,11 @@
           $('.x-yellow').addGlow({ textColor: '#F8DA00', haloColor: '#F8DA00', radius: 100 });
           $('.x-red').addGlow({ textColor: '#f00', haloColor: '#f00', radius: 100 });
           $('.x-granata').addGlow({ textColor: '#a03823', haloColor: '#a03823', radius: 100 });
-
       });
-
   </script>
   <!-- page specific tags -->
   <%= yield :header_tags -%>
     <!-- end page specific tags -->
-
 </head>
 <body>
 <div id="fs-main">
@@ -127,36 +125,27 @@
   </div>
   <div class="fs-sheet clearfix">
     <header class="fs-header clearfix">
-
-
       <div class="fs-shapes">
         <h1 class="fs-headline" data-left="58%">
-          <a href="#" class="hide">Professionisti esperti in materie fiscali sportive</a>
-          <a href="#"><%= Setting.welcome_text_fs %></a>
+          <%= Setting.welcome_text_fs %>
         </h1>
-
-
       </div>
       <div class="fs-textblock fs-object375974515" data-left="80%">
         <% form_tag({:controller => 'editorial', :action => 'ricerca'}, :method => :get, :class => "fs-search") do %>
             <%= text_field_tag 'q', @question, :accesskey => accesskey(:quick_search) %>
-            <input type="submit" value="ricerca" class="fs-search-button"/>
+            <input type="submit" value="" class="fs-search-button"/>
         <% end %>
       </div>
-
     </header>
-
     <nav class="fs-nav clearfix">
       <%= render_navigation(:level => 1) %>
     </nav>
     <div id="fs-tramenu-wrapper">
       <%= render :partial => 'editorial/tramenu_block' %>
-
     </div>
     <nav class="fs-menu2-nav clearfix">
       <%= render_navigation(:level => 2..3, :expand_all => true) %>
     </nav>
-
     <div id="user-info">
     <%= render_flash_messages %>
     </div>

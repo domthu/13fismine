@@ -1799,6 +1799,39 @@ right: -14px;   */
     line-height: 1.5em;
     font-weight: bold;
 }
+
+/* -    ----------------    cerca     ----------------- */
+.fs-ricerca-sx{
+    width: 32%;
+     padding: 10px;
+     float: left;
+}
+.fs-ricerca-dx{
+    padding: 10px;
+     float: left;
+    width: 370px;
+    margin: 2px 0 0 10px;
+    background-color: #e3f8ff;
+}
+.fs-ricerca-header label{
+     color: #2C4056;
+        line-height: 2em;
+        font-weight: normal;
+    font-size: 1em;
+}
+.fs-ricerca-header{
+    border-top: solid 2px #F9C133;
+    width: 100%;
+    display:block;
+    background-color: #e3f8ff;
+    border-bottom: solid 2px #87ceeb;
+    border-right: solid 1px #FFBB52;
+    border-left: solid 1px #87ceeb;
+    height: 113px;
+}
+.fs-ricerca-r{
+ background-color:#e0ffff ;
+}
 /* ------------------------------- test carousel -------------------------*/
 
 .banners_block_l_carousel {
