@@ -4,7 +4,6 @@ class UserProfile < ActiveRecord::Base
   belongs_to :user
   validates_uniqueness_of :user_id #, :scope => [:type, :project_id]
 
-  after_update :reprocess
   has_attached_file :photo, :styles => {:l => ["200x200", :png, :jpg],
                                         :m => ["80x80", :png, :jpg],
                                         :s => ["48x48", :png, :jpg],
@@ -84,7 +83,4 @@ class UserProfile < ActiveRecord::Base
     self.data = incoming_file.read
   end
 
-  def reprocess
-    self.find('#').image.reprocess!
-  end
 end

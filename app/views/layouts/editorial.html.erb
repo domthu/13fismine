@@ -23,7 +23,7 @@
    <%= stylesheet_link_tag 'editorial', :media => 'print' %>
   <!--   styles per il Front End  -->
   <!-- yui page specific tags -->
-  <%= yield :header_yui -%>
+
   <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
@@ -33,7 +33,7 @@
 
   <%= javascript_include_tag "jquery.js"%>
   <%#= javascript_include_tag "jquery/jquery-1.7.1.min.js" %>
-
+  <%= yield :header_yui -%>
   <%#= javascript_include_tag "jquery/jquery-1.7.1.min.js" %>
   <%# javascript_include_tag "jquery/jquery-1.9.1.min.js" %>
   <%# javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
