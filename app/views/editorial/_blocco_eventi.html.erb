@@ -17,21 +17,8 @@
               <div class="fs-lateral-blocks-head">
                 <%= link_to(h(@conv_prossimo.subject), url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %> </div>
               <div class="fs-conv-block">
-                <%= if @conv_prossimo.immagine_url.nil?
-                      if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
-                        image_tag("/images/commons/sections/#{@conv_prossimo.top_section.immagine}", :width => 100)
-                      else
-                        image_tag("/images/commons/sections/no-img.jpg", :width => 100)
-                      end
-                    else
-                      if FileTest.exist?("#{RAILS_ROOT}/public/images/articles/#{@conv_prossimo.immagine_url}")
-                        image_tag(@conv_prossimo.immagine_url, :alt => h(truncate(@conv_prossimo.subject, :length => 25)), :width => 100)
-                      else
-                        image_tag("/images/articles/no-img.jpg", :width => 100)
-                      end
-                    end
-                %>
-                <%= link_to(h(smart_truncate(@conv_prossimo.summary, 175)), url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %>
+                <%= image_tag art_image(@conv_prossimo, :m) %>
+                <%= link_to(h(@conv_prossimo.summary), url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %>
                 <%# link_to(h(smart_truncate(@conv_prossimo.summary, 120)), :controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false) %>
               </div>
               <%= link_to "Visualizza... ", url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button" %>
@@ -53,20 +40,7 @@
                   <div class="fs-lateral-blocks-head">
                     <%= link_to(h(con.subject), url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %> </div>
                   <div class="fs-conv-block">
-                    <%= if con.immagine_url.nil?
-                          if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{con.top_section.immagine}")
-                            image_tag("/images/commons/sections/#{con.top_section.immagine}", :width => 100)
-                          else
-                            image_tag("/images/commons/sections/no-img.jpg", :width => 100)
-                          end
-                        else
-                          if FileTest.exist?("#{RAILS_ROOT}/public/images/articles/#{con.immagine_url}")
-                            image_tag(con.immagine_url, :alt => h(truncate(con.subject, :length => 25)), :width => 100)
-                          else
-                            image_tag("/images/articles/no-img.jpg", :width => 100)
-                          end
-                        end
-                    %>
+                    <%= image_tag art_image(@conv_futuri, :m) %>
                     <%= link_to(h(smart_truncate(con.summary, 175)), url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %>
                   </div>
                   <%= link_to "Visualizza...", url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button" %>

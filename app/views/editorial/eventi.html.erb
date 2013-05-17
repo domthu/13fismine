@@ -24,16 +24,7 @@
                   <span><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
                 </div>
                 <div class="fs-convegni-futuri">
-                  <%= if con.immagine_url.nil?
-                        if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{con.top_section.immagine}")
-                          image_tag("/images/commons/sections/#{con.top_section.immagine}", :width => 100)
-                        else
-                          image_tag("/images/commons/sections/no-img.jpg", :width => 100)
-                        end
-                      else
-                        image_tag(con.immagine_url, :alt => h(truncate(con.subject, :length => 25)), :width => 100)
-                      end
-                  %>
+                  <%= image_tag art_image(@conv_futuri, :m) %>
                   <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento",  :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %></span>
                   <p>
                     <%= link_to(h(smart_truncate(con.summary, 125)), :controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %>
@@ -75,20 +66,7 @@
                 </div>
                 <div style="width:100%;">
                   <div class="fs-image-caption-wrapper-convegni">
-                    <%= if @conv_prossimo.immagine_url.nil?
-                          if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
-                            image_tag("/images/commons/sections/#{@conv_prossimo.top_section.immagine}")
-                          else
-                            image_tag("/images/commons/sections/no-img.jpg")
-                          end
-                        else
-                          if FileTest.exist?("#{RAILS_ROOT}/public/images/articles/#{@conv_prossimo.immagine_url}")
-                            image_tag(@conv_prossimo.immagine_url, :alt => h(truncate(@conv_prossimo.subject, :length => 25)))
-                          else
-                            image_tag("/images/articles/no-img.jpg")
-                          end
-                        end
-                    %>
+                    <%= image_tag art_image(@conv_prossimo, :m) %>
                   </div>
                   <div class="fs-riassunto-full"><p>
                     <%= h(smart_truncate(@conv_prossimo.summary, 200)) %></p><br/>
@@ -127,8 +105,7 @@
                       </div>
                     </div>
                     <div class="fs-resize-box">
-                      <a href="javascript:increaseFontSize()" id="increase" class="fs-resize-itm">A<sup>+</sup></a>
-                      <a href="javascript:decreaseFontSize()" id="decrease" class="fs-resize-itm">a<sup>-</sup></a>
+                      <%=  link_to_function( image_tag('ico/printer-icon.png'), "javascript:print()") %>
                     </div>
                   </div>
                   <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>

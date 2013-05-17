@@ -5,21 +5,7 @@
     </div>
     <div style="width:100%;">
       <div class="fs-image-caption-wrapper-full">
-        <%= if @articolo.immagine_url.nil?
-              if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{@articolo.top_section.immagine}")
-                image_tag("/images/commons/sections/#{@articolo.top_section.immagine}")
-              else
-                image_tag("/images/commons/sections/no-img.jpg")
-              end
-            else
-              if FileTest.exist?("#{RAILS_ROOT}/public/images/articles/images_url/#{@articolo.immagine_url}")
-                image_tag("/images/articles/images_url/#{@articolo.immagine_url}", :alt => h(truncate(@articolo.subject, :length => 25)))
-            else
-                image_tag("/images/commons/sections/no-img.jpg")
-              end
-
-            end
-        %>
+        <%= image_tag art_image(articolo, :l) %>
       </div>
       <div class="fs-postmetadata-full">
         <div class="fs-author">
@@ -42,8 +28,7 @@
             </div>
           </div>
           <div class="fs-resize-box">
-            <a href="javascript:increaseFontSize()" id="increase" class="fs-resize-itm">A<sup>+</sup></a>
-            <a href="javascript:decreaseFontSize()" id="decrease" class="fs-resize-itm">a<sup>-</sup></a>
+            <%=  link_to_function( image_tag('ico/printer-icon.png'), "javascript:print()") %>
           </div>
         </div>
         <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
