@@ -44,7 +44,7 @@ function handleFileSelect(evt, prev_id, avatar) {
                 var span = document.getElementById(prev_id);
                 span.innerHTML = ['<img class="thumb" src="', e.target.result,
                     '" title="', escape(theFile.name), '"/>'].join('');
-                document.getElementById(prev_id).insertBefore(span, null);
+                //document.getElementById(prev_id).insertBefore(span, null);
             };
         })(f);
 
@@ -52,7 +52,7 @@ function handleFileSelect(evt, prev_id, avatar) {
         reader.readAsDataURL(f);
     }
 
-    if (avatar.length > 0) {
+    if (avatar && avatar.length > 0) {
      funct_avatar(avatar);
     }
 }

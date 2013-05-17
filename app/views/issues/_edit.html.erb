@@ -26,12 +26,7 @@
            </div>
           <p><%= time_entry.text_field :comments, :size => 60 %></p>
           <% @time_entry.custom_field_values.each do |value| %>
-            <p><%= custom_field_tag_with_label :time_entry, value %></p>
-            <p>immagine:<%= f.file_field :image, :label => :field_immagine %> </p>
-            <p id="prev" style="height: 150px;"> <%= image_tag @top_section.image.url(:m) %></p>
-            <script type="text/javascript">
-                document.getElementById('top_section_image').addEventListener('change', handleFileSelect, false);
-            </script>
+          <p><%= custom_field_tag_with_label :time_entry, value %></p>
           <% end %>
         <% end %>
     </fieldset>

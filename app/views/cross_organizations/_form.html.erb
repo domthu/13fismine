@@ -12,10 +12,7 @@
   <p><%= f.check_box :se_visibile, :label => :label_se_visibile %></p>
 
   <p><%= f.file_field :image, :label => :field_immagine %> </p>
-
   <p id="prev" style="max-height: 300px;"> <%= image_tag @cross_organization.image.url(:m) %>   </p>
-
-  <p>
   <ul style="font-size: 0.8em; color: #aeaeae; margin: 0 0 5px  11%;">
     <li>
       il rapporto tra larghezza e altezza dell'immagine sarà 1/1 (quadrato)
@@ -26,5 +23,16 @@
   </ul>
 </div>
 <script type="text/javascript">
-    document.getElementById('cross_organization_image').addEventListener('change', handleFileSelect, false);
+    (function () {
+
+      //funct_avatar('i');
+      document.getElementById('cross_organization_image').addEventListener('change', function(event) {
+              if (!event) // i.e. the argument is undefined or null
+                event = window.event;
+                handleFileSelect(event, 'prev', '')
+      }, false);
+
+    })
+            ();
+
 </script>

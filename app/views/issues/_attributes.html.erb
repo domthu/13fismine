@@ -3,12 +3,22 @@
 <% if !@issue.new_record? %>
       <div class="splitcontents-3box">
         <p><%= f.file_field :image, :label => :field_immagine %> </p>
-
         <div id="prev" style="height: 155px;"> <%= image_tag @issue.image.url(:l) %></div>
-      </div>
-<script type="text/javascript">
-    document.getElementById('issue_image').addEventListener('change', handleFileSelect, false);
-</script>
+        </div>
+        <script type="text/javascript">
+          (function () {
+
+            //funct_avatar('i');
+            document.getElementById('issue_image').addEventListener('change', function(event) {
+                    if (!event) // i.e. the argument is undefined or null
+                      event = window.event;
+                      handleFileSelect(event, 'prev', '')
+            }, false);
+
+          })
+          ();
+        </script>
+
       <div class="splitcontents-3box">
 <% else %>
       <div class="splitcontentleft">

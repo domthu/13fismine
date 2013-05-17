@@ -8,22 +8,31 @@
   <p><%= f.text_field :ordinamento, :label => :field_ordinamento, :size => 3 %></p>
   <!--  <p><%# f.check_box :protetto, :label => :label_protetto %></p> -->
   <p><%= f.file_field :image, :label => :field_immagine %> </p>
-
   <p id="prev" style="max-height: 300px;"> <%= image_tag @section.image.url(:l) %>   </p>
-
   <p>
-  <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
-    <li>
-      il rapporto tra larghezza e altezza dell'immagine sarà 3/2
-    </li>
-    <li>
-      l'immagine verrà ritagliata a 300px per 200px
-    </li>
-    <li>
-      l'immagine verrà non deve superare i 200kb e di formato jpg/png/gif/bmp
-    </li>
-  </ul>
+    <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
+      <li>
+        il rapporto tra larghezza e altezza dell'immagine sarà 3/2
+      </li>
+      <li>
+        l'immagine verrà ritagliata a 300px per 200px
+      </li>
+      <li>
+        l'immagine verrà non deve superare i 200kb e di formato jpg/png/gif/bmp
+      </li>
+    </ul>
+  </p>
 </div>
 <script type="text/javascript">
-    document.getElementById('section_image').addEventListener('change', handleFileSelect, false);
+  (function () {
+
+    //funct_avatar('i');
+    document.getElementById('section_image').addEventListener('change', function(event) {
+            if (!event) // i.e. the argument is undefined or null
+              event = window.event;
+              handleFileSelect(event, 'prev', '')
+    }, false);
+
+  })
+  ();
 </script>
