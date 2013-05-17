@@ -99,39 +99,39 @@ class ProjectsController < ApplicationController
         @project.members << m
       end
 
-      @project.members_fs_add_author_manager()
-      #begin
-      #Domthu Add all collaboratori as a project members
-      #user.role_id = Redattore
-      @managers = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER, :admin => false })
-      @authors = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR, :admin => false})
-      #puts "***********MANAGER*****************************"
-      #puts @managers
-      for usr in @managers
-        member = Member.new
-        member.user = usr
-        #3 	Manager
-        #member.roles = [Role.find_by_name('Manager')]
-        member.roles = [Role.find_by_id(FeeConst::ROLE_MANAGER)]
-        #ActiveRecord::RecordInvalid (Validation failed: Ruolo non è valido):
-        #member.project = @project
-        #member.save
-        @project.members << member
-      end
-      #puts "***********AUTHORS*****************************"
-      #puts @authors
-      for usr in @authors
-        member = Member.new
-        member.user = usr
-        #4 	Redattore
-        #member.roles = [Role.find_by_name('Redattore')]
-        member.roles = [Role.find_by_id(FeeConst::ROLE_AUTHOR)]
-        #member.project = @project
-        #member.save
-        @project.members << member
-      end
-      #puts "***********************************************"
-      #rescue
+      @project.members_fs_add_author_manager(nil, nil)
+#      #begin
+#      #Domthu Add all collaboratori as a project members
+#      #user.role_id = Redattore
+#      @managers = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER, :admin => false })
+#      @authors = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR, :admin => false})
+#      #puts "***********MANAGER*****************************"
+#      #puts @managers
+#      for usr in @managers
+#        member = Member.new
+#        member.user = usr
+#        #3 	Manager
+#        #member.roles = [Role.find_by_name('Manager')]
+#        member.roles = [Role.find_by_id(FeeConst::ROLE_MANAGER)]
+#        #ActiveRecord::RecordInvalid (Validation failed: Ruolo non è valido):
+#        #member.project = @project
+#        #member.save
+#        @project.members << member
+#      end
+#      #puts "***********AUTHORS*****************************"
+#      #puts @authors
+#      for usr in @authors
+#        member = Member.new
+#        member.user = usr
+#        #4 	Redattore
+#        #member.roles = [Role.find_by_name('Redattore')]
+#        member.roles = [Role.find_by_id(FeeConst::ROLE_AUTHOR)]
+#        #member.project = @project
+#        #member.save
+#        @project.members << member
+#      end
+#      #puts "***********************************************"
+#      #rescue
 
       respond_to do |format|
         format.html {

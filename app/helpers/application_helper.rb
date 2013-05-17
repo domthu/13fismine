@@ -1104,17 +1104,34 @@ module ApplicationHelper
   # Returns the avatar image tag for the given +user+ if avatars are enabled
   # +user+ can be a User or a string that will be scanned for an email address (eg. 'joe <joe@foo.bar>')
   def avatar(user, options = { })
-    if Setting.gravatar_enabled?
-      options.merge!({:ssl => (defined?(request) && request.ssl?), :default => Setting.gravatar_default})
-      email = nil
-      if user.respond_to?(:mail)
-        email = user.mail
-      elsif user.to_s =~ %r{<(.+?)>}
-        email = $1
+    if user && !user.user_profile.nil?
+      #xs s m l
+      taglia = options[:size] || "60"
+      classe = options[:class] || " "
+      size = taglia.to_i
+      if size < 15
+        return user.user_profile.my_avatar(:xs, classe)
+      elsif size < 25
+        return user.user_profile.my_avatar(:s, classe)
+      elsif size < 51
+        return user.user_profile.my_avatar(:m, classe)
+      else
+        return user.user_profile.my_avatar(:l, classe)
       end
-      return gravatar(email.to_s.downcase, options) unless email.blank? rescue nil
+
     else
-      ''
+      if Setting.gravatar_enabled?
+        options.merge!({:ssl => (defined?(request) && request.ssl?), :default => Setting.gravatar_default})
+        email = nil
+        if user.respond_to?(:mail)
+          email = user.mail
+        elsif user.to_s =~ %r{<(.+?)>}
+          email = $1
+        end
+        return gravatar(email.to_s.downcase, options) unless email.blank? rescue nil
+      else
+        ''
+      end
     end
   end
 
@@ -1237,4 +1254,3 @@ def smart_truncate(text, char_limit)
     size>char_limit
   end.join(" ") +(text.size()>char_limit ? " "+ "..." : "" )
 end
-

@@ -217,19 +217,19 @@ class Project < ActiveRecord::Base
       p.data_dal = Date.today
       p.data_al = Date.today + (365 * 100)
       p.save!
-      p.members_fs_add_author_manager()
+      p.members_fs_add_author_manager(nil, nil)
     end
   end
 
-  def members_fs_add_author_manager()
+  def members_fs_add_author_manager(_managers, _authors)
     #begin
     #Domthu Add all collaboratori as a project members
     #user.role_id = Redattore
-    @managers = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER, :admin => false })
-    @authors = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR, :admin => false})
+    _managers = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER, :admin => false }) if _managers.nil?
+    _authors = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR, :admin => false}) if _authors.nil?
     #puts "***********MANAGER*****************************"
-    #puts @managers
-    for usr in @managers
+    #puts _managers
+    for usr in _managers
       member = Member.new
       member.user = usr
       #3 	Manager
@@ -239,8 +239,8 @@ class Project < ActiveRecord::Base
       self.members << member
     end
     #puts "***********AUTHORS*****************************"
-    #puts @authors
-    for usr in @authors
+    #puts _authors
+    for usr in _authors
       member = Member.new
       member.user = usr
       #4 	Redattore
@@ -1183,6 +1183,7 @@ class Project < ActiveRecord::Base
       meta = "della seconda meta di "
       date_edizione += 2
     end
+    date_edizione -= 1  #MariaCristina il 20130517
     identificatore = date_edizione.to_s + "-" + desired_year.to_s
     flash_name = "QUINDICINALE"
 

@@ -411,6 +411,7 @@ class Issue < ActiveRecord::Base
     'address_map',
     'section_id',
     'image',
+    'author_id',
     :if => lambda {|issue, user| issue.new_record? || user.allowed_to?(:edit_issues, issue.project) }
 
 #    add_column :issues, :se_sommario, :boolean, :default => 1

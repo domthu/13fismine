@@ -7,8 +7,8 @@
   <% end %>
 
   <p>
-    <% if @issue.new_record? %>
-<%= f.select :author_id, principals_options_for_select(@issue.assignable_users, User.current.id), :include_blank => true %>
+    <% if !@issue.new_record? %>
+<%= f.select :author_id, principals_options_for_select(@issue.assignable_users, @issue.author_id), :include_blank => true %>
     <% end %>
   </p>
 

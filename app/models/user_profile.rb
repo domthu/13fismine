@@ -21,21 +21,21 @@ class UserProfile < ActiveRecord::Base
   named_scope :invisibili, :conditions => " display_in =#{FeeConst::PROFILO_FS_INVISIBILE}" # PROFILO_FS_INVISIBILE = 4
 
 
-  def my_avatar(taglia) #'l per large  ecc
+  def my_avatar(taglia, other_css='') #'l per large  ecc
     if self.use_gravatar
-      '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="' + my_gravatar_url(self.user.mail.downcase, taglia) + '" alt="mio-avatar"></div>'
+      '<div class="fs-my-avatar-' + taglia.to_s + other_css + '"> <img class="gravatar" src="' + my_gravatar_url(self.user.mail.downcase, taglia) + '" alt="mio-avatar"></div>'
     else
       case taglia
         when :l
-          '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/' + self.photo.url(:l) + '" alt="mio-avatar"></div>'
+          '<div class="fs-my-avatar-' + taglia.to_s + other_css + '"> <img class="gravatar" src="/images/' + self.photo.url(:l) + '" alt="mio-avatar"></div>'
         when :m
-          '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/' + self.photo.url(:m) + '" alt="mio-avatar"></div>'
+          '<div class="fs-my-avatar-' + taglia.to_s + other_css + '"> <img class="gravatar" src="/images/' + self.photo.url(:m) + '" alt="mio-avatar"></div>'
         when :s
-          '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/' + self.photo.url(:s) + '" alt="mio-avatar"></div>'
+          '<div class="fs-my-avatar-' + taglia.to_s + other_css + '"> <img class="gravatar" src="/images/' + self.photo.url(:s) + '" alt="mio-avatar"></div>'
         when :xs
-          '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/' + self.photo.url(:xs) + '" alt="mio-avatar"></div>'
+          '<div class="fs-my-avatar-' + taglia.to_s + other_css + '"> <img class="gravatar" src="/images/' + self.photo.url(:xs) + '" alt="mio-avatar"></div>'
         else
-          '<div class="fs-my-avatar-' + taglia.to_s + '"> <img src="/images/commons/' + taglia.to_s + '-no_avatar.jpg" alt="mio-avatar"></div>'
+          '<div class="fs-my-avatar-' + taglia.to_s + other_css + '"> <img class="gravatar" src="/images/commons/' + taglia.to_s + '-no_avatar.jpg" alt="mio-avatar"></div>'
       end
     end
   end
