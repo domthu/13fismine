@@ -122,7 +122,7 @@
     <div id="question" style="margin-bottom:16px;">
       <%= "Stato del quesito: " + @issue.quesito_news.quesito_status_fs_text %>
       <%= link_to @issue.quesito_news.abbr_name, news_path(@issue.quesito_news) %>
-      <%= textilizable(@issue.quesito_news.summary) %>
+      <%= @issue.quesito_news.summary %>
     </div>
 <hr />
     <div id="responses" style="margin-bottom:16px;">

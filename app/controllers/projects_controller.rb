@@ -218,6 +218,11 @@ class ProjectsController < ApplicationController
                                             :include => [:project, :status, :tracker],
                                             :conditions => cond)
 
+    @conv_futuri = Issue.solo_convegni.all(:include => [:project, :status, :reservations, {:section => :top_section}], :conditions => ["(#{cond})"])
+    #@newsport = Issue.solo_newsport.find(:include => [:project, :status, :tracker], :conditions => ["(#{cond})"])
+
+    @quesiti = Issue.solo_quesiti.all(:include => [:project, :status, :quesito_news, {:author => :user_profile}, {:section => :top_section}], :conditions => ["(#{cond})"])
+
     if User.current.allowed_to?(:view_time_entries, @project)
       @total_hours = TimeEntry.visible.sum(:hours, :include => :project, :conditions => cond).to_f
     end

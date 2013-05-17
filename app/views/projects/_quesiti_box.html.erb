@@ -1,0 +1,40 @@
+<div class="quesiti box">
+  <h3><%=l(:label_respreq)%></h3>
+  <% if @quesiti.any? %>
+    <% @quesiti.each_with_index do |quesito_issue, index| %>
+      <% if quesito_issue.is_quesito? %>
+        <p class="subject <%= quesito_issue.css_classes %>" title="<%= h(truncate(quesito_issue.subject, :length => 125))%>"><b><%= (index + 1).to_s %> </b> Risposta: <%= link_to quesito_issue, issues_path(quesito_issue) %><%= quesito_issue.quesito_news.get_state_icons_fe %></p>
+
+
+      <p class="subject">
+        Stato: <%=h quesito_issue.status %>. Domanda: <blockquote cite="<%= news_path(quesito_issue.quesito_news) %>">
+        <%= link_to quesito_issue.quesito_news.abbr_name, news_path(quesito_issue.quesito_news) %>
+        <%= quesito_issue.quesito_news.summary %></blockquote>
+      </p>
+      <% other_risposte = quesito_issue.quesito_news.issues.count - 1 %>
+      <% if other_risposte > 0 %>
+        <p class="subject">
+      <%# if quesito_issue.quesito_news.is_issue_reply? %>
+        <% if other_risposte == 1 %>
+          Un altra risposta:
+        <% else %>
+          Altre risposte (<b><%= other_risposte.to_s %></b>):
+        <% end %>
+        <ul>
+        <% quesito_issue.quesito_news.issues.each_with_index do |risposta, i| %>
+          <% if risposta.id != quesito_issue.id %>
+          <li><%= (i + 1).to_s %> <%= link_to risposta %></li>
+          <% end %>
+        <% end %>
+        </ul>
+        </p>
+      <%# else  Risposta: Nessuna risposta adesso %>
+      <% end %>
+      <% else %>
+        qualcosa di strano
+      <% end %>
+    <% end %>
+  <% else %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+</div>

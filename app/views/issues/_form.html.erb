@@ -7,6 +7,12 @@
   <% end %>
 
   <p>
+    <% if @issue.new_record? %>
+<%= f.select :author_id, principals_options_for_select(@issue.assignable_users, User.current.id), :include_blank => true %>
+    <% end %>
+  </p>
+
+  <p>
     <% if !@issue.new_record? && @issue.se_prenotazione %>
         <%= f.select :section_id, [[@issue.section.full_name, @issue.section_id]], :include_blank => false, :required => true, :size => 100, :title => l(:label_section) %>
     <% else %>
@@ -34,13 +40,57 @@
   </div>
 
 
+ <%# content for yui %>
+<% if !@issue.new_record? %>
   <div class="yui-skin-sam"><%= f.text_area :description,
-                                            :cols => 90,
-                                            :rows => (@issue.description.blank? ? 75 : [[125, @issue.description.length / 50].max, 100].min),
-                                            :accesskey => accesskey(:edit),
-                                            :id => 'issue_description_field',
-                                            :label => '' %>
+        :cols => 90,
+        :rows => (@issue.description.blank? ? 75 : [[125, @issue.description.length / 50].max, 100].min),
+        :accesskey => accesskey(:edit),
+        :id => 'issue_description_field',
+        :label => '' %>
   </div>
+<% end %>
+<% if !@issue.new_record? %>
+<% content_for :header_yui do %>
+    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
+    <%= javascript_include_tag "yui/element-min.js" %>
+    <%= javascript_include_tag "yui/container_core-min.js" %>
+    <%= javascript_include_tag "yui/menu-min.js" %>
+    <%= javascript_include_tag "yui/button-min.js" %>
+    <%= javascript_include_tag "yui/editor-min.js" %>
+    <%= javascript_include_tag "yui/yui_fs.js" %>
+<script type="text/javascript" charset="utf-8">
+
+//Event.observe(window, 'load', function() {
+//});
+//document.observe("dom:loaded", loadme);
+
+(function () {
+    loadme();
+})();
+
+function loadme(){
+        var myConfig1 = {
+            handleSubmit:true,
+             height:'100%',
+            width:'99%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        var myEditor1 = init_yui_editor_fs('issue_description_field', myConfig1);
+
+}
+
+</script>
+<% end %>
+<% end %>
+
 </div>
 
 <% if @issue.new_record? %>
@@ -59,35 +109,3 @@
 <%# wikitoolbar_for 'issue_subject' %>
 <%# wikitoolbar_for 'issue_summary' %>
 <%# wikitoolbar_for 'issue_description' %>
-
-
-<% content_for :header_yui do %>
-    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
-    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
-    <%= javascript_include_tag "yui/element-min.js" %>
-    <%= javascript_include_tag "yui/container_core-min.js" %>
-    <%= javascript_include_tag "yui/menu-min.js" %>
-    <%= javascript_include_tag "yui/button-min.js" %>
-    <%= javascript_include_tag "yui/editor-min.js" %>
-    <%= javascript_include_tag "yui/yui_fs.js" %>
-<% end %>
-<script type="text/javascript" charset="utf-8">
-    (function () {
-        var myConfig1 = {
-            handleSubmit:true,
-             height:'100%',
-            width:'99%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        var myEditor1 = init_yui_editor_fs('issue_description_field', myConfig1);
-
-    })
-            ();
-
-</script>

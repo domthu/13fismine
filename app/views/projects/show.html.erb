@@ -15,7 +15,7 @@
    <li><%=l(:label_date_from)%> <%= format_date @project.data_dal %> <%=l(:label_date_to)%> <%= format_date @project.data_al %> </li>
    <li style="display:none"><%=l(:label_titolo)%> <%= @project.titolo %></li>
    <li><%=l(:label_search_key)%> <%= @project.search_key %></li>
-   
+
   <% unless @project.homepage.blank? %><li><%=l(:field_homepage)%>: <%= auto_link(h(@project.homepage)) %></li><% end %>
   <% if @subprojects.any? %>
    <li><%=l(:label_subproject_plural)%>:
@@ -58,13 +58,12 @@
 <div class="splitcontentright">
   <%= render :partial => 'members_box' %>
 
-  <% if @news.any? && authorize_for('news', 'index') %>
-  <div class="news box">
-    <h3><%=l(:label_news_latest)%></h3>
-    <%= render :partial => 'news/news', :collection => @news %>
-    <p><%= link_to l(:label_news_view_all), :controller => 'news', :action => 'index', :project_id => @project %></p>
-  </div>
-  <% end %>
+  <%= render :partial => 'news_box' %>
+
+  <%= render :partial => 'convegni_box' %>
+
+  <%= render :partial => 'quesiti_box' %>
+
   <%= call_hook(:view_projects_show_right, :project => @project) %>
 </div>
 

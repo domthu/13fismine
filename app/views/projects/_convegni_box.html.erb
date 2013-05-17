@@ -1,0 +1,34 @@
+<div class="eventi box">
+  <h3><%=l(:field_evt)%></h3>
+  <% if @conv_futuri.any? %>
+    <% @conv_futuri.each_with_index do |con, index| %>
+      <% if con.is_convegno? %>
+        <p class="subject <%= con.css_classes %>" title="<%= h(truncate(con.subject, :length => 200))%>"><b><%= (index + 1).to_s %> </b><%= link_to con, issues_path(con) %></p>
+        <%= con.convegno_status_fs_text %>
+        <% if !con.reservations.nil? && con.reservations.count > 0 %>
+          <table class="list reservations">
+            <thead><tr>
+              <th style='width: 20%;text-align:left;'><%=  l(:label_user)%></th>
+              <th style='width: 10%;text-align:left;'><%=  l(:label_num_persone)%></th>
+            </tr></thead>
+            <tbody>
+            <% con.reservations.each do |reservation| %>
+              <tr class="<%= cycle 'odd', 'even' %>">
+                <td class="username"><%= avatar(reservation.user, :size => "14") %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
+                <td align="center"><%=h reservation.num_persone %></td>
+              </tr>
+            <% end %>
+            <tr>
+              <td class="total center"><%=h con.reservations.count.to_s %></td>
+              <td class="total center"><%=h con.reservations.sum(:num_persone).to_s %></td>
+            </tr>
+          </table>
+       <% end %>
+      <% else %>
+        qualcosa di strano
+      <% end %>
+    <% end %>
+  <% else %>
+    <p class="nodata"><%=l(:label_prenotazioni_none)%></p>
+  <% end %>
+</div>

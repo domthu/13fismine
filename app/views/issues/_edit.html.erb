@@ -16,26 +16,23 @@
         </fieldset>
     <% end %>
     <% if User.current.allowed_to?(:log_time, @project) %>
-          <h1 style="color: #00212D;">YUI  _________________ </h1>
         <fieldset class="tabular"><legend><%= l(:button_log_time) %></legend>
         <% fields_for :time_entry, @time_entry, { :builder => TabularFormBuilder, :lang => current_language} do |time_entry| %>
-        <div class="splitcontentleft">
-        <p><%= time_entry.text_field :hours, :size => 6, :label => :label_spent_time %> <%= l(:field_hours) %></p>
-        </div>
-        <div class="splitcontentright">             <h1 style="color: #228b22;">YUI  _________________ </h1>
-        <p><%= time_entry.select :activity_id, activity_collection_for_select_options %></p>
-         </div>
-        <p><%= time_entry.text_field :comments, :size => 60 %></p>
-        <% @time_entry.custom_field_values.each do |value| %>
-        <p><%= custom_field_tag_with_label :time_entry, value %></p>
-
-                  <p>immagine:<%= f.file_field :image, :label => :field_immagine %> </p>
-                  <p id="prev" style="height: 150px;"> <%= image_tag @top_section.image.url(:m) %></p>
-                  <script type="text/javascript">
-                      document.getElementById('top_section_image').addEventListener('change', handleFileSelect, false);
-                  </script>
-
-        <% end %>
+          <div class="splitcontentleft">
+          <p><%= time_entry.text_field :hours, :size => 6, :label => :label_spent_time %> <%= l(:field_hours) %></p>
+          </div>
+          <div class="splitcontentright">
+          <p><%= time_entry.select :activity_id, activity_collection_for_select_options %></p>
+           </div>
+          <p><%= time_entry.text_field :comments, :size => 60 %></p>
+          <% @time_entry.custom_field_values.each do |value| %>
+            <p><%= custom_field_tag_with_label :time_entry, value %></p>
+            <p>immagine:<%= f.file_field :image, :label => :field_immagine %> </p>
+            <p id="prev" style="height: 150px;"> <%= image_tag @top_section.image.url(:m) %></p>
+            <script type="text/javascript">
+                document.getElementById('top_section_image').addEventListener('change', handleFileSelect, false);
+            </script>
+          <% end %>
         <% end %>
     </fieldset>
     <% end %>

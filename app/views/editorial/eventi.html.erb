@@ -20,7 +20,7 @@
           <% @conv_futuri.each do |con| %>
               <div class="fs-convegni-border">
                 <div class="fs-convegni-futuri-data"><span>
-                                                     <%= con.section %> &nbsp;</span>
+                  <%= con.section %> &nbsp;</span>
                   <span><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
                 </div>
                 <div class="fs-convegni-futuri">

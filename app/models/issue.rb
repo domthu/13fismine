@@ -96,6 +96,7 @@ class Issue < ActiveRecord::Base
   named_scope :with_filter, lambda {|filter| { :conditions => merge_conditions(filter) } }
   named_scope :solo_convegni, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_CONVEGNI.to_s)
   named_scope :solo_newsport, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_NEWSPORT.to_s)
+  named_scope :solo_quesiti, :conditions => merge_conditions("#{Issue.table_name}.news_id is not null")
 
   before_create :default_assign
   before_save :close_duplicates, :update_done_ratio_from_issue_status

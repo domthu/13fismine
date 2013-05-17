@@ -166,9 +166,10 @@ Redmine::MenuManager.map :top_menu do |menu|
   menu.push :activity, { :controller => 'activities', :action => 'index' }, :caption => :label_activity_plural, :if => Proc.new { User.current.logged? }
   menu.push :administration, { :controller => 'admin', :action => 'index' }, :if => Proc.new { User.current.admin? }, :last => true
   #menu.push :help, Redmine::Info.help_url, :last => true
-  menu.push :help, Redmine::Info.help_url, :if => Proc.new { User.current.admin? }, :target => '_blank', :last => true
-  menu.push :help_user, Redmine::Info.help_user_url, :if => Proc.new { User.current.admin? }, :target => '_blank', :last => true
+  menu.push :help, Redmine::Info.help_url, :if => Proc.new { User.current.admin? }, :html => {:target => '_blank'}
+  menu.push :help_user, Redmine::Info.help_user_url, :if => Proc.new { User.current.admin? }, :html => {:target => '_blank'}
 end
+#:html => {:onclick => 'return showTour();', :target => '_blank'}
 
 Redmine::MenuManager.map :top_menu_fs do |menu|
   menu.push :public_site_home, :editorial_path

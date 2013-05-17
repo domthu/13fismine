@@ -1,12 +1,18 @@
 <% fields_for :issue, @issue, :builder => TabularFormBuilder do |f| %>
     <div id="attributes-box">
+<% if !@issue.new_record? %>
       <div class="splitcontents-3box">
         <p><%= f.file_field :image, :label => :field_immagine %> </p>
 
         <div id="prev" style="height: 155px;"> <%= image_tag @issue.image.url(:l) %></div>
       </div>
+<script type="text/javascript">
+    document.getElementById('issue_image').addEventListener('change', handleFileSelect, false);
+</script>
       <div class="splitcontents-3box">
-
+<% else %>
+      <div class="splitcontentleft">
+<% end %>
         <p><%= f.check_box :se_visible_web %></p>
 
         <p><%= f.check_box :se_visible_data %></p>
@@ -46,7 +52,11 @@
             </p>
         <% end %>
       </div>
+<% if !@issue.new_record? %>
       <div class="splitcontents-3box">
+<% else %>
+      <div class="splitcontentright">
+<% end %>
         <% if @issue.new_record? || @allowed_statuses.any? %>
             <p><%= f.select :status_id, (@allowed_statuses.collect { |p| [p.name, p.id] }), :required => true %></p>
         <% else %>
@@ -62,6 +72,8 @@
 
         <p><%= f.text_field :due_date, :size => 10, :disabled => !@issue.leaf? %><%= calendar_for('issue_due_date') if @issue.leaf? %></p>
 
+<% if !@issue.new_record? %>
+
         <p><%= f.text_field :estimated_hours, :size => 3, :disabled => !@issue.leaf? %> <%= l(:field_hours) %></p>
 
         <p><label><%= l(:field_ordinamento) %></label> <%= f.text_field :ordinamento, :size => 2 %></p>
@@ -69,13 +81,11 @@
         <% if @issue.leaf? && Issue.use_field_for_done_ratio? %>
             <p><%= f.select :done_ratio, ((0..10).to_a.collect { |r| ["#{r*10} %", r*10] }) %></p>
         <% end %>
+<% end %>
 
       </div>
     </div>
-      <div style="clear:both;"></div>
-      <%= render :partial => 'issues/form_custom_fields' %>
+    <div style="clear:both;"></div>
+    <%= render :partial => 'issues/form_custom_fields' %>
 
 <% end %>
-<script type="text/javascript">
-    document.getElementById('issue_image').addEventListener('change', handleFileSelect, false);
-</script>
