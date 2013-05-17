@@ -104,83 +104,40 @@
 <%# end %>
 <script type="text/javascript" charset="utf-8">
     (function () {
-        var myConfig1 = {
-            handleSubmit:true,
-            height:'200px',
-            width:'95%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:true,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        var myEditor1 = init_yui_editor_fs('titoli', myConfig1);
-        var myConfig2 = {
-            handleSubmit:true,
-            height:'400px',
-            width:'95%',
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('curriculum', myConfig2);
+      var myConfig1 = {
+          handleSubmit:true,
+          height:'200px',
+          width:'95%',
+          resize:true,
+          animate:true,
+          dompath:true,
+          focusAtStart:true,
+          nodeChangeDelay:false,
+          removeLineBreaks:true,
+          drag:true
+      };
+      var myEditor1 = init_yui_editor_fs('titoli', myConfig1);
+      var myConfig2 = {
+          handleSubmit:true,
+          height:'400px',
+          width:'95%',
+          animate:true,
+          dompath:true,
+          focusAtStart:false,
+          nodeChangeDelay:false,
+          removeLineBreaks:true,
+          drag:true
+      };
+      init_yui_editor_fs('curriculum', myConfig2);
+
+      //funct_avatar('i');
+      document.getElementById('photo').addEventListener('change', function(event) {
+              if (!event) // i.e. the argument is undefined or null
+                event = window.event;
+                handleFileSelect(event, 'fs-photo-edit-i', 'i')
+      }, false);
+
     })
             ();
 
-</script>
-<script>
-    // valori accettati 1= Immagine Avatar Papareclip , 0 = Immagine Gravatar , 2  = Nuova immagine upload
-    function funct_avatar(val) {
-        if (val == 'g') {
-            document.getElementById('fs-photo-edit-i').style.display = 'none';
-            document.getElementById('fs-photo-edit-a').style.display = 'none';
-            document.getElementById('fs-photo-edit-g').style.display = 'block';
-        }
-        else if (val == 'a') {
-            document.getElementById('fs-photo-edit-i').style.display = 'none';
-            document.getElementById('fs-photo-edit-a').style.display = 'block';
-            document.getElementById('fs-photo-edit-g').style.display = 'none';
-        }
-        else if (val == 'i') {
-            document.getElementById('fs-photo-edit-i').style.display = 'block';
-            document.getElementById('fs-photo-edit-a').style.display = 'none';
-            document.getElementById('fs-photo-edit-g').style.display = 'none';
-            document.getElementById('use_gravatar_false').checked = true;
-            document.getElementById('use_gravatar_true').checked = false;
-            document.getElementById('use_gravatar_false').setAttribute('checked', 'checked');
-        }
-
-    }
-    function handleFileSelect(evt) {
-        var files = evt.target.files; // FileList object
-        // Loop through the FileList and render image files as thumbnails.
-        for (var i = 0, f; f = files[i]; i++) {
-
-            // Only process image files.
-            if (!f.type.match('image.*')) {
-                continue;
-            }
-            var reader = new FileReader();
-            // Closure to capture the file information.
-            reader.onload = (function (theFile) {
-                return function (e) {
-                    // Render thumbnail.
-                    // var span = document.createElement('span');
-                    var span = document.getElementById('fs-photo-edit-i');
-                    span.innerHTML = ['<img class="thumb" src="', e.target.result,
-                        '" title="', escape(theFile.name), '"/>'].join('');
-                    document.getElementById('fs-photo-edit-i').insertBefore(span, null);
-                };
-            })(f);
-            // Read in the image file as a data URL.
-            reader.readAsDataURL(f);
-        }
-        funct_avatar('i');
-    }
-    document.getElementById('photo').addEventListener('change', handleFileSelect, false);
 </script>
