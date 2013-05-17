@@ -49,6 +49,7 @@
   <%= javascript_include_tag "script.js" %>
   <%= javascript_include_tag "script.responsive.js" %>
   <%= javascript_include_tag "jquery.carouFredSel-6.2.1-packed.js" %>
+  <%= javascript_include_tag "application_fs.js" %>
   <script type="text/javascript">
       //$(function () {
       $(document).ready(function() {
@@ -62,39 +63,45 @@
                   pauseOnHover	: true
               }
           });
-          $("#carousel_tramenu_js").carouFredSel({
-          	responsive	: true,
-          	scroll		: {
-          		fx			: "crossfade"
-          	},
-          	items		: {
-          		visible		: 1,
-          		width		: 290,
-          		height		: 94
-          	}
-          });
-          $("#carousel_block_l_js").carouFredSel({
-          	height: 215,
-          	items: {
-          		visible: 1,
-          		start: "random",
-          		width: 256,
-          		height: 215
-          	},
-          	auto: {
-          		timeoutDuration: 3000,
-          		fx: "fade",
-          		duration: 2000
-          	},
-              pagination: "#block_l_js_pag",
-              keys: false
-          });
+          if ($("#carousel_tramenu_js").length > 0) {
+            $("#carousel_tramenu_js").carouFredSel({
+            	responsive	: true,
+            	scroll		: {
+            		fx			: "crossfade"
+            	},
+            	items		: {
+            		visible		: 1,
+            		width		: 290,
+            		height		: 94
+            	}
+            });
+          }
+          if ($("#carousel_block_l_js").length > 0) {
+            $("#carousel_block_l_js").carouFredSel({
+            	height: 215,
+            	items: {
+            		visible: 1,
+            		start: "random",
+            		width: 256,
+            		height: 215
+            	},
+            	auto: {
+            		timeoutDuration: 3000,
+            		fx: "fade",
+            		duration: 2000
+            	},
+                pagination: "#block_l_js_pag",
+                keys: false
+            });
+          }
           //$("#assos_carousel").removeClass("hide");
           // $("input[type=submit]").button();
 
           //Focus
           //< %= javascript_tag "$('#username').focus();" %>
-          $('#username').focus();
+          if ($("#username").length > 0) {
+            $('#username').focus();
+          }
           //Scroll to top
           $(window).scroll(function() {
               if(jQuery(this).scrollTop() != 0) {
