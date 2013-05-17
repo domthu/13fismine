@@ -60,17 +60,16 @@
 <%# wikitoolbar_for 'issue_summary' %>
 <%# wikitoolbar_for 'issue_description' %>
 
-
-<% content_for :header_yui do %>
-    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
-    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
-    <%= javascript_include_tag "yui/element-min.js" %>
-    <%= javascript_include_tag "yui/container_core-min.js" %>
-    <%= javascript_include_tag "yui/menu-min.js" %>
-    <%= javascript_include_tag "yui/button-min.js" %>
-    <%= javascript_include_tag "yui/editor-min.js" %>
-    <%= javascript_include_tag "yui/yui_fs.js" %>
-<% end %>
+<%# content_for :header_yui do %>
+<%# end %>
+<%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+<%= javascript_include_tag "yui/yahoo-dom-event.js" %>
+<%= javascript_include_tag "yui/element-min.js" %>
+<%= javascript_include_tag "yui/container_core-min.js" %>
+<%= javascript_include_tag "yui/menu-min.js" %>
+<%= javascript_include_tag "yui/button-min.js" %>
+<%= javascript_include_tag "yui/editor-min.js" %>
+<%= javascript_include_tag "yui/yui_fs.js" %>
 <script type="text/javascript" charset="utf-8">
     (function () {
         var myConfig1 = {
