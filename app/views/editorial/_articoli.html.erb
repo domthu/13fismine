@@ -20,7 +20,7 @@
                           <div class="fs-postmetadatafooter-author-ko">
                             <div class="fs-postmetadatafooter-author">
                              <% if !articolo.author.nil? && !articolo.author.user_profile.nil? %>
-                                  <span><%= articolo.author.user_profile.my_avatar(:xs) %> </span>
+                                  <span><%= link_to  articolo.author.user_profile.my_avatar(:xs), profile_show_path(articolo.author.user_profile)   %> </span>
                               <% else %>
                                   <span style="width: 32px;">Di:</span>
                               <% end %>
@@ -35,7 +35,7 @@
                           <div class="fs-postmetadatafooter-author-ok">
                             <div class="fs-postmetadatafooter-author">
                               <% if !articolo.author.nil? && !articolo.author.user_profile.nil? %>
-                                  <span><%= articolo.author.user_profile.my_avatar(:xs) %> </span>
+                                  <span><%= link_to articolo.author.user_profile.my_avatar(:s), profile_show_path(articolo.author.user_profile) %> </span>
                               <% else %>
                                   <span style="width: 32px;">Di:</span>
                               <% end %>
