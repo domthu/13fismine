@@ -1143,7 +1143,7 @@ module ApplicationHelper
       false
   end
 #<% if defined?(group_banner.url) and !(group_banner.url.nil?) %>
-#<a href="<%= get_url(group_banner.url) %>" target="_blank"><%=truncate_lines(truncate_single_line(group_banner.url), :lenght => 50) %></a>
+#<a href="<%= get_url(group_banner.url) %>" target="_blank"><%=truncate_lines(truncate_single_line(group_banner.url), :length => 50) %></a>
 #<% else %>
 #<%=h group_banner.url %>
 #<% end %>
@@ -1156,7 +1156,7 @@ module ApplicationHelper
       else
         okuri = uri
       end
-      "<a href='" + okuri + "' target='_blank'>" + truncate_lines(truncate_single_line(uri), :lenght => 50) + "</a>".html_safe
+      "<a href='" + okuri + "' target='_blank'>" + truncate_lines(truncate_single_line(uri), :length => 50) + "</a>".html_safe
     end
   end
 

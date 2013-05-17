@@ -36,7 +36,7 @@
       <%= l(:label_total) %>: <%= h @section.issues.count %>
       <ul>
         <% @section.issues.each do |issue| %>
-          <li><%= link_to truncate_lines(truncate_single_line(issue), :lenght => 50), issue %></li>
+          <li><%= link_to truncate_lines(truncate_single_line(issue), :length => 50), issue %></li>
         <% end %>
       </ul>
     <% else %>

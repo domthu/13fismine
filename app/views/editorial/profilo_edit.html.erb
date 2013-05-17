@@ -75,18 +75,20 @@
 
         <p>  <%= link_to("elimina profilo", profile_destroy_path(@user_profile.id), :class => "fs-rosso-button", :confirm => "conferma?") %></p>
       </div>
+      <br/>&nbsp; <br/>
       <div class="cleared"></div>
       <div class="yui-skin-sam">
         <%= label_tag l(:label_titoli) %>
         <br/>
 
-        <p><%= text_area_tag :titoli, :name => 'titoli', :required => false, :cols => 120, :rows => 15 %>  </p>
+        <p><%= text_area_tag :titoli, @user_profile.titoli , :name => 'titoli', :required => false, :cols => 120, :rows => 15 %>  </p>
       </div>
+      <br/>&nbsp; <br/>
       <div class="yui-skin-sam">
         <%= label_tag l(:label_curriculum) %>
         <br/>
 
-        <p><%= text_area_tag :curriculum, :name => 'curriculum', :required => false, :cols => 120, :rows => 15 %>  </p>
+        <p><%= text_area_tag :curriculum, @user_profile.curriculum, :name => 'curriculum', :required => false, :cols => 120, :rows => 15 %>  </p>
       </div>
   <% end %>
 </div>

@@ -1,5 +1,8 @@
 /* personalizzazioni */
-
+.htmloverflow{
+    display: block;
+    overflow: auto;
+}
 .fs-art-attachments{
 text-align: center;
     padding: 10px 10%;

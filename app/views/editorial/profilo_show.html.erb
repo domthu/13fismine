@@ -30,11 +30,12 @@
           <div class="fs-profiles-bt">
           <p class="fs-profiles-labels">Titoli </p>
 
-          <p><%= textilizable @user_profile.titoli %></p>
+          <div class="htmloverflow"><%= raw @user_profile.titoli %></div>
+            <br/>&nbsp; <br/>
 
           <p class="fs-profiles-labels"> Curriculum </p>
 
-          <p><%= textilizable @user_profile.curriculum %></p>
+          <div class="htmloverflow"><%= raw @user_profile.curriculum %></div>
           </div>
         </article>
         <br/>&nbsp; <br/>
