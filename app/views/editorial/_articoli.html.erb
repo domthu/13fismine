@@ -24,7 +24,7 @@
                               <% else %>
                                   <span style="width: 32px;">Di:</span>
                               <% end %>
-                              <span style="padding-left: 6px;"> <%= h articolo.author %></span>
+                              <span style="padding: 0 3px 0 6px;"> <%= h articolo.author %></span>
                             </div>
                             <% if !articolo.author.nil? && !articolo.author.user_profile.nil? %>
                                 <div class="fs-postmetadatafooter-author-qualifica"><%= articolo.author.user_profile.fs_qualifica unless articolo.author.user_profile.fs_qualifica.nil? %>  </div>
@@ -35,11 +35,11 @@
                           <div class="fs-postmetadatafooter-author-ok">
                             <div class="fs-postmetadatafooter-author">
                               <% if !articolo.author.nil? && !articolo.author.user_profile.nil? %>
-                                  <span><%= link_to articolo.author.user_profile.my_avatar(:s), profile_show_path(articolo.author.user_profile) %> </span>
+                                  <span><%= link_to articolo.author.user_profile.my_avatar(:xs), profile_show_path(articolo.author.user_profile) %> </span>
                               <% else %>
                                   <span style="width: 32px;">Di:</span>
                               <% end %>
-                              <span style="padding-left: 6px;"> <%= h articolo.author %></span>
+                              <span style="padding: 0 3px 0 6px;"> <%= h articolo.author %></span>
                             </div>
                             <% if !articolo.author.nil? && !articolo.author.user_profile.nil? %>
                                 <div class="fs-postmetadatafooter-author-qualifica"><%= articolo.author.user_profile.fs_qualifica unless articolo.author.user_profile.fs_qualifica.nil? %>  </div>
