@@ -1104,16 +1104,20 @@ module ApplicationHelper
   # Returns the avatar image tag for the given +user+ if avatars are enabled
   # +user+ can be a User or a string that will be scanned for an email address (eg. 'joe <joe@foo.bar>')
   def avatar(user, options = { })
+    #classe = options[:class] || " "
+    classe = options.delete(:class) || " "
+    #if user && user.firstname == "pippo" && !user.user_profile.nil?
     if user && !user.user_profile.nil?
+      #{ :size => "24", :class => "journal-link" }
       #xs s m l
       taglia = options[:size] || "60"
-      classe = options[:class] || " "
+
       size = taglia.to_i
-      if size < 15
+      if size < 30 #15
         return user.user_profile.my_avatar(:xs, classe)
-      elsif size < 25
+      elsif size < 50 #20
         return user.user_profile.my_avatar(:s, classe)
-      elsif size < 51
+      elsif size < 70 #30
         return user.user_profile.my_avatar(:m, classe)
       else
         return user.user_profile.my_avatar(:l, classe)

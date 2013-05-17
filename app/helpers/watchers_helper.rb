@@ -46,7 +46,7 @@ module WatchersHelper
   def watchers_list(object)
     remove_allowed = User.current.allowed_to?("delete_#{object.class.name.underscore}_watchers".to_sym, object.project)
     lis = object.watcher_users.collect do |user|
-      s = avatar(user, :size => "16").to_s + link_to_user(user, :class => 'user').to_s
+      s = avatar(user, { :size => "16", :class => "no-div" }).to_s + link_to_user(user, :class => 'user').to_s
       if remove_allowed
         url = {:controller => 'watchers',
                :action => 'destroy',

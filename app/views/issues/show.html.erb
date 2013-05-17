@@ -3,7 +3,7 @@
 <h2><%= issue_heading(@issue) %></h2>
 
 <div class="<%= @issue.css_classes %> details">
-  <%= avatar(@issue.author, :size => "50") %>
+  <%= avatar(@issue.author, { :size => "50", :class => "no-div" }) %>
   <div class="subject">
     <%= render_issue_subject_with_tree(@issue) %>
   </div>
@@ -28,7 +28,7 @@
     <th class="start-date"><%=l(:field_start_date)%>:</th><td class="start-date"><%= format_date(@issue.start_date) %></td>
 </tr>
 <tr>
-    <th class="assigned-to"><%=l(:field_assigned_to)%>:</th><td class="assigned-to"><%= avatar(@issue.assigned_to, :size => "14") %><%= @issue.assigned_to ? link_to_user(@issue.assigned_to) : "-" %></td>
+    <th class="assigned-to"><%=l(:field_assigned_to)%>:</th><td class="assigned-to"><%= avatar(@issue.assigned_to, { :size => "14", :class => "no-div" } ) %><%= @issue.assigned_to ? link_to_user(@issue.assigned_to) : "-" %></td>
     <th class="due-date"><%=l(:field_due_date)%>:</th><td class="due-date"><%= format_date(@issue.due_date) %></td>
 </tr>
 <tr>
@@ -204,7 +204,7 @@
                 <%= link_to(h(reservation.to_s), reservation_path(reservation), :class => 'icon icon-summary') if User.current.admin? %>
                 <%= h(reservation.to_s) if !User.current.admin? %>
             </td>
-            <td class="username"><%= avatar(reservation.user, :size => "14") %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
+            <td class="username"><%= avatar(reservation.user, { :size => "14", :class => "no-div" }) %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
             <td><%= format_date(reservation.created_at) %></td>
             <td align="center"><%=h reservation.num_persone %></td>
             <td align="center"><%=h reservation.prezzo %></td>

@@ -14,7 +14,7 @@
             <tbody>
             <% con.reservations.each do |reservation| %>
               <tr class="<%= cycle 'odd', 'even' %>">
-                <td class="username"><%= avatar(reservation.user, :size => "14") %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
+                <td class="username"><%= avatar(reservation.user, { :size => "14", :class => "no-div" }) %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
                 <td align="center"><%=h reservation.num_persone %></td>
               </tr>
             <% end %>
