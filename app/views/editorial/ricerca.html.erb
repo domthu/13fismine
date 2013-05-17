@@ -1,57 +1,81 @@
-<h2><%= l(:label_search) %></h2>
-  In questa pagina:
-  <ul>
-    <li>Ricerca generale sullo storico</li>
-    <li>Presentazione risultati per tipo ricerca</li>
-  </ul>
-<div class="box">
-<% form_tag({}, :method => :get) do %>
-<%= label_tag "search-input", l(:description_search), :class => "hidden-for-sighted" %>
-<p><%= text_field_tag 'q', @question, :size => 60, :id => 'search-input' %>
-<%= javascript_tag "Field.focus('search-input')" %>
-<%= project_select_tag %>
-<%= hidden_field_tag 'all_words', '', :id => nil %>
-<label><%= check_box_tag 'all_words', 1, @all_words %> <%= l(:label_all_words) %></label>
-<%= hidden_field_tag 'titles_only', '', :id => nil %>
-<label><%= check_box_tag 'titles_only', 1, @titles_only %> <%= l(:label_search_titles_only) %></label>
-</p>
-<p>
-<% @object_types.each do |t| %>
-<label><%= check_box_tag t, 1, @scope.include?(t) %> <%= type_label(t) %></label>
-<% end %>
-</p>
+<div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
+  <article class="fs-post fs-article">
+    <div class="fs-postcontent fs-postcontent-0 clearfix">
+      <div class="fs-content-layout">
+        <div class="fs-content-layout-row">
+          <div class="fs-layout-cell layout-item-0" style="width: 99%;">
+            <h2><%= l(:label_search) %> </h2>
+            <div class="fs-ricerca-header">
+              <% form_tag({}, :method => :get) do %>
+                  <div class="fs-ricerca-sx">
+                    <%#label_tag "search-input", l(:description_search), :class => "hidden-for-sighted" %>
+                    <%= text_field_tag 'q', @question, :size => 60, :id => 'search-input' %>
+                      <%= javascript_tag "Field.focus('search-input')" %>
+                      <br /> &nbsp;
+                      <span style="text-align:center; width: 100%; display:block;">
+                      <%= submit_tag l(:button_submit), :name => 'submit', :class => 'fs-blu-button' %>
+                    </span>
+                  </div>
+                  <div class="fs-ricerca-dx">
+                      <span><%= project_select_tag %> <%= hidden_field_tag 'all_words', '', :id => nil %>
+                      <label><%= check_box_tag 'all_words', 1, @all_words %> <%= l(:label_all_words) %></label></span>
+                        <span>&nbsp; &nbsp;&nbsp; <%= hidden_field_tag 'titles_only', '', :id => nil %>
+                        <label><%= check_box_tag 'titles_only', 1, @titles_only %> <%= l(:label_search_titles_only) %></label>
+                        </span>
+                    <br />
 
-<p><%= submit_tag l(:button_submit), :name => 'submit' %></p>
-<% end %>
-</div>
+                      <% @object_types.each do |t| %>
+                          <label><%= check_box_tag t, 1, @scope.include?(t) %> <%= type_label(t) %></label>   &nbsp;
+                      <% end %>
+                  </div>
+              <% end %>
+            </div>
+            <div class="clearfix"></div>
+            <% if @results %>
+                <div>
+                    <h3><%= l(:label_result_plural) %> (<%= @results_by_type.values.sum %>)</h3>
+                    <dl id="search-results">
+                      <% @results.each do |e| %>
+                          <dt class="<%= e.event_type %>"><%= content_tag('span', h(e.project) , :class => 'project') unless @project == e.project %> <%= link_to highlight_tokens(truncate(h(e.event_title), :length => 255), @tokens), event_url_fs(e)  %></dt>
+                          <dd><span class="description"><%= raw(highlight_tokens(e.event_description, @tokens)).html_safe %></span>
+                        <!--  <dd><span class="description"><%# highlight_tokens(raw(e.event_description.html_safe), @tokens) %></span>  -->
+                            <span class="author"><%= format_time(e.event_datetime) %></span></dd>
+                          <hr class="abbosepsup"/>
+                      <% end %>
+                    </dl>
+                      <div id="search-results-counts">
+                        <%= render_results_by_type(@results_by_type) unless @scope.size == 1 %>
+                      </div>
+                 </div>
+            <% end %>
+            <p>
+            <center>
+              <% if @pagination_previous_date %>
+                  <%= link_to_content_update("\xc2\xab " + l(:label_previous),
+                                             params.merge(:previous => 1,
+                                                          :offset => @pagination_previous_date.strftime("%Y%m%d%H%M%S"))) %>&nbsp;
+              <% end %>
+              <% if @pagination_next_date %>
+                  <%= link_to_content_update(l(:label_next) + " \xc2\xbb",
+                                             params.merge(:previous => nil,
+                                                          :offset => @pagination_next_date.strftime("%Y%m%d%H%M%S"))) %>
+              <% end %>
+            </center>
+            </p>
 
-<% if @results %>
-    <div id="search-results-counts">
-    <%= render_results_by_type(@results_by_type) unless @scope.size == 1 %>
+            <% html_title(l(:label_search)) -%>
+          </div>
+        </div>
+      </div>
     </div>
+    <br/>
+  </article>
+  <br/>
 
-    <h3><%= l(:label_result_plural) %> (<%= @results_by_type.values.sum %>)</h3>
-    <dl id="search-results">
-      <% @results.each do |e| %>
-        <dt class="<%= e.event_type %>"><%= content_tag('span', h(e.project), :class => 'project') unless @project == e.project %> <%= link_to highlight_tokens(truncate(h(e.event_title), :length => 255), @tokens), event_url_fs(e) %></dt>
-        <dd><span class="description"><%= highlight_tokens(h(e.event_description), @tokens) %></span>
-        <span class="author"><%= format_time(e.event_datetime) %></span></dd>
-        <hr class="abbosepsup" />
-      <% end %>
-    </dl>
+  <div class="clearfix"></div>
+</div>
+<%= render :partial => 'blocco_sidebar1' %>
+<% content_for :header_yui do %>
+    <%= stylesheet_link_tag 'application.css', :media => 'all' %>
 <% end %>
 
-<p><center>
-<% if @pagination_previous_date %>
-<%= link_to_content_update("\xc2\xab " + l(:label_previous),
-      params.merge(:previous => 1,
-                   :offset => @pagination_previous_date.strftime("%Y%m%d%H%M%S"))) %>&nbsp;
-<% end %>
-<% if @pagination_next_date %>
-<%= link_to_content_update(l(:label_next) + " \xc2\xbb",
-      params.merge(:previous => nil,
-                   :offset => @pagination_next_date.strftime("%Y%m%d%H%M%S"))) %>
-<% end %>
-</center></p>
-
-<% html_title(l(:label_search)) -%>

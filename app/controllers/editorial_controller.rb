@@ -715,7 +715,7 @@ class EditorialController < ApplicationController
     else
       @question = ""
     end
-    render :layout => false if request.xhr?
+    #render :layout => false if request.xhr?
   end
 
   def unauthorized

@@ -52,7 +52,7 @@ SimpleNavigation::Configuration.run do |navigation|
     menu_generale.item :key_6, 'Eventi e Convegni', eventi_path
     menu_generale.item  @tmenu_ns.key, @tmenu_ns.description, '/editoriale/' + @tmenu_ns.key
     menu_generale.item :key_8, 'Abbonamenti', abbonamenti_path
-    menu_generale.item :key_7, 'CONI-FNS-EPS-DSA', progettofs_path
+    menu_generale.item :key_7, 'Progetto Fiscosport', progettofs_path
     menu_generale.dom_class = 'fs-hmenu'
 
 

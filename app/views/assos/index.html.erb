@@ -5,6 +5,7 @@
 <h2><%= l(:label_asso_plural) %></h2>
 
 <% if @assos.any? %>
+<div style="max-width: 960px; overflow: auto;">
 <table class="list assos">
   <thead><tr>
   <%= sort_header_tag('ragione_sociale', :title => l(:label_ragione_sociale), :style => 'width: 10%;text-align:left;')%>
@@ -36,6 +37,7 @@
   </tr>
 <% end %>
 </table>
+</div>
 
 <p class="pagination"><%= pagination_links_full @asso_pages, @asso_count %></p>
 
