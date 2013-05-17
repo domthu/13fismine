@@ -26,7 +26,7 @@
       <div class="fs-vuoto-inline-button  fs-profiles-esx-btn">
         <label><%= radio_button_tag :use_gravatar, true, :onchange => "funct_avatar('g')" %> <%= 'Usa mail su Gravatar' %></label><br/>
         <label><%= radio_button_tag :use_gravatar, false, :onchange => "funct_avatar('a')" %> <%= 'Usa tua immagine Avatar' %></label><br/>
-        <%= file_field_tag :photo, :onchange => "handleFileSelect('handleFileSelect, false'})" %>
+        <%= file_field_tag :photo %>
         <h6>nb: usa un'immagine quadrata sarà ridimensionata a 200px per 200px </h6>
       </div>
     </div>

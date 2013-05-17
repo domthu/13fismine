@@ -51,3 +51,4 @@ config/database.yml
 /lib/redmine/imap.rb
 /lib/redmine/pop3.rb
 /public/images/users/*
+/public/images/commons/*
