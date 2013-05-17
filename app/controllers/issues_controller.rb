@@ -169,6 +169,11 @@ class IssuesController < ApplicationController
       end
     end
 
+    #Control Author is in project members
+#    if @issue.author_id && @issue.author && !@issue.author.member_of?(@project)
+#      @project.
+#    end
+
     if @issue.save
       attachments = Attachment.attach_files(@issue, params[:attachments])
       call_hook(:controller_issues_new_after_save, { :params => params, :issue => @issue})
