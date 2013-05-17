@@ -8,7 +8,7 @@
 
   <p>
     <% if !@issue.new_record? %>
-<%= f.select :author_id, principals_options_for_select(@issue.assignable_users, @issue.author_id), :include_blank => true %>
+<%= f.select :author_id, principals_options_for_select(@issue.assignable_users, @issue.author), :include_blank => false %>&nbsp;&nbsp;<%= link_to @issue.author, user_path(@issue.author), :target => "_blank" %>
     <% end %>
   </p>
 
@@ -51,44 +51,44 @@
   </div>
 <% end %>
 <% if !@issue.new_record? %>
-<% content_for :header_yui do %>
-    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
-    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
-    <%= javascript_include_tag "yui/element-min.js" %>
-    <%= javascript_include_tag "yui/container_core-min.js" %>
-    <%= javascript_include_tag "yui/menu-min.js" %>
-    <%= javascript_include_tag "yui/button-min.js" %>
-    <%= javascript_include_tag "yui/editor-min.js" %>
-    <%= javascript_include_tag "yui/yui_fs.js" %>
-<script type="text/javascript" charset="utf-8">
+  <% content_for :header_yui do %>
+      <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+      <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
+      <%= javascript_include_tag "yui/element-min.js" %>
+      <%= javascript_include_tag "yui/container_core-min.js" %>
+      <%= javascript_include_tag "yui/menu-min.js" %>
+      <%= javascript_include_tag "yui/button-min.js" %>
+      <%= javascript_include_tag "yui/editor-min.js" %>
+      <%= javascript_include_tag "yui/yui_fs.js" %>
+  <% end %>
+  <script type="text/javascript" >
 
-//Event.observe(window, 'load', function() {
-//});
-//document.observe("dom:loaded", loadme);
+  //Event.observe(window, 'load', function() {
+  //});
+  //document.observe("dom:loaded", loadme);
 
-(function () {
-    loadme();
-})();
+  (function () {
+      loadme();
+  })();
 
-function loadme(){
-        var myConfig1 = {
-            handleSubmit:true,
-             height:'100%',
-            width:'99%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        var myEditor1 = init_yui_editor_fs('issue_description_field', myConfig1);
+  function loadme() {
+          var myConfig1 = {
+              handleSubmit:true,
+               height:'100%',
+              width:'99%',
+              resize:true,
+              animate:true,
+              dompath:true,
+              focusAtStart:false,
+              nodeChangeDelay:false,
+              removeLineBreaks:true,
+              drag:true
+          };
+          var myEditor1 = init_yui_editor_fs('issue_description_field', myConfig1);
 
-}
+  }
 
-</script>
-<% end %>
+  </script>
 <% end %>
 
 </div>

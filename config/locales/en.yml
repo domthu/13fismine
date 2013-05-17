@@ -1414,6 +1414,10 @@ en:
   field_crediti: (old) Credito
   field_annotazioni: (old) Annotazioni
 
+  field_image_file_name: Filename
+  field_image_content_type: File type
+  field_image_file_size: File size
+  field_image_updated_at: Updated at
 
 #Permission
   permission_access_back_end: Accedi al backEnd?

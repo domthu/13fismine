@@ -1,12 +1,17 @@
 //(function() {
-var Dom = YAHOO.util.Dom,
-    Event = YAHOO.util.Event;
+var yuiDom = null; //YAHOO.util.Dom;
+    //yuiEvent = YAHOO.util.Event;
 //})();
 
 function init_yui_editor_fs(id_textarea, _myconfig) {
-//  Event.observe(window, 'load', load_yui_editor_fs(id_textarea, _myconfig));
+//  yuiEvent.observe(window, 'load', load_yui_editor_fs(id_textarea, _myconfig));
 //}
 //function load_yui_editor_fs(id_textarea, _myconfig) {
+
+  if (yuiDom == null) {
+    yuiDom = YAHOO.util.Dom;
+  }
+
     var myEditor = new YAHOO.widget.Editor(id_textarea, _myconfig);
     myEditor.on('toolbarLoaded', function() {
         var codeConfig = {
@@ -28,15 +33,15 @@ function init_yui_editor_fs(id_textarea, _myconfig) {
                     this._setDesignMode('on');
                 }
 
-                Dom.removeClass(iframe, 'editor-hidden');
-                Dom.addClass(ta, 'editor-hidden');
+                yuiDom.removeClass(iframe, 'editor-hidden');
+                yuiDom.addClass(ta, 'editor-hidden');
                 this.show();
                 this._focusWindow();
             } else {
                 //state = 'on';
                 this.cleanHTML();
-                Dom.addClass(iframe, 'editor-hidden');
-                Dom.removeClass(ta, 'editor-hidden');
+                yuiDom.addClass(iframe, 'editor-hidden');
+                yuiDom.removeClass(ta, 'editor-hidden');
                 this.toolbar.set('disabled', true);
                 this.toolbar.getButtonByValue('editcode').set('disabled', false);
                 this.toolbar.selectButton('editcode');

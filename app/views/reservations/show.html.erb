@@ -12,7 +12,7 @@
   <fieldset class="box tabular">
     <legend><%=l(:label_reservation)%></legend>
     <p>
-      <%= avatar(@reservation.user, :size => "14") %><%= link_to h(@reservation.user.login), edit_user_path(@reservation.user) %>
+      <%= avatar(@reservation.user, { :size => "14", :class => "no-div" }) %><%= link_to h(@reservation.user.login), edit_user_path(@reservation.user) %>
     </p>
     <p>
       <%#h link_to h(@reservation.issue), preview_issue_path(:project_id => @reservation.issue.project, :id => @reservation.issue) %>

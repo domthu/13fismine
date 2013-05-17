@@ -52,3 +52,4 @@ config/database.yml
 /lib/redmine/pop3.rb
 /public/images/users/*
 /public/images/commons/*
+/public/images/articoli/*

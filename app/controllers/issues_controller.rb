@@ -169,6 +169,17 @@ class IssuesController < ApplicationController
       end
     end
 
+    #Control Author is in project members
+    if @issue.author_id && @issue.author && !@issue.author.member_of?(@project)
+      member = Member.new
+      member.user = @issue.author
+      #3 	Manager
+      #member.roles = [Role.find_by_name('Manager')]
+      member.roles = [Role.find_by_id(FeeConst::ROLE_MANAGER)]
+      #ActiveRecord::RecordInvalid (Validation failed: Ruolo non è valido):
+      @project.members << member
+    end
+
     if @issue.save
       attachments = Attachment.attach_files(@issue, params[:attachments])
       call_hook(:controller_issues_new_after_save, { :params => params, :issue => @issue})
