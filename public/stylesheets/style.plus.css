@@ -767,6 +767,12 @@ margin-left:-1px;*/
     font-variant: small-caps;
     padding-left: 3px  ;
     color: #2e2e2e;
+    line-height: 1.2em;
+}
+.fs-postmetadatafooter-author-txt{
+    padding: 0 2px 0 6px;
+    line-height: 1em;
+    text-align: left;
 }
 
 .fs-postmetadatafooter-ok {
