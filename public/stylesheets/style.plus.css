@@ -769,6 +769,10 @@ margin-left:-1px;*/
     color: #2e2e2e;
     line-height: 1.2em;
 }
+.fs-postmetadatafooter-author-txt{
+    padding: 0 2px 0 6px;
+    line-height: 1em;
+}
 
 .fs-postmetadatafooter-ok {
  background: url('/images/commons/free_ok.jpg')  no-repeat  top left;
