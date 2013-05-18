@@ -88,18 +88,23 @@
     </div>
   <% else %>
   <div class="box">
-    <% if !@news.new_record? && User.current.allowed_to?(:add_issue_watchers, @news.project) -%>
-      <% form_for @news, :url => assign_collaboratore_path do |f| %>
-        <%= f.error_messages %>
-        <%= f.hidden_field :project_id, :value => @news.project.id %>
-        <%= f.hidden_field :news_id, :value => @news.id %>
+    <% if !@news.new_record? && User.current.allowed_to?(:add_issue_watchers, @news.project) %>
+      <%# form_for @news, :url => assign_collaboratore_path do |f_a| %>
+      <%# form_for @news, :controller => 'news', :action => 'assegna' :controller => 'news', :action => 'assegna' , :conditions => {:method => :put} do |f_a| %>
+      <% remote_form_for(:news, :url => { :action => 'assegna_js'}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f_a| %>
+        <%= f_a.error_messages %>
+        <%= f_a.hidden_field :project_id, :value => @news.project.id %>
+        <%= f_a.hidden_field :news_id, :value => @news.id %>
         <p id="watchers_form"><label><b><%= l(:label_newmembers) %></label></b>
-        <% @news.project.users.sort.each do |user| -%>
+        <% @news.project.users.sort.each do |user| %>
           <label class="floating"><%= check_box_tag 'watcher_user_ids[]', user.id, false %> <%=h user %></label>
         <% end %>
         </p>
-        <%= f.submit 'Assegna uno o più collaboratori per rispondere' unless (!User.current.admin? ||  !User.current.ismanager?) %>
-      <% end -%>
+        <%# f_a.submit 'Assegna uno o più collaboratori per rispondere' unless (!User.current.admin? ||  !User.current.ismanager?) %>
+        <p><%= submit_tag 'Assegna uno o più collaboratori per rispondere' unless (!User.current.admin? ||  !User.current.ismanager?) %></p>
+
+      <% end %>
+      <div class="informa" id="tab-content-dati"> </div>
     <% end %>
   </div>
 

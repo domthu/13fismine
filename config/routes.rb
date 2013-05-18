@@ -307,7 +307,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'news/:id/comments', :controller => 'comments', :action => 'create', :conditions => {:method => :post}
   map.connect 'news/:id/comments/:comment_id', :controller => 'comments', :action => 'destroy', :conditions => {:method => :delete}
 
-  map.assign_collaboratore 'news/assign', :controller => 'news', :action => 'assign'
+  #map.assign_collaboratore 'news/assign', :controller => 'news', :action => 'assegna' , :conditions => {:method => :put}
   #map.fast_reply 'issues/fast_reply', :controller => 'issues', :action => 'fast_reply'
   map.fast_reply 'quesito/fast_reply', :controller => 'issue_move', :action => 'fast_reply'
 
