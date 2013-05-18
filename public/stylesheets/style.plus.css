@@ -1340,11 +1340,11 @@ right: -14px;   */
 .fs-postmetadata-full-convegni {
     background: #ffffff;
     border-bottom: 1px solid #d3d3d3;
-    border-top: 3px solid #afafaf;
     position: relative;
     width: 98%;
     display: block;
     margin: 10px;
+    padding:10px 0;
 }
 
 .fs-image-caption-wrapper-convegni {
@@ -1361,11 +1361,13 @@ right: -14px;   */
 
 .fs-convegni-prenota {
     background: #ffffff;
-    border-bottom: 3px solid #afafaf;
+    border-bottom: 1px solid #d3d3d3;
     position: relative;
     width: 98%;
     display: block;
-    margin: 5px;
+    margin: 10px;
+    padding:10px 0 20px;
+
 }
 
 .fs-convegni-prenota form h4 {

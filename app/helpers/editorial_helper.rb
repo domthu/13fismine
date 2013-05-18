@@ -2,18 +2,6 @@ module EditorialHelper
   include FeesHelper #getdate
   include AttachmentsHelper
 
-  def art_image(articolo = nil, taglia = :l)
-    if  !articolo.image_file_name.nil?
-      return articolo.image.url(taglia)
-    elsif !articolo.section.image_file_name.nil?
-      return articolo.section.image.url(taglia)
-    elsif !articolo.top_section.image_file_name.nil?
-      return articolo.top_section.image.url(taglia)
-    else
-      return "/images/commons/sections/no-img.jpg"
-    end
-  end
-
 
   def highlight_tokens(text, tokens)
     return text unless text && tokens && !tokens.empty?

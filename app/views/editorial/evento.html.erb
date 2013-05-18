@@ -26,20 +26,7 @@
               <div class="counter-bg-fade2"></div>
               <div style="width:100%;">
                 <div class="fs-image-caption-wrapper-convegni">
-                  <%= if @convegno.immagine_url.nil?
-                        if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{@convegno.top_section.immagine}")
-                          image_tag("/images/commons/sections/#{@convegno.top_section.immagine}")
-                        else
-                          image_tag("/images/commons/sections/no-img.jpg")
-                        end
-                      else
-                        if FileTest.exist?("#{RAILS_ROOT}/public/images/articles/#{@convegno.immagine_url}")
-                          image_tag(@convegno.immagine_url, :alt => h(truncate(@convegno.subject, :length => 25)))
-                        else
-                          image_tag("/images/articles/no-img.jpg")
-                        end
-                      end
-                  %>
+                  <%= image_tag art_image(@convegno, :l) %>
                 </div>
                 <div class="fs-riassunto-full"><p>
                   <%= h(smart_truncate(@convegno.summary, 200)) %></p>
@@ -79,8 +66,7 @@
                     </div>
                   </div>
                   <div class="fs-resize-box">
-                    <a href="javascript:increaseFontSize()" id="increase" class="fs-resize-itm">A<sup>+</sup></a>
-                    <a href="javascript:decreaseFontSize()" id="decrease" class="fs-resize-itm">a<sup>-</sup></a>
+                    <%=  link_to_function( image_tag('ico/printer-icon.png'), "javascript:print()") %>
                   </div>
                         </div>
                 <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>

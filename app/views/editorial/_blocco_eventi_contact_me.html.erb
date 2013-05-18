@@ -29,7 +29,7 @@
   <span>
   <p>
     <% if User.current && User.current.logged? %>
-        <%=  User.current.mail %>
+        <%# User.current.mail %>
     <% else %>
         <%= text_field_tag 'evtmail', "", :placeholder => "La tua mail...", :size => 100 %>
     <% end %>
