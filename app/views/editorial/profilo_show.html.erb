@@ -39,7 +39,7 @@
           </div>
         </article>
         <br/>&nbsp; <br/>
-        <% if User.current.ismanager? || (User.current.isauthor? && User.current == @user_profile) %>
+        <% if User.current.ismanager? || ((User.current.isauthor? || User.current.ismanager?) && User.current == @user_profile.user) %>
             <article class="fs-post-profile fs-article">
               <p style="text-align: center;">  <%= link_to("modifica", profile_edit_path(@user_profile), :class => "fs-giallo-button") %></p>
             </article>
@@ -51,4 +51,3 @@
 <%# render :partial => 'blocco_sidebar1' %>
 
 <%= render :partial => 'blocco_sidebar1' %>
-
