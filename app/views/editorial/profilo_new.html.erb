@@ -72,7 +72,7 @@
       </div>
       <p style="padding:10px 0;"></p>
 
-      <p>  <%= submit_tag "crea", :action => 'profilo_edit', :class => "fs-giallo-button" %></p>
+      <p>  <%= submit_tag("crea", :action => 'profilo_edit', :class => "fs-giallo-button") if (User.current.admin? || User.current.ismanager? || User.current == @this_user)  %></p>
 
       <p style="padding:5px 0;"> altrimenti</p>
 

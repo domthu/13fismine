@@ -10,7 +10,10 @@ class EditorialController < ApplicationController
 #  #before_filter :get_news, :only => [:news, :articolo_full]  #recupero articolo status
   before_filter :correct_user_article, :only => [:articolo]  #LOGGATO O ARTICOLO LIBERO
   before_filter :enabled_user_article, :only => [:articolo]  #ABBONATO E CONTENUTO PROTETTO
+  before_filter :find_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_show]
+  before_filter :correct_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_create]  #Admin o se stesso
   before_filter :find_quesito_fs, :only => [:quesito_destroy, :quesito_edit, :quesito_show]
+  before_filter :correct_user_quesito, :only => [:quesito_destroy, :quesito_edit]  #Admin o se stesso
 
   helper :messages
   include MessagesHelper
@@ -414,7 +417,7 @@ class EditorialController < ApplicationController
 
   #Il dato @quesito_news viene caricato dentro il before_filter
   def quesito_edit
-    @news.title = @news.quesito_new_default_title(User.current)
+    #@news.title = @news.quesito_new_default_title(User.current)
     @quesito_news.summary = params[:summary]
     @quesito_news.description = params[:description]
     if request.post?
@@ -448,7 +451,7 @@ class EditorialController < ApplicationController
     @id = params[:id]
     #1 news sola
     @quesito_news = News.all_quesiti_fs.find(@id)
-     @quesito_news_stato = @quesito_news.quesito_status_fs_text
+    @quesito_news_stato = @quesito_news.quesito_status_fs_text
     @quesito_news_stato_num = @quesito_news.quesito_status_fs_number
     #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
 
@@ -502,13 +505,12 @@ class EditorialController < ApplicationController
   end
 
   def profilo_show
-    @id = params[:id].to_i
-    @user_profile = UserProfile.find_by_id(@id)
+    if @user_profile.nil?
+      flash[:notice] = fading_flash_message("Profilo non trovato.", 5)
+    end
   end
 
   def profilo_edit
-    @id = params[:id].to_i
-    @user_profile = UserProfile.find_by_id(@id)
     if request.post? #  flash[:notice] = fading_flash_message("il photo." + params[:photo].to_s + "\n uid >" + params[:user_id] + "\n pid >" + params[:id], 5)
       if @user_profile.update_attributes(:user_id => params[:user_id], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
         if !params[:photo].nil?
@@ -587,8 +589,8 @@ class EditorialController < ApplicationController
     end
   end
 =end
+
   def profilo_destroy
-    @user_profile = UserProfile.find(params[:id])
     @user_profile.destroy
 
     respond_to do |format|
@@ -728,6 +730,17 @@ class EditorialController < ApplicationController
 
   private
 
+  def find_user_profile
+    @id = params[:id].to_i
+    @user_profile = UserProfile.find_by_id(@id)
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = "profilo non trovato..."
+    return reroute_404()
+  end
+  def correct_user_profile
+    return reroute_log() unless (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user)
+  end
+
   def find_quesito_fs
     @id = params[:id].to_i
     #@quesito_news = News.all_public_fs.find(@id)
@@ -739,6 +752,9 @@ class EditorialController < ApplicationController
     check_quesito_privacy_fs
   rescue ActiveRecord::RecordNotFound
     reroute_404()
+  end
+  def correct_user_quesito
+    return reroute_log() unless (User.current.admin? || User.current.ismanager? || User.current == @quesito_news.author)
   end
 
   def find_optional_project
@@ -780,6 +796,7 @@ class EditorialController < ApplicationController
       reroute_auth() unless User.current.isfee?(@articolo)
     end
   end
+
   def reroute_auth()
     flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
     flash[:error] = "Abbonamento non valido (utente)..."

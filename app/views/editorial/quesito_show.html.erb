@@ -1,4 +1,3 @@
-<%= render_flash_messages %>
 <% if User.current && User.current.logged? %>
     <div class="fs-layout-cell fs-content clearfix">
       <article class="fs-post fs-article">
@@ -20,8 +19,8 @@
                           <span>  <%= text_area_tag :description, @quesito_news.description, :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
                         </div>
                         <div id="fs-form-quesito-new-btn">
-                           <%= link_to 'Elimina', { :action => 'quesito_destroy',:id=>@quesito_news.id }, :class => "fs-giallo-button", :confirm => 'Confermi la cancellazione del quesito?' %> &nbsp;
-                          <%= submit_tag 'Salva le modifiche', :class => "fs-giallo-button", :confirm => 'Confermi le modifiche?' %> &nbsp;
+                           <%= link_to('Elimina', { :action => 'quesito_destroy',:id=>@quesito_news.id }, :class => "fs-giallo-button", :confirm => 'Confermi la cancellazione del quesito?') if (User.current.admin? || User.current.ismanager? || User.current == @quesito_news.author) %> &nbsp;
+                          <%= submit_tag('Salva le modifiche', :class => "fs-giallo-button", :confirm => 'Confermi le modifiche?') if (User.current.admin? || User.current.ismanager? || User.current == @quesito_news.author)  %> &nbsp;
                           <%= link_to('Indietro', quesiti_my_path, :class => "fs-blu-button") %>
                         </div>
                     <% end %>
