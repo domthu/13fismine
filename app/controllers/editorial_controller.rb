@@ -6,7 +6,7 @@ class EditorialController < ApplicationController
   include FeesHelper #ROLE_XXX  CONVEGNI_XXX QUESITO_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
-  before_filter :find_articolo, :only => [:articolo]  #recupero articolo status
+  before_filter :find_articolo, :only => [:articolo] #, :preview_articolo can be not visible]  #recupero articolo status
 #  #before_filter :get_news, :only => [:news, :articolo_full]  #recupero articolo status
   before_filter :correct_user_article, :only => [:articolo]  #LOGGATO O ARTICOLO LIBERO
   before_filter :enabled_user_article, :only => [:articolo]  #ABBONATO E CONTENUTO PROTETTO
@@ -166,26 +166,39 @@ class EditorialController < ApplicationController
     end
   end
   # -----------------  ARTICOLO  (inizio)   ------------------
-  def articolo
+  #La preview puo essere vista anche se non è pubblico il project o l'issue
+  def preview_articolo
     @id = params[:article_id].to_i
-    @articolo= Issue.all_public_fs.find(@id)
-    @attachements = @articolo.attachments
-
-    #singolo articolo
-    @section_id = @articolo.section_id
-    @icount = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s).count()
-    if @icount > 3
-      @artsimilar = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s ).all(
-          :limit => 10)
+    #articolo tipo quesito
+    _action = "articolo"
+    @articolo = Issue.find_by_id(@id)
+    if @articolo.is_quesito?
+      #Attenzione si vede News e non Issue
+      @quesito_news = News.find_by_id(@articolo.news_id)
+      other_quesito_datas()
+      _action = "quesito_show"
+    #articolo tipo convegno
+    elsif @articolo.is_convegno?
+      @convegno= @articolo
+      other_evento_datas()
+      _action = "evento"
+    #articolo normale
     else
-      @artsimilar = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @articolo.section.top_section.id.to_s ).all(
-          :limit => 10)
+      other_articolo_datas()
+    end
+    respond_to do |format|
+      format.html {
+        render :action => _action #, :locals => {:user => @user, :block_name => block}
+      }
+      format.api
     end
 
-    if @articolo.news_id
-      @quesito = News.all_quesiti_fs.find_by_id(@articolo.news_id)
-    end
-
+  rescue ActiveRecord::RecordNotFound
+    reroute_404("L'articolo cercato non è è stato trovato...")
+  end
+  #@id e @articolo in find_articolo
+  def articolo
+    other_articolo_datas()
   end
   # -----------------  ARTICOLO  (fine)   ------------------
   # -----------------  EDIZIONI /NEWSLETTER  (inizio)  ------------------
@@ -263,28 +276,10 @@ class EditorialController < ApplicationController
   def evento
     #singolo articolo
     @id = params[:id].to_i
-    @backurl = request.url
     @convegno= Issue.find(@id)
-
-    @rcount = Reservation.count(:conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
-    if @rcount <= 0
-      #@reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id],:num_persone => params[:num_persone],:msg => params[:msg])
-      @reservation_new = Reservation.new
-    else
-      @reservation =Reservation.find(:first, :conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
-    end
-    @conv_prossimo = Issue.all_public_fs.solo_convegni.first(
-        :order => 'due_date ASC',
-        :conditions => "#{Issue.table_name}.due_date >=' #{DateTime.now.to_date}'")
-
-    if @conv_prossimo.nil?
-      @conv_futuri
-    else
-      @cid = @conv_prossimo.id
-      @conv_futuri = Issue.all_public_fs.solo_convegni.all(
-          :order => 'due_date ASC',
-          :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
-    end
+    other_evento_datas()
+  rescue ActiveRecord::RecordNotFound
+    reroute_404("L'evento cercato non è è stato trovato...")
   end
 
   def eventi
@@ -451,14 +446,9 @@ class EditorialController < ApplicationController
     @id = params[:id]
     #1 news sola
     @quesito_news = News.all_quesiti_fs.find(@id)
-    @quesito_news_stato = @quesito_news.quesito_status_fs_text
-    @quesito_news_stato_num = @quesito_news.quesito_status_fs_number
-    #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
-
-    # @quesito_issues = @quesito_news.issues
-    @quesito_issues_all_count = @quesito_news.issues.count # testing
-    @quesito_issues = @quesito_news.issues.all_public_fs #--> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
-    @quesito_issues_count = @quesito_issues.count
+    other_quesito_datas()
+  rescue ActiveRecord::RecordNotFound
+    reroute_404("Il quesito cercato non è è stato trovato...")
   end
 
   #Show del singolo quesito. Attenzione l'id passato è quello dell'articolo
@@ -803,6 +793,64 @@ class EditorialController < ApplicationController
     redirect_to(signin_path)
 
     #redirect_to(unauthorized_path)
+  end
+
+  #privato. Usato sia per articolo che preview (anche se non pubblico il project ed issue)
+  def other_articolo_datas()
+    @attachements = @articolo.attachments
+
+    #singolo articolo
+    @section_id = @articolo.section_id
+    @icount = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s).count()
+    if @icount > 3
+      @artsimilar = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s ).all(
+          :limit => 10)
+    else
+      @artsimilar = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @articolo.section.top_section.id.to_s ).all(
+          :limit => 10)
+    end
+
+    if @articolo.news_id
+      @quesito = News.all_quesiti_fs.find_by_id(@articolo.news_id)
+    end
+
+  end
+
+  #privato. Usato sia per quesito_show che preview (anche se non pubblico il project ed issue)
+  def other_quesito_datas()
+    @quesito_news_stato = @quesito_news.quesito_status_fs_text
+    @quesito_news_stato_num = @quesito_news.quesito_status_fs_number
+    #lista issues-articoli [0..n]  @quesiti_art.empty? @quesiti_art.count
+
+    # @quesito_issues = @quesito_news.issues
+    @quesito_issues_all_count = @quesito_news.issues.count # testing
+    @quesito_issues = @quesito_news.issues.all_public_fs #--> Verificare se funzione pero dovrebbe riportare un array di news e non di issue
+    @quesito_issues_count = @quesito_issues.count
+  end
+
+  #privato. Usato sia per evento che preview (anche se non pubblico il project ed issue)
+  def other_evento_datas()
+    @backurl = request.url
+
+    @rcount = Reservation.count(:conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
+    if @rcount <= 0
+      #@reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id],:num_persone => params[:num_persone],:msg => params[:msg])
+      @reservation_new = Reservation.new
+    else
+      @reservation =Reservation.find(:first, :conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
+    end
+    @conv_prossimo = Issue.all_public_fs.solo_convegni.first(
+        :order => 'due_date ASC',
+        :conditions => "#{Issue.table_name}.due_date >=' #{DateTime.now.to_date}'")
+
+    if @conv_prossimo.nil?
+      @conv_futuri
+    else
+      @cid = @conv_prossimo.id
+      @conv_futuri = Issue.all_public_fs.solo_convegni.all(
+          :order => 'due_date ASC',
+          :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
+    end
   end
 
 end

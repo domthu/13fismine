@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reservations
 
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "reply"
+#rake routes | grep -r "articolo"
 
   map.resources :top_menus
 
@@ -242,6 +242,7 @@ ActionController::Routing::Routes.draw do |map|
   # Misc issue routes. TODO: move into resources
   map.auto_complete_issues '/issues/auto_complete', :controller => 'auto_completes', :action => 'issues', :conditions => { :method => :get }
   map.preview_issue '/issues/preview/:id', :controller => 'previews', :action => 'issue' # TODO: would look nicer as /issues/:id/preview
+  map.preview_fs_articolo '/editorial/articolo/:article_id', :controller => 'editorial', :action => 'preview_articolo'
   map.preview_articolo '/issues/articolo/:id', :controller => 'previews', :action => 'articolo'
   map.preview_newsletter '/newsletter/:user_id', :controller => 'previews', :action => 'newsletter'
 

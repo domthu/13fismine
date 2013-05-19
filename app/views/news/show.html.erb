@@ -123,7 +123,7 @@
           <b><%= link_to_issue(issue, :project => true) %></b>
           <br /><%= l(:field_assigned_to) %> ==> <%= link_to_user(issue.author) %>
           <br /><% if issue.description? %>
-            <%= textilizable(issue.description) %>
+            <%= issue.description %>
           <% else %>
             <%= l(:no_reply_actualy) %>
           <% end %>

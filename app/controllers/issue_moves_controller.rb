@@ -69,10 +69,12 @@ class IssueMovesController < ApplicationController
   def fast_reply
     @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category, :section, :quesito_news])
     #Domthu [:project, :tracker, :status, :author, :priority, :category])
-    puts "###################################################################à"
+    puts "###################################################################"
     flash[:notice] = "Procedura risposta veloce"
     if !@issue.nil? && @issue.is_quesito?
-      if User.current.admin? ||  User.current.ismanager? || authorize_for('issues', 'edit')
+      #TODO undefined method `authorize_for' for #<IssueMovesController:0xb5e11738>
+      #if User.current.admin? ||  User.current.ismanager? || authorize_for('issues', 'edit')
+      if User.current.admin? ||  User.current.ismanager? || User.current == @issue.author
       #KAPPAO @issue.visible?
         if @issue.description?
           @news = @issue.quesito_news

@@ -1636,6 +1636,9 @@ en:
   notice_missing_parameters: La pagina non puo essere caricata per mancanza di informazione
   orderedby_updated_desc: Ordinamento per data di ultimo salvataggio decrescente
   orderedby_created_desc: Ordinamento per data di creazione decrescente
+  content_articolo: Article content
+  preview_fs_issue_abrv: Fee view
+  preview_fs_issue: Preview article in front end
 
 #notice_email_sent: "Una email è stata spedita a %{value}"
   unauthorized: Non autorizzato ad accedere al contenuto
