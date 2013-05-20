@@ -101,6 +101,8 @@ class NewsController < ApplicationController
   end
 
   def assign
+    flash[:errors] = l(:error_none_assigned)
+    return
     #find_project reccupera il progetto associato
     #if params[:watcher_user_ids].is_a?(Hash)
     if !@news.nil? && @news.project.identifier == FeeConst::QUESITO_KEY
