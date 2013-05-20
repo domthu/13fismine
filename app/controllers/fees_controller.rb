@@ -28,7 +28,7 @@ class FeesController < ApplicationController
     #__User_all = User.all()
 
     if params['verify'].to_i == 1
-      @msg = ["---Verificazione degli utenti---"]
+      @msg = ["---Verifica degli utenti---"]
       #_ArrStr = Array.new
       #_ArrStr.push "---Init---"
       #User.each do |user|

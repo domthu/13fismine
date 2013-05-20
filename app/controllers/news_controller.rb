@@ -21,11 +21,11 @@ class NewsController < ApplicationController
   include FeesHelper
   #Kappao include ActionView::Helpers::UrlHelper #use link_to in controller
 
-  before_filter :find_model_object, :except => [:new, :create, :index]
-  before_filter :find_project_from_association, :except => [:new, :create, :index, :assign]
+  before_filter :find_model_object, :except => [:new, :create, :index, :assegna_js]
+  before_filter :find_project_from_association, :except => [:new, :create, :index, :assign, :assegna_js]
   before_filter :find_project, :only => [:new, :create, :assign]
-  before_filter :find_news, :only => [:assign]
-  before_filter :authorize, :except => [:index, :assign]
+  before_filter :find_news, :only => [:assign, :assegna_js]
+  before_filter :authorize, :except => [:index, :assign, :assegna_js]
   before_filter :find_optional_project, :only => :index
   accept_rss_auth :index
   accept_api_auth :index
@@ -101,8 +101,12 @@ class NewsController < ApplicationController
   end
 
   def assign
-    flash[:errors] = l(:error_none_assigned)
-    return
+    puts "******************ASSIGN************************+"
+    return redirect_to :action => 'index'
+  end
+    #via js
+  def assegna_js
+    puts "******************ASSEGNA************************+"
     #find_project reccupera il progetto associato
     #if params[:watcher_user_ids].is_a?(Hash)
     if !@news.nil? && @news.project.identifier == FeeConst::QUESITO_KEY
@@ -153,10 +157,18 @@ class NewsController < ApplicationController
       else
         flash[:errors] = l(:error_none_assigned)
       end
-      redirect_to :action => 'show', :id => @news.id
+      #return redirect_to :action => 'show', :id => @news.id
     else
       flash[:errors] = l(:none_found_news)
-      redirect_to :action => 'index'
+      #return redirect_to :action => 'index'
+    end
+    respond_to do |format|
+      format.js {
+        render(:update) {|page|
+          #page.replace_html "tab-content-dati", :partial => 'users/dati'
+          page.visual_effect(:highlight, "asseganti")
+        }
+      }
     end
   end
 
@@ -178,8 +190,13 @@ class NewsController < ApplicationController
 
 private
   def find_news
-    @news = News.find(:first, :include => [:project], :conditions => ["id =  ?", params[:news]['news_id']])
+    @news_id =  params[:news]['news_id']
+    puts "*************news_id: " + @news_id.to_s
+    @news = News.find(:first, :include => [:project], :conditions => ['id =  ?', @news_id.to_s])
+    #@news = News.find(@news_id, :include => [:project])
+    #@news = News.find(:first, :include => [:project], :conditions => ['id =  ?', params[:news]['news_id']])
   rescue ActiveRecord::RecordNotFound
+    puts "*******************************+"
     render_404
   end
 

@@ -15,10 +15,10 @@ class UserProfile < ActiveRecord::Base
   named_scope :users_profiles_all, :include => :user,
               :conditions => "(#{User.table_name}.role_id = #{FeeConst::ROLE_MANAGER} OR #{User.table_name}.role_id = #{FeeConst::ROLE_AUTHOR})"
 
-  named_scope :collaboratori, :conditions => " display_in =#{FeeConst::PROFILO_FS_COLLABORATORE}" # PROFILO_FS_COLLABORATORE = 1
-  named_scope :responsabili, :conditions => " display_in =#{FeeConst::PROFILO_FS_RESPONSABILE}" # PROFILO_FS_RESPONSABILE = 2
-  named_scope :direttori, :conditions => " display_in =#{FeeConst::PROFILO_FS_DIRETTORE}" # PROFILO_FS_DIRETTORE = 3
-  named_scope :invisibili, :conditions => " display_in =#{FeeConst::PROFILO_FS_INVISIBILE}" # PROFILO_FS_INVISIBILE = 4
+  named_scope :collaboratori, :conditions => " display_in =#{FeeConst::PROFILO_FS_COLLABORATORE}", :order => "#{User.table_name}.lastname ASC"   # PROFILO_FS_COLLABORATORE = 1
+  named_scope :responsabili, :conditions => " display_in =#{FeeConst::PROFILO_FS_RESPONSABILE}", :order => "#{User.table_name}.lastname ASC" # PROFILO_FS_RESPONSABILE = 2
+  named_scope :direttori, :conditions => " display_in =#{FeeConst::PROFILO_FS_DIRETTORE}", :order => "#{User.table_name}.lastname ASC" # PROFILO_FS_DIRETTORE = 3
+  named_scope :invisibili, :conditions => " display_in =#{FeeConst::PROFILO_FS_INVISIBILE}", :order => "#{User.table_name}.lastname ASC" # PROFILO_FS_INVISIBILE = 4
 
 
   def my_avatar(taglia, other_css='') #'l per large  ecc
@@ -86,5 +86,21 @@ class UserProfile < ActiveRecord::Base
     self.content_type = incoming_file.content_type
     self.data = incoming_file.read
   end
+
+  def self.show_edit_profile_button?(usr = nil)
+    case usr
+      when nil
+        false
+      when
+       usr.ismanager?
+        true
+      when usr.isauthor?
+    end
+
+    else
+      false
+
+    end
+
 
 end

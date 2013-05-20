@@ -455,8 +455,9 @@ class AccountController < ApplicationController
     else
       if (Setting.fee?)
         #TODO Controllare la scadenza se è di RUOLO
-        str = control_assign_role(user)
-        Rails.logger.info("Login controllo ruolo: " + str)
+
+       # str = control_assign_role(user)
+       # Rails.logger.info("Login controllo ruolo: " + str)
       end
       Rails.logger.info("login ok membro")
       redirect_to(editorial_url)
