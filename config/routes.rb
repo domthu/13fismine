@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reservations
 
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "reply"
+#rake routes | grep -r "articolo"
 
   map.resources :top_menus
 
@@ -242,6 +242,7 @@ ActionController::Routing::Routes.draw do |map|
   # Misc issue routes. TODO: move into resources
   map.auto_complete_issues '/issues/auto_complete', :controller => 'auto_completes', :action => 'issues', :conditions => { :method => :get }
   map.preview_issue '/issues/preview/:id', :controller => 'previews', :action => 'issue' # TODO: would look nicer as /issues/:id/preview
+  map.preview_fs_articolo '/editorial/articolo/:article_id', :controller => 'editorial', :action => 'preview_articolo'
   map.preview_articolo '/issues/articolo/:id', :controller => 'previews', :action => 'articolo'
   map.preview_newsletter '/newsletter/:user_id', :controller => 'previews', :action => 'newsletter'
 
@@ -307,7 +308,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'news/:id/comments', :controller => 'comments', :action => 'create', :conditions => {:method => :post}
   map.connect 'news/:id/comments/:comment_id', :controller => 'comments', :action => 'destroy', :conditions => {:method => :delete}
 
-  map.assign_collaboratore 'news/assign', :controller => 'news', :action => 'assign'
+  #map.assign_collaboratore 'news/assign', :controller => 'news', :action => 'assegna' , :conditions => {:method => :put}
   #map.fast_reply 'issues/fast_reply', :controller => 'issues', :action => 'fast_reply'
   map.fast_reply 'quesito/fast_reply', :controller => 'issue_move', :action => 'fast_reply'
 

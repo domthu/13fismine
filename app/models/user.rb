@@ -136,6 +136,13 @@ class User < Principal
   def my_quesiti
     News.all(:conditions => ['author_id = ?', self.id], :order => "created_on DESC")
   end
+  def hide_name
+    str = " utente Fiscosport n° " + self.id.to_s
+    if self.comune_id && self.comune
+      str += " - prov. di " + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
+    end
+    return (str.nil? || str.blank?)  ? "-" : str
+  end
 
   def getLocalization()
     str = ""

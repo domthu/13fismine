@@ -1,4 +1,5 @@
 <div class="contextual">
+<%= link_to l(:preview_fs_issue_abrv), preview_fs_articolo_path(:article_id => @issue.id.to_s), {:target => "_blank", :class => 'icon icon-preview', :title => l(:preview_fs_issue)} %>
 <%= link_to_if_authorized(l(:button_update), {:controller => 'issues', :action => 'edit', :id => @issue }, :onclick => 'showAndScrollTo("update", "notes"); return false;', :class => 'icon icon-edit', :accesskey => accesskey(:edit)) %>
 <%= link_to_if_authorized l(:button_log_time), {:controller => 'timelog', :action => 'new', :issue_id => @issue}, :class => 'icon icon-time-add' %>
 <%= watcher_tag(@issue, User.current) %>

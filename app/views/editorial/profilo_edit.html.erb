@@ -65,15 +65,15 @@
         </div>
         <p style="padding:5px 0;"></p>
 
-        <p>  <%= submit_tag "salva", :action => 'profilo_edit', :class => "fs-giallo-button" %></p>
+        <p>  <%= submit_tag("salva", :action => 'profilo_edit', :class => "fs-giallo-button") if (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user)%></p>
 
         <p style="padding:5px 0;"> altrimenti</p>
 
-        <p>  <%= link_to "annulla", :back, :class => "fs-giallo-button", :style => "float:none;" %></p>
+        <p>  <%= link_to("annulla", :back, :class => "fs-giallo-button", :style => "float:none;") if (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user)%></p>
 
         <p style="padding:5px 0;"> oppure </p>
 
-        <p>  <%= link_to("elimina profilo", profile_destroy_path(@user_profile.id), :class => "fs-rosso-button", :confirm => "conferma?") %></p>
+        <p>  <%= link_to("elimina profilo", profile_destroy_path(@user_profile.id), :class => "fs-rosso-button", :confirm => "conferma?") if (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user) %></p>
       </div>
       <br/>&nbsp; <br/>
       <div class="cleared"></div>

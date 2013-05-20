@@ -42,6 +42,13 @@
 
  <%# content for yui %>
 <% if !@issue.new_record? %>
+  <p><b>
+    <% if @issue.is_quesito? %>
+      <%= l(:quesito_risposta_rapida, :num => @issue.quesito_news.id.to_s) %>
+    <% else %>
+      <%= l(:content_articolo) %>
+    <% end %>
+  </b></p>
   <div class="yui-skin-sam"><%= f.text_area :description,
         :cols => 90,
         :rows => (@issue.description.blank? ? 75 : [[125, @issue.description.length / 50].max, 100].min),

@@ -45,13 +45,17 @@
     <%= f.hidden_field :lock_version %>
     <%# submit_tag l(:button_submit)  %>
     <%= submit_tag l(:button_edit) %>
-    <%= link_to_remote l(:label_preview),
+    <% if !@issue.new_record? && !@issue.description.nil? && @issue.description.empty? %>
+      <%= link_to_remote l(:label_preview),
                        { :url => preview_articolo_path(:project_id => @project, :id => @issue),
                          :method => 'post',
                          :update => 'preview',
                          :with => 'Form.serialize("issue-form")',
                          :complete => "Element.scrollTo('preview')"
                        }, :accesskey => accesskey(:preview) %>
+
+      <%= link_to l(:preview_fs_issue), preview_fs_articolo_path(:article_id => @issue.id.to_s), {:target => "_blank", :class => 'icon icon-preview'} %>
+    <% end %>
 <% end %>
 
 <div id="preview" class="wiki"></div>

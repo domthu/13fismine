@@ -2,7 +2,7 @@
     <div id="attributes-box">
 <% if !@issue.new_record? %>
       <div class="splitcontents-3box">
-        <p><%= f.file_field :image, :label => :field_immagine %> </p>
+        <div class="prev_browse"><%= f.file_field :image, :label => :field_immagine %> </div>
         <div id="prev" style="height: 155px;"> <%= image_tag @issue.image.url(:l) %></div>
       </div>
       <script type="text/javascript">
