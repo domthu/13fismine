@@ -198,10 +198,16 @@ class ProjectsController < ApplicationController
       #  redirect_to edizione_path(@project, params[:jump]) && return
       #end
     end
-    if not User.current.allowed_to?(:access_back_end, nil, :global => true)
+    #sandro --problema di accesso per author nella visualizzazione projects (edizioni) messo solo parametro  n2 context = @project
+    #if not User.current.allowed_to?(:access_back_end, nil, :global => true)
+    #  redirect_to(url_for(:controller => 'editorial', :action => 'edizione', :id => params[:id]))
+    #  return
+    #end
+    unless User.current.allowed_to?(:access_back_end, @project, :global => true)
       redirect_to(url_for(:controller => 'editorial', :action => 'edizione', :id => params[:id]))
       return
     end
+
 
 
     @users_by_role = @project.users_by_role

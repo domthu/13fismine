@@ -1212,7 +1212,7 @@ module ApplicationHelper
     elsif !articolo.top_section.image_file_name.nil?
       return articolo.top_section.image.url(taglia)
     else
-      return "/images/commons/sections/no-img.jpg"
+      return "/images/commons/m_art-no-image.jpg"
     end
   end
 

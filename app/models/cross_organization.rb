@@ -6,7 +6,7 @@ class CrossOrganization < ActiveRecord::Base
                     :url  =>  "commons/organizations/:id:style.:extension" ,
                     :path =>  "#{RAILS_ROOT}/public/images/commons/organizations/:id:style.:extension" ,
                     :default_style => :l,
-                    :default_url => "commons/:style_no-image.png"
+                    :default_url => "commons/:style_ico-no-image.jpg"
   validates_attachment_size :image, :less_than => 200.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 

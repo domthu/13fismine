@@ -16,9 +16,18 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :reservations
 
-  #  under are only for testing
-  map.connect 'eventi/', :controller => 'editorial', :action => 'eventi'
+  #  under are only for paperclip images refresh
 
+  map.with_options :controller => 'settings' do |img|
+    img.with_options :conditions => {:method => :post} do |img_model|
+      img_model.connect 'settings', :action => 'img_refresh_users' , :tab =>  'display'
+      img_model.connect 'settings', :action => 'img_refresh_assos' , :tab =>  'display'
+      img_model.connect 'settings', :action => 'img_refresh_org'  , :tab =>  'display'
+      img_model.connect 'settings', :action => 'img_refresh_tsection' , :tab =>  'display'
+      img_model.connect 'settings', :action => 'img_refresh_section' , :tab =>  'display'
+      img_model.connect 'settings', :action => 'img_refresh_issues'  , :tab =>  'display'
+    end
+    end
   #----------------------------------------------------------------------------------
 
   #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'

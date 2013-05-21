@@ -55,6 +55,7 @@ class EditorialController < ApplicationController
       format.api
 
     end
+
   end
 
   def top_menu
@@ -221,7 +222,7 @@ class EditorialController < ApplicationController
       @block_projects = Project.latest_fs
     end
   rescue ActiveRecord::RecordNotFound
-    reroute_404()
+    #reroute_404()
   end
 
   def edizione_newsletter
@@ -261,9 +262,11 @@ class EditorialController < ApplicationController
   end
 
   def evento_prenotazione
-    @reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id], :num_persone => params[:num_persone], :msg => params[:msg])
-
-    redirect_back_or_default({:action => 'evento', :id => params[:id].to_i})
+      if request.post? #  flash[:notice] = fading_flash_message("il photo." + params[:photo].to_s + "\n uid >" + params[:user_id] + "\n pid >" + params[:id], 5)
+        @reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id], :num_persone => params[:num_persone], :msg => params[:msg])
+              @reservation_new.save
+      end
+      redirect_back_or_default eventi_url
 
   end
 
@@ -301,7 +304,7 @@ class EditorialController < ApplicationController
           :order => 'due_date ASC',
           :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
                                #reservations
-      @reservation_new =Reservation.new
+     # @reservation_new =Res.newervation
       @rcount = Reservation.count(:conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
       @reservation =Reservation.find(:first, :conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
       @convegno= Issue.find(@cid)

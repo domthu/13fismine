@@ -2,19 +2,19 @@
 
 <table>
   <tr>
+    <th style='width: 35px;'></th>
     <th>User</th>
     <th>titoli</th>
     <th>curriculum</th>
-    <th>immagine_url</th>
     <th>external_url</th>
   </tr>
 
 <% @user_profiles.each do |user_profile| %>
   <tr>
+    <td><%= image_tag user_profile.photo.url(:xs) %></td>
     <td><%=h user_profile.user_id %></td>
     <td><%=h user_profile.titoli %></td>
     <td><%=h user_profile.curriculum %></td>
-    <td><%=h user_profile.immagine_url %></td>
     <td><%=h user_profile.external_url %></td>
     <td><%= link_to 'Show', user_profile %></td>
     <td><%= link_to 'Edit', edit_user_profile_path(user_profile) %></td>
@@ -22,7 +22,8 @@
   </tr>
 <% end %>
 </table>
-
+<br />
+<%= link_to('Rigenera le immagini!',url_for({:controller => "user_profiles" , :action=> "img_refresh"}) ) %>
 <br />
 
 <%= link_to 'New user_profile', new_user_profile_path %>

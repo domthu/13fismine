@@ -31,14 +31,14 @@ class SettingsController < ApplicationController
       settings = (params[:settings] || {}).dup.symbolize_keys
       settings.each do |name, value|
         # remove blank values in array settings
-        value.delete_if {|v| v.blank? } if value.is_a?(Array)
+        value.delete_if { |v| v.blank? } if value.is_a?(Array)
         Setting[name] = value
       end
       flash[:notice] = l(:notice_successful_update)
       redirect_to :action => 'edit', :tab => params[:tab]
     else
       @options = {}
-      @options[:user_format] = User::USER_FORMATS.keys.collect {|f| [User.current.name(f), f.to_s] }
+      @options[:user_format] = User::USER_FORMATS.keys.collect { |f| [User.current.name(f), f.to_s] }
       @deliveries = ActionMailer::Base.perform_deliveries
 
       @guessed_host_and_path = request.host_with_port.dup
@@ -61,4 +61,35 @@ class SettingsController < ApplicationController
   rescue Redmine::PluginNotFound
     render_404
   end
+
+  def img_refresh_users
+    UserProfile.all.each { |s| s.photo.reprocess! }
+    redirect_to :action => 'edit', :tab => :display
+  end
+
+  def img_refresh_assos
+    Asso.all.each { |s| s.image.reprocess! }
+    redirect_to :action => 'edit', :tab => :display
+  end
+
+  def img_refresh_org
+    CrossOrganization.all.each { |s| s.image.reprocess! }
+    redirect_to :action => 'edit', :tab => :display
+  end
+
+  def img_refresh_tsection
+    TopSection.all.each { |s| s.image.reprocess! }
+    redirect_to :action => 'edit', :tab => :display
+  end
+
+  def img_refresh_section
+    Section.all.each { |s| s.image.reprocess! }
+    redirect_to :action => 'edit', :tab => :display
+  end
+
+  def img_refresh_issues
+    Issue.all.each { |s| s.image.reprocess! }
+    redirect_to :action => 'edit', :tab => :display
+  end
+
 end

@@ -816,7 +816,10 @@ class User < Principal
       return false unless context.allows_to?(action)
       # Admin users are authorized for anything else
       return true if admin?
-
+      # Sandro -> risolve il problema che un author non puo' vedere le edizioni
+      return true if  User.current.isauthor?
+      return true if User.current.ismanager?
+      # fine  sandro
       roles = roles_for_project(context)
       return false unless roles
       roles.detect { |role|

@@ -1,10 +1,10 @@
 class Section < ActiveRecord::Base
   include FeesHelper
-  has_attached_file :image, :styles => {:xs => "32x32#", :m => "150x100#", :l => "300x200#"},
+  has_attached_file :image, :styles => {:xs => "32x32#", :s => "75x50#" , :m => "150x100#", :l => "300x200#"},
                     :default_style => :l,
                     :url  => :url_image,
                     :path => :path_image,
-                    :default_url => "commons/:style_no-image.png"
+                    :default_url => "commons/:style_art-no-image.jpg"
   validates_attachment_size :image, :less_than => 200.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 

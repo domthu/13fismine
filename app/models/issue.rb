@@ -20,10 +20,10 @@ class Issue < ActiveRecord::Base
   include FeesHelper
   #after_update :reprocess
   #has_image  #vedi config/initializers/paperclip.rb
-  has_attached_file :image, :styles => {:m => "150x100#", :l => "300x200#"},
-                    :url  => "articoli/:id:style.:extension",
+  has_attached_file :image, :styles => {:xs => "32x32#", :s => "75x50#" , :m => "150x100#", :l => "300x200#"},
+                    :url => "articoli/:id:style.:extension",
                     :path => "#{RAILS_ROOT}/public/images/articoli/:id:style.:extension",
-                    :default_url => "commons/:style_no-image.png"
+                    :default_url => "commons/:style_art-no-image.jpg"
   validates_attachment_size :image, :less_than => 200.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 
@@ -55,9 +55,9 @@ class Issue < ActiveRecord::Base
                      :include => [:project, :journals],
                      # sort by id so that limited eager loading doesn't break with postgresql
                      :order_column => "#{table_name}.id"
-  acts_as_event :title => Proc.new {|o| "#{o.tracker.name} ##{o.id} (#{o.status}): #{o.subject}"},
-                :url => Proc.new {|o| {:controller => 'issues', :action => 'show', :id => o.id}},
-                :type => Proc.new {|o| 'issue' + (o.closed? ? ' closed' : '') }
+  acts_as_event :title => Proc.new { |o| "#{o.tracker.name} ##{o.id} (#{o.status}): #{o.subject}" },
+                :url => Proc.new { |o| {:controller => 'issues', :action => 'show', :id => o.id} },
+                :type => Proc.new { |o| 'issue' + (o.closed? ? ' closed' : '') }
 
   acts_as_activity_provider :find_options => {:include => [:project, :author, :tracker]},
                             :author_key => :author_id
@@ -74,26 +74,26 @@ class Issue < ActiveRecord::Base
   validates_numericality_of :estimated_hours, :allow_nil => true
   validate :validate_issue
 
-  named_scope :visible, lambda {|*args| { :include => :project,
-      :conditions => Issue.visible_condition(args.shift || User.current, *args) } }
+  named_scope :visible, lambda { |*args| {:include => :project,
+                                          :conditions => Issue.visible_condition(args.shift || User.current, *args)} }
   named_scope :open, :conditions => ["#{IssueStatus.table_name}.is_closed = ?", false], :include => :status
   named_scope :recently_updated, :order => "#{Issue.table_name}.updated_on DESC"
-  named_scope :with_limit, lambda { |limit| { :limit => limit} }
-  named_scope :with_offset, lambda { |offset| { :offset => offset} }
+  named_scope :with_limit, lambda { |limit| {:limit => limit} }
+  named_scope :with_offset, lambda { |offset| {:offset => offset} }
   named_scope :on_active_project, :include => [:status, :project, :tracker],
-      :conditions => ["#{Project.table_name}.status=#{Project::STATUS_ACTIVE}"]
+              :conditions => ["#{Project.table_name}.status=#{Project::STATUS_ACTIVE}"]
   named_scope :without_version, lambda {
     {
-      :conditions => { :fixed_version_id => nil}
+        :conditions => {:fixed_version_id => nil}
     }
   }
-  named_scope :with_query, lambda {|query|
+  named_scope :with_query, lambda { |query|
     {
-      :conditions => Query.merge_conditions(query.statement)
+        :conditions => Query.merge_conditions(query.statement)
     }
   }
   named_scope :all_public_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}], :order => 'updated_on DESC', :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{Issue.table_name}.updated_on DESC"}
-  named_scope :with_filter, lambda {|filter| { :conditions => merge_conditions(filter) } }
+  named_scope :with_filter, lambda { |filter| {:conditions => merge_conditions(filter)} }
   named_scope :solo_convegni, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_CONVEGNI.to_s)
   named_scope :solo_newsport, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_NEWSPORT.to_s)
   named_scope :solo_quesiti, :conditions => merge_conditions("#{Issue.table_name}.news_id is not null")
@@ -104,46 +104,56 @@ class Issue < ActiveRecord::Base
   after_destroy :update_parent_attributes
 
 
- # return rue if summary is equal to description for full article
+  # return rue if summary is equal to description for full article
   def hide_summary?
-    if self.nil?  || self.testo_no_format.nil?  || self.summary.nil?
+    if self.nil? || self.testo_no_format.nil? || self.summary.nil?
       return false
     end
     s1= self.summary[0..125].gsub(/\s+/, "")
     s2= self.testo_no_format[0..125].gsub(/\s+/, "")
     s1[0..110].casecmp s2[0..110]
-     end
+  end
+
   def user_has_profile(usr = nil)
-   if usr == nil #UserProfile.users_profiles_all(:first, :condition => " user_id =#{usr}").count  > 0
-     true
-   else
-     false
-   end
- end
+    if usr == nil #UserProfile.users_profiles_all(:first, :condition => " user_id =#{usr}").count  > 0
+      true
+    else
+      false
+    end
+  end
+
+  def show_reservation?()
+    if self.due_date.nil?
+      false
+    else
+      self.due_date >= DateTime.now
+    end
+  end
+
   # returns latest issues for public area
   def self.latest_fs(user = User.current, count = 5)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
-   all_public_fs(:all, :limit => count, :order => "#{table_name}.created_on DESC")
+    all_public_fs(:all, :limit => count, :order => "#{table_name}.created_on DESC")
   end
 
   # returns latest issues for public area
   def self.all_by_sezione_fs(sezione = 1, user = User.current)
-    all_public_fs(:all, :limit => count, :conditions => ["#{Issue.table_name}.section_id = :secid", {:secid => sezione }], :include => [ :author, :project ], :order => "#{table_name}.created_on DESC")
+    all_public_fs(:all, :limit => count, :conditions => ["#{Issue.table_name}.section_id = :secid", {:secid => sezione}], :include => [:author, :project], :order => "#{table_name}.created_on DESC")
   end
 
   # Returns a SQL conditions string used to find all issues visible by the specified user
   def self.visible_condition(user, options={})
     Project.allowed_to_condition(user, :view_issues, options) do |role, user|
       case role.issues_visibility
-      when 'all'
-        nil
-      when 'default'
-        user_ids = [user.id] + user.groups.map(&:id)
-        "(#{table_name}.is_private = #{connection.quoted_false} OR #{table_name}.author_id = #{user.id} OR #{table_name}.assigned_to_id IN (#{user_ids.join(',')}))"
-      when 'own'
-        user_ids = [user.id] + user.groups.map(&:id)
-      else
-        '1=0'
+        when 'all'
+          nil
+        when 'default'
+          user_ids = [user.id] + user.groups.map(&:id)
+          "(#{table_name}.is_private = #{connection.quoted_false} OR #{table_name}.author_id = #{user.id} OR #{table_name}.assigned_to_id IN (#{user_ids.join(',')}))"
+        when 'own'
+          user_ids = [user.id] + user.groups.map(&:id)
+        else
+          '1=0'
       end
     end
   end
@@ -156,6 +166,7 @@ class Issue < ActiveRecord::Base
       self.section.top_section #+ "::" + self.section
     end
   end
+
   def top_section_key
     if (self.section.nil?)
       FeeConst::TOP_SECTION_DEFAULT
@@ -177,6 +188,7 @@ class Issue < ActiveRecord::Base
       #self.section.sezione
     end
   end
+
   def section_full_name
     if self.section.nil?
       ""
@@ -207,7 +219,7 @@ class Issue < ActiveRecord::Base
       if self.due_date.is_a?(Date)
         evento = self.due_date.to_date
         if (today > evento)
-          "<h3 class='domand_ko'>Convegno passato. Scaduto da " +  distance_of_date_in_words(today, evento) + "</h3><p>La partecipazione prevista era di " + cnt + " persone</p>"
+          "<h3 class='domand_ko'>Convegno passato. Scaduto da " + distance_of_date_in_words(today, evento) + "</h3><p>La partecipazione prevista era di " + cnt + " persone</p>"
         else
           #"<h3 class='domand_wait'>Il convegno avverà fra " + distance_of_time_in_words(evento.time, Time.now) + "</h3><p>La partecipazione prevista finora è di " + cnt + " persone</p>"
           "<h3 class='domand_wait'>Il convegno avverà fra " + distance_of_date_in_words(evento, today) + "</h3><p>La partecipazione prevista finora è di " + cnt + " persone</p>"
@@ -237,14 +249,14 @@ class Issue < ActiveRecord::Base
   def visible?(usr=nil)
     (usr || User.current).allowed_to?(:view_issues, self.project) do |role, user|
       case role.issues_visibility
-      when 'all'
-        true
-      when 'default'
-        !self.is_private? || self.author == user || user.is_or_belongs_to?(assigned_to)
-      when 'own'
-        self.author == user || user.is_or_belongs_to?(assigned_to)
-      else
-        false
+        when 'all'
+          true
+        when 'default'
+          !self.is_private? || self.author == user || user.is_or_belongs_to?(assigned_to)
+        when 'own'
+          self.author == user || user.is_or_belongs_to?(assigned_to)
+        else
+          false
       end
     end
   end
@@ -265,7 +277,7 @@ class Issue < ActiveRecord::Base
   def copy_from(arg)
     issue = arg.is_a?(Issue) ? arg : Issue.visible.find(arg)
     self.attributes = issue.attributes.dup.except("id", "root_id", "parent_id", "lft", "rgt", "created_on", "updated_on")
-    self.custom_field_values = issue.custom_field_values.inject({}) {|h,v| h[v.custom_field_id] = v.value; h}
+    self.custom_field_values = issue.custom_field_values.inject({}) { |h, v| h[v.custom_field_id] = v.value; h }
     self.status = issue.status
     self
   end
@@ -307,7 +319,7 @@ class Issue < ActiveRecord::Base
     end
     if options[:copy]
       issue.author = User.current
-      issue.custom_field_values = self.custom_field_values.inject({}) {|h,v| h[v.custom_field_id] = v.value; h}
+      issue.custom_field_values = self.custom_field_values.inject({}) { |h, v| h[v.custom_field_id] = v.value; h }
       issue.status = if options[:attributes] && options[:attributes][:status_id]
                        IssueStatus.find_by_id(options[:attributes][:status_id])
                      else
@@ -375,6 +387,7 @@ class Issue < ActiveRecord::Base
     end
     send :attributes_without_tracker_first=, new_attributes, *args
   end
+
   # Do not redefine alias chain on reload (see #4838)
   alias_method_chain(:attributes=, :tracker_first) unless method_defined?(:attributes_without_tracker_first=)
 
@@ -383,36 +396,36 @@ class Issue < ActiveRecord::Base
   end
 
   safe_attributes 'tracker_id',
-    'status_id',
-    'parent_issue_id',
-    'category_id',
-    'assigned_to_id',
-    'priority_id',
-    'fixed_version_id',
-    'subject',
-    'summary',
-    'description',
-    'start_date',
-    'due_date',
-    'done_ratio',
-    'estimated_hours',
-    'custom_field_values',
-    'custom_fields',
-    'lock_version',
-    'se_visible_web',
-    'se_visible_data',
-    'se_visible_newsletter',
-    'se_protetto',
-    'ordinamento',
-    'immagine_url',
-    'tag_link',
-    'news_id',
-    'se_prenotazione',
-    'address_map',
-    'section_id',
-    'image',
-    'author_id',
-    :if => lambda {|issue, user| issue.new_record? || user.allowed_to?(:edit_issues, issue.project) }
+                  'status_id',
+                  'parent_issue_id',
+                  'category_id',
+                  'assigned_to_id',
+                  'priority_id',
+                  'fixed_version_id',
+                  'subject',
+                  'summary',
+                  'description',
+                  'start_date',
+                  'due_date',
+                  'done_ratio',
+                  'estimated_hours',
+                  'custom_field_values',
+                  'custom_fields',
+                  'lock_version',
+                  'se_visible_web',
+                  'se_visible_data',
+                  'se_visible_newsletter',
+                  'se_protetto',
+                  'ordinamento',
+                  'immagine_url',
+                  'tag_link',
+                  'news_id',
+                  'se_prenotazione',
+                  'address_map',
+                  'section_id',
+                  'image',
+                  'author_id',
+                  :if => lambda { |issue, user| issue.new_record? || user.allowed_to?(:edit_issues, issue.project) }
 
 #    add_column :issues, :se_sommario, :boolean, :default => 1
 #    add_column :issues, :titolo, :text
@@ -424,16 +437,16 @@ class Issue < ActiveRecord::Base
 #    add_column :issues, :riassunto_no_format, :text
 
   safe_attributes 'status_id',
-    'assigned_to_id',
-    'fixed_version_id',
-    'done_ratio',
-    :if => lambda {|issue, user| issue.new_statuses_allowed_to(user).any? }
+                  'assigned_to_id',
+                  'fixed_version_id',
+                  'done_ratio',
+                  :if => lambda { |issue, user| issue.new_statuses_allowed_to(user).any? }
 
   safe_attributes 'is_private',
-    :if => lambda {|issue, user|
-      user.allowed_to?(:set_issues_private, issue.project) ||
-        (issue.author == user && user.allowed_to?(:set_own_issues_private, issue.project))
-    }
+                  :if => lambda { |issue, user|
+                    user.allowed_to?(:set_issues_private, issue.project) ||
+                        (issue.author == user && user.allowed_to?(:set_own_issues_private, issue.project))
+                  }
 
   # Safely sets attributes
   # Should be called from controllers instead of #attributes=
@@ -459,7 +472,7 @@ class Issue < ActiveRecord::Base
     end
 
     unless leaf?
-      attrs.reject! {|k,v| %w(priority_id done_ratio start_date due_date estimated_hours).include?(k)}
+      attrs.reject! { |k, v| %w(priority_id done_ratio start_date due_date estimated_hours).include?(k) }
     end
 
     if attrs.has_key?('parent_issue_id')
@@ -547,7 +560,7 @@ class Issue < ActiveRecord::Base
     @issue_before_change = self.clone
     @issue_before_change.status = self.status
     @custom_values_before_change = {}
-    self.custom_values.each {|c| @custom_values_before_change.store c.custom_field_id, c.value }
+    self.custom_values.each { |c| @custom_values_before_change.store c.custom_field_id, c.value }
     # Make sure updated_on is updated when adding a note.
     updated_on_will_change!
     @current_journal
@@ -622,21 +635,21 @@ class Issue < ActiveRecord::Base
 
   # Returns true if this issue is blocked by another issue that is still open
   def blocked?
-    !relations_to.detect {|ir| ir.relation_type == 'blocks' && !ir.issue_from.closed?}.nil?
+    !relations_to.detect { |ir| ir.relation_type == 'blocks' && !ir.issue_from.closed? }.nil?
   end
 
   # Returns an array of status that user is able to apply
   def new_statuses_allowed_to(user, include_default=false)
     statuses = status.find_new_statuses_allowed_to(
-      user.roles_for_project(project),
-      tracker,
-      author == user,
-      assigned_to_id_changed? ? assigned_to_id_was == user.id : assigned_to_id == user.id
-      )
+        user.roles_for_project(project),
+        tracker,
+        author == user,
+        assigned_to_id_changed? ? assigned_to_id_was == user.id : assigned_to_id == user.id
+    )
     statuses << status unless statuses.empty?
     statuses << IssueStatus.default if include_default
     statuses = statuses.uniq.sort
-    blocked? ? statuses.reject {|s| s.is_closed?} : statuses
+    blocked? ? statuses.reject { |s| s.is_closed? } : statuses
   end
 
   # Returns the mail adresses of users that should be notified
@@ -647,14 +660,14 @@ class Issue < ActiveRecord::Base
     notified << author if author && author.active? && author.notify_about?(self)
     if assigned_to
       if assigned_to.is_a?(Group)
-        notified += assigned_to.users.select {|u| u.active? && u.notify_about?(self)}
+        notified += assigned_to.users.select { |u| u.active? && u.notify_about?(self) }
       else
         notified << assigned_to if assigned_to.active? && assigned_to.notify_about?(self)
       end
     end
     notified.uniq!
     # Remove users that can not view the issue
-    notified.reject! {|user| !visible?(user)}
+    notified.reject! { |user| !visible?(user) }
     notified.collect(&:mail)
   end
 
@@ -676,7 +689,7 @@ class Issue < ActiveRecord::Base
     if issues.any?
       relations = IssueRelation.all(:conditions => ["issue_from_id IN (:ids) OR issue_to_id IN (:ids)", {:ids => issues.map(&:id)}])
       issues.each do |issue|
-        issue.instance_variable_set "@relations", relations.select {|r| r.issue_from_id == issue.id || r.issue_to_id == issue.id}
+        issue.instance_variable_set "@relations", relations.select { |r| r.issue_from_id == issue.id || r.issue_to_id == issue.id }
       end
     end
   end
@@ -700,7 +713,7 @@ class Issue < ActiveRecord::Base
 
   # Returns an array of issues that duplicate this one
   def duplicates
-    relations_to.select {|r| r.relation_type == IssueRelation::TYPE_DUPLICATES}.collect {|r| r.issue_from}
+    relations_to.select { |r| r.relation_type == IssueRelation::TYPE_DUPLICATES }.collect { |r| r.issue_from }
   end
 
   # Returns the due date or the target due date if any
@@ -720,9 +733,9 @@ class Issue < ActiveRecord::Base
 
   def soonest_start
     @soonest_start ||= (
-        relations_to.collect{|relation| relation.successor_soonest_start} +
+    relations_to.collect { |relation| relation.successor_soonest_start } +
         ancestors.collect(&:soonest_start)
-      ).compact.max
+    ).compact.max
   end
 
   def reschedule_after(date)
@@ -783,11 +796,11 @@ class Issue < ActiveRecord::Base
       if valid?
         attachments = Attachment.attach_files(self, params[:attachments])
         # TODO: Rename hook
-        Redmine::Hook.call_hook(:controller_issues_edit_before_save, { :params => params, :issue => self, :time_entry => @time_entry, :journal => @current_journal})
+        Redmine::Hook.call_hook(:controller_issues_edit_before_save, {:params => params, :issue => self, :time_entry => @time_entry, :journal => @current_journal})
         begin
           if save
             # TODO: Rename hook
-            Redmine::Hook.call_hook(:controller_issues_edit_after_save, { :params => params, :issue => self, :time_entry => @time_entry, :journal => @current_journal})
+            Redmine::Hook.call_hook(:controller_issues_edit_after_save, {:params => params, :issue => self, :time_entry => @time_entry, :journal => @current_journal})
           else
             raise ActiveRecord::Rollback
           end
@@ -883,6 +896,7 @@ class Issue < ActiveRecord::Base
                                                 and #{Issue.table_name}.project_id <> #{project.id}
                                               group by s.id, s.is_closed, #{Issue.table_name}.project_id") if project.descendants.active.any?
   end
+
   # End ReportsController extraction
 
   # Returns an array of projects that current user can move issues to
@@ -895,14 +909,14 @@ class Issue < ActiveRecord::Base
       if Role.non_member.allowed_to?(:move_issues)
         projects = Project.visible.all
       else
-        User.current.memberships.each {|m| projects << m.project if m.roles.detect {|r| r.allowed_to?(:move_issues)}}
+        User.current.memberships.each { |m| projects << m.project if m.roles.detect { |r| r.allowed_to?(:move_issues) } }
       end
     end
     projects
   end
 
 
-private
+  private
 
   def update_nested_set_attributes
     if root_id.nil?
@@ -927,11 +941,11 @@ private
           reload
         end
         old_root_id = root_id
-        self.root_id = (@parent_issue.nil? ? id : @parent_issue.root_id )
+        self.root_id = (@parent_issue.nil? ? id : @parent_issue.root_id)
         target_maxright = nested_set_scope.maximum(right_column_name) || 0
         offset = target_maxright + 1 - lft
         Issue.update_all("root_id = #{root_id}, lft = lft + #{offset}, rgt = rgt + #{offset}",
-                          ["root_id = ? AND lft >= ? AND rgt <= ? ", old_root_id, lft, rgt])
+                         ["root_id = ? AND lft >= ? AND rgt <= ? ", old_root_id, lft, rgt])
         self[left_column_name] = lft + offset
         self[right_column_name] = rgt + offset
         if @parent_issue
@@ -998,11 +1012,11 @@ private
     # Only need to update issues with a fixed_version from
     # a different project and that is not systemwide shared
     Issue.all(:conditions => merge_conditions("#{Issue.table_name}.fixed_version_id IS NOT NULL" +
-                                                " AND #{Issue.table_name}.project_id <> #{Version.table_name}.project_id" +
-                                                " AND #{Version.table_name}.sharing <> 'system'",
-                                                conditions),
+                                                  " AND #{Issue.table_name}.project_id <> #{Version.table_name}.project_id" +
+                                                  " AND #{Version.table_name}.sharing <> 'system'",
+                                              conditions),
               :include => [:project, :fixed_version]
-              ).each do |issue|
+    ).each do |issue|
       next if issue.project.nil? || issue.fixed_version.nil?
       unless issue.project.shared_versions.include?(issue.fixed_version)
         issue.init_journal(User.current)
@@ -1066,7 +1080,7 @@ private
   def create_journal
     if @current_journal
       # attributes changes
-      (Issue.column_names - %w(id root_id lft rgt lock_version created_on updated_on)).each {|c|
+      (Issue.column_names - %w(id root_id lft rgt lock_version created_on updated_on)).each { |c|
         before = @issue_before_change.send(c)
         after = send(c)
         next if before == after || (before.blank? && after.blank?)
@@ -1076,9 +1090,9 @@ private
                                                       :value => send(c))
       }
       # custom fields changes
-      custom_values.each {|c|
+      custom_values.each { |c|
         next if (@custom_values_before_change[c.custom_field_id]==c.value ||
-                  (@custom_values_before_change[c.custom_field_id].blank? && c.value.blank?))
+            (@custom_values_before_change[c.custom_field_id].blank? && c.value.blank?))
         @current_journal.details << JournalDetail.new(:property => 'cf',
                                                       :prop_key => c.custom_field_id,
                                                       :old_value => @custom_values_before_change[c.custom_field_id],

@@ -21,6 +21,7 @@ class UserProfile < ActiveRecord::Base
   named_scope :invisibili, :conditions => " display_in =#{FeeConst::PROFILO_FS_INVISIBILE}", :order => "#{User.table_name}.lastname ASC" # PROFILO_FS_INVISIBILE = 4
 
 
+
   def my_avatar(taglia, other_css='') #'l per large  ecc
     head = ''
     head = '<div class="' + other_css + ' fs-my-avatar-' + taglia.to_s + '"> ' if other_css != "no-div"
@@ -86,21 +87,6 @@ class UserProfile < ActiveRecord::Base
     self.content_type = incoming_file.content_type
     self.data = incoming_file.read
   end
-
-  def self.show_edit_profile_button?(usr = nil)
-    case usr
-      when nil
-        false
-      when
-       usr.ismanager?
-        true
-      when usr.isauthor?
-    end
-
-    else
-      false
-
-    end
 
 
 end
