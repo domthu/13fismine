@@ -34,7 +34,7 @@ module FeeConst
   PROFILO_FS_COLLABORATORE = 1
   PROFILO_FS_RESPONSABILE = 2
   PROFILO_FS_DIRETTORE = 3
-  PROFILO_FS_INVISIBILE = 4
+  PROFILO_FS_INVISIBILE = 0
   #---------------------
   #di sistema: Non si possono cancellare
   DEFAULT_SECTION = 5 #Approfondimenti

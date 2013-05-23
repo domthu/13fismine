@@ -17,7 +17,7 @@
               <div class="fs-lateral-blocks-head">
                 <%= link_to(h(@conv_prossimo.subject), url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %> </div>
               <div class="fs-conv-block">
-                <%= image_tag art_image(@conv_prossimo, :m) %>
+                <%= image_tag art_image(@conv_prossimo, :s) %>
                 <%= link_to(h(@conv_prossimo.summary), url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %>
                 <%# link_to(h(smart_truncate(@conv_prossimo.summary, 120)), :controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false) %>
               </div><div class="clearfix"></div>
@@ -40,7 +40,7 @@
                   <div class="fs-lateral-blocks-head">
                     <%= link_to(h(con.subject), url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %> </div>
                   <div class="fs-conv-block">
-                    <%= image_tag art_image(con, :m) %>
+                    <%= image_tag art_image(con, :s) %>
                     <%= link_to(h(smart_truncate(con.summary, 175)), url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %>
                   </div><div class="clearfix"></div>
                   <%= link_to "Visualizza...", url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button" %>

@@ -11,8 +11,8 @@
               <div class="fs-chisiamo-item">
                    <%= link_to(item.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
                 <p>
-                  <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
-                  <span style="font-style: italic;">  <%= item.fs_qualifica %> </span>
+                  <span class="fs-chisiamo-item-txt1">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span>
+                  <span class="fs-chisiamo-item-txt2">  <%= item.fs_qualifica %> </span>
                </p>
               </div>
           <% end %>
@@ -30,8 +30,8 @@
               <div class="fs-chisiamo-item">
                 <%= link_to(item.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
                 <p>
-                  <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
-                  <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
+                  <span  class="fs-chisiamo-item-txt1">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span>
+                  <span  class="fs-chisiamo-item-txt2">  <%= item.fs_qualifica %> </span></p>
               </div>
           <% end %>
           <div class="clearfix"></div>
@@ -48,17 +48,16 @@
               <div class="fs-chisiamo-item2">
                 <%= link_to(item.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
                 <p>
-                  <span style="font-weight: bold;">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span><br/>
-                  <span style="font-style: italic;">  <%= item.fs_qualifica %> </span></p>
+                  <span  class="fs-chisiamo-item-txt1">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span>
+                  <span  class="fs-chisiamo-item-txt2">  <%= item.fs_qualifica %> </span></p>
               </div>
           <% end %>
           <% @users.each do |item| %>
               <div class="fs-chisiamo-item2">
                 <%= link_to image_tag("/images/commons/m-no_avatar.jpg", :alt => item.firstname + ' ' + item.lastname, :height => "80", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_new", :id => item.id %>
                 <p>
-                  <span style="font-weight: bold;">  <%= link_to((item.firstname + ' ' + item.lastname), :controller => "editorial", :action => "profilo_new", :id => item.id) %></span><br/>
-                    <span style="font-style: italic;">[ <%= item.id.to_s %> <%= item.role_id == 4 ? 'Collaboratore' :'Admin' %>
-                      ]</span></p>
+                  <span  class="fs-chisiamo-item-txt1">  <%= link_to((item.firstname + ' ' + item.lastname), :controller => "editorial", :action => "profilo_new", :id => item.id) %></span>
+                    <span  class="fs-chisiamo-item-txt2">[ <%= item.id.to_s %> <%= item.role_id == 4 ? 'Collaboratore' :'Admin' %> ]</span></p>
               </div>
           <% end %>
           <div class="clearfix"></div>

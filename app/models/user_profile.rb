@@ -15,6 +15,7 @@ class UserProfile < ActiveRecord::Base
   named_scope :users_profiles_all, :include => :user,
               :conditions => "(#{User.table_name}.role_id = #{FeeConst::ROLE_MANAGER} OR #{User.table_name}.role_id = #{FeeConst::ROLE_AUTHOR})"
 
+
   named_scope :collaboratori, :conditions => " display_in =#{FeeConst::PROFILO_FS_COLLABORATORE}", :order => "#{User.table_name}.lastname ASC"   # PROFILO_FS_COLLABORATORE = 1
   named_scope :responsabili, :conditions => " display_in =#{FeeConst::PROFILO_FS_RESPONSABILE}", :order => "#{User.table_name}.lastname ASC" # PROFILO_FS_RESPONSABILE = 2
   named_scope :direttori, :conditions => " display_in =#{FeeConst::PROFILO_FS_DIRETTORE}", :order => "#{User.table_name}.lastname ASC" # PROFILO_FS_DIRETTORE = 3

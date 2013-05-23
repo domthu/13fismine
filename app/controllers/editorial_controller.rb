@@ -404,7 +404,8 @@ class EditorialController < ApplicationController
     if request.post?
       if @news.save
         # flash[:notice] = l(:notice_successful_create)
-        flash[:notice] = fading_flash_message("Il suo quesito è stato registrato grazie.", 7)
+        flash[:notice] = "Il suo quesito è stato registrato grazie."
+        #flash[:notice] = fading_flash_message("Il suo quesito è stato registrato grazie.", 7)
         redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
         #redirect_to :controller => 'news', :action => 'index', :project_id => @project
       else
@@ -420,7 +421,8 @@ class EditorialController < ApplicationController
     @quesito_news.description = params[:description]
     if request.post?
       if @quesito_news.save
-        flash[:notice] = fading_flash_message(l(:notice_successful_update), 7)
+        flash[:notice] = :notice_successful_update
+        #flash[:notice] = fading_flash_message(l(:notice_successful_update), 7)
       else
         flash[:notice] = 'qualcosa è andato storto!'
       end
@@ -433,8 +435,8 @@ class EditorialController < ApplicationController
     #verificare che l'utente sia un admin o un se stesso
     if @quesito_news.author == User.current || User.current.admin?
       @quesito_news.destroy #@quesito_news = News.destroy(params[:id])
-      flash[:notice] = fading_flash_message("Il suo quesito è stato rimosso.", 7)
-      # flash[:notice] =  'quesito rimosso!'
+      #flash[:notice] = fading_flash_message("Il suo quesito è stato rimosso.", 7)
+       flash[:notice] =  'quesito rimosso!'
     else
       flash[:error] = fading_flash_message("Solo l'utente che ha creato il quesito può eliminarlo", 15)
     end
@@ -499,8 +501,9 @@ class EditorialController < ApplicationController
 
   def profilo_show
     if @user_profile.nil?
-      flash[:notice] = fading_flash_message("Profilo non trovato.", 5)
+     # flash[:notice] = fading_flash_message("Profilo non trovato.", 5)
     end
+    @profiles_hidden = UserProfile.users_profiles_all.invisibili
   end
 
   def profilo_edit
@@ -512,7 +515,8 @@ class EditorialController < ApplicationController
         # if @user_profile.update_attributes(:user_id => params[:user_id], :photo => params[:photo], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
         #@user_profile.photo.reprocess!
         # @user_profile.save
-        flash[:notice] = fading_flash_message("il tuo profilo è stato aggiornato.", 5)
+       # flash[:notice] = fading_flash_message("il tuo profilo è stato aggiornato2.", 5)
+        flash[:notice] = ("il tuo profilo è stato aggiornato.")
       else
         flash[:notice] = 'mmmhhh ... qualcosa è andato storto!'
       end
@@ -536,7 +540,9 @@ class EditorialController < ApplicationController
         # if @user_profile.update_attributes(:user_id => params[:user_id], :photo => params[:photo], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
         #@user_profile.photo.reprocess!
         # @user_profile.save
-        flash[:notice] = fading_flash_message("il tuo profilo è stato creato.", 5)
+        #flash[:notice] = fading_flash_message("il tuo profilo è stato creato.", 5)
+        flash[:notice] = "il tuo profilo è stato creato."
+
       else
         flash[:notice] = 'mmmhhh ... qualcosa è andato storto!'
       end
@@ -553,7 +559,8 @@ class EditorialController < ApplicationController
     if request.post?
       if @user_profile.save
         # flash[:notice] = l(:notice_successful_create)
-        flash[:notice] = fading_flash_message("Il suo profilo è stato creato.", 5)
+       # flash[:notice] = fading_flash_message("Il suo profilo è stato creato.", 5)
+        flash[:notice] = "Il suo profilo è stato creato."
         redirect_to(profile_show_path(@user_profile.id))
 
         #redirect_to :controller => 'news', :action => 'index', :project_id => @project

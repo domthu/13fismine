@@ -74,17 +74,17 @@ class SettingsController < ApplicationController
 
   def img_refresh_org
     CrossOrganization.all.each { |s| s.image.reprocess! }
-    redirect_to :action => 'edit', :tab => :display
+    redirect_to :action => 'edit' , :tab => :display
   end
 
   def img_refresh_tsection
     TopSection.all.each { |s| s.image.reprocess! }
-    redirect_to :action => 'edit', :tab => :display
+    redirect_to :action => 'edit' , :tab => :display
   end
 
   def img_refresh_section
     Section.all.each { |s| s.image.reprocess! }
-    redirect_to :action => 'edit', :tab => :display
+    redirect_to :action => 'edit' , :tab => :display
   end
 
   def img_refresh_issues

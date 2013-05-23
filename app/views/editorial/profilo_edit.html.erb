@@ -61,7 +61,7 @@
           <label><%= radio_button_tag :display_in, 1, @user_profile.display_in == 1 %> <%= 'Collaboratori' %></label><br/>
           <label><%= radio_button_tag :display_in, 2, @user_profile.display_in == 2 %> <%= 'Responsabili' %></label><br/>
           <label><%= radio_button_tag :display_in, 3, @user_profile.display_in == 3 %> <%= 'Direttori' %></label><br/>
-          <label><%= radio_button_tag :display_in, 4, @user_profile.display_in == 4 %> <%= 'Non Visibile' %></label><br/>
+          <label><%= radio_button_tag :display_in, 0, @user_profile.display_in == 0 %> <%= 'Non Visibile' %></label><br/>
         </div>
         <p style="padding:5px 0;"></p>
 
@@ -91,6 +91,8 @@
         <p><%= text_area_tag :curriculum, @user_profile.curriculum, :name => 'curriculum', :cols => 120, :rows => 15 %>  </p>
       </div>
   <% end %>
+
+
 </div>
 <%# content_for :header_yui do %>
     <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>

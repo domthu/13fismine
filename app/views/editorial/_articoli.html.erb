@@ -5,8 +5,14 @@
         <ARTICLE class="fs-post fs-article">
           <% if articolo %>
               <div class="fs-postmetadataheader">
-                <span class="fs-art-sezione">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
-                <span class="fs-postdateicon" style="float:right;"><%# articolo.due_date %> <%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
+                <% if articolo.se_protetto %>
+                  <span class="fs-art-sezione fs-art-sez-ko fs-art-ko">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
+                <span class="fs-postdateicon fs-art-ko" style="float:right;"><%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
+               <% else	  %>
+                    <span class="fs-art-sezione fs-art-sez-ok fs-art-ok">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
+                  <span class="fs-postdateicon fs-art-ok" style="float:right;"><%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
+
+                    <%end%>
                 <h5 class="fs-postheader">
                   <%=   link_to_articolo(articolo, :title=> articolo.subject ) %>
                 </h5>
@@ -30,7 +36,7 @@
                                 <div class="fs-postmetadatafooter-author-qualifica"><%= articolo.author.user_profile.fs_qualifica unless articolo.author.user_profile.fs_qualifica.nil? %>  </div>
                             <% end %>
                           </div>
-                          <div class="fs-postmetadatafooter-ko"></div>
+                          <div class="fs-postmetadatafooter-status fs-art-ko">articolo riservato agli abbonati</div>
                       <% else %>
                           <div class="fs-postmetadatafooter-author-ok">
                             <div class="fs-postmetadatafooter-author">
@@ -45,7 +51,7 @@
                                 <div class="fs-postmetadatafooter-author-qualifica"><%= articolo.author.user_profile.fs_qualifica unless articolo.author.user_profile.fs_qualifica.nil? %>  </div>
                             <% end %>
                           </div>
-                          <div class="fs-postmetadatafooter-ok"></div>
+                          <div class="fs-postmetadatafooter-status fs-art-ok">articolo consultabile liberamente</div>
                       <% end %>
                     </div>
                   </div>
@@ -53,7 +59,11 @@
                   <br/> &nbsp; <br/>
 
                   <p style="text-align: right; padding-right: 200px;">
+                    <% unless articolo.se_protetto %>
                     <%= link_to_articolo(articolo, :title => 'Continua ...', :class => "fs-blu-button") %></p>
+                        <%	 else %>
+                        <%= link_to_articolo(articolo, :title => 'Continua ...', :class => "fs-rosso-button") %></p>
+                    <% end %>
                 </div>
               </div>
           <% else %>

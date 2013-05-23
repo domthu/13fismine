@@ -1,5 +1,5 @@
 class TopSection < ActiveRecord::Base
-  has_attached_file :image,  :styles => {:xs => "32x32#", :s => "75x50#" , :m => "150x100#", :l => "300x200#"},
+  has_attached_file :image,  :styles => {:xs => "32x32#", :s => "75x50#" , :m => "200x134#", :l => "300x200#"},
                     :url  => :url_image ,
                     :path => :path_image ,
                     :default_style => :l,

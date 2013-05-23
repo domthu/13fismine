@@ -599,4 +599,5 @@ def fading_flash_message(text, seconds=3)
      	</script>
    	EOJS
 end
+
 end
