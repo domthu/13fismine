@@ -4,7 +4,15 @@
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">
           <div class="fs-layout-cell layout-item-0" style="width: 99%">
-            <%= raw(Setting.static_page_progettofs.html_safe) %>
+            <div id="fs-pag-abbonamenti-header">
+              <% if User.current.logged?  %>
+                <%#	else  %>
+              <div> Entra nel mondo Fiscosport!   <%= link_to "Registrati", url_for(:controller => "account",:action => 'register'), :class => "fs-blu-button"%>
+              </div>
+              <div>Se sei già abbonato fai il login qui sopra / </div>
+                 <%	end  %>
+            </div>
+            <%= raw(Setting.static_page_abbonamenti.html_safe) %>
           </div>
         </div>
       </div>

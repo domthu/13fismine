@@ -54,6 +54,7 @@ ActionController::Routing::Routes.draw do |map|
   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
   map.progettofs  '/progetto-fiscosport', :controller => 'editorial', :action => 'pages_progetto-fs'
   map.lavoraconnoi '/lavora-con-noi', :controller => 'editorial', :action => 'pages_lavora-con-noi'
+  map.abbonamenti '/abbonamenti', :controller => 'editorial', :action => 'pages_abbonamenti'
    #-> Edizioni e Newletter (table: projects)-
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
@@ -84,7 +85,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.articoloid '/editoriale/articolo/:id', :controller => 'editorial', :action => 'articolo'
   #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
-  map.abbonamenti '/account/registrati', :controller => 'account', :action => 'register'
+  #map.register '/account/registrati', :controller => 'account', :action => 'register'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
   map.prova_gratis 'prova_gratis', :controller => 'account', :action => 'prova', :conditions => {:method => [:post]}
 =begin

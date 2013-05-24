@@ -2044,6 +2044,18 @@ right: -14px;   */
     float: none;
     clear: both;
 }
+#fs-pag-abbonamenti-header{
+    width: 100%;
+    min-height: 30px;
+    border: double 1px #c71585;
+}
+#fs-pag-abbonamenti-header div{
+display: inline-block;
+    float: left;
+    width: 48%;
+    border: dotted 1px #8a2be2;
+    font-size: 1.2em;
+}
 
 /* ======================================================================================= */
 /* ===================zona riservata . SOPRA TUTTE LE PERSONALIZZAZIONI ================== */

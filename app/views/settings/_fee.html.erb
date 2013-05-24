@@ -65,8 +65,8 @@
 </div>
 </fieldset>
 
-<fieldset  class="yui-skin-sam"><legend><%= l(:setting_iscription) %></legend>
-<%= setting_text_area :template_iscription, :label => false, :rows => 5 %>
+<fieldset  class="yui-skin-sam"><legend><%= l(:static_page_abbonamenti) %></legend>
+<%= setting_text_area :static_page_abbonamenti, :label => false, :rows => 10 %>
 <%= l(:label_iscription) %>
 <div style="float:right;">
 </div>
@@ -172,7 +172,7 @@
             removeLineBreaks:true,
             drag:true
         };
-        init_yui_editor_fs('settings_template_iscription', myConfig7);
+        init_yui_editor_fs('settings_static_page_abbonamenti', myConfig7);
 
     })
 

@@ -1461,8 +1461,8 @@ en:
   label_privacy: Documento che definisce il rilascio della privacy
   setting_condition: "Regolamento degli abbonamenti"
   label_condition: "Documento che definisce le condizioni d'uso"
-  setting_iscription: "Modalità per abbonarsi"
-  label_iscription: "Documento che elenca le modalità e i passi per l'iscrizione"
+  static_page_abbonamenti: "Pagina -> Abbonamenti"
+  label_iscription: "Crea la pagina statica Abbonamenti nel front end"
 
 #Static pages in FE memorized in: settings/_projects
   static_page_cosaoffriamo: "Pagina -> Cosa Offriamo"

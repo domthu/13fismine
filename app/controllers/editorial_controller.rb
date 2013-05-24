@@ -799,10 +799,9 @@ class EditorialController < ApplicationController
 
   def reroute_auth()
     flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
-    flash[:error] = "Abbonamento non valido (utente)..."
-    redirect_to(signin_path)
-
-    #redirect_to(unauthorized_path)
+    #flash[:error] = "Abbonamento non valido (utente)..."
+    #redirect_to(signin_path)
+    redirect_to(abbonamenti_path)
   end
 
   #privato. Usato sia per articolo che preview (anche se non pubblico il project ed issue)
