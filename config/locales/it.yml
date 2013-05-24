@@ -1475,7 +1475,7 @@ it:
   static_page_cosaoffriamo: "Pagina -> Cosa Offriamo"
   static_page_lavoraconnoi: "Pagina -> Lavora con Noi"
   static_page_progettofs: "Pagina -> Progetto Fiscosport"
-
+  static_page_contattaci: "Pagina -> Contattaci"
 #Deliver_fee  type
   proposal: Abbonamenti disponibili
   thanks: Pagamento ricevuto, grazie

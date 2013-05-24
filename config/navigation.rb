@@ -45,14 +45,15 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
     end
-    @tmenu_ns = TopMenu.find_by_id(FeeConst::TMENU_NEWSPORT.to_s)
+   # @tmenu_ns = TopMenu.find_by_id(FeeConst::TMENU_NEWSPORT.to_s)
     menu_generale.item :key_2, 'Chi Siamo', '/chi-siamo'
     menu_generale.item :key_3, 'Cosa Offriamo', cosaoffriamo_path
     menu_generale.item :key_5, 'Lavora con Noi', lavoraconnoi_path
     menu_generale.item :key_6, 'Eventi e Convegni', eventi_path
-    menu_generale.item  @tmenu_ns.key, @tmenu_ns.description, '/editoriale/' + @tmenu_ns.key
+   #menu_generale.item  @tmenu_ns.key, @tmenu_ns.description, '/editoriale/' + @tmenu_ns.key
     menu_generale.item :key_8, 'Abbonamenti', abbonamenti_path
     menu_generale.item :key_7, 'Progetto Fiscosport', progettofs_path
+    menu_generale.item :key_9, 'Contattaci', progettofs_path
     menu_generale.dom_class = 'fs-hmenu'
 
 

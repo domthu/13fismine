@@ -50,7 +50,7 @@ ActionController::Routing::Routes.draw do |map|
   # Named Routes for static pages.
   map.chisiamo '/chi_siamo', :controller => 'editorial', :action => 'chisiamo'
   map.cosaoffriamo '/cosa-offriamo', :controller => 'editorial', :action => 'pages_cosa-offriamo'
-  map.contatti '/contatti', :controller => 'editorial', :action => 'contatti'
+  map.contattaci '/contattaci', :controller => 'editorial', :action => 'pages_contattaci'
   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
   map.progettofs  '/progetto-fiscosport', :controller => 'editorial', :action => 'pages_progetto-fs'
   map.lavoraconnoi '/lavora-con-noi', :controller => 'editorial', :action => 'pages_lavora-con-noi'

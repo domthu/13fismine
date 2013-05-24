@@ -291,3 +291,8 @@ static_page_lavoraconnoi:
 
 static_page_progettofs:
   default: "Pagina progetto fiscosport"
+
+static_page_contattaci:
+  default: "Pagina contattaci"
+
+

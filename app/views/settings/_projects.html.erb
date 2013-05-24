@@ -26,6 +26,10 @@
        <%= setting_text_area :static_page_progettofs, :label => false, :rows => 50 %>
      </fieldset>
      <br />
+     <fieldset  class="yui-skin-sam"><legend><%= l(:static_page_contattaci) %></legend>
+       <%= setting_text_area :static_page_contattaci, :label => false, :rows => 50 %>
+     </fieldset>
+     <br />
    </div>
     <%= submit_tag l(:button_save) %>
 <% end %>
@@ -72,6 +76,20 @@
             drag:true
         };
         init_yui_editor_fs('settings_static_page_progettofs', myConfig4);
+
+        var myConfig1 = {
+            handleSubmit:true,
+            width:'100%',
+            resize:true,
+            animate:true,
+            dompath:true,
+            focusAtStart:false,
+            nodeChangeDelay:false,
+            removeLineBreaks:true,
+            drag:true
+        };
+        init_yui_editor_fs('settings_static_page_contattaci', myConfig1);
+
 
            })
 

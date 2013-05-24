@@ -1,20 +1,3 @@
-# Redmine - project management software
-# Copyright (C) 2006-2011  Jean-Philippe Lang
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
 class Issue < ActiveRecord::Base
   include Redmine::SafeAttributes
   include FeesHelper
@@ -98,12 +81,15 @@ class Issue < ActiveRecord::Base
   named_scope :solo_newsport, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_NEWSPORT.to_s)
   named_scope :solo_quesiti, :conditions => merge_conditions("#{Issue.table_name}.news_id is not null")
 
+
   before_create :default_assign
   before_save :close_duplicates, :update_done_ratio_from_issue_status
   after_save :reschedule_following_issues, :update_nested_set_attributes, :update_parent_attributes, :create_journal
   after_destroy :update_parent_attributes
 
-
+  def year
+     self.due_date.strftime('%Y')
+   end
   # return rue if summary is equal to description for full article
   def hide_summary?
     if self.nil? || self.testo_no_format.nil? || self.summary.nil?

@@ -1,0 +1,43 @@
+segnalazioni: BE
+1- BE se un utente è author  (appena assegnato) non visualizza gli articoli?
+2- BE se un utente è manager non puo' creare una edizione?
+segnalazioni: FE
+1- FE la ricerca non permette di cercare tra gli eventi?
+2- FE/FE: quando si sta lavorando nel BE ad esempio aggiornare la categoria ... in FE viene mostrato il messaggio flash "successfully updated"
+
+=====================================================================================================	
+risoluzioni:	
+1- FE chiesto l'ordinamento per cognome: 
+order by lastname  ora c'è l'ordinamento, se non funziona  è stato invertito firstname con lastname sul database 
+questo è successo perchè nel database originale esiste solo un campo che contiene sia il nome e cognome , a volte la ragione sociale a volte spettabile a ecc
+l'importazione automatica cerca lo spazio tra i nomi e tenta di dividere il nome dal cognome ma non sempre sono inseriti in questo ordine.
+2- FE si ipad non si ingrandisce su gesture zoom:
+risolto (da testare)
+
+3- BE un utente promosso  amministratore  o  collaboratore non riesce ad accedere alle edizioni (Project) e viene rediretto nel FE con errore 404:
+------ project_controller methiod show : messo solo parametro  n2 context = @project  codice: 
+    #if not User.current.allowed_to?(:access_back_end, nil, :global => true)
+    #  redirect_to(url_for(:controller => 'editorial', :action => 'edizione', :id => params[:id]))
+    #  return
+    #end
+    unless User.current.allowed_to?(:access_back_end, @project, :global => true)
+      redirect_to(url_for(:controller => 'editorial', :action => 'edizione', :id => params[:id]))
+      return
+    end
+  ------ model user_rb  riga 811 estende la visibiltà (Dom, da vedere se ok)  su allowed_to?
+per il contesto Project aggiunte 2 righe:
+  
+      return true if  User.current.isauthor?
+      return true if User.current.ismanager?
+	  
+4- FE la prenotazione convegno non funziona se non si è admin :
+	  rivisto il codice + rivista anche la grafica del singolo convegno e della prenotazione
+5- FE la prenotazione convegno non deve visualizzarsi se l'evento è passato :
+	  rivisto il codice
+6- FE errore su creazione nuovo profilo: il campo telefono con .empty? crea errore sostituiti con .blank?
+7- FE rivisitazione della pagina evento (show), ora non visualizza il campo se questo non è valorizzato, 
+		aggiunta la possibilità ai manager di modificare anche i profili nascosti per poterli volendo rendereli vsibili 
+8- FE menu giallo togliere sez: 'News E Sport' spostarla in menu contenuti e sostituirla con pagina 'Contattaci': 
+		ok ora la pagina statica chisiamo si puo' creare direttamente in: Impostazioni/Edizioni dai manager
+		  
+		  
