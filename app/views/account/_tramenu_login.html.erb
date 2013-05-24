@@ -1,5 +1,5 @@
 <% if User.current && User.current.logged? %>
-  <p class="fs-tramenu-blockheader x-granata">Utente:&nbsp; <%= User.current.name() %></p>
+  <div class="fs-tramenu-blockheader x-granata" style="overflow: hidden;"> <%= User.current.name() %></div>
   <div class="fs-login-logged">
     <div id='fs-login-avatar'>
       <div class="fs-login">

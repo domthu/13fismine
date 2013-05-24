@@ -20,6 +20,7 @@ class AccountController < ApplicationController
   helper :custom_fields
   include CustomFieldsHelper
   include FeesHelper  #ROLE_XXX  gedate
+  before_filter :reroute_if_logged , :only  => :register
 
   # prevents login action to be filtered by check_if_login_required application scope filter
   skip_before_filter :check_if_login_required
@@ -535,5 +536,10 @@ class AccountController < ApplicationController
   def account_pending
     flash[:notice] = l(:notice_account_pending)
     redirect_to :action => 'login'
+  end
+  def reroute_if_logged
+    if User.current.logged?
+      redirect_to :controller => 'mio_profilo', :action => 'index'
+    end
   end
 end
