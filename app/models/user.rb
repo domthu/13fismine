@@ -102,9 +102,8 @@ class User < Principal
   validates_inclusion_of :mail_notification, :in => MAIL_NOTIFICATION_OPTIONS.collect(&:first), :allow_blank => true
   validate :validate_password_length
 
-  #domthu
-  #validates_inclusion_of :se_privacy, :in => [true], :message => "Devi accettare le condizioni"
-  #validates_inclusion_of :se_condition, :message => "Devi dare il tuo consenso", :in => [false] #, false]
+  validates_inclusion_of :se_privacy, :in => [true], :message => "Devi accettare le condizioni"
+  validates_inclusion_of :se_condition, :message => "Devi dare il tuo consenso", :in => [true] #, false]
 
   before_create :set_mail_notification
   before_save :update_hashed_password

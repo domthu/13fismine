@@ -3719,3 +3719,32 @@ html>body #ajax-indicator {
     vertical-align: bottom;
 
 }
+/****************STEPY*********************/
+.button-back { float: left; }
+.button-next, .finish { float: right; }
+.button-back, .button-next, .finish
+{
+	border: 1px solid #327E04; color: #FFF; cursor: pointer; font-weight: bold; font-size: 1.1em;
+	padding: 3px 10px; text-decoration: none;
+	-khtml-border-radius: 3px; -moz-border-radius: 3px; -opera-border-radius: 3px;
+	-webkit-border-radius: 3px; border-radius: 3px;
+}
+.button-back:hover, .button-next:hover, .finish:hover { border-color: #9FC898; color: #9FC898; }
+.step {
+	border: 1px solid #DDD; clear: left; font: 10px verdana; width: 97%; padding:5px;
+	-khtml-border-radius: 3px; -moz-border-radius: 3px; -opera-border-radius: 3px;
+	-webkit-border-radius: 3px; border-radius: 3px;
+}
+.step label { display: block; font: bold 12px verdana; margin: 10px 0 3px 7px; }
+.step legend { color: #9FC898; font: bold 12px verdana; padding: 0 2px 3px 2px; }
+.step input, .step textarea, .step select { border: 1px solid #AAA; font: 10px verdana; margin-left: 7px; }
+.stepy-titles {
+  display: none !important;
+}
+.stepy-titles li {  }
+.stepy-titles li span {  }
+.stepy-titles .current-step {  }
+#stepy-titles-0, #stepy-titles-1 , #stepy-titles-2 {}
+#steps-titles{
+    display: none !important;
+}

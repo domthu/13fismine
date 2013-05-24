@@ -101,36 +101,14 @@ class AccountController < ApplicationController
       #di default non viene abilitato
 
       #Collect fs custom data
-#Parameters: {"user_asso_id"=>"41", "extra_organismo"=>"", "user_telefono"=>"123123123", "user_se_condition"=>"1", "extra"=>{"cross_id"=>"", "asso_id"=>""}, "commit"=>"Invia", "user_cross_organization_id"=>"1", "user_Town"=>"castelr", "action"=>"register", "password"=>"[FILTERED]", "user_fax"=>"213124123412", "user"=>{"codice"=>"123123123", "login"=>"domthu2", "soc"=>"", "mail"=>"dom.thual@gmail.com", "lastname"=>"thual", "num_reg_coni"=>"123123", "comune_id"=>"", "firstname"=>"dominique", "language"=>"it"}, "authenticity_token"=>"KjT8SLqtKJm23yzGzhC00MMQqSsq/JuZJTXYovMMz80=", "user_titolo"=>"Altro", "user_note"=>"qualcosa", "controller"=>"account", "user_indirizzo"=>"via monte vettore", "password_confirmation"=>"[FILTERED]", "user_se_privacy"=>"1"}
-      #user firstname
-      #user lastname
-      #user mail
-      #user login
-      #user password
-      #user password_confirmation
-      #user language
-      #user se_condition =>"1"
-      #user se_privacy =>"1"
-      #user titolo
-      #user reg_coni
-      #extra cross_id
-      #extra asso_id
-      #extra organismo
-      #user soc
-      #user comune_id
-      #user indirizzo
-      #user telefono
-      #user fax
-      #user codice
-      #user note
 
-      if !params[:user][:se_condition].nil? && params[:user][:se_condition] && !params[:user][:se_condition].blank?
+      if params[:user][:se_condition].present?
         @user.se_condition = params[:user][:se_condition]
       else
         flash.now[:error] = l(:notice_register_must_condition);
         return
       end
-      if !params[:user][:se_privacy].nil? && params[:user][:se_privacy] && !params[:user][:se_privacy].blank?
+      if params[:user][:se_privacy].present?
         @user.se_privacy = params[:user][:se_privacy]
       else
         flash.now[:error] = l(:notice_register_must_consensus);
@@ -138,7 +116,7 @@ class AccountController < ApplicationController
       end
 
       #Region Province Comune
-      if !params[:user][:comune_id].nil? && params[:user][:comune_id] && !params[:user][:comune_id].blank?
+      if params[:user][:comune_id].present?
         #puts "CCCCCCCCCCCCCCCCC #{params[:user][:comune_id]} CCCCCCCCCCC"
         @user.comune_id = params[:user][:comune_id].to_i
         #INUTILE basta usare comune_id
@@ -150,9 +128,9 @@ class AccountController < ApplicationController
         end
       end
       #STEP3 CONI FSN e Associazione
-      if ((params[:extra][:asso_id]) && (params[:extra][:cross_id]))
-        @user.asso_id = params[:extra][:asso_id].to_i
-        @user.cross_organization_id = params[:extra][:cross_id].to_i
+      if ((params[:extra][:asso_select]) && (params[:extra][:cross_select]))
+        @user.asso_id = params[:extra][:asso_select].to_i
+        @user.cross_organization_id = params[:extra][:cross_select].to_i
         #Region Province Comune --> inutile le abbiamo dentro la
       else
         if (params[:user][:asso_id])
