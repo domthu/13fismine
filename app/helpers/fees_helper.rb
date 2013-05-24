@@ -2,6 +2,8 @@ module FeeConst
 
   #ruoli che non sono sottoposti ad controllo di scadenza
   #NOTA BENE usare i permissi per quesi casi
+  ROLE_ADMIN        = 0  #Admin<br />
+
   ROLE_MANAGER        = 3  #Manager<br />
   ROLE_AUTHOR         = 4  #Redattore  <br />
   #ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore tutti uguali<br />
