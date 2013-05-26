@@ -3662,15 +3662,8 @@ span.flash.warning, div.flash.warning {
     display: none;
 }
 
-.dotted {
-    border: dotted 1px #765400;
-    padding: 10%;
-    width: 60%;
-}
-
-.hide {
-    display: none;
-}
+.dotted { border: dotted 1px #765400; width: 60%; }
+.hide { display: none; }
 
 #toTop {
     background: url('../images/toTop.png') no-repeat scroll 0 0 transparent;
@@ -3748,3 +3741,4 @@ html>body #ajax-indicator {
 #steps-titles{
     display: none !important;
 }
+.required{ color: red; font-style: bold;}

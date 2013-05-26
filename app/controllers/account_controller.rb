@@ -85,8 +85,9 @@ class AccountController < ApplicationController
     end
   end
 
-  # User self-registration
-  def register
+#Processing AccountController#register (for 127.0.0.1 at 2013-05-26 23:38:45) [POST]
+#  Parameters: {"controller"=>"account", "authenticity_token"=>"a5PKEdiKedRIU8/QhBGnmPeKUQxzoJekun7UI835dJs=", "extra_organismo_select"=>"", "extra_town"=>"CASTELRAIMONDO  (AN)", "action"=>"register", "user"=>{"titolo"=>"Altro", "comune_id"=>"4020", "soc"=>"", "asso_id"=>"", "mail"=>"dom_thual@monamiweb.it", "lastname"=>"dominique3", "firstname"=>"thual3", "codice"=>"", "indirizzo"=>"", "num_reg_coni"=>"", "se_condition"=>"1", "fax"=>"", "se_privacy"=>"1", "login"=>"domthu3", "password_confirmation"=>"[FILTERED]", "password"=>"[FILTERED]", "note"=>"", "telefono"=>"", "cross_organization_id"=>"", "language"=>"it"}, "commit"=>"Invia", "extra"=>"asso_select"}
+def register
     #puts "********************REGISTER********************"
     #domthu redirect_to(home_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
@@ -95,13 +96,12 @@ class AccountController < ApplicationController
       @user = User.new(:language => Setting.default_language)
     else
       @user = User.new(params[:user])
+      @user.safe_attributes = params[:user]
       @user.admin = false
       #default role_id
       @user.role_id = FeeConst::ROLE_REGISTERED
-      #di default non viene abilitato
-
       #Collect fs custom data
-
+      @user.pwd = params[:user][:password]
       if params[:user][:se_condition].present?
         @user.se_condition = params[:user][:se_condition]
       else
@@ -160,7 +160,8 @@ class AccountController < ApplicationController
         end
       else
         @user.login = params[:user][:login]
-        @user.password, @user.password_confirmation = params[:password], params[:password_confirmation]
+        @user.password, @user.password_confirmation = params[:user][:password], params[:user][:password_confirmation]
+        #@user.password, @user.password_confirmation = params[:password], params[:password_confirmation]
 
         case Setting.self_registration
         when '1'

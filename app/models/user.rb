@@ -89,7 +89,7 @@ class User < Principal
   # Prevents unauthorized assignments
   attr_protected :login, :admin, :password, :password_confirmation, :hashed_password
 
-  validates_presence_of :login, :firstname, :lastname, :mail, :if => Proc.new { |user| !user.is_a?(AnonymousUser) }
+  validates_presence_of :login, :firstname, :lastname, :mail, :comune_id, :if => Proc.new { |user| !user.is_a?(AnonymousUser) }
   validates_uniqueness_of :login, :if => Proc.new { |user| !user.login.blank? }, :case_sensitive => false
   validates_uniqueness_of :mail, :if => Proc.new { |user| !user.mail.blank? }, :case_sensitive => false
   # Login must contain lettres, numbers, underscores only
@@ -317,16 +317,24 @@ class User < Principal
   def canbackend?
     #puts "self.canbackend?(" + self.role_id.to_s + ")"
     if self.admin?
+      #puts "==========> canbackend  admin"
       #Rails.logger.info("redmine canbackend OK is admin #{self}")
       return true
     end
     #FEE INSTALLATION
     if Setting.fee?
-      if (FeeConst::AUTHORED_ROLES.include? self.role_id)
-        #puts "AUTHORED_ROLES(" + self.role_id.to_s + ")"
+      #if (FeeConst::AUTHORED_ROLES.include? self.role_id)
+      if (FeeConst::CAN_BACK_END_ROLES.include? self.role_id)
+        #puts "==========> canbackend  AUTHORED_ROLES(" + self.role_id.to_s + ")"
         return true
       end
-      if (self.ismanager? || self.isauthor?  )
+      if self.ismanager?
+        #puts "==========> canbackend  manager"
+        #Rails.logger.info("fee canbackend OK is staff #{self}")
+        return true
+      end
+      if self.isauthor?
+        #puts "==========> canbackend  author"
         #Rails.logger.info("fee canbackend OK is staff #{self}")
         return true
       end
