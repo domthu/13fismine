@@ -313,6 +313,32 @@ class User < Principal
     end
     return str
   end
+  def uicon()
+      str = ""
+      if self.admin?
+        str += "admin"
+      elsif self.ismanager?
+        str += "man"
+      elsif self.isauthor?
+        str += "auth"
+      elsif self.isvip?
+        str += "vip"
+      elsif self.isabbonato?
+        str += "abbo"
+      elsif self.isregistered?
+        str += "reg"
+      elsif self.isrenewing?
+        str += "renew"
+      elsif self.isexpired?
+        str += "exp"
+      elsif self.isarchivied?
+        str += "arc"
+      else
+        #str += " icon-warning icon-adjust-min"
+        str += "question"
+      end
+      return str
+    end
 
   def canbackend?
     #puts "self.canbackend?(" + self.role_id.to_s + ")"
