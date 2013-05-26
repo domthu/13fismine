@@ -7,7 +7,6 @@
     <!--[form:user]-->
     <div class="splitcontentleft">
 
-
       <fieldset class="box tabular">
         <legend><%=l(:label_gest_privato)%></legend>
           <div class="contextual">
@@ -27,8 +26,6 @@
               <% end %>
             </span>
           </p>
-
-
 
       </fieldset>
 
@@ -121,10 +118,13 @@
             <tbody>
             <% associati.sort_by(&:lastname).each do |user| %>
               <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
-                <td class="user icon<%= user.icon() %>">
-                  <%= link_to_user user unless User.current.admin? %>
-                  <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
+                <td>
+                  <%= user_role_iconized(user, :size => "s", :icon_for => user.uicon, :text => link_to(user, edit_user_path(user))) %>
                 </td>
+              <!--  <td class="user icon<%# user.icon() %>">
+                  <%# link_to_user user unless User.current.admin? %>
+                  <%# link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
+                </td>   -->
                 <td>
                   <%= format_date(user.scadenza) %>
                 </td>

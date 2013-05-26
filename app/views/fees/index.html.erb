@@ -1,167 +1,197 @@
-<h2><%=l(:control_fee)%>. TOTALE UTENTI: <%= @num_users %></h2>
-  <div id="footer-menu" class="box">
-    <%= render_menu :menu_fee_fs %>
-  </div>
-
+<h2><%= l(:control_fee) %>. TOTALE UTENTI: <%= @num_users %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_fee_fs %>
+</div>
+<hr/>
+<br/>
+<!--  utilizzo di   application_helper / user_role_iconized
+#usr utente , parametro obbligatorio occorre sempre per primo
+#size: l per large 50px  :s per small 25px
+#text = la didascalia se omesso prende iol nome dell'utente
+#icon_for: stampa solo l'icona da un parametro parametri accettati= admin + man  +auth + vip + abbo +reg +renew +exp  + arc   -->
 <div class="splitcontentleft">
   <fieldset class="box tabular">
     <legend>Ruoli non sottoposti a controllo di abbonamento&nbsp;<b>Totali: <%= @num_uncontrolled_TOTAL %></b></legend>
     <blockquote>
-<p class="admin"><b>[<%= @name_admin_count %>]</b>Amministratore del sito (interfaccia redmine)</p>
-<p class="power_user"><b>[<%= @name_manager_count %>]</b>ROLE_MANAGER        = 3  #Manager</p>
-<p class="redattore"><b>[<%= @name_author_count %>]</b>ROLE_AUTHOR         = 4  #Redattore<br />
-  #ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore tutti uguali</p>
-<p class="invitato"><b>[<%= @name_invitati_count %>]</b>ROLE_VIP            = 10 #Invitato Gratuito</p>
+      <p>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>[' + @name_admin_count.to_s + ' ]</b>  Amministratori del sito (fismine)', :icon_for => 'admin') %>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>[' + @name_manager_count.to_s + ' ]  </b>Managers del sito (fismine)', :icon_for => 'man') %>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>[' + @name_author_count.to_s + ' ]  </b>Redattori e Collaboratori (fismine)', :icon_for => 'auth') %>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>[' + @name_invitati_count.to_s + ' ]  </b>Vip, Invitati gratuiti (solo front-end)', :icon_for => 'vip') %>
+      </p>
     </blockquote>
   </fieldset>
-
   <fieldset class="box tabular">
-    <legend>Admin</legend>
-    <h5>
-      <p class="admin">Amministratori <b><%= @name_admin_count %></b></p>
-    </h5>
-    <% @name_admin.each do |usr| %>
-      <div class="icon icon-admin"><%= link_to usr, user_path(usr) %></div>
-    <% end %>
+    <legend>Amministratore</legend>
+    <blockquote>
+      <p>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>Amministratori</b>  (' + @name_admin_count.to_s + ')', :icon_for => 'admin') %>
+        <% @name_admin.each do |usr| %>
+            <%= user_role_iconized(usr, :size => "s", :icon_for => 'admin', :text => link_to(usr, user_path(usr))) %>
+        <% end %>
+      </p>
+      <hr/>
+    </blockquote>
   </fieldset>
-
   <fieldset class="box tabular">
     <legend>Manager</legend>
-    <h5>
-      <p class="power_user">Manager (=power_user): <b><%= @name_manager_count %></b></p>
-    </h5>
-    <% @name_manager.each do |usr| %>
-      <div class="icon icon-man"><%= link_to usr, user_path(usr) %></div>
-    <% end %>
-  </fieldset>
-
-  <fieldset class="box tabular">
-    <legend>Redattori</legend>
-    <h5>
-      <p class="redattore">Redattori: <b><%= @name_author_count %></b></p>
-    </h5>
-    <% @name_author.each do |usr| %>
-      <div class="icon icon-auth"><%= link_to usr, user_path(usr) %></div>
-    <% end %>
-  </fieldset>
-
-  <fieldset class="box tabular">
-    <legend>VIP</legend>
-    <h5>
-      <p class="invitato">VIP: <b><%= @name_invitati_count %></b>
-    </h5>
-    <% @name_invitati.each do |usr| %>
-      <div class="icon icon-vip"><%= link_to usr, user_path(usr) %></div>
-    <% end %>
-  </fieldset>
-
-</div>
-
-<div class="splitcontentright">
-
-  <fieldset class="box tabular">
-    <legend><%=l(:siglatipo)%></legend>
-    <h5>
-      Categoria Utenti: Cross organizations ed utenti
-    </h5>
-    <ul>
-      <li>Numero di cross organismi: <b><%= @num_organismi %></b></li>
-      <li>Numero di utenti che si riferiscono: <b><%= @num_members %></b></li>
-    </ul>
-  </fieldset>
-
-  <fieldset class="box tabular">
-    <legend>Ruoli sottoposti a controllo di abbonamento (manuale ed automatico)&nbsp;<b>Totali: <%= @num_controlled_TOTAL %></b></legend>
     <blockquote>
-<p class="abbonato"><b>[<%= @num_abbonati %>]</b> ROLE_ABBONATO       = 6  #Abbonato user.data_scadenza > (today - Setting.renew_days)</p>
-<p class="inscadenza"><b>[<%= @num_rinnovamento %>]</b>ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />Numero di abbonati in stato di rinnovamento (Scadenza - <%= Setting.renew_days%> giorni)</p>
-<p class="registrato"><b>[<%= @num_registrati %>]</b>ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />Con periodo di prova (Data di registrazione + <%= Setting.register_days%> giorni)</p>
-<p class="scaduto"><b>[<%= @num_scaduti %>]</b>ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza &lt; today</p>
-<p class="archivied"><b>[<%= @num_archiviati %>]</b>ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)</p>
+      <p>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>Managers</b>  (' + @name_manager_count.to_s + ')', :icon_for => 'man') %>
+        <% @name_manager.each do |usr| %>
+            <%= user_role_iconized(usr, :size => "s", :icon_for => 'man', :text => link_to(usr, user_path(usr))) %>
+        <% end %>
+      </p>
+      <hr/>
     </blockquote>
   </fieldset>
-
   <fieldset class="box tabular">
-    <legend><%=l(:affiliati)%>&nbsp;<b>Totali: <%= @num_associated_TOTAL %></b></legend>
+    <legend>Redattori</legend>
+    <blockquote>
+      <p>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>Redattori</b>  (' + @name_author_count.to_s + ')', :icon_for => 'auth') %>
+        <% @name_author.each do |usr| %>
+            <%= user_role_iconized(usr, :size => "s", :icon_for => 'auth', :text => link_to(usr, user_path(usr))) %>
+        <% end %>
+      </p>
+      <hr/>
+    </blockquote>
+  </fieldset>
+  <fieldset class="box tabular">
+    <legend>Vip (gratuiti)</legend>
+    <blockquote>
+      <p>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>Invitati</b>  (' + @name_invitati_count.to_s + ')', :icon_for => 'vip') %>
+        <% @name_invitati.each do |usr| %>
+            <%= user_role_iconized(usr, :size => "s", :icon_for => 'vip', :text => link_to(usr, user_path(usr))) %>
+        <% end %>
+      </p>
+      <hr/>
+    </blockquote>
+  </fieldset>
+</div>
+<div class="splitcontentright">
+  <fieldset class="box tabular">
+    <legend>Ruoli sottoposti a controllo di abbonamento &nbsp;<b>Totali: <%= @num_controlled_TOTAL %></b></legend>
+    <blockquote>
+      <p>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>[' + @num_abbonati.to_s + ' ]</b>  Utenti con abbonamento valido', :icon_for => 'abbo') %>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>[' + @num_registrati.to_s + ' ]  </b>Utenti registrati (periodo di prova)', :icon_for => 'reg') %>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>[' + @num_rinnovamento.to_s + ' ]  </b>Utenti in scadenza (fase di rinnovo)', :icon_for => 'renew') %>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>[' + @num_scaduti.to_s + ' ]  </b>Utenti con abbonamento scaduto', :icon_for => 'exp') %>
+        <%= user_role_iconized(nil, :size => 'l', :text => '<b>[' + @num_archiviati.to_s + ' ]  </b>Utenti archiviati', :icon_for => 'arc') %>
+      </p>
+    </blockquote>
+    <h5>Note e Legenda:</h5>
+    <ul class="mini-legend">
+      <li><b>Abbonato</b> ROLE_ABBONATO: user.data_scadenza > (today - Setting.renew_days)</li>
+      <li><b>In Rinnovo</b> ROLE_RENEW: periodo prima della scadenza, si imposta in: Setting.renew_days. Ora è di
+        (Scadenza - <%= Setting.renew_days %> giorni)
+      </li>
+      <li><b> Registrato</b>ROLE_REGISTERED: periodo di prova gratuita, si imposta in: Setting.register_days. Si
+        determina : (Data di registrazione + <%= Setting.register_days %> giorni)
+      </li>
+      <li><b>Scaduto </b>ROLE_EXPIRED: scaduto se: user.data_scadenza &lt; today</li>
+      <li><b>Archiviato</b>ROLE_ARCHIVED: bloccato: puo uscire da questo stato solo manualmente (es. se: "Ha pagato",
+        "invito di prova"=REGISTERED, cambio ruolo...)
+      </li>
+    </ul>
+  </fieldset>
+  <br/>
+  <fieldset class="box tabular">
+    <legend><%= l(:label_assos_referee) %></legend>
+    <%= l(:label_assos_referee_help) %>
+    <% if @referee.any? %>
+        <%= l(:label_total) %>:<strong class="total center"><%= h @referee.count %></strong>
+        <table class="list users">
+          <thead>
+          <th><%= l(:label_user) %></th>
+          <th><%= l(:field_due_date) %></th>
+          <th>Power</th>
+          </thead>
+          <tbody>
+          <% @referee.each do |user| %>
+              <tr id="user-<%= user.id %>"> <!-- class="<%# cycle 'odd', 'even' %>"  -->
+                <td>
+                  <%= user_role_iconized(user, :size => "s", :icon_for => user.uicon, :text => link_to(user, user_path(user))) %>
+                </td>
+                <td>
+                  <%= format_date(user.scadenza) %>
+                </td>
+                <td>
+                  <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled' %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+    <% else %>
+        <p class="nodata"><%= l(:label_no_referee) %></p>
+    <% end %>
+  </fieldset>
+  <fieldset class="box tabular">
+    <legend><%= l(:affiliati) %>&nbsp;<b>Totali: <%= @num_associated_TOTAL %></b></legend>
     <ul>
       <li>ASSOCIAZIONE Numero di organismi associati: <b><%= @num_Associations %></b></li>
       <li>ASSOCIATI NON PAGANTI: Numero di membri (soci) <b> <%= @num_Associated_COUNT %></b></li>
     </ul>
-    <br>
-    Dettaglio dello stato degli Utenti associati e quindi Non paganti
+    <br/>
+    <h5>Dettaglio dello stato degli Utenti associati e quindi non paganti</h5>
+
+    <blockquote>
+      <p>
+        <%= user_role_iconized(nil, :size => 's', :text => '<b>[' + @num_Associated_ABBONATO.to_s + ' ]</b>  Associati con abbonamento valido', :icon_for => 'abbo') %>
+        <%= user_role_iconized(nil, :size => 's', :text => '<b>[' + @num_Associated_REGISTERED.to_s + ' ]  </b>Associati registrati (periodo di prova) ', :icon_for => 'reg') %>
+        <%= user_role_iconized(nil, :size => 's', :text => '<b>[' + @num_Associated_RENEW.to_s + ' ]  </b>Associati in scadenza (fase di rinnovo)', :icon_for => 'renew') %>
+        <%= user_role_iconized(nil, :size => 's', :text => '<b>[' + @num_Associated_EXPIRED.to_s + ' ]  </b>Associati con abbonamento scaduto', :icon_for => 'exp') %>
+        <%= user_role_iconized(nil, :size => 's', :text => '<b>[' + @num_Associated_ARCHIVIED.to_s + ' ]  </b>Associati archiviati', :icon_for => 'arc') %>
+      </p>
+      <hr>
+    </blockquote>
+  </fieldset>
+  <br/>
+  <fieldset class="box tabular">
+    <legend><%= l(:siglatipo) %></legend>
     <ul>
-      <li class="icon icon-abbo"><b>[<%= @num_Associated_ABBONATO %>]</b> associati con abbonamento valido</li>
-      <li class="icon icon-reg"><b>[<%= @num_Associated_REGISTERED %>]</b> associati in registrazione</li>
-      <li class="icon icon-renew"><b>[<%= @num_Associated_RENEW %>]</b> associati in rinnovo</li>
-      <li class="icon icon-exp"><b>[<%= @num_Associated_EXPIRED %>]</b> associati con abbonamento scaduto </li>
-      <li class="icon icon-arc"><b>[<%= @num_Associated_ARCHIVIED %>]</b> associati archiviati </li>
+      <li>Numero di organismi: <b><%= @num_organismi %></b></li>
+      <li>Numero di utenti che si riferiscono: <b><%= @num_members %></b></li>
     </ul>
   </fieldset>
-
   <fieldset class="box tabular">
-    <legend><%=l(:label_assos_referee)%></legend>
-    <%=l(:label_assos_referee_help)%>
-    <% if @referee.any? %>
-      <%= l(:label_total) %>:<strong class="total center"><%= h @referee.count %></strong>
-      <table class="list users">
-        <thead>
-          <th><%= l(:label_user) %></th>
-          <th><%= l(:field_due_date) %></th>
-          <th>Power</th>
-        </thead>
-        <tbody>
-        <% @referee.each do |user| %>
-          <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
-            <td class="user icon<%= user.icon() %>">
-              <%= link_to_user user unless User.current.admin? %>
-              <%= link_to h(user), edit_user_path(:id => user) unless !User.current.admin? %>
-            </td>
-            <td>
-              <%= format_date(user.scadenza) %>
-            </td>
-            <td>
-              <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled'  %>
-            </td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <p class="nodata"><%= l(:label_no_referee) %></p>
-    <% end %>
-  </fieldset>
-
-  <fieldset class="box tabular">
-    <legend><%=l(:who_pay)%>&nbsp;<b>Totali: <%= @num_privati_TOTAL %></b></legend>
+    <legend><%= l(:who_pay) %>&nbsp;<b>Totali: <%= @num_privati_TOTAL %></b></legend>
     <ul>
       <li>PRIVATI PAGANTI: Numero di utenti senza affiliazione <b>: <%= @num_privati_COUNT %></b></li>
     </ul>
-    Dettaglio dei privati paganti
-    <ul>
-      <li class="icon icon-abbo"><b>[<%= @num_privati_ABBONATO %>]</b> privati con abbonamento valido</li>
-      <li class="icon icon-reg"><b>[<%= @num_privati_REGISTERED %>]</b> privati in registrazione</li>
-      <li class="icon icon-renew"><b>[<%= @num_privati_RENEW %>]</b> privati in rinnovo</li>
-      <li class="icon icon-exp"><b>[<%= @num_privati_EXPIRED %>]</b> privati con abbonamento scaduto </li>
-      <li class="icon icon-arc"><b>[<%= @num_privati_ARCHIVIED %>]</b> privati archiviati </li>
-    </ul>
+    <h5>Dettaglio dei privati paganti </h5>
+    <blockquote>
+      <p>
+        <%= user_role_iconized(nil, :size => 's', :text => '<b>[' + @num_privati_ABBONATO.to_s + ' ]</b>  Privati con abbonamento valido', :icon_for => 'abbo') %>
+        <%= user_role_iconized(nil, :size => 's', :text => '<b>[' + @num_privati_REGISTERED.to_s + ' ]  </b>Privati registrati (periodo di prova) ', :icon_for => 'reg') %>
+        <%= user_role_iconized(nil, :size => 's', :text => '<b>[' + @num_privati_RENEW.to_s + ' ]  </b>Privati in scadenza (fase di rinnovo)', :icon_for => 'renew') %>
+        <%= user_role_iconized(nil, :size => 's', :text => '<b>[' + @num_privati_EXPIRED.to_s + ' ]  </b>Privati con abbonamento scaduto', :icon_for => 'exp') %>
+        <%= user_role_iconized(nil, :size => 's', :text => '<b>[' + @num_privati_ARCHIVIED.to_s + ' ]  </b>Privati archiviati', :icon_for => 'arc') %>
+      </p>
+      <hr>
+    </blockquote>
   </fieldset>
-
+  <br/>
   <fieldset class="box tabular">
     <legend>Utenti senza ruolo: <b><%= @num_no_role %></b></legend>
     <% form_tag({:action => 'index', :verify => 1}, :class => "tabular") do %>
-      <%= submit_tag l(:button_verify) %>
+        <br/> &nbsp;<br/>
+        <%= submit_tag l(:button_verify) %>
     <% end %>
     <% if !@msg.nil? && @msg.any? %>
-      <%= l(:results) %>
-      <div id="fs_informa" class="nodata">
-        <ul style="text-align: left;">
-          <% @msg.each_with_index do |say, index| %>
-            <%# index.to_s + ' - ' + say%>
-            <li><%= say %></li>
-          <% end %>
-        </ul>
-      </div>
-      <br />
+        <%= l(:results) %>
+        <div id="fs_informa" class="nodata">
+          <ul style="text-align: left;">
+            <% @msg.each_with_index do |say, index| %>
+                <%# index.to_s + ' - ' + say%>
+                <li><%= say %></li>
+            <% end %>
+          </ul>
+        </div>
+        <br/>
     <% end %>
   </fieldset>
 </div>

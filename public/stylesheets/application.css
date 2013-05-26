@@ -1083,7 +1083,7 @@ h2 img { vertical-align:middle; }
 .icon-arc { background-image: url(../images/role/min_arc.jpg); padding-left: 16px; font-style: italic; min-height:21px;}
 .icon-no-role { background-image: url(../images/exclamation.png); padding-left: 16px;}
 .icon-no-user { background-image: url(../images/bullet_delete.png); padding-left: 16px;}
-.description{color: ##2C4056; background-color:#FFFFFF; padding: 5px;} /*font-weight: bold; */
+.description{color:#2C4056; background-color:#FFFFFF; padding: 5px;} /*font-weight: bold; */
 .risposta{margin: 20px ;border: solid 1px blue; padding: 10px;}
 .fs-quesiti-status-icon {
     background-image: url('/images/commons/quesito-status.jpg');
@@ -1141,7 +1141,7 @@ div.asso-select{float:right; right:10px;}
 }
 .splitcontents-3box p {
     width: 100%;
-    padding-left: 145px;                                          }
+    padding-left: 145px; }
 #issue_image{
  font-size: 0.8em;
     color: #afafaf;
@@ -1183,3 +1183,98 @@ textarea#issue_subject{
     text-align: center;
     width: 40px;
 }
+/* sandro fee controller  utenti ruoli icons */
+
+.mini-legend li{
+    font-size: 8px;
+    line-height: 1.5em;
+}
+.user-role-icon-l{
+    display:table-cell;
+    float:left;
+    min-height:50px;
+    vertical-align: middle;
+    width:100%;
+ }
+.user-role-icon-l span {
+    width:50px;
+    display:block;
+    float:left;
+    height:50px;
+    overflow: hidden;
+    margin-right: 10px;
+ }
+.user-role-icon-l p{
+    background-color: #f1f1f1;
+    float: none!important;
+    padding: 0;
+    clear: none;
+    margin: 1em;
+ }
+.user-role-icon-only-l{
+    display:table-cell;
+    float:left;
+    min-height:50px;
+    vertical-align: middle;
+    width:55px;
+}
+.user-role-icon-only-s {
+    display:table-cell;
+    float:left;
+    min-height:30px;
+    vertical-align: middle;
+    width:33px;
+}
+.user-role-icon-s {
+     display:table-cell;
+     float:left;
+     min-height:30px;
+     vertical-align: middle;
+     width:98%;
+     padding-left: 10px;
+ }
+.user-role-icon-s span {
+     width:30px;
+     display:block;
+     float:left;
+     height:30px;
+     overflow: hidden;
+    margin-right: 6px;
+ }
+.user-role-icon-s p{
+    background-color: #f1f1f1;
+    float: none!important;
+    padding: 0;
+    clear: none;
+    margin: 0.5em;
+ }
+.user-role-icon-s a {
+    color: #1e1e1e;
+    text-decoration: none;
+}
+ /*Action Fee Roles*/
+ .l-admin { background: url(../images/ico/users_sprite.png) no-repeat 0 0;}
+ .l-man { background: url(../images/ico/users_sprite.png) no-repeat 0 -50px;}
+ .l-auth{ background: url(../images/ico/users_sprite.png) no-repeat 0 -100px; }
+ .l-vip { background: url(../images/ico/users_sprite.png) no-repeat 0 -150px; }
+ .l-abbo { background: url(../images/ico/users_sprite.png) no-repeat 0 -200px; }
+ .l-reg { background: url(../images/ico/users_sprite.png) no-repeat 0 -250px;}
+ .l-renew { background: url(../images/ico/users_sprite.png) no-repeat 0 -300px; }
+ .l-exp { background: url(../images/ico/users_sprite.png) no-repeat 0 -350px; }
+ .l-arc { background: url(../images/ico/users_sprite.png) no-repeat 0 -400px; }
+ .l-question { background: url(../images/ico/users_sprite.png) no-repeat 0 -450px; }
+ .l-exclamation { background: url(../images/ico/users_sprite.png) no-repeat 0 -500px; }
+ .s-admin { background: url(../images/ico/users_sprite.png) no-repeat -50px -10px;}
+ .s-man { background: url(../images/ico/users_sprite.png) no-repeat -50px -60px;}
+ .s-auth{ background: url(../images/ico/users_sprite.png) no-repeat -50px -110px; }
+ .s-vip { background: url(../images/ico/users_sprite.png) no-repeat -50px -160px; }
+ .s-abbo { background: url(../images/ico/users_sprite.png) no-repeat -50px -210px; }
+ .s-reg { background: url(../images/ico/users_sprite.png) no-repeat -50px -260px; }
+ .s-renew { background: url(../images/ico/users_sprite.png) no-repeat -50px -310px; }
+ .s-exp { background: url(../images/ico/users_sprite.png) no-repeat -50px -360px; }
+ .s-arc { background: url(../images/ico/users_sprite.png) no-repeat -50px -410px; }
+ .s-question { background: url(../images/ico/users_sprite.png) no-repeat -50px -460px; }
+ .s-exclamation { background: url(../images/ico/users_sprite.png) no-repeat -50px -510px; }
+ /*  fine del fee roles icons */
+
+

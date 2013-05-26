@@ -1382,8 +1382,8 @@ it:
   label_is_referente: è responsabile?
   label_gest_privato: Privato == Pagante
   label_gest_organismo: Organismo associato == Utente non paga
-  label_assos_referee: Responsabili organismi
-  label_assos_referee_help: Lista dei responsabili di organismi associati
+  label_assos_referee: Responsabili degli organismi associati
+  label_assos_referee_help: Lista dei responsabili
   label_no_referee: Nessun responsabile trovato
   label_referee_list_assos: Responsabile di associazioni
   label_have_referee: Ha responsabilità?
@@ -1588,7 +1588,7 @@ it:
   control_fee: Gestione abbonamenti --> Pannello di controllo
   stato_utenze: Stato delle utenze FISCOSPORT
   button_verify: Verifica
-  who_pay: Paganti
+  who_pay: Privati (paganti)
   associations: Associazioni
   affiliati: Affiliati (Non paganti)
   siglatipo: Sigla e Tipi organismi
