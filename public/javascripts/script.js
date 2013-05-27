@@ -1140,5 +1140,8 @@ $(document).ready(function() {
       .ajaxStop(function() {
           $(this).hide();
       })
+      .click(function() {
+          $(this).hide();
+      })
   ;
 });

@@ -1,0 +1,64 @@
+<h1>Mi sento fortunato</h1>
+<% if User.current.logged? %>
+  <div class="fs-block clearfix">
+    <div class="fs-blockheader">
+      <h3 class="t" title="Digita almeno 3 caratteri per iniziare la ricerca">Mi sento fortunato: </h3>
+    </div>
+    <div class="fs-blockcontent">
+      <div id="fs_informa" class="fs-informna">
+        <%= text_field_tag :qs_search %>
+      </div>
+    </div>
+  </div>
+
+  <%= javascript_include_tag "jquery/select2.min.js" %>
+  <%= stylesheet_link_tag 'jquery/select2.css' %>
+  <script type="text/javascript">
+  var pageSize = 10;
+  //def top_menu --> @top_menu
+  var top_menu_i = parseInt(<%= @top_menu.nil? ? "0" : @top_menu.id.to_s %>);
+  //def top_sezione --> @topsection
+  var top_section_i = parseInt(<%= @topsection.nil? ? "0" : @topsection.id.to_s %>);
+  $(document).ready(function () {
+     var urlqs = '<%= art_extend_path %>';
+     $("#qs_search").select2({
+        width:'100%',
+        placeholder: "Ricerca veloce",
+        minimumInputLength: 3, //multiple: true,
+        ajax: {
+            url: urlqs,
+            quietMillis: 400,
+            dataType: 'json',
+            data: function (term, page) {
+                return {
+                    term:term,
+                    page_limit:pageSize,
+                    page:page,
+                    top_menu:top_menu_i,
+                    top_section:top_section_i
+                };
+            },
+            results: function (data, page) {
+                var more = (page * pageSize) < data.total;
+                return {results: data.issues, more: more};
+            }
+        },
+        formatResult:FormatQs,
+        formatSelection:QsSelection,
+        dropdownCssClass: "bigdrop",
+        escapeMarkup: function (m) { return m; }
+    });
+  }); //end jquery document ready
+
+  function FormatQs(articolo) {
+     return '<div>' + articolo.label + '</div>';
+  }
+  function QsSelection(articolo) {
+     if (articolo.url != '') {
+        window.location.href = articolo.url;
+     }
+     return articolo.value;
+  }
+  </script>
+
+<% end %>

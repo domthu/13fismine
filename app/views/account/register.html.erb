@@ -103,7 +103,7 @@
       <hr class="dotted"/>
 
       <div class="box hide">
-        <h4>Non trovi la tua Sigla :: Organismo :: Associazione. Identificale qui sotto</h4>
+        <h4>Non trovi cui sopra la tua Sigla :: Organismo :: Associazione. Identificale qui sotto</h4>
 
         <p><label for="user_cross_organization_id"><%= l(:field_sigla_organismo) %></label>
         <p><%= f.select :cross_organization_id, options_for_select(CrossOrganization.find(
@@ -135,14 +135,14 @@
         <h4>Se la tua associazione non sembra registrata. Compili i campi qui sotto per creare una sua scheda</h4>
         <h5>Il team di FISCOSPORT provederà a contarti in un secondo momento per convalidare i campi. </h5>
 
-        <p><%= f.text_field :soc, :label => l(:field_soc), :style => 'width:80%;', :maxlength => 255 %></p>
-        <div class="flash notice"><%= l(:field_asso_title) %></div>
+        <p><%= f.text_field :soc, :label => l(:field_asso_title), :style => 'width:80%;', :maxlength => 255 %></p>
+        <div class="flash notice hide"><%= l(:field_asso_title) %></div>
 
         <p><strong><label for="user_comune_id"><%= l(:field_sigla_sede) %></strong>
           <label for="user_comune_id"><%= l(:field_comune) %><span class="required">*</span></label>
           <%= f.hidden_field :comune_id, {:style => 'width:60%;'} %>
-          <%= text_field_tag 'extra_town', nil, {:style => 'width:60%;'} %>
-          <small>Digitare almeno 2 caratteri per iniziare la ricerca</small>
+          <%= text_field_tag "extra_town" %>
+          <small>Digitare almeno 3 caratteri per iniziare la ricerca</small>
         </p>
 
         <p><%= f.text_field :indirizzo, :label => l(:field_indirizzo), :style => 'width:60%;' %></p>
@@ -188,241 +188,255 @@
 
 
  <script type="text/javascript">
-     $(document).ready(function () {
-         HideAvaibility("user_mail");
+ var pageSize = 10;
+$(document).ready(function () {
+   HideAvaibility("user_mail");
+   HideAvaibility("user_login");
+
+   $('#steps').stepy({
+       back:undefined, backLabel:'< Indietro', block:false, description:false, errorImage:true, finish:undefined, finishButton:true, ignore:'', legend:true, nextLabel:'Prossimo >', next:undefined, titleClick:false, titleTarget:undefined, select:undefined, validate:false  //Kappao manca alcuni script? jquery validate TypeError: a is undefined
+   });
+   $('#user_language').select2({
+       width:'61%',
+       placeholder:"Seleziona il tuo linguagio",
+       allowClear:true
+   });
+   $('#user_titolo').select2({
+       width:'80%',
+       placeholder:"Come rappresenti l'associazione nel quale appartieni. Se ti muovi per conto tuo lasci cosi.",
+       allowClear:true
+   });
+   jQuery.ajaxSetup({
+       'beforeSend':function (xhr) {
+           xhr.setRequestHeader("Accept", "text/javascript")
+       }
+   });
+   $("#user_mail").keyup(function () {
+       if ($("#user_login").val().length <= 0) {
+         $("#user_login").val($(this).val());
          HideAvaibility("user_login");
+       }
+   });
+   $("#user_mail").blur(function () {
+       if ((($(this).val() + "").length > 0) && ( isValidEmailAddress($(this).val()))) {
+           controlfield($("#user_mail").attr("id"), $(this).val());
+       }
+       else
+           HideAvaibility("user_mail");
+   });
+   //$("#user_login").keyup(function () {
+   $("#user_login").blur(function () {
+       if (($(this).val() + "").length > 1) {
+           controlfield($("#user_login").attr("id"), $(this).val());
+       }
+       else
+           HideAvaibility("user_login");
+   });
+   $('#user_cross_organization_id').select2({
+       width:'80%',
+       placeholder:"Selezionare la tua federazione e il tuo organismo",
+       allowClear:true
+   });
+   $("#user_cross_organization_id").on('change', function (ev) {
+       //alert('changed usertiposigla --> TODO reload Associations?')
+   });
+   $('#user_asso_id').select2({
+       width:'80%',
+       placeholder:"Ricerca la tua associazione. Se non trovi, ci sentiamo via mail.",
+       allowClear:true
+   });
+   $("#extra_organismo_select").select2({
+       width:'80%',
+       placeholder:"Ricerca la tua associazione e la sua relativa federazione ed organismo",
+       minimumInputLength:3,
+       ajax:{
+           url:'<%= organismi_path %>',
+           dataType:'json', //'jsonp',
+           quietMillis:500,
+           data:function (term, page) { // page is the one-based page number tracked by Select2
+               return {
+                   term:term, //search term
+                   page_limit:pageSize, // page size
+                   page:page//, // page number
 
-         $('#steps').stepy({
-             back:undefined, backLabel:'< Indietro', block:false, description:false, errorImage:true, finish:undefined, finishButton:true, ignore:'', legend:true, nextLabel:'Prossimo >', next:undefined, titleClick:false, titleTarget:undefined, select:undefined, validate:false  //Kappao manca alcuni script? jquery validate TypeError: a is undefined
-         });
-         $('#user_language').select2({
-             width:'61%',
-             placeholder:"Seleziona il tuo linguagio",
-             allowClear:true
-         });
-         $('#user_titolo').select2({
-             width:'80%',
-             placeholder:"Come rappresenti l'associazione nel quale appartieni. Se ti muovi per conto tuo lasci cosi.",
-             allowClear:true
-         });
-         jQuery.ajaxSetup({
-             'beforeSend':function (xhr) {
-                 xhr.setRequestHeader("Accept", "text/javascript")
-             }
-         });
-         $("#user_mail").keyup(function () {
-             if ($("#user_login").val().length <= 0) {
-               $("#user_login").val($(this).val());
-               HideAvaibility("user_login");
-             }
-         });
-         $("#user_mail").blur(function () {
-             if ((($(this).val() + "").length > 0) && ( isValidEmailAddress($(this).val()))) {
-                 controlfield($("#user_mail").attr("id"), $(this).val());
-             }
-             else
-                 HideAvaibility("user_mail");
-         });
-         //$("#user_login").keyup(function () {
-         $("#user_login").blur(function () {
-             if (($(this).val() + "").length > 1) {
-                 controlfield($("#user_login").attr("id"), $(this).val());
-             }
-             else
-                 HideAvaibility("user_login");
-         });
-         $('#user_cross_organization_id').select2({
-             width:'80%',
-             placeholder:"Selezionare la tua federazione e il tuo organismo",
-             allowClear:true
-         });
-         $("#user_cross_organization_id").on('change', function (ev) {
-             //alert('changed usertiposigla --> TODO reload Associations?')
-         });
-         $('#user_asso_id').select2({
-             width:'80%',
-             placeholder:"Ricerca la tua associazione. Se non trovi, ci sentiamo via mail.",
-             allowClear:true
-         });
-         $("#extra_organismo_select").select2({
-             width:'80%',
-             placeholder:"Ricerca la tua associazione e la sua relativa federazione ed organismo",
-             minimumInputLength:3,
-             ajax:{
-                 url:'<%= organismi_path %>',
-                 dataType:'json', //'jsonp',
-                 quietMillis:500,
-                 data:function (term, page) { // page is the one-based page number tracked by Select2
-                     return {
-                         term:term, //search term
-                         page_limit:10, // page size
-                         page:page//, // page number
+               };
+           },
+           results:function (data, page) {
+               //alert(data);
+               var more = (page * pageSize) < data.total; // whether or not there are more results available
+               //var data_jsonp = [];
+               //$.each(data.organismi, function (index, value) {
+               //    //alert(index + ': ' + value);
+               //    var elmt = {
+               //        id:value.id,
+               //        text:value.text
+               //    }
+               //    data_jsonp.push(elmt);
+               //});
+               // notice we return the value of more so Select2 knows if more results can be loaded
+               //data.organismi.replace('''text''', 'text').replace('''id''', 'id')
+               return {results:data.organismi, more:more};
+               //return {results: data_jsonp, more: more};
+           }
+       },
+       formatResult:FormatOrga, // omitted for brevity, see the source of this page
+       formatSelection:OrgaSelection, // omitted for brevity, see the source of this page
+       dropdownCssClass:"bigdrop", // apply css that makes the dropdown taller
+       escapeMarkup:function (m) {
+           return m;
+       } // we do not want to escape markup since we are displaying html in results
+   });
 
-                     };
-                 },
-                 results:function (data, page) {
-                     //alert(data);
-                     var more = (page * 10) < data.total; // whether or not there are more results available
-                     var data_jsonp = [];
-                     $.each(data.organismi, function (index, value) {
-                         //alert(index + ': ' + value);
-                         var elmt = {
-                             id:value.id,
-                             text:value.text
-                         }
-                         data_jsonp.push(elmt);
-                     });
-                     // notice we return the value of more so Select2 knows if more results can be loaded
-                     //data.organismi.replace('''text''', 'text').replace('''id''', 'id')
-                     return {results:data.organismi, more:more};
-                     //return {results: data_jsonp, more: more};
-                 }
-             },
-             formatResult:FormatOrga, // omitted for brevity, see the source of this page
-             formatSelection:OrgaSelection, // omitted for brevity, see the source of this page
-             dropdownCssClass:"bigdrop", // apply css that makes the dropdown taller
-             escapeMarkup:function (m) {
-                 return m;
-             } // we do not want to escape markup since we are displaying html in results
-         });
+   var urlzoneextend = '<%= zone_extend_path %>';
+   $("#extra_town").select2({
+      width:'80%',
+      placeholder: "Ricerca la tua città. Digita almeno 3 carateri per iniziare la ricerca",
+      minimumInputLength: 3, //multiple: true,
+      ajax: {
+          url: urlzoneextend,
+          quietMillis: 400,
+          dataType: 'json',
+          data: function (term, page) {
+              return {
+                  term:term,
+                  page_limit:pageSize,
+                  page:page
+              };
+          },
+          results: function (data, page) {
+              var more = (page * pageSize) < data.total;
+              return {results: data.citta, more: more};
+          }
+      },
+      formatResult:FormatCitta,
+      formatSelection:CittaSelection,
+      dropdownCssClass: "bigdrop",
+      escapeMarkup: function (m) { return m; }
+  });
 
-         var urlzone = '<%= zone_path %>';
-         //$('#extra_Town').autocomplete({
-         $('#extra_town').autocomplete({
-             source:urlzone,
-             select:function (event, ui) {
-                 if (ui.item) {
-                     //$('#user_Town').val(ui.item.Text);
-                     //$('#user_comune_id').val(ui.item.Value);
-                     $('#user_comune_id').val(ui.item.hiddenvalue);
-                 }
-                 return true;
-             },
-             minLength:2
-         }).data("autocomplete")._renderItem = function (ul, item) {
-             return $("<li></li>")
-                     .data("item.autocomplete", item)
-                 //.append("<a id='" + item.Value + "'>" + item.Text + "</a>")
-                     .append("<a>" + item.label + "</a>")
-                     .appendTo(ul);
-         };
-         //privacy
-         $("#ainformativa").click(function (e) {
-             Inform(e);
-             return false
-         });
-         $('#informativa').dialog({
-             autoOpen:false,
-             width:700,
-             show:"blind",
-             hide:"explode",
-             height:550,
-             resizable:true,
-             draggable:true,
-             title:'Informativa',
-             bgiframe:true,
-             modal:true,
-             open:function (event, ui) {
-                 $(this).load(url_inf);
-             },
-             buttons:{
-                 "Acconsento":function () {
-                     $('#user_se_privacy').prop('checked', true);
-                     $(this).dialog("close");
-                 },
-                 "Chiudi":function () {
-                     $(this).dialog("close");
-                 }
-             }
-         });
-         //Condition
-         $("#acondizioni").click(function (e) {
-             Leggi(e);
-             return false
-         });
-         $('#condizioni').dialog({
-             autoOpen:false,
-             width:700,
-             height:550,
-             resizable:true,
-             draggable:true,
-             title:'Condizioni di utilizzo',
-             bgiframe:true,
-             modal:true,
-             open:function (event, ui) {
-                 $(this).load(url_cond);
-                 $('.ui-widget-overlay').bind('click', function () {
-                     $('#condizioni').dialog('close');
-                 })
-             },
-             buttons:{
-                 "Ho letto":function (ev, ui) {
-                     $('#user_se_condition').prop('checked', true);
-                     $(this).dialog("close");
-                 },
-                 "Chiudi":function () {
-                     $(this).dialog("close");
-                 }
-             }
-         });
+   //privacy
+   $("#ainformativa").click(function (e) {
+       Inform(e);
+       return false
+   });
+   $('#informativa').dialog({
+       autoOpen:false,
+       width:700,
+       show:"blind",
+       hide:"explode",
+       height:550,
+       resizable:true,
+       draggable:true,
+       title:'Informativa',
+       bgiframe:true,
+       modal:true,
+       open:function (event, ui) {
+           $(this).load(url_inf);
+       },
+       buttons:{
+           "Acconsento":function () {
+               $('#user_se_privacy').prop('checked', true);
+               $(this).dialog("close");
+           },
+           "Chiudi":function () {
+               $(this).dialog("close");
+           }
+       }
+   });
+   //Condition
+   $("#acondizioni").click(function (e) {
+       Leggi(e);
+       return false
+   });
+   $('#condizioni').dialog({
+       autoOpen:false,
+       width:700,
+       height:550,
+       resizable:true,
+       draggable:true,
+       title:'Condizioni di utilizzo',
+       bgiframe:true,
+       modal:true,
+       open:function (event, ui) {
+           $(this).load(url_cond);
+           $('.ui-widget-overlay').bind('click', function () {
+               $('#condizioni').dialog('close');
+           })
+       },
+       buttons:{
+           "Ho letto":function (ev, ui) {
+               $('#user_se_condition').prop('checked', true);
+               $(this).dialog("close");
+           },
+           "Chiudi":function () {
+               $(this).dialog("close");
+           }
+       }
+   });
 
-     }); //end hquery document ready
+}); //end hquery document ready
 
-     function isValidEmailAddress(emailAddress) {
-         var pattern = new RegExp(/^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i);
-         return pattern.test(emailAddress);
-     }
-     function HideAvaibility(id) {
-         $("#no_" + id).hide();
-         $("#si_" + id).hide();
-     }
-     var urlctrl = '<%= emailctrl_path %>';
-     function controlfield(id, val) {
-         $.post(urlctrl, { field:id, term:val },
-                 function (data) {
-                     data = data || {};
-                     if (data.success) {
-                         $("#flash_notice").html("Controllo del campo " + id + " per il valore (" + val + ")");
-                         //OnSuccess
-                         if (data.available) {
-                             $("#no_" + id).hide('explode', {}, 450);
-                             var obj = $("#si_" + id);
-                             setTimeout(function () {
-                                 obj.show('fade', {}, 'slow');
-                             }, 500);
-                         }
-                         if (data.unavailable) {
-                             $("#si_" + id).hide('puff', {}, 450);  //'fast'
-                             var obj = $("#no_" + id);
-                             setTimeout(function () {
-                                 obj.show('fade', {}, 'slow');
-                             }, 500);
-                         }
-                     } else if (data.errors) {
-                         $("#flash_error").html("Controllo del campo " + id + " per il valore (" + val + ")");
-                         $("#flash_error").html(data.errors);
-                         //showerrmsg(data.errors);
-                     }
-                 }
-         );
-     }
-     var url_cond = '<%= condition_path %>';
-     function Leggi(e) {
-         $("#condizioni").dialog('open');
-         return false;
-     }
-     var url_inf = '<%= privacy_path %>';
-     function Inform(e) {
-         $("#informativa").dialog("open");
-         return false;
-     }
-     function FormatOrga(organismi) {
-         return '<div>' + organismi.label + '</div>';
-     }
-
-     function OrgaSelection(data) {
-         $('#extra_cross_select').val(data.hiddenvalue_cross);
-         $('#extra_asso_select').val(data.hiddenvalue_asso);
-         return data.value;
-     }
+function isValidEmailAddress(emailAddress) {
+   var pattern = new RegExp(/^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i);
+   return pattern.test(emailAddress);
+}
+function HideAvaibility(id) {
+   $("#no_" + id).hide();
+   $("#si_" + id).hide();
+}
+var urlctrl = '<%= emailctrl_path %>';
+function controlfield(id, val) {
+   $.post(urlctrl, { field:id, term:val },
+           function (data) {
+               data = data || {};
+               if (data.success) {
+                   $("#flash_notice").html("Controllo del campo " + id + " per il valore (" + val + ")");
+                   //OnSuccess
+                   if (data.available) {
+                       $("#no_" + id).hide('explode', {}, 450);
+                       var obj = $("#si_" + id);
+                       setTimeout(function () {
+                           obj.show('fade', {}, 'slow');
+                       }, 500);
+                   }
+                   if (data.unavailable) {
+                       $("#si_" + id).hide('puff', {}, 450);  //'fast'
+                       var obj = $("#no_" + id);
+                       setTimeout(function () {
+                           obj.show('fade', {}, 'slow');
+                       }, 500);
+                   }
+               } else if (data.errors) {
+                   $("#flash_error").html("Controllo del campo " + id + " per il valore (" + val + ")");
+                   $("#flash_error").html(data.errors);
+                   //showerrmsg(data.errors);
+               }
+           }
+   );
+}
+var url_cond = '<%= condition_path %>';
+function Leggi(e) {
+   $("#condizioni").dialog('open');
+   return false;
+}
+var url_inf = '<%= privacy_path %>';
+function Inform(e) {
+   $("#informativa").dialog("open");
+   return false;
+}
+function FormatOrga(organismi) {
+   return '<div>' + organismi.label + '</div>';
+}
+function OrgaSelection(data) {
+   $('#extra_cross_select').val(data.hiddenvalue_cross);
+   $('#extra_asso_select').val(data.hiddenvalue_asso);
+   return data.value;
+}
+function FormatCitta(Citta) {
+   return '<div>' + Citta.label + '</div>';
+}
+function CittaSelection(Citta) {
+   $('#comune_id').val(Citta.id);
+   return Citta.value;
+}
  </script>

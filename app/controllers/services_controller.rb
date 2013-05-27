@@ -1,5 +1,8 @@
 class ServicesController < ApplicationController
 
+#include EditorialHelper
+include ApplicationHelper
+
   #Non usato perchè preferiamo una lista a discesa
   def Usertitle
     #Rails.logger.info("json Usertitle")
@@ -76,6 +79,26 @@ class ServicesController < ApplicationController
   end
 
   def zone
+#//var urlzone = '<%= zone_path %>';
+#//$('#extra_Town').autocomplete({
+#//$('#extra_town').autocomplete({
+#//    source:urlzone,
+#//    select:function (event, ui) {
+#//        if (ui.item) {
+#//            //$('#user_Town').val(ui.item.Text);
+#//            //$('#user_comune_id').val(ui.item.Value);
+#//            $('#user_comune_id').val(ui.item.hiddenvalue);
+#//        }
+#//        return true;
+#//    },
+#//    minLength:2
+#//}).data("autocomplete")._renderItem = function (ul, item) {
+#//    return $("<li></li>")
+#//            .data("item.autocomplete", item)
+#//        //.append("<a id='" + item.Value + "'>" + item.Text + "</a>")
+#//            .append("<a>" + item.label + "</a>")
+#//            .appendTo(ul);
+#//};
     s =  params[:term] ? params[:term].to_s : ""
     @towns = Comune.find(
       :all,
@@ -111,6 +134,152 @@ class ServicesController < ApplicationController
     render :json => @json_towns.to_json
   end
 
+  #La ricerca puo provenire da una pagina di
+  # Caso 1: top_menu e quindi multi top_section(s)
+  # Caso 2: mono top_section
+  def articolo_extend
+    s =  params[:term] ? params[:term].to_s : ""
+    page_limit =  params[:page_limit] ? params[:page_limit].to_i : 10
+    pagina =  params[:page] ? params[:page].to_i : 1
+    offset = pagina * page_limit;
+
+    #def top_sezione --> @topsection
+    top_section_id =  params[:top_section] ? params[:top_section].to_i : 0
+    if top_section_id > 0
+      #@topsection = TopSection.find_by_id(top_section_id)
+
+      totale = Issue.all_public_fs.with_filter("top_sections.hidden_menu = 0 AND top_sections.id = " + top_section_id.to_s + " AND (issues.subject LIKE ? OR issues.description LIKE ?)", "%#{s}%", "%#{s}%").count()
+
+      @art = Issue.all_public_fs.find(
+        :all,
+        :conditions => ['top_sections.hidden_menu = 0 AND top_sections.id = ? AND (issues.subject LIKE ? OR issues.description LIKE ?)', "#{top_section_id}", "%#{s}%", "%#{s}%"],
+        :order => 'issues.due_date DESC',
+        :limit => page_limit,
+        :offset => offset
+      )
+
+    else
+      #def top_menu --> @top_menu
+      top_menu_id =  params[:top_menu] ? params[:top_menu].to_i : 0
+      if top_menu_id > 0
+        #@top_menu = TopMenu.find_by_id(top_menu_id) if top_menu_id > 0
+
+        totale = Issue.all_public_fs.with_filter("top_sections.hidden_menu = 0 AND top_sections.top_menu_id = " + top_menu_id.to_s + " AND (issues.subject LIKE ? OR issues.description LIKE ?)", "%#{s}%", "%#{s}%").count()
+
+        @art = Issue.all_public_fs.find(
+          :all,
+          :conditions => ['top_sections.hidden_menu = 0 AND top_sections.top_menu_id = ? AND (issues.subject LIKE ? OR issues.description LIKE ?)', "#{top_menu_id}", "%#{s}%", "%#{s}%"],
+          :order => 'issues.due_date DESC',
+          :limit => page_limit,
+          :offset => offset
+        )
+      end
+    end
+
+    if (@art.nil? or @art.count < 1)
+      if pagina > 1
+        xmsg = "Ricerche (" + totale.to_s + ") per -#{s}- finite. "
+      else
+        xmsg = "Nessun articolo per la ricerca -#{s}-"
+      end
+      @json_art = [{
+        :id => 0,
+        :label => xmsg,
+        :value => "",
+        :url => ""
+      }]
+    else
+      @json_art = @art.collect { |e|  {
+        :id =>  "#{e.id}",
+        #:label => highlight_tokens(truncate(e.subject, :length => 255), s),
+        #:label => highlight_tokens_svc(e.subject, s),
+        #:label => syntax_highlight(e.subject, s), #undefined method `truncate'
+        :label => smart_truncate(e.subject, 100), #.html_safe
+        :value => "#{e.id}",
+        #:url => link_to_articolo(e, :title=> e.subject)  #undefined method `truncate'
+        #:url => highlight_tokens(truncate(e.subject, :length => 255), s)
+        #:url => '/issues/articolo/' + e.id.to_s
+        :url => '/editorial/articolo/' + e.id.to_s
+        }
+      }
+    end
+    render :json => {
+         :issues => @json_art,
+         :total => totale,
+         :page => pagina
+    }
+  end
+
+#  def highlight_tokens_svc(text, tokens)
+#    return text unless text && tokens && !tokens.empty?
+#    re_tokens = tokens.collect { |t| Regexp.escape(t) }
+#    regexp = Regexp.new "(#{re_tokens.join('|')})", Regexp::IGNORECASE
+#    result = ''
+#    text.split(regexp).each_with_index do |words, i|
+#      if result.length > 1200
+#        # maximum length of the preview reached
+#        result << '...'
+#        break
+#      end
+#      words = words.mb_chars
+#      if i.even?
+#        result << words.length > 100 ? "#{words.slice(0..44)} ... #{words.slice(-45..-1)}" : words
+#      else
+#        t = (tokens.index(words.downcase) || 0) % 4
+#        result << content_tag('span', words, :class => "highlight token-#{t}")
+#      end
+#    end
+#    result
+#  end
+
+  def zone_extend
+    s =  params[:term] ? params[:term].to_s : ""
+    page_limit =  params[:page_limit] ? params[:page_limit].to_i : 10
+    pagina =  params[:page] ? params[:page].to_i : 1
+    offset = pagina * page_limit;
+
+    totale = Comune.find(
+      :all,
+      :include => [{:province => :region}],
+      :conditions => ['comunes.name LIKE ? or provinces.sigla LIKE ? or provinces.name LIKE ? or regions.name LIKE ?', "%#{s}%", "%#{s}%", "%#{s}%", "%#{s}%"]
+      ).count()
+
+    @towns = Comune.find(
+      :all,
+      :include => [{:province => :region}],
+      :conditions => ['comunes.name LIKE ? or provinces.sigla LIKE ? or provinces.name LIKE ? or regions.name LIKE ?', "%#{s}%", "%#{s}%", "%#{s}%", "%#{s}%"],
+      :order => 'comunes.name',
+      :limit => page_limit,
+      :offset => offset
+    )
+    if (@towns.nil? or @towns.count < 1)
+      #@json_towns = render :json => [{
+      #  :id => 0,
+      #  :label => "0",
+      #  :value => "Nessuna città per la ricerca -#{s}-"
+      #}]
+      #@json_towns = [{"label":"Nessuna città per la ricerca -#{s}-","value":"","id":"0"}]
+      #@json_towns = nil
+      @json_towns = [{
+        :id => 0,
+        :label => "Nessuna città per la ricerca -#{s}-",
+        :value => ""
+      }]
+    else
+      @json_towns = @towns.collect { |e|  {
+        :id =>  "#{e.id}",
+        :label => "#{e.cap} #{e.name} (#{e.province.sigla}) [#{e.province.region.name}]",
+        :value => "#{e.name} #{e.cap} (#{e.province.sigla})"
+        }
+      }
+    end
+    render :json => {
+         :citta => @json_towns,
+         :total => totale,
+         :page => pagina
+    }
+  end
+
   #TypeOrganization(tipo) :: CrossOrganization(sigla) :: organizations (id <--> id e user_id)
   #Asso(ragione_sociale) :: organizations
   # User -->  	asso_id 	cross_organization_id
@@ -135,22 +304,24 @@ class ServicesController < ApplicationController
     )
 
     if (@FedOrgAsso.nil? or @FedOrgAsso.count < 1)
-      return render :json => [{
-        :label => "0",
-        :value => "Nessun organismo associato per la ricerca -#{s}-",
-        :hiddenvalue => "0"
+      @json_datas = [{
+        :id => 0,
+        :label => "Nessun organismo associato per la ricerca -#{s}-",
+        :value => "0",
+        :hiddenvalue_cross => "0",
+        :hiddenvalue_asso => "0"
       }]
-    end
-    @json_datas = @FedOrgAsso.collect { |e|  {
-      :id => e.id,
-      :value => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100).html_safe,
-      :label => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100).html_safe,
-
-      :hiddenvalue_cross => "#{e.cross_organization.id}",
-      :hiddenvalue_asso => "#{e.id}"
-      #:text => "#{e.cross_organization.type_organization.tipo}"
+    else
+      @json_datas = @FedOrgAsso.collect { |e|  {
+        :id => e.id,
+        :value => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100).html_safe,
+        :label => "#{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla} :: " + smart_truncate("#{e.asso.ragione_sociale}", 100).html_safe,
+        :hiddenvalue_cross => "#{e.cross_organization.id}",
+        :hiddenvalue_asso => "#{e.id}"
+        #:text => "#{e.cross_organization.type_organization.tipo}"
+        }
       }
-    }
+    end
     #page++
     #format.json { render :json => @detail.errors, :status => :unprocessable_entity }
     #format.json { render

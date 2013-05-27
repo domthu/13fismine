@@ -1,5 +1,8 @@
 <div class="fs-layout-cell fs-sidebar1 clearfix">
   <%= render :partial => 'blocco_informa' %>
+  <% unless @topsection.nil? && @top_menu.nil? %>
+      <%= render :partial => 'blocco_quick_search' %>
+  <% end %>
   <% unless request.url.match('/event').nil? %>
       <%= render :partial => 'blocco_eventi_contact_me' %>
       <% unless @conv_prossimo.nil? %>
