@@ -56,22 +56,22 @@
                     </div>
                   </div>
                   <%= raw(articolo.summary) %>
-                  <br/> &nbsp; <br/>
 
-                  <p style="text-align: right; padding-right: 200px;">
+                </div>
+                       </div>
+                  <p class="fs-art-bottom-right">
                     <% unless articolo.se_protetto %>
                     <%= link_to_articolo(articolo, :title => 'Continua ...', :class => "fs-blu-button") %></p>
                         <%	 else %>
                         <%= link_to_articolo(articolo, :title => 'Continua ...', :class => "fs-rosso-button") %></p>
                     <% end %>
-                </div>
-              </div>
+
           <% else %>
               <br/>
               <p class="nodata"><%= l(:label_no_data) %></p>
               <br/>
           <% end %>
-        </ARTICLE>
+        </ARTICLE> &nbsp; <br/>
         <%# render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
         <br/>
     <% end %>

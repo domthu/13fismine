@@ -586,18 +586,17 @@ class ApplicationController < ActionController::Base
     api_request? ? nil : super
   end
 
-
+#  ruby on rails flash messages - :alert :error :notice and :success
 def fading_flash_message(text, seconds=3)
  	text +
    	<<-EOJS
      	<script type='text/javascript'>
        	$(document).ready( function() {
          	setTimeout(function() {
-           	$('#fs-flash-notice').fadeOut(2500);
+           	$('#fs-fade-flash').fadeOut(2400);
          	}, #{seconds*1000});
        	});
      	</script>
    	EOJS
 end
-
 end
