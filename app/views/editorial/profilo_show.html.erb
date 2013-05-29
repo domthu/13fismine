@@ -79,22 +79,22 @@
                   <p style="text-align: center;">  <%= link_to("modifica", profile_edit_path(@user_profile), :class => "fs-giallo-button") %></p>
                 </article>
             <% end %>
-            <ul>
-              <li> admin= <%= User.current.admin? %> </li>
-              <li> author= <%= User.current.isauthor? %> </li>
-              <li> manager= <%= User.current.ismanager? %> </li>
-              <li> role= <%= User.current.role_id.to_s %> </li>
-            </ul>
-            <% if (User.current.admin? || User.current.ismanager? ) && @profiles_hidden.count > 0 %>
+            <% if (User.current.admin? || User.current.ismanager?) && @profiles_hidden.count > 0 %>
                 <article class="fs-post-profile fs-article">
                   <div id="fs-profiles-all">
-                    <h4> Se vuoi tu puoi modificare i profili nascosti. </h4>
-                    <br />
-                      <% @profiles_hidden.each do |item| %>
-                          <div class="fs-profiles-all-itm"> <%= item.my_avatar(:xs) %></dt>
-                            <span> <%= link_to(('[' + item.user.id.to_s + '] ' + item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_edit", :id => item.id) %> </span>
-                              </div>
+
+                    <h4> Sei un
+                      <% if User.current.admin? %> amministratore
                       <% end %>
+                      <% if User.current.ismanager? %> manager
+                      <% end %> di questo sito.</h4>
+                    <h4> Se vuoi tu puoi modificare i profili nascosti. </h4>
+                    <br/>
+                    <% @profiles_hidden.each do |item| %>
+                        <div class="fs-profiles-all-itm"> <%= item.my_avatar(:xs) %></dt>
+                          <span> <%= link_to(('[' + item.user.id.to_s + '] ' + item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_edit", :id => item.id) %> </span>
+                        </div>
+                    <% end %>
                   </div>
                 </article>
             <% end %>
