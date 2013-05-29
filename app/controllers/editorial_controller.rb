@@ -1,19 +1,19 @@
 class EditorialController < ApplicationController
-  layout 'editorial'#, :except => [:profilo_new]
-  #before_filter :require_admin
+  layout 'editorial' #, :except => [:profilo_new]
+                     #before_filter :require_admin
   helper :sort
   include SortHelper
   include FeesHelper #ROLE_XXX  CONVEGNI_XXX QUESITO_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
   before_filter :find_articolo, :only => [:articolo] #, :preview_articolo can be not visible]  #recupero articolo status
-#  #before_filter :get_news, :only => [:news, :articolo_full]  #recupero articolo status
-  before_filter :correct_user_article, :only => [:articolo]  #LOGGATO O ARTICOLO LIBERO
-  before_filter :enabled_user_article, :only => [:articolo]  #ABBONATO E CONTENUTO PROTETTO
+                     #  #before_filter :get_news, :only => [:news, :articolo_full]  #recupero articolo status
+  before_filter :correct_user_article, :only => [:articolo] #LOGGATO O ARTICOLO LIBERO
+  before_filter :enabled_user_article, :only => [:articolo] #ABBONATO E CONTENUTO PROTETTO
   before_filter :find_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_show]
-  before_filter :correct_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_create]  #Admin o se stesso
+  before_filter :correct_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_create] #Admin o se stesso
   before_filter :find_quesito_fs, :only => [:quesito_destroy, :quesito_edit, :quesito_show]
-  before_filter :correct_user_quesito, :only => [:quesito_destroy, :quesito_edit]  #Admin o se stesso
+  before_filter :correct_user_quesito, :only => [:quesito_destroy, :quesito_edit] #Admin o se stesso
 
   helper :messages
   include MessagesHelper
@@ -44,7 +44,7 @@ class EditorialController < ApplicationController
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
     @offset ||= @issues_pages.current.offset
     @issues = Issue.all_public_fs.all(
-        :limit =>  @limit,
+        :limit => @limit,
         :offset => @offset)
     #Issue.visible.on_active_project.watched_by(user.id).recently_updated.with_limit(10)
 
@@ -59,90 +59,90 @@ class EditorialController < ApplicationController
   end
 
   def top_menu
-    @base_url = params[:pages]
-    @key_url = params[:topmenu_key]
-    if @key_url.nil?
-      flash[:notice] = l(:notice_missing_parameters) + " --> 1"
-      redirect_to :action => 'home'
-      return
-    elsif @key_url == "home"
-      redirect_to :action => 'home'
-      return
-    end
-    @top_menu = TopMenu.find(:first, :conditions => ["`key` = ?", @key_url])
-    if @top_menu.nil?
-      flash[:notice] = l(:notice_missing_parameters) + " --> 2 @key_url="+ @key_url
-      # redirect_to :action => 'home'
-      return
-    end
-    #@top_sections = TopSection.find(:all,
-    @topsection_ids = TopSection.find(:all,
-                                      :select => 'distinct id',
-                                      :conditions => ["se_visibile = 1 AND hidden_menu = 0 AND top_menu_id =  ?", @top_menu.id]
-    )
-    #@topsection_ids = @top_sections.select(:id).uniq
-    # Paginate results
-    case params[:format]
-      when 'xml', 'json'
-        @offset, @limit = api_offset_and_limit
-      else
-        #@limit = 5
-        #@offset= 25
-        @limit = per_page_option_fs
-    end
+      @base_url = params[:pages]
+      @key_url = params[:topmenu_key]
+      if @key_url.nil?
+        flash[:notice] = l(:notice_missing_parameters) + " --> 1"
+        redirect_to :action => 'home'
+        return
+      elsif @key_url == "home"
+        redirect_to :action => 'home'
+        return
+      end
+      @top_menu = TopMenu.find(:first, :conditions => ["`key` = ?", @key_url])
+      if @top_menu.nil?
+        flash[:notice] = l(:notice_missing_parameters) + " --> 2 @key_url="+ @key_url
+        # redirect_to :action => 'home'
+        return
+      end
+      #@top_sections = TopSection.find(:all,
+      @topsection_ids = TopSection.find(:all,
+                                        :select => 'distinct id',
+                                        :conditions => ["se_visibile = 1 AND hidden_menu = 0 AND top_menu_id =  ?", @top_menu.id]
+      )
+      #@topsection_ids = @top_sections.select(:id).uniq
+      # Paginate results
+      case params[:format]
+        when 'xml', 'json'
+          @offset, @limit = api_offset_and_limit
+        else
+          #@limit = 5
+          #@offset= 25
+          @limit = per_page_option_fs
+      end
 
-    @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).count()
+      @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).count()
 
-    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @offset ||= @issues_pages.current.offset
-    @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).all(
-        :limit => @limit,
-        :offset => @offset)
+      @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+      @offset ||= @issues_pages.current.offset
+      @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).all(
+          :limit => @limit,
+          :offset => @offset)
 
-    respond_to do |format|
-      format.html {
-        render :layout => !request.xhr?
-      }
-      format.api
+      respond_to do |format|
+        format.html {
+          render :layout => !request.xhr?
+        }
+        format.api
+      end
     end
-  end
 
   #dal menu sezione si accede all'insieme degli articoli riferiti alla sezione
   #map.sezione_page '/editorial/:topmenu_key/sezione/:topsection_id'
   #link_to sezione_page_url
   def top_sezione
-        #inizio box convegni
+    #inizio box convegni
     @conv_prossimo = Issue.all_public_fs.solo_convegni.first(
-           :order => 'due_date ASC',
-           :conditions => "#{Issue.table_name}.due_date >=' #{DateTime.now.to_date}'")
+        :order => 'due_date ASC',
+        :conditions => "#{Issue.table_name}.due_date >=' #{DateTime.now.to_date}'")
 
-       if @conv_prossimo.nil?
-         @conv_futuri
-       else
-         @cid = @conv_prossimo.id
-         @conv_futuri = Issue.all_public_fs.solo_convegni.all(
-             :order => 'due_date ASC',
-             :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
-       end
-       #fine box convegni
+    if @conv_prossimo.nil?
+      @conv_futuri
+    else
+      @cid = @conv_prossimo.id
+      @conv_futuri = Issue.all_public_fs.solo_convegni.all(
+          :order => 'due_date ASC',
+          :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
+    end
+    #fine box convegni
 
     @base_url = params[:pages] #request.path
     @key_url = params[:topmenu_key]
-                               # @topsection_id = params[:topsection_id]
+    # @topsection_id = params[:topsection_id]
     @topsection_key = params[:topsection_key]
     @topsection = TopSection.find(:first, :conditions => ["top_sections.`key` = ?", @topsection_key])
-                               #flash[:notice] = l(:notice_missing_parameters) + " -->  @section_id="+ @topsection.id.to_s   + @topsection_key
-                               # if @topsection_id.nil?
-                               #         flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
-                               #         redirect_to :action => 'home'
-                               #         return
-                               #     end
+    #flash[:notice] = l(:notice_missing_parameters) + " -->  @section_id="+ @topsection.id.to_s   + @topsection_key
+    # if @topsection_id.nil?
+    #         flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
+    #         redirect_to :action => 'home'
+    #         return
+    #     end
     if @topsection.nil?
-      flash[:notice] = l(:notice_missing_parameters) + " --> 3 @section_id="+ @topsection.id.to_s
+      flash[:alert] = :notice_missing_parameters + " --> 3 @section_id="+ @topsection.id.to_s
       redirect_to :action => 'home'
       return
     end
-                               # Paginate results
+    # Paginate results
     case params[:format]
       when 'xml', 'json'
         @offset, @limit = api_offset_and_limit
@@ -153,7 +153,7 @@ class EditorialController < ApplicationController
     end
     @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).count()
     @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-                               #Kapao riompe la paginazione @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).with_limit(@issues_pages.items_per_page).with_offset(@issues_pages.current.offset)
+    #Kapao riompe la paginazione @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).with_limit(@issues_pages.items_per_page).with_offset(@issues_pages.current.offset)
     @offset ||= @issues_pages.current.offset
     @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @topsection.id.to_s).all(
         :limit => @limit,
@@ -166,6 +166,7 @@ class EditorialController < ApplicationController
       format.api
     end
   end
+
   # -----------------  ARTICOLO  (inizio)   ------------------
   #La preview puo essere vista anche se non è pubblico il project o l'issue
   def preview_articolo
@@ -178,12 +179,12 @@ class EditorialController < ApplicationController
       @quesito_news = News.find_by_id(@articolo.news_id)
       other_quesito_datas()
       _action = "quesito_show"
-    #articolo tipo convegno
+      #articolo tipo convegno
     elsif @articolo.is_convegno?
       @convegno= @articolo
       other_evento_datas()
       _action = "evento"
-    #articolo normale
+      #articolo normale
     else
       other_articolo_datas()
     end
@@ -197,10 +198,12 @@ class EditorialController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     reroute_404("L'articolo cercato non è è stato trovato...")
   end
+
   #@id e @articolo in find_articolo
   def articolo
     other_articolo_datas()
   end
+
   # -----------------  ARTICOLO  (fine)   ------------------
   # -----------------  EDIZIONI /NEWSLETTER  (inizio)  ------------------
   def edizioni
@@ -210,12 +213,12 @@ class EditorialController < ApplicationController
   def edizione
     @id = params[:id].to_i
     if @id.nil?
-      flash[:notice] = l(:notice_not_authorized)
+      flash[:alert] = fading_flash_message(l(:notice_not_authorized), 4)
       return redirect_to({:action => 'home'})
     end
     @project = Project.all_public_fs.find_public(@id)
     if @project.nil?
-      flash[:notice] = l(:notice_not_authorized)
+      flash[:alert] = fading_flash_message(l(:notice_not_authorized), 4)
       return redirect_to({:action => 'home'})
     else
       @issues = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
@@ -262,11 +265,11 @@ class EditorialController < ApplicationController
   end
 
   def evento_prenotazione
-      if request.post? #  flash[:notice] = fading_flash_message("il photo." + params[:photo].to_s + "\n uid >" + params[:user_id] + "\n pid >" + params[:id], 5)
-        @reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id], :num_persone => params[:num_persone], :msg => params[:msg])
-              @reservation_new.save
-      end
-      redirect_back_or_default eventi_url
+    if request.post? #  flash[:notice] = fading_flash_message("il photo." + params[:photo].to_s + "\n uid >" + params[:user_id] + "\n pid >" + params[:id], 5)
+      @reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id], :num_persone => params[:num_persone], :msg => params[:msg])
+      @reservation_new.save
+    end
+    redirect_back_or_default eventi_url
 
   end
 
@@ -304,7 +307,7 @@ class EditorialController < ApplicationController
           :order => 'due_date ASC',
           :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
                                #reservations
-     # @reservation_new =Res.newervation
+                               # @reservation_new =Res.newervation
       @rcount = Reservation.count(:conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
       @reservation =Reservation.find(:first, :conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
       @convegno= Issue.find(@cid)
@@ -353,13 +356,13 @@ class EditorialController < ApplicationController
 
     if (!@errors.nil? and @errors.length > 0)
       return render :json => {
-        :success => false,
-        :response => @stat,
-        :errors => @errors
+          :success => false,
+          :response => @stat,
+          :errors => @errors
       }
     end
 
-    render :json => { :success => true, :response => @stat}
+    render :json => {:success => true, :response => @stat}
   end
 
 
@@ -403,13 +406,10 @@ class EditorialController < ApplicationController
     @news.comments_count = 0
     if request.post?
       if @news.save
-        # flash[:notice] = l(:notice_successful_create)
-        flash[:notice] = "Il suo quesito è stato registrato grazie."
-        #flash[:notice] = fading_flash_message("Il suo quesito è stato registrato grazie.", 7)
+        flash[:success] = fading_flash_message("Il suo quesito è stato registrato grazie.", 4)
         redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
-        #redirect_to :controller => 'news', :action => 'index', :project_id => @project
       else
-        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
+        flash[:error] = fading_flash_message("Non ho potuto registrare il quesito... qualcosa è andato storto", 4)
       end
     end
   end
@@ -421,10 +421,10 @@ class EditorialController < ApplicationController
     @quesito_news.description = params[:description]
     if request.post?
       if @quesito_news.save
-        flash[:notice] = :notice_successful_update
+        flash[:success] = fading_flash_message(:notice_successful_update, 4)
         #flash[:notice] = fading_flash_message(l(:notice_successful_update), 7)
       else
-        flash[:notice] = 'qualcosa è andato storto!'
+        flash[:error] = fading_flash_message('non ho potuto aggiornare ... qualcosa è andato storto!', 4)
       end
     end
     redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @quesito_news
@@ -435,10 +435,10 @@ class EditorialController < ApplicationController
     #verificare che l'utente sia un admin o un se stesso
     if @quesito_news.author == User.current || User.current.admin?
       @quesito_news.destroy #@quesito_news = News.destroy(params[:id])
-      #flash[:notice] = fading_flash_message("Il suo quesito è stato rimosso.", 7)
-       flash[:notice] =  'quesito rimosso!'
+                            #flash[:notice] = fading_flash_message("Il suo quesito è stato rimosso.", 7)
+      flash[:notice] = fading_flash_message("Quesito rimosso!",4)
     else
-      flash[:error] = fading_flash_message("Solo l'utente che ha creato il quesito può eliminarlo", 15)
+      flash[:error] = fading_flash_message("Solo l'utente che ha creato il quesito può eliminarlo",4)
     end
     redirect_to :controller => 'editorial', :action => 'quesiti_my'
   end
@@ -501,7 +501,7 @@ class EditorialController < ApplicationController
 
   def profilo_show
     if @user_profile.nil?
-     # flash[:notice] = fading_flash_message("Profilo non trovato.", 5)
+      flash[:alert] = fading_flash_message("Profilo non trovato.", 3)
     end
     @profiles_hidden = UserProfile.users_profiles_all.invisibili
   end
@@ -512,44 +512,32 @@ class EditorialController < ApplicationController
         if !params[:photo].nil?
           @user_profile.update_attributes(:photo => params[:photo])
         end
-        # if @user_profile.update_attributes(:user_id => params[:user_id], :photo => params[:photo], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
-        #@user_profile.photo.reprocess!
-        # @user_profile.save
-       # flash[:notice] = fading_flash_message("il tuo profilo è stato aggiornato2.", 5)
-        flash[:notice] = ("il tuo profilo è stato aggiornato.")
+        flash[:success] = fading_flash_message("il tuo profilo è stato aggiornato.", 4)
       else
-        flash[:notice] = 'mmmhhh ... qualcosa è andato storto!'
+        flash[:error] = fading_flash_message('non ho potuto aggiornare ... qualcosa è andato storto!', 4)
       end
       redirect_to :action => 'profilo_show', :id => @user_profile
       return
     end
-   # render :layout => "editorial_edit"
+    # render :layout => "editorial_edit"
   end
 
   def profilo_new
     @uid= params[:id]
     @this_user = User.find_by_id(@uid)
-    #render :layout => "editorial_edit"
-   # ----
-    if request.post? #  flash[:notice] = fading_flash_message("il photo." + params[:photo].to_s + "\n uid >" + params[:user_id] + "\n pid >" + params[:id], 5)
+    if request.post?
       @user_profile = UserProfile.new(:user_id => params[:user_id], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
       if @user_profile.save
         if !params[:photo].nil?
           @user_profile.update_attributes(:photo => params[:photo])
         end
-        # if @user_profile.update_attributes(:user_id => params[:user_id], :photo => params[:photo], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
-        #@user_profile.photo.reprocess!
-        # @user_profile.save
-        #flash[:notice] = fading_flash_message("il tuo profilo è stato creato.", 5)
-        flash[:notice] = "il tuo profilo è stato creato."
-
+        flash[:success] = fading_flash_message("il tuo profilo è stato creato.",4)
       else
-        flash[:notice] = 'mmmhhh ... qualcosa è andato storto!'
+        flash[:error] = fading_flash_message('non ho potuto creare ... qualcosa è andato storto!', 4)
       end
       redirect_to :action => 'profilo_show', :id => @user_profile
       return
     end
-   # render :layout => "editorial_edit"
   end
 
 
@@ -559,70 +547,24 @@ class EditorialController < ApplicationController
     if request.post?
       if @user_profile.save
         # flash[:notice] = l(:notice_successful_create)
-       # flash[:notice] = fading_flash_message("Il suo profilo è stato creato.", 5)
-        flash[:notice] = "Il suo profilo è stato creato."
+        # flash[:notice] = fading_flash_message("Il suo profilo è stato creato.", 5)
+        flash[:success] = fading_flash_message("il tuo profilo è stato creato.", 4)
         redirect_to(profile_show_path(@user_profile.id))
-
-        #redirect_to :controller => 'news', :action => 'index', :project_id => @project
       else
-        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
+        flash[:error] = fading_flash_message('non ho potuto creare ... qualcosa è andato storto!', 4)
       end
     end
   end
-
-
-=begin
-  def profilo_update
-    @user_profile = UserProfile.find(params[:id])
-    respond_to do |format|
-      UserProfile(@user_profile).photo.reprocess!
-      if @user_profile.update_attributes(params[:user_profile])
-
-        flash[:notice] = fading_flash_message("Il suo profilo è stato aggiornato.", 5)
-        format.html { redirect_to :action => 'profilo_show', :id => @user_profile.id }
-        format.xml { head :ok }
-      else
-        # format.html { render :action => "edit" }
-        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
-        format.xml { render :xml => @user_profile.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-=end
 
   def profilo_destroy
     @user_profile.destroy
-
+    flash[:notice] = fading_flash_message("il tuo profilo è stato rimosso.", 4)
     respond_to do |format|
       format.html { redirect_to(profiles_all_url) }
       format.xml { head :ok }
     end
   end
 
-
-=begin
-  def profilo_create
-    render :layout => "editorial_edit"
-    @user_profile = UserProfile.new(params[:user_profile])
-    if request.post?
-      if @user_profile.save
-        # flash[:notice] = l(:notice_successful_create)
-        flash[:notice] = fading_flash_message("Il suo profilo è stato registrato grazie.", 7)
-        redirect_to :controller => 'editorial', :action => 'profilo_show' , :id => @user_profile.id
-        #redirect_to :controller => 'news', :action => 'index', :project_id => @project
-      else
-        flash.now[:notice] = 'Bah... qualcosa è andato storto!'
-      end
-    end
-    end
-=end
-# -----------------    CHI SIAMO    (fine) [menu item] ------------------
-
-  def contact
-  end
-
-  def help
-  end
 
   def banners
     @xbanner = GroupBanner.find(:all, :order => 'priorita DESC', :conditions => ["se_visible = 1"])
@@ -734,9 +676,10 @@ class EditorialController < ApplicationController
     @id = params[:id].to_i
     @user_profile = UserProfile.find_by_id(@id)
   rescue ActiveRecord::RecordNotFound
-    flash[:error] = "profilo non trovato..."
+    flash[:alert] = fading_flash_message("il profilo non è stato trovato.", 4)
     return reroute_404()
   end
+
   def correct_user_profile
     return reroute_log() unless (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user)
   end
@@ -753,6 +696,7 @@ class EditorialController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     reroute_404()
   end
+
   def correct_user_quesito
     return reroute_log() unless (User.current.admin? || User.current.ismanager? || User.current == @quesito_news.author)
   end
@@ -774,21 +718,22 @@ class EditorialController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     reroute_404("il contenuto cercato è stato rimosso...")
   end
+
   def correct_user_article
     reroute_log() unless (User.current.logged? || !@articolo.se_protetto)
   end
 
   def reroute_404(_message = nil)
     #flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
-    flash[:notice] = "Problemi incontrati nel recupero dei dati..."
+    flash[:alert] = fading_flash_message("Problemi incontrati nel recupero dei dati...", 4)
     return render_404_fs({:message => _message}) unless _message.nil?
     render_404_fs
     #render_404
   end
 
   def reroute_log()
-    flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
-    redirect_to(signin_path)
+    flash[:alert] = fading_flash_message("Per accedere al contenuto devi essere authentificato. <br /> Fai il login per favore...", 4)
+    redirect_to(abbonamenti_path)
   end
 
   def enabled_user_article
@@ -798,8 +743,7 @@ class EditorialController < ApplicationController
   end
 
   def reroute_auth()
-    flash[:notice] = "Per accedere al contenuto devi avere un abbonamento in corso..."
-    #flash[:error] = "Abbonamento non valido (utente)..."
+    flash[:notice] = fading_flash_message("Per accedere devi avere un abbonamento valido...", 4)
     #redirect_to(signin_path)
     redirect_to(abbonamenti_path)
   end
@@ -812,10 +756,10 @@ class EditorialController < ApplicationController
     @section_id = @articolo.section_id
     @icount = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s).count()
     if @icount > 3
-      @artsimilar = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s ).all(
+      @artsimilar = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s).all(
           :limit => 10)
     else
-      @artsimilar = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @articolo.section.top_section.id.to_s ).all(
+      @artsimilar = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @articolo.section.top_section.id.to_s).all(
           :limit => 10)
     end
 

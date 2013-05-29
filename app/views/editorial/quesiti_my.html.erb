@@ -5,9 +5,6 @@
           </div>
       <% else %>
           <article class="fs-article fs-post-quesiti">
-            <% if flash[:notice] %>
-                <div id="fs-flash-notice"><%= notice %> </div>
-            <% end %>
             <% @quesiti_news.each do |item| %>
                 <div class="fs-convegni-border">
                   <div class="fs-quesiti-data">  <span>
