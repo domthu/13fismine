@@ -91,5 +91,9 @@ class SettingsController < ApplicationController
     Issue.all.each { |s| s.image.reprocess! }
     redirect_to :action => 'edit', :tab => :display
   end
+  def img_refresh_banners
+    GroupBanner.all.each { |s| s.image.reprocess! }
+    redirect_to :action => 'edit', :tab => :display
+  end
 
 end

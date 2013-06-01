@@ -1185,7 +1185,7 @@ textarea#issue_subject{
 }
 /* sandro fee controller  utenti ruoli icons */
 
-.mini-legend li{
+.mini-legend, .mini-legend li{
     font-size: 8px;
     line-height: 1.5em;
 }

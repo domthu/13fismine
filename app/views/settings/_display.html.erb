@@ -20,7 +20,8 @@
 
       <p>User Profiles (Avatar)
         -  <%= link_to('Rigenera le immagini!', url_for(:controller => "settings", :action => "img_refresh_users")) %>  </p>
-
+      <p>Banners
+        -  <%= link_to('Rigenera le immagini!', url_for(:controller => "settings", :action => "img_refresh_banners")) %>  </p>
       <p>Associazioni
         -  <%= link_to('Rigenera le immagini!', url_for(:controller => "settings", :action => "img_refresh_assos")) %>  </p>
 
@@ -36,6 +37,7 @@
       <p>Articoli
         -  <%= link_to('Rigenera le immagini!', url_for(:controller => "settings", :action => "img_refresh_issues")) %>  </p>
 
+      <p class="mini-legend">NB:Per rendere visibili le immagini aggiornate occorre riavviare il server: contatare il webmaster. </p>
     </div>
 
     <%= submit_tag l(:button_save) %>
