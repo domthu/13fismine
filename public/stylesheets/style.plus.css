@@ -1875,6 +1875,22 @@ h3.fs-postheader {
 }
 
 /*         -----------------------------ABBONAMENTI ----*/
+/*PAGINA PRINCIPALE */
+
+#fs-pag-abbonamenti-header {
+    width: 100%;
+    min-height: 155px;
+    background: url("/images/commons/abbonamenti.png") top right no-repeat transparent;
+    text-align: center;
+}
+
+#fs-pag-abbonamenti-header div {
+    display: inline-block;
+    float: left;
+    width: 75%;
+    font-size: 1.2em;
+}
+/*PAG REGISTRAZIONE */
 #fs-abbo-top {
     width: 100%;
     border-bottom: solid 2px #d3d3d3;
@@ -1912,10 +1928,14 @@ h3.fs-postheader {
 
 }
 
-#steps-step-0 legend {
+#steps-step-0 legend ,#steps-step-1 legend {
     color: #00465e;
     font-size: 15px;
 }
+
+
+
+
 
 /* ------------------------------- test carousel -------------------------*/
 
@@ -1966,19 +1986,6 @@ h3.fs-postheader {
     clear: both;
 }
 
-#fs-pag-abbonamenti-header {
-    width: 100%;
-    min-height: 155px;
-    background: url("/images/commons/abbonamenti.png") top right no-repeat transparent;
-    text-align: center;
-}
-
-#fs-pag-abbonamenti-header div {
-    display: inline-block;
-    float: left;
-    width: 75%;
-    font-size: 1.2em;
-}
 
 /* ======================================================================================= */
 /* ===================zona riservata . SOPRA TUTTE LE PERSONALIZZAZIONI ================== */
@@ -2031,6 +2038,21 @@ span.alert {
 span.error {
     background: url('/images/ico/flash_error.png') center center no-repeat;
 }
+
+/* altri  allarmi note */
+.fe-notice {
+    background: url('/images/ico/flash_notice_s.png')center left no-repeat;
+    font-weight: bold;
+    padding: 3px 5px 3px 32px;
+    display: table-cell;
+    vertical-align: middle;
+    font-style: italic;
+    color: #005b7c;
+    height: 20px;
+    min-height: 20px;
+    border-bottom: solid 1px #e0ffff;
+}
+
 
 /*  navigazione  e menu   */
 .art-nav {

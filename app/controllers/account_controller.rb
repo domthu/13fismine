@@ -19,8 +19,8 @@ class AccountController < ApplicationController
   layout 'editorial'
   helper :custom_fields
   include CustomFieldsHelper
-  include FeesHelper  #ROLE_XXX  gedate
-  before_filter :reroute_if_logged , :only  => :register
+  include FeesHelper #ROLE_XXX  gedate
+  before_filter :reroute_if_logged, :only => :register
 
   # prevents login action to be filtered by check_if_login_required application scope filter
   skip_before_filter :check_if_login_required
@@ -87,7 +87,7 @@ class AccountController < ApplicationController
 
 #Processing AccountController#register (for 127.0.0.1 at 2013-05-26 23:38:45) [POST]
 #  Parameters: {"controller"=>"account", "authenticity_token"=>"a5PKEdiKedRIU8/QhBGnmPeKUQxzoJekun7UI835dJs=", "extra_organismo_select"=>"", "extra_town"=>"CASTELRAIMONDO  (AN)", "action"=>"register", "user"=>{"titolo"=>"Altro", "comune_id"=>"4020", "soc"=>"", "asso_id"=>"", "mail"=>"dom_thual@monamiweb.it", "lastname"=>"dominique3", "firstname"=>"thual3", "codice"=>"", "indirizzo"=>"", "num_reg_coni"=>"", "se_condition"=>"1", "fax"=>"", "se_privacy"=>"1", "login"=>"domthu3", "password_confirmation"=>"[FILTERED]", "password"=>"[FILTERED]", "note"=>"", "telefono"=>"", "cross_organization_id"=>"", "language"=>"it"}, "commit"=>"Invia", "extra"=>"asso_select"}
-def register
+  def register
     #puts "********************REGISTER********************"
     #domthu redirect_to(home_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
@@ -164,12 +164,12 @@ def register
         #@user.password, @user.password_confirmation = params[:password], params[:password_confirmation]
 
         case Setting.self_registration
-        when '1'
-          register_by_email_activation(@user)
-        when '3'
-          register_automatically(@user)
-        else
-          register_manually_by_administrator(@user)
+          when '1'
+            register_by_email_activation(@user)
+          when '3'
+            register_automatically(@user)
+          else
+            register_manually_by_administrator(@user)
         end
       end
     end
@@ -177,21 +177,21 @@ def register
 
   #via js
   def prova
-  #FeeConst::ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
+    #FeeConst::ROLE_REGISTERED     = 9  #Ospite periodo di prova durante Setting.register_days<br />
     @user = User.new(:language => Setting.default_language, :mail_notification => Setting.default_notification_option)
     @user.admin = false
     @user.mail = params[:mail] if params[:mail].present?
     @user.firstname = params[:firstname] if params[:firstname].present?
     @user.lastname = params[:lastname] if params[:lastname].present?
     @user.login = @user.mail
-    @user.random_password  #    self.password = password & self.password_confirmation = password
+    @user.random_password #    self.password = password & self.password_confirmation = password
     @user.se_condition = true
     @user.se_privacy = true
-    #default role_id
+                          #default role_id
     @user.role_id = FeeConst::ROLE_REGISTERED
     @user.datascadenza = Date.today + Setting.register_days.to_i
-    #@user.mail_notification = 'selected'
-    #@user.mail_notification = 'only_my_events'
+                          #@user.mail_notification = 'selected'
+                          #@user.mail_notification = 'only_my_events'
     @user.annotazioni = "Prova gratis per " + @user.name + ", con email " + @user.mail + ", fatta il " + Date.today.to_s + ", per " + Setting.register_days.to_s + " giorni. Scadenza: " + @user.scadenza.to_s
 
     @stat =''
@@ -208,12 +208,12 @@ def register
           :success => false,
           :response => @stat,
           :errors => @errors
-        }
+      }
       #}
     end
 
     raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
-    # Force ActionMailer to raise delivery errors so we can catch it
+                          # Force ActionMailer to raise delivery errors so we can catch it
     ActionMailer::Base.raise_delivery_errors = true
     @stat = 'Invio email non riuscito '
     begin
@@ -222,7 +222,7 @@ def register
         @user.register #update_attribute
         @stat = " Utente registrato"
         self.logged_user = @user
-        # Sends an email to the administrators
+                       # Sends an email to the administrators
         Mailer.deliver_account_activation_request(@user)
       else
         if !@user.errors.empty?
@@ -232,45 +232,45 @@ def register
         puts "********************Prova user not saved! (" + @errors + ")********************"
         @stat += "Tipo registrazione(" + Setting.self_registration + "). "
         case Setting.self_registration
-        when '1'
-          @stat += " Utente registrato, in attesa della conferma email"
-          #register_by_email_activation(@user)
-          token = Token.new(:user => @user, :action => "register")
-          if @user.save and token.save
-            @user.register #verificare se farlo? update_attribute
-            Mailer.deliver_register(token)
-            @stat += l(:notice_account_register_done)
-          else
-            puts "********************Prova self_registration 1 KAPPAO (" + @errors + ")********************"
-            @stat += " Conferma email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span>"
-          end
+          when '1'
+            @stat += " Utente registrato, in attesa della conferma email"
+            #register_by_email_activation(@user)
+            token = Token.new(:user => @user, :action => "register")
+            if @user.save and token.save
+              @user.register #verificare se farlo? update_attribute
+              Mailer.deliver_register(token)
+              @stat += l(:notice_account_register_done)
+            else
+              puts "********************Prova self_registration 1 KAPPAO (" + @errors + ")********************"
+              @stat += " Conferma email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span>"
+            end
 
-        when '3' # Automatic activation
-          @stat += " Utente registrato automaticamente"
-          #register_automatically(@user)
-          @user.activate
-          @user.last_login_on = Time.now
-          if @user.save
-            @user.register #verificare se farlo? update_attribute
-            self.logged_user = @user
-            @stat += l(:notice_account_activated)
-          else
-            puts "********************Prova self_registration 3 KAPPAO (" + @errors + ")********************"
-            @stat += " Creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente</span>"
-          end
+          when '3' # Automatic activation
+            @stat += " Utente registrato automaticamente"
+            #register_automatically(@user)
+            @user.activate
+            @user.last_login_on = Time.now
+            if @user.save
+              @user.register #verificare se farlo? update_attribute
+              self.logged_user = @user
+              @stat += l(:notice_account_activated)
+            else
+              puts "********************Prova self_registration 3 KAPPAO (" + @errors + ")********************"
+              @stat += " Creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente</span>"
+            end
 
-        else
-          @stat += " Utente NON registrato: richiede registrazione manuale da parte dell'amministratore"
-          #register_manually_by_administrator(@user)
-          if @user.save
-            @user.register #verificare se farlo? update_attribute
-            # Sends an email to the administrators
-            Mailer.deliver_account_activation_request(user)
-            account_pending
           else
-            puts "********************Prova self_registration other KAPPAO (" + @errors + ")********************"
-            @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
-          end
+            @stat += " Utente NON registrato: richiede registrazione manuale da parte dell'amministratore"
+            #register_manually_by_administrator(@user)
+            if @user.save
+              @user.register #verificare se farlo? update_attribute
+                             # Sends an email to the administrators
+              Mailer.deliver_account_activation_request(user)
+              account_pending
+            else
+              puts "********************Prova self_registration other KAPPAO (" + @errors + ")********************"
+              @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
+            end
 
         end
       end
@@ -301,27 +301,27 @@ def register
     #Jquery
     if (!@errors.nil? and @errors.length > 0)
       return render :json => {
-        :success => false,
-        :response => @stat,
-        :errors => @errors
+          :success => false,
+          :response => @stat,
+          :errors => @errors
       }
     else
       render :json => {
-        :success => true,
-        :response => @stat,
-        :errors => "errore: " + @errors}
+          :success => true,
+          :response => @stat,
+          :errors => "errore: " + @errors}
     end
   end
 
   #unused double render in prova
   def getuserhtml(user)
-      render_to_string(
+    render_to_string(
         :layout => false,
         :controller => 'user',
         :action => 'show',
-        :locals => { :user => user }
-      )
-      #  :partial => 'user/show',
+        :locals => {:user => user}
+    )
+    #  :partial => 'user/show',
   end
 
   # Token based account activation
@@ -366,7 +366,7 @@ def register
     if user.nil?
       invalid_credentials
     elsif user.new_record?
-      onthefly_creation_failed(user, {:login => user.login, :auth_source_id => user.auth_source_id })
+      onthefly_creation_failed(user, {:login => user.login, :auth_source_id => user.auth_source_id})
     else
       # Valid user
       successful_authentication(user)
@@ -390,18 +390,18 @@ def register
           user.register
 
           case Setting.self_registration
-          when '1'
-            register_by_email_activation(user) do
-              onthefly_creation_failed(user)
-            end
-          when '3'
-            register_automatically(user) do
-              onthefly_creation_failed(user)
-            end
-          else
-            register_manually_by_administrator(user) do
-              onthefly_creation_failed(user)
-            end
+            when '1'
+              register_by_email_activation(user) do
+                onthefly_creation_failed(user)
+              end
+            when '3'
+              register_automatically(user) do
+                onthefly_creation_failed(user)
+              end
+            else
+              register_manually_by_administrator(user) do
+                onthefly_creation_failed(user)
+              end
           end
         else
           # Existing record
@@ -422,7 +422,7 @@ def register
     if params[:autologin] && Setting.autologin?
       set_autologin_cookie(user)
     end
-    call_hook(:controller_account_success_authentication_after, {:user => user })
+    call_hook(:controller_account_success_authentication_after, {:user => user})
     #domthu redirect on FrontEnd if no permissions for backend
     #if User.current.allowed_to?(:access_back_end, nil, :global => true)
     #if self.logged_user.allowed_to?(:access_back_end, nil, :global => true)
@@ -436,8 +436,8 @@ def register
       if (Setting.fee?)
         #TODO Controllare la scadenza se è di RUOLO
 
-       # str = control_assign_role(user)
-       # Rails.logger.info("Login controllo ruolo: " + str)
+        # str = control_assign_role(user)
+        # Rails.logger.info("Login controllo ruolo: " + str)
       end
       Rails.logger.info("login ok membro")
       redirect_to(editorial_url)
@@ -448,17 +448,17 @@ def register
     token = Token.create(:user => user, :action => 'autologin')
     cookie_name = Redmine::Configuration['autologin_cookie_name'] || 'autologin'
     cookie_options = {
-      :value => token.value,
-      :expires => 1.year.from_now,
-      :path => (Redmine::Configuration['autologin_cookie_path'] || '/'),
-      :secure => (Redmine::Configuration['autologin_cookie_secure'] ? true : false),
-      :httponly => true
+        :value => token.value,
+        :expires => 1.year.from_now,
+        :path => (Redmine::Configuration['autologin_cookie_path'] || '/'),
+        :secure => (Redmine::Configuration['autologin_cookie_secure'] ? true : false),
+        :httponly => true
     }
     cookies[cookie_name] = cookie_options
   end
 
   # Onthefly creation failed, display the registration form to fill/fix attributes
-  def onthefly_creation_failed(user, auth_source_options = { })
+  def onthefly_creation_failed(user, auth_source_options = {})
     @user = user
     session[:auth_source_registration] = auth_source_options unless auth_source_options.empty?
     render :action => 'register'
@@ -516,6 +516,7 @@ def register
     flash[:notice] = l(:notice_account_pending)
     redirect_to :action => 'login'
   end
+
   def reroute_if_logged
     if User.current.logged?
       redirect_to :controller => 'mio_profilo', :action => 'index'
