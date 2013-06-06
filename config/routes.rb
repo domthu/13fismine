@@ -1,23 +1,15 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :pages
   map.resources :user_profiles
-
   map.resources :reservations
-
 #http://guides.rubyonrails.org/v2.3.11/routing.html
 #rake routes | grep -r "articolo"
-
   map.resources :top_menus
-
   map.resources :contract_users
-
   map.resources :contracts
-
   map.resources :templates
-
   map.resources :reservations
-
   #  under are only for paperclip images refresh
-
   map.with_options :controller => 'settings' do |img|
     img.with_options :conditions => {:method => :post} do |img_model|
       img_model.connect 'settings', :action => 'img_refresh_users' , :tab =>  'display'
@@ -29,7 +21,6 @@ ActionController::Routing::Routes.draw do |map|
     end
     end
   #----------------------------------------------------------------------------------
-
   #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
   #AJAX get usando JQuery UI autocomplete
   map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle', :conditions => {:method => [:get]}

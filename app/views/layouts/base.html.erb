@@ -22,6 +22,7 @@
 <%= yield :header_tags -%>
 <!-- yui page specific tags -->
 <%= yield :header_yui -%>
+  <%= javascript_include_tag :ckeditor %>
 </head>
 <body class="<%=h body_css_classes %>">
 <div id="wrapper">
