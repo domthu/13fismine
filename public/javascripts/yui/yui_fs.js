@@ -69,5 +69,18 @@ function init_yui_editor_fs(id_textarea, _myconfig) {
         }, this, true);
     }, myEditor, true);
     myEditor.render();
+
+    //Set new hidden field for cleaned html
+    //http://www.packtpub.com/article/yui-2-8-rich-text-editor
+    //Event.on('form1', 'submit', function (ev) {
+    //    var html = myEditor.getEditorHTML();
+    //    html = myEditor.cleanHTML(html);
+    //    if (html.search(/<strong/gi) > -1) {
+    //        alert("Don't shout at me!");
+    //        Event.stopEvent(ev);
+    //    }
+    //    this.msgBody.innerHTML = html;
+    //});
+
     return myEditor;
 }

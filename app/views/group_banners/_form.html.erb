@@ -73,45 +73,72 @@
 
 
 <% content_for :header_yui do %>
-    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
-    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
-    <%= javascript_include_tag "yui/element-min.js" %>
-    <%= javascript_include_tag "yui/container_core-min.js" %>
-    <%= javascript_include_tag "yui/menu-min.js" %>
-    <%= javascript_include_tag "yui/button-min.js" %>
-    <%= javascript_include_tag "yui/editor-min.js" %>
-    <%= javascript_include_tag "yui/yui_fs.js" %>
-<% end %>
-<script type="text/javascript" charset="utf-8">
-    (function () {
-        var myConfig1 = {
-            handleSubmit:true,
-            width:'95%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:true,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        //initia l'editor per una test area in particolare
-        var myEditor1 = init_yui_editor_fs('group_banner_didascalia', myConfig1);
-        //Esempio secondo editore html nella stessa pagina
-        //<div class="yui-skin-sam">
-        //  <p>
-        //  <#" f.text_area :espositore, :label => :field_espositore, :required => true %></p>
-        //</div>
-        //var myConfig2 = {
-        //    handleSubmit: true,
-        //    height: '400px',
-        //    width: '95%',
-        //    animate: true,
-        //    dompath: true,
-        //    focusAtStart: true
-        //};
-        //init_yui_editor_fs('group_banner_espositore', myConfig2);
-    })
-            ();
+    <%# stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
+    <%# javascript_include_tag "yui/yahoo-dom-event.js" %>
+    <%# javascript_include_tag "yui/element-min.js" %>
+    <%# javascript_include_tag "yui/container_core-min.js" %>
+    <%# javascript_include_tag "yui/menu-min.js" %>
+    <%# javascript_include_tag "yui/button-min.js" %>
+    <%# javascript_include_tag "yui/editor-min.js" %>
+<!-- Simple editor
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/assets/skins/sam/skin.css">
+<script src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/element/element-min.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/container/container_core-min.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/editor/simpleeditor-min.js"></script>
+ -->
 
+<!-- Complex Editor  -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/assets/skins/sam/skin.css">
+<script src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/element/element-min.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/container/container_core-min.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/menu/menu-min.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/button/button-min.js"></script>
+<script src="http://yui.yahooapis.com/2.9.0/build/editor/editor-min.js"></script>
+
+
+
+
+    <%= javascript_include_tag "yui/yui_fs.js" %>
+
+
+<% end %>
+
+
+<script type="text/javascript" charset="utf-8">
+
+document.observe("dom:loaded", showeditor);
+
+function showeditor() {
+
+//    var myComplexEditor = new YAHOO.widget.Editor('group_banner_didascalia', {
+//        height: '300px',
+//        width: '522px',
+//        dompath: true, //Turns on the bar at the bottom
+//        animate: true //Animates the opening, closing and moving of Editor windows
+//    });
+//    myComplex.render();
+
+//    var mySimpleEditor = new YAHOO.widget.SimpleEditor('group_banner_didascalia', {
+//        height: '300px',
+//        width: '522px',
+//        dompath: true //Turns on the bar at the bottom
+//    });
+//    mySimpleEditor.render();
+
+    var myConfig1 = {
+        handleSubmit:true,
+        width:'95%',
+        resize:true,
+        animate:true,
+        dompath:true,
+        focusAtStart:true,
+        nodeChangeDelay:false,
+        removeLineBreaks:true,
+        drag:true
+    };
+    //initia l'editor per una test area in particolare
+    var myEditor1 = init_yui_editor_fs('group_banner_didascalia', myConfig1);
+};
 </script>

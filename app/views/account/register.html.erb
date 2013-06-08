@@ -96,6 +96,24 @@
               <fieldset class="" title="Privato o Affiliato ad un associazione" style="display: none;">
                 <legend>Associato a... Sigla :: Organismo :: Associazione</legend>
 
+                  <%= f.radio_button :status, "Sono un privato" %>
+                  <%= f.label :status, "private", :value => "private" %>
+                  <%= f.radio_button :status, "Associato" %>
+                  <%= f.label :status, "associated", :value => "associated" %>
+                  <%= f.radio_button :status, "responsabile associazione" %>
+                  <%= f.label :status, "responsable", :value => "responsable" %>
+
+
+                <div id="rbt_private" class="rbt" >
+                  <h1>PRIVATO</h1>
+                </div>
+                <div id="rbt_private" class="rbt" >
+                  <h1>PRIVATO</h1>
+                </div>
+                <div id="rbt_private" class="rbt" >
+                  <h1>PRIVATO</h1>
+                </div>
+
                 <br/>
 
                 <div class="fs-abbo-sx1">
