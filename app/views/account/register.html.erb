@@ -18,103 +18,97 @@
           <!------  inizio ------ -->
           <!-- STEP 1 -->
           <% labelled_form_for @user, :url => {:action => 'register'}, :html => {:method => :post, :class => "register tabular", :id => "steps"} do |f| %>
-              <%= error_messages_for 'user' %>
+            <%= error_messages_for 'user' %>
 
-              <fieldset class="fs-abbo-fields" title="Anagrafica">
-                <legend> Dati personali e di accesso</legend>
-                <div class="fs-abbo-sx1">
-                  <p><label><%= l(:field_nome) %></label></p>
+            <fieldset class="fs-abbo-fields">
+              <legend title="Anagrafica"> Dati personali e di accesso</legend>
+              <div class="fs-abbo-sx1">
+                <p><label><%= l(:field_nome) %></label></p>
 
-                  <p><%= f.text_field :firstname, :label => l(:field_firstname) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %></p>
+                <p><%= f.text_field :firstname, :label => l(:field_firstname) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %></p>
 
-                  <p><%= f.text_field :lastname, :label => l(:field_lastname) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %></p>
+                <p><%= f.text_field :lastname, :label => l(:field_lastname) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %></p>
 
-                  <p><%= f.text_field :mail, :label => l(:field_mail) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %>
-                    <img id="si_user_mail" src="/images/true.png" alt="Anagrafica disponibile" title="Anagrafica disponibile"/>
+                <p><%= f.text_field :mail, :label => l(:field_mail) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %>
+                  <img id="si_user_mail" src="/images/true.png" alt="Anagrafica disponibile" title="Anagrafica disponibile" style="display: none;" />
 
-                  <div id="no_user_mail">
-                    <img src="/images/false.png" alt="Anagrafica non disponibile. Ci risulta già una registrazione con questa Anagrafica!" title="Anagrafica non disponibile. Ci risuta già una registrazione con questa Anagrafica!"/><br/>
+                <div id="no_user_mail" style="display: none;" >
+                  <img src="/images/false.png" alt="Anagrafica non disponibile. Ci risulta già una registrazione con questa Anagrafica!" title="Anagrafica non disponibile. Ci risuta già una registrazione con questa Anagrafica!"/><br/>
 
-                    <p class="fs-abbo-tips"> Informazione già presente nel server: Sei già registrato? Usi
-                      il <%= link_to l(:label_login), :signin %> per
-                      accedere di nuovo. Se hai problemi <%= link_to 'Contattaci', contattaci_path %>. </p>
+                  <p class="fs-abbo-tips"> Informazione già presente nel server: Sei già registrato? Usi
+                    il <%= link_to l(:label_login), :signin %> per
+                    accedere di nuovo. Se hai problemi <%= link_to 'Contattaci', contattaci_path %>. </p>
+                </div>
+
+                <!--[form:user]-->
+                <% if @user.auth_source_id.nil? %>
+                    <p class="fs-abbo-tips" style="width: 70%;"><%= l(:field_username_as_email) %></p>
                   </div>
-                  <!--[form:user]-->
-                  <% if @user.auth_source_id.nil? %>
-                      <p class="fs-abbo-tips" style="width: 70%;"><%= l(:field_username_as_email) %></p>
-                      </div>
-                      <div class="fs-abbo-dx1">
+                  <div class="fs-abbo-dx1">
 
-                        <p><%= f.text_field :login, :label => l(:field_login) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %>
-                          <img id="si_user_login" src="/images/true.png" alt="login disponibile" title="login disponibile"/><img id="no_user_login" src="/images/false.png" title="login non disponibile. Ci risulta già una registrazione con questo login!"/>
-                        </p>
-
-                        <p><%= f.password_field :password, {:style => 'width:60%;', :label => l(:field_password) + " <span class='required'>*</span>", :maxlength => 255} %>
-                          <br/>
-                          <em><%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></em></p>
-
-                        <p><%= f.password_field :password_confirmation, {:style => 'width:60%;', :label => l(:field_password_confirmation) + " <span class='required'>*</span>", :maxlength => 255} %></p>
-                  <% end %>
-
-                  <p><span style='margin-left:7px;'>
-                    <%= f.select(:language, lang_options_for_select, :label => l(:field_language) + " <span class='required'>*</span>") %></span>
-                  </p>
-                  <% if Setting.openid? %>
-                      <p><label for="user_identity_url"><%= l(:field_identity_url) %></label>
-                        <%= f.text_field :identity_url %></p>
-                  <% end %>
-
-                  <% @user.custom_field_values.select { |v| v.editable? || v.required? }.each do |value| %>
-                      <p><%= custom_field_tag_with_label :user, value %></p>
-                  <% end %>
-                  <!--[eoform:user]-->
-                  </div>
-                  <div class="clearfix"></div>
-                  <div class="fs-abbo-bottom">
-                    <div class="fs-abbo-sx1">
-                      <p>
-                        <label><%= f.check_box :se_condition, :label => l(:field_language) + " <span class='required'>*</span>" %> <%= l(:field_se_condition_readed) %></label>
+                      <p><%= f.text_field :login, :label => l(:field_login) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %>
+                        <img id="si_user_login" src="/images/true.png" alt="login disponibile" title="login disponibile" style="display: none;" /><img id="no_user_login" src="/images/false.png" title="login non disponibile. Ci risulta già una registrazione con questo login!" style="display: none;" />
                       </p>
 
-                      <p>Leggo le <a href='#' id='acondizioni' class='pri'><b>condizioni di utilizzo</b></a></p>
+                      <p><%= f.password_field :password, {:style => 'width:60%;', :label => l(:field_password) + " <span class='required'>*</span>", :maxlength => 255} %>
+                        <br/>
+                        <em><%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></em></p>
 
-                      <div id="condizioni" title="Condizioni di utilizzo" class="hidden" style="overflow: hidden;"></div>
-                    </div>
-                    <div class="fs-abbo-dx1">
-                      <p>
-                        <label><%= f.check_box :se_privacy, :label => l(:field_se_privacy) + " <span class='required'>*</span>" %> <%= l(:field_se_privacy_accept) %></label>
-                      </p>
+                      <p><%= f.password_field :password_confirmation, {:style => 'width:60%;', :label => l(:field_password_confirmation) + " <span class='required'>*</span>", :maxlength => 255} %></p>
+                <% end %>
 
-                      <p>Acconsento al <a href='#' id='ainformativa' class='pri'><b>trattamento dei dati</b></a></p>
-                    </div>
-                    <div id="informativa" title="Informativa" class="hidden" style="overflow: hidden;">
-                    </div>
+                <p><span style='margin-left:7px;'>
+                  <%= f.select(:language, lang_options_for_select, :label => l(:field_language) + " <span class='required'>*</span>") %></span>
+                </p>
+                <% if Setting.openid? %>
+                    <p><label for="user_identity_url"><%= l(:field_identity_url) %></label>
+                      <%= f.text_field :identity_url %></p>
+                <% end %>
+
+                <% @user.custom_field_values.select { |v| v.editable? || v.required? }.each do |value| %>
+                    <p><%= custom_field_tag_with_label :user, value %></p>
+                <% end %>
+                <!--[eoform:user]-->
+                </div>
+                <div class="clearfix"></div>
+                <div class="fs-abbo-bottom">
+                  <div class="fs-abbo-sx1">
+                    <p>
+                      <label><%= f.check_box :se_condition, :label => l(:field_language) + " <span class='required'>*</span>" %> <%= l(:field_se_condition_readed) %></label>
+                    </p>
+
+                    <p>Leggo le <a href='#' id='acondizioni' class='pri'><b>condizioni di utilizzo</b></a></p>
+                    <div id="condizioni" title="Condizioni di utilizzo" class="hidden" style="overflow: hidden;"></div>
                   </div>
-                  </fieldset>
-              <!--STEP 2 -->
+                  <div class="fs-abbo-dx1">
+                    <p>
+                      <label><%= f.check_box :se_privacy, :label => l(:field_se_privacy) + " <span class='required'>*</span>" %> <%= l(:field_se_privacy_accept) %></label>
+                    </p>
 
-              <fieldset class="" title="Privato o Affiliato ad un associazione" style="display: none;">
-                <legend>Associato a... Sigla :: Organismo :: Associazione</legend>
-
-                  <%= f.radio_button :status, "Sono un privato" %>
-                  <%= f.label :status, "private", :value => "private" %>
-                  <%= f.radio_button :status, "Associato" %>
-                  <%= f.label :status, "associated", :value => "associated" %>
-                  <%= f.radio_button :status, "responsabile associazione" %>
-                  <%= f.label :status, "responsable", :value => "responsable" %>
-
-
-                <div id="rbt_private" class="rbt" >
-                  <h1>PRIVATO</h1>
-                </div>
-                <div id="rbt_private" class="rbt" >
-                  <h1>PRIVATO</h1>
-                </div>
-                <div id="rbt_private" class="rbt" >
-                  <h1>PRIVATO</h1>
+                    <p>Acconsento al <a href='#' id='ainformativa' class='pri'><b>trattamento dei dati</b></a></p>
+                  </div>
+                  <div id="informativa" title="Informativa" class="hidden" style="overflow: hidden;">
+                  </div>
                 </div>
 
-                <br/>
+                <div class="clearfix"></div>
+                <input id="radio1" name="rbt" type="radio" value="dv_privato" /><label for="radio1">Sono un privato <span class="fe-notice" title="Non dipendo di nessun associazione." ><span></label>
+                <input id="radio2" name="rbt" type="radio" value="dv_associato" /><label for="radio2">Sono socio <span class="fe-notice" title="Seleziono l'associazione nella lista delle associazioni registrate in Fiscosport" ></span></label>
+                <input id="radio3" name="rbt" type="radio"  value="dv_responsabile" /><label for="radio3">Responsabile associazione <span class="fe-notice" title="Vedo se la mia associazione esiste già nella lista. Altrimenti provò a creare una nuova scheda" ></span></label>
+
+            </fieldset>
+
+            <!--STEP 2 -->
+            <fieldset class="" style="display: none;">
+              <legend title="Privato o Affiliato ad un associazione Sigla :: Organismo :: Associazione" >Privato o associato o responsabile</legend>
+
+              <div id="dv_privato" class="dvrbt" style="display: none;" >
+                <h1>Privato: </h1>
+
+              </div><!-- dv_privato -->
+
+              <div id="dv_associato" class="dvrbt" style="display: none;" >
+                <h1>Socio: </h1>
 
                 <div class="fs-abbo-sx1">
                   <p style="text-align:center;"><%= f.select :titolo, options_for_select(["Abbonamento Personale", "Presidente", "Tesoriere", "Professionista", "Consigliere", "Segretario", "Delegato", "Altro", "Segretaria", "Dirigente", "Amministratore unico", "Operatore", "Libero professionista", "Amministratore", "Tecnico/Dirigente", "Professionista-consigliere", "Socio", "Associato", "Studente", "Vice-presidente", "Responsabile Amministrativo", "Vice Presidente Regionale", "Impiegata", "Avvocato", "Consulente", "Responsabile"], "Altro") %></p>
@@ -122,10 +116,43 @@
                 <div class="fs-abbo-dx1">
                   <p style="text-align:center;"><%= f.text_field :num_reg_coni, :label => l(:field_coni_number), :style => 'width:70%' %></p>
                 </div>
+                <br/>
                 <hr class="dotted"/>
                 <br/>
-                <!--
-  <h4>Cerca se la tua sigla, organismo, associazione è già affiliata a Fiscosport.</h4>   -->
+                <p style="text-align:center;"><label for="user_cross_organization_id"><%= l(:field_sigla_organismo) %></label>
+                <%= f.select :cross_organization_id, options_for_select(CrossOrganization.find(
+                           :all,
+                           :joins => [:type_organization],
+                           :order => 'type_organizations.tipo, sigla'
+                         ).collect { |c| ["#{c.type_organization.tipo} :: #{c.sigla}", c.id] }), :include_blank => true, :required => false, :title => l(:field_sigla_organismo) %>
+                </p>
+                <%# TypeOrganization.all.sort.each do |tipo|  missing method sort %>
+                <p>
+                  <% TypeOrganization.all.each do |tipo| %>
+                      <small><%= tipo.descrizione %></small> &nbsp; &nbsp;&nbsp;&nbsp;
+                  <% end %>
+                </p>
+                <%#{e.organization.cross_organization.type_organization.tipo} :: #{e.organization.cross_organization.sigla}   %>
+                <p style="text-align:center;"><label for="user_asso_id"><%= l(:field_asso) %></label>
+
+                <p><%= f.select :asso_id, options_for_select(Asso.find(
+                           :all,
+                           :include => [:users, {:organization => {:cross_organization => :type_organization}}],
+                           :order => 'ragione_sociale'
+                         ).collect { |e| [smart_truncate("Organismo #{e.ragione_sociale}", 100) + " (#{e.users.count()})", e.id] }), :include_blank => true, :required => false, :title => l(:field_asso_title) %>
+                </p>
+                <%#, :size => 10, :width => 600 %>
+                <br/>
+                <hr class="dotted"/>
+                <br/>
+                <h4>La tua associazione ti ha dato un codice promozionale? inserilo qui:</h4>
+                <p><%= f.text_field :codice, {:style => 'width:60%;', :label => l(:field_codice_segnalatore), :maxlength => 255} %></p>
+              </div><!-- dv_associato -->
+
+
+              <div id="dv_responsabile" class="dvrbt" style="display: none;" >
+                <h1>Responsabile associazione: </h1>
+                <!--<h4>Cerca se la tua sigla, organismo, associazione è già affiliata a Fiscosport.</h4>   -->
                 <div class="fe-notice"> Digitare almeno 3 caratteri per iniziare la ricerca nelle associazione già
                   registrate in Fiscosport con le loro affiliazione.
                 </div>
@@ -133,80 +160,47 @@
                   <%= hidden_field_tag "extra", "cross_select" %>
                   <%= hidden_field_tag "extra", "asso_select" %>
                   <%= text_field_tag "extra_organismo_select" %>
+                </p>
+                <br/>
+                <hr class="dotted"/>
+                <br/>
+                <p class="fe-notice">Se non hai trovato la tua associazione compila i campi qui sotto, il team di FISCOSPORT provederà a contattarti in un secondo momento per la validazione dei dati.  </p>
 
+                <p><%= f.text_field :soc, :label => l(:field_asso_title), :style => 'width:80%;', :maxlength => 255 %></p>
+
+                <div class="flash notice hide"><%= l(:field_asso_title) %></div>
+
+                <p><%= f.text_field :indirizzo, :label => l(:field_indirizzo), :style => 'width:60%;' %></p>
+
+                <p><%= f.text_field :telefono, {:style => 'width:60%;', :label => l(:field_telefono), :maxlength => 255} %></p>
+
+                <p><%= f.text_field :fax, {:style => 'width:60%;', :label => l(:field_fax), :maxlength => 255} %></p>
+
+              </div><!-- dv_responsabile -->
+
+              <br/>
+              <hr class="dotted"/>
+              <br/>
+
+              <div class="box">
+
+                <p>
+                  <label for="user_comune_id"><%= l(:field_comune) %><span class="required">*</span></label>
+                  <%= f.hidden_field :comune_id, {:style => 'width:60%;'} %>
+                  <%= text_field_tag "extra_town" %>
+                  <div class="fe-notice">Digitare almeno 3 caratteri per iniziare la ricerca. Usi la rotella per caricare altre risposte possibile</div>
                 </p>
 
-                <hr class="dotted"/>
+                <%# ex user_annotazioni %>
+                <p><%= f.text_area :note, {:cols => 60, :rows => 10, :label => l(:field_com), :class => 'wiki-edit', :style => 'width:60%;'} %>
+                </p>
+              </div>
+            </fieldset>
 
 
-                <div class="box hide">
-                  <p class="fe-notice">Non hai trovato la tua sigla, organismo o associazione ? Identificale qui  sotto </p>
-                  <p style="text-align:center;"><label for="user_cross_organization_id"><%= l(:field_sigla_organismo) %></label>
-                  <%= f.select :cross_organization_id, options_for_select(CrossOrganization.find(
-                                                                                     :all,
-                                                                                     :joins => [:type_organization],
-                                                                                     :order => 'type_organizations.tipo, sigla'
-                                                                             ).collect { |c| ["#{c.type_organization.tipo} :: #{c.sigla}", c.id] }), :include_blank => true, :required => false, :title => l(:field_sigla_organismo) %>
-                  </p>
-                   <%# TypeOrganization.all.sort.each do |tipo|  missing method sort %>
-
-                       <p></p>
-                    <% TypeOrganization.all.each do |tipo| %>
-                          <small><%= tipo.descrizione %></small> &nbsp; &nbsp;&nbsp;&nbsp;
-                                            <% end %>
-
-                  <%#{e.organization.cross_organization.type_organization.tipo} :: #{e.organization.cross_organization.sigla}   %>
-                  <p style="text-align:center;"><label for="user_asso_id"><%= l(:field_asso) %></label>
-
-                  <p><%= f.select :asso_id, options_for_select(Asso.find(
-                                                                       :all,
-                                                                       :include => [:users, {:organization => {:cross_organization => :type_organization}}],
-                                                                       :order => 'ragione_sociale'
-                                                               ).collect { |e| [smart_truncate("Organismo #{e.ragione_sociale}", 100) + " (#{e.users.count()})", e.id] }), :include_blank => true, :required => false, :title => l(:field_asso_title) %>
-                  </p>
-                  <%#, :size => 10, :width => 600 %>
-                </div>
-                     <br />&nbsp; <br />
-                <div class="box">
-                  <p class="fe-notice">Se non hai trovato la tua associazione oppure se sei un privato compila in ogni caso i campi qui sotto, il team di FISCOSPORT provederà a contattarti in un secondo momento per la validazione dei dati.  </p>
-                  <div class="fs-abbo-sx1">
-                  <p><%= f.text_field :soc, :label => l(:field_asso_title), :style => 'width:80%;', :maxlength => 255 %></p>
-
-                  <div class="flash notice hide"><%= l(:field_asso_title) %></div>
-
-                  <p><strong><label for="user_comune_id"><%= l(:field_sigla_sede) %></strong>
-                    <label for="user_comune_id"><%= l(:field_comune) %><span class="required">*</span></label>
-                    <%= f.hidden_field :comune_id, {:style => 'width:60%;'} %>
-                    <%= text_field_tag "extra_town" %>
-                    <small>Digitare almeno 3 caratteri per iniziare la ricerca</small>
-                  </p>
-
-                  <p><%= f.text_field :indirizzo, :label => l(:field_indirizzo), :style => 'width:60%;' %></p>
-
-                  <p><%= f.text_field :telefono, {:style => 'width:60%;', :label => l(:field_telefono), :maxlength => 255} %></p>
-
-                  <p><%= f.text_field :fax, {:style => 'width:60%;', :label => l(:field_fax), :maxlength => 255} %></p>
-                     </div><div class="fs-abbo-dx1">
-                  <hr class="dotted"/>
-
-                  <h4>La tua associazione ti ha dato un codice promozionale? inserilo qui:</h4>
-
-                  <p><%= f.text_field :codice, {:style => 'width:60%;', :label => l(:field_codice_segnalatore), :maxlength => 255} %></p>
-
-                  <hr class="dotted"/>
-
-                  <%# ex user_annotazioni %>
-                  <p><%= f.text_area :note, {:cols => 60, :rows => 10, :label => l(:field_com), :class => 'wiki-edit', :style => 'width:60%;'} %>
-                  </p>
-                  </div>
-                </div>
-              </fieldset>
-
-
-              <div id="pops" title="" class="hidden" style="overflow: hidden;"></div>
-              <%= submit_tag l(:button_submit), :class => "finish" %>
+            <div id="pops" title="" class="hidden" style="overflow: hidden;"></div>
+            <%= submit_tag l(:button_submit), :class => "finish" %>
           <% end %>
-
 
         </div>
       </div>
@@ -223,11 +217,50 @@
 <%= stylesheet_link_tag 'jquery/select2.css' %>
 
 
+<!--
+  $( "#radio-jquery-ui" ).buttonset();
+  $( "#radio-jquery-ui :input" ).each(function(){
+    $label = $(this).next();
+    $("table").append($("<tr/>").attr('id',$(this).attr('id'))
+      .append($("<td/>").addClass('1').html($label.html()))
+      .append($("<td align='center'/>").addClass('2').html( ($(this).attr('checked'))? 'checked' : 'no' ) )
+      .append($("<td/>").addClass('3').html( ($label.hasClass('ui-state-active'))? 'ui-state-active' : 'not active' )));
+  });
+  $( "#radio-jquery-ui label" ).click(function(){
+    $( "#radio-jquery-ui label" ).each(function(){
+      $input = $(this).prev();
+      $("tr [id='"+$(this).attr('for')+"'] td.2").html( ($input.attr('checked'))? 'checked' : 'no'  );
+      $("tr[id='"+$(this).attr('for')+"'] td.3").html( ($(this).hasClass('ui-state-active'))? 'ui-state-active' : 'not active' );
+    });
+  });
+-->
+
 <script type="text/javascript">
     var pageSize = 10;
     $(document).ready(function () {
-        HideAvaibility("user_mail");
-        HideAvaibility("user_login");
+        //HideAvaibility("user_mail");
+        //HideAvaibility("user_login");
+
+        $('input:radio[name="rbt"]').change(function(){
+					var sel = $('input:radio[name="rbt"]:checked').val();
+					$("div.dvrbt").each( function() {
+            if ($(this).attr('id') == sel){
+              $(this).show();
+            } else {
+              $(this).hide();
+            }
+					});
+
+				});
+        //Initial set
+        //var $radios = $('input:radio[name=rbt]');
+        //if($radios.is(':checked') === false) {
+        //    $radios.filter('[value=dv_associato]').prop('checked', true);
+        //}
+        $("input[name=rbt][value=dv_associato]").prop('checked', true);
+        $("#dv_associato").show();
+
+        $( document ).tooltip();
 
         $('#steps').stepy({
             back:undefined, backLabel:'< Indietro', block:false, description:false, errorImage:true, finish:undefined, finishButton:true, ignore:'', legend:true, nextLabel:'Prossimo >', next:undefined, titleClick:false, titleTarget:undefined, select:undefined, validate:false  //Kappao manca alcuni script? jquery validate TypeError: a is undefined

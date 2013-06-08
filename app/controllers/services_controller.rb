@@ -141,7 +141,7 @@ include ApplicationHelper
     s =  params[:term] ? params[:term].to_s : ""
     page_limit =  params[:page_limit] ? params[:page_limit].to_i : 10
     pagina =  params[:page] ? params[:page].to_i : 1
-    offset = pagina * page_limit;
+    offset = (pagina - 1) * page_limit;
 
     #def top_sezione --> @topsection
     top_section_id =  params[:top_section] ? params[:top_section].to_i : 0
@@ -236,18 +236,19 @@ include ApplicationHelper
     s =  params[:term] ? params[:term].to_s : ""
     page_limit =  params[:page_limit] ? params[:page_limit].to_i : 10
     pagina =  params[:page] ? params[:page].to_i : 1
-    offset = pagina * page_limit;
+    offset = (pagina - 1) * page_limit;
 
     totale = Comune.find(
       :all,
       :include => [{:province => :region}],
-      :conditions => ['comunes.name LIKE ? or provinces.sigla LIKE ? or provinces.name LIKE ? or regions.name LIKE ?', "%#{s}%", "%#{s}%", "%#{s}%", "%#{s}%"]
+      :conditions => ['comunes.name LIKE ? or comunes.cap LIKE ?', "%#{s}%", "%#{s}%"]
       ).count()
+      #:conditions => ['comunes.name LIKE ? or provinces.sigla LIKE ? or provinces.name LIKE ? or regions.name LIKE ?', "%#{s}%", "%#{s}%", "%#{s}%", "%#{s}%"]
 
     @towns = Comune.find(
       :all,
       :include => [{:province => :region}],
-      :conditions => ['comunes.name LIKE ? or provinces.sigla LIKE ? or provinces.name LIKE ? or regions.name LIKE ?', "%#{s}%", "%#{s}%", "%#{s}%", "%#{s}%"],
+      :conditions => ['comunes.name LIKE ? or comunes.cap LIKE ?', "%#{s}%", "%#{s}%"],
       :order => 'comunes.name',
       :limit => page_limit,
       :offset => offset
@@ -287,7 +288,7 @@ include ApplicationHelper
     s =  params[:term] ? params[:term].to_s : ""
     page_limit =  params[:page_limit] ? params[:page_limit].to_i : 10
     pagina =  params[:page] ? params[:page].to_i : 1
-    offset = pagina * page_limit;
+    offset = (pagina - 1) * page_limit;
     totale = Organization.find(
       :all,
       :include => [:asso, {:cross_organization => :type_organization}],
