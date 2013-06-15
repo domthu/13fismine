@@ -6,7 +6,7 @@
     }
 </style>
 <div id="fs-profilo">
-  <% form_tag({:action => "profilo_edit", :id => @user_profile, :method => :post}, :multipart => true) do %>
+  <% form_tag({:action => "profilo_edit", :id => @user_profile, :method => :post}, :multipart => true) do |f| %>
       <%= hidden_field_tag :user_id, @user_profile.user_id %>
       <div class="fs-profiles-esx">
         <div id="fs-photo-edit">
@@ -40,7 +40,7 @@
           <%= text_field_tag :fs_fax, @user_profile.fs_fax %>
         </p>
 
-        <p>
+        <p >
           <%= label_tag :fs_skype %><br/>
           <%= text_field_tag :fs_skype, @user_profile.fs_skype %>
         </p>
@@ -65,11 +65,11 @@
         </div>
         <p style="padding:5px 0;"></p>
 
-        <p>  <%= submit_tag("salva", :action => 'profilo_edit', :class => "fs-giallo-button") if (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user)%></p>
+        <p>  <%= submit_tag("salva", :action => 'profilo_edit', :class => "fs-giallo-button") if (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user) %></p>
 
         <p style="padding:5px 0;"> altrimenti</p>
 
-        <p>  <%= link_to("annulla", :back, :class => "fs-giallo-button", :style => "float:none;") if (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user)%></p>
+        <p>  <%= link_to("annulla", :back, :class => "fs-giallo-button", :style => "float:none;") if (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user) %></p>
 
         <p style="padding:5px 0;"> oppure </p>
 
@@ -77,69 +77,20 @@
       </div>
       <br/>&nbsp; <br/>
       <div class="cleared"></div>
-      <div class="yui-skin-sam">
-        <%= label_tag l(:label_titoli) %>
-        <br/>
-
-        <p><%= text_area_tag :titoli, @user_profile.titoli , :name => 'titoli',  :cols => 120, :rows => 15 %>  </p>
+      <div>
+        <%= label_tag l(:label_titoli) %><br/>
+         <p><%= text_area_tag :titoli, @user_profile.titoli, :name => 'titoli' %>  </p>
       </div>
       <br/>&nbsp; <br/>
-      <div class="yui-skin-sam">
-        <%= label_tag l(:label_curriculum) %>
-        <br/>
 
-        <p><%= text_area_tag :curriculum, @user_profile.curriculum, :name => 'curriculum', :cols => 120, :rows => 15 %>  </p>
+      <div>
+        <%= label_tag l(:label_curriculum) %> <br/>
+        <p><%= text_area_tag :curriculum, @user_profile.curriculum, :name => 'curriculum' %>  </p>
       </div>
   <% end %>
-
-
 </div>
-<%# content_for :header_yui do %>
-    <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
-    <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
-    <%= javascript_include_tag "yui/element-min.js" %>
-    <%= javascript_include_tag "yui/container_core-min.js" %>
-    <%= javascript_include_tag "yui/menu-min.js" %>
-    <%= javascript_include_tag "yui/button-min.js" %>
-    <%= javascript_include_tag "yui/editor-min.js" %>
-    <%= javascript_include_tag "yui/yui_fs.js" %>
-<%# end %>
-<script type="text/javascript" charset="utf-8">
-    (function () {
-      var myConfig1 = {
-          handleSubmit:true,
-          height:'200px',
-          width:'95%',
-          resize:true,
-          animate:true,
-          dompath:true,
-          focusAtStart:false,
-          nodeChangeDelay:false,
-          removeLineBreaks:true,
-          drag:true
-      };
-      var myEditor1 = init_yui_editor_fs('titoli', myConfig1);
-      var myConfig2 = {
-          handleSubmit:true,
-          height:'400px',
-          width:'95%',
-          animate:true,
-          dompath:true,
-          focusAtStart:false,
-          nodeChangeDelay:false,
-          removeLineBreaks:true,
-          drag:true
-      };
-      init_yui_editor_fs('curriculum', myConfig2);
-
-      //funct_avatar('i');
-      document.getElementById('photo').addEventListener('change', function(event) {
-              if (!event) // i.e. the argument is undefined or null
-                event = window.event;
-                handleFileSelect(event, 'fs-photo-edit-i', 'i')
-      }, false);
-
-    })
-            ();
-
+<script type="text/javascript">
+    CKEDITOR.replace('titoli');
+    CKEDITOR.replace('curriculum');
 </script>
+

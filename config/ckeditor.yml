@@ -9,7 +9,7 @@ options: &options
   
   swf_types_description: "Files"
   swf_file_types: "*.doc;*.wpd;*.pdf;*.swf;*.xls"
-  swf_file_size_limit: "10 MB"
+  swf_file_size_limit: "5 MB"
   swf_file_file_upload_limit: 5
   
   public_uri: "/uploads"

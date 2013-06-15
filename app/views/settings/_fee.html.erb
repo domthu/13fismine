@@ -19,7 +19,7 @@
 
     <br />
 
-<fieldset class="yui-skin-sam"><legend><%= l(:setting_emails_fee_proposal) %></legend>
+<fieldset><legend><%= l(:setting_emails_fee_proposal) %></legend>
 <%= setting_text_area :template_fee_proposal, :label => false, :rows => 5 %>
 <%= l(:label_emails_fee_proposal) %>
 <div style="float:right;"  >
@@ -27,7 +27,7 @@
 </div>
 </fieldset>
 
-<fieldset class="yui-skin-sam"><legend><%= l(:setting_emails_fee_register_asso) %></legend>
+<fieldset><legend><%= l(:setting_emails_fee_register_asso) %></legend>
 <%= setting_text_area :template_fee_register_asso, :label => false, :rows => 5 %>
 <%= l(:label_emails_fee_register_asso) %>
 <div style="float:right;">
@@ -35,7 +35,7 @@
 </div>
 </fieldset>
 
-<fieldset class="yui-skin-sam"><legend><%= l(:setting_emails_fee_renew) %></legend>
+<fieldset><legend><%= l(:setting_emails_fee_renew) %></legend>
 <%= setting_text_area :template_fee_renew, :label => false,  :rows => 5 %>
 <%= l(:label_emails_fee_renew) %>
 <div style="float:right;">
@@ -43,7 +43,7 @@
 </div>
 </fieldset>
 
-<fieldset class="yui-skin-sam"><legend><%= l(:setting_fee_thanks) %></legend>
+<fieldset><legend><%= l(:setting_fee_thanks) %></legend>
 <%= setting_text_area :template_fee_thanks, :label => false, :rows => 5  %>
 <%= l(:label_fee_thanks) %>
 <div style="float:right;">
@@ -51,21 +51,21 @@
 </div>
 </fieldset>
 
-<fieldset class="yui-skin-sam"><legend><%= l(:setting_privacy) %></legend>
+<fieldset><legend><%= l(:setting_privacy) %></legend>
 <%= setting_text_area :template_privacy, :label => false, :rows => 5 %>
 <%= l(:label_privacy) %>
 <div style="float:right;">
 </div>
 </fieldset>
 
-<fieldset  class="yui-skin-sam"><legend><%= l(:setting_condition) %></legend>
+<fieldset><legend><%= l(:setting_condition) %></legend>
 <%= setting_text_area :template_condition, :label => false, :rows => 5 %>
 <%= l(:label_condition) %>
 <div style="float:right;">
 </div>
 </fieldset>
 
-<fieldset  class="yui-skin-sam"><legend><%= l(:static_page_abbonamenti) %></legend>
+<fieldset><legend><%= l(:static_page_abbonamenti) %></legend>
 <%= setting_text_area :static_page_abbonamenti, :label => false, :rows => 10 %>
 <%= l(:label_iscription) %>
 <div style="float:right;">
@@ -80,103 +80,12 @@
   <%= simple_format(l(:fee_not_abilitated)) %>
   </div>
 <% end %>
-
-<script type="text/javascript" charset="utf-8">
-    (function () {
-        var myConfig1 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:true,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_template_fee_proposal', myConfig1);
-
-        var myConfig2 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_template_fee_register_asso', myConfig2);
-
-        var myConfig3 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_template_fee_renew', myConfig3);
-
-        var myConfig4 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_template_fee_thanks', myConfig4);
-
-        var myConfig5 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_template_privacy', myConfig5);
-
-        var myConfig6 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_template_condition', myConfig6);
-
-        var myConfig7 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_static_page_abbonamenti', myConfig7);
-
-    })
-
-  ();
-
-
+<script type="text/javascript">
+    CKEDITOR.replace('settings_template_fee_proposal',{ toolbar : 'Basic'});
+    CKEDITOR.replace('settings_template_fee_register_asso',{ toolbar : 'Basic'});
+    CKEDITOR.replace('settings_template_fee_renew',{ toolbar : 'Basic'});
+    CKEDITOR.replace('settings_template_fee_thanks',{ toolbar : 'Basic'});
+    CKEDITOR.replace('settings_template_privacy',{ toolbar : 'Light'});
+    CKEDITOR.replace('settings_template_condition',{ toolbar : 'Light'});
+    CKEDITOR.replace('settings_static_page_abbonamenti',{ toolbar : 'Full'});
 </script>

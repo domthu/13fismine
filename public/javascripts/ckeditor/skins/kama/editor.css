@@ -122,7 +122,7 @@ span.cke_skin_kama {
 }
 
 .cke_skin_kama .cke_focus {
-    outline: auto 5px -webkit-focus-ring-color;
+    outline:  5px -webkit-focus-ring-color;
 }
 
 .cke_skin_kama textarea.cke_source {
@@ -993,7 +993,7 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
     visibility: hidden;
 }
 
-.cke_skin_kama .cke_rtl .cke_path a, .cke_skin_kama .cke_rtl .cke_path cke_empty {
+.cke_skin_kama .cke_rtl .cke_path a, .cke_skin_kama .cke_rtl .cke_path .cke_empty {
     float: right;
 }
 

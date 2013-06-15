@@ -1116,7 +1116,7 @@ h2 img { vertical-align:middle; }
 .htmldraft{padding:20px; margin-top: 1em; background: url(../images/draft.png)}
 .hide{display: none;}
 div.asso-select{float:right; right:10px;}
-/* sandro per implementazione paperclip e yui */
+/* sandro per implementazione paperclip  */
 #buttons-inline div{
     display: inline-block;
 }
@@ -1125,12 +1125,10 @@ div.asso-select{float:right; right:10px;}
     width: 33%;
 }
 .splitcontents-3box p label {
-                         font-size: 0.8em;
+    font-size: 0.8em;
     margin-left: -155px;
-    /* width of labels. Should be smaller than left column to create some right margin */
     width: 150px;
 }
-
 .splitcontents-3box #prev img {
     margin: auto;
     display: block;
@@ -1162,11 +1160,16 @@ textarea#issue_subject{
     padding: 5px;
 }
 #attributes-box {
-    border: dotted 1px #BBC6E0;
-    padding: 10px;
-    margin: 10px auto;
+    border: solid 1px #BBC6E0;
+    padding: 20px;
+    margin: 10px;
     background-color: #ffffff;
-    float: left;
+    height: 240px ;
+    width: 850px;
+}
+#ck-box-issues{
+    margin: 10px;
+    width: 880px;
 }
 #toTop {
     background: url('../images/toTop.png') no-repeat scroll 0 0 transparent;

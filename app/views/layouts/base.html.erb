@@ -20,8 +20,6 @@
 <%= call_hook :view_layouts_base_html_head %>
 <!-- page specific tags -->
 <%= yield :header_tags -%>
-<!-- yui page specific tags -->
-<%= yield :header_yui -%>
   <%= javascript_include_tag :ckeditor %>
 </head>
 <body class="<%=h body_css_classes %>  yui-skin-sam">
@@ -52,9 +50,7 @@
         <%= render_project_jump_box %>
     </div>
     <% end %>
-
     <h1 style="color:#F5BC13;"><%= page_header_title %></h1>
-
     <% if display_main_menu?(@project) %>
     <div id="main-menu">
         <%= render_main_menu(@project) %>

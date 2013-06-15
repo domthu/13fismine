@@ -1664,6 +1664,18 @@ h3.fs-postheader {
 
 /* =========================== fine quesiti  ============================= */
 /* ===================== inizio chi siamo (user profiles)  ===================== */
+#SkypeButton-conteiner{
+    width: 100px;
+    float: right;
+    margin-top: -20px;
+}
+#SkypeButton_Chat_me img,  #SkypeButton_Call_me img  {
+/*margin: 3px !important;   */
+}
+#SkypeButton_Call_me_paraElement ,#SkypeButton_Chat_me_paraElement{
+    height:1.5em;
+}
+
 .fs-profiles-sx {
     width: 30%;
     padding: 10px;
