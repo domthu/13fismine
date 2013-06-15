@@ -40,7 +40,7 @@
   </div>
 
 
- <%# content for yui %>
+
 <% if !@issue.new_record? %>
   <p><b>
     <% if @issue.is_quesito? %>
@@ -49,53 +49,7 @@
       <%= l(:content_articolo) %>
     <% end %>
   </b></p>
-  <div class="yui-skin-sam"><%= f.text_area :description,
-        :cols => 90,
-        :rows => (@issue.description.blank? ? 75 : [[125, @issue.description.length / 50].max, 100].min),
-        :accesskey => accesskey(:edit),
-        :id => 'issue_description_field',
-        :label => '' %>
-  </div>
-<% end %>
-<% if !@issue.new_record? %>
-  <% content_for :header_yui do %>
-      <%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
-      <%= javascript_include_tag "yui/yahoo-dom-event.js" %>
-      <%= javascript_include_tag "yui/element-min.js" %>
-      <%= javascript_include_tag "yui/container_core-min.js" %>
-      <%= javascript_include_tag "yui/menu-min.js" %>
-      <%= javascript_include_tag "yui/button-min.js" %>
-      <%= javascript_include_tag "yui/editor-min.js" %>
-      <%= javascript_include_tag "yui/yui_fs.js" %>
-  <% end %>
-  <script type="text/javascript" >
-
-  //Event.observe(window, 'load', function() {
-  //});
-  //document.observe("dom:loaded", loadme);
-
-  (function () {
-      loadme();
-  })();
-
-  function loadme() {
-          var myConfig1 = {
-              handleSubmit:true,
-               height:'100%',
-              width:'99%',
-              resize:true,
-              animate:true,
-              dompath:true,
-              focusAtStart:false,
-              nodeChangeDelay:false,
-              removeLineBreaks:true,
-              drag:true
-          };
-          var myEditor1 = init_yui_editor_fs('issue_description_field', myConfig1);
-
-  }
-
-  </script>
+      <div ><%= f.cktext_area :description , :width => 675  , :height => 800,  :swf_params => {:assetable_type => 'Test', :assetable_id => 1} %></div>
 <% end %>
 
 </div>

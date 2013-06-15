@@ -7,13 +7,14 @@ CKEDITOR.editorConfig = function( config )
 {
   config.PreserveSessionOnFileBrowser = true;
   // Define changes to default configuration here. For example:
-  config.language = 'en';
+  config.language = 'it';
   // config.uiColor = '#AADC6E';
 
   //config.ContextMenu = ['Generic','Anchor','Flash','Select','Textarea','Checkbox','Radio','TextField','HiddenField','ImageButton','Button','BulletedList','NumberedList','Table','Form'] ; 
   
-  config.height = '400px';
-  config.width = '600px';
+ /* config.height = '400px';
+  config.width = '600px';  */
+  config.skin = 'kama';
   
   //config.resize_enabled = false;
   //config.resize_maxHeight = 2000;

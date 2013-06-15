@@ -1,6 +1,7 @@
 require 'mime/types'
 
 class Ckeditor::Asset < ActiveRecord::Base
+  unloadable
   set_table_name "ckeditor_assets"
   
   belongs_to :user

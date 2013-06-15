@@ -33,3 +33,6 @@ img, input, textarea
 {
 	cursor: default;
 }
+.cke_show_borders{
+    border: 15px;
+}

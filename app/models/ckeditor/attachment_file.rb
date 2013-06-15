@@ -1,10 +1,15 @@
 class Ckeditor::AttachmentFile < Ckeditor::Asset
+=begin
   has_attached_file :data,
                     :url => "/ckeditor_assets/attachments/:id/:filename",
                     :path => ":rails_root/public/ckeditor_assets/attachments/:id/:filename"
   
   validates_attachment_size :data, :less_than=>100.megabytes
-  
+=end
+  has_attached_file :data,
+                    :url => "/images/ckeditor_assets/attachments/:id:filename",
+                    :path => "#{RAILS_ROOT}/public/images/ckeditor_assets/attachments/:id:filename"
+  validates_attachment_size :data, :less_than=>5.megabytes
   def url(*args)
     if [:thumb, :content].include?(args.first)
       send("url_#{args.first}")
