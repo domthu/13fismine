@@ -1664,16 +1664,18 @@ h3.fs-postheader {
 
 /* =========================== fine quesiti  ============================= */
 /* ===================== inizio chi siamo (user profiles)  ===================== */
-#SkypeButton-conteiner{
+#SkypeButton-conteiner {
     width: 100px;
     float: right;
     margin-top: -20px;
 }
-#SkypeButton_Chat_me img,  #SkypeButton_Call_me img  {
-/*margin: 3px !important;   */
+
+#SkypeButton_Chat_me img, #SkypeButton_Call_me img {
+    /*margin: 3px !important;   */
 }
-#SkypeButton_Call_me_paraElement ,#SkypeButton_Chat_me_paraElement{
-    height:1.5em;
+
+#SkypeButton_Call_me_paraElement, #SkypeButton_Chat_me_paraElement {
+    height: 1.5em;
 }
 
 .fs-profiles-sx {
@@ -1902,6 +1904,7 @@ h3.fs-postheader {
     width: 75%;
     font-size: 1.2em;
 }
+
 /*PAG REGISTRAZIONE */
 #fs-abbo-top {
     width: 100%;
@@ -1940,14 +1943,10 @@ h3.fs-postheader {
 
 }
 
-#steps-step-0 legend ,#steps-step-1 legend {
+#steps-step-0 legend, #steps-step-1 legend {
     color: #00465e;
     font-size: 15px;
 }
-
-
-
-
 
 /* ------------------------------- test carousel -------------------------*/
 
@@ -1997,7 +1996,6 @@ h3.fs-postheader {
     float: none;
     clear: both;
 }
-
 
 /* ======================================================================================= */
 /* ===================zona riservata . SOPRA TUTTE LE PERSONALIZZAZIONI ================== */
@@ -2053,7 +2051,7 @@ span.error {
 
 /* altri  allarmi note */
 .fe-notice {
-    background: url('/images/ico/flash_notice_s.png')center left no-repeat;
+    background: url('/images/ico/flash_notice_s.png') center left no-repeat;
     font-weight: bold;
     padding: 3px 5px 3px 32px;
     display: table-cell;
@@ -2064,7 +2062,6 @@ span.error {
     min-height: 20px;
     border-bottom: solid 1px #e0ffff;
 }
-
 
 /*  navigazione  e menu   */
 .art-nav {
@@ -2556,7 +2553,8 @@ ul.fs-menu2-hmenu>li:before {
     height: 38px;
     background: url('/images/template/menuseparator2.png') center center no-repeat;
 }
- /* ------------------ menu 2 a discesa   */
+
+/* ------------------ menu 2 a discesa   */
 
 ul.fs-menu2-hmenu li li a {
     background: #ffffff;
@@ -2938,7 +2936,8 @@ ul.fs-menu2-hmenu>li.ext.ext-l.ext-r:hover>.ext-m:before {
     width: 100%;
 
 }
- /* bottone -blu !*/
+
+/* bottone -blu !*/
 .fs-blu-button {
     border: 0;
     border-collapse: separate;
@@ -3726,5 +3725,12 @@ html>body #ajax-indicator {
     color: red;
     font-weight: bold;
 }
+
 /*RADIO BUTTON REGISTER*/
-.dvrbt { border: 0px solid red;}
+.dvrbt {
+    border: 0 solid red;
+}
+
+#fs_informa {
+    padding: 7px;
+}
