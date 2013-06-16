@@ -1171,6 +1171,20 @@ textarea#issue_subject{
     margin: 10px;
     width: 880px;
 }
+#settings-pages fieldset,#settings-fee fieldset {
+    margin:10px 30px;
+}
+#settings-pages legend {
+   font-size: 1.3em;
+    font-weight: bold;
+    color: #00465e;
+}
+#settings-fee legend {
+   font-size: 1.2em;
+    font-weight: bold;
+    color: #505050;
+}
+
 #toTop {
     background: url('../images/toTop.png') no-repeat scroll 0 0 transparent;
     bottom: 10px;

@@ -1,97 +1,15 @@
 <% form_tag({:action => 'edit', :tab => 'projects'}) do %>
+    <div class="box tabular settings">
+      <p><%= setting_check_box :default_projects_public %></p>
 
-<div class="box tabular settings">
-<p><%= setting_check_box :default_projects_public %></p>
+      <p><%= setting_multiselect(:default_projects_modules,
+                                 Redmine::AccessControl.available_project_modules.collect { |m| [l_or_humanize(m, :prefix => "project_module_"), m.to_s] }) %></p>
 
-<p><%= setting_multiselect(:default_projects_modules,
-        Redmine::AccessControl.available_project_modules.collect {|m| [l_or_humanize(m, :prefix => "project_module_"), m.to_s]}) %></p>
+      <p><%= setting_check_box :sequential_project_identifiers %></p>
 
-<p><%= setting_check_box :sequential_project_identifiers %></p>
-
-<p><%= setting_select :new_project_user_role_id,
-                      Role.find_all_givable.collect {|r| [r.name, r.id.to_s]},
-                      :blank => "--- #{l(:actionview_instancetag_blank_option)} ---" %></p>
-</div>
-   <div>
-     <h1> Editing delle pagine statiche </h1>
-    <fieldset  class="yui-skin-sam"><legend><%= l(:static_page_cosaoffriamo) %></legend>
-      <%= setting_text_area :static_page_cosaoffriamo, :label => false, :rows => 50 %>
-    </fieldset>
-     <br />
-     <fieldset  class="yui-skin-sam"><legend><%= l(:static_page_lavoraconnoi) %></legend>
-      <%= setting_text_area :static_page_lavoraconnoi, :label => false, :rows => 50 %>
-    </fieldset>
-     <br />
-     <fieldset  class="yui-skin-sam"><legend><%= l(:static_page_progettofs) %></legend>
-       <%= setting_text_area :static_page_progettofs, :label => false, :rows => 50 %>
-     </fieldset>
-     <br />
-     <fieldset  class="yui-skin-sam"><legend><%= l(:static_page_contattaci) %></legend>
-       <%= setting_text_area :static_page_contattaci, :label => false, :rows => 50 %>
-     </fieldset>
-     <br />
-   </div>
+      <p><%= setting_select :new_project_user_role_id,
+                            Role.find_all_givable.collect { |r| [r.name, r.id.to_s] },
+                            :blank => "--- #{l(:actionview_instancetag_blank_option)} ---" %></p>
+    </div>
     <%= submit_tag l(:button_save) %>
 <% end %>
-
-
-<script type="text/javascript" charset="utf-8">
-    (function () {
-
-        var myConfig2 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_static_page_cosaoffriamo', myConfig2);
-
-        var myConfig3 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_static_page_lavoraconnoi', myConfig3);
-
-        var myConfig4 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_static_page_progettofs', myConfig4);
-
-        var myConfig1 = {
-            handleSubmit:true,
-            width:'100%',
-            resize:true,
-            animate:true,
-            dompath:true,
-            focusAtStart:false,
-            nodeChangeDelay:false,
-            removeLineBreaks:true,
-            drag:true
-        };
-        init_yui_editor_fs('settings_static_page_contattaci', myConfig1);
-
-
-           })
-
-            ();
-</script>

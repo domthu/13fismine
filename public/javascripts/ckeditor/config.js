@@ -11,8 +11,8 @@ CKEDITOR.editorConfig = function (config) {
 
     //config.ContextMenu = ['Generic','Anchor','Flash','Select','Textarea','Checkbox','Radio','TextField','HiddenField','ImageButton','Button','BulletedList','NumberedList','Table','Form'] ;
 
-    /* config.height = '400px';
-     config.width = '600px';  */
+    // config.height = '400px';
+    // config.width = '600px';
     config.skin = 'kama';
 
     //config.resize_enabled = false;
@@ -28,7 +28,7 @@ CKEDITOR.editorConfig = function (config) {
 
     config.toolbar_Full =
         [
-            [ 'Source', '-', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', '-', 'Templates' ],
+            [ 'Source', 'Maximize', '-', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', '-', 'Templates' ],
             [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
             [ 'Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt' ] ,
             '/',
@@ -39,23 +39,23 @@ CKEDITOR.editorConfig = function (config) {
             '/',
             [ 'Styles', 'Format', 'Font', 'FontSize' ] ,
             [ 'TextColor', 'BGColor' ],
-            [ 'Maximize', 'ShowBlocks' ]
+            [  'Preview', 'ShowBlocks' ]
         ];
     config.toolbar_Light =
         [
-            [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
+            [ 'Source', 'Maximize', 'Preview', '-',  'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
             [ 'SelectAll', '-', 'Scayt' ] ,
             [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] ,
-            [ 'Link', 'Unlink', 'Anchor', '-', 'Maximize', 'Preview'],
+            [ 'Link', 'Unlink', 'Anchor', '-'],
             '/',
             [ 'Format', 'Font', 'FontSize' ] ,
-            [ 'Bold', 'Italic', 'Strike', 'TextColor', 'BGColor', '-', 'RemoveFormat' ],
+            [ 'Bold', 'Italic', 'Strike', 'TextColor', 'BGColor', 'RemoveFormat' ],
             [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ]
 
         ];
     config.toolbar_Basic =
         [
-            [ 'Format', 'Font', 'FontSize', 'Bold', 'Italic', '-', 'RemoveFormat', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink']
+            [  'Source', '-', 'Format', 'Font', 'FontSize', 'Bold', 'Italic','TextColor', 'BGColor', '-', 'RemoveFormat', '-', 'NumberedList', 'BulletedList', 'Table', '-', 'Link', 'Unlink']
         ];
 };
 

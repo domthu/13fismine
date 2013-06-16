@@ -158,8 +158,8 @@ ActionController::Routing::Routes.draw do |map|
   map.associati 'associati', :controller => 'fees', :action => 'associati'
   map.email_fee 'email_fee', :controller => 'fees', :action => 'email_fee', :conditions => {:method => :get}
   map.email_fee_goto_settings 'email_fee_settings', :controller => 'settings', :action => 'edit', :tab => 'fee'
+  map.static_pages_settings 'email_fee_settings', :controller => 'settings', :action => 'edit', :tab => 'static_pages'
   #map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
-
   #in POST not in Get for params[:username]...
   #map.signin 'login', :controller => 'account', :action => 'login'
   #map.signout 'logout', :controller => 'account', :action => 'logout'

@@ -1,0 +1,40 @@
+<% form_tag({:action => 'edit', :tab => 'pages'}) do %>
+    <div class="box" id="settings-pages">
+      <fieldset>
+        <legend><%= l(:static_page_cosaoffriamo) %></legend>
+        <%= setting_text_area :static_page_cosaoffriamo, :label => false %>
+      </fieldset>
+      &nbsp; <br/>
+      <fieldset>
+        <legend><%= l(:static_page_lavoraconnoi) %></legend>
+        <%= setting_text_area :static_page_lavoraconnoi, :label => false %>
+      </fieldset>
+      &nbsp; <br/>
+      <fieldset>
+        <legend><%= l(:static_page_progettofs) %></legend>
+        <%= setting_text_area :static_page_progettofs, :label => false %>
+      </fieldset>
+      &nbsp; <br/>
+      <fieldset>
+        <legend><%= l(:static_page_contattaci) %></legend>
+        <%= setting_text_area :static_page_contattaci, :label => false %>
+      </fieldset>
+      &nbsp; <br/>
+      <fieldset>
+        <legend><%= l(:static_page_abbonamenti) %></legend>
+        <%= setting_text_area :static_page_abbonamenti, :label => false %>
+      </fieldset>
+      &nbsp; <br/>
+      <%= submit_tag l(:button_save) %>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    CKEDITOR.replace('settings_static_page_cosaoffriamo', { toolbar:'Full', height:'600' });
+    CKEDITOR.replace('settings_static_page_lavoraconnoi', { toolbar:'Full', height:'600' });
+    CKEDITOR.replace('settings_static_page_progettofs', { toolbar:'Full', height:'600' });
+    CKEDITOR.replace('settings_static_page_contattaci', { toolbar:'Full', height:'600' });
+    CKEDITOR.replace('settings_static_page_abbonamenti', { toolbar:'Full', height:'600' });
+</script>
+
+
