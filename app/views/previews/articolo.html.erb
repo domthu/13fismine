@@ -65,6 +65,6 @@
 
 <% if @notes %>
   <fieldset class="preview"><legend><%= l(:field_notes) %></legend>
-    <%= yuizable_fs @notes, :attachments => @attachements, :object => @issue %>
+    <%= ckeditorzable_fs @notes, :attachments => @attachements, :object => @issue %>
   </fieldset>
 <% end %>
