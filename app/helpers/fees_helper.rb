@@ -86,6 +86,7 @@ module FeesHelper
 #    end
 #  end
 
+  #<%= select_tag 'block', "<option></option>" + options_for_select(@block_options), :id => "block-select" %>
   def fee_roles_options_for_select(selected)
     options_for_select([[l(:label_all), ''],
                         ["#{l(:role_manager)}", "#{FeeConst::ROLE_MANAGER.to_i}"],
@@ -96,7 +97,7 @@ module FeesHelper
                         ["#{l(:role_renew)}", "#{FeeConst::ROLE_RENEW.to_i}"],
                         ["#{l(:role_expired)}", "#{FeeConst::ROLE_EXPIRED.to_i}"],
                         ["#{l(:role_archivied)}", "#{FeeConst::ROLE_ARCHIVIED.to_i}"]
-                        ], selected)
+                        ], selected.to_s)
   end
   #  def change_status_link(user)
   def change_role_status_link(user)
