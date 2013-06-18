@@ -22,6 +22,10 @@ rescue LoadError
 end
 
 Rails::Initializer.run do |config|
+  config.load_paths += %W( #{RAILS_ROOT}/app/models/ckeditor )
+  # Specify gems that this application depends on and have them installed with rake gems:install
+# config.gem 'paperclip', '2.3.3'
+  config.gem 'ckeditor', '3.4.1'
   # Settings in config/environments/* take precedence those specified here
 
   # Skip frameworks you're not going to use
@@ -59,7 +63,8 @@ Rails::Initializer.run do |config|
   config.gem 'rubytree', :lib => 'tree'
   config.gem 'coderay', :version => '~>1.0.0'
 
-
+  #config.reload_plugins = true if RAILS_ENV == 'development'
+  #config.reload_plugins = true if RAILS_ENV == 'production'
   # Load any local configuration that is kept out of source control
   # (e.g. gems, patches).
   if File.exists?(File.join(File.dirname(__FILE__), 'additional_environment.rb'))

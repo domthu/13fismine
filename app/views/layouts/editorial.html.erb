@@ -14,27 +14,16 @@
   <%= favicon %>
   <!--[if lt IE 9]>  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <!--[if lte IE 7]><%= stylesheet_link_tag 'style.ie7.css', :media => 'screen' %><![endif]-->
- <!--  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Quattrocento+Sans&amp;subset=latin">
-  <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
-  -->
   <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
   <%# stylesheet_link_tag 'application_fs', :media => 'all' %>
    <%= stylesheet_link_tag 'editorial', :media => 'print' %>
   <!--   styles per il Front End  -->
-  <!-- yui page specific tags -->
-
   <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
-
   <%#= javascript_heads %>
-  <%# javascript_include_tag "jquery/jquery-1.8.2.min.js"%>
-
   <%= javascript_include_tag "jquery.js"%>
-  <%#= javascript_include_tag "jquery/jquery-1.7.1.min.js" %>
-  <% #= yield :header_yui -%>
-  <%#= javascript_include_tag "jquery/jquery-1.7.1.min.js" %>
+  <%= javascript_include_tag :ckeditor %>
   <%# javascript_include_tag "jquery/jquery-1.9.1.min.js" %>
   <%# javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
   <%#stylesheet_link_tag 'jquery/redmond/jquery-ui-1.8.23.custom.css', :media => 'all' %>
@@ -50,6 +39,7 @@
   <%= javascript_include_tag "script.responsive.js" %>
   <%= javascript_include_tag "jquery.carouFredSel-6.2.1-packed.js" %>
   <%= javascript_include_tag "application_fs.js" %>
+
   <script type="text/javascript">
       //$(function () {
       $(document).ready(function() {

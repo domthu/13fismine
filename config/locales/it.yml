@@ -392,6 +392,7 @@ it:
   setting_emails_footer: Piè di pagina email
   setting_protocol: Protocollo
   setting_per_page_options: Opzioni oggetti per pagina
+  setting_per_page_options_fs: Gruppi di pagine
   setting_user_format: Formato visualizzazione utenti
   setting_activity_days_default: "Giorni mostrati sulle attività dell'edizione"
   setting_display_subprojects_issues: "Mostra gli articoli delle sottoedizioni nell'edizione principale in modo predefinito"
@@ -422,7 +423,7 @@ it:
   setting_issue_group_assignment: Permetti di assegnare un articolo a gruppi
   setting_default_issue_start_date_to_creation_date: "Usa la data corrente come data d'inizio per i nuovi articoli"
   #domthu verify
-  setting_welcome_text_fs: "Testo di benvenuto lato abbonati: sul sito pubblico"
+  setting_welcome_text_fs: "Slogan principale sul sito lato front-end"
 
   permission_add_project: Crea edizione
   permission_add_subprojects: Crea sottoedizioni
@@ -482,7 +483,7 @@ it:
   permission_export_wiki_pages: Esporta pagine wiki
   permission_manage_subtasks: Gestisci sottoattività
 
-  project_module_issue_tracking: Tracking degli articoli
+  project_module_issue_tracking: Articoli
   project_module_time_tracking: Time tracking
   project_module_news: Quesiti
   project_module_documents: Documenti
@@ -1308,7 +1309,7 @@ it:
   label_impressions: Impressions
   label_clicks: Clicks
   label_didascalia: Didascalia
-  label_se_prima_pagina: promosso in prima pagina
+  label_se_prima_pagina: In prima pagina?
   label_se_prenotazione: Gestione convegno?
   label_impressions_history: Storico impressione
 
@@ -1321,7 +1322,7 @@ it:
   field_impressions: Impressions
   field_clicks: Clicks
   field_didascalia: Didascalia
-  field_se_prima_pagina: promosso in prima pagina
+  field_se_prima_pagina: In prima pagina?
   field_se_prenotazione: Gestione convegno?
   field_impressions_history: Storico impressione
 
@@ -1468,14 +1469,14 @@ it:
   label_privacy: Documento che definisce il rilascio della privacy
   setting_condition: "Regolamento degli abbonamenti"
   label_condition: "Documento che definisce le condizioni d'uso"
-  static_page_abbonamenti: "Pagina -> Abbonamenti"
   label_iscription: "Crea la pagina statica Abbonamenti nel front end"
-
+  static_pages_settings: "Pagine"
 #Static pages in FE memorized in: settings/_projects
-  static_page_cosaoffriamo: "Pagina -> Cosa Offriamo"
-  static_page_lavoraconnoi: "Pagina -> Lavora con Noi"
-  static_page_progettofs: "Pagina -> Progetto Fiscosport"
-  static_page_contattaci: "Pagina -> Contattaci"
+  static_page_abbonamenti: "Abbonamenti"
+  static_page_cosaoffriamo: "Cosa Offriamo"
+  static_page_lavoraconnoi: "Lavora con Noi"
+  static_page_progettofs: " Progetto Fiscosport"
+  static_page_contattaci: "Contattaci"
 #Deliver_fee  type
   proposal: Abbonamenti disponibili
   thanks: Pagamento ricevuto, grazie

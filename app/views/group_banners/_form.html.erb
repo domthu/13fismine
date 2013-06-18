@@ -1,45 +1,31 @@
 <%= f.error_messages %>
-
 <div class="box tabular">
   <p><%= f.text_field :espositore, :label => :field_espositore, :required => true %></p>
-
-  <p><%= f.text_field :url, :label => :field_url, :required => true, :size => 80 %></p>
-
+  <p><%= f.text_field :url, :label => :field_url, :required => false, :size => 80 %></p>
   <p><%= f.check_box :se_visibile, :label => :field_se_visibile %></p>
-
   <p><%= f.text_field :priorita, :label => :field_priorita, :size => 3 %></p>
-
   <p><%# f.text_field :posizione, :label => :field_posizione, :required => true, :size => 80 %></p>
-
-  <p><%= f.text_field :banner, :label => :field_banner, :required => true, :size => 80 %></p>
-
   <p><%= f.text_field :impressions, :label => :field_impressions, :size => 3 %></p>
-
   <p><%= f.text_field :clicks, :label => :field_clicks, :size => 3 %></p>
-
   <p><%= f.text_field :impressions_history, :label => :field_impressions_history, :size => 3 %></p>
-
-  <p><%= f.check_box :se_prima_pagina, :label => :field_se_prima_pagina %></p>
-
-  <p><%# f.text_area :didascalia, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
-
-  <p><%# f.text_area :didascalia, :required => false, :cols => 60, :rows => 15, :class => 'rich_text_editor' %></p>
-
-  <div class="yui-skin-sam">
-    <p><%= f.text_area :didascalia, :name => 'group_banner[didascalia]', :required => false %>  </p>
-  </div>
-  <hr/>
-  <p>nuova versione banners e immagine</p>
-
-  <p> <%= f.select(:posizione, ['associazione','block_l', 'block_s', 'tramenu'], {}, {:class => '', :label => :field_posizione}) %></p>
-
+   <p> <%= f.select(:posizione, ['associazione', 'block_l', 'block_s', 'tramenu'], {}, {:class => '', :label => :field_posizione}) %><span class="mini-legend"> * NB: se si seleziona 'associazione' verrà visualizzato il 'Banner Associazione' negli altri casi verrà visualizzato il campo 'Immagine' </span></p>
   <p><%= f.file_field :image, :label => :field_immagine %> </p>
   <p id="prev" style="max-height: 300px;"> <%= image_tag @group_banner.image.url(:original) %>   </p>
-  <p>
+
+  <p><label>Banner Associazione </label> <%= f.cktext_area :didascalia, :width => 775 , :label => :field_banner  , :height => 456,  :swf_params => {:assetable_type => 'Test', :assetable_id => 1} %></p>
+
+   <hr/>
+  <div>
     <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
       <li>
-        Immagini stili e misure:
+       Info casella POSIZIONE:
 
+      </li>
+      <li>
+        ":associazione" verrà visualizzato il contenuto qui sopra in un blocco laterale o in una newsletter
+      </li>
+      <li>
+        nb: le altre opzioni qui sotto sono per le postazioni fisse dentro le pagine principali
       </li>
       <li>
         blocco grande a sinistra: :block_l => "256x216#"
@@ -54,91 +40,21 @@
         l'immagine verrà non deve superare i 200kb e di formato jpg/png/gif/bmp
       </li>
     </ul>
-  </p>
+  </div>
+  <p><%= f.text_field :banner, :label => :field_banner, :required => false, :size => 80 %><span class="mini-legend">*obsoleto</span></p>
+  <p><%= f.check_box :se_prima_pagina, :label => :field_se_prima_pagina %> <span class="mini-legend">*obsoleto</span> </p>
 </div>
 <script type="text/javascript">
     (function () {
 
-      //funct_avatar('i');
-      document.getElementById('group_banner_image').addEventListener('change', function(event) {
-              if (!event) // i.e. the argument is undefined or null
+        //funct_avatar('i');
+        document.getElementById('group_banner_image').addEventListener('change', function (event) {
+            if (!event) // i.e. the argument is undefined or null
                 event = window.event;
-                handleFileSelect(event, 'prev', '')
-      }, false);
+            handleFileSelect(event, 'prev', '')
+        }, false);
 
     })
             ();
 
-</script>
-
-
-<% content_for :header_yui do %>
-    <%# stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
-    <%# javascript_include_tag "yui/yahoo-dom-event.js" %>
-    <%# javascript_include_tag "yui/element-min.js" %>
-    <%# javascript_include_tag "yui/container_core-min.js" %>
-    <%# javascript_include_tag "yui/menu-min.js" %>
-    <%# javascript_include_tag "yui/button-min.js" %>
-    <%# javascript_include_tag "yui/editor-min.js" %>
-<!-- Simple editor
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/assets/skins/sam/skin.css">
-<script src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/element/element-min.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/container/container_core-min.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/editor/simpleeditor-min.js"></script>
- -->
-
-<!-- Complex Editor  -->
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/assets/skins/sam/skin.css">
-<script src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/element/element-min.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/container/container_core-min.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/menu/menu-min.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/button/button-min.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/editor/editor-min.js"></script>
-
-
-
-
-    <%= javascript_include_tag "yui/yui_fs.js" %>
-
-
-<% end %>
-
-
-<script type="text/javascript" charset="utf-8">
-
-document.observe("dom:loaded", showeditor);
-
-function showeditor() {
-
-//    var myComplexEditor = new YAHOO.widget.Editor('group_banner_didascalia', {
-//        height: '300px',
-//        width: '522px',
-//        dompath: true, //Turns on the bar at the bottom
-//        animate: true //Animates the opening, closing and moving of Editor windows
-//    });
-//    myComplex.render();
-
-//    var mySimpleEditor = new YAHOO.widget.SimpleEditor('group_banner_didascalia', {
-//        height: '300px',
-//        width: '522px',
-//        dompath: true //Turns on the bar at the bottom
-//    });
-//    mySimpleEditor.render();
-
-    var myConfig1 = {
-        handleSubmit:true,
-        width:'95%',
-        resize:true,
-        animate:true,
-        dompath:true,
-        focusAtStart:true,
-        nodeChangeDelay:false,
-        removeLineBreaks:true,
-        drag:true
-    };
-    //initia l'editor per una test area in particolare
-    var myEditor1 = init_yui_editor_fs('group_banner_didascalia', myConfig1);
-};
 </script>

@@ -556,6 +556,7 @@ module ApplicationHelper
   # 2 ways to call this method:
   # * with a String: textilizable(text, options)
   # * with an object and one of its attribute: textilizable(issue, :description, options)
+=begin
   def yuizable_fs(*args)
     options = args.last.is_a?(Hash) ? args.pop : {}
     case args.size
@@ -623,7 +624,7 @@ module ApplicationHelper
     end
     parsed.html_safe
   end
-
+=end
   def parse_inline_attachments(text, project, obj, attr, only_path, options)
     # when using an image link, try to use an attachment, if possible
     if options[:attachments] || (obj && obj.respond_to?(:attachments))

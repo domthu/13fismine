@@ -17,10 +17,7 @@ class EditorialController < ApplicationController
 
   helper :messages
   include MessagesHelper
-
   caches_action :robots
-  uses_yui_editor
-
   #HOME > TOP_MENU > TOP_SECTION > SECTION > ARTICOLO
   def home
     @xbanner = GroupBanner.find(:all, :order => 'priorita DESC', :conditions => ["se_visibile = 1"])

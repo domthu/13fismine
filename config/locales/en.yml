@@ -388,6 +388,7 @@ en:
   setting_emails_footer: Emails footer
   setting_protocol: Protocol
   setting_per_page_options: Objects per page options
+  setting_per_page_options_fs: Gruppi di pagine
   setting_user_format: Users display format
   setting_activity_days_default: Days displayed on project activity
   setting_display_subprojects_issues: Display subprojects issues on main projects by default
@@ -1463,7 +1464,7 @@ en:
   label_condition: "Documento che definisce le condizioni d'uso"
   static_page_abbonamenti: "Pagina -> Abbonamenti"
   label_iscription: "Crea la pagina statica Abbonamenti nel front end"
-
+  static_pages_settings: "Pages"
 #Static pages in FE memorized in: settings/_projects
   static_page_cosaoffriamo: "Pagina -> Cosa Offriamo"
   static_page_lavoraconnoi: "Pagina -> Lavora con Noi"

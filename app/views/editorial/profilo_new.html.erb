@@ -80,58 +80,20 @@
 
     </div>
     <div class="cleared"></div>
-    <div class="yui-skin-sam">
+    <div>
       <%= label_tag l(:label_titoli) %>
       <br/>
-
       <p><%= text_area_tag :titoli, 'i miei titoli', :name => 'titoli', :cols => 120, :rows => 15 %>  </p>
     </div>
-    <div class="yui-skin-sam">
+    <div>
       <%= label_tag l(:label_curriculum) %>
       <br/>
-
       <p><%= text_area_tag :curriculum, 'il mio curriculum', :name => 'curriculum', :cols => 120, :rows => 15 %>  </p>
     </div>
 <% end %>
 </div>
 
-<%# content_for :header_yui do %>
-
-<%# end %>
-<script type="text/javascript" charset="utf-8">
-    (function () {
-      var myConfig1 = {
-          handleSubmit:true,
-          height:'200px',
-          width:'95%',
-          resize:true,
-          animate:true,
-          dompath:true,
-          focusAtStart:false,
-          nodeChangeDelay:false,
-          removeLineBreaks:true,
-          drag:true
-      };
-      var myEditor1 = init_yui_editor_fs('titoli', myConfig1);
-      var myConfig2 = {
-          handleSubmit:true,
-          height:'400px',
-          width:'95%',
-          animate:true,
-          dompath:true,
-          focusAtStart:false,
-          drag:true
-      };
-      init_yui_editor_fs('curriculum', myConfig2);
-
-      //funct_avatar('i');
-      document.getElementById('photo').addEventListener('change', function(event) {
-              if (!event) // i.e. the argument is undefined or null
-                event = window.event;
-                handleFileSelect(event, 'fs-photo-edit-i', 'i')
-      }, false);
-
-    })
-            ();
-
+<script type="text/javascript">
+    CKEDITOR.replace('titoli');
+    CKEDITOR.replace('curriculum');
 </script>

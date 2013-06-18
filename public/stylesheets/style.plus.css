@@ -1664,6 +1664,20 @@ h3.fs-postheader {
 
 /* =========================== fine quesiti  ============================= */
 /* ===================== inizio chi siamo (user profiles)  ===================== */
+#SkypeButton-conteiner {
+    width: 100px;
+    float: right;
+    margin-top: -20px;
+}
+
+#SkypeButton_Chat_me img, #SkypeButton_Call_me img {
+    /*margin: 3px !important;   */
+}
+
+#SkypeButton_Call_me_paraElement, #SkypeButton_Chat_me_paraElement {
+    height: 1.5em;
+}
+
 .fs-profiles-sx {
     width: 30%;
     padding: 10px;
@@ -1890,6 +1904,7 @@ h3.fs-postheader {
     width: 75%;
     font-size: 1.2em;
 }
+
 /*PAG REGISTRAZIONE */
 #fs-abbo-top {
     width: 100%;
@@ -1928,14 +1943,10 @@ h3.fs-postheader {
 
 }
 
-#steps-step-0 legend ,#steps-step-1 legend {
+#steps-step-0 legend, #steps-step-1 legend {
     color: #00465e;
     font-size: 15px;
 }
-
-
-
-
 
 /* ------------------------------- test carousel -------------------------*/
 
@@ -1985,7 +1996,6 @@ h3.fs-postheader {
     float: none;
     clear: both;
 }
-
 
 /* ======================================================================================= */
 /* ===================zona riservata . SOPRA TUTTE LE PERSONALIZZAZIONI ================== */
@@ -2041,18 +2051,17 @@ span.error {
 
 /* altri  allarmi note */
 .fe-notice {
-    background: url('/images/ico/flash_notice_s.png')center left no-repeat;
+    background: url('/images/ico/flash_notice_s.png') center left no-repeat;
     font-weight: bold;
-    padding: 3px 5px 3px 32px;
+    padding: 10px 5px 3px 32px;
     display: table-cell;
     vertical-align: middle;
     font-style: italic;
     color: #005b7c;
-    height: 20px;
-    min-height: 20px;
+    height: 24px;
+    min-height: 24px;
     border-bottom: solid 1px #e0ffff;
 }
-
 
 /*  navigazione  e menu   */
 .art-nav {
@@ -2544,7 +2553,8 @@ ul.fs-menu2-hmenu>li:before {
     height: 38px;
     background: url('/images/template/menuseparator2.png') center center no-repeat;
 }
- /* ------------------ menu 2 a discesa   */
+
+/* ------------------ menu 2 a discesa   */
 
 ul.fs-menu2-hmenu li li a {
     background: #ffffff;
@@ -2926,7 +2936,8 @@ ul.fs-menu2-hmenu>li.ext.ext-l.ext-r:hover>.ext-m:before {
     width: 100%;
 
 }
- /* bottone -blu !*/
+
+/* bottone -blu !*/
 .fs-blu-button {
     border: 0;
     border-collapse: separate;
@@ -2934,13 +2945,13 @@ ul.fs-menu2-hmenu>li.ext.ext-l.ext-r:hover>.ext-m:before {
     -moz-background-origin: border !important;
     background-origin: border-box !important;
     background: #006B92;
-    background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+    background: linear-gradient(top, #005b7c 0, #006a95 50%, #00678f 60%, #00465e 100%) no-repeat;
     background: -webkit-linear-gradient(top, #005b7c 0, #006a95 50%, #00678f 60%, #00465e 100%) no-repeat;
-    background: -moz-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-    background: -o-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-    background: -ms-linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-    background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
-    -svg-background: linear-gradient(top, #007BA8 0, #007BA8 50%, #0078A3 60%, #005675 100%) no-repeat;
+    background: -moz-linear-gradient(top, #005b7c 0, #006a95 50%, #00678f 60%, #00465e 100%) no-repeat;
+    background: -o-linear-gradient(top, #005b7c 0, #006a95 50%, #00678f 60%, #00465e 100%) no-repeat;
+    background: -ms-linear-gradient(top, #005b7c 0, #006a95 50%, #00678f 60%, #00465e 100%) no-repeat;
+    background: linear-gradient(top, #005b7c 0, #006a95 50%, #00678f 60%, #00465e 100%) no-repeat;
+    -svg-background: linear-gradient(top, #005b7c 0, #006a95 50%, #00678f 60%, #00465e 100%) no-repeat;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -3638,7 +3649,7 @@ html>body #ajax-indicator {
 .button-next, .finish {
     float: right;
 }
-
+/*
 .button-back, .button-next, .finish {
     border: 1px solid #327E04;
     color: #FFF;
@@ -3658,7 +3669,7 @@ html>body #ajax-indicator {
     border-color: #9FC898;
     color: #9FC898;
 }
-
+  */
 .step {
     border: 1px solid #DDD;
     clear: left;
@@ -3714,5 +3725,54 @@ html>body #ajax-indicator {
     color: red;
     font-weight: bold;
 }
+
 /*RADIO BUTTON REGISTER*/
-.dvrbt { border: 0px solid red;}
+.dvrbt {
+    border: 0 solid red;
+}
+
+#fs_informa {
+    padding: 7px;
+}
+.register-switch-item {
+    height: 50px;
+    width: 33%;
+    float:left;
+    display: table-cell;
+    color: #fff;
+    background-color: #00465e;
+}
+.register-switch-item  .fe-notice {
+    border-bottom: none !important;
+
+}
+#register-switch input   , #register-switch span , #register-switch label{
+    display: inline;
+    vertical-align: middle;
+}
+#register-switch input{
+    margin-left: -10px;
+}
+#register-switch span{
+    margin-left: 4px;
+}
+#register-switch{
+    height: 100px;
+}
+#register-switch label{
+   margin: 0 !important;
+    padding: 3px;
+}
+#register-switch p {
+  /*  background-color: #3e89b2;   */
+    width:220px;
+    display: inline-block;
+    vertical-align: middle;
+    padding:0;
+}
+.fs-register{
+    display: block;
+    height: auto;
+    padding: 20px;
+    text-align: center;
+}
