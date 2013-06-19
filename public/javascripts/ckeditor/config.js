@@ -11,7 +11,7 @@ CKEDITOR.editorConfig = function (config) {
 
     //config.ContextMenu = ['Generic','Anchor','Flash','Select','Textarea','Checkbox','Radio','TextField','HiddenField','ImageButton','Button','BulletedList','NumberedList','Table','Form'] ;
 
-    // config.height = '400px';
+    config.height = '400px';
     // config.width = '600px';
     config.skin = 'kama';
 
@@ -20,10 +20,13 @@ CKEDITOR.editorConfig = function (config) {
     //config.resize_maxWidth = 750;
 
     //config.startupFocus = true;
+    config.filebrowserImageUploadUrl = '/ckeditor/create/image';
+    config.filebrowserBrowseUrl = '/ckeditor/files' ;
+    config.filebrowserUploadUrl = '/ckeditor/create/file';
+    config.filebrowserImageBrowseUrl = '/ckeditor/images' ;
 
     // works only with en, ru, uk languages
     config.extraPlugins = "embed,attachment";
-
     config.toolbar = 'Full';
 
     config.toolbar_Full =
@@ -34,7 +37,7 @@ CKEDITOR.editorConfig = function (config) {
             '/',
             [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] ,
             [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl' ],
-             [ 'Link', 'Unlink', 'Anchor' ],
+            [ 'Link', 'Unlink', 'Anchor' ],
             [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak' ],
             '/',
             [ 'Styles', 'Format', 'Font', 'FontSize' ] ,
@@ -43,7 +46,7 @@ CKEDITOR.editorConfig = function (config) {
         ];
     config.toolbar_Light =
         [
-            [ 'Source', 'Maximize', 'Preview', '-',  'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
+            [ 'Source', 'Maximize', 'Preview', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
             [ 'SelectAll', '-', 'Scayt' ] ,
             [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] ,
             [ 'Link', 'Unlink', 'Anchor', '-'],
@@ -55,7 +58,7 @@ CKEDITOR.editorConfig = function (config) {
         ];
     config.toolbar_Basic =
         [
-            [  'Source', '-', 'Format', 'Font', 'FontSize', 'Bold', 'Italic','TextColor', 'BGColor', '-', 'RemoveFormat', '-', 'NumberedList', 'BulletedList', 'Table', '-', 'Link', 'Unlink']
+            [  'Source', '-', 'Format', 'Font', 'FontSize', 'Bold', 'Italic', 'TextColor', 'BGColor', '-', 'RemoveFormat', '-', 'NumberedList', 'BulletedList', 'Table', '-', 'Link', 'Unlink']
         ];
 };
 
