@@ -1,12 +1,3 @@
-<%# form_tag({:action => :update}, {:method => :put})form_tag({:action => controller.action_name, :id => @project, :path => to_path_param(@path), :rev => ''}, {:method => :get, :id => 'revision_selector'}) do -%>
-<%= stylesheet_link_tag 'yui/skin.css', :media => 'all' %>
-<%= javascript_include_tag "yui/yahoo-dom-event.js" %>
-<%= javascript_include_tag "yui/element-min.js" %>
-<%= javascript_include_tag "yui/container_core-min.js" %>
-<%= javascript_include_tag "yui/menu-min.js" %>
-<%= javascript_include_tag "yui/button-min.js" %>
-<%= javascript_include_tag "yui/editor-min.js" %>
-<%= javascript_include_tag "yui/yui_fs.js" %>
 <style>
     .thumb {
         height: 120px;
@@ -16,84 +7,92 @@
 </style>
 <div id="fs-profilo">
   <h3 style="text-align: center;"><%= @this_user %></h3>
-<% form_tag({:action => "profilo_new", :method => :post}, :multipart => true) do %>
-    <%= hidden_field_tag :user_id, @this_user.id %>
-    <div class="fs-profiles-esx">
-      <div id="fs-photo-edit">
-        <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:none;"></div>
+  <% form_tag({:action => "profilo_new", :method => :post}, :multipart => true) do %>
+      <%= hidden_field_tag :user_id, @this_user.id %>
+      <div class="fs-profiles-esx">
+        <div id="fs-photo-edit">
+          <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:none;"></div>
           <div id="fs-photo-edit-g" style="display:block;">' + gravatar_for(@this_user, :size => 120) + ' </div>' %>
+        </div>
+        <div class="fs-vuoto-inline-button  fs-profiles-esx-btn">
+          <label><%= radio_button_tag :use_gravatar, true, :onchange => "funct_avatar('g')" %> <%= 'Usa mail su Gravatar' %></label><br/>
+          <label><%= radio_button_tag :use_gravatar, false, :onchange => "funct_avatar('a')" %> <%= 'Usa tua immagine Avatar' %></label><br/>
+          <%= file_field_tag :photo %>
+          <h6>nb: usa un'immagine quadrata sarà ridimensionata a 200px per 200px </h6>
+        </div>
       </div>
-      <div class="fs-vuoto-inline-button  fs-profiles-esx-btn">
-        <label><%= radio_button_tag :use_gravatar, true, :onchange => "funct_avatar('g')" %> <%= 'Usa mail su Gravatar' %></label><br/>
-        <label><%= radio_button_tag :use_gravatar, false, :onchange => "funct_avatar('a')" %> <%= 'Usa tua immagine Avatar' %></label><br/>
-        <%= file_field_tag :photo %>
-        <h6>nb: usa un'immagine quadrata sarà ridimensionata a 200px per 200px </h6>
+      <div class="fs-profiles-ecx">
+        <p>
+          <%= label_tag :fs_qualifica %><br/>
+          <%= text_field_tag :fs_qualifica %>
+        </p>
+
+        <p>
+          <%= label_tag :fs_tel %><br/>
+          <%= text_field_tag :fs_tel %>
+        </p>
+
+        <p>
+          <%= label_tag :fs_fax %><br/>
+          <%= text_field_tag :fs_fax %>
+        </p>
+
+        <p>
+          <%= label_tag :fs_skype %><br/>
+          <%= text_field_tag :fs_skype %>
+        </p>
+
+        <p>
+          <%= label_tag :fs_mail %><br/>
+          <%= text_field_tag :fs_mail %>
+        </p>
+
+        <p>
+          <%= label_tag :fs_external_url %><br/>
+          <%= text_field_tag :external_url %>
+        </p>
       </div>
-    </div>
-    <div class="fs-profiles-ecx">
-      <p>
-        <%= label_tag :fs_qualifica %><br/>
-        <%= text_field_tag :fs_qualifica %>
-      </p>
+      <div class="fs-profiles-edx">
 
-      <p>
-        <%= label_tag :fs_tel %><br/>
-        <%= text_field_tag :fs_tel %>
-      </p>
+        <div class="fs-profiles-radio-buttons">
+          <%= label_tag l(:label_display_in) %> &nbsp;<br/>
+          <label><%= radio_button_tag :display_in, 1, true %> <%= 'Collaboratori' %></label><br/>
+          <label><%= radio_button_tag :display_in, 2 %> <%= 'Responsabili' %></label><br/>
+          <label><%= radio_button_tag :display_in, 3 %> <%= 'Direttori' %></label><br/>
+          <label><%= radio_button_tag :display_in, 0 %> <%= 'Non Visibile' %></label><br/>
+        </div>
+        <p style="padding:10px 0;"></p>
 
-      <p>
-        <%= label_tag :fs_fax %><br/>
-        <%= text_field_tag :fs_fax %>
-      </p>
+        <p>  <%= submit_tag("crea", :action => 'profilo_edit', :class => "fs-giallo-button") if (User.current.admin? || User.current.ismanager? || User.current == @this_user) %></p>
 
-      <p>
-        <%= label_tag :fs_skype %><br/>
-        <%= text_field_tag :fs_skype %>
-      </p>
+        <p style="padding:5px 0;"> altrimenti</p>
 
-      <p>
-        <%= label_tag :fs_mail %><br/>
-        <%= text_field_tag :fs_mail %>
-      </p>
+        <p>  <%= link_to "annulla", :back, :class => "fs-giallo-button", :style => "float:none;" %></p>
 
-      <p>
-        <%= label_tag :fs_external_url %><br/>
-        <%= text_field_tag :external_url %>
-      </p>
-    </div>
-    <div class="fs-profiles-edx">
-
-      <div class="fs-profiles-radio-buttons">
-        <%= label_tag l(:label_display_in) %> &nbsp;<br/>
-        <label><%= radio_button_tag :display_in, 1, true %> <%= 'Collaboratori' %></label><br/>
-        <label><%= radio_button_tag :display_in, 2 %> <%= 'Responsabili' %></label><br/>
-        <label><%= radio_button_tag :display_in, 3 %> <%= 'Direttori' %></label><br/>
-        <label><%= radio_button_tag :display_in, 0 %> <%= 'Non Visibile' %></label><br/>
       </div>
-      <p style="padding:10px 0;"></p>
+      <div class="cleared"></div>
+      <div>
+        <%= label_tag l(:label_titoli) %>
+        <br/>
 
-      <p>  <%= submit_tag("crea", :action => 'profilo_edit', :class => "fs-giallo-button") if (User.current.admin? || User.current.ismanager? || User.current == @this_user)  %></p>
+        <p><%= text_area_tag :titoli, 'i miei titoli', :name => 'titoli', :cols => 120, :rows => 15 %>  </p>
+      </div>
+      <div>
+        <%= label_tag l(:label_curriculum) %>
+        <br/>
 
-      <p style="padding:5px 0;"> altrimenti</p>
-
-      <p>  <%= link_to "annulla", :back, :class => "fs-giallo-button", :style => "float:none;" %></p>
-
-    </div>
-    <div class="cleared"></div>
-    <div>
-      <%= label_tag l(:label_titoli) %>
-      <br/>
-      <p><%= text_area_tag :titoli, 'i miei titoli', :name => 'titoli', :cols => 120, :rows => 15 %>  </p>
-    </div>
-    <div>
-      <%= label_tag l(:label_curriculum) %>
-      <br/>
-      <p><%= text_area_tag :curriculum, 'il mio curriculum', :name => 'curriculum', :cols => 120, :rows => 15 %>  </p>
-    </div>
-<% end %>
+        <p><%= text_area_tag :curriculum, 'il mio curriculum', :name => 'curriculum', :cols => 120, :rows => 15 %>  </p>
+      </div>
+  <% end %>
 </div>
-
-<script type="text/javascript">
+<script type="text/javascript" charset="utf-8">
     CKEDITOR.replace('titoli');
     CKEDITOR.replace('curriculum');
+    //preview  uploaded image
+    document.getElementById('photo').addEventListener('change', function (event) {
+                if (!event) // i.e. the argument is undefined or null
+                    event = window.event;
+                handleFileSelect(event, 'fs-photo-edit-i', 'i')
+            }, false
+    );
 </script>

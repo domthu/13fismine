@@ -4,103 +4,59 @@
       <div class="fs-postheader-full">      <%= articolo.subject %>  </div>
     </div>
     <div style="width:100%;">
-      <div class="fs-image-caption-wrapper-full">
+           <div class="fs-image-caption-wrapper-full">
         <%= image_tag art_image(articolo, :l) %>
-        <%#(FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")).to_s  +  "#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}" %>
-        <% unless articolo.hide_summary? %>
-
-            <div class="fs-postmetadata-full">
-              <div class="fs-author">
-                <% if !articolo.author.user_profile.nil? %>
-                    <span> <%= articolo.author.user_profile.my_avatar(:s) %></span><span style="padding-left:6px;"> <%= h articolo.author %> </span>
-                <% else %>
-                    <span style="width: 32px;">Di:</span></span><span>  <%= h articolo.author %> </span>
-                <% end %>
-              </div>
-              <div class='fs-social'>
-                <div class='fs-social-fb '>
-                  <script src="http://connect.facebook.net/it_IT/all.js#xfbml=1"></script>
-                  <fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like>
-                </div>
-                <div class='fs-social-tw '>
-                  <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
-                  <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-                </div>
-                <div class='fs-social-gp '>
-                  <!-- Place this tag where you want the +1 button to render. -->
-                  <div class="g-plusone" data-size="medium" data-recommendations="false">
-                    <!-- Place this tag after the last +1 button tag. -->
-                    <script type="text/javascript">
-                        window.___gcfg = {lang:'it'};
-                        (function () {
-                            var po = document.createElement('script');
-                            po.type = 'text/javascript';
-                            po.async = true;
-                            po.src = 'https://apis.google.com/js/plusone.js';
-                            var s = document.getElementsByTagName('script')[0];
-                            s.parentNode.insertBefore(po, s);
-                        })();
-                    </script>
-                  </div>
-                </div>
-                <div class="fs-resize-box">
-                  <%=  link_to_function( image_tag('ico/printer-icon.png'), "javascript:print()") %>
-                <!--
-                  <a href="javascript:increaseFontSize()" id="increase" class="fs-resize-itm">A<sup>+</sup></a>
-                  <a href="javascript:decreaseFontSize()" id="decrease" class="fs-resize-itm">a<sup>-</sup></a>
-                  -->
-                </div>
-              </div>
-            </div>  <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
-        <% end %>
       </div>
-
-      <% if articolo.hide_summary? %>
-          <br /> &nbsp;   <br /> &nbsp;
-          <div class="fs-postmetadata-full" style="float:right;">
-            <div class="fs-author">
-              <% if !articolo.author.user_profile.nil? %>
-                  <span> <%= articolo.author.user_profile.my_avatar(:s) %></span><span style="padding-left:6px;"> <%= h articolo.author %> </span>
-              <% else %>
-                  <span style="width: 32px;">Di:</span></span><span>  <%= h articolo.author %> </span>
-              <% end %>
-            </div>
-            <div class='fs-social'>
-              <div class='fs-social-fb '>
-                <script src="http://connect.facebook.net/it_IT/all.js#xfbml=1"></script>
-                <fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like>
-              </div>
-              <div class='fs-social-tw '>
-                <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
-                <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-              </div>
-              <div class='fs-social-gp '>
-                <!-- Place this tag where you want the +1 button to render. -->
-                <div class="g-plusone" data-size="medium" data-recommendations="false">
-                  <!-- Place this tag after the last +1 button tag. -->
-                  <script type="text/javascript">
-                      window.___gcfg = {lang:'it'};
-                      (function () {
-                          var po = document.createElement('script');
-                          po.type = 'text/javascript';
-                          po.async = true;
-                          po.src = 'https://apis.google.com/js/plusone.js';
-                          var s = document.getElementsByTagName('script')[0];
-                          s.parentNode.insertBefore(po, s);
-                      })();
-                  </script>
-                </div>
-              </div>
-              <div class="fs-resize-box">
-                <%=  link_to_function( image_tag('ico/printer-icon.png'), "javascript:print()") %>
-              </div>
-            </div>
-          </div>  <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
-      <% end %>
       <div class="fs-riassunto-full">
         <p>
-          <%= h(articolo.summary) unless articolo.hide_summary? %>
+          <% if articolo.hide_summary? == false%>
+            <%=  raw(articolo.summary).html_safe %>
+              <% end %>
         </p>
+                 <div class="fs-postmetadata-full">
+                   <div class="fs-author">
+                     <% if !articolo.author.nil? && !articolo.author.user_profile.nil? %>
+                         <span><%= link_to  articolo.author.user_profile.my_avatar(:s), profile_show_path(articolo.author.user_profile) %> </span><span style="padding-left:10px;"> <%= h articolo.author %>
+
+                            <div class="fs-postmetadatafooter-author-qualifica"><%= articolo.author.user_profile.fs_qualifica unless articolo.author.user_profile.fs_qualifica.nil? %>  </div>
+
+                   </span>
+                     <% else %>
+                         <span style="width: 32px;">Di:</span><span>  <%= h articolo.author %> </span>
+                     <% end %>
+                   </div>
+                   <div class='fs-social'>
+                     <div class='fs-social-fb '>
+                       <script src="http://connect.facebook.net/it_IT/all.js#xfbml=1"></script>
+                       <fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like>
+                     </div>
+                     <div class='fs-social-tw '>
+                       <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
+                       <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                     </div>
+                     <div class='fs-social-gp '>
+                       <!-- Place this tag where you want the +1 button to render. -->
+                       <div class="g-plusone" data-size="medium" data-recommendations="false">
+                         <!-- Place this tag after the last +1 button tag. -->
+                         <script type="text/javascript">
+                             window.___gcfg = {lang:'it'};
+                             (function () {
+                                 var po = document.createElement('script');
+                                 po.type = 'text/javascript';
+                                 po.async = true;
+                                 po.src = 'https://apis.google.com/js/plusone.js';
+                                 var s = document.getElementsByTagName('script')[0];
+                                 s.parentNode.insertBefore(po, s);
+                             })();
+                         </script>
+                       </div>
+                     </div>
+                     <div class="fs-resize-box">
+                       <%=  link_to_function( image_tag('ico/printer-icon.png'), "javascript:print()") %>
+                     </div>
+                   </div>
+                 </div>
+
       </div>
     </div>
     <div class="clearfix">&nbsp; <br/></div>

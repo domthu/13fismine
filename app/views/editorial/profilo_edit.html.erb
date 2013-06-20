@@ -40,7 +40,7 @@
           <%= text_field_tag :fs_fax, @user_profile.fs_fax %>
         </p>
 
-        <p >
+        <p>
           <%= label_tag :fs_skype %><br/>
           <%= text_field_tag :fs_skype, @user_profile.fs_skype %>
         </p>
@@ -76,21 +76,32 @@
         <p>  <%= link_to("elimina profilo", profile_destroy_path(@user_profile.id), :class => "fs-rosso-button", :confirm => "conferma?") if (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user) %></p>
       </div>
       <br/>&nbsp; <br/>
+
       <div class="cleared"></div>
       <div>
-        <%= label_tag l(:label_titoli) %><br/>
-         <p><%= text_area_tag :titoli, @user_profile.titoli, :name => 'titoli' %>  </p>
+        <%= label_tag l(:label_titoli) %>
+        <br/>
+        <p><%= text_area_tag :titoli, @user_profile.titoli, :name => 'titoli' %>  </p>
       </div>
       <br/>&nbsp; <br/>
 
       <div>
         <%= label_tag l(:label_curriculum) %> <br/>
+
         <p><%= text_area_tag :curriculum, @user_profile.curriculum, :name => 'curriculum' %>  </p>
       </div>
   <% end %>
 </div>
-<script type="text/javascript">
+
+<script type="text/javascript" charset="utf-8">
     CKEDITOR.replace('titoli');
     CKEDITOR.replace('curriculum');
+    //preview  uploaded image
+    document.getElementById('photo').addEventListener('change', function (event) {
+        if (!event) // i.e. the argument is undefined or null
+            event = window.event;
+            handleFileSelect(event, 'fs-photo-edit-i', 'i')
+        }, false
+    );
 </script>
 

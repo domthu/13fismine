@@ -797,6 +797,7 @@ h3.fs-postheader {
 .fs-author span {
     display: table-cell;
     vertical-align: middle;
+    padding-left: 3%;
 }
 
 .fs-social {
@@ -871,12 +872,11 @@ h3.fs-postheader {
 .fs-postmetadata-full {
     background: #ffffff;
     border-bottom: 1px solid #e7e7e7;
-    border-top: 1px solid #e7e7e7;
-    margin-bottom: 10px;
+  /*  border-top: 1px solid #e7e7e7;        */
+    margin: 10px auto;
     position: relative;
     float: left;
-    padding: 5px;
-    width: 300px;
+    width: 336px;
     display: table;
 }
 
@@ -952,6 +952,9 @@ h3.fs-postheader {
     font-style: italic;
     padding: 3px;
 
+}
+.fs-box-link div{
+float: left;
 }
 
 /*per il blocco edizioni */
@@ -1679,7 +1682,7 @@ h3.fs-postheader {
 }
 
 .fs-profiles-sx {
-    width: 30%;
+    width: 31%;
     padding: 10px;
     float: left;
 

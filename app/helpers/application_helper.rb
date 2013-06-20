@@ -1216,22 +1216,34 @@ module ApplicationHelper
 
   def art_image(articolo = nil, taglia = :l)
     if  !articolo.image_file_name.nil?
-      return articolo.image.url(taglia)
+      if (FileTest.exists?("#{RAILS_ROOT}/public/images/articoli/#{articolo.image_file_name}") == false)
+        return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
+      else
+        return articolo.image.url(taglia)
+      end
     elsif !articolo.section.image_file_name.nil?
-      return articolo.section.image.url(taglia)
+      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.section.image_file_name}") == false)
+        return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
+      else
+        return articolo.section.image.url(taglia)
+      end
     elsif !articolo.top_section.image_file_name.nil?
-      return articolo.top_section.image.url(taglia)
+      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.image_file_name}") == false)
+        return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
+      else
+        return articolo.top_section.image.url(taglia)
+      end
     else
       return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
     end
   end
+
 
   #nel be mette l'icona ecco i parametri :
   #usr utente , parametro obbligatorio occorre sempre per primo
   #size: l per large 50px  :s per small 25px
   #text = la didascalia se omesso prende iol nome dell'utente
   #icon_for: stampa solo l'icona da un parametro parametri accettati= admin + man  +auth + vip + abbo +reg +renew +exp  + arc
-
 
 
   def user_role_iconized(usr = nil, params={})
@@ -1289,6 +1301,7 @@ module ApplicationHelper
 #  end
 
 end
+
 class String
   def to_slug
     ActiveSupport::Inflector.transliterate(self.downcase).gsub(/[^a-zA-Z0-9]+/, '-').gsub(/-{2,}/, '-').gsub(/^-|-$/, '')
