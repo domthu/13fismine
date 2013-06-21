@@ -1,6 +1,8 @@
 <%= error_messages_for 'project' %>
 
-<div class="splitcontentleft">
+<% if @project.new_record? %>
+  <div class="splitcontentleft">
+<% end %>
 
 <div class="box">
   <!--[form:project]-->
@@ -75,35 +77,37 @@
 <% end %>
 <% end %>
 
-</div>
+<% if @project.new_record? %>
+  </div>
 
-<div class="splitcontentright">
+  <div class="splitcontentright">
 
-<%= render :partial => 'lastprojects_box' %>
+  <%= render :partial => 'lastprojects_box' %>
 
-<% if @project.new_record? && !@authors.nil? && @authors.any? %>
-  <div class="box">
-    <h3 class="redattore">Lista redattori che possono partecipare alla realizzazione degli articoli: <b><%= @authors.count() %></b>
-    </h3>
-    <p>
-    <% @authors.each do |usr| %>
-      <div class="icon icon-auth"><%= link_to usr, user_path(usr) %></div>
-    <% end %>
-    </p>
+  <% if @project.new_record? && !@authors.nil? && @authors.any? %>
+    <div class="box">
+      <h3 class="redattore">Lista redattori che possono partecipare alla realizzazione degli articoli: <b><%= @authors.count() %></b>
+      </h3>
+      <p>
+      <% @authors.each do |usr| %>
+        <div class="icon icon-auth"><%= link_to usr, user_path(usr) %></div>
+      <% end %>
+      </p>
+    </div>
+  <% end %>
+
+  <% if @project.new_record? && !@managers.nil? && @managers.any? %>
+    <div class="box ">
+      <h3 class="power_user">Lista Manager che accedono all'edizione: <b><%= @managers.count() %></b></h3>
+      <p>
+      <% @managers.each do |usr| %>
+        <div class="icon icon-man"><%= link_to usr, user_path(usr) %></div>
+      <% end %>
+      </p>
+    </div>
+  <% end %>
+
   </div>
 <% end %>
-
-<% if @project.new_record? && !@managers.nil? && @managers.any? %>
-  <div class="box ">
-    <h3 class="power_user">Lista Manager che accedono all'edizione: <b><%= @managers.count() %></b></h3>
-    <p>
-    <% @managers.each do |usr| %>
-      <div class="icon icon-man"><%= link_to usr, user_path(usr) %></div>
-    <% end %>
-    </p>
-  </div>
-<% end %>
-
-</div>
 
 <!--[eoform:project]-->

@@ -4,5 +4,37 @@
 <div class="box">
 <p><%= f.text_field :name, :required => true %></p>
 <p><%= f.text_field :description, :required => true, :size => 80 %></p>
+
+<% unless @board.new_record? %>
+<div class="contextual">
+
+
+<span><%= link_to_remote(l(:button_watch) + ' ' +  l(:all),
+                   {:url => {:controller => 'watchers',
+                            :action => 'watch_all',
+                            :object_type => @board.class.name.underscore,
+                            :object_id => @board.id}},
+                  :class => 'icon icon-fav')
+%></span>
+<span><%= link_to_remote l(:button_unwatch)  + ' ' + l(:all),
+                   {:url => {:controller => 'watchers',
+                            :action => 'unwatch_all',
+                            :object_type => @board.class.name.underscore,
+                            :object_id => @board.id}},
+                  :class => 'icon icon-fav-off'
+%></span>
+
+</div>
+
+  <h3><%= h(@board.project.members.count) %> ascoltatori</h3>
+    <% @board.project.members.each do |m| %>
+    <div class="watchers_lst">
+      <%= watcher_tag(@board, m.user) %>
+    </div>
+    <% end %>
+  <div style="clear:both;"></div>
+  <%= render :partial => 'watchers/watchers', :locals => {:watched => @board} %>
+<% end %>
+
 </div>
 <!--[eoform:board]-->

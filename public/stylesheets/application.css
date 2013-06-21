@@ -1294,4 +1294,6 @@ textarea#issue_subject{
  .s-exclamation { background: url(../images/ico/users_sprite.png) no-repeat -50px -510px; }
  /*  fine del fee roles icons */
 
-
+div .watchers_lst{
+  float: left; margin 10px; padding: 10px; width: 45%; border: solid 0px red;
+}

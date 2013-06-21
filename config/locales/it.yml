@@ -952,6 +952,7 @@ it:
   button_prova: Leggi Gratis!
 
 #dom verify
+  all: tutti
   button_save_abbonamento: Salva abbonamento
   button_save_dati: Salva dati
   button_save_fatture: Salva fatture
