@@ -104,6 +104,18 @@
           $('#toTop').click(function() {
               jQuery('body,html').animate({scrollTop:0},800);
           });
+          if ($('#fs-flash').html().trim().length > 0) {
+              $('#fs-flash').show();
+              setTimeout(function() {
+              $('#fs-flash').fadeOut(2400);
+          }, 6000);
+          };
+          $('#fs-flash').focus(function() {
+              $('#fs-flash').show();
+              setTimeout(function() {
+                  $('#fs-flash').fadeOut(2400);
+              }, 6000);
+          });
 
           $('.x-white').addGlow({ textColor: 'white', haloColor: '#aaa', radius: 100 });
           $('.x-blue').addGlow({ textColor: '#00f', haloColor: '#00f', radius: 100, duration: 200 });
@@ -145,10 +157,9 @@
     <nav class="fs-menu2-nav clearfix">
       <%= render_navigation(:level => 2..3, :expand_all => true) %>
     </nav>
-    <% flash.each do |key,msg| %>
-        <p id="fs-fade-flash"> <span class=<%= key.to_s %>></span>
-          <%= msg %>  </p>
-    <% end %>
+    <div id="fs-flash" style="display:none;"><% flash.each do |key,msg| %>
+       <p> <span class='<%= key.to_s %> '> </span>  <%= msg %> </p>
+    <% end %></div>
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">

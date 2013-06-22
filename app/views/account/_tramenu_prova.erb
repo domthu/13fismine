@@ -1,77 +1,85 @@
 <script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
-      // effetto sul testo di fade o slide
-      $('#tickGratis').list_ticker({speed:3000,effect:'fade'})
-      $("#user_firstname").prop('maxLength', 255);
-      $("#user_lastname").prop('maxLength', 255);
-      $("#user_mail").prop('maxLength', 255);
+    $(document).ready(function () {
+        // effetto sul testo di fade o slide
+        $('#tickGratis').list_ticker({speed:3000, effect:'fade'})
+        $("#user_firstname").prop('maxLength', 255);
+        $("#user_lastname").prop('maxLength', 255);
+        $("#user_mail").prop('maxLength', 255);
 
-      //privacy
-      $( "#ainformativa_prova" ).click(function(e){
-        Inform_prova(e);
-        return false
-      });
-      $('#informativa_prova').dialog({
-        autoOpen: false,
-        width: 700,
-        show: "blind",
-        hide: "explode",
-        height: 550,
-        resizable: true,
-        draggable: true,
-        title: 'Informativa',
-        bgiframe: true,
-        modal: true,
-        open: function (event, ui) {
-            $(this).load(url_inf);
-        }
-      });
-
-  });
-  var url_inf = '<%= privacy_path %>';
-  function Inform_prova(e) {
-    $("#informativa_prova").dialog("open");
-    return false;
-  }
-  var urlprova = '<%= prova_gratis_path %>';
-  function prova(){
-    var mail = $('#mail').val();
-    var lastname = $('#lastname').val();
-    var firstname = $('#firstname').val();
-    var team_artist = $('#modlgn_remember').is(':checked');
-    $.post(urlprova, { mail: mail, lastname: lastname, firstname: firstname, team_artist: team_artist, authenticity_token: $("input[name='authenticity_token']").val(), back_url: $('#back_url').val()  },
-      function (data) {
-        data = data || {};
-        if (data.success) {
-            //OnSuccess
-            if (data.response) {
-              $("#flash_notice").html(data.response);
-              $("#user-info").html("<div class='flash notice'>" + data.response + "</div>");
-              //alert(data.response)
+        //privacy
+        $("#ainformativa_prova").click(function (e) {
+            Inform_prova(e);
+            return false
+        });
+        $('#informativa_prova').dialog({
+            autoOpen:false,
+            width:700,
+            show:"blind",
+            hide:"explode",
+            height:550,
+            resizable:true,
+            draggable:true,
+            title:'Informativa',
+            bgiframe:true,
+            modal:true,
+            open:function (event, ui) {
+                $(this).load(url_inf);
             }
-        } else if (data.errors) {
-            $("#flash_error").html(data.errors);
-            $("#user-info").html("<div class='flash error'>" + data.errors + "</div>");
-            //showerrmsg(data.errors);
-            //alert(data.errors)
-        }
-        else
-          alert("La prova non è andata a buon fine: <br />" + data)
+        });
 
-      }
-    );
-    return false;
-  }
+    });
+    var url_inf = '<%= privacy_path %>';
+    function Inform_prova(e) {
+        $("#informativa_prova").dialog("open");
+        return false;
+    }
+    var urlprova = '<%= prova_gratis_path %>';
+    function prova() {
+        var mail = $('#mail').val();
+        var lastname = $('#lastname').val();
+        var firstname = $('#firstname').val();
+        var team_artist = $('#modlgn_remember').is(':checked');
+        if (lastname.length > 0 && firstname.length > 0 && mail.length > 0) {
+            $.post(urlprova, { mail:mail, lastname:lastname, firstname:firstname, team_artist:team_artist, authenticity_token:$("input[name='authenticity_token']").val(), back_url:$('#back_url').val()  },
+                    function (data) {
+                        data = data || {};
+                        if (data.success) {
+                            //OnSuccess
+                            if (data.response) {
+                                $("#fs-flash").html('<p> <span class="success"></span>' + data.response + '</p>').focus();
+                            }
+                        } else if (data.errors) {
+                            s = "";
+                            if ($.isArray(data.errors)) {
+                                $.each(data.errors, function (index, value) {
+                                    s += '<p> <span class="error"></span>' + value + '</p>'
+                                });
+                            } else {
+                                s += '<p> <span class="error"></span>' + data.errors + '</p>'
+                            }
+                            $("#fs-flash").html(s).focus();
+                        }
+                        else {
+                            $("#fs-flash").html('<p> <span class="alert"></span> La prova non è andata a buon fine: <br />' + data.response + '</p>').focus();
+                        }
+                    });
+        }
+        else {
+            $("#fs-flash").html('<p> <span class="notice"></span> Tutti i campi devono essere compilati</p>').focus();
+        }
+        return false;
+    }
 
 </script>
 
-<p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">Prova la newsletter gratis per <%= Setting.register_days %> giorni!</p>
+<p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">Prova la newsletter gratis per <%= Setting.register_days %>
+  giorni!</p>
 <div id="fs-prova-gratis-fields">
-  <span class="fs-prova-gratis-txt"><%= text_field_tag 'firstname', nil, :style => 'width:95%;', :placeholder => l(:field_firstname) + "..."  %></span>
-  <span class="fs-prova-gratis-txt"><%= text_field_tag 'lastname', nil, :style => 'width:95%;', :placeholder => l(:field_lastname) + "..."  %></span>
-  <span class="fs-prova-gratis-txt"><%= text_field_tag 'mail', nil, :style => 'width:95%;', :placeholder => l(:field_mail) + "..."  %></span>
+  <span class="fs-prova-gratis-txt"><%= text_field_tag 'firstname', nil, :style => 'width:95%;', :placeholder => l(:field_firstname) + "..." %></span>
+  <span class="fs-prova-gratis-txt"><%= text_field_tag 'lastname', nil, :style => 'width:95%;', :placeholder => l(:field_lastname) + "..." %></span>
+  <span class="fs-prova-gratis-txt"><%= text_field_tag 'mail', nil, :style => 'width:95%;', :placeholder => l(:field_mail) + "..." %></span>
 
-  <input type="button" value="<%= l(:button_prova)%>" name="leggi_gratis" id="fs-prova-gratis-btn" class="fs-button" onclick="return prova();"/>
+  <input type="button" value="<%= l(:button_prova) %>" name="leggi_gratis" id="fs-prova-gratis-btn" class="fs-button" onclick="return prova();"/>
 
   <div id="fs-prova-gratis-info">
     <div class="fs-prova-gratis-info">
@@ -80,12 +88,13 @@
       </label>
       <ul id="tickGratis" class="fs-prova-gratis-righe">
         <li>Prova anche la demo di <a href="http://teamartist.com" target="_blank">Team Artist</a></li>
-        <li> il software per le nostre associazioni. </li>
-        <li>Promo: se ti iscrivi a FiscoSport...  </li>
-         <li>-10% sul listino approfittane ora! <a href="http://teamartist.com" target="_blank">Scopri...</a></li>
+        <li> il software per le nostre associazioni.</li>
+        <li>Promo: se ti iscrivi a FiscoSport...</li>
+        <li>-10% sul listino approfittane ora! <a href="http://teamartist.com" target="_blank">Scopri...</a></li>
       </ul>
       <div class="clearfix"></div>
-       <span title="Cliccando su '<%= l(:button_prova)%>' acconsenti esplicitamente al trattamento dei dati personali ai sensi del D.Lgs. 196/2003" >Cliccando su "<%= l(:button_prova)%>" acconsenti al <a href='#' id='ainformativa_prova' class='pri'><b>trattamento dati</b></a>
+       <span title="Cliccando su '<%= l(:button_prova) %>' acconsenti esplicitamente al trattamento dei dati personali ai sensi del D.Lgs. 196/2003">Cliccando su "<%= l(:button_prova) %>
+         " acconsenti al <a href='#' id='ainformativa_prova' class='pri'><b>trattamento dati</b></a>
        </span>
     </div>
   </div>

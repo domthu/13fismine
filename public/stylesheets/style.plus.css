@@ -2006,14 +2006,8 @@ float: left;
 /* ===================                                                   ================= */
 /* ===================  zona riservata    SOTTO MENU E BOTTONI E COMMONS ================= */
 /* ======================================================================================= */
-#fs-fade-flash {
+#fs-flash {
     background: url('/images/commons/flash-bg.jpg') repeat-x;
-    display: block;
-    text-align: center;
-    color: #ffce0b;
-    font-size: 18px;
-    font-family: 'Trebuchet MS', Arial, Helvetica, Sans-Serif;
-    line-height: 2em;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -2022,34 +2016,50 @@ float: left;
     box-shadow: 0 0 3px 2px rgb(255, 206, 11);
     text-shadow: 0 0 6px rgb(255, 70, 0);
     width: 70%;
-    height: 75px;
+    min-height: 75px;
     margin: 4px 2px;
     position: absolute;
-    z-index: 10;
+    z-index: 10; vertical-align: middle;
+
+}
+#fs-flash p{
+    text-align: center;
+    color: #ffce0b;
+    font-size: 18px;
+    font-family: 'Trebuchet MS', Arial, Helvetica, Sans-Serif;
     line-height: 1.5em;
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
 
 }
 
-#fs-fade-flash span {
+.notice {
+    background: url('/images/ico/flash_notice.png') center center no-repeat;
     float: left;
     width: 70px;
     height: 75px;
 }
 
-span.notice {
-    background: url('/images/ico/flash_notice.png') center center no-repeat;
-}
-
-span.success {
+.success {
     background: url('/images/ico/flash_success.png') center right no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
 }
 
-span.alert {
+.alert {
     background: url('/images/ico/flash_alert.png') center center no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
 }
 
-span.error {
+.error {
     background: url('/images/ico/flash_error.png') center center no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
 }
 
 /* altri  allarmi note */

@@ -497,6 +497,7 @@ class EditorialController < ApplicationController
   end
 
   def profilo_show
+    flash[:success] = "il tuo profilo è stato aggiornavbgfcgdfgchngdchcgfto."
     if @user_profile.nil?
       flash[:alert] = fading_flash_message("Profilo non trovato.", 3)
     end
@@ -509,7 +510,7 @@ class EditorialController < ApplicationController
         if !params[:photo].nil?
           @user_profile.update_attributes(:photo => params[:photo])
         end
-        flash[:success] = fading_flash_message("il tuo profilo è stato aggiornato.", 4)
+        flash[:success] = "il tuo profilo è stato aggiornato."
       else
         flash[:error] = fading_flash_message('non ho potuto aggiornare ... qualcosa è andato storto!', 4)
       end

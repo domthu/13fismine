@@ -184,6 +184,7 @@ class AccountController < ApplicationController
     @user.firstname = params[:firstname] if params[:firstname].present?
     @user.lastname = params[:lastname] if params[:lastname].present?
     @user.login = @user.mail
+    @user.comune_id = 1
     @user.random_password #    self.password = password & self.password_confirmation = password
     @user.se_condition = true
     @user.se_privacy = true
