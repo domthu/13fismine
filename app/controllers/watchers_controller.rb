@@ -17,11 +17,13 @@
 
 class WatchersController < ApplicationController
   before_filter :find_project
-  before_filter :require_login, :check_project_privacy, :only => [:watch, :unwatch]
+  before_filter :find_watcher_user, :only => [:watch_for, :unwatch_for]
+  before_filter :find_all_watchers, :only => [:watch_all, :unwatch_all]
+  before_filter :require_login, :check_project_privacy, :only => [:watch, :unwatch, :watch_for, :unwatch_for]
   before_filter :authorize, :only => [:new, :destroy]
 
   verify :method => :post,
-         :only => [ :watch, :unwatch ],
+         :only => [ :watch, :unwatch, :watch_for, :unwatch_for ],
          :render => { :nothing => true, :status => :method_not_allowed }
 
   def watch
@@ -31,9 +33,71 @@ class WatchersController < ApplicationController
       set_watcher(User.current, true)
     end
   end
+  def watch_for
+    if @watched.respond_to?(:visible?) && !@watched.visible?(@user)
+      render_403
+    else
+      set_watcher(@user, true)
+    end
+  end
+  def watch_all
+    @arr = []
+    for usr in @users_all do
+      #next unless !@watched.visible?(usr)
+      #puts "user(" + usr.id.to_s + ") --> " + usr.name
+      if !@watched.watched_by?(usr)
+        @watched.set_watcher(usr, true)
+        @arr.push(usr)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js do
+        render(:update) do |page|
+          for usr in @arr do
+            c = watcher_css(@watched, usr)
+            page.select(".#{c}").each do |item|
+              page.replace_html item, watcher_link(@watched, usr)
+            end
+          end
+        end
+      end
+    end
+  rescue ::ActionController::RedirectBackError
+    render :text => (watching ? 'Watcher added.' : 'Watcher removed.'), :layout => true
+  end
 
   def unwatch
     set_watcher(User.current, false)
+  end
+  def unwatch_for
+    set_watcher(@user, false)
+  end
+  def unwatch_all
+    @arr = []
+    for usr in @users_all do
+      next unless usr
+      #puts "user(" + usr.id.to_s + ") --> " + usr.name
+      if @watched.watched_by?(usr)
+        @watched.set_watcher(usr, false)
+        @arr.push(usr)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js do
+        render(:update) do |page|
+          for usr in @arr do
+            c = watcher_css(@watched, usr)
+            page.select(".#{c}").each do |item|
+              page.replace_html item, watcher_link(@watched, usr)
+            end
+          end
+        end
+      end
+    end
+  rescue ::ActionController::RedirectBackError
+    render :text => (watching ? 'Watcher added.' : 'Watcher removed.'), :layout => true
   end
 
   def new
@@ -74,13 +138,24 @@ private
     render_404
   end
 
+  def find_watcher_user
+    @user = User.find(params[:user_id])
+  rescue
+    render_404
+  end
+  def find_all_watchers
+    @users_all = @project.users
+  rescue
+    render_404
+  end
+
   def set_watcher(user, watching)
     @watched.set_watcher(user, watching)
     respond_to do |format|
       format.html { redirect_to :back }
       format.js do
         render(:update) do |page|
-          c = watcher_css(@watched)
+          c = watcher_css(@watched, user)
           page.select(".#{c}").each do |item|
             page.replace_html item, watcher_link(@watched, user)
           end

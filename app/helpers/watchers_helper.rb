@@ -20,26 +20,48 @@
 module WatchersHelper
 
   def watcher_tag(object, user, options={})
-    content_tag("span", watcher_link(object, user), :class => watcher_css(object))
+    content_tag("span", watcher_link(object, user), :class => watcher_css(object, user))
   end
 
   def watcher_link(object, user)
-    return '' unless user && user.logged? && object.respond_to?('watched_by?')
+#    return '' unless user && user.logged? && object.respond_to?('watched_by?')
+#    watched = object.watched_by?(user)
+#    url = {:controller => 'watchers',
+#           :action => (watched ? 'unwatch' : 'watch'),
+#           :object_type => object.class.to_s.underscore,
+#           :object_id => object.id}
+#    link_to_remote((watched ? l(:button_unwatch) : l(:button_watch)),
+#                   {:url => url},
+#                   :href => url_for(url),
+#                   :class => (watched ? 'icon icon-fav' : 'icon icon-fav-off'))
+    #domthu 20130621
+    return '' unless user && object.respond_to?('watched_by?')
     watched = object.watched_by?(user)
-    url = {:controller => 'watchers',
-           :action => (watched ? 'unwatch' : 'watch'),
-           :object_type => object.class.to_s.underscore,
-           :object_id => object.id}
-    link_to_remote((watched ? l(:button_unwatch) : l(:button_watch)),
-                   {:url => url},
-                   :href => url_for(url),
-                   :class => (watched ? 'icon icon-fav' : 'icon icon-fav-off'))
-
+    if (user == User.current)
+      url = {:controller => 'watchers',
+             :action => (watched ? 'unwatch' : 'watch'),
+             :object_type => object.class.to_s.underscore,
+             :object_id => object.id}
+      link_to_remote((watched ? l(:button_unwatch) : l(:button_watch)),
+                     {:url => url},
+                     :href => url_for(url),
+                     :class => (watched ? 'icon icon-fav' : 'icon icon-fav-off'))
+    else
+      url = {:controller => 'watchers',
+             :action => (watched ? 'unwatch_for' : 'watch_for'),
+             :object_type => object.class.to_s.underscore,
+             :object_id => object.id,
+             :user_id => user.id}
+      link_to_remote((watched ? l(:button_unwatch) : l(:button_watch)) + ' ' + user.name(),
+                     {:url => url},
+                     :href => url_for(url),
+                     :class => (watched ? 'icon icon-fav' : 'icon icon-fav-off'))
+    end
   end
 
   # Returns the css class used to identify watch links for a given +object+
-  def watcher_css(object)
-    "#{object.class.to_s.underscore}-#{object.id}-watcher"
+  def watcher_css(object, user)
+    "#{object.class.to_s.underscore}-#{object.id}-#{user.id}-watcher"
   end
 
   # Returns a comma separated list of users watching the given object
