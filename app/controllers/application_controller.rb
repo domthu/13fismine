@@ -585,18 +585,4 @@ class ApplicationController < ActionController::Base
   def pick_layout(*args)
     api_request? ? nil : super
   end
-
-#  ruby on rails flash messages - :alert :error :notice and :success
-def fading_flash_message(text, seconds=3)
- 	text +
-   	<<-EOJS
-     	<script type='text/javascript'>
-       	$(document).ready( function() {
-         	setTimeout(function() {
-           	$('#fs-fade-flash').fadeOut(2400);
-         	}, #{seconds*1000});
-       	});
-     	</script>
-   	EOJS
-end
 end

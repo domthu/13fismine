@@ -210,12 +210,12 @@ class EditorialController < ApplicationController
   def edizione
     @id = params[:id].to_i
     if @id.nil?
-      flash[:alert] = fading_flash_message(l(:notice_not_authorized), 4)
+      flash[:alert] = l(:notice_not_authorized)
       return redirect_to({:action => 'home'})
     end
     @project = Project.all_public_fs.find_public(@id)
     if @project.nil?
-      flash[:alert] = fading_flash_message(l(:notice_not_authorized), 4)
+      flash[:alert] = l(:notice_not_authorized)
       return redirect_to({:action => 'home'})
     else
       @issues = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
@@ -262,7 +262,7 @@ class EditorialController < ApplicationController
   end
 
   def evento_prenotazione
-    if request.post? #  flash[:notice] = fading_flash_message("il photo." + params[:photo].to_s + "\n uid >" + params[:user_id] + "\n pid >" + params[:id], 5)
+    if request.post?
       @reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id], :num_persone => params[:num_persone], :msg => params[:msg])
       @reservation_new.save
     end
@@ -403,10 +403,10 @@ class EditorialController < ApplicationController
     @news.comments_count = 0
     if request.post?
       if @news.save
-        flash[:success] = fading_flash_message("Il suo quesito è stato registrato grazie.", 4)
+        flash[:success] = "Il suo quesito è stato registrato grazie."
         redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
       else
-        flash[:error] = fading_flash_message("Non ho potuto registrare il quesito... qualcosa è andato storto", 4)
+        flash[:error] = "Non ho potuto registrare il quesito... qualcosa è andato storto"
       end
     end
   end
@@ -418,10 +418,9 @@ class EditorialController < ApplicationController
     @quesito_news.description = params[:description]
     if request.post?
       if @quesito_news.save
-        flash[:success] = fading_flash_message(:notice_successful_update, 4)
-        #flash[:notice] = fading_flash_message(l(:notice_successful_update), 7)
+        flash[:success] = l(:notice_successful_update)
       else
-        flash[:error] = fading_flash_message('non ho potuto aggiornare ... qualcosa è andato storto!', 4)
+        flash[:error] = 'non ho potuto aggiornare ... qualcosa è andato storto!'
       end
     end
     redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @quesito_news
@@ -429,13 +428,11 @@ class EditorialController < ApplicationController
 
   #Il dato @quesito_news viene caricato dentro il before_filter
   def quesito_destroy
-    #verificare che l'utente sia un admin o un se stesso
     if @quesito_news.author == User.current || User.current.admin?
-      @quesito_news.destroy #@quesito_news = News.destroy(params[:id])
-                            #flash[:notice] = fading_flash_message("Il suo quesito è stato rimosso.", 7)
-      flash[:notice] = fading_flash_message("Quesito rimosso!",4)
+      @quesito_news.destroy
+      flash[:notice] = "Quesito rimosso!"
     else
-      flash[:error] = fading_flash_message("Solo l'utente che ha creato il quesito può eliminarlo",4)
+      flash[:error] = "Solo l'utente che ha creato il quesito può eliminarlo"
     end
     redirect_to :controller => 'editorial', :action => 'quesiti_my'
   end
@@ -499,20 +496,20 @@ class EditorialController < ApplicationController
   def profilo_show
     flash[:success] = "il tuo profilo è stato aggiornavbgfcgdfgchngdchcgfto."
     if @user_profile.nil?
-      flash[:alert] = fading_flash_message("Profilo non trovato.", 3)
+      flash[:alert] = "Profilo non trovato."
     end
-    @profiles_hidden = UserProfile.users_profiles_all.invisibili
+    @profiles_hidden =notice_successful_create UserProfile.users_profiles_all.invisibili
   end
 
   def profilo_edit
-    if request.post? #  flash[:notice] = fading_flash_message("il photo." + params[:photo].to_s + "\n uid >" + params[:user_id] + "\n pid >" + params[:id], 5)
+    if request.post?
       if @user_profile.update_attributes(:user_id => params[:user_id], :display_in => params[:display_in], :fs_qualifica => params[:fs_qualifica], :fs_tel => params[:fs_tel], :fs_fax => params[:fs_fax], :use_gravatar => params[:use_gravatar], :fs_skype => params[:fs_skype], :fs_mail => params[:fs_mail], :external_url => params[:external_url], :titoli => params[:titoli], :curriculum => params[:curriculum])
         if !params[:photo].nil?
           @user_profile.update_attributes(:photo => params[:photo])
         end
         flash[:success] = "il tuo profilo è stato aggiornato."
       else
-        flash[:error] = fading_flash_message('non ho potuto aggiornare ... qualcosa è andato storto!', 4)
+        flash[:error] = 'non ho potuto aggiornare ... qualcosa è andato storto!'
       end
       redirect_to :action => 'profilo_show', :id => @user_profile
       return
@@ -529,9 +526,9 @@ class EditorialController < ApplicationController
         if !params[:photo].nil?
           @user_profile.update_attributes(:photo => params[:photo])
         end
-        flash[:success] = fading_flash_message("il tuo profilo è stato creato.",4)
+        flash[:success] = "il tuo profilo è stato creato."
       else
-        flash[:error] = fading_flash_message('non ho potuto creare ... qualcosa è andato storto!', 4)
+        flash[:error] = 'non ho potuto creare ... qualcosa è andato storto!'
       end
       redirect_to :action => 'profilo_show', :id => @user_profile
       return
@@ -544,19 +541,17 @@ class EditorialController < ApplicationController
     @user_profile = UserProfile.new(params[:user_profile])
     if request.post?
       if @user_profile.save
-        # flash[:notice] = l(:notice_successful_create)
-        # flash[:notice] = fading_flash_message("Il suo profilo è stato creato.", 5)
-        flash[:success] = fading_flash_message("il tuo profilo è stato creato.", 4)
+        flash[:success] = l(:notice_successful_create)
         redirect_to(profile_show_path(@user_profile.id))
       else
-        flash[:error] = fading_flash_message('non ho potuto creare ... qualcosa è andato storto!', 4)
+        flash[:error] = 'non ho potuto creare ... qualcosa è andato storto!'
       end
     end
   end
 
   def profilo_destroy
     @user_profile.destroy
-    flash[:notice] = fading_flash_message("il tuo profilo è stato rimosso.", 4)
+    flash[:notice] = "il tuo profilo è stato rimosso."
     respond_to do |format|
       format.html { redirect_to(profiles_all_url) }
       format.xml { head :ok }
@@ -674,7 +669,7 @@ class EditorialController < ApplicationController
     @id = params[:id].to_i
     @user_profile = UserProfile.find_by_id(@id)
   rescue ActiveRecord::RecordNotFound
-    flash[:alert] = fading_flash_message("il profilo non è stato trovato.", 4)
+    flash[:alert] = "il profilo non è stato trovato."
     return reroute_404()
   end
 
@@ -723,15 +718,14 @@ class EditorialController < ApplicationController
 
   def reroute_404(_message = nil)
     #flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
-    flash[:alert] = fading_flash_message("Problemi incontrati nel recupero dei dati...", 4)
+    flash[:alert] = "Problemi incontrati nel recupero dei dati..."
     return render_404_fs({:message => _message}) unless _message.nil?
     render_404_fs
     #render_404
   end
 
   def reroute_log()
-    flash[:alert] = fading_flash_message("Per accedere al contenuto devi essere authentificato. <br /> Fai il login per favore...", 4)
-    redirect_to(abbonamenti_path)
+    flash[:alert] = "Per accedere al contenuto devi essere authentificato. <br /> Fai il login per favore..."
   end
 
   def enabled_user_article
@@ -741,7 +735,7 @@ class EditorialController < ApplicationController
   end
 
   def reroute_auth()
-    flash[:notice] = fading_flash_message("Per accedere devi avere un abbonamento valido...", 4)
+    flash[:notice] = "Per accedere devi avere un abbonamento valido..."
     #redirect_to(signin_path)
     redirect_to(abbonamenti_path)
   end
