@@ -208,7 +208,13 @@ class User < Principal
       CrossGroup.find(:all, :include => :group_banner, :conditions => ["se_visibile = 1 AND asso_id = #{self.asso_id}"])
     end
   end
-
+  def my_abbo_isprivate?
+    if self.cross_organization_id.nil? && self.asso_id.nil?
+      true
+    else
+      false
+    end
+  end
   #CALL this procedure from Frontend only
   def isfee?(issue = nil)
     #return false

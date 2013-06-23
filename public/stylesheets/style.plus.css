@@ -343,10 +343,11 @@
 }
 
 .fs-logged2 {
-    margin-top: 3px;
-    padding: 3px 0 0 6px;
-    display: block;
     float: left;
+    display: table;
+    width: 98%;
+    height: auto;
+    overflow: hidden;
 }
 
 .fs-logged2 a,
@@ -359,9 +360,26 @@
     color: #a52a2a;
 }
 
-#fs-login2-txt {
-    width: 175px;
-    float: left;
+.fs-login-my-abbo {
+    font-size: 0.9em;
+    width: 98%;
+    color: #016284;
+    font-style: italic;
+
+}
+
+.fs-logged2 img {
+    float: right;
+}
+
+.fs-logged2 span {
+    height: 50px;
+    display: table-cell;
+    vertical-align: middle;
+    font-variant: small-caps;
+    overflow: hidden;
+    font-size: 1.2em;
+    text-align: center;
 }
 
 #fs-login2-asso {
@@ -872,7 +890,7 @@ h3.fs-postheader {
 .fs-postmetadata-full {
     background: #ffffff;
     border-bottom: 1px solid #e7e7e7;
-  /*  border-top: 1px solid #e7e7e7;        */
+    /*  border-top: 1px solid #e7e7e7;        */
     margin: 10px auto;
     position: relative;
     float: left;
@@ -953,8 +971,9 @@ h3.fs-postheader {
     padding: 3px;
 
 }
-.fs-box-link div{
-float: left;
+
+.fs-box-link div {
+    float: left;
 }
 
 /*per il blocco edizioni */
@@ -2019,10 +2038,12 @@ float: left;
     min-height: 75px;
     margin: 4px 2px;
     position: absolute;
-    z-index: 10; vertical-align: middle;
+    z-index: 10;
+    vertical-align: middle;
 
 }
-#fs-flash p{
+
+#fs-flash p {
     text-align: center;
     color: #ffce0b;
     font-size: 18px;
@@ -3662,27 +3683,28 @@ html>body #ajax-indicator {
 .button-next, .finish {
     float: right;
 }
+
 /*
 .button-back, .button-next, .finish {
-    border: 1px solid #327E04;
-    color: #FFF;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.1em;
-    padding: 3px 10px;
-    text-decoration: none;
-    -khtml-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -opera-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+  border: 1px solid #327E04;
+  color: #FFF;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 3px 10px;
+  text-decoration: none;
+  -khtml-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -opera-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
 }
 
 .button-back:hover, .button-next:hover, .finish:hover {
-    border-color: #9FC898;
-    color: #9FC898;
+  border-color: #9FC898;
+  color: #9FC898;
 }
-  */
+*/
 .step {
     border: 1px solid #DDD;
     clear: left;
@@ -3747,43 +3769,52 @@ html>body #ajax-indicator {
 #fs_informa {
     padding: 7px;
 }
+
 .register-switch-item {
     height: 50px;
     width: 33%;
-    float:left;
+    float: left;
     display: table-cell;
     color: #fff;
     background-color: #00465e;
 }
+
 .register-switch-item  .fe-notice {
     border-bottom: none !important;
 
 }
-#register-switch input   , #register-switch span , #register-switch label{
+
+#register-switch input, #register-switch span, #register-switch label {
     display: inline;
     vertical-align: middle;
 }
-#register-switch input{
+
+#register-switch input {
     margin-left: -10px;
 }
-#register-switch span{
+
+#register-switch span {
     margin-left: 4px;
 }
-#register-switch{
+
+#register-switch {
     height: 100px;
 }
-#register-switch label{
-   margin: 0 !important;
+
+#register-switch label {
+    margin: 0 !important;
     padding: 3px;
 }
+
 #register-switch p {
-  /*  background-color: #3e89b2;   */
-    width:220px;
+    /*  background-color: #3e89b2;   */
+    width: 220px;
     display: inline-block;
     vertical-align: middle;
-    padding:0;
+    padding: 0;
 }
-.fs-register{
+
+.fs-register {
     display: block;
     height: auto;
     padding: 20px;

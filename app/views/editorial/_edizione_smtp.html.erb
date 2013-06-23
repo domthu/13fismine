@@ -1,18 +1,22 @@
 <%# @project= Project.all_public_fs.find_by_id params[:id].to_i project @art.count  %>
 <%# @prj.testuser(1010) %>
 <%# @prj.newsletter_smtp(1) %>
-<% defurl =  "http://" + Setting.host_name %>
+<% defurl = "http://" + Setting.host_name %>
 <style type="text/css" xmlns="http://www.w3.org/1999/html">
-    /* Backgrounds */
+        /* Backgrounds */
     .email_background {
         width: 640px;
         background: url('<%= defurl %>/images/commons/email_bg.jpg') repeat-y;
     }
-    table td { padding: 0}
-    .smtp{
-      color: #00212D;
-      font-family: Arial,Helvetica,Sans-Serif;
-      font-size: 13px;
+
+    table td {
+        padding: 0
+    }
+
+    .smtp {
+        color: #00212D;
+        font-family: Arial, Helvetica, Sans-Serif;
+        font-size: 13px;
     }
 </style>
 
@@ -28,9 +32,10 @@
 <tr>
   <td valign="bottom" height="40" align="center">
     <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
-      La newsletter di Fiscosport, puoi consultare l'edizione
-      <%= link_to(@project.description, {:controller=> 'editorial', :action=> 'edizione_newsletter',:id => @project.id}, :class => "newwin", :target => '_blank') %> direttamente online.
-      </font>
+      La newsletter di Fiscosport, puoi consultare l'edizione &nbsp;
+      <%= link_to(@project.description, url_for(defurl+ edizione_path + @project.id.to_s), :class => "newwin", :style => 'color:#fff;', :target => '_blank') %>
+      direttamente online.
+    </font>
   </td>
 </tr>
 <tr>
@@ -55,24 +60,38 @@
 <!-- Inizio sezione con logo e nomeutente -->
 <table width="560" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td width="242" height="110" align="left" valign="top">
+    <td width="242" align="left" valign="top">
       <!-- logo -->
-
       <a href="<%= defurl %>" target="_blank"><img src="<%= defurl %>/images/commons/fiscosport_news.jpg" border="0" height="106"/></a>
-
     <td align="left" valign="top">
       <!-- tabella di 2 righe per il testo -->
       <table width="318" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td height="50" align="left" valign="center" style="border-bottom:1px solid #1C6693;">
-            <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height: 18px; ">
-              Newsletter riservata a :<span style="font-size: 18px;">
-                            <%= User.current.firstname %> &nbsp; <%= User.current.lastname %></span>
-            </font></td>
+          <td  height="0" align="left" valign="center" style="border-bottom:1px solid #1C6693;">
+            <table width="100%">
+              <tr>
+                <td align="center" valign="center" style="text-align: center;">
+                  <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-style:italic; font-size:12px; color:#a03120; line-height:15px;">
+                    Questa newsletter è riservata a :</font>
+                </td>
+              <tr>
+                <td height="50" align="center" valign="center" style="text-align: center;">
+                  <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:18px; color:#333333; line-height: 25px;">
+                    <%= @user.firstname %> &nbsp; <%= @user.lastname %></font>
+                </td>
+              </tr>
+            </table>
+          </td>
+        <tr>
+          <td align="center" valign="bottom" style="text-align: center;">
+            &nbsp;
+          </td>
         </tr>
         <tr>
-          <td width="318" height="50" align="left" valign="center" style="border-bottom:1px solid #cccccc;">
-            <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:13px; color:#333333; line-height:18px; font-weight: bold;"> <%= User.current.soc %> </font>
+          <td align="center" valign="bottom" style="text-align: center;">
+            <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-style:italic; font-size:12px; color:#a03120; line-height:15px;">
+              <span style="margin-top: 10px;">
+              <%= 'Il suo abbonamento  a Fiscosport è offerto da:' %> </span></font>
           </td>
         </tr>
       </table>
@@ -82,36 +101,19 @@
 </table>
 <!-- fine sezione con logo e nomeutente -->
 <!-- inizio visibile solo se associato o affiliato-->
-<% if User.current.associazione_affiliata %>
-    <table width="560" border="0" cellpadding="0" cellspacing="0">
-      <tr>
-        <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
-          <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:18px; font-weight: bold;">
-            Associato a:<%=User.current.cross_organization.organizzazione %>&nbsp;<%=User.current.cross_organization.sigla %>&nbsp;<%= link_to h(User.current.associazione_affiliata), asso_path(User.current.associazione_affiliata), :target => '_blank', :style => "text-decoration:none;" %>
-          </font>
-        </td>
-        <td width="55" valign="bottom" align="right">
-          <img src="<%= defurl %>/images/commons/assos/#{ User.current.asso.logo}" width="50" height="50" border="0"/>
-        </td>
-      </tr>
-    </table>
-<% else %>
-    <% if User.current.sigla_tipo() %>
-        <table width="560" border="0" cellpadding="0" cellspacing="0">
-          <tr>
-            <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
-              <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:11px; color:#333333; line-height:18px; font-weight: bold;">
-                Affiliato
-                a: <%= link_to h(User.current.sigla_tipo()), asso_path(User.current.sigla_tipo()), :target => '_blank', :style => "text-decoration:none;" %>
-              </font>
-            </td>
-            <td width="55" valign="bottom" align="right">
-              <img src="<%= defurl %>/images/ico/fs.png" width="50" height="50" border="0"/>
-            </td>
-          </tr>
-        </table>
-    <% end %>
-<% end %>
+<table width="560" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="500"  bgcolor="#ffffff" align="right" style="vertical-align: middle;">
+      <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:15px; color:#1e1e1e; line-height:18px; font-weight: bold;">
+        <%= user_myasso_text(@user) %>
+      </font>
+    </td>
+    <td width="60" valign="bottom" align="right">
+      <%= image_tag(user_myasso_icon(@user, :s), :width => 48, :height => 48) %>
+    </td>
+  </tr>
+</table>
+
 <!-- fine riga visibile solo se associato o è affiliato'  / sotto un'ummagine di spazio -->
 <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
   <tr>
@@ -155,7 +157,8 @@
               <table width="560" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td width="36" height="30" align="center" valign="top">
-                    <img src="<%= defurl %>/images/ico/freg-y.png" border="0"/>
+                    <!--
+                    <img src="<%#defurl %>/images/ico/freg-y.png" border="0"/>     -->
                   </td>
                   <td width="524" align="left" valign="center" bgcolor="ffffff" style="border-top:solid 1px #f1e9b8;">
                     <font style="font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333; line-height:2em;">
@@ -176,19 +179,19 @@
         <td width="560">
           <table width="560" border="0" cellpadding="10" cellspacing="0">
             <tr>
-              <td width="24" align="left" valign="center">
+              <td width="28" align="left" valign="middle">
                 <a href="#<%= ancora %>">
                   <img src="<%= defurl %>/images/ico/fred24-y.png" border="0"/>
                 </a>
               </td>
-              <td width="536" align="left" valign="center">
+              <td width="532" align="left" valign="center">
 
-                <font style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">
-                  <a href="#<%= ancora %>" style="color:#333333; text-decoration: none;" >
-                    <strong><%= h(nart.subject) %> </strong>
+                <font style="font-family:Arial, Helvetica, sans-serif; font-size:13px;">
+                  <a href="#<%= ancora %>" style="color:#333333; text-decoration: none;">
+                    <%= h(nart.subject) %>
                   </a>
                 </font>
-                <br/>
+                <br/> &nbsp;
               </td>
             </tr>
           </table>
@@ -221,10 +224,10 @@
   </tr>
   <tr>
     <td width="100" align="right" valign="center" height="50">
-      <img src="<%= defurl %>/images/commons/sommario_ico.jpg" border="0" alt="Sommario" />
+      <img src="<%= defurl %>/images/commons/sommario_ico.jpg" border="0" alt="Sommario"/>
     </td>
     <td width="460" align="right" valign="center" height="50">
-      <img src="<%= defurl %>/images/commons/sommario.jpg" border="0" alt="Sommario" />
+      <img src="<%= defurl %>/images/commons/sommario.jpg" border="0" alt="Sommario"/>
     </td>
   </tr>
   <tr>
@@ -246,16 +249,9 @@
             <tr>
               <!-- sotto: immagine sx -->
               <td width="120" align="left" valign="top" rowspan="2">
-                <%= if articolo.immagine_url.nil? || !(FileTest.exist?("#{RAILS_ROOT}/public/images/#{articolo.immagine_url}"))
-                      if FileTest.exist?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.immagine}")
-                        "<img src='" + defurl + "/images/commons/sections/" + articolo.top_section.immagine + "' id='" + ancora + "' alt='" + truncate(articolo.subject, :length => 25) + "' width='120px' />"
-                      else
-                        "<img src='" + defurl + "/images/commons/sections/no-img.jpg' id='" + ancora + "' alt='" + truncate(articolo.subject, :length => 25) + "' width='120px' />"
-                      end
-                    else
-                      "<img src='" + defurl + "/" + articolo.immagine_url + "' id='" + ancora + "' alt='" + truncate(articolo.subject, :length => 25) + "' />"
-                    end
-                %>
+
+                <%= link_to(image_tag(art_image(articolo, :m)), link_to_articolo(articolo, {:absolute_path => true}), :id => ancora) %>
+
               </td>
               <!-- titolo  -->
               <td width="440" align="left" valign="top">
@@ -287,8 +283,8 @@
           <table width="560" border="0" cellpadding="0" cellspacing="0">
             <tr>
               <td width="560" height="33" align="right" valign="top">
-                <%= link_to_articolo(articolo, {:target => "_blank", :title=> "<img src='" + defurl + "/images/commons/btn_news_y.gif' width='107' height='29' alt='vedi articolo' />"}) %>
-             </td>
+                <%= link_to(image_tag(defurl + '/images/commons/btn_news_y.gif', :width => 107, :height => 26), link_to_articolo(articolo, {:absolute_path => true}), :target => "_blank") %>
+              </td>
             </tr>
           </table>
         </td>
@@ -312,7 +308,7 @@
 <tr>
   <td valign="top" height="80" align="center">
     <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff;">
-      footer
+      &nbsp;
     </font>
   </td>
 </table>

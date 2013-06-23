@@ -1238,6 +1238,42 @@ module ApplicationHelper
     end
   end
 
+  # per l'icona associazioni eecc
+  def user_myasso_icon(user = nil, taglia = :l, options={} )
+    if user.canbackend? || user.admin?
+      return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
+    end
+    if !user.asso_id.nil?
+      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/assos/#{user.asso.image_file_name}") == false)
+        return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
+      else
+        return user.asso.image.url(taglia)
+      end
+    elsif !user.sigla_tipo.nil?
+      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/organizations/#{user.cross_organizations.image_file_name}") == false)
+        return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
+      else
+        return user.cross_organizations.image.url(taglia)
+      end
+    else
+      return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
+    end
+
+  end
+
+  def user_myasso_text(user = nil)
+    if user.canbackend? || user.admin?
+      return "Staff di Fiscosport"
+    end
+    if !user.asso_id.nil?
+      return user.asso.ragione_sociale
+    elsif !user.cross_organization_id.nil?
+      return user.cross_organizations.organizzazione + ' | ' + user.cross_organizations.sigla
+    else
+      return "Abbonamento privato"
+    end
+  end
+
 
   #nel be mette l'icona ecco i parametri :
   #usr utente , parametro obbligatorio occorre sempre per primo
@@ -1274,8 +1310,6 @@ module ApplicationHelper
       end
       return s
     end
-
-
   end
 
 
@@ -1291,6 +1325,7 @@ module ApplicationHelper
   def link_to_content_update(text, url_params = {}, html_options = {})
     link_to(text, url_params, html_options)
   end
+end
 #  def link_to_content_update(text, url_params = {}, html_options = {}, path_prefix=nil)
 #    if path_prefix.nil?
 #      link_to(text, url_params, html_options)
@@ -1300,19 +1335,19 @@ module ApplicationHelper
 #    end
 #  end
 
-end
+
+  def smart_truncate(text, char_limit)
+    text = text.squish
+    size = 0
+    text.mb_chars.split().reject do |token|
+      size+=token.size()
+      size>char_limit
+    end.join(" ") +(text.size()>char_limit ? " "+ "..." : "")
+  end
+
 
 class String
   def to_slug
     ActiveSupport::Inflector.transliterate(self.downcase).gsub(/[^a-zA-Z0-9]+/, '-').gsub(/-{2,}/, '-').gsub(/^-|-$/, '')
   end
-end
-
-def smart_truncate(text, char_limit)
-  text = text.squish
-  size = 0
-  text.mb_chars.split().reject do |token|
-    size+=token.size()
-    size>char_limit
-  end.join(" ") +(text.size()>char_limit ? " "+ "..." : "")
 end
