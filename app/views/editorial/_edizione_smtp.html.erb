@@ -109,7 +109,7 @@
       </font>
     </td>
     <td width="60" valign="bottom" align="right">
-      <%= image_tag(user_myasso_icon(@user, :s), :width => 48, :height => 48) %>
+      <%= image_tag(defurl + user_myasso_icon(@user, :s), :width => 48, :height => 48) %>
     </td>
   </tr>
 </table>
@@ -252,7 +252,7 @@
               <!-- sotto: immagine sx -->
               <td width="120" align="left" valign="top" rowspan="2">
 
-                <%= link_to(image_tag(art_image(articolo, :m)), link_to_articolo(articolo, {:absolute_path => true}), :id => ancora) %>
+                <%= link_to(image_tag( defurl + art_image(articolo, :m)), link_to_articolo(articolo, {:only_path => false}), :id => ancora) %>
 
               </td>
               <!-- titolo  -->
@@ -285,7 +285,7 @@
           <table width="560" border="0" cellpadding="0" cellspacing="0">
             <tr>
               <td width="560" height="33" align="right" valign="top">
-                <%= link_to(image_tag(defurl + '/images/commons/btn_news_y.gif', :width => 107, :height => 26), link_to_articolo(articolo, {:absolute_path => true}), :target => "_blank") %>
+                <%= link_to(image_tag(defurl + '/images/commons/btn_news_y.gif', :width => 107, :height => 26), link_to_articolo(articolo, {:only_path => false , :target => "_blank"})) %>
               </td>
             </tr>
           </table>

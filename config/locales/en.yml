@@ -205,6 +205,7 @@ en:
   notice_failed_to_save_dati: "Impossibile salvare i dati per l'utente(i): %{errors}."
   notice_failed_to_save_fatture: "Impossibile salvare la fattura per l'utente(i): %{errors}."
   notice_successful_assigned: Assegnazione collaborati effettuata.
+  notice_failed_to_send_newsletter:  "Impossibile inviare la newsletter errore: %{errors}."
 
   error_can_t_load_default_data: "Default configuration could not be loaded: %{value}"
   error_scm_not_found: "The entry or revision was not found in the repository."

@@ -45,23 +45,28 @@ module ApplicationHelper
   end
 
   def link_to_articolo(articolo, options={})
-    title = options[:title] || "?"
+    title = options[:title] || " "
     classe = options[:class] || " "
     target = options[:target] || "_self"
-    if articolo.is_convegno?
-      s = url_for(:controller => 'editorial', :action => 'evento', :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug))
+    only_path =options[:only_path]
+    if only_path == false
+      return url_for(:controller => 'editorial', :action => 'evento', :id => articolo.id.to_s, :only_path => false, :slug => h(truncate(articolo.subject, :length => 125).to_slug))
     else
-      s = url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug))
-    end
-    #escape? add extra html_option?
-    if User.current.logged?
-      #return link_to(title, s ,:class => classe, :escape => false, :target => target, :rel => "nofollow" )
-      return link_to(title, s, :class => classe, :target => target, :rel => "nofollow")
-    else
-      #return link_to(title, s ,:class => classe, :escape => false, :rel => "nofollow", :target => target, :back_url =>  s )
-      return link_to(title, s, :class => classe, :target => target, :rel => "nofollow", :back_url => s)
+      if articolo.is_convegno?
+        s = url_for(:controller => 'editorial', :action => 'evento', :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug))
+      else
+        s = url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug))
+      end
+      if User.current.logged?
+        #return link_to(title, s ,:class => classe, :escape => false, :target => target, :rel => "nofollow" )
+        return link_to(title, s, :class => classe, :target => target, :rel => "nofollow")
+      else
+        #return link_to(title, s ,:class => classe, :escape => false, :rel => "nofollow", :target => target, :back_url =>  s )
+        return link_to(title, s, :class => classe, :target => target, :rel => "nofollow", :back_url => s)
+      end
     end
   end
+
 
   # Displays a link to +issue+ with its subject.
   # Examples:
@@ -1239,7 +1244,7 @@ module ApplicationHelper
   end
 
   # per l'icona associazioni eecc
-  def user_myasso_icon(user = nil, taglia = :l, options={} )
+  def user_myasso_icon(user = nil, taglia = :l, options={})
     if user.canbackend? || user.admin?
       return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
     end
@@ -1336,14 +1341,14 @@ end
 #  end
 
 
-  def smart_truncate(text, char_limit)
-    text = text.squish
-    size = 0
-    text.mb_chars.split().reject do |token|
-      size+=token.size()
-      size>char_limit
-    end.join(" ") +(text.size()>char_limit ? " "+ "..." : "")
-  end
+def smart_truncate(text, char_limit)
+  text = text.squish
+  size = 0
+  text.mb_chars.split().reject do |token|
+    size+=token.size()
+    size>char_limit
+  end.join(" ") +(text.size()>char_limit ? " "+ "..." : "")
+end
 
 
 class String

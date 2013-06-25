@@ -209,6 +209,7 @@ it:
   notice_failed_to_save_dati: "Impossibile salvare i dati per l'utente(i): %{errors}."
   notice_failed_to_save_fatture: "Impossibile salvare la fattura per l'utente(i): %{errors}."
   notice_successful_assigned: Assegnazione collaborati effettuata.
+  notice_failed_to_send_newsletter:  "Impossibile inviare la newsletter errore: %{errors}."
 
   error_can_t_load_default_data: "Non è stato possibile caricare la configurazione predefinita : %{value}"
   error_scm_not_found: "La risorsa e/o la versione non esistono nel repository."
