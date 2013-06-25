@@ -254,7 +254,7 @@ it:
 
   gui_validation_error: 1 errore
   gui_validation_error_plural: "%{count} errori"
-
+  field_id: 'Num.#'
   field_name: Nome
   field_description: Testo
   field_summary: Sommario
@@ -289,7 +289,7 @@ it:
   field_assigned_to: Assegnato a
   field_priority: Priorità
   field_fixed_version: Versione prevista
-  field_user: Utente
+  field_user: Login
   field_principal: Principale
   field_role: Ruolo
   field_homepage: Homepage
@@ -318,8 +318,8 @@ it:
   field_onthefly: "Creazione utente 'al volo'"
   field_start_date: Inizio
   field_done_ratio: "% completato"
-  field_auth_source: Modalità di autenticazione
-  field_hide_mail: Nascondi il mio indirizzo email
+  field_auth_source: Autenticazione
+  field_hide_mail: Nascondi email
   field_comments: Commento
   field_url: URL
   field_start_page: Pagina principale
@@ -352,7 +352,7 @@ it:
   field_assigned_to_role: "Ruolo dell'assegnatario"
   field_text: Campo di testo
   field_visible: Visibile
-  field_warn_on_leaving_unsaved: Avvisami quando lascio una pagina con testo non salvato
+  field_warn_on_leaving_unsaved: Avviso di salvataggio modifiche
   field_issues_visibility: Visibilità articoli
   field_is_private: Privato
   field_commit_logs_encoding: Codifica dei messaggi di commit
@@ -581,9 +581,9 @@ it:
   label_logged_as: Benvenuto
   label_environment: Ambiente
   label_authentication: Autenticazione
-  label_auth_source: Modalità di autenticazione
-  label_auth_source_new: Nuova modalità di autenticazione
-  label_auth_source_plural: Modalità di autenticazione
+  label_auth_source: Modalità autenticazione
+  label_auth_source_new: Nuova modalità autenticazione
+  label_auth_source_plural: Modalità autenticazione
   label_subproject_plural: Sottoedizioni
   label_subproject_new: Nuova sottoedizione
   label_and_its_subprojects: "%{value} ed le sue sottoedizioni"

@@ -161,6 +161,7 @@
 
 <p></p>
         <p><label><%= l(:label_role) %></label><strong>
+          <p><%= f.check_box :admin, :disabled => (@user == User.current) %></p>
         <% roles_fs.each do |role| %>
           <%= radio_button_tag 'user[role_id]', role.id, (role.id == @user.role_id) %> <%=h role %>
           <br />
