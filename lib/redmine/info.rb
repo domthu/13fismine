@@ -1,10 +1,10 @@
 module Redmine
   module Info
     class << self
-      def app_name; 'fismine' end
-      def url; 'http://monamiweb.it/fismine/' end
-      def app_name_fs; 'MerciDolci' end
-      def url_fs; 'http://www.mercidolci.it/' end
+      def app_name; 'FISMINE for Fiscosport' end
+      def url; 'http://fiscosport.it/' end
+      def app_name_fs; 'Fiscosport' end
+      def url_fs; 'http://fiscosport.it/'  end
       #dom@monamiweb.it
       #def help_url; 'http://www.dom.monamiweb.it/' end
       #def help_url; 'http://www.redmine.org/guide' end

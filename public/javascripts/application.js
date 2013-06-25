@@ -1,5 +1,5 @@
 /* redMine - project management software
- Copyright (C) 2006-2008  Jean-Philippe Lang */
+ Copyright (C) 2006-2008  Created by  DomThual & SPecchiaSoft (2013)  */
 
 function checkAll(id, checked) {
     var els = Element.descendants(id);

@@ -1,5 +1,5 @@
 # RedMine - project management software
-# Copyright (C) 2006-2011  Jean-Philippe Lang
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
 #
 # FileSystem adapter
 # File written by Paul Rivier, at Demotera.
