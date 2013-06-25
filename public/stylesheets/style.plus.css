@@ -3772,11 +3772,13 @@ html>body #ajax-indicator {
 
 .register-switch-item {
     height: 50px;
-    width: 33%;
+    width: 49%;
     float: left;
     display: table-cell;
     color: #fff;
     background-color: #00465e;
+    line-height: 4em;
+    margin-left: 5px;
 }
 
 .register-switch-item  .fe-notice {
@@ -3792,28 +3794,23 @@ html>body #ajax-indicator {
 #register-switch input {
     margin-left: -10px;
 }
-
 #register-switch span {
     margin-left: 4px;
 }
-
-#register-switch {
+   #register-switch {
     height: 100px;
+    text-align: center;
 }
-
 #register-switch label {
     margin: 0 !important;
     padding: 3px;
 }
-
 #register-switch p {
     /*  background-color: #3e89b2;   */
-    width: 220px;
     display: inline-block;
-    vertical-align: middle;
-    padding: 0;
+    text-align: left;
+    margin: 0 auto;
 }
-
 .fs-register {
     display: block;
     height: auto;

@@ -289,14 +289,14 @@ it:
   field_assigned_to: Assegnato a
   field_priority: Priorità
   field_fixed_version: Versione prevista
-  field_user: Login
+  field_user: Utente
   field_principal: Principale
   field_role: Ruolo
   field_homepage: Homepage
   field_is_public: Pubblico
   field_parent: Sottoedizione di
   field_is_in_roadmap: articoli mostrati nella roadmap
-  field_login: Utente
+  field_login: Login
   field_mail_notification: Notifiche via email
   field_admin: Amministratore
   field_last_login_on: Ultima connessione
@@ -1267,8 +1267,8 @@ it:
 # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
 # asso (Categoria utente) ha tanti utenti
 # asso ha uno (o più) Organismi Associati NON ha asso.organization_id?
-  field_asso: Associato
-  label_asso: Associato
+  field_asso: Affiliato
+  label_asso: Affiliato
   label_asso_plural: Associazioni aderenti
   label_asso_new: Nuova associazione aderente
   label_asso_associated_group_banner: Banner di associazioni

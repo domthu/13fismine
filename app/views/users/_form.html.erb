@@ -3,13 +3,26 @@
 <div id="user_form">
 <!--[form:user]-->
 <div class="splitcontentleft">
+  <fieldset class="box tabular">
+    <legend><%=l(:label_authentication)%></legend>
+    <% unless @auth_sources.empty? %>
+    <p><%= f.select :auth_source_id, ([[l(:label_internal), ""]] + @auth_sources.collect { |a| [a.name, a.id] }), {}, :onchange => "if (this.value=='') {Element.show('password_fields');} else {Element.hide('password_fields');}" %></p>
+    <% end %>
+    <p><%= f.text_field :login, :required => true  %></p>
+    <div id="password_fields" style="<%= 'display:none;' if @user.auth_source %>">
+    <p><%= f.password_field :password, :required => true, :size => 25  %></p>
+
+    <p><%= f.password_field :password_confirmation, :required => true, :size => 25  %></p>
+    <p class="mini-legend">  <%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></p>
+    </div>
+  </fieldset>
 <fieldset class="box tabular">
   <legend><%=l(:label_information_plural)%></legend>
-  <p><%= f.text_field :login, :required => true, :size => 25  %></p>
+
   <p><%= f.text_field :firstname, :required => true %></p>
   <p><%= f.text_field :lastname, :required => true %></p>
   <p><%= f.text_field :mail, :required => true %></p>
-  <p><%= f.select :language, lang_options_for_select %></p>
+
   <% if Setting.openid? %>
   <p><%= f.text_field :identity_url  %></p>
   <% end %>
@@ -18,22 +31,21 @@
     <p><%= custom_field_tag_with_label :user, value %></p>
   <% end %>
 
-  <p><%= f.check_box :admin, :disabled => (@user == User.current) %></p>
-  <%= call_hook(:view_users_form, :user => @user, :form => f) %>
+
+    <p><%= f.text_field :indirizzo, :label => :field_indirizzo, :required => false, :size => 25  %></p>
+    <p><%= f.select :comune_id, (Comune.all.collect {|c| [c.name, c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_comune)  %></p>
+
+
 </fieldset>
 
-<fieldset class="box tabular">
-  <legend><%=l(:label_authentication)%></legend>
-  <% unless @auth_sources.empty? %>
-  <p><%= f.select :auth_source_id, ([[l(:label_internal), ""]] + @auth_sources.collect { |a| [a.name, a.id] }), {}, :onchange => "if (this.value=='') {Element.show('password_fields');} else {Element.hide('password_fields');}" %></p>
-  <% end %>
-  <div id="password_fields" style="<%= 'display:none;' if @user.auth_source %>">
-  <p><%= f.password_field :password, :required => true, :size => 25  %><br />
-  <em><%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></em></p>
-  <p><%= f.password_field :password_confirmation, :required => true, :size => 25  %></p>
-  </div>
-</fieldset>
+
 </div>
+  <div class="splitcontentright">
+  <fieldset  class="box tabular">
+    <legend><%=l(:label_preferences)%></legend>
+    <p><%= f.select :language, lang_options_for_select %></p>
+  </fieldset>
+   </div>
 
 <div class="splitcontentright">
 <fieldset class="box">

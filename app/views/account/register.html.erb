@@ -77,14 +77,15 @@
 
 
         <div class="step" id="register-switch">
-          <h4 title="Anagrafica"> Specifica il tipo di abbonamento...</h4>
+
+                    <h4 title="Anagrafica"> Specifica il tipo di abbonamento...</h4>
           &nbsp;<br/>
 
           <div class="register-switch-item">
             <span class="fe-notice" title="Non dipendo da nessun associazione mi voglio registrare personalmente."></span>
             <input id="radio1" name="rbt" type="radio" value="dv_privato"/>
 
-            <p><label for="radio1">Sono un privato<br/> &nbsp; </label></p>
+            <p><label for="radio1">Sono un privato </label></p>
           </div>
           <div class="register-switch-item">
             <span class="fe-notice" title="Selezionerò l'associazione nella lista delle associazioni registrate in Fiscosport"></span>
@@ -92,13 +93,9 @@
 
             <p><label for="radio2">Sono membro di una associazione</label></p>
           </div>
-          <div class="register-switch-item">
-            <span class="fe-notice" title="Vedo se la mia associazione esiste già nella lista. Altrimenti registrerò il mio gruppo o associazione a Fiscosport"></span>
-            <input id="radio3" name="rbt" type="radio" value="dv_responsabile"/>
-
-            <p><label for="radio3">Sono il responsabile di una associazione o un gruppo </label></p>
           </div>
-        </div>
+
+
         &nbsp;<br/>
 
         <div class="clearfix"></div>
@@ -228,8 +225,7 @@
         <div class="fs-abbo-dx1">
           <p><%= f.text_field :codice, {:style => 'width:89%;', :label => l(:field_codice_segnalatore), :maxlength => 255} %></p>
 
-          <div class="fe-notice" style="text-align: left; padding: 0 40px;">La tua associazione o qualcun'altro ti ha
-            dato un codice promozionale? inserilo qui.
+          <div class="fe-notice" style="text-align: left; padding: 0 40px;">  Codice?
           </div>
         </div>
       <p> <br />&nbsp;<br />&nbsp;<br />&nbsp;<br />&nbsp;<br /></p>

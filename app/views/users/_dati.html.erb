@@ -23,15 +23,7 @@
 
       </fieldset>
 
-      <fieldset class="box tabular">
-        <legend><%=l(:label_localizazzione)%></legend>
 
-        <p><%= f.text_field :indirizzo, :label => :field_indirizzo, :required => false, :size => 25  %></p>
-        <p><%= f.text_field :cap, :label => :field_cap, :required => false, :size => 25  %></p>
-        <p><%= f.select :comune_id, (Comune.all.collect {|c| [c.name, c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_comune)  %></p>
-        <p><%= f.text_field :prov, :label => :field_prov, :required => false, :size => 25  %></p>
-
-      </fieldset>
 
     </div>
     <div class="splitcontentright">
