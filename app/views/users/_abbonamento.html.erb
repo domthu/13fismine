@@ -178,23 +178,3 @@
 
   <p><%= submit_tag l(:button_save_abbonamento) %></p>
 <% end %>
-
-
-  belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
-  #TODO: verificare ci potrebbe essere che alcuni associazione Sigla - Tipo non appare nella tabella CrossOrganization
-  # prova per i banner (sandro)
-  ##su cross_group.rb è :
-  #  belongs_to :user
-  #  belongs_to :group_banner
-  has_many :cross_groups
-  has_many :group_banners, :through => :cross_groups
-
-  #l'utente può essere il referente di una (o più) organizzazione
-  #2.7 Choosing Between belongs_to and has_one. La foreign key si trova sulla tabella che fa belongs_to
-  #Puo anche essere il power_user di un organization
-  #has_one :reference, :class_name => 'Organization', :dependent => :nullify
-  has_many :references, :class_name => 'Organization', :dependent => :nullify
-
-
-
-  has_many :invoices, :class_name => 'Invoice', :dependent => :destroy

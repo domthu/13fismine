@@ -46,26 +46,18 @@
                         if (data.success) {
                             //OnSuccess
                             if (data.response) {
-                                $("#fs-flash").html('<p> <span class="success"></span>' + data.response + '</p>').focus();
+                                js_flash("success", data.response);
                             }
-                        } else if (data.errors) {
-                            s = "";
-                            if ($.isArray(data.errors)) {
-                                $.each(data.errors, function (index, value) {
-                                    s += '<p> <span class="error"></span>' + value + '</p>'
-                                });
-                            } else {
-                                s += '<p> <span class="error"></span>' + data.errors + '</p>'
+                        } else {
+                          //Onerror
+                          if (data.errors) {
+                            js_flash("error", data.errors);
                             }
-                            $("#fs-flash").html(s).focus();
-                        }
-                        else {
-                            $("#fs-flash").html('<p> <span class="alert"></span> La prova non è andata a buon fine: <br />' + data.response + '</p>').focus();
                         }
                     });
         }
         else {
-            $("#fs-flash").html('<p> <span class="notice"></span> Tutti i campi devono essere compilati</p>').focus();
+            js_flash("alert", "Tutti i campi devono essere compilati");
         }
         return false;
     }
