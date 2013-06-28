@@ -496,9 +496,9 @@
                 function (data) {
                     data = data || {};
                     if (data.success) {
-                        $("#flash_notice").html("Controllo del campo " + id + " per il valore (" + val + ")");
                         //OnSuccess
                         if (data.available) {
+                          js_flash("notice", "Controllo del campo " + id + " per il valore ("   + val + ") disponibile");
                             $("#no_" + id).hide('explode', {}, 450);
                             var obj = $("#si_" + id);
                             setTimeout(function () {
@@ -506,6 +506,7 @@
                             }, 500);
                         }
                         if (data.unavailable) {
+                            js_flash("alert", "Controllo del campo " + id + " per il valore ("   + val + ") NON disponibile");
                             $("#si_" + id).hide('puff', {}, 450);  //'fast'
                             var obj = $("#no_" + id);
                             setTimeout(function () {
@@ -513,9 +514,8 @@
                             }, 500);
                         }
                     } else if (data.errors) {
-                        $("#flash_error").html("Controllo del campo " + id + " per il valore (" + val + ")");
-                        $("#flash_error").html(data.errors);
-                        //showerrmsg(data.errors);
+                        data.errors += "Controllo del campo " + id + " per il valore (" + val + ")";
+                        js_flash("error", data.errors);
                     }
                 }
         );

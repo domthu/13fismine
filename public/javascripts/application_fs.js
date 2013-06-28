@@ -56,3 +56,15 @@ function handleFileSelect(evt, prev_id, avatar) {
      funct_avatar(avatar);
     }
 }
+function js_flash(tipo, txt) {
+  //fs-flash
+  s = "";
+  if ($.isArray(txt)) {
+      $.each(txt, function (index, value) {
+          s += '<p> <span class="' + tipo + '"></span>' + value + '</p>'
+      });
+  } else {
+      s += '<p> <span class="' + tipo + '"></span>' + data.errors + '</p>'
+  }
+  $("#fs-flash").html(s).focus();
+}

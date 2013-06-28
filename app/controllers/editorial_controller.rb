@@ -323,7 +323,7 @@ class EditorialController < ApplicationController
       @email = params[:user_mail]
     end
     @stat =''
-    @errors = ''
+    @errors []
     raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
     # Force ActionMailer to raise delivery errors so we can catch it
     ActionMailer::Base.raise_delivery_errors = true
@@ -336,7 +336,8 @@ class EditorialController < ApplicationController
       #flash[:notice] = l(:notice_user_newsletter_email_sent)
       @stat = 'Email inviato correttamente <br />'
     rescue Exception => e
-      @errors += l(:notice_email_error, e.message)
+      @errors << l(:notice_email_error, e.message)
+      @errors << @stat
     end
     ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
 
@@ -354,7 +355,6 @@ class EditorialController < ApplicationController
     if (!@errors.nil? and @errors.length > 0)
       return render :json => {
           :success => false,
-          :response => @stat,
           :errors => @errors
       }
     end
