@@ -1,4 +1,21 @@
 <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
+  <% if User.current.logged? %>
+  <article class="fs-post fs-article">
+    <div class="fs-postcontent fs-postcontent-0 clearfix">
+      <div class="fs-content-layout">
+        <div class="fs-content-layout-row">
+          <div class="fs-layout-cell layout-item-0" style="width: 99%">
+            <%= get_status_role(User.current) %><h1 class="<%= User.current.role %>"><%= User.current.name %></h1>
+            <h2><%= user_role_iconized(User.current.icon(), :size => 'l', :text => ('Scadenza: ' + link_to( User.current.scadenza.to_s + ' (' + User.current.scadenza_fra + ')', :controller => 'mio_profilo', :action => 'account')), :icon_for => User.current.uicon()) %></h2>
+            <%# User.current.my_abbo_isprivate? %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+  </article>
+  <%	end  %>
+  <br/>
   <article class="fs-post fs-article">
     <div class="fs-postcontent fs-postcontent-0 clearfix">
       <div class="fs-content-layout">

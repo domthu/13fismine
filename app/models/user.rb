@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -209,7 +209,8 @@ class User < Principal
     end
   end
   def my_abbo_isprivate?
-    if self.cross_organization_id.nil? && self.asso_id.nil?
+    #if self.cross_organization_id.nil? && self.associazione_affiliata.nil?
+    if self.associazione_affiliata.nil?
       true
     else
       false

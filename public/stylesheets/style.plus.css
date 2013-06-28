@@ -3817,3 +3817,128 @@ html>body #ajax-indicator {
     padding: 20px;
     text-align: center;
 }
+/***** Icons *****/
+.icon {
+background-position: 0% 50%;
+background-repeat: no-repeat;
+padding-left: 20px;
+padding-top: 2px;
+padding-bottom: 3px;
+}
+
+/*State Fee Roles*/
+.admin{background: url(../images/ico/users_sprite.png) no-repeat 0 0; padding-left: 50px; min-height:55px;}
+.power_user{background: background: url(../images/ico/users_sprite.png) no-repeat 0 -50px; padding-left: 45px; min-height:50px; }
+.redattore{background: url(../images/ico/users_sprite.png) no-repeat 0 -100px; padding-left: 48px; min-height:53px; }
+.invitato{background: url(../images/ico/users_sprite.png) no-repeat 0 -150px; padding-left: 48px; min-height:53px; }
+.abbonato{background: url(../images/ico/users_sprite.png) no-repeat 0 -200px; padding-left: 32px; min-height:37px;}
+.registrato{background: url(../images/ico/users_sprite.png) no-repeat 0 -250px; padding-left: 40px; min-height:45px;}
+.inscadenza{background: url(../images/ico/users_sprite.png) no-repeat 0 -300px; padding-left: 64px; min-height:69px; }
+.scaduto{background: url(../images/ico/users_sprite.png) no-repeat 0 -350px; padding-left: 26px; font-style: italic; min-height:31px; }
+.archivied{background: url(../images/ico/users_sprite.png) no-repeat 0 -400px; padding-left: 16px; font-style: italic; min-height:21px; }
+
+/*Action Fee Roles*/
+.icon-admin {background: url(../images/ico/users_sprite.png) no-repeat -50px -10px; padding-left: 40px; min-height:21px;}
+.icon-man { background: url(../images/ico/users_sprite.png) no-repeat -50px -60px; padding-left: 40px; min-height:21px;}
+.icon-auth { background: url(../images/ico/users_sprite.png) no-repeat -50px -110px; padding-left: 40px; min-height:21px;}
+.icon-vip { background: url(../images/ico/users_sprite.png) no-repeat -50px -160px; padding-left: 30px; min-height:21px;}
+.icon-abbo { background: url(../images/ico/users_sprite.png) no-repeat -50px -210px; padding-left: 30px; min-height:21px;}
+.icon-reg { background: url(../images/ico/users_sprite.png) no-repeat -50px -260px; padding-left: 30px; min-height:21px;}
+.icon-renew { background: url(../images/ico/users_sprite.png) no-repeat -50px -310px; padding-left: 30px; min-height:21px;}
+.icon-exp { background: url(../images/ico/users_sprite.png) no-repeat -50px -360px; padding-left: 26px;font-style: italic; min-height:21px;}
+.icon-arc { background: url(../images/ico/users_sprite.png) no-repeat -50px -410px; padding-left: 16px; font-style: italic; min-height:21px;}
+.icon-no-role { background-image: url(../images/exclamation.png); padding-left: 16px;}
+.icon-no-user { background-image: url(../images/bullet_delete.png); padding-left: 16px;}
+
+/* sandro fee controller  utenti ruoli icons */
+.mini-legend, .mini-legend li{
+    font-size: 9px;
+    line-height: 1.5em;
+}
+.user-role-icon-l{
+    display:table-cell;
+    float:left;
+    min-height:50px;
+    vertical-align: middle;
+    width:100%;
+ }
+.user-role-icon-l span {
+    width:50px;
+    display:block;
+    float:left;
+    height:50px;
+    overflow: hidden;
+    margin-right: 10px;
+ }
+.user-role-icon-l p{
+    background-color: #f1f1f1;
+    float: none!important;
+    padding: 0;
+    clear: none;
+    margin: 1em;
+ }
+.user-role-icon-only-l{
+    display:table-cell;
+    float:left;
+    min-height:50px;
+    vertical-align: middle;
+    width:55px;
+}
+.user-role-icon-only-s {
+    display:table-cell;
+    float:left;
+    min-height:30px;
+    vertical-align: middle;
+    width:33px;
+}
+.user-role-icon-s {
+     display:table-cell;
+     float:left;
+     min-height:30px;
+     vertical-align: middle;
+     width:98%;
+     padding-left: 10px;
+ }
+.user-role-icon-s span {
+     width:30px;
+     display:block;
+     float:left;
+     height:30px;
+     overflow: hidden;
+    margin-right: 6px;
+ }
+.user-role-icon-s p{
+    background-color: #f1f1f1;
+    float: none!important;
+    padding: 0;
+    clear: none;
+    margin: 0.5em;
+ }
+.user-role-icon-s a {
+    color: #1e1e1e;
+    text-decoration: none;
+}
+ /*Action Fee Roles*/
+ .l-admin { background: url(../images/ico/users_sprite.png) no-repeat 0 0;}
+ .l-man { background: url(../images/ico/users_sprite.png) no-repeat 0 -50px;}
+ .l-auth{ background: url(../images/ico/users_sprite.png) no-repeat 0 -100px; }
+ .l-vip { background: url(../images/ico/users_sprite.png) no-repeat 0 -150px; }
+ .l-abbo { background: url(../images/ico/users_sprite.png) no-repeat 0 -200px; }
+ .l-reg { background: url(../images/ico/users_sprite.png) no-repeat 0 -250px;}
+ .l-renew { background: url(../images/ico/users_sprite.png) no-repeat 0 -300px; }
+ .l-exp { background: url(../images/ico/users_sprite.png) no-repeat 0 -350px; }
+ .l-arc { background: url(../images/ico/users_sprite.png) no-repeat 0 -400px; }
+ .l-question { background: url(../images/ico/users_sprite.png) no-repeat 0 -450px; }
+ .l-exclamation { background: url(../images/ico/users_sprite.png) no-repeat 0 -500px; }
+ .s-admin { background: url(../images/ico/users_sprite.png) no-repeat -50px -10px;}
+ .s-man { background: url(../images/ico/users_sprite.png) no-repeat -50px -60px;}
+ .s-auth{ background: url(../images/ico/users_sprite.png) no-repeat -50px -110px; }
+ .s-vip { background: url(../images/ico/users_sprite.png) no-repeat -50px -160px; }
+ .s-abbo { background: url(../images/ico/users_sprite.png) no-repeat -50px -210px; }
+ .s-reg { background: url(../images/ico/users_sprite.png) no-repeat -50px -260px; }
+ .s-renew { background: url(../images/ico/users_sprite.png) no-repeat -50px -310px; }
+ .s-exp { background: url(../images/ico/users_sprite.png) no-repeat -50px -360px; }
+ .s-arc { background: url(../images/ico/users_sprite.png) no-repeat -50px -410px; }
+ .s-question { background: url(../images/ico/users_sprite.png) no-repeat -50px -460px; }
+ .s-exclamation { background: url(../images/ico/users_sprite.png) no-repeat -50px -510px; }
+ /*  fine del fee roles icons */
