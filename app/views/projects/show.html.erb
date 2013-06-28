@@ -53,6 +53,21 @@
   </div>
   <% end %>
   <%= call_hook(:view_projects_show_left, :project => @project) %>
+
+  <div class="issues box">
+    <h3><%=l(:list_articoli)%></h3>
+    <% arts = @project.issues %>
+    <% if arts.empty? %>
+      <p><i><%= l(:label_no_data) %></i></p>
+    <% else %>
+      <ul>
+        <% arts.each do |art| %>
+          <li><%= link_to_issue art %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
 </div>
 
 <div class="splitcontentright">
