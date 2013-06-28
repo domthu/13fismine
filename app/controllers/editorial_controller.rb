@@ -498,7 +498,7 @@ class EditorialController < ApplicationController
     if @user_profile.nil?
       flash[:alert] = "Profilo non trovato."
     end
-    @profiles_hidden =notice_successful_create UserProfile.users_profiles_all.invisibili
+    @profiles_hidden = UserProfile.users_profiles_all.invisibili
   end
 
   def profilo_edit
@@ -609,7 +609,7 @@ class EditorialController < ApplicationController
       #@object_types = @object_types.select {|o| User.current.allowed_to?("view_#{o}".to_sym, projects_to_search)}
     end
 
-    @scope = @object_types.select { |t| params[t] }
+    @scope = @object_types.select{ |t| params[t] }
     @scope = @object_types if @scope.empty?
 
     # extract tokens from the question
