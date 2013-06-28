@@ -1271,10 +1271,10 @@ module ApplicationHelper
     if user.canbackend? || user.admin?
       return "Staff di Fiscosport"
     end
-    if !user.ass.nil? && !user.asso.ragione_sociale.nil?
-      return user.asso.ragione_sociale
-    elsif !user.cross_organizations.organizzazione.nil? && !user.cross_organization_id.nil? && user.cross_organizations.sigla.nil?
-      return user.cross_organizations.organizzazione.to_s + ' | ' + user.cross_organizations.sigla.to_s
+    if !user.associazione_affiliata.nil?
+      return user.asso.name
+    elsif !user.sigla_tipo.nil?
+      return user.cross_organization.name
     else
       return "Abbonamento privato"
     end
