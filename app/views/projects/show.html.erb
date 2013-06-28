@@ -62,7 +62,7 @@
     <% else %>
       <ul>
         <% arts.each do |art| %>
-          <li><%= link_to_issue art %></li>
+          <li><%= link_to_issue art, :truncate => 100 %></li>
         <% end %>
       </ul>
     <% end %>
