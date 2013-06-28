@@ -64,7 +64,7 @@ function js_flash(tipo, txt) {
           s += '<p> <span class="' + tipo + '"></span>' + value + '</p>'
       });
   } else {
-      s += '<p> <span class="' + tipo + '"></span>' + data.errors + '</p>'
+      s += '<p> <span class="' + tipo + '"></span>' + txt + '</p>'
   }
   $("#fs-flash").html(s).focus();
 }

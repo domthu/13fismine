@@ -323,7 +323,7 @@ class EditorialController < ApplicationController
       @email = params[:user_mail]
     end
     @stat =''
-    @errors []
+    @errors = []
     raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
     # Force ActionMailer to raise delivery errors so we can catch it
     ActionMailer::Base.raise_delivery_errors = true
