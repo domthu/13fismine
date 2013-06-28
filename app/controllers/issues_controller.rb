@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -180,7 +180,24 @@ class IssuesController < ApplicationController
       @project.members << member
     end
 
+    #domthu 20130629 Control Assigned_to is in project members
+    if @issue.assigned_to_id && @issue.assigned_to && !@issue.assigned_to.member_of?(@project)
+      member = Member.new
+      member.user = @issue.assigned_to
+      #3 	Manager
+      #member.roles = [Role.find_by_name('Manager')]
+      member.roles = [Role.find_by_id(FeeConst::ROLE_MANAGER)]
+      #ActiveRecord::RecordInvalid (Validation failed: Ruolo non è valido):
+      @project.members << member
+    end
+
     if @issue.save
+
+      #domthu 20130629 substitute author with other one\
+      if @issue.assigned_to_id !=  @issue.author_id
+        @issue.update_attribute(:author_id, @issue.assigned_to_id)
+      end
+
       attachments = Attachment.attach_files(@issue, params[:attachments])
       call_hook(:controller_issues_new_after_save, { :params => params, :issue => @issue})
       respond_to do |format|
@@ -213,7 +230,17 @@ class IssuesController < ApplicationController
   end
 
   def update
-    update_issue_from_params
+   update_issue_from_params
+
+    #domthu 20130629 Control Assigned_to is in project members
+    change_author_id = (params[:issue] && params[:issue][:author_id])
+    if change_author_id !=  @issue.author_id
+      @issue.update_attribute(:author_id, change_author_id)
+      #if @issue.update_attribute(:author_id, change_author_id)
+      #  flash[:notice] = "Cambiato author"
+      #end
+    end
+
     #domthu 20120710
     #@issue.summary =  params[:summary]
     if @issue.save_issue_with_child_records(params, @time_entry)

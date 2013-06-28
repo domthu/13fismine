@@ -1297,3 +1297,11 @@ textarea#issue_subject{
 div .watchers_lst{
   float: left; margin 10px; padding: 10px; width: 45%; border: solid 0px red;
 }
+p.changeauthor img.gravatar{
+    float: left;
+    height: 26px;
+    margin: 0 0.5em 0 0;
+    padding: 2px;
+    width: 26px;
+    display: inline;
+}
