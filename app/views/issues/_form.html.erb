@@ -6,11 +6,11 @@
       </p>
   <% end %>
 
-  <p>
-    <% if !@issue.new_record? %>
-<%= f.select :author_id, principals_options_for_select(@issue.assignable_users, @issue.author), :include_blank => false %>&nbsp;&nbsp;<%= link_to @issue.author, user_path(@issue.author), :target => "_blank" %>
-    <% end %>
+<% if !@issue.new_record? %>
+  <p class="changeauthor">
+<%= f.select :author_id, principals_options_for_select(@issue.assignable_users, @issue.author), :include_blank => false %>&nbsp;&nbsp;<%= avatar(@issue.author, { :size => "50", :class => "no-div" }) %><%= link_to @issue.author, user_path(@issue.author), :target => "_blank" %>
   </p>
+<% end %>
 
   <p>
     <% if !@issue.new_record? && @issue.se_prenotazione %>
