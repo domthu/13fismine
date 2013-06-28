@@ -1349,6 +1349,7 @@ en:
   label_issue_plural_from_section: "Articoli legati alla sezione"
   label_address_map: Geo posizione
   field_address_map: Geo posizione
+  label_comment: Comment
 
 #User
   label_power_user: Resp. Asso.

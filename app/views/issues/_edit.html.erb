@@ -34,7 +34,7 @@
 
     <fieldset><legend><%= l(:field_notes) %></legend>
 
-    <%= text_area_tag 'notes', @notes, :cols => 60, :rows => 10, :class => 'wiki-edit' %>
+    <%= text_area_tag 'notes', @notes %>
     <%# wikitoolbar_for 'notes' %>
     <%= call_hook(:view_issues_edit_notes_bottom, { :issue => @issue, :notes => @notes, :form => f }) %>
 
@@ -57,5 +57,7 @@
       <%= link_to l(:preview_fs_issue), preview_fs_articolo_path(:article_id => @issue.id.to_s), {:target => "_blank", :class => 'icon icon-preview'} %>
     <% end %>
 <% end %>
-
+<script type="text/javascript" charset="utf-8">
+    CKEDITOR.replace('notes', { toolbar:'Basic'});
+</script>
 <div id="preview" class="wiki"></div>

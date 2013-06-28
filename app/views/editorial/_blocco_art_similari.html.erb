@@ -15,7 +15,7 @@
 
                       <div class="fs-postcontent">
                         <div class="fs-box-link">
-                       <div><%= image_tag art_image(articolo, :s) %></div>
+                       <div><%= image_tag(art_image(articolo, :s)) %></div>
                         <%= link_to_articolo(articolo, :title=> h(smart_truncate(articolo.summary, 220))) %>
                         <br/>
                         </div>

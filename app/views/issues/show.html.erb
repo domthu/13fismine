@@ -97,13 +97,23 @@
 <% if !@issue.leaf? || User.current.allowed_to?(:manage_subtasks, @project) %>
 <hr />
 <div id="issue_tree">
+  <% unless @journals.present? %>
+      <div style="clear: both;"></div>
+      <div id="update" >
+        <h3><%= l(:label_comment) %></h3>
+        <%= render :partial => 'edit_fast' %>
+      </div>
+  <%  end %>
+  <!--
 <div class="contextual">
-  <%= link_to(l(:button_add), {:controller => 'issues', :action => 'new', :project_id => @project, :issue => {:parent_issue_id => @issue}}) if User.current.allowed_to?(:manage_subtasks, @project) %>
+  <%# link_to(l(:button_add), {:controller => 'issues', :action => 'new', :project_id => @project, :issue => {:parent_issue_id => @issue}}) if User.current.allowed_to?(:manage_subtasks, @project) %>
 </div>
 <p><strong><%=l(:label_subtask_plural)%></strong></p>
-<%= render_descendants_tree(@issue) unless @issue.leaf? %>
+<%# render_descendants_tree(@issue) unless @issue.leaf? %>
+-->
 </div>
 <% end %>
+
 
 <% if @relations.present? || User.current.allowed_to?(:manage_issue_relations, @project) %>
 <hr />
@@ -236,8 +246,6 @@
   </div>
 </div>
 <% end %>
-
-
 <% if @changesets.present? %>
 <div id="issue-changesets">
 <h3><%=l(:label_associated_revisions)%></h3>
@@ -252,10 +260,8 @@
 </div>
 <% end %>
 
-
 <div style="clear: both;"></div>
 <%= render :partial => 'action_menu' %>
-
 <div style="clear: both;"></div>
 <% if authorize_for('issues', 'edit') %>
   <div id="update" style="display:none;">
@@ -263,7 +269,6 @@
   <%= render :partial => 'edit' %>
    </div>
 <% end %>
-
 <% other_formats_links do |f| %>
   <%= f.link_to 'Atom', :url => {:key => User.current.rss_key} %>
   <%= f.link_to 'PDF' %>

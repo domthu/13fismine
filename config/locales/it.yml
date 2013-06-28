@@ -1357,6 +1357,7 @@ it:
   label_issue_plural_from_section: "Articoli legati alla sezione"
   label_address_map: Geo posizione
   field_address_map: Geo posizione
+  label_comment: Commenta
 
 #User
   label_power_user: Power user (Resp. asso.?)
