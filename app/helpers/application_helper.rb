@@ -1221,19 +1221,19 @@ module ApplicationHelper
 
   def art_image(articolo = nil, taglia = :l)
     if  !articolo.image_file_name.nil?
-      if (FileTest.exists?("#{RAILS_ROOT}/public/images/articoli/#{articolo.image_file_name}") == false)
+      if !articolo.image.file?
         return "/images/articoli/" + taglia.to_s + "_art-no-image.jpg"
       else
         return articolo.image.url(taglia)
       end
     elsif !articolo.section.image_file_name.nil?
-      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.section.image_file_name}") == false)
+      if !articolo.section.image.file?
         return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
       else
         return articolo.section.image.url(taglia)
       end
     elsif !articolo.top_section.image_file_name.nil?
-      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.image_file_name}") == false)
+      if !articolo.top_section.image.file?
         return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
       else
         return articolo.top_section.image.url(taglia)
@@ -1242,6 +1242,7 @@ module ApplicationHelper
       return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
     end
   end
+
 
   # per l'icona associazioni eecc
   def user_myasso_icon(user = nil, taglia = :l, options={})
