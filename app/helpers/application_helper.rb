@@ -1222,7 +1222,7 @@ module ApplicationHelper
   def art_image(articolo = nil, taglia = :l)
     if  !articolo.image_file_name.nil?
       if (FileTest.exists?("#{RAILS_ROOT}/public/images/articoli/#{articolo.image_file_name}") == false)
-        return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
+        return "/images/articoli/" + taglia.to_s + "_art-no-image.jpg"
       else
         return articolo.image.url(taglia)
       end
