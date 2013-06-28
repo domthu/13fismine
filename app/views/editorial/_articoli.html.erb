@@ -2,14 +2,14 @@
   <% if @issues && @issues.any? %>
     <% @issues.each do |articolo| %>
         <!-- qui è l'inserimento dell'articolo -->
-        <ARTICLE class="fs-post fs-article">
+        <article class="fs-post fs-article">
           <% if articolo %>
               <div class="fs-postmetadataheader">
                 <% if articolo.se_protetto %>
-                  <span class="fs-art-sezione fs-art-sez-ko fs-art-ko">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
+                  <span class="fs-art-sezione fs-art-sez-ko fs-art-ko">&nbsp;<%= articolo.section.full_name %></span>
                 <span class="fs-postdateicon fs-art-ko" style="float:right;"><%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
                <% else	  %>
-                    <span class="fs-art-sezione fs-art-sez-ok fs-art-ok">&nbsp;<%= articolo.top_section %>&nbsp;::&nbsp;<%= articolo.section %></span>
+                    <span class="fs-art-sezione fs-art-sez-ok fs-art-ok">&nbsp;<%= articolo.section.full_name %></span>
                   <span class="fs-postdateicon fs-art-ok" style="float:right;"><%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
 
                     <%end%>
@@ -21,7 +21,7 @@
                 <div class="fs-content-layout-wrapper layout-item-0">
                   <div class="fs-image-caption-wrapper">
                     <div class="fs-image-caption-wrapper-img">
-                      <%= image_tag art_image(articolo, :m) %>
+                      <%= image_tag(art_image(articolo, :m)) %>
                       <% if articolo.se_protetto %>
                           <div class="fs-postmetadatafooter-author-ko">
                             <div class="fs-postmetadatafooter-author">
@@ -71,7 +71,7 @@
               <p class="nodata"><%= l(:label_no_data) %></p>
               <br/>
           <% end %>
-        </ARTICLE> &nbsp; <br/>
+        </article> &nbsp; <br/>
         <%# render :partial => 'articolo_teaser', :locals => {:articolo => articolo} %>
         <br/>
     <% end %>

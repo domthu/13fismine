@@ -1221,19 +1221,19 @@ module ApplicationHelper
 
   def art_image(articolo = nil, taglia = :l)
     if  !articolo.image_file_name.nil?
-      if (FileTest.exists?("#{RAILS_ROOT}/public/images/articoli/#{articolo.image_file_name}") == false)
-        return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
+      if !articolo.image.file?
+        return "/images/articoli/" + taglia.to_s + "_art-no-image.jpg"
       else
         return articolo.image.url(taglia)
       end
     elsif !articolo.section.image_file_name.nil?
-      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.section.image_file_name}") == false)
+      if !articolo.section.image.file?
         return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
       else
         return articolo.section.image.url(taglia)
       end
     elsif !articolo.top_section.image_file_name.nil?
-      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/sections/#{articolo.top_section.image_file_name}") == false)
+      if !articolo.top_section.image.file?
         return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
       else
         return articolo.top_section.image.url(taglia)
@@ -1242,6 +1242,7 @@ module ApplicationHelper
       return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
     end
   end
+
 
   # per l'icona associazioni eecc
   def user_myasso_icon(user = nil, taglia = :l, options={})
@@ -1270,10 +1271,10 @@ module ApplicationHelper
     if user.canbackend? || user.admin?
       return "Staff di Fiscosport"
     end
-    if !user.asso_id.nil?
+    if !user.ass.nil? && !user.asso.ragione_sociale.nil?
       return user.asso.ragione_sociale
-    elsif !user.cross_organization_id.nil?
-      return user.cross_organizations.organizzazione + ' | ' + user.cross_organizations.sigla
+    elsif !user.cross_organizations.organizzazione.nil? && !user.cross_organization_id.nil? && user.cross_organizations.sigla.nil?
+      return user.cross_organizations.organizzazione.to_s + ' | ' + user.cross_organizations.sigla.to_s
     else
       return "Abbonamento privato"
     end
