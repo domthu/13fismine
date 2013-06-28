@@ -494,7 +494,6 @@ class EditorialController < ApplicationController
   end
 
   def profilo_show
-    flash[:success] = "il tuo profilo è stato aggiornavbgfcgdfgchngdchcgfto."
     if @user_profile.nil?
       flash[:alert] = "Profilo non trovato."
     end

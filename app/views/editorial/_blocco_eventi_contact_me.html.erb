@@ -2,21 +2,17 @@
     $(document).ready(function () {
         $("#accordion-events-contact").accordion({heightStyle:"content", autoHeight:false, active:1 });
     });
-
     var urlpropose = '<%= propose_evt_path %>';
     function sendmail() {
-        $.post(urlpropose, { user_mail:$("#evtmail").val(), body:$("#message").val(), authenticity_token: $("input[name='authenticity_token']").val(), back_url: $('#back_url').val() },
+        $.post(urlpropose, { user_mail:$("#evtmail").val(), body:$("#message").val(), authenticity_token:$("input[name='authenticity_token']").val(), back_url:$('#back_url').val() },
                 function (data) {
                     data = data || {};
                     if (data.success) {
-                        //OnSuccess
                         if (data.response) {
-                            $("#user-response").html("<div class='flash notice'>" + data.response + "</div>");
+                            js_flash("success", data.response);
                         }
                     } else if (data.errors) {
-                        $("#flash_error").html(data.errors);
-                        $("#user-response").html("<div class='flash error'>" + data.errors + "</div>");
-                        //showerrmsg(data.errors);
+                        js_flash("error", data.errors);
                     }
                 }
         );
@@ -29,7 +25,7 @@
   <span>
   <p>
     <% if User.current && User.current.logged? %>
-        <%# User.current.mail %>
+        <%= hidden_field_tag 'evtmail', User.current.mail %>
     <% else %>
         <%= text_field_tag 'evtmail', "", :placeholder => "La tua mail...", :size => 100 %>
     <% end %>
