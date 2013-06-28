@@ -1249,7 +1249,7 @@ module ApplicationHelper
     if user.canbackend? || user.admin?
       return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
     end
-    if !user.asso_id.nil?
+    if !user.associazione_affiliata.nil?
       if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/assos/#{user.asso.image_file_name}") == false)
         return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
       else
