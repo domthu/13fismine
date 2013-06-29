@@ -1,4 +1,4 @@
-<h1><%= link_to(h("#{issue.tracker.name} ##{issue.id}: #{issue.subject}"), issue_url) %></h1>
+<h2><%= link_to(h("#{issue.tracker.name} ##{issue.id}: #{issue.subject}"), issue_url) %></h2>
 
 <ul>
 <li><%=l(:field_author)%>: <%=h issue.author %></li>
@@ -10,6 +10,7 @@
 <% issue.custom_field_values.each do |c| %>
   <li><%=h c.custom_field.name %>: <%=h show_value(c) %></li>
 <% end %>
-</ul>
-
-<%= textilizable(issue, :description, :only_path => false) %>
+<hr>
+<h3><%= raw(issue.subject).html_safe %> <h3>
+ <br />
+<%= raw(issue.description).html_safe %>

@@ -309,7 +309,8 @@ div.issue span.private { position:relative; bottom: 2px; text-transform: upperca
 #issue_tree table.issues, #relations table.issues { border: 0; }
 #issue_tree td.checkbox, #relations td.checkbox {display:none;}
 #relations td.buttons {padding:0;}
-
+#issue_fast_reply{ background-color: #F6F6F6;}
+#issue_fast_reply h3{ background-color: #2c4056; padding-left: 10px; color: #fff; border: 0;}
 fieldset.collapsible { border-width: 1px 0 0 0; font-size: 0.9em; }
 fieldset.collapsible legend { padding-left: 16px; background: url(../images/arrow_expanded.png) no-repeat 0% 40%; cursor:pointer; }
 fieldset.collapsible.collapsed legend { background-image: url(../images/arrow_collapsed.png); }
@@ -1304,4 +1305,52 @@ p.changeauthor img.gravatar{
     padding: 2px;
     width: 26px;
     display: inline;
+}
+
+.button-grey {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background-color:#ededed;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color: #323232;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+}
+.button-grey:hover {
+	background-color:#dfdfdf;
+}
+.button-grey:active {
+	position:relative;
+	top:1px;
+}
+.button-blu {
+	-moz-box-shadow:inset 0px 1px 0px 0px #80826b;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #80826b;
+	box-shadow:inset 0px 1px 0px 0px #80826b;
+	background-color:#2c4056;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#fff7ff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+}.button-blu:hover {
+	background-color:#80826b;
+     cursor: pointer ;
+}.button-blu:active {
+	position:relative;
+	top:1px;
 }

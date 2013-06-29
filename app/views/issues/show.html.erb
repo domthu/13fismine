@@ -3,288 +3,274 @@
 <h2><%= issue_heading(@issue) %></h2>
 
 <div class="<%= @issue.css_classes %> details">
-  <%= avatar(@issue.author, { :size => "50", :class => "no-div" }) %>
+  <%= avatar(@issue.author, {:size => "50", :class => "no-div"}) %>
   <div class="subject">
     <%= render_issue_subject_with_tree(@issue) %>
   </div>
   <p class="author">
     <%= authoring @issue.created_on, @issue.author %>.
     <% if @issue.created_on != @issue.updated_on %>
-      <%= l(:label_updated_time, time_tag(@issue.updated_on)) %>.
+        <%= l(:label_updated_time, time_tag(@issue.updated_on)) %>.
     <% end %>
   </p>
 
-<table class="attributes">
-<tr>
-    <th class="status"><%=l(:field_section)%>:</th><td class="status"><%= h(@issue.section_full_name) unless @issue.section.nil? %></td>
-    <th class="status"><%=l(:field_news)%>:</th><td class="status"><%= link_to @issue.quesito_news.abbr_name, news_path(@issue.quesito_news) unless @issue.quesito_news.nil? %></td>
-</tr>
-<tr>
-    <th class="status"><%=l(:field_status)%>:</th><td class="status"><%= h(@issue.status.name) %></td>
-    <th class="status"><%=l(:field_ordinamento)%>:</th><td class="status"><%= h(@issue.ordinamento) %></td>
-</tr>
-<tr>
-    <th class="priority"><%=l(:field_priority)%>:</th><td class="priority"><%= h(@issue.priority.name) %></td>
-    <th class="start-date"><%=l(:field_start_date)%>:</th><td class="start-date"><%= format_date(@issue.start_date) %></td>
-</tr>
-<tr>
-    <th class="assigned-to"><%=l(:field_assigned_to)%>:</th><td class="assigned-to"><%= avatar(@issue.assigned_to, { :size => "14", :class => "no-div" } ) %><%= @issue.assigned_to ? link_to_user(@issue.assigned_to) : "-" %></td>
-    <th class="due-date"><%=l(:field_due_date)%>:</th><td class="due-date"><%= format_date(@issue.due_date) %></td>
-</tr>
-<tr>
-    <th class="category"><%=l(:field_category)%>:</th><td class="category"><%=h(@issue.category ? @issue.category.name : "-") %></td>
-    <th class="progress"><%=l(:field_done_ratio)%>:</th><td class="progress"><%= progress_bar @issue.done_ratio, :width => '80px', :legend => "#{@issue.done_ratio}%" %></td>
-</tr>
-<tr>
-    <th class="fixed-version"><%=l(:field_fixed_version)%>:</th><td class="fixed-version"><%= @issue.fixed_version ? link_to_version(@issue.fixed_version) : "-" %></td>
-    <% if User.current.allowed_to?(:view_time_entries, @project) %>
-    <th class="spent-time"><%=l(:label_spent_time)%>:</th>
-    <td class="spent-time"><%= @issue.spent_hours > 0 ? (link_to l_hours(@issue.spent_hours), {:controller => 'timelog', :action => 'index', :project_id => @project, :issue_id => @issue}) : "-" %></td>
-    <% end %>
-</tr>
-<tr>
-    <th class="chklabel"><%= check_box_tag('w', 'w', @issue.se_visible_web, :disabled => true) %><%=l(:label_se_visible_web)%></th>
-    <th class="chklabel"><%= check_box_tag('q', 'q', @issue.se_visible_data, :disabled => true)  %><%=l(:label_se_visible_data)%></th>
-    <th class="chklabel"><%= check_box_tag('s', 's', @issue.se_visible_newsletter, :disabled => true)  %><%=l(:label_se_visible_newsletter)%></th>
-    <th class="chklabel"><%= check_box_tag('x', 'x', @issue.se_protetto, :disabled => true)  %><%=l(:label_se_protetto)%></th>
-</tr>
-<tr>
-    <th class="chklabel"><%= check_box_tag('c', 'c', @issue.se_prenotazione, :disabled => true)  %><%=l(:label_se_prenotazione)%></th><td class=""></td>
-    <% if @issue.estimated_hours %>
-    <th class="estimated-hours"><%=l(:field_estimated_hours)%>:</th><td class="estimated-hours"><%= l_hours(@issue.estimated_hours) %></td>
-    <% end %>
-</tr>
-
-<%= render_custom_fields_rows(@issue) %>
-<%= call_hook(:view_issues_show_details_bottom, :issue => @issue) %>
-</table>
-
-<% if @issue.summary? -%>
- <p><strong><%=l(:field_summary)%></strong></p>
- <fieldset class="htmldraft">
-      <legend></legend>
-      <% unless @issue.summary.nil? %>
-        <%= @issue.summary.html_safe %>
+  <table class="attributes">
+    <tr>
+      <th class="status"><%= l(:field_section) %>:</th>
+      <td class="status"><%= h(@issue.section_full_name) unless @issue.section.nil? %></td>
+      <th class="status"><%= l(:field_news) %>:</th>
+      <td class="status"><%= link_to @issue.quesito_news.abbr_name, news_path(@issue.quesito_news) unless @issue.quesito_news.nil? %></td>
+    </tr>
+    <tr>
+      <th class="status"><%= l(:field_status) %>:</th>
+      <td class="status"><%= h(@issue.status.name) %></td>
+      <th class="status"><%= l(:field_ordinamento) %>:</th>
+      <td class="status"><%= h(@issue.ordinamento) %></td>
+    </tr>
+    <tr>
+      <th class="priority"><%= l(:field_priority) %>:</th>
+      <td class="priority"><%= h(@issue.priority.name) %></td>
+      <th class="start-date"><%= l(:field_start_date) %>:</th>
+      <td class="start-date"><%= format_date(@issue.start_date) %></td>
+    </tr>
+    <tr>
+      <th class="assigned-to"><%= l(:field_assigned_to) %>:</th>
+      <td class="assigned-to"><%= avatar(@issue.assigned_to, {:size => "14", :class => "no-div"}) %><%= @issue.assigned_to ? link_to_user(@issue.assigned_to) : "-" %></td>
+      <th class="due-date"><%= l(:field_due_date) %>:</th>
+      <td class="due-date"><%= format_date(@issue.due_date) %></td>
+    </tr>
+    <tr>
+      <th class="category"><%= l(:field_category) %>:</th>
+      <td class="category"><%= h(@issue.category ? @issue.category.name : "-") %></td>
+      <th class="progress"><%= l(:field_done_ratio) %>:</th>
+      <td class="progress"><%= progress_bar @issue.done_ratio, :width => '80px', :legend => "#{@issue.done_ratio}%" %></td>
+    </tr>
+    <tr>
+      <th class="fixed-version"><%= l(:field_fixed_version) %>:</th>
+      <td class="fixed-version"><%= @issue.fixed_version ? link_to_version(@issue.fixed_version) : "-" %></td>
+      <% if User.current.allowed_to?(:view_time_entries, @project) %>
+          <th class="spent-time"><%= l(:label_spent_time) %>:</th>
+          <td class="spent-time"><%= @issue.spent_hours > 0 ? (link_to l_hours(@issue.spent_hours), {:controller => 'timelog', :action => 'index', :project_id => @project, :issue_id => @issue}) : "-" %></td>
       <% end %>
-      <div class="wiki hide">
-        <%# textilizable(@issue.summary) %>
-      </div>
-  </fieldset>
-<% end %>
-
-<% if @issue.description? || @issue.attachments.any? -%>
-  <p><strong><%=l(:field_description)%></strong></p>
-  <% if @issue.description? %>
-    <div class="contextual">
-    <%= link_to_remote_if_authorized(l(:button_quote), { :url => {:controller => 'journals', :action => 'new', :id => @issue} }, :class => 'icon icon-comment') %>
-    </div>
-
-   <fieldset class="htmldraft">
+    </tr>
+    <tr>
+      <th class="chklabel"><%= check_box_tag('w', 'w', @issue.se_visible_web, :disabled => true) %><%= l(:label_se_visible_web) %></th>
+      <th class="chklabel"><%= check_box_tag('q', 'q', @issue.se_visible_data, :disabled => true) %><%= l(:label_se_visible_data) %></th>
+      <th class="chklabel"><%= check_box_tag('s', 's', @issue.se_visible_newsletter, :disabled => true) %><%= l(:label_se_visible_newsletter) %></th>
+      <th class="chklabel"><%= check_box_tag('x', 'x', @issue.se_protetto, :disabled => true) %><%= l(:label_se_protetto) %></th>
+    </tr>
+    <tr>
+      <th class="chklabel"><%= check_box_tag('c', 'c', @issue.se_prenotazione, :disabled => true) %><%= l(:label_se_prenotazione) %></th>
+      <td class=""></td>
+      <% if @issue.estimated_hours %>
+          <th class="estimated-hours"><%= l(:field_estimated_hours) %>:</th>
+          <td class="estimated-hours"><%= l_hours(@issue.estimated_hours) %></td>
+      <% end %>
+    </tr>
+    <%= render_custom_fields_rows(@issue) %>
+    <%= call_hook(:view_issues_show_details_bottom, :issue => @issue) %>
+  </table>
+  <% if @issue.summary? -%>
+      <p><strong><%= l(:field_summary) %></strong></p>
+      <fieldset class="htmldraft">
         <legend></legend>
-        <% unless @issue.description.nil? %>
-          <%= @issue.description.html_safe %>
+        <% unless @issue.summary.nil? %>
+            <%= @issue.summary.html_safe %>
         <% end %>
-        <div class="wiki hide">
-          <%# textilizable(@issue.description) %>
-        </div>
-    </fieldset>
+      </fieldset>
   <% end %>
-  <%= link_to_attachments @issue %>
-<% end -%>
+  <% if @issue.description? || @issue.attachments.any? -%>
+      <p><strong><%= l(:field_description) %></strong></p>
+      <% if @issue.description? %>
+          <div class="contextual">
+            <%= link_to_remote_if_authorized(l(:button_quote), {:url => {:controller => 'journals', :action => 'new', :id => @issue}}, :class => 'icon icon-comment') %>
+          </div>
 
-<%= call_hook(:view_issues_show_description_bottom, :issue => @issue) %>
+          <fieldset class="htmldraft">
+            <legend></legend>
+            <% unless @issue.description.nil? %>
+                <%= @issue.description.html_safe %>
+            <% end %>
+          </fieldset>
+      <% end %>
+      <%= link_to_attachments @issue %>
+  <% end -%>
+  <%= call_hook(:view_issues_show_description_bottom, :issue => @issue) %>
+  <% if @relations.present? || User.current.allowed_to?(:manage_issue_relations, @project) %>
+      <hr/>
+      <div id="relations">
+        <%= render :partial => 'relations' %>
+      </div>
+  <% end %>
+  <% if !@issue.leaf? || User.current.allowed_to?(:manage_subtasks, @project) %>
+      <br/>
 
-<% if !@issue.leaf? || User.current.allowed_to?(:manage_subtasks, @project) %>
-<hr />
-<div id="issue_tree">
-  <% unless @journals.present? %>
-      <div style="clear: both;"></div>
-      <div id="update" >
+      <div id="issue_fast_reply">
+        <div style="clear: both;"></div>
         <h3><%= l(:label_comment) %></h3>
         <%= render :partial => 'edit_fast' %>
+        <br/>
       </div>
-  <%  end %>
-  <!--
-<div class="contextual">
-  <%# link_to(l(:button_add), {:controller => 'issues', :action => 'new', :project_id => @project, :issue => {:parent_issue_id => @issue}}) if User.current.allowed_to?(:manage_subtasks, @project) %>
+  <% end %>
 </div>
-<p><strong><%=l(:label_subtask_plural)%></strong></p>
-<%# render_descendants_tree(@issue) unless @issue.leaf? %>
--->
-</div>
-<% end %>
-
-
-<% if @relations.present? || User.current.allowed_to?(:manage_issue_relations, @project) %>
-<hr />
-<div id="relations">
-<%= render :partial => 'relations' %>
-</div>
-<% end %>
-
-</div>
-
 <%# inserire qui la risposta veloce %>
 <% if @issue.is_quesito? %>
-<div class="box details">
-  <div class="">
-    <div id="question" style="margin-bottom:16px;">
-      <%= "Stato del quesito: " + @issue.quesito_news.quesito_status_fs_text %>
-      <%= link_to @issue.quesito_news.abbr_name, news_path(@issue.quesito_news) %>
-      <%= @issue.quesito_news.summary %>
-    </div>
-<hr />
-    <div id="responses" style="margin-bottom:16px;">
-      <h3 class="responses"><%= l(:quesito_risposta_rapida, :num => @issue.quesito_news.id.to_s) %></h3>
+    <div class="box details">
+      <div class="">
+        <div id="question" style="margin-bottom:16px;">
+          <%= "Stato del quesito: " + @issue.quesito_news.quesito_status_fs_text %>
+          <%= link_to @issue.quesito_news.abbr_name, news_path(@issue.quesito_news) %>
+          <%= @issue.quesito_news.summary %>
+        </div>
+        <hr/>
+        <div id="responses" style="margin-bottom:16px;">
+          <h3 class="responses"><%= l(:quesito_risposta_rapida, :num => @issue.quesito_news.id.to_s) %></h3>
 
-<% if @issue.description? %>
-  <% if @issue.quesito_news.is_issue_reply? %>
-    <%#  PULSANTE DI RISPOSTA RAPIDA
-    Kappao Couldn't find News with ID=0
-    /home/dom/rails/13fismine/app/controllers/editorial_controller.rb:542:in `find_quesito_fs' %>
-    <%# form_for @issue, :url => fast_reply_path do |f_r| %>
-    <% form_for @issue, :url => {:controller => 'issue_moves', :action => 'fast_reply', :id => @issue} do |f_r| %>
-      <%= f_r.error_messages %>
-      <%= f_r.hidden_field :id, :value => @issue.id %>
-      <h2><%= l(:label_fast_reply) %></h2>
-      <% if authorize_for('issues', 'fast_reply') || User.current.admin? || User.current.ismanager? %>
-      <%= f_r.submit l(:button_news_fast_reply)  %>
-      <% end  %>
+          <% if @issue.description? %>
+              <% if @issue.quesito_news.is_issue_reply? %>
+                  <% form_for @issue, :url => {:controller => 'issue_moves', :action => 'fast_reply', :id => @issue} do |f_r| %>
+                      <%= f_r.error_messages %>
+                      <%= f_r.hidden_field :id, :value => @issue.id %>
+                      <h2><%= l(:label_fast_reply) %></h2>
+                      <% if authorize_for('issues', 'fast_reply') || User.current.admin? || User.current.ismanager? %>
+                          <%= f_r.submit l(:button_news_fast_reply) %>
+                      <% end %>
 
-      <% if @issue.quesito_news.issues.count > 1 %>
-        <p><label><b><%= l(:label_reply_members) %></b></label>
-        <ul>
-        <% @issue.quesito_news.issues.each do |other_issue|
-            if other_issue.id != @issue.id %>
-            <li><%= link_to other_issue %> ==> <%= link_to other_issue.author %></li>
-        <% end
-        end %>
-        </ul>
-        </p>
-      <% end  %>
+                      <% if @issue.quesito_news.issues.count > 1 %>
+                          <p><label><b><%= l(:label_reply_members) %></b></label>
+                          <ul>
+                            <% @issue.quesito_news.issues.each do |other_issue|
+                              if other_issue.id != @issue.id %>
+                                    <li><%= link_to other_issue %> ==> <%= link_to other_issue.author %></li>
+                                <% end
+                                   end %>
+                          </ul>
+                          </p>
+                      <% end %>
 
-    <% end %>
-  <% end %>
-  <hr>
-  <% form_for @issue, :url =>  {:controller => 'issue_moves', :action => 'new', :id => @issue} do |f2| %>
-    <h2><%= l(:label_reply_article) %></h2>
-<%# map.permission :move_issues, {:issue_moves => [:new, :create], :issues => [:fast_reply]}, :require => :loggedin      authorize_for('issue_moves', 'new') %>
-    <% if authorize_for('issues', 'fast_reply') || User.current.admin? || User.current.ismanager? %>
-      <%= f2.submit l(:button_issue_reply_article) %>
-    <% end %>
-  <% end %>
-
-<% else %>
-  <p>per creare una <span style="color: red;">risposta rapida*</span> o generare un articolo che andrà a finire su una edizione allora dovete prima scrivere la risposta nel campo <b><%= l(:field_description) %></b> </p>
-<% end %>
-    </div>
-  </div>
-</div>
-<% end %>
-
-<% if @issue.is_convegno? %>
-<div class="box details">
-  <div id="convegno" style="margin-bottom:16px;">
-    <div class="contextual">
-    <%= link_to l(:label_reservation_new), new_reservation_path, :class => 'icon icon-add' %>
-    </div>
-    <%= "Stato del convegno: " + @issue.convegno_status_fs_text %>
-  </div>
-  <hr />
-  <div id="prenotazioni" style="margin-bottom:16px;">
-    <h3 class="prenotazioni"><%= l(:convegno_prenotazioni, :num => @issue.reservations.count.to_s) %></h3>
-
-    <% if !@issue.reservations.nil? && @issue.reservations.count > 0 %>
-      <div class="autoscroll">
-      <table class="list reservations">
-        <thead><tr>
-          <th style='width: 20%;text-align:left;'><%=  l(:label_reservation)%></th>
-          <th style='width: 20%;text-align:left;'><%=  l(:label_user)%></th>
-          <th><%= l(:label_date) %></th>
-          <th style='width: 10%;text-align:left;'><%=  l(:label_num_persone)%></th>
-          <th style='width: 10%;text-align:left;'><%=  l(:label_prezzo)%></th>
-          <th style='width: 30%;text-align:left;'><%=  l(:label_msg)%></th>
-          <th style='width: 5%;'></th>
-          <th style='width: 5%;'></th>
-        </tr></thead>
-        <tbody>
-        <% @issue.reservations.each do |reservation| %>
-          <tr class="<%= cycle 'odd', 'even' %>">
-            <td class="buttons">
-                <%= link_to(h(reservation.to_s), reservation_path(reservation), :class => 'icon icon-summary') if User.current.admin? %>
-                <%= h(reservation.to_s) if !User.current.admin? %>
-            </td>
-            <td class="username"><%= avatar(reservation.user, { :size => "14", :class => "no-div" }) %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
-            <td><%= format_date(reservation.created_at) %></td>
-            <td align="center"><%=h reservation.num_persone %></td>
-            <td align="center"><%=h reservation.prezzo %></td>
-            <td><%=h smart_truncate(reservation.msg, 100) %></td>
-            <td class="buttons"><%= link_to('', edit_reservation_path(reservation), :class => 'icon icon-edit') if User.current.admin? %>
-            <%= link_to('', reservation_path(reservation), :class => 'icon icon-show') if !User.current.admin? %>
-            </td>
-            <td class="buttons"><%= link_to ('', reservation, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
-          </tr>
-        <% end %>
-        <tr>
-          <td></td>
-          <td class="total center"><%=h @issue.reservations.count.to_s %></td>
-          <td></td>
-          <td class="total center"><%=h @issue.reservations.sum(:num_persone).to_s %></td>
-          <td class="total center"><%=  @issue.reservations.sum(:prezzo).to_f %></td>
-          <td colspan="3">
-            <% other_formats_links do |f| %>
-              <%= f.link_to 'PDF' %>
-            <% end %>
-          </td>
-        </tr>
-      </table>
+                  <% end %>
+              <% end %>
+              <hr>
+              <% form_for @issue, :url => {:controller => 'issue_moves', :action => 'new', :id => @issue} do |f2| %>
+                  <h2><%= l(:label_reply_article) %></h2>
+                  <% if authorize_for('issues', 'fast_reply') || User.current.admin? || User.current.ismanager? %>
+                      <%= f2.submit l(:button_issue_reply_article) %>
+                  <% end %>
+              <% end %>
+          <% else %>
+              <p>per creare una <span style="color: red;">risposta rapida*</span> o generare un articolo che andrà a
+                finire su una edizione allora dovete prima scrivere la risposta nel campo
+                <b><%= l(:field_description) %></b></p>
+          <% end %>
+        </div>
       </div>
-    <% else %>
-      <%=l(:label_prenotazioni_none)%>
-    <% end %>
+    </div>
+<% end %>
+<% if @issue.is_convegno? %>
+    <div class="box details">
+      <div id="convegno" style="margin-bottom:16px;">
+        <div class="contextual">
+          <%= link_to l(:label_reservation_new), new_reservation_path, :class => 'icon icon-add' %>
+        </div>
+        <%= "Stato del convegno: " + @issue.convegno_status_fs_text %>
+      </div>
+      <hr/>
+      <div id="prenotazioni" style="margin-bottom:16px;">
+        <h3 class="prenotazioni"><%= l(:convegno_prenotazioni, :num => @issue.reservations.count.to_s) %></h3>
 
-  </div>
-</div>
+        <% if !@issue.reservations.nil? && @issue.reservations.count > 0 %>
+            <div class="autoscroll">
+              <table class="list reservations">
+                <thead>
+                <tr>
+                  <th style='width: 20%;text-align:left;'><%= l(:label_reservation) %></th>
+                  <th style='width: 20%;text-align:left;'><%= l(:label_user) %></th>
+                  <th><%= l(:label_date) %></th>
+                  <th style='width: 10%;text-align:left;'><%= l(:label_num_persone) %></th>
+                  <th style='width: 10%;text-align:left;'><%= l(:label_prezzo) %></th>
+                  <th style='width: 30%;text-align:left;'><%= l(:label_msg) %></th>
+                  <th style='width: 5%;'></th>
+                  <th style='width: 5%;'></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @issue.reservations.each do |reservation| %>
+                    <tr class="<%= cycle 'odd', 'even' %>">
+                      <td class="buttons">
+                        <%= link_to(h(reservation.to_s), reservation_path(reservation), :class => 'icon icon-summary') if User.current.admin? %>
+                        <%= h(reservation.to_s) if !User.current.admin? %>
+                      </td>
+                      <td class="username"><%= avatar(reservation.user, {:size => "14", :class => "no-div"}) %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
+                      <td><%= format_date(reservation.created_at) %></td>
+                      <td align="center"><%= h reservation.num_persone %></td>
+                      <td align="center"><%= h reservation.prezzo %></td>
+                      <td><%= h smart_truncate(reservation.msg, 100) %></td>
+                      <td class="buttons"><%= link_to('', edit_reservation_path(reservation), :class => 'icon icon-edit') if User.current.admin? %>
+                        <%= link_to('', reservation_path(reservation), :class => 'icon icon-show') if !User.current.admin? %>
+                      </td>
+                      <td class="buttons"><%= link_to ('', reservation, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
+                    </tr>
+                <% end %>
+                <tr>
+                  <td></td>
+                  <td class="total center"><%= h @issue.reservations.count.to_s %></td>
+                  <td></td>
+                  <td class="total center"><%= h @issue.reservations.sum(:num_persone).to_s %></td>
+                  <td class="total center"><%= @issue.reservations.sum(:prezzo).to_f %></td>
+                  <td colspan="3">
+                    <% other_formats_links do |f| %>
+                        <%= f.link_to 'PDF' %>
+                    <% end %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+        <% else %>
+            <%= l(:label_prenotazioni_none) %>
+        <% end %>
+      </div>
+    </div>
 <% end %>
 <% if @changesets.present? %>
-<div id="issue-changesets">
-<h3><%=l(:label_associated_revisions)%></h3>
-<%= render :partial => 'changesets', :locals => { :changesets => @changesets} %>
-</div>
+    <div id="issue-changesets">
+      <h3><%= l(:label_associated_revisions) %></h3>
+      <%= render :partial => 'changesets', :locals => {:changesets => @changesets} %>
+    </div>
 <% end %>
 
 <% if @journals.present? %>
-<div id="history">
-<h3><%=l(:label_history)%></h3>
-<%= render :partial => 'history', :locals => { :issue => @issue, :journals => @journals } %>
-</div>
+    <div id="history">
+      <h3><%= l(:label_history) %></h3>
+      <%= render :partial => 'history', :locals => {:issue => @issue, :journals => @journals} %>
+    </div>
 <% end %>
 
 <div style="clear: both;"></div>
 <%= render :partial => 'action_menu' %>
 <div style="clear: both;"></div>
 <% if authorize_for('issues', 'edit') %>
-  <div id="update" style="display:none;">
-  <h3><%= l(:button_update) %></h3>
-  <%= render :partial => 'edit' %>
-   </div>
+    <div id="update" style="display:none;">
+      <h3><%= l(:button_update) %></h3>
+      <%= render :partial => 'edit' %>
+    </div>
 <% end %>
+
 <% other_formats_links do |f| %>
-  <%= f.link_to 'Atom', :url => {:key => User.current.rss_key} %>
-  <%= f.link_to 'PDF' %>
+    <%= f.link_to 'Atom', :url => {:key => User.current.rss_key} %>
+    <%= f.link_to 'PDF' %>
 <% end %>
 
 <% html_title "#{@issue.tracker.name} ##{@issue.id}: #{@issue.subject}" %>
 
 <% content_for :sidebar do %>
-  <%= render :partial => 'issues/sidebar' %>
+    <%= render :partial => 'issues/sidebar' %>
 
-  <% if User.current.allowed_to?(:add_issue_watchers, @project) ||
-    (@issue.watchers.present? && User.current.allowed_to?(:view_issue_watchers, @project)) %>
-    <div id="watchers">
-      <%= render :partial => 'watchers/watchers', :locals => {:watched => @issue} %>
-    </div>
-  <% end %>
+    <% if User.current.allowed_to?(:add_issue_watchers, @project) ||
+            (@issue.watchers.present? && User.current.allowed_to?(:view_issue_watchers, @project)) %>
+        <div id="watchers">
+          <%= render :partial => 'watchers/watchers', :locals => {:watched => @issue} %>
+        </div>
+    <% end %>
 <% end %>
 
 <% content_for :header_tags do %>

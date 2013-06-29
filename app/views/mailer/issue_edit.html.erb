@@ -1,11 +1,12 @@
+<p style="font-size: 0.8em; font-style: italic; ">
 <%= l(:text_issue_updated, :id => "##{@issue.id}", :author => h(@journal.user)) %>
-
+</p>
 <ul>
 <% for detail in @journal.details %>
     <li><%= show_detail(detail, true) %></li>
 <% end %>
 </ul>
-
-<%= textilizable(@journal, :notes, :only_path => false) %>
-<hr />
+<%= raw(@journal.notes).html_safe %>
+<%# @journal, :notes, :only_path => false) %>
+ <hr>
 <%= render :partial => "issue.html.erb", :locals => { :issue => @issue, :issue_url => @issue_url } %>

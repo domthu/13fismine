@@ -4,21 +4,24 @@
                                        :class => nil,
                                        :method => :put,
                                        :multipart => true} do |f| %>
-    <div class="box">
-
-      <fieldset><legend><%= l(:field_notes) %></legend>
-
-        <%= text_area_tag 'notes', @notes %>
-        <%# wikitoolbar_for 'notes' %>
-        <%= call_hook(:view_issues_edit_notes_bottom, { :issue => @issue, :notes => @notes, :form => f }) %>
-
+    <%= error_messages_for 'issue', 'time_entry' %>
+    <div>
+      <% if @edit_allowed || !@allowed_statuses.empty? %>
+          <fieldset style="display:none">
+            <%= f.select :author_id, principals_options_for_select(@issue.assignable_users, @issue.author) %>
+          </fieldset>
+      <% end %>
+      <fieldset>
+        <legend><%= l(:field_notes) %></legend>
+        <%= text_area_tag 'notes', @notes, :id => "fast_reply" %>
+        <%= call_hook(:view_issues_edit_notes_bottom, {:issue => @issue, :notes => @notes, :form => f}) %>
       </fieldset>
     </div>
-             <%= f.hidden_field :lock_version %>
-    <%# submit_tag l(:button_submit)  %>
-    <%= submit_tag l(:button_save) %>
-
- <%	end  %>
+    <%= f.hidden_field :lock_version %>
+    <p style="width: 95%; text-align: right;">
+      <%= submit_tag l(:button_submit), :class => 'button-blu' %>
+    </p>
+<% end %>
 <script type="text/javascript" charset="utf-8">
-    CKEDITOR.replace('notes', { toolbar:'Basic'});
- </script>
+    CKEDITOR.replace('fast_reply', { toolbar:'Basic', height:200 });
+</script>
