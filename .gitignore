@@ -50,11 +50,11 @@ config/database.yml
 /config/environments/production.rb
 /lib/redmine/imap.rb
 /lib/redmine/pop3.rb
-/public/images/users/*
-/public/images/articoli/*
-/public/images/commons/nook/*
-/public/images/commons/assos/*
-/public/images/commons/sections/*
-/public/images/commons/organizations/*
-/public/images/commons/banners/*
+public/images/users/*
+public/images/articoli/*
+public/images/commons/nook/*
+public/images/commons/assos/*
+public/images/commons/sections/*
+public/images/commons/organizations/*
+public/images/commons/banners/*
 
