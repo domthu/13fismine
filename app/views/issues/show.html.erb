@@ -13,7 +13,6 @@
         <%= l(:label_updated_time, time_tag(@issue.updated_on)) %>.
     <% end %>
   </p>
-
   <table class="attributes">
     <tr>
       <th class="status"><%= l(:field_section) %>:</th>
@@ -107,7 +106,7 @@
 
       <div id="issue_fast_reply">
         <div style="clear: both;"></div>
-        <h3><%= l(:label_comment) %></h3>
+        <h3 class="gradient-dx-blu"><%= l(:label_comment) %></h3>
         <%= render :partial => 'edit_fast' %>
         <br/>
       </div>

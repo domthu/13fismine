@@ -310,7 +310,6 @@ div.issue span.private { position:relative; bottom: 2px; text-transform: upperca
 #issue_tree td.checkbox, #relations td.checkbox {display:none;}
 #relations td.buttons {padding:0;}
 #issue_fast_reply{ background-color: #F6F6F6;}
-#issue_fast_reply h3{ background-color: #2c4056; padding-left: 10px; color: #fff; border: 0;}
 fieldset.collapsible { border-width: 1px 0 0 0; font-size: 0.9em; }
 fieldset.collapsible legend { padding-left: 16px; background: url(../images/arrow_expanded.png) no-repeat 0% 40%; cursor:pointer; }
 fieldset.collapsible.collapsed legend { background-image: url(../images/arrow_collapsed.png); }
@@ -382,7 +381,7 @@ table#time-report .hours-dec { font-size: 0.9em; }
 div.wiki-page .contextual a {opacity: 0.4}
 div.wiki-page .contextual a:hover {opacity: 1}
 
-form .attributes select { width: 60%; }
+form .attributes select { width: 55%; }
 input#issue_subject { width: 99%; }
 select#issue_done_ratio { width: 95px; }
 
@@ -1353,4 +1352,21 @@ p.changeauthor img.gravatar{
 }.button-blu:active {
 	position:relative;
 	top:1px;
+}
+.gradient-dx-blu {
+    background: -moz-linear-gradient(left, rgb(44, 64, 86) 0%, rgba(255, 246, 196, 0) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgb(44, 64, 86)), color-stop(100%, rgb(255, 255, 255)));
+    background: -webkit-linear-gradient(left, rgb(44, 64, 86) 0%, rgba(255, 255, 255, 0.64) 100%);
+    background: -o-linear-gradient(left, rgb(44, 64, 86) 0%, rgb(255, 255, 255) 100%);
+    background: -ms-linear-gradient(left, rgb(44, 64, 86) 0%, rgb(255, 255, 255) 100%);
+    background: linear-gradient(to right, rgb(44, 64, 86) 0%, rgb(255, 255, 255) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#00000000', endColorstr = '#a6000000', GradientType = 1);
+    position: relative;
+    height: 24px;
+    color: #fff;
+    margin: 6px auto;
+    width: auto;
+    font-weight: bold;
+    border: 1px solid #d3d6f1;
+    padding: 3px 11px 0;
 }
