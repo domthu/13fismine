@@ -78,6 +78,7 @@
         <% end %>
       </fieldset>
   <% end %>
+
   <% if @issue.description? || @issue.attachments.any? -%>
       <p><strong><%= l(:field_description) %></strong></p>
       <% if @issue.description? %>
@@ -99,16 +100,6 @@
       <hr/>
       <div id="relations">
         <%= render :partial => 'relations' %>
-      </div>
-  <% end %>
-  <% if !@issue.leaf? || User.current.allowed_to?(:manage_subtasks, @project) %>
-      <br/>
-
-      <div id="issue_fast_reply">
-        <div style="clear: both;"></div>
-        <h3 class="gradient-dx-blu"><%= l(:label_comment) %></h3>
-        <%= render :partial => 'edit_fast' %>
-        <br/>
       </div>
   <% end %>
 </div>
@@ -236,24 +227,33 @@
       <%= render :partial => 'changesets', :locals => {:changesets => @changesets} %>
     </div>
 <% end %>
-
 <% if @journals.present? %>
     <div id="history">
-      <h3><%= l(:label_history) %></h3>
+      <h1><%= l(:label_history) %></h1>
       <%= render :partial => 'history', :locals => {:issue => @issue, :journals => @journals} %>
     </div>
 <% end %>
-
+<!-- Issue fast reply -->
+<% if !@issue.leaf? || User.current.allowed_to?(:manage_subtasks, @project) %>
+    <br/>
+    <div id="issue_fast_reply">
+      <div style="clear: both;"></div>
+      <h3 class="gradient-dx-blu"><%= l(:label_comment) %></h3>
+      <%= render :partial => 'edit_fast' %>
+      <br/>
+    </div>
+<% end %>
 <div style="clear: both;"></div>
 <%= render :partial => 'action_menu' %>
 <div style="clear: both;"></div>
-<% if authorize_for('issues', 'edit') %>
+<!--
+<%# if authorize_for('issues', 'edit') %>
     <div id="update" style="display:none;">
-      <h3><%= l(:button_update) %></h3>
-      <%= render :partial => 'edit' %>
+      <h3><%# l(:button_update) %></h3>
+      <%# render :partial => 'edit' %>
     </div>
-<% end %>
-
+<%# end %>
+-->
 <% other_formats_links do |f| %>
     <%= f.link_to 'Atom', :url => {:key => User.current.rss_key} %>
     <%= f.link_to 'PDF' %>

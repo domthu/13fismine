@@ -1327,8 +1327,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						throw( e );
 				}
 
-				var selection = this.document.getSelection().getNative();
-				selection.removeAllRanges();
-				selection.addRange( nativeRange );
-			};
+				//var selection = this.document.getSelection().getNative();
+				//selection.removeAllRanges();
+				//selection.addRange( nativeRange );
+                if ( selection )
+                {
+                    selection.removeAllRanges();
+                 	selection.addRange( nativeRange );
+                }
+            };
+
 } )();

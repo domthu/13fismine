@@ -5,7 +5,6 @@
     <%= avatar(journal.user, { :size => "24", :class => "no-div" } ) %>
     <%= content_tag('a', '', :name => "note-#{journal.indice}")%>
     <%= authoring journal.created_on, journal.user, :label => :label_updated_time_by %></h4>
-
     <% if journal.details.any? %>
     <ul class="details">
       <% for detail in journal.details %>
@@ -17,5 +16,4 @@
   </div>
   <%= call_hook(:view_issues_history_journal_bottom, { :journal => journal }) %>
 <% end %>
-
 <% heads_for_wiki_formatter if User.current.allowed_to?(:edit_issue_notes, issue.project) || User.current.allowed_to?(:edit_own_issue_notes, issue.project) %>

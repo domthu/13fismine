@@ -35,24 +35,16 @@
             <% end %>
           </fieldset>
       <% end %>
-      <div id="issue_fast_reply">
-        <div style="clear: both;"></div>
-        <h3 class="gradient-dx-blu"><%= l(:label_comment) %></h3>
-        <fieldset>
-          <legend><%= l(:field_notes) %></legend>
-
-          <%= text_area_tag 'notes', @notes %>
-          <%# wikitoolbar_for 'notes' %>
-          <%= call_hook(:view_issues_edit_notes_bottom, {:issue => @issue, :notes => @notes, :form => f}) %>
-
-          <p><%= l(:label_attachment_plural) %><br/><%= render :partial => 'attachments/form' %></p>
-        </fieldset>
-        <br/>
-      </div>
+      <div style="clear: both;"></div>
+      <fieldset>
+        <legend><%= l(:label_allegati) %></legend>
+        <%= call_hook(:view_issues_edit_notes_bottom, {:issue => @issue, :notes => @notes, :form => f}) %>
+        <p><%= l(:label_attachment_plural) %><br/><%= render :partial => 'attachments/form' %></p>
+      </fieldset>
+      <br/>
     </div>
-
     <%= f.hidden_field :lock_version %>
-    <p style="width: 95%; text-align: right;">
+    <p style="margin-left: 33%; text-align: left;">
       <%= submit_tag l(:button_save), :class => 'button-blu' %>
     </p>
     <br>
@@ -64,11 +56,6 @@
                             :with => 'Form.serialize("issue-form")',
                             :complete => "Element.scrollTo('preview')"
                            }, :accesskey => accesskey(:preview) %>
-
         <%= link_to l(:preview_fs_issue), preview_fs_articolo_path(:article_id => @issue.id.to_s), {:target => "_blank", :class => 'icon icon-preview'} %>
     <% end %>
 <% end %>
-<script type="text/javascript" charset="utf-8">
-    CKEDITOR.replace('notes', { toolbar:'Basic', height:200 });
-</script>
-<div id="preview" class="wiki"></div>

@@ -71,16 +71,17 @@ class JournalsController < ApplicationController
     content << text.gsub(/(\r?\n|\r\n?)/, "\n> ") + "\n\n"
 
     render(:update) { |page|
-      page.<< "$('notes').value = \"#{escape_javascript content}\";"
-      page.show 'update'
+      page.<< "$('fast_reply').value = \"#{escape_javascript content}\";"
       page << "Form.Element.focus('notes');"
-      page << "Element.scrollTo('update');"
-      page << "$('notes').scrollTop = $('notes').scrollHeight - $('notes').clientHeight;"
+      page << "var oEditor = CKEDITOR.instances.fast_reply;"
+      page << "oEditor.insertHtml( \"#{escape_javascript content}\" );"
+      page.show 'fast_reply'
     }
   end
 
   def edit
     (render_403; return false) unless @journal.editable_by?(User.current)
+
     if request.post?
       @journal.update_attributes(:notes => params[:notes]) if params[:notes]
       @journal.destroy if @journal.details.empty? && @journal.notes.blank?

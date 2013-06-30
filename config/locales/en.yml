@@ -1336,6 +1336,7 @@ en:
   field_prezzo: Prezzo
   field_msg: Messaggio
   label_other_reservation_plural_from_issue: Altre prenotazioni per questo convegno
+  label_allegati: Attachments
 
 #ISSUE --> ATTIVITA
   label_se_visible_web: Visibile Web?
