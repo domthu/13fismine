@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :newsletter_users
+  map.resources :newsletters
   map.resources :pages
   map.resources :user_profiles
   map.resources :reservations
@@ -95,6 +97,14 @@ ActionController::Routing::Routes.draw do |map|
 =end
 
 #Map menu
+
+  map.newsletter_invii '/invii/:project_id',
+                      :controller => 'newsletters',
+                      :action => 'invii',
+                      :project_id => /\d.+/,
+                      #:project_id => /[^\/]+/,
+                      :conditions => {:method => [:get, :post]}
+
 
   map.editorial '/editoriale/home',
                 :controller => 'editorial',
@@ -247,7 +257,7 @@ ActionController::Routing::Routes.draw do |map|
   map.preview_issue '/issues/preview/:id', :controller => 'previews', :action => 'issue' # TODO: would look nicer as /issues/:id/preview
   map.preview_fs_articolo '/editorial/articolo/:article_id', :controller => 'editorial', :action => 'preview_articolo'
   map.preview_articolo '/issues/articolo/:id', :controller => 'previews', :action => 'articolo'
-  map.preview_newsletter '/newsletter/:user_id', :controller => 'previews', :action => 'newsletter'
+  map.preview_newsletter '/newsletter_preview/:user_id', :controller => 'previews', :action => 'newsletter'
 
   map.issues_context_menu '/issues/context_menu', :controller => 'context_menus', :action => 'issues'
   map.issue_changes '/issues/changes', :controller => 'journals', :action => 'index'

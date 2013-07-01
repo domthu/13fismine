@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  email_type: MyString
+  user_id: 1
+  asso_id: 1
+  data_scadenza: 2013-06-30 22:36:32
+  html: MyText
+  newsletter_id: 1
+  errore: MyText
+  sended: false
+
+two:
+  email_type: MyString
+  user_id: 1
+  asso_id: 1
+  data_scadenza: 2013-06-30 22:36:32
+  html: MyText
+  newsletter_id: 1
+  errore: MyText
+  sended: false

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  project_id: 1
+  data: 2013-06-30 22:36:05
+  html: MyText
+  sended: false
+
+two:
+  project_id: 1
+  data: 2013-06-30 22:36:05
+  html: MyText
+  sended: false
