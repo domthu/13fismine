@@ -8,6 +8,11 @@ class Newsletter < ActiveRecord::Base
   #boolean
   #validates_presence_of :sended
 
+  #named scope
+  #scope :per_project, ->(prj_id) { where("project_id < ?", prj_id) } Rails 3?
+  #dynamic scope\
+  #Newsletter.scoped_by_project_id(12)
+
   def to_s
     (project.nil? ? "?(news)" : project.name)
   end

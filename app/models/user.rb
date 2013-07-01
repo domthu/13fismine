@@ -81,6 +81,8 @@ class User < Principal
   #has_one :reference, :class_name => 'Organization', :dependent => :nullify
   has_many :references, :class_name => 'Organization', :dependent => :nullify
   has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
+  #invvi emails
+  has_many :newsletter_users, :dependent => :destroy
 
   acts_as_customizable
 
@@ -135,6 +137,7 @@ class User < Principal
   def my_quesiti
     News.all(:conditions => ['author_id = ?', self.id], :order => "created_on DESC")
   end
+
   def hide_name
     str = " utente Fiscosport n° " + self.id.to_s
     if self.comune_id && self.comune
@@ -189,7 +192,9 @@ class User < Principal
     if self.asso_id.nil? || self.asso.nil? || self.asso_id == 0
       nil
     else
-      Asso.find(:all, :include => [:organization => :cross_organization], :conditions => ["id =  ?", self.asso_id])
+      #Asso.find(:first, :include => [:organization => :cross_organization], :conditions => ["id =  ?", self.asso_id])
+      #Asso.all(:include => [:organization => :cross_organization]).find(self.asso_id)
+      Asso.find(self.asso_id)
     end
   end
 

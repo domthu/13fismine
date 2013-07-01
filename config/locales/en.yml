@@ -1686,3 +1686,15 @@ en:
   button_send_newsletter: Invia quindicinale
   label_user_list_newsletters: "Storico degli invii precedenti"
   label_newsletter: Quindicinale
+  error_can_not_create_newsletter: "Creazione automatica della newsletter (%{newsletter}) non riuscità"
+  label_newsletter_plural_long: "gestione invii della newsletter"
+  field_sended: "email inviata"
+  field_html: "testo del messaggio"
+  field_data: "data invio"
+  label_sended: 'email inviata'
+  label_html: 'testo del messaggio'
+  label_data: 'data invio'
+  label_newsletter_none: "Nessun invio fatto a questo giorno"
+  field_abbonamento: "Abbonamento"
+  field_abbonamento_type: "Tipo abbonamento"
+  field_user_fee: "Abbonato"

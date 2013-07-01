@@ -9,6 +9,11 @@ class NewsletterUser < ActiveRecord::Base
   #boolean
   validates_presence_of :sended
 
+  #named scope
+  #scope :per_user, -> (usr_id) { where("user_id < ?", usr_id) } Rails 3?
+  #dynamic scope\
+  #NewsletterUser.scoped_by_user_id(12)
+
   def to_s
     s = ''
     s += (user.nil? ? "?(user)" : user.name)

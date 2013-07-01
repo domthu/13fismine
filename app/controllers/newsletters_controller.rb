@@ -73,32 +73,48 @@ class NewslettersController < ApplicationController
     end
 
     #Collect user
-    @users_by_roles = User.all(:conditions => ['role_id IN (?)', FeeConst::NEWSLETTER_ROLES])
+    @users_by_roles = User.all(
+      :conditions => ['role_id IN (?)', FeeConst::NEWSLETTER_ROLES]
+      )
+#       :include => [:asso, :cross_organization]
+#       :joins => [:newsletter_users]
+#       :conditions => ["#{NewsletterUsers.table_name}.project_id = ? )", @project.id.to_s]
     # if asso_id is not null allora sono non pagante
     @users_emailed = @newsletter.newsletter_users
 
     #sort and filters users
     sort_init 'login', 'asc'
-    sort_update %w(login firstname lastname mail admin created_on last_login_on)
+    #sort_update %w(login firstname lastname mail admin created_on last_login_on)
+    sort_update %w(lastname mail data asso_id)
+
     @limit = per_page_option
 
     scope = @users_by_roles
 
     @role = params[:role] ? params[:role].to_i : 1
-    c = ARCondition.new(@role == 0 ? ["role_id IN ? ", FeeConst::NEWSLETTER_ROLES] : ["role_id = ?", @role])
-
+    c = ARCondition.new(@role == 0 ? ["role_id IN (?) ", FeeConst::NEWSLETTER_ROLES] : ["role_id = ?", @role])
+    #ricerca testuale
     unless params[:name].blank?
       name = "%#{params[:name].strip.downcase}%"
       c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
     end
+    #Asso filter
+    @asso_id = (params[:asso] && params[:asso][:asso_id]) ? params[:asso][:asso_id].to_i : 0
+    if @asso_id > 0
+      c << ["asso_id = ? ", @asso_id.to_s]
+    end
 
-    @user_count = scope.count(:conditions => c.conditions)
+    #@user_count = scope.count(:conditions => c.conditions)
+    @user_count = User.all.count(:conditions => c.conditions)
     @user_pages = Paginator.new self, @user_count, @limit, params['page']
     @offset ||= @user_pages.current.offset
-    @users =  scope.find :order => sort_clause,
-                        :conditions => c.conditions,
-                        :limit  =>  @limit,
-                        :offset =>  @offset
+    #@users =  scope.find :all,
+    @users =  User.find :all,
+                :order => sort_clause,
+                :conditions => c.conditions,
+                :limit  =>  @limit,
+                :offset =>  @offset
+
 #    @cross_groups = CrossGroup.find(:all,
 #                              :order => sort_clause,
 #                              :limit  =>  @cross_group_pages.items_per_page,

@@ -55,7 +55,9 @@ class Asso < ActiveRecord::Base
 #  end
 
   def to_s
-    str = "[" << self.id.to_s << "] "
+    str = ""
+    #str = "[" << self.id.to_s << "] "
+    str = "[" + (self.users.any? ? self.users.count.to_s : "0") + "]  " #<i class='icon'></i>"
     str << (self.ragione_sociale.blank?  ? "?" : self.ragione_sociale)
     str << (self.presidente.blank? ? "" : " (" + self.presidente + ")")
     return str
