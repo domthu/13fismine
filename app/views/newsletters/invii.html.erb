@@ -1,0 +1,55 @@
+<div class="contextual">
+</div>
+
+<div class="box">
+ <%= render :partial => 'show', :newsletter => @newsletter %>
+</div>
+
+<h2><%=l(:label_user_plural)%></h2>
+
+<% form_tag({}, :method => :get) do %>
+<fieldset><legend><%= l(:label_filter_plural) %></legend>
+<label for='role'><%= l(:field_abbonamento) %>:</label>
+<%= select_tag 'role', users_roles_options_for_select(@role), :class => "small", :onchange => "this.form.submit(); return false;"  %>
+
+<label for='name'><%= l(:label_user) %>:</label>
+<%= text_field_tag 'name', params[:name], :size => 30 %>
+<%= submit_tag l(:button_apply), :class => "small", :name => nil %>
+<%= link_to l(:button_clear), users_path, :class => 'icon icon-reload' %>
+</fieldset>
+<% end %>
+&nbsp;
+
+<div class="autoscroll">
+<table class="list">
+  <thead><tr>
+  <%= sort_header_tag('login', :caption => l(:field_login)) %>
+  <%= sort_header_tag('firstname', :caption => l(:field_firstname)) %>
+  <%= sort_header_tag('lastname', :caption => l(:field_lastname)) %>
+  <%= sort_header_tag('mail', :caption => l(:field_mail)) %>
+  <%= sort_header_tag('datascadenza', :caption => l(:field_data_scadenza), :default_order => 'desc') %>
+  <%= sort_header_tag('asso_id', :caption => l(:field_asso), :default_order => 'desc') %>
+    <th><p class="icon icon-email"></p></th>
+  </tr></thead>
+  <tbody>
+<% for user in @users -%>
+  <tr class="user <%= cycle("odd", "even") %> <%= %w(anon active registered locked)[user.status] %>">
+  <td class="username"><%= avatar(user, { :size => "14", :class => "no-div" }) %><%= link_to h(user.login), edit_user_path(user) %></td>
+  <td class="firstname"><%= h(user.firstname) %></td>
+  <td class="lastname"><%= h(user.lastname) %></td>
+  <td class="email"><%= mail_to(h(user.mail)) %></td>
+  <%# align="center"><%= checked_image user.admin? %>
+  <td class="datascadenza" align="center"><%= format_date(user.scadenza) %></td>
+  <td class="asso_id" align="center"><%= user.associazione_affiliata.name unless user.my_abbo_isprivate? %></td>
+    <td class="buttons">
+      <%# change_status_link(user) %>
+      <%# link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
+    </td>
+  </tr>
+<% end -%>
+  </tbody>
+</table>
+</div>
+<p class="pagination"><%= pagination_links_full @user_pages, @user_count %></p>
+
+<% html_title(l(:label_user_plural)) -%>

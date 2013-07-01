@@ -1,0 +1,70 @@
+<%= f.error_messages %>
+
+  <p>
+    <%= f.label :project_id %><br />
+    <%= f.text_field :project_id %>
+  </p>
+  <p>
+    <%= f.label :data %><br />
+    <%= f.datetime_select :data %>
+  </p>
+  <p>
+    <%= f.label :html %><br />
+    <%= f.text_area :html %>
+  </p>
+  <p>
+    <%= f.label :sended %><br />
+    <%= f.check_box :sended %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+
+<div class="box tabular">
+  <p><%= f.text_field :ragione_sociale, :label => :field_ragione_sociale, :required => true, :size => 40 %></p>
+  <p><%= f.text_field :indirizzo, :label => :field_indirizzo, :size => 50 %></p>
+  <p><%= f.text_field :email, :label => :field_email, :required => true, :size => 20 %></p>
+  <p><%= f.text_field :presidente, :label => :field_presidente, :size => 40  %></p>
+  <p><%= f.text_field :consulente, :label => :field_consulente, :size => 40  %></p>
+  <p><%= f.text_field :logo, :label => :field_logo, :size => 40  %></p>
+  <p><%= f.text_field :telefono, :label => :field_telefono, :size => 40  %></p>
+  <p><%= f.text_field :telefono_alt, :label => :field_telefono_alt, :size => 40  %></p>
+  <p><%= f.text_field :fax, :label => :field_fax, :fax => 40  %></p>
+  <p><%= f.text_area :comunicazioni, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+  <p><%= f.text_field :email_alt, :label => :field_email_alt, :size => 20 %></p>
+  <p><%= f.file_field :image, :label => :field_immagine %> </p>
+  <p id="prev" style="max-height: 300px;"> <%= image_tag @asso.image.url(:m) %>   </p>
+  <p>
+    <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
+      <li>
+        Immagini stili e misure:
+
+      </li>
+      <li>
+        blocco grande a sinistra: :block_l => "256x216#"
+      </li>
+      <li>
+        blocco piccolo come dentro un articolo: :block_s => "194x154#"
+      </li>
+      <li>
+        blocco tra i menu a destra :tramenu => "290x94#"
+      </li>
+      <li>
+        l'immagine verrà non deve superare i 200kb e di formato jpg/png/gif/bmp
+      </li>
+    </ul>
+  </p>
+ </div>
+ <script type="text/javascript">
+    (function () {
+      document.getElementById('asso_image').addEventListener('change', function(event) {
+              if (!event) // i.e. the argument is undefined or null
+                event = window.event;
+                handleFileSelect(event, 'prev', '')
+      }, false);
+
+    })
+            ();
+ </script>

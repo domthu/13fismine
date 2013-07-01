@@ -1,0 +1,16 @@
+<fieldset class="box tabular">
+  <legend><%=l(:label_newsletter)%></legend>
+
+  <p><label>
+    <%= l(:label_project) %></label><span><%= link_to h(@newsletter.project), project_path(@newsletter.project, :id => @newsletter.project_id), { :class => 'icon icon-projects'} %>
+  </span></p>
+  <p><label><%= l(:label_sended) %></label><span>
+      <%= check_box_tag '', 1, @newsletter.sended, :disabled => 'disabled'  %>
+  </span></p>
+  <p><label>
+    <%=l(:label_data)%></label><span><%= format_date(@newsletter.data) %>
+  </span></p>
+  <p><label>
+    <%= l(:label_html) %></label><span><%=h @newsletter.html %>
+  </span></p>
+</fieldset>

@@ -1,0 +1,44 @@
+<h1>Editing newsletter_user</h1>
+
+<% form_for(@newsletter_user) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :email_type %><br />
+    <%= f.text_field :email_type %>
+  </p>
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :asso_id %><br />
+    <%= f.text_field :asso_id %>
+  </p>
+  <p>
+    <%= f.label :data_scadenza %><br />
+    <%= f.datetime_select :data_scadenza %>
+  </p>
+  <p>
+    <%= f.label :html %><br />
+    <%= f.text_area :html %>
+  </p>
+  <p>
+    <%= f.label :newsletter_id %><br />
+    <%= f.text_field :newsletter_id %>
+  </p>
+  <p>
+    <%= f.label :errore %><br />
+    <%= f.text_area :errore %>
+  </p>
+  <p>
+    <%= f.label :sended %><br />
+    <%= f.check_box :sended %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @newsletter_user %> |
+<%= link_to 'Back', newsletter_users_path %>

@@ -1,7 +1,9 @@
 <div class="contextual">
   <% if User.current.allowed_to?(:add_subprojects, @project) %>
     <%= link_to l(:label_subproject_new), {:controller => 'projects', :action => 'new', :parent_id => @project}, :class => 'icon icon-add' %>
+    <%= link_to(l(:button_send_newsletter), newsletter_invii_path(:project_id => @project.id), :class => 'icon icon-multiple') if User.current.admin? && @project.is_public_fs? %>
   <% end %>
+
 </div>
 
 <h2><%=l(:label_overview)%></h2>

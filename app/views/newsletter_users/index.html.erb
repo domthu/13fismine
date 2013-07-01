@@ -1,0 +1,34 @@
+<h1>Listing newsletter_users</h1>
+
+<table>
+  <tr>
+    <th>email_type</th>
+    <th>User</th>
+    <th>Associazione</th>
+    <th>Data scadenza</th>
+    <th>html</th>
+    <th>newsletter_id</th>
+    <th>errore</th>
+    <th>sended</th>
+  </tr>
+
+<% @newsletter_users.each do |newsletter_user| %>
+  <tr>
+    <td><%=h newsletter_user.email_type %></td>
+    <td><%=h newsletter_user.user_id %></td>
+    <td><%=h newsletter_user.asso_id %></td>
+    <td><%=h newsletter_user.data_scadenza %></td>
+    <td><%=h newsletter_user.html %></td>
+    <td><%=h newsletter_user.newsletter_id %></td>
+    <td><%=h newsletter_user.errore %></td>
+    <td><%=h newsletter_user.sended %></td>
+    <td><%= link_to 'Show', newsletter_user %></td>
+    <td><%= link_to 'Edit', edit_newsletter_user_path(newsletter_user) %></td>
+    <td><%= link_to 'Destroy', newsletter_user, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New newsletter_user', new_newsletter_user_path %>

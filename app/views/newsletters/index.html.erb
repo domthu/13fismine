@@ -1,0 +1,26 @@
+<h1>Listing newsletters</h1>
+
+<table>
+  <tr>
+    <th>Project</th>
+    <th>(old) data</th>
+    <th>html</th>
+    <th>sended</th>
+  </tr>
+
+<% @newsletters.each do |newsletter| %>
+  <tr>
+    <td><%=h newsletter.project_id %></td>
+    <td><%=h newsletter.data %></td>
+    <td><%=h newsletter.html %></td>
+    <td><%=h newsletter.sended %></td>
+    <td><%= link_to 'Show', newsletter %></td>
+    <td><%= link_to 'Edit', edit_newsletter_path(newsletter) %></td>
+    <td><%= link_to 'Destroy', newsletter, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New newsletter', new_newsletter_path %>

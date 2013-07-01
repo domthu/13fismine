@@ -22,6 +22,11 @@ module FeeConst
   AUTHORED_ROLES =[ROLE_ADMIN, ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW]
   CAN_BACK_END_ROLES =[ROLE_ADMIN, ROLE_MANAGER, ROLE_AUTHOR]
 
+  NEWSLETTER_ROLES =[ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW]
+#  role_abbonato: Abbonato
+#  role_registered: Registrato
+#  role_renew: Rinnovo, In scadenza
+
   EDIZIONE_KEY = "e-" #Identificatore
 
   #QUESITO_ID = 15
