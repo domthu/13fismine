@@ -1,7 +1,7 @@
 class CreateNewsletterUsers < ActiveRecord::Migration
   def self.up
     create_table :newsletter_users do |t|
-      t.string :email_type :limit => 30, :null => false
+      t.string :email_type, :limit => 30, :null => false
       t.integer :user_id, :null => false
       t.integer :asso_id, :null => true
       t.datetime :data_scadenza, :null => true
