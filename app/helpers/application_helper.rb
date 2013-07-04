@@ -50,7 +50,11 @@ module ApplicationHelper
     target = options[:target] || "_self"
     only_path =options[:only_path]
     if only_path == false
-      return url_for(:controller => 'editorial', :action => 'evento', :id => articolo.id.to_s, :only_path => false, :slug => h(truncate(articolo.subject, :length => 125).to_slug))
+      if articolo.is_convegno?
+        return url_for(:controller => 'editorial', :action => 'evento', :id => articolo.id.to_s, :only_path => false, :slug => h(truncate(articolo.subject, :length => 125).to_slug))
+      else
+        return url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug))
+      end
     else
       if articolo.is_convegno?
         s = url_for(:controller => 'editorial', :action => 'evento', :id => articolo.id.to_s, :slug => h(truncate(articolo.subject, :length => 125).to_slug))
