@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en-EN" xmlns="http://www.w3.org/1999/html">
+<html dir="ltr" lang="en-EN" xmlns="http://www.w3.org/1999/html" xmlns:fb="https://www.facebook.com/2008/fbml">
 <head><!-- Created by DomThu & SPecchiaSoft -->
    <meta charset="utf-8"/>
   <title>FiscoSport (v0.5.30 beta) <%= h html_title %></title>
@@ -7,6 +7,9 @@
   <meta name="description" content="<%= Redmine::Info.app_name %>"/>
   <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="title" content="Professionisti esperti in materie fiscali sportive" />
+  <meta name="description" content="Visita il sito fiscosport per tenerti sempre aggiornato" />
+  <link rel="image_src" type="image/jpeg" href="http://37.59.40.44:88/images/ico/fs.png"/>
   <%= csrf_meta_tag %>
   <%#<meta name="csrf-token" content="<%= form_authenticity_token % >" />
   <meta name="csrf-param" content="authenticity_token" />
@@ -170,6 +173,7 @@
     <div id="toTop" style="display: none;"></div>
     <div id="ajax-indicator" style="display: none;"><span><%= l(:label_loading) %></span></div>
     <footer class="fs-footer clearfix">
+
       <p><a href="#">Link1</a> | <a href="#">Link2</a> | <a href="#">Link3</a></p>
 
       <p>Copyright © 2012. All Rights Reserved.</p>
