@@ -1397,7 +1397,7 @@ it:
   field_pwd: (old) Password
   field_login_fisco: (old) login FISCOSPORT
   field_mail_fisco: (old) email FISCOSPORT
-  field_soc: (old) società
+  field_soc: Società
   field_note: (old) note
   field_cap: (old) CAP
   field_prov: (old) provincia
