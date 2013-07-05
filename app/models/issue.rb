@@ -76,7 +76,7 @@ class Issue < ActiveRecord::Base
     }
   }
   named_scope :all_public_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
-                                :order => "#{Project.table_name}.id DESC , due_date DESC",
+                                :order => "#{Project.table_name}.id DESC , #{TopSection.table_name}.ordinamento DESC , due_date DESC",
                                 :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"]}
   named_scope :with_filter, lambda { |filter| {:conditions => merge_conditions(filter)} }
   named_scope :solo_convegni, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_CONVEGNI.to_s)
