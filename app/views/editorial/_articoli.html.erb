@@ -4,6 +4,7 @@
         <!-- qui è l'inserimento dell'articolo -->
         <article class="fs-post fs-article">
           <% if articolo %>
+debug ordinamento <br />       <h2><%=  articolo.project_id.to_s%> <-project-| <br /> <%= articolo.top_section.ordinamento.to_s%> <-top_section-| <br /> <%= articolo.due_date.to_s%> <-due_date-|  </h2>
               <div class="fs-postmetadataheader">
                 <% if articolo.se_protetto %>
                   <span class="fs-art-sezione fs-art-sez-ko fs-art-ko">&nbsp;<%= articolo.section.full_name %></span>
