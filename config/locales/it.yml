@@ -995,7 +995,7 @@ it:
   text_line_separated: Valori multipli permessi (un valore per ogni riga).
   text_issues_ref_in_commit_messages: Articoli di riferimento e chiusura nei messaggi di commit
   text_issue_added: "E' stato creato un articolo %{id} da %{author}."
-  text_issue_updated: "L'articolo %{id} è stata aggiornato da %{author}."
+  text_issue_updated: "L'articolo %{id} è stato aggiornato da %{author}."
   text_wiki_destroy_confirmation: Sicuro di voler eliminare questo wiki e tutti i suoi contenuti?
   text_issue_category_destroy_question: "Alcuni articoli (%{count}) risultano assegnati a questa categoria. Cosa vuoi fare ?"
   text_issue_category_destroy_assignments: Rimuovi le assegnazioni a questa categoria

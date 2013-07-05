@@ -4,7 +4,19 @@
     });
     var urlpropose = '<%= propose_evt_path %>';
     function sendmail() {
-        $.post(urlpropose, { user_mail:$("#evtmail").val(), body:$("#message").val(), authenticity_token:$("input[name='authenticity_token']").val(), back_url:$('#back_url').val() },
+        var email = $("#evtmail").val();
+        if (email.trim.length <= 1)
+        {
+            js_flash("alert", "impostare la mail");
+            return false;
+        }
+        var msg = $("#message").val();
+        if (msg.trim.length <= 1)
+        {
+            js_flash("alert", "Descrivere il convegno che intendi propore");
+            return false;
+        }
+        $.post(urlpropose, { user_mail: email, body: msg, authenticity_token:$("input[name='authenticity_token']").val(), back_url:$('#back_url').val() },
                 function (data) {
                     data = data || {};
                     if (data.success) {

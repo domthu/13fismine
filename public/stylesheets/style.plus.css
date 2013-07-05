@@ -76,6 +76,7 @@
     position: relative;
     width: 100%;
     min-height: 125px;
+    padding-top: 8px;
     background: #fff5d9; /* Old browsers */
     background: -moz-linear-gradient(top, #ffe375 0%, #f2e6d0 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffe375), color-stop(100%, #f1e6d0)); /* Chrome,Safari4+ */
