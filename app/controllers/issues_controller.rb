@@ -193,8 +193,8 @@ class IssuesController < ApplicationController
 
     if @issue.save
 
-      #domthu 20130629 substitute author with other one\
-      if @issue.assigned_to_id !=  @issue.author_id
+      #domthu 20130629 substitute author with other one
+      if (@issue.assigned_to_id && (@issue.assigned_to_id > 0) && (@issue.assigned_to_id !=  @issue.author_id))
         @issue.update_attribute(:author_id, @issue.assigned_to_id)
       end
 
