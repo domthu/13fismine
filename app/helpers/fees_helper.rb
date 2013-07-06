@@ -352,6 +352,7 @@ module FeesHelper
 #      end
     end
 
+
     if data_scadenza.nil? || !data_scadenza.is_a?(Date)
         #  FeeConst::ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
         str << ", <b style='color:red'>Scadenza "
