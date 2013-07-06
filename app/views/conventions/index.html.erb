@@ -1,0 +1,66 @@
+<div class="contextual">
+<%= link_to l(:label_convention_new), new_convention_path, :class => 'icon icon-add' %>
+</div>
+
+<h2><%= l(:label_convention_plural) %></h2>
+
+<% if @convs.any? %>
+<div style="max-width: 960px; overflow: auto;">
+<table class="list conventions">
+  <thead><tr>
+  <%= sort_header_tag('ragione_sociale', :title => l(:label_ragione_sociale), :style => 'width: 15%;text-align:left;')%>
+  <%= sort_header_tag('Tipo_Sigla', :title => l(:label_convention_pact), :style => 'width: 15%;text-align:left;')%>
+  <%= sort_header_tag('data_scadenza', :title => l(:label_convention_ref), :style => 'width: 15%;')%>
+  <%= sort_header_tag('presidente', :title => l(:label_convention_people), :style => 'width: 15%;text-align:left;')%>
+  <%= sort_header_tag('indirizzo', :title => l(:label_convention_address), :style => 'width: 15%;text-align:left;')%>
+  <%= sort_header_tag('telefono', :title => l(:label_convention_contact), :style => 'width: 15%;text-align:left;')%>
+
+  <%# sort_header_tag('Tipo_Sigla', :title => l(:label_cross_organization), :style => 'width: 15%;text-align:left;')%>
+  <%# sort_header_tag('region', :title => l(:label_region), :style => 'width: 10%;')%>
+  <%# sort_header_tag('province', :title => l(:label_province), :style => 'width: 10%;')%>
+  <%# sort_header_tag('data_scadenza', :title => l(:label_data_scadenza), :style => 'width: 10%;')%>
+  <%# sort_header_tag('responsabile', :title => l(:label_manager), :style => 'width: 15%;text-align:left;')%>
+  <%# sort_header_tag('ConiNum?', :title => l(:label_richiedinumeroregistrazione), :style => 'width: 5%;')%>
+  <%# sort_header_tag('presidente', :title => l(:label_presidente), :style => 'width: 10%;text-align:left;')%>
+  <%# sort_header_tag('referente', :title => l(:label_referente), :style => 'width: 10%;text-align:left;')%>
+  <%# sort_header_tag('consulente', :title => l(:label_consulente), :style => 'width: 10%;text-align:left;')%>
+  <%# sort_header_tag('indirizzo', :title => l(:label_indirizzo), :style => 'width: 10%;text-align:left;')%>
+  <%# sort_header_tag('comune', :title => l(:label_comune), :style => 'width: 10%;')%>
+  <%# sort_header_tag('logo', :title => l(:label_logo), :style => 'width: 10%;text-align:left;')%>
+  <%# sort_header_tag('telefono', :title => l(:label_telefono), :style => 'width: 10%;text-align:left;')%>
+  <%# sort_header_tag('fax', :title => l(:label_fax), :style => 'width: 10%;text-align:left;')%>
+  <%# sort_header_tag('email', :title => l(:label_email), :style => 'width: 10%;text-align:left;')%>
+  <th style='width: 5%;'></th>
+  <th style='width: 5%;'></th>
+  </tr></thead>
+  <tbody>
+<% @convs.each do |conv| %>
+  <tr class="<%= cycle 'odd', 'even' %>">
+    <td><%= link_to(conv, convention_path(conv), :class => 'icon icon-summary') %></td>
+    <td><%= link_to h(conv.cross_organization), cross_organization_path(conv.cross_organization, :id => conv.cross_organization_id) %><br /><%=h conv.get_zone() %></td>
+    <td align="left"><%= format_date(conv.data_scadenza) %><br /><%= link_to(h(conv.user), user_path(conv.user, :id => conv.user_id), :class => "icon " + conv.user_icon() ) %></td>
+
+    <td>Pre: <%=h conv.presidente %><br />Ref: <%=h conv.referente %><br />Con: <%=h conv.consulente %></td>
+
+    <td><%=h conv.indirizzo %><br /><%=h conv.comune %></td>
+
+    <td>Mail: <%=h conv.email %><br />Tel: <%=h conv.telefono %><br />Fax: <%=h conv.fax %></td>
+
+<!--
+    <td align="left"><%=h conv.region %></td>
+    <td align="left"><%=h conv.province %></td>
+    <td align="center"><%= check_box_tag '', 1, conv.richiedinumeroregistrazione, :disabled => 'disabled' %></td>
+    <td><%=h conv.logo %></td>
+-->
+    <td class="buttons"><%= link_to('', edit_convention_path(conv), :class => 'icon icon-edit') if User.current.admin? %></td>
+    <td class="buttons"><%= link_to ('', conv, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
+  </tr>
+<% end %>
+</table>
+</div>
+
+<p class="pagination"><%= pagination_links_full @conv_pages, @conv_count %></p>
+
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

@@ -1,7 +1,6 @@
 <% roles_fs = Role.all_fs %>
 <% remote_form_for(:user, :url => { :action => 'edit_abbonamento', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
 
-<% __asso = @user.associazione_affiliata() %>
   <p><%= submit_tag l(:button_save_abbonamento) %></p>
   <div id="edit_dati_form">
     <!--[form:user]-->
@@ -19,8 +18,8 @@
 
           <p class="">
             <label for="siglatipo"><%= l(:label_have_sigla_tipo) %></label>
-            <span><% if @user.sigla_tipo() %>
-                <%= link_to h(@user.sigla_tipo()), cross_organization_path (@user.sigla_tipo()) %>
+            <span><% if defined?(@user.cross_organization) %>
+                <%= link_to h(@user.cross_organization), cross_organization_path (@user.cross_organization) %>
               <% else %>
                 <%= l(:label_no_sigla_tipo) %>
               <% end %>
@@ -37,18 +36,18 @@
           <p class="">
             <label for="refe"><%= l(:label_have_referee) %></label>
             <span class="<%= 'total' if @user.is_referente? %>">
-            <%= check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
+            <%# check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
           </p>
 
           <p class="">
-            <label><%= l(:label_referee_list_assos) %></label>
+            <label><%= l(:label_referee_list_conventions) %></label>
 
             <span>
               <% if @user.responsable? && @user.responsable_of && @user.responsable_of.count > 0 %>
                 <span><%= l(:label_total) %>:<strong class="total center"><%= h @user.responsable_of.count %></strong><%= l(:label_list_responsable_for)%></span>
                 <ul>
-                <% @user.responsable_of.sort_by(&:data_scadenza).reverse.each do |organismo| %>
-                  <li><%= link_to h(organismo), organization_path(organismo) %></li>
+                <% @user.responsable_of.sort_by(&:data_scadenza).reverse.each do |conv| %>
+                  <li><%= link_to h(conv), convention_path(conv) %></li>
                 <% end %>
                 </ul>
               <%else %>
@@ -62,41 +61,26 @@
       <fieldset class="box tabular">
         <legend><%=l(:label_gest_organismo)%></legend>
 
-          <div class="asso-select"><%= f.select :asso_id, (Asso.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => 'cambia asso' %></div>
+          <div class="convention-select"><%= f.select :convention_id, (Convention.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => 'cambia asso' %></div>
 
           <p class="">
-            <label><%= l(:label_have_asso) %></label>
+            <label><%= l(:label_have_convention) %></label>
             <span>
-              <% if __asso %>
-                  <%= link_to h(__asso), asso_path(__asso) %>
-                <%# if @user.asso_id? %>
-                  <%# link_to h(__asso.to_s), asso_path(@user.asso, :id => @user.asso_id) %>
-                <%# end %>
+              <% if defined?(@user.convention) %>
+                  <%= link_to h(@user.convention), convention_path(@user.convention) %>
               <% else %>
-                <%= l(:label_no_asso) %>
+                <%= l(:label_no_convention) %>
               <% end %>
             </span>
           </p>
 
-          <p class="">
-            <label><%= l(:label_have_organization) %></label>
-            <span>
-              <% if @user.organization() %>
-                  <%= link_to h(@user.organization()), organization_path(@user.organization()) %>
-              <% else %>
-                  <%= l(:label_no_organization) %>
-              <% end %>
-            </span>
-          </p>
-
-<% if __asso %>
+<% if @user.convention %>
 
           <p class="">
           <label><%=l(:label_referente) %></label><span>
-            <%# if __asso.organization.referente %>
-            <% if @user.asso.organization.referente %>
-              <%= link_to h(@user.asso.organization.referente) unless User.current.admin? %>
-              <%= link_to h(@user.asso.organization.referente), edit_user_path(:id => @user.asso.organization.referente) unless !User.current.admin? %>
+            <% if @user.convention.user %>
+              <%= link_to h(@user.convention.user) unless User.current.admin? %>
+              <%= link_to h(@user.convention.user), edit_user_path(:id => @user.convention.user) unless !User.current.admin? %>
             <% else %>
               <em class="nodata"><%= l(:label_no_referente) %></em>
             <% end %>
@@ -105,10 +89,10 @@
       </fieldset>
 
       <fieldset class="box tabular">
-        <legend><%=l(:label_assos_users)%></legend>
-        <% associati = @user.asso.users %>
-        <% if associati.any? %>
-          <%= l(:label_total) %>:<strong class="total center"><%= h associati.count %></strong>
+        <legend><%=l(:label_conventions_users)%></legend>
+        <% convenzionati = @user.convention.users %>
+        <% if convenzionati.any? %>
+          <%= l(:label_total) %>:<strong class="total center"><%= h convenzionati.count %></strong>
           <table class="list users">
             <thead>
               <th style="text-align:left;"><%= l(:label_user) %></th>
@@ -116,7 +100,7 @@
               <th style="text-align:left;"><i class="icon icon-man" title="Power user, responsabile"></i></th>
             </thead>
             <tbody>
-            <% associati.sort_by(&:lastname).each do |user| %>
+            <% convenzionati.sort_by(&:lastname).each do |user| %>
               <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
                 <td>
                   <%= user_role_iconized(user, :size => "s", :icon_for => user.uicon, :text => link_to(user, edit_user_path(user))) %>

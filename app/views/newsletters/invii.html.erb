@@ -1,8 +1,8 @@
 <div class="contextual">
 <em class="hide">Limit <%= @limit %></em>
 <em class="hide">offset <%= @offset %></em>
-<em class="hide">asso id <%= @asso_id %></em>
-<em class="hide">asso id <%= @role %></em>
+<em class="hide">convention id <%= @convention_id %></em>
+<em class="hide">convention id <%= @role %></em>
 
 </div>
 
@@ -14,14 +14,12 @@
 
 <% form_tag({}, :method => :get) do %>
 <fieldset><legend><%= l(:label_filter_plural) %></legend>
-<p class="asso-select">
-<%# select_tag :asso_id, options_from_collection_for_select(Asso.all, 'id', 'name', @asso_id)  %>
-<%#(Asso.all.collect {|c| [smart_truncate(c.name, 200), c.id]}), {:include_blank => true, :required => false, :size => 60, :title => 'cambia asso'} %>
-<label for='asso_id'><%= l(:field_asso) %>:</label>
-<%= select(:asso,
-           :asso_id,
-           Asso.all.collect{ |s| [truncate(s.name, :length => 120), s.id] },
-           {:include_blank => 'Tutti', :class => "small", :selected => @asso_id, :onchange => "this.form.submit(); return false;" }) %>
+<p class="convention-select">
+<label for='convention_id'><%= l(:field_convention) %>:</label>
+<%= select(:convention,
+           :convention_id,
+           Convention.all.collect{ |s| [truncate(s.name, :length => 120), s.id] },
+           {:include_blank => 'Tutti', :class => "small", :selected => @convention_id, :onchange => "this.form.submit(); return false;" }) %>
 </p>
 
 <label for='role'><%= l(:field_abbonamento_type) %>:</label>
@@ -43,7 +41,7 @@
   <%# sort_header_tag('lastname', :caption => l(:field_lastname)) %>
   <%= sort_header_tag('mail', :caption => l(:field_mail)) %>
   <%= sort_header_tag('datascadenza', :caption => l(:field_data_scadenza), :default_order => 'desc') %>
-  <%= sort_header_tag('asso_id', :caption => l(:field_asso), :default_order => 'desc') %>
+  <%= sort_header_tag('convention_id', :caption => l(:field_convention), :default_order => 'desc') %>
     <th style="text-align:left; width: 40px;"><i class="icon icon-email" title="Imposti per l'invio email"></i><input id="checkbox_selector" type="checkbox" name="invia" class="selectall" checked="checked" /></th>
   </tr></thead>
   <tbody>
@@ -55,7 +53,7 @@
   <td class="email"><%= mail_to(h(user.mail)) %></td>
   <%# align="center"><%= checked_image user.admin? %>
   <td class="datascadenza" align="center"><%= format_date(user.scadenza) %></td>
-  <td class="asso_id" align="center"><%= h truncate(user.associazione_affiliata.name, :length => 30) unless user.my_abbo_isprivate? %></td>
+  <td class="convention_id" align="center"><%= h truncate(user.convention.name, :length => 30) unless user.privato? %></td>
     <td class="checkbox"><%= check_box_tag 'ids[]', user.id, {:name => "invia"} %></td>
       <%# change_status_link(user) %>
       <%# link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>

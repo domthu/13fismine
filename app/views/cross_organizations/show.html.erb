@@ -25,15 +25,15 @@
 
   </fieldset>
 
-  <fieldset class="box tabular">
-    <legend><%=l(:label_cross_organization_user_asso)%></legend>
+  <fieldset class="box">
+    <legend><%=l(:label_cross_organization_user_convention)%></legend>
       <% if @cross_organization.users.any? %>
         <%= l(:label_total) %>:<strong class="total center"><%= h @cross_organization.users.count %></strong>
-        <table class="subtable list users" width="100%">
+        <table class="subtable users" width="100%">
           <tr>
             <th style="text-align:left;"><%= l(:label_users) %></th>
             <th style="text-align:left;"><%= l(:label_data_scadenza) %></th>
-            <th style="text-align:left;"><%= l(:label_organization) %>?</th>
+            <th style="text-align:left;"><%= l(:label_convention) %>?</th>
           </tr>
           <% @cross_organization.users.sort_by(&:lastname).each do |user| %>
               <tr>
@@ -41,7 +41,7 @@
                     <%= link_to(h(user.to_s), user_path(user), :class => 'icon ' + user.icon()) if User.current.admin? %>
                 </td>
                 <td><%= format_date(user.datascadenza) %></td>
-                <td><% unless user.cross_organization.blank? %>
+                <td><% if defined?(user.cross_organization) && !user.cross_organization.blank? %>
                       <%= h(user.cross_organization.to_s) %>
                     <% else %>
                       <i class="icon icon-padlock_close"></i>
@@ -51,58 +51,52 @@
             <% end %>
         </table>
       <% else %>
-        <%=l(:label_cross_organization_user_asso_none)%>
+        <p class="nodata"><%= l(:label_cross_organization_user_convention_none) %></p>
       <% end %>
   </fieldset>
 
 </div>
 
 <div class="splitcontentright">
-  <fieldset class="box tabular">
-    <legend><%=l(:label_other_organization_sametype)%></legend>
-      <% if @cross_organization.organizations.any? %>
-        <%= l(:label_total) %>:<strong class="total center"><%= h @cross_organization.organizations.count %></strong>
-        <table class="subtable list users" width="100%">
+  <fieldset class="box">
+    <legend><%=l(:label_other_convention_sametype)%></legend>
+      <% if @cross_organization.conventions.any? %>
+        <%= l(:label_total) %>:<strong class="total center"><%= h @cross_organization.conventions.count %></strong>
+        <table class="subtable users" width="100%">
           <tr>
-            <th style="text-align:left;"><%= l(:label_power_user) %>?</th>
-            <th style="text-align:left;"><%= l(:label_organization) %></th>
-            <th style="text-align:left;"><%= l(:label_data_scadenza) %></th>
-            <th style="text-align:left;"><%= l(:label_asso) %></th>
+            <th><%= l(:label_power_user) %></th>
+            <th><%= l(:label_data_scadenza) %></th>
+            <th style="text-align:left;"><%= l(:label_convention) %></th>
           </tr>
 
-          <% @cross_organization.organizations.each do |org| %>
+          <% @cross_organization.conventions.each do |conv| %>
             <tr>
-              <td><% if org.user && !org.user.nil?  && !org.user.blank?  %>
-                  <%= link_to(h(org.user.to_s), user_path(org.user), :class => 'icon' + org.user.icon()) if User.current.admin? %>
-                  <%= h(org.user.to_s) if !User.current.admin? %>
+              <td><% if conv.user && !conv.user.nil?  && !conv.user.blank?  %>
+                  <%= link_to(h(conv.user.name), user_path(conv.user), :class => 'icon' + conv.user.icon()) if User.current.admin? %>
+                  <%= h(conv.user.name) if !User.current.admin? %>
                 <% else %>
-                  <div class="flash error">?<%= h(org.user_id.to_s) %>?</div>
+                  <div class="flash error">?<%= h(conv.user_id.to_s) %>?</div>
                 <% end %>
               </td>
+              <td><%= format_date(conv.data_scadenza) %></td>
               <td class="buttons">
-                  <%= link_to(h(org.to_s), organization_path(org), :class => 'icon icon-summary') if User.current.admin? %>
-                  <%= h(org.to_s) if !User.current.admin? %>
+                  <%= link_to(h(conv.to_s), convention_path(conv), :class => 'icon icon-summary') if User.current.admin? %>
+                  <%= h(conv.to_s) if !User.current.admin? %>
               </td>
-              <td><%= format_date(org.data_scadenza) %></td>
-              <td class="buttons">
-                  <%= link_to(h(org.asso.to_s), asso_path(org.asso), :class => 'icon icon-summary') if User.current.admin? %>
-                  <%= h(org.asso.to_s) if !User.current.admin? %>
-              </td>
-
             </tr>
           <% end %>
 
         </table>
       <% else %>
-        <%=l(:label_other_organization_none)%>
+        <p class="nodata"><%= l(:label_other_convention_none) %></p>
       <% end %>
   </fieldset>
 
-  <fieldset class="box tabular">
+  <fieldset class="box">
     <legend><%=l(:label_other_cross_organization_sametype)%></legend>
       <% if @cross_organization.type_organization.cross_organizations.any? && (@cross_organization.type_organization.cross_organizations.count > 1)%>
         <%= l(:label_total) %>:<strong class="total center"><%= h(@cross_organization.type_organization.cross_organizations.count - 1) %></strong>
-      <table class="subtable list users" width="100%">
+      <table class="subtable users" width="100%">
         <tr>
           <th style="width:40%; text-align:left;"><%= l(:label_type_organization) %></th>
           <th style="width:40%; text-align:left;"><%= l(:label_sigla) %></th>
@@ -112,7 +106,7 @@
               if (type_related_cross != @cross_organization) %>
                 <tr>
                   <td><%=h type_related_cross.type_organization %></td>
-                  <td class="buttons">
+                  <td class="buttons" style="width:20%; text-align:left;">
                       <%= link_to(h(type_related_cross.sigla), cross_organization_path(type_related_cross), :class => 'icon icon-globe icon-adjust-min') if User.current.admin? %>
                   </td>
                   <td><%= check_box_tag '', 1, type_related_cross.se_visibile, :disabled => 'disabled'  %></td>
@@ -121,7 +115,7 @@
         end %>
       </table>
       <% else %>
-        <%=l(:label_other_cross_organization_none)%>
+      <p class="nodata"><%= l(:label_other_cross_organization_none) %></p>
       <% end %>
   </fieldset>
 </div>

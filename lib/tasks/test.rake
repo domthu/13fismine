@@ -1,5 +1,5 @@
-require "#{RAILS_ROOT}/app/helpers/assos_helper"
-include AssosHelper
+require "#{RAILS_ROOT}/app/helpers/conventions_helper"
+include ConventionsHelper
 
 #Attenzione installare la $ gem install hapricot
 require 'diff'

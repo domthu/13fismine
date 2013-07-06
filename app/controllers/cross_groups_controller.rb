@@ -12,9 +12,9 @@ class CrossGroupsController < ApplicationController
     #@cross_groups = CrossGroup.all
 
     #Sorting
-    sort_init 'asso'
+    sort_init 'convention'
     sort_update 'id' => 'id',
-                'asso' => "assos.ragione_sociale",   #related table.Field
+                'convention' => "conventions.ragione_sociale",   #related table.Field
                 'group banner' => "group_banners.espositore",   #related table.Field
                 'se_visibile' => 'cross_groups.se_visibile'
 
@@ -28,7 +28,7 @@ class CrossGroupsController < ApplicationController
         @cross_groups = CrossGroup.find(:all,
                                   :order => sort_clause,
                                   :limit  =>  @cross_group_pages.items_per_page,
-                                  :include => [:asso, :group_banner],
+                                  :include => [:convention, :group_banner],
                                   :offset =>  @cross_group_pages.current.offset)
         render :layout => !request.xhr?
       }

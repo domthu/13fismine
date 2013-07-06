@@ -1116,18 +1116,9 @@ en:
   field_iva: IVA
   field_pagamento: Pagamento
 
-# asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
-# asso (Categoria utente) ha tanti utenti
-  #label_asso: Socio
-  label_asso: Cat. Utente
-  label_asso_full: Categoria Utente
-  label_asso_plural: Cat. Utenti
-  label_asso_new: Nuova categoria utente
-  label_assos_users: Utenti soci
-
   field_cross_group: Banner utente
   #label_cross_group: Banner utente
-  label_cross_group: <- Cat.-Banner ->
+  label_cross_group: Asso. Banner
   label_cross_group_plural: Banner Utenti
   label_cross_group_new: Nuovo banner per utente
 
@@ -1135,50 +1126,43 @@ en:
   label_group_banner: Banner
   label_group_banner_plural: Banners
   label_group_banner_new: Nuovo banner
-  label_group_banner_associated_asso: Categorie utenti associate
-  label_group_banner_associated_asso_none: Nessuna categoria utente associata
+  label_group_banner_convention: Categorie utenti associate
+  label_group_banner_convention_none: Nessuna categoria utente associata
   label_cross_groups_from_group_banner: "Associazione Banner Utente (Banner <--> Categoria) per questo banner"
 
-# asso (Categoria utente) ha tanti organismi
-#Organismo associato collegato a type_organization, asso, e sigla
-  label_organization: Org. associato
-  label_organization_plural: Org. asso.
-  label_organization_new: Nuovo organismo associato
-  label_organization_plural_long: Organismo associato
-
-  label_type_organization: Org. tipo
-  label_type_organization_plural: Org. tipi
+#Organismo convenzionato collegato a type_organization e sigla
+  label_type_organization: Org. Tipo
+  label_type_organization_plural: Org. Tipi
   label_type_organization_new: Nuovo tipo di organismo
   label_type_organization_plural_long: Tipi di organismo
 
-  label_have_organization: Org. associato?
-  label_no_organization: "L'utente non fa parte di un organismo associato"
   label_is_responsable: é responsabile?
-  label_not_responsable: "L'utente non gestisce organismi associati"
-  label_have_asso: Cat. Utente
-  label_no_asso: "L'utente non fa parte di un organismo associato"
-  label_have_sigla_tipo: Sigla
-  label_no_sigla_tipo: "L'utente non fa parte di una sigla organismo"
+  label_not_responsable: "L'utente non gestisce organismi convenzionati"
+  label_have_convention: Non pagante?
+  label_no_convention: "Utente pagante. L'utente non fa parte di un'organismo convenzionato"
+  label_list_responsable_for: "Lista organismi convenzionati dove é responsabile:"
+  label_have_sigla_tipo: Federato?
+  label_no_sigla_tipo: "L'utente non fa parte di una federazione"
 
-  #label_cross_organization: Sigla
-  label_cross_organization: <- Sigla ->
-  label_cross_organization_plural: Sigle
-  label_cross_organization_new: Nuova sigla
-  label_other_cross_organization_sametype: Altre sigle correlate
-  label_other_organization_sametype: Altre organismi associati correlati
-  label_other_organization_none: Nessun organismo associato
+  #label_cross_organization: ex Sigla
+  label_cross_organization: Federazione
+  label_cross_organization_plural: Federazioni
+  label_cross_organization_new: Nuova federazione
+  label_other_cross_organization_sametype: Altre federazioni correlate
+  label_other_convention_sametype: Convenzioni per la federazione
+  label_other_convention_none: Nessuna convenzione stabilita
 
   label_tipo: "Tipo dell'organismo"
   label_descrizione: Descrizione
-  label_organizzazione: Organizzazione
   label_sigla: Sigla
-  label_type_organization: Tipo organizzazione
-
-  field_tipo: "Tipo dell'organismo"
+  label_type_organization: Organismo
+  label_type_organization: Org. Tipo
+  label_codice_attivazione: Codice di attivazione
+  field_codice_attivazione: Codice di attivazione
+  field_tipo: "Tipo di organismo"
   field_descrizione: Descrizione
-  field_organizzazione: Organizzazione
   field_sigla: Sigla
-  field_type_organization: Tipo organizzazione
+  field_type_organization: Organismo
 
   label_richiedinumeroregistrazione: Richiedi N° di Registrazione
   label_data_scadenza: Data scadenza
@@ -1243,9 +1227,9 @@ en:
   error_can_not_delete_topsection_unless_sections: "Non è possibile eliminare una categoria a lei sono legate dellle sezione..."
 #top_menu
   label_top_menu: Menu
-  label_top_menu_plural: lista dei menu
-  label_top_menu_new: Nuovo menu
-  field_top_menu: menu
+  label_top_menu_plural: i menu  dei contenuti
+  label_top_menu_new: Nuovo menu contenuti
+  field_top_menu: Menu contenuti
   error_can_not_delete_top_menu_unless_topsections: "Non è possibile eliminare un menu finchè è associato ad sezioni top..."
   error_can_not_delete_system: "Non è possibile eliminare %{name}, perchè serve come default al sistema. Solo modifica accettata. "
 #section
@@ -1256,15 +1240,22 @@ en:
   label_protetto: Privato
   error_can_not_delete_section_unless_issues: "Non è possibile eliminare una sezione finchè è legata a degli articoli..."
   label_sections_from_top_section: "Sezioni legate alla categoria "
- # asso (Categoria utente) e group_banner (Banner) sono associati tramite cross_group (banner utente)
- # asso (Categoria utente) ha tanti utenti
- # asso ha uno (o più) Organismi Associati NON ha asso.organization_id?
-  field_asso: Associazione
-  label_asso: Associazione
-  label_asso_plural: Associazioni aderenti
-  label_asso_new: Nuova associazione aderente
-  label_asso_associated_group_banner: Banner di associazioni
-  label_asso_associated_group_banner_none: Nessun banner associazioni
+
+# convention (Organismo convenzionato) e group_banner (Banner) sono associati tramite cross_group (banner utente)
+# convention (Organismo convenzionato) ha tanti utenti non paganti
+  field_convention: Convenzioni
+  label_convention: Convenzioni
+  label_convention_full: Organismi aderenti (convenzionati)
+  label_convention_plural: Organismi convenzionati
+  label_convention_new: Nuova organismo aderente
+  label_conventions_users: Utenti soci non paganti (sotto convenzione)
+  label_convention_user: Responsabile convenzione
+  label_convention: Convenzione
+  label_convention_none: Nessuna convenzione (organismo associato)
+  label_convention_group_banner: Banner convenzione
+  label_convention_group_banner_none: Nessun banner per la convenzione (organismo associato)
+  label_convention_pact: "Federazione<br />Zona"
+  label_convention_ref: "Scadenza<br />responsabile"
 
   label_ragione_sociale: Ragione sociale
   label_email: Email
@@ -1282,7 +1273,7 @@ en:
 
   field_ragione_sociale: Ragione sociale
   field_email: Email
-  field_indirizzo: Indirizzo
+  field_indirizzo: "Sede o Domicilio"
   field_presidente: Presidente
   field_referente: Referente
   field_consulente: Consulente
@@ -1303,7 +1294,7 @@ en:
   label_impressions: Impressions
   label_clicks: Clicks
   label_didascalia: Didascalia
-  label_se_prima_pagina: promosso in prima pagina
+  label_se_prima_pagina: In prima pagina?
   label_se_prenotazione: Gestione convegno?
   label_impressions_history: Storico impressione
 
@@ -1316,7 +1307,7 @@ en:
   field_impressions: Impressions
   field_clicks: Clicks
   field_didascalia: Didascalia
-  field_se_prima_pagina: promosso in prima pagina
+  field_se_prima_pagina: In prima pagina?
   field_se_prenotazione: Gestione convegno?
   field_impressions_history: Storico impressione
 
@@ -1336,7 +1327,7 @@ en:
   field_prezzo: Prezzo
   field_msg: Messaggio
   label_other_reservation_plural_from_issue: Altre prenotazioni per questo convegno
-  label_allegati: Attachments
+  label_allegati: Allegati
 
 #ISSUE --> ATTIVITA
   label_se_visible_web: Visibile Web?
@@ -1350,19 +1341,16 @@ en:
   label_issue_plural_from_section: "Articoli legati alla sezione"
   label_address_map: Geo posizione
   field_address_map: Geo posizione
-  label_comment: Comment
+  label_comment: Commenta
 
 #User
-  label_power_user: Resp. Asso.
+  label_power_user: Referente conv.
   label_users: Utenti
   label_user_invoices: "Altre fatture legate all'utente"
-  label_organization_user_asso: Referenti org. asso correlati
-  label_cross_organization_user_asso: "Sigla: lista utenti federati"
-  label_cross_organization_user_asso_none: nessun utente registrato per questa federazione
-  label_asso_organization: Organismo associato
-  label_asso_organization_none: Nessun organismo associato
+  label_cross_organization_user_convention: "Sigla: lista utenti federati"
+  label_cross_organization_user_convention_none: nessun utente registrato per questa federazione
 
-  field_power_user:  Responsabile organismo associato
+  field_power_user: Referente convenzione
   field_users: Utenti
   label_dati_plural: Dati FISCOSPORT
   label_abbonamento_plural: Abbonamento
@@ -1379,18 +1367,16 @@ en:
   label_is_referente: è responsabile?
   label_gest_privato: Privato == Pagante
   label_gest_organismo: Organismo associato == Utente non paga
-  label_assos_referee: Responsabili organismi
-  label_assos_referee_help: Lista dei responsabili di organismi associati
+  label_conventions_referee: Responsabili degli organismi convenzionati
+  label_conventions_referee_help: Lista dei responsabili
   label_no_referee: Nessun responsabile trovato
-  label_referee_list_assos: Responsabile di associazioni
+  label_referee_list_conventions: Responsabile della convenzione
   label_have_referee: Ha responsabilità?
-
-
   field_codice: (old) Codice
   field_pwd: (old) Password
   field_login_fisco: (old) login FISCOSPORT
   field_mail_fisco: (old) email FISCOSPORT
-  field_soc: (old) società
+  field_soc: "Intestatario dell'abbonamento"
   field_note: (old) note
   field_cap: (old) CAP
   field_prov: (old) provincia
@@ -1399,8 +1385,8 @@ en:
   field_mail2: (old)  2nd email
   field_sez: (old) sezione
   field_iva_: (old) IVA
-  field_codicefiscale: (old) Cofice Fiscale
-  field_partitaiva: (old) PIVA
+  field_codicefiscale: Cofice Fiscale
+  field_partitaiva: Partita IVA
   field_registrato: (old) registrato?
   field_num_reg_coni: (old) N° regionale CONI
   field_abbonato: (old) Abbonato
@@ -1419,10 +1405,10 @@ en:
   field_crediti: (old) Credito
   field_annotazioni: (old) Annotazioni
 
-  field_image_file_name: Filename
-  field_image_content_type: File type
-  field_image_file_size: File size
-  field_image_updated_at: Updated at
+  field_image_file_name: Nome del file
+  field_image_content_type: Tipo file
+  field_image_file_size: Taglia file
+  field_image_updated_at: Data-ora file
 
 #Permission
   permission_access_back_end: Accedi al backEnd?
@@ -1450,12 +1436,12 @@ en:
   label_emails_fee_proposal: "Template di composizione email per propore ad uno o più utenti i possibili abbonamenti in corso. Segue un link alla pagina degli abbonamenti."
   setting_emails_fee_renew: Email di rinovo abbonamento
   label_emails_fee_renew: "Template di composizione email per invitare un utente ad rinnovare il proprio abbonamento di prossima scadenza. "
-  setting_emails_fee_register_asso: Conferma nuovo membro associativo
-  label_emails_fee_register_asso: "Template inviato al power_user di un organismo associato in seguito alla registrazione di un nuovo utente che si auto dichiara membro. Questo messaggio invita il power_user ad confermare o no questo utente usando un apposito link in basso alla pagina."
+  setting_emails_fee_register_convention: Conferma nuovo membro come non pagante (convenzionato)
+  label_emails_fee_register_convention: "Template inviato al power_user di un organismo convenzionato in seguito alla registrazione di un nuovo utente che si auto dichiara membro. Questo messaggio invita il power_user ad confermare o no questo utente usando un apposito link in basso alla pagina."
   setting_fee_thanks: Email di ringraziamento pagamento ricevuto
   label_fee_thanks: "Template per confermare il ricevuto pagamento ed ringrazziare l'abbonato del rinnovo."
   label_send_test_email_fee_thanks: Invia email di prova Ringrazio(me stesso)
-  label_send_test_email_fee_asso: Invia email di prova al PowerUser(me stesso)
+  label_send_test_email_fee_convention: Invia email al responsabile organismo convenzionato(me stesso)
   label_send_test_email_fee_confirm: Invia email di prova Conferma
   label_send_test_email_fee_renew: Invia email di prova Rilancio
   setting_info_fs: Fiscosport informa
@@ -1466,19 +1452,18 @@ en:
   label_privacy: Documento che definisce il rilascio della privacy
   setting_condition: "Regolamento degli abbonamenti"
   label_condition: "Documento che definisce le condizioni d'uso"
-  static_page_abbonamenti: "Pagina -> Abbonamenti"
   label_iscription: "Crea la pagina statica Abbonamenti nel front end"
-  static_pages_settings: "Pages"
+  static_pages_settings: "Pagine"
 #Static pages in FE memorized in: settings/_projects
-  static_page_cosaoffriamo: "Pagina -> Cosa Offriamo"
-  static_page_lavoraconnoi: "Pagina -> Lavora con Noi"
-  static_page_progettofs: "Pagina -> Progetto Fiscosport"
-  static_page_contattaci: "Pagina -> Contattaci"
-
+  static_page_abbonamenti: "Abbonamenti"
+  static_page_cosaoffriamo: "Cosa Offriamo"
+  static_page_lavoraconnoi: "Lavora con Noi"
+  static_page_progettofs: " Progetto Fiscosport"
+  static_page_contattaci: "Contattaci"
 #Deliver_fee  type
   proposal: Abbonamenti disponibili
   thanks: Pagamento ricevuto, grazie
-  asso: Conferma registrazione nuovo membro
+  asso: Conferma registrazione nuovo membro convenzionato
   renew: Rinnova abbonamento
 
 #Application menu FS
@@ -1587,7 +1572,7 @@ en:
   control_fee: Gestione abbonamenti --> Pannello di controllo
   stato_utenze: Stato delle utenze FISCOSPORT
   button_verify: Verifica
-  who_pay: Paganti
+  who_pay: Privati (paganti)
   associations: Associazioni
   affiliati: Affiliati (Non paganti)
   siglatipo: Sigla e Tipi organismi
@@ -1643,9 +1628,9 @@ en:
   notice_missing_parameters: La pagina non puo essere caricata per mancanza di informazione
   orderedby_updated_desc: Ordinamento per data di ultimo salvataggio decrescente
   orderedby_created_desc: Ordinamento per data di creazione decrescente
-  content_articolo: Article content
-  preview_fs_issue_abrv: Fee view
-  preview_fs_issue: Preview article in front end
+  content_articolo: "Contenuto dell'articolo"
+  preview_fs_issue_abrv: "Vista abbonato"
+  preview_fs_issue: "Vedi articolo lato pubblico"
 
 #notice_email_sent: "Una email è stata spedita a %{value}"
   unauthorized: Non autorizzato ad accedere al contenuto

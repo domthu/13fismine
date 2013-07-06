@@ -20,6 +20,7 @@ module FeeConst
   ROLES =[ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW, ROLE_EXPIRED, ROLE_ARCHIVIED]
 
   AUTHORED_ROLES =[ROLE_ADMIN, ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW]
+  #ruoli che non possono essere cancelati dentro i ruoli di Redmine
   CAN_BACK_END_ROLES =[ROLE_ADMIN, ROLE_MANAGER, ROLE_AUTHOR]
 
   NEWSLETTER_ROLES =[ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW]
@@ -237,7 +238,6 @@ module FeesHelper
     if _usr.nil?
       return nil
     end
-    #SELECT `firstname`, `lastname`,`mail`,`id`,`codice`,`nome`,`asso_id`,`cross_organization_id`,`data`,`datascadenza` FROM `_usrs` where nome like '%PERUFFO MARCO%'
     str = "<b class='" + get_role_css(_usr) +"'>(" +  _usr.id.to_s + ")" +
       _usr.name + "</b>, " + "code: " + _usr.codice.to_s + ", scadenza: " +
       (_usr.scadenza.nil? ?  ", --NO scad--" :  _usr.scadenza.to_s) +
@@ -248,21 +248,6 @@ module FeesHelper
     #if 1 == 0
       #Utente con questo ruolo ne possono uscire solo MANUALMENTE quindi non trattare
       str << "Utente con questo ruolo ne possono uscire solo MANUALMENTE quindi non trattare"
-#    #control if not yet registered and waiting for approvment
-#    elsif !_usr.role_id.nil? && _usr.role_id == FeeConst::ROLE_REGISTERED
-#      #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
-#      #TODO EXPIRALO se ha superato il numero di giorni previsti
-#      today = Date.today
-#      fee_deadline = _usr.created_on + Setting.register_days.to_i.days
-#      if today < fee_deadline
-#        str << ensure_role(_usr, FeeConst::ROLE_EXPIRED)
-#      else
-#        #l'Utente registrato dispone ancora di alcuni giorni
-#        #FeeConst::ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
-#        str = "<span class='registrato'>" << old_state << "</span>"
-#      end
-#    elsif !_usr.role_id.nil? && _usr.role_id == FeeConst::ROLE_ARCHIVIED
-#        str = "<b class='modified'>Codice utente non presente?=</b>"
     else
       #user.admin solo utente 1 e 1959
       if _usr.id == 1
@@ -317,8 +302,8 @@ module FeesHelper
           #TODO control expiration
           str << ensure_fee_validity(_usr, nil)
           #control
-          if !_usr.asso.nil?
-            str << "<b style='color:red;'>codice(" << _usr.codice.to_s << ") PRIVATO pero ha un Asso(" << _usr.asso.to_s << ")</b> "
+          if _usr.convention
+            str << "<b style='color:red;'>codice(" << _usr.codice.to_s << ") PRIVATO pero coperto da orgasnismo convenzionato(" << _usr.convention.to_s << ")</b> "
           end
 
         #SCADUTO  --> 2 e 4 e 5 + Tutti altri casi    (dopo la data di scadenza)  possono ancora ricevere newsletter. possono ancora vedere le cose
@@ -335,13 +320,13 @@ module FeesHelper
         else
           #ABBONATO_AFFILIATO --> codice di un organismo associato
           #organismo_associato = Asso.find(_usr.codice);
-          if _usr.asso.nil?
+          if _usr.convention.nil?
             str << " <b style='color:red;'>Codice NON conosciuto " << _usr.codice.to_s << "</b> "
             #SCADUTO  --> 2 e 4 e 5 + Tutti altri casi    (dopo la data di scadenza)  possono ancora ricevere newsletter. possono ancora vedere le cose
             str << ensure_role(_usr, FeeConst::ROLE_EXPIRED)
           else
             #esiste l'organismo associato pagante per questo utente
-            str << ensure_fee_validity(_usr, _usr.asso)
+            str << ensure_fee_validity(_usr, _usr.convention)
           end
         end
       end
@@ -349,12 +334,6 @@ module FeesHelper
     #solo se cambiatoe
     return str
   end
-#NOTA: Distinguire Privati paganti ed Org.Asso paganti
-#  _usr.privato?
-#  _usr.scadenza
-#  _usr.affiliato?
-#  _usr.affiliato_to
-
 
   def ensure_fee_validity(_usr, org_asso)
     str = "<div style='color: "
@@ -366,8 +345,8 @@ module FeesHelper
     else
       #Association
       str += "blue;'>"
-      str << "<b>NON PAGANTE</b> Asso(" << _usr.asso_id.to_s << "): " << smart_truncate(_usr.asso.name, 50)
-      data_scadenza = _usr.asso.scadenza
+      str << "<b>NON PAGANTE</b> Asso(" << _usr.convention_id.to_s << "): " << smart_truncate(_usr.convention.name, 50)
+      data_scadenza = _usr.convention.scadenza
 #      if data_scadenza.nil?
 #        data_scadenza = _usr.datascadenza #esamina questa stringa
 #      end
@@ -381,8 +360,7 @@ module FeesHelper
         else
           str << " DATA?" << data_scadenza << "["
         end
-        str << "asso.id: " << (_usr.asso_id.nil? ? "" : ("(" << _usr.asso_id.to_s << ")--> " << ((_usr.asso.nil? || _usr.asso.scadenza.nil?) ? "/user.scadenza" : _usr.asso.scadenza.to_s)))
-        #str << "/cross.id: " << (_usr.cross_organization_id.nil? ? "" : _usr.cross_organization_id.to_s)
+        str << "asso.id: " << (_usr.convention_id.nil? ? "" : ("(" << _usr.convention_id.to_s << ")--> " << ((_usr.convention.nil? || _usr.convention.scadenza.nil?) ? "/user.scadenza" : _usr.convention.scadenza.to_s)))
         str << "/user.data: " << (_usr.data.nil? ? "" : _usr.data.to_s)
         str << "/user.datascadenza" << (_usr.datascadenza.nil? ? " " : _usr.datascadenza.to_s)
         str << "]</b>"
@@ -398,7 +376,7 @@ module FeesHelper
       if (today < renew_deadline)
         str << ensure_role(_usr, FeeConst::ROLE_ABBONATO)
       elsif (today < scadenza)
-        #IN_SCADENZA           (controllo sulla data di scadenza del privato o dell'Organismo Associato)
+        #IN_SCADENZA           (controllo sulla data di scadenza del privato o dell'Organismo conventionciato)
         #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
         str << ensure_role(_usr, FeeConst::ROLE_RENEW)
       else

@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -931,26 +931,26 @@ class Project < ActiveRecord::Base
       </table>
       <!-- fine sezione con logo e nomeutente -->
       <!-- inizio visibile solo se associato o affiliato-->'
-      if usr.asso_id > 0 && !usr.asso_id.nil?
+      if usr.convention_id && (usr.convention_id > 0)
         s2 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
             <tr>
               <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
                 <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:18px; font-weight: bold;">
-                Associato a: ' + usr.asso.ragione_sociale + '</font>
+                Covenzione da: ' + usr.convention.ragione_sociale + '</font>
 
               </td>
               <td width="55" valign="bottom" align="right">
-                <img src="http://es.pecchia.info/images/banners/assos/ + usr.asso.logo  + " width="50" height="50" border="0" \>
+                <img src="http://es.pecchia.info/images/banners/assos/ + usr.convention.logo  + " width="50" height="50" border="0" \>
               </td>
             </tr>
           </table>'
       else
-        if usr.sigla_tipo()
+        if usr.cross_organization
           s2 += '<table width="560" border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
                   <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:11px; color:#333333; line-height:18px; font-weight: bold;">
-                    Affiliato a: ' + usr.sigla_tipo.to_s + '
+                    Affiliato a: ' + usr.cross_organization.to_s + '
                   </font>
                 </td>
                 <td width="55" valign="bottom" align="right">
@@ -1142,26 +1142,6 @@ class Project < ActiveRecord::Base
     else
       return '<h1 style="color:red;"> Utente id:[' + u.to_s + '] non trovato!</h1>'
     end
-  end
-
-  def testuser(u) #sperimentale sandro
-                  # User.exists?( :id => usr )
-                  # oppure per includere altro ... example:
-                  #User.find_by_id(id, :include => [:accounts => [:orders => [:objects]]])
-    s=""
-    for i in 0..10
-      usr = User.find_by_id u
-      if !usr.blank?
-        s += '<h1 style="color:blue;">' + usr.firstname + '</h1>'
-        s += '<h2 style="color:green;">' + usr.asso_id.to_s + '</h2>'
-
-        u += 1
-      else
-        s += '<h1 style="color:red;">' + u.to_s + '</h1>'
-        u += 1
-      end
-    end
-    return s
   end
 
   def set_creation_names()

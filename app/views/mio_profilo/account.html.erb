@@ -530,24 +530,24 @@
 
 
 <fieldset class="box tabular">
-  <legend><%=l(:label_asso_organization)%></legend>
+  <legend><%=l(:label_convention)%></legend>
   <div class="fs-logged2 fs-blockcontent ">
     <ul>
-      <% if User.current.associazione_affiliata %>
+      <% if defined?(User.current.convention) %>
           <li>
-            Associato a: <br /> <%= link_to h(User.current.associazione_affiliata), asso_path(User.current.associazione_affiliata) %>
+            Coperto dalla convenzione: <br /> <%= link_to h(User.current.convention), convention_path(User.current.convention) %>
           </li>
       <% else %>
-          <% if User.current.sigla_tipo() %>
+          <% if defined?(User.current.cross_organization) %>
               <li>
-                Affiliato a:<br /> <%= link_to h(User.current.sigla_tipo()), cross_organization_path(User.current.sigla_tipo()) %>
+                Federato a:<br /> <%= link_to h(User.current.cross_organization), cross_organization_path(User.current.cross_organization) %>
               </li>
           <% end %>
       <% end %>
       <% if User.current.responsable? && User.current.responsable_of
-           User.current.responsable_of.each do |organismo| %>
+           User.current.responsable_of.each do |conv| %>
               <li>
-                  <%= link_to h(organismo), organization_path(organismo) %>
+                  Responsabile della convenzione: <%= link_to h(conv), convention_path(conv) %>
               </li>
           <% end
       end %>
@@ -557,8 +557,8 @@
     </ul>
 
     <div class="fs-logged2-ico">
-      <% if User.current.organization() %>
-          <%= image_tag "/images/commons/assos/#{ User.current.asso.logo}", :width => 50, :height => 50, :border => 0 %>
+      <% if User.current.convention %>
+          <%= image_tag "/images/commons/assos/#{ User.current.convention.logo}", :width => 50, :height => 50, :border => 0 %>
       <% else %>
           <%= image_tag "/images/ico/fs.png", :width => 50, :height => 50, :border => 0 %>
       <% end %>

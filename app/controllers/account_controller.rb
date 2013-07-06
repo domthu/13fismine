@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -85,11 +85,7 @@ class AccountController < ApplicationController
     end
   end
 
-#Processing AccountController#register (for 127.0.0.1 at 2013-05-26 23:38:45) [POST]
-#  Parameters: {"controller"=>"account", "authenticity_token"=>"a5PKEdiKedRIU8/QhBGnmPeKUQxzoJekun7UI835dJs=", "extra_organismo_select"=>"", "extra_town"=>"CASTELRAIMONDO  (AN)", "action"=>"register", "user"=>{"titolo"=>"Altro", "comune_id"=>"4020", "soc"=>"", "asso_id"=>"", "mail"=>"dom_thual@monamiweb.it", "lastname"=>"dominique3", "firstname"=>"thual3", "codice"=>"", "indirizzo"=>"", "num_reg_coni"=>"", "se_condition"=>"1", "fax"=>"", "se_privacy"=>"1", "login"=>"domthu3", "password_confirmation"=>"[FILTERED]", "password"=>"[FILTERED]", "note"=>"", "telefono"=>"", "cross_organization_id"=>"", "language"=>"it"}, "commit"=>"Invia", "extra"=>"asso_select"}
   def register
-    #puts "********************REGISTER********************"
-    #domthu redirect_to(home_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     if request.get?
       session[:auth_source_registration] = nil
@@ -117,27 +113,21 @@ class AccountController < ApplicationController
 
       #Region Province Comune
       if params[:user][:comune_id].present?
-        #puts "CCCCCCCCCCCCCCCCC #{params[:user][:comune_id]} CCCCCCCCCCC"
         @user.comune_id = params[:user][:comune_id].to_i
-        #INUTILE basta usare comune_id
-        #retreive CAP, Città, ProvinceID
         @Citta = Comune.find(params[:user][:comune_id])
         if @Citta #province_id region_id	cap
           @user.cap = @Citta.cap
           @user.prov = @Citta.province.name + "(" + @Citta.province_id.to_s + ")"
         end
       end
-      #STEP3 CONI FSN e Associazione
-      if ((params[:extra][:asso_select]) && (params[:extra][:cross_select]))
-        @user.asso_id = params[:extra][:asso_select].to_i
+      #STEP3 CONI FSN e convenzione
+      if ((params[:extra][:convention_select]) && (params[:extra][:cross_select]))
+        @user.convention_id = params[:extra][:convention_select].to_i
         @user.cross_organization_id = params[:extra][:cross_select].to_i
         #Region Province Comune --> inutile le abbiamo dentro la
       else
-        if (params[:user][:asso_id])
-          #puts "AAAAAAAAAAAAAAAA #{params[:user][:asso_id]} AAAAAAAAAAA"
-          #@user.tiposigla_id = params[:user][:tiposigla_id]
-          #@user.organismo_id = params[:user][:organismo_id]
-          @user.asso_id = params[:user][:asso_id].to_i
+        if (params[:user][:convention_id])
+          @user.convention_id = params[:user][:convention_id].to_i
         end
         if (params[:user][:organization_id])
           @user.cross_organization_id = params[:user][:organization_id].to_i

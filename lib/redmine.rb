@@ -159,7 +159,6 @@ Redmine::MenuManager.map :top_menu do |menu|
   menu.push :home, :home_path, :if => Proc.new { User.current.logged? }
   #domthu 20120517
   #menu.push :section, :sections_path
-  #menu.push :asso, :assos_path
   #menu.push :my_page, :table_path
   menu.push :my_page, { :controller => 'my', :action => 'page' }, :if => Proc.new { User.current.logged? }
   menu.push :projects, { :controller => 'projects', :action => 'index' }, :caption => :label_project_plural, :if => Proc.new { User.current.logged? }
@@ -308,8 +307,7 @@ Redmine::MenuManager.map :application_menu do |menu|
   #menu.push :comune, :comunes_path, :if => Proc.new { User.current.admin? }
   menu.push :type_organization, :type_organizations_path, :if => Proc.new { User.current.admin? }
   menu.push :cross_organization, :cross_organizations_path, :if => Proc.new { User.current.admin? }
-  menu.push :organization, :organizations_path, :if => Proc.new { User.current.admin? }
-  menu.push :asso, :assos_path, :if => Proc.new { User.current.admin? }
+  menu.push :convention, :conventions_path, :if => Proc.new { User.current.admin? }
   menu.push :cross_group, :cross_groups_path, :if => Proc.new { User.current.admin? }
   menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
   #menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }

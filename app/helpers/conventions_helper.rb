@@ -1,4 +1,4 @@
-module AssosHelper
+module ConventionsHelper
 
   def smart_truncate2(text, char_limit)
     text = text.squish

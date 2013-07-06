@@ -7,7 +7,7 @@
           <div class="fs-layout-cell layout-item-0" style="width: 99%">
             <h1 class="<%= User.current.role %>"><%= User.current.name %></h1>
             <h2><%= user_role_iconized(User.current.icon(), :size => 'l', :text => ('Scadenza: ' + link_to( User.current.scadenza.to_s + ' (' + User.current.scadenza_fra + ')', :controller => 'mio_profilo', :action => 'account')), :icon_for => User.current.uicon()) %></h2>
-            <%# User.current.my_abbo_isprivate? %>
+            <%# User.current.privato? %>
             <div style="float:left; margin: 10px; padding: 10px;">
               <%= User.current. getLocalization() %>
             </div>

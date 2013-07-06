@@ -76,16 +76,13 @@ class NewslettersController < ApplicationController
     @users_by_roles = User.all(
       :conditions => ['role_id IN (?)', FeeConst::NEWSLETTER_ROLES]
       )
-#       :include => [:asso, :cross_organization]
-#       :joins => [:newsletter_users]
-#       :conditions => ["#{NewsletterUsers.table_name}.project_id = ? )", @project.id.to_s]
-    # if asso_id is not null allora sono non pagante
+    # if convention_id is not null allora sono NON pagante
     @users_emailed = @newsletter.newsletter_users
 
     #sort and filters users
     sort_init 'login', 'asc'
     #sort_update %w(login firstname lastname mail admin created_on last_login_on)
-    sort_update %w(lastname mail data asso_id)
+    sort_update %w(lastname mail data convention_id)
 
     @limit = per_page_option
 
@@ -98,10 +95,10 @@ class NewslettersController < ApplicationController
       name = "%#{params[:name].strip.downcase}%"
       c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
     end
-    #Asso filter
-    @asso_id = (params[:asso] && params[:asso][:asso_id]) ? params[:asso][:asso_id].to_i : 0
-    if @asso_id > 0
-      c << ["asso_id = ? ", @asso_id.to_s]
+    #Convention filter
+    @convention_id = (params[:convention] && params[:convention][:convention_id]) ? params[:convention][:convention_id].to_i : 0
+    if @convention_id > 0
+      c << ["convention_id = ? ", @convention_id.to_s]
     end
 
     #@user_count = scope.count(:conditions => c.conditions)
@@ -118,7 +115,7 @@ class NewslettersController < ApplicationController
 #    @cross_groups = CrossGroup.find(:all,
 #                              :order => sort_clause,
 #                              :limit  =>  @cross_group_pages.items_per_page,
-#                              :include => [:asso, :group_banner],
+#                              :include => [:convention, :group_banner],
 #                              :offset =>  @cross_group_pages.current.offset)
 
     respond_to do |format|
