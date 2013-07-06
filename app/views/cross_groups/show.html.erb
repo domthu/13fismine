@@ -14,7 +14,7 @@
 <fieldset class="box tabular">
   <legend><%=l(:label_cross_group)%></legend>
     <p>
-      <%= l(:label_asso) %>: <%= link_to(h(@cross_group.asso), asso_path(@cross_group.asso, :id => @cross_group.asso_id)) %>
+      <%= l(:label_convention) %>: <%= link_to(h(@cross_group.convention), convention_path(@cross_group.convention, :id => @cross_group.convention_id)) %>
     </p>
 
     <p>
@@ -28,13 +28,13 @@
 
 <div class="splitcontentright">
     <fieldset class="box tabular">
-      <legend><%=l(:label_asso_associated_group_banner)%></legend>
-        <% if (@cross_group.asso.group_banners.any? && @cross_group.asso.group_banners.count() > 1) %>
+      <legend><%=l(:label_convention_group_banner)%></legend>
+        <% if (@cross_group.convention.group_banners.any? && @cross_group.convention.group_banners.count() > 1) %>
         <table>
           <tr>
             <th><%=l(:label_group_banner)%></th>
           </tr>
-          <% @cross_group.asso.group_banners.each do |related_banner|
+          <% @cross_group.convention.group_banners.each do |related_banner|
                 if (related_banner != @cross_group.group_banner) %>
                   <tr>
                     <td class="buttons">
@@ -44,28 +44,28 @@
           end %>
         </table>
         <% else %>
-          <%=l(:label_asso_associated_group_banner_none)%>
+          <p class="nodata"><%= l(:label_convention_group_banner_none) %></p>
         <% end %>
     </fieldset>
 
     <fieldset class="box tabular">
-      <legend><%=l(:label_group_banner_associated_asso)%></legend>
+      <legend><%=l(:label_group_banner_convention)%></legend>
         <% if (@cross_group.group_banner.assos.any? && @cross_group.group_banner.assos.count() > 1) %>
         <table>
           <tr>
-            <th><%=l(:label_asso)%></th>
+            <th><%=l(:label_convention)%></th>
           </tr>
-          <% @cross_group.group_banner.assos.each do |related_asso|
-                if (related_asso != @cross_group.asso) %>
+          <% @cross_group.group_banner.assos.each do |related_convention|
+                if (related_convention != @cross_group.convention) %>
                   <tr>
                     <td class="buttons">
-                        <%= link_to(h(related_asso), asso_path(related_asso), :class => 'icon icon-summary')  if User.current.admin?   %>
+                        <%= link_to(h(related_convention), convention_path(related_convention), :class => 'icon icon-summary')  if User.current.admin?   %>
                   </tr>
                 <% end
           end %>
         </table>
         <% else %>
-          <%=l(:label_group_banner_associated_asso_none)%>
+          <p class="nodata"><%= l(:label_group_banner_convention_none) %></p>
         <% end %>
     </fieldset>
 </div>

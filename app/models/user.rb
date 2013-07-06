@@ -62,24 +62,23 @@ class User < Principal
   belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id'
 
   #belongs_to :account, :class_name => 'Account', :foreign_key => 'account_id' (non paga ma è abilitato al servizio)
-  belongs_to :asso, :class_name => 'Asso', :foreign_key => 'asso_id'
+  belongs_to :convention, :class_name => 'Convention', :foreign_key => 'convention_id'
+  #l'utente può essere il referente di una (o più) organismi convenzionati
+  #Puo anche essere il power_user di una convention
+  #has_one :reference, :class_name => 'Convention', :dependent => :nullify
+  has_many :references, :class_name => 'Convention', :dependent => :nullify
 
-  #l'utente può appartenere o non ad una organizzazione
-  #ATTENZIONE i 2 campi Sigla (ex Organismi) e Tipo organizzazione sono raddunati in una foreign_key
+  #l'utente può essere affiliato
   belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
-  #TODO: verificare ci potrebbe essere che alcuni associazione Sigla - Tipo non appare nella tabella CrossOrganization
-  # prova per i banner (sandro)
+
   ##su cross_group.rb è :
   #  belongs_to :user
   #  belongs_to :group_banner
   has_many :cross_groups
   has_many :group_banners, :through => :cross_groups
 
-  #l'utente può essere il referente di una (o più) organizzazione
+
   #2.7 Choosing Between belongs_to and has_one. La foreign key si trova sulla tabella che fa belongs_to
-  #Puo anche essere il power_user di un organization
-  #has_one :reference, :class_name => 'Organization', :dependent => :nullify
-  has_many :references, :class_name => 'Organization', :dependent => :nullify
   has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
   #invvi emails
   has_many :newsletter_users, :dependent => :destroy
@@ -158,69 +157,19 @@ class User < Principal
     return (str.nil? || str.blank?)  ? "-" : str
   end
 
-  #Utente è affiliato ad una Sigla-TipoOrganizzazione
-  def sigla_tipo()
-    if self.cross_organization_id.nil? || self.cross_organization.nil?
-      nil
-    else
-      self.cross_organization
-#      CrossOrganization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", { \
-#      :co_id => self.cross_organization_id, \
-#      :asso_id => self.asso_id}])  #.to_s
-    end
-  end
-
-
-  #Organismo associato: Utente è associato. Non paga. Paga il responsabile power_user
-  #Asso e Organization sono tabelle 1<-->1 quindo si usa il asso_id per cercare nella tabella Organisation
-  def organization()
-    if self.asso_id.nil? || self.asso.nil?
-      nil
-    else
-      #Organization.find(self.asso_id)
-      #Couldn't find Organization with ID=43 (Date.parse(final_data) rescue nil)
-      (Organization.find(self.asso_id) rescue nil)
-
-#      Organization.find(:first, :conditions => ["cross_organization_id = :co_id AND asso_id = :asso_id", { \
-#      :co_id => self.cross_organization_id, \
-#      :asso_id => self.asso_id}])  #.to_s
-    end
-  end
-
-  #ASSOCIAZIONE
-  def associazione_affiliata()
-    if self.asso_id.nil? || self.asso.nil? || self.asso_id == 0
-      nil
-    else
-      #Asso.find(:first, :include => [:organization => :cross_organization], :conditions => ["id =  ?", self.asso_id])
-      #Asso.all(:include => [:organization => :cross_organization]).find(self.asso_id)
-      Asso.find(self.asso_id)
-    end
-  end
-
-  def associazione_banner()
-    if self.asso_id.nil? || self.asso.nil?
-      nil
-    else
-      Asso.find(:all, :include => [:cross_groups => :group_banner], :conditions => ["id =  ?", self.asso_id])
-    end
-  end
-
   def pubblicita()
-    if self.asso_id.nil? || self.asso.nil?
+    if self.privato?
       nil
     else
-      CrossGroup.find(:all, :include => :group_banner, :conditions => ["se_visibile = 1 AND asso_id = #{self.asso_id}"])
+      CrossGroup.find(:all, :include => :group_banner, :conditions => ["se_visibile = 1 AND convention_id = #{self.convention_id}"])
     end
   end
-  def my_abbo_isprivate?
-    #if self.cross_organization_id.nil? && self.associazione_affiliata.nil?
-    if self.associazione_affiliata.nil?
-      true
-    else
-      false
-    end
+
+  def privato?
+    #TODO controllare la data di scadenza
+    return self.convention_id.nil?
   end
+
   #CALL this procedure from Frontend only
   def isfee?(issue = nil)
     #return false
@@ -269,8 +218,6 @@ class User < Principal
 
     #Control content if public
     if issueid #!issueid.nil?
-               #return self.asso.nil?
-               #TODO retreive another Object like Project(Newsletter) or News(Quesiti)
       @article = Issue.find(issueid)
       #Show if it is public content
       if @article.nil? || !@article.se_visible_web?
@@ -381,18 +328,15 @@ class User < Principal
     return false
   end
 
-  def privato?
-    return self.asso.nil?
-  end
 
-  #l'utente gesctisce almeno un Organization (Association)
+  #l'utente gesctisce almeno un Organismo convenzionato
   def is_referente?
-    return (Organization.all(:conditions => {:user_id => self.id}).count > 0)
+    return (Convention.all(:conditions => {:user_id => self.id}).count > 0)
   end
   def responsable?
     return !self.references.nil?
   end
-  #List of Organization the user is power user
+  #List of Convention the user is power user
   def responsable_of
     self.references
   end
@@ -425,24 +369,35 @@ class User < Principal
     end
   end
 
-  #Tutti utenti che dipendono di un Associazione == Organization
-  #NON PAGANO. vale la data di scadenza dell'associazione
+  #Tutti utenti che dipendono di un Organismo convenzionato NON PAGANO.
+  #vale la data di scadenza della convenzione
   #Altrimenti prendiamo la data di scadenza dell'utente
   def scadenza
     if Setting.fee?
-      #se l'utente non fa parte di un associazione o l'associazione non ha data di scadenza valida
-      if (self.asso.nil? || self.asso.scadenza.nil? || self.asso.scadenza.year == 0)
-        # Lo cionsideriamo un Privato. Il privato paga lui
+      #se l'utente non fa parte di un organismo convenzionato o quella ha una scadenza non valida
+      if (self.convention.nil? || self.convention.scadenza.nil? || self.convention.scadenza.year == 0)
+        # Lo consideriamo un Privato. Il privato paga lui
         if self.datascadenza.is_a?(Date)
           return self.datascadenza.to_date
         else
           return nil
         end
       else
-        #Altrimenti l'utente è associato (ad un organismo associato)
-        #L'associazione paga per l'utente. La data di scadenza è
-        #quella di asso.organization.data_scadenza (cf modello asso.scadenza())
-        return self.asso.scadenza.to_date
+        #Altrimenti l'utente è sotto l'umbrella di un organismo convenzionato
+        #Utente non Pagante.
+        #La data di scadenza è quella di convention.data_scadenza
+        #Solo se ancora valida (cf modello convention.scadenza())
+        con_date = self.convention.scadenza.to_date
+        if self.datascadenza.is_a?(Date)
+          #TODO verificare se è scaduta < TODAY. altrimenti riportare la data dell'utente
+          if con_date < self.datascadenza.to_date
+            return self.datascadenza.to_date
+          else
+            return con_date
+          end
+        else
+          return con_date
+        end
       end
     else
       nil
@@ -940,7 +895,7 @@ class User < Principal
                   'auth_source_id',
                   'data',
                   'datascadenza',
-                  'asso_id',
+                  'convention_id',
                   'role_id',
                   'cross_organization_id',
                   'tariffa_precedente',

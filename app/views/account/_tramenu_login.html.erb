@@ -33,7 +33,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="fs-login-my-abbo">
-          <%= User.current.my_abbo_isprivate? ? '' :'Associato a...' %>
+          <%= User.current.privato? ? '' :'Associato a...' %>
         </div>
         <div class="fs-logged2"><span>  <%= user_myasso_text(User.current) %></span>
           <%= image_tag(user_myasso_icon(User.current, :s), :width => 48, :height => 48) %>

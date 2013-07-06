@@ -1248,22 +1248,22 @@ module ApplicationHelper
   end
 
 
-  # per l'icona associazioni eecc
+  # per l'icona dell'organismo convenzionato
   def user_myasso_icon(user = nil, taglia = :l, options={})
     if user.canbackend? || user.admin?
       return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
     end
-    if !user.associazione_affiliata.nil?
-      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/assos/#{user.asso.image_file_name}") == false)
+    if user.convention
+      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/assos/#{user.convention.image_file_name}") == false)
         return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
       else
-        return user.asso.image.url(taglia)
+        return user.convention.image.url(taglia)
       end
-    elsif !user.sigla_tipo.nil?
-      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/organizations/#{user.cross_organizations.image_file_name}") == false)
+    elsif user.cross_organization
+      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/organizations/#{user.cross_organization.image_file_name}") == false)
         return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
       else
-        return user.cross_organizations.image.url(taglia)
+        return user.cross_organization.image.url(taglia)
       end
     else
       return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
@@ -1275,12 +1275,11 @@ module ApplicationHelper
     if user.canbackend? || user.admin?
       return "Staff di Fiscosport"
     end
-    if !user.associazione_affiliata.nil?
-      return user.asso.name
-    elsif !user.sigla_tipo.nil?
-      return user.cross_organization.name
+    str = (user.cross_organization) ? "<br />Affiliato: " + user.cross_organization.name : ""
+    if user.convention
+      return user.convention.name + str
     else
-      return "Abbonamento privato"
+      return "Abbonamento privato" + str
     end
   end
 

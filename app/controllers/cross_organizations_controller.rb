@@ -16,9 +16,8 @@ class CrossOrganizationsController < ApplicationController
     #end
 
     #Sorting
-    sort_init 'organizzazione'
-    sort_update 'organizzazione' => 'organizzazione',
-                'type_organization' => 'type_organization',
+    sort_init 'type_organization'
+    sort_update 'type_organization' => 'type_organizations.tipo',
                 'sigla' => 'sigla',
                 'se_visibile' => 'se_visibile'
 
@@ -31,6 +30,7 @@ class CrossOrganizationsController < ApplicationController
         @cross_organizations = CrossOrganization.find(:all,
                           :order => sort_clause,
                           :limit  =>  @cross_organization_pages.items_per_page,
+                          :include => [:type_organization],
                           :offset =>  @cross_organization_pages.current.offset)
         render :layout => !request.xhr?
       }
@@ -102,6 +102,12 @@ class CrossOrganizationsController < ApplicationController
   def destroy
     @cross_organization = CrossOrganization.find(params[:id])
     @cross_organization.destroy
+
+    @user = User.all(:conditions => {:cross_organization_id => params[:id]})
+    @user.each do |usr|
+      usr.cross_organization_id = nil
+      usr.save!  #--> save_without_transactions
+    end
 
     respond_to do |format|
       format.html { redirect_to(cross_organizations_url) }

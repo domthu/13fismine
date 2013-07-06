@@ -1,4 +1,4 @@
-class Asso < ActiveRecord::Base
+class Convention < ActiveRecord::Base
   has_attached_file :image, :styles => {:l => ["200x200#", :png, :jpg],
                                         :m => ["80x80#", :png, :jpg],
                                         :s => ["48x48#", :png, :jpg],
@@ -10,14 +10,22 @@ class Asso < ActiveRecord::Base
   validates_attachment_size :image, :less_than => 200.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 
+  include ApplicationHelper #get_short_date
   include FeesHelper  #ROLE_XXX  gedate
 
   #domthu20120516
-  has_many :users, :dependent => :nullify
-  #Organismi Associati
-  #domthu20120708   has_many :organizations, :dependent => :nullify
-  #ATTENZIONE Organization (Organismi Associati) e Asso (Categoria Utente) hanno una relazione 1 a 1
-  has_one :organization, :dependent => :nullify
+  has_many :users, :dependent => :nullify #Non fare niente dobbiamo eliminare convention_id
+
+  belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id'#, :default => null
+  #Il responsabile del patto - contratto
+  #2.7 Choosing Between belongs_to and has_one
+  #belongs_to :referente, :class_name => 'User', :foreign_key => 'user_id'#, :default => null
+  belongs_to :user #, :class_name => 'User', :foreign_key => 'user_id'#, :default => null
+
+  #Con questi 3 campi siamo in grado di definire quale organismo con quale copertura geografica
+  belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
+  belongs_to :region, :class_name => 'Region', :foreign_key => 'region_id'#, :default => null
+  belongs_to :province, :class_name => 'Province', :foreign_key => 'province_id'#, :default => null
 
   #has_one :cross_organization, :through => :organization, :dependent => :delete_all
   #http://guides.rubyonrails.org/v2.3.8/association_basics.html#choosing-between-belongs-to-and-has-one
@@ -66,16 +74,52 @@ class Asso < ActiveRecord::Base
 
   alias :name :to_s
 
+  #nome del patto: Federazione con copertura geografica
+  def pact
+    str = ""
+    #str = "[" << self.id.to_s << "] "
+    str << (self.cross_organization.nil?  ? "" : self.cross_organization.name)
+    str << " - " + get_zone
+    str << " - " + get_short_date(self.data_scadenza)
+    return str
+  end
+
+  def get_zone
+    str = ""
+    if self.region.nil?
+      if self.province.nil?
+        str << " Nazionale"
+      else
+        str << " Provinciale (" + self.province.name + ")"
+      end
+    else
+      str << "Regionale (" + self.region.name + ")"
+    end
+    return str
+  end
+
   #Tutti utenti che dipendono di un Associazione == Organization
   #NON PAGANO. vale la data di scadenza dell'associazione
+  def havePowerUser?
+    #!self.user.nil? && self.user.power_user
+    self.user && self.user.power_user
+  end
+
   def scadenza
-    if (self.organization.nil? || self.organization.data_scadenza.nil?)
-      return nil
-    elsif !self.organization.data_scadenza.is_a?(Date)
-      return nil
-    else
-      self.organization.data_scadenza.to_date
+    return self.data_scadenza
+  end
+
+  def user_icon()
+    if self.user
+      self.user.icon()
+    else #default
+      #' icon-warning icon-adjust-min'
+      ' icon-no-user'
     end
+  end
+
+  def soci
+    User.all(:conditions => {:convention_id => self.id})
   end
 
 end

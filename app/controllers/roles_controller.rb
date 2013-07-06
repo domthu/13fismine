@@ -67,7 +67,7 @@ class RolesController < ApplicationController
     #ROLE_RENEW=11
     #ROLE_EXPIRED=7
     #ROLE_ARCHIVIED=8
-    if Setting.fee? and FeeConst::ROLES.include? @role.id
+    if Setting.fee? and FeeConst::CAN_BACK_END_ROLES.include? @role.id
       flash[:error] = l(:error_can_not_remove_role_for_fee_management)
     else
       @role.destroy
