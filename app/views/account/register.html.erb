@@ -149,8 +149,6 @@
               </div>
                 <br />
 
-
-
               </fieldset>
               <!--FINE dv_convenzioni -->
               &nbsp;<br/>
@@ -289,47 +287,37 @@
             //alert('changed usertiposigla --> TODO reload Associations?')
         });
 
-        $("#extra_organismo_select").select2({
-            width:'80%',
-            placeholder:"Ricerca la tua associazione e la sua relativa federazione ed organismo",
-            minimumInputLength:3,
-            ajax:{
-                url:'<%= organismi_path %>',
-                dataType:'json', //'jsonp',
-                quietMillis:500,
-                data:function (term, page) { // page is the one-based page number tracked by Select2
-                    return {
-                        term:term, //search term
-                        page_limit:pageSize, // page size
-                        page:page//, // page number
-
-                    };
-                },
-                results:function (data, page) {
-                    //alert(data);
-                    var more = (page * pageSize) < data.total; // whether or not there are more results available
-                    //var data_jsonp = [];
-                    //$.each(data.organismi, function (index, value) {
-                    //    //alert(index + ': ' + value);
-                    //    var elmt = {
-                    //        id:value.id,
-                    //        text:value.text
-                    //    }
-                    //    data_jsonp.push(elmt);
-                    //});
-                    // notice we return the value of more so Select2 knows if more results can be loaded
-                    //data.organismi.replace('''text''', 'text').replace('''id''', 'id')
-                    return {results:data.organismi, more:more};
-                    //return {results: data_jsonp, more: more};
-                }
-            },
-            formatResult:FormatOrga, // omitted for brevity, see the source of this page
-            formatSelection:OrgaSelection, // omitted for brevity, see the source of this page
-            dropdownCssClass:"bigdrop", // apply css that makes the dropdown taller
-            escapeMarkup:function (m) {
-                return m;
-            } // we do not want to escape markup since we are displaying html in results
-        });
+        //$("#extra_organismo_select").select2({
+        //    width:'80%',
+        //    placeholder:"Ricerca la tua associazione e la sua relativa federazione ed organismo",
+        //    minimumInputLength:3,
+        //    ajax:{
+        //        url:'<%= organismi_path %>',
+        //        dataType:'json', //'jsonp',
+        //        quietMillis:500,
+        //        data:function (term, page) { // page is the one-based page number tracked by Select2
+        //            return {
+        //                term:term, //search term
+        //                page_limit:pageSize, // page size
+        //                page:page//, // page number
+        //            };
+        //        },
+        //        results:function (data, page) {
+        //            //alert(data);
+        //            var more = (page * pageSize) < data.total; // whether or not there are more results available
+        //            // notice we return the value of more so Select2 knows if more results can be loaded
+        //            //data.organismi.replace('''text''', 'text').replace('''id''', 'id')
+        //            return {results:data.organismi, more:more};
+        //            //return {results: data_jsonp, more: more};
+        //        }
+        //    },
+        //    formatResult:FormatOrga, // omitted for brevity, see the source of this page
+        //    formatSelection:OrgaSelection, // omitted for brevity, see the source of this page
+        //    dropdownCssClass:"bigdrop", // apply css that makes the dropdown taller
+        //    escapeMarkup:function (m) {
+        //        return m;
+        //    } // we do not want to escape markup since we are displaying html in results
+        //});
 
         var urlzoneextend = '<%= zone_extend_path %>';
         $("#extra_town").select2({

@@ -85,6 +85,7 @@ class AccountController < ApplicationController
     end
   end
 
+#Parameters: {"action"=>"register", "authenticity_token"=>"P7eqAhfI5yeK+jAXK3NFvXLbBYyPT058LyJtDJva+Ks=", "commit"=>"Invia", "user"=>{"codicefiscale"=>"", "mail"=>"domthu@ks3000495.kimsufi.com", "sez"=>"", "language"=>"it", "se_condition"=>"1", "comune_id"=>"4035", "partitaiva"=>"", "soc"=>"", "indirizzo"=>"", "login"=>"dom1", "lastname"=>"thual1", "firstname"=>"dom1", "cross_organization_id"=>"", "titolo"=>"Responsabile", "password"=>"[FILTERED]", "se_privacy"=>"1", "fax"=>"", "telefono"=>"", "password_confirmation"=>"[FILTERED]"}, "controller"=>"account", "extra_town"=>"4035"}
   def register
     redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     if request.get?
@@ -120,19 +121,20 @@ class AccountController < ApplicationController
           @user.prov = @Citta.province.name + "(" + @Citta.province_id.to_s + ")"
         end
       end
+
       #STEP3 CONI FSN e convenzione
-      if ((params[:extra][:convention_select]) && (params[:extra][:cross_select]))
-        @user.convention_id = params[:extra][:convention_select].to_i
-        @user.cross_organization_id = params[:extra][:cross_select].to_i
-        #Region Province Comune --> inutile le abbiamo dentro la
-      else
-        if (params[:user][:convention_id])
-          @user.convention_id = params[:user][:convention_id].to_i
-        end
-        if (params[:user][:organization_id])
-          @user.cross_organization_id = params[:user][:organization_id].to_i
-        end
+      #if params[:extra] && params[:extra][:convention_select]) && params[:extra][:cross_select]
+      #  @user.convention_id = params[:extra][:convention_select].to_i
+      #  @user.cross_organization_id = params[:extra][:cross_select].to_i
+      #  #Region Province Comune --> inutile le abbiamo dentro la
+      #else
+        #if (params[:user][:convention_id])
+        #  @user.convention_id = params[:user][:convention_id].to_i
+        #end
+      if (params[:user][:cross_organization_id])
+        @user.cross_organization_id = params[:user][:cross_organization_id].to_i
       end
+      #end
       if (params[:user][:mail])
         @user.mail_fisco = params[:user][:mail]
       end
