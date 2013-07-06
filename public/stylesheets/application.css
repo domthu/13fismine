@@ -1115,7 +1115,7 @@ h2 img { vertical-align:middle; }
 .total{font-weight: bold;color: #2C4056; background-color:#FFFFDD; padding: 5px;}
 .htmldraft{padding:20px; margin-top: 1em; background: url(../images/draft.png)}
 .hide{display: none;}
-div.asso-select{float:right; right:10px;}
+div.conv-select{float:right; right:10px;}
 /* sandro per implementazione paperclip  */
 #buttons-inline div{
     display: inline-block;
