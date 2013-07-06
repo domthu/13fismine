@@ -288,11 +288,7 @@
         $("#user_cross_organization_id").on('change', function (ev) {
             //alert('changed usertiposigla --> TODO reload Associations?')
         });
-        $('#user_asso_id').select2({
-            width:'80%',
-            placeholder:"Ricerca la tua associazione. Se non trovi, ci sentiamo via mail.",
-            allowClear:true
-        });
+
         $("#extra_organismo_select").select2({
             width:'80%',
             placeholder:"Ricerca la tua associazione e la sua relativa federazione ed organismo",
@@ -479,7 +475,6 @@
     }
     function OrgaSelection(data) {
         $('#extra_cross_select').val(data.hiddenvalue_cross);
-        $('#extra_asso_select').val(data.hiddenvalue_asso);
         return data.value;
     }
     function FormatCitta(Citta) {
