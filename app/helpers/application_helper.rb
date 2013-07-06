@@ -175,7 +175,7 @@ module ApplicationHelper
   end
 
   def format_activity_title(text)
-    h(truncate_single_line(text, :length => 100))
+    h(truncate_single_line(text, :length => 200))
   end
 
   def format_activity_day(date)
@@ -183,7 +183,8 @@ module ApplicationHelper
   end
 
   def format_activity_description(text)
-    h(truncate(text.to_s, :length => 120).gsub(%r{[\r\n]*<(pre|code)>.*$}m, '...')).gsub(/[\r\n]+/, "<br />")
+    raw(truncate(text.to_s, :length => 120)).gsub(/[\r\n]+/, "<br />").html_safe
+   # h(truncate(text.to_s, :length => 120).gsub(%r{[\r\n]*<(pre|code)>.*$}m, '...')).gsub(/[\r\n]+/, "<br />")
   end
 
   def format_version_name(version)
@@ -539,8 +540,8 @@ module ApplicationHelper
     return '' if text.blank?
     project = options[:project] || @project || (obj && obj.respond_to?(:project) ? obj.project : nil)
     only_path = options.delete(:only_path) == false ? false : true
-
-    text = Redmine::WikiFormatting.to_html(Setting.text_formatting, text, :object => obj, :attribute => attr)
+    #tolta anche qui per prova
+    # text = Redmine::WikiFormatting.to_html(Setting.text_formatting, text, :object => obj, :attribute => attr)
 
     @parsed_headings = []
     @heading_anchors = {}

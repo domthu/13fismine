@@ -43,8 +43,11 @@
   <div class="splitcontentright">
   <fieldset  class="box tabular">
     <legend><%=l(:label_preferences)%></legend>
-    <p><%= f.check_box :admin %></p>
     <p><%= f.select :language, lang_options_for_select %></p>
+    <p><%= f.check_box :se_condition, :checked => true  %></p>
+    <p><%= f.check_box :se_privacy , :checked => true   %></p>
+    <p><%= f.check_box :admin %></p>
+
   </fieldset>
    </div>
 

@@ -1126,8 +1126,8 @@ en:
   label_group_banner: Banner
   label_group_banner_plural: Banners
   label_group_banner_new: Nuovo banner
-  label_group_banner_associated_asso: Categorie utenti associate
-  label_group_banner_associated_asso_none: Nessuna categoria utente associata
+  label_group_banner_convention: Categorie utenti associate
+  label_group_banner_convention_none: Nessuna categoria utente associata
   label_cross_groups_from_group_banner: "Associazione Banner Utente (Banner <--> Categoria) per questo banner"
 
 #Organismo convenzionato collegato a type_organization e sigla
@@ -1141,23 +1141,24 @@ en:
   label_have_convention: Non pagante?
   label_no_convention: "Utente pagante. L'utente non fa parte di un'organismo convenzionato"
   label_list_responsable_for: "Lista organismi convenzionati dove é responsabile:"
-
-  label_have_sigla_tipo: Sigla
-  label_no_sigla_tipo: "L'utente non fa parte di una sigla organismo"
+  label_have_sigla_tipo: Federato?
+  label_no_sigla_tipo: "L'utente non fa parte di una federazione"
 
   #label_cross_organization: ex Sigla
   label_cross_organization: Federazione
   label_cross_organization_plural: Federazioni
   label_cross_organization_new: Nuova federazione
   label_other_cross_organization_sametype: Altre federazioni correlate
-  label_other_organization_sametype: Altre federazioni correlati
-  label_other_organization_none: Nessuna federazione associata
+  label_other_convention_sametype: Convenzioni per la federazione
+  label_other_convention_none: Nessuna convenzione stabilita
 
   label_tipo: "Tipo dell'organismo"
   label_descrizione: Descrizione
   label_sigla: Sigla
   label_type_organization: Organismo
-
+  label_type_organization: Org. Tipo
+  label_codice_attivazione: Codice di attivazione
+  field_codice_attivazione: Codice di attivazione
   field_tipo: "Tipo di organismo"
   field_descrizione: Descrizione
   field_sigla: Sigla
@@ -1247,13 +1248,14 @@ en:
   label_convention_full: Organismi aderenti (convenzionati)
   label_convention_plural: Organismi convenzionati
   label_convention_new: Nuova organismo aderente
-  label_conventions_users: Utenti soci non paganti
-  label_convention_user: Responsabile convenzion
-  label_convention: Organismo associato
-  label_convention_none: Nessun organismo associato
-  label_convention_group_banner: Banner del organismo convenzionato
-  label_convention_group_banner_none: Nessun banner per la convenzione
-
+  label_conventions_users: Utenti soci non paganti (sotto convenzione)
+  label_convention_user: Responsabile convenzione
+  label_convention: Convenzione
+  label_convention_none: Nessuna convenzione (organismo associato)
+  label_convention_group_banner: Banner convenzione
+  label_convention_group_banner_none: Nessun banner per la convenzione (organismo associato)
+  label_convention_pact: "Federazione<br />Zona"
+  label_convention_ref: "Scadenza<br />responsabile"
 
   label_ragione_sociale: Ragione sociale
   label_email: Email
@@ -1271,7 +1273,7 @@ en:
 
   field_ragione_sociale: Ragione sociale
   field_email: Email
-  field_indirizzo: Indirizzo
+  field_indirizzo: "Sede o Domicilio"
   field_presidente: Presidente
   field_referente: Referente
   field_consulente: Consulente
@@ -1342,13 +1344,13 @@ en:
   label_comment: Commenta
 
 #User
-  label_power_user: Power user (Resp. asso.?)
+  label_power_user: Referente conv.
   label_users: Utenti
   label_user_invoices: "Altre fatture legate all'utente"
-  label_cross_organization_user_asso: "Sigla: lista utenti federati"
-  label_cross_organization_user_asso_none: nessun utente registrato per questa federazione
+  label_cross_organization_user_convention: "Sigla: lista utenti federati"
+  label_cross_organization_user_convention_none: nessun utente registrato per questa federazione
 
-  field_power_user: Power user (Resp. asso.?)
+  field_power_user: Referente convenzione
   field_users: Utenti
   label_dati_plural: Dati FISCOSPORT
   label_abbonamento_plural: Abbonamento
@@ -1370,12 +1372,11 @@ en:
   label_no_referee: Nessun responsabile trovato
   label_referee_list_conventions: Responsabile della convenzione
   label_have_referee: Ha responsabilità?
-
   field_codice: (old) Codice
   field_pwd: (old) Password
   field_login_fisco: (old) login FISCOSPORT
   field_mail_fisco: (old) email FISCOSPORT
-  field_soc: (old) società
+  field_soc: "Intestatario dell'abbonamento"
   field_note: (old) note
   field_cap: (old) CAP
   field_prov: (old) provincia
@@ -1384,8 +1385,8 @@ en:
   field_mail2: (old)  2nd email
   field_sez: (old) sezione
   field_iva_: (old) IVA
-  field_codicefiscale: (old) Cofice Fiscale
-  field_partitaiva: (old) PIVA
+  field_codicefiscale: Cofice Fiscale
+  field_partitaiva: Partita IVA
   field_registrato: (old) registrato?
   field_num_reg_coni: (old) N° regionale CONI
   field_abbonato: (old) Abbonato

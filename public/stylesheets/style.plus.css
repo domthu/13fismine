@@ -6,7 +6,7 @@
 
 .fs-art-attachments {
     text-align: center;
-    padding: 10px auto;
+    padding: 10px 0;
     border-bottom: solid 1px grey;
 
 }
@@ -1945,7 +1945,11 @@ h3.fs-postheader {
 }
 
 .fs-abbo-fields {
-
+    border-radius: 30px;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border: 3px outset #DBE0E6;
+    background-color: #fafafa;
 }
 
 .fs-abbo-sx1, .fs-abbo-dx1 {
@@ -1958,6 +1962,7 @@ h3.fs-postheader {
     width: 100%;
 }
 
+/*
 .fs-abbo-tips {
     font-weight: normal;
     font-size: 10px;
@@ -1965,8 +1970,9 @@ h3.fs-postheader {
     text-align: justify;
 
 }
+*/
 
-#steps-step-0 legend, #steps-step-1 legend {
+.step legend {
     color: #00465e;
     font-size: 15px;
 }
@@ -2085,8 +2091,7 @@ h3.fs-postheader {
 }
 
 /* altri  allarmi note */
-.fe-notice {
-    background: url('/images/ico/flash_notice_s.png') center left no-repeat;
+.fs-flash-in {
     font-weight: bold;
     padding: 10px 5px 3px 32px;
     display: table-cell;
@@ -2096,6 +2101,18 @@ h3.fs-postheader {
     height: 24px;
     min-height: 24px;
     border-bottom: solid 1px #e0ffff;
+}
+.notice-in {
+     background: url('/images/ico/flash_notice_s.png') center left no-repeat;
+ }
+.error-in {
+    background: url('/images/ico/flash_error_s.png') center left no-repeat;
+}
+.alert-in {
+    background: url('/images/ico/flash_alert_s.png') center left no-repeat;
+}
+.success-in {
+    background: url('/images/ico/flash_success_s.png') center left no-repeat;
 }
 
 /*  navigazione  e menu   */
@@ -3707,16 +3724,11 @@ html>body #ajax-indicator {
 }
 */
 .step {
-    border: 1px solid #DDD;
-    clear: left;
+
     font: 10px verdana;
-    width: 97%;
+    width: 100%;
     padding: 5px;
-    -khtml-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -opera-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+
 }
 
 .step label {
@@ -3726,15 +3738,20 @@ html>body #ajax-indicator {
 }
 
 .step legend {
-    color: #9FC898;
-    font: bold 12px verdana;
+
+    color: #494949;
+    font-size: 18px;
+    font-family: Arial, Helvetica, Sans-Serif;
+   margin-left: 10px;
     padding: 0 2px 3px 2px;
+    text-transform: uppercase;
 }
 
 .step input, .step textarea, .step select {
-    border: 1px solid #AAA;
-    font: 10px verdana;
+    border: 1px solid #ede3c8;
     margin-left: 7px;
+    font-size: 1em;
+    line-height: 16px;
 }
 
 .stepy-titles {
@@ -3782,7 +3799,7 @@ html>body #ajax-indicator {
     margin-left: 5px;
 }
 
-.register-switch-item  .fe-notice {
+.register-switch-item  .fe-notice-inline {
     border-bottom: none !important;
 
 }
