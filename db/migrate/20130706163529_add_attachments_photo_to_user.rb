@@ -6,9 +6,9 @@ class AddAttachmentsPhotoToUser < ActiveRecord::Migration
     add_column :users, :photo_updated_at, :datetime
     add_column :projects, :system, :boolean, :default => 0
     rename_column :users, :abbonato, :use_gravatar
-    change_column :users, :use_gravatar ,:default => 1
     rename_column :users, :sez, :codice_attivazione
     rename_column :conventions, :Codice, :codice_attivazione
+    change_column :users, :use_gravatar , :boolean, :default => 1, :null => true
   end
 
   def self.down
