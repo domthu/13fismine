@@ -1181,7 +1181,8 @@ it:
   label_organizzazione: Organizzazione
   label_sigla: Sigla
   label_type_organization: Org. Tipo
-
+  label_codice_attivazione: Codice di attivazione
+  field_codice_attivazione: Codice di attivazione
   field_tipo: "Tipo di organismo"
   field_descrizione: Descrizione
   field_organizzazione: Organizzazione
@@ -1290,7 +1291,7 @@ it:
 
   field_ragione_sociale: Ragione sociale
   field_email: Email
-  field_indirizzo: Indirizzo
+  field_indirizzo: "Sede o Domicilio"
   field_presidente: Presidente
   field_referente: Referente
   field_consulente: Consulente
@@ -1392,12 +1393,11 @@ it:
   label_no_referee: Nessun responsabile trovato
   label_referee_list_assos: Responsabile di associazioni
   label_have_referee: Ha responsabilità?
-
   field_codice: (old) Codice
   field_pwd: (old) Password
   field_login_fisco: (old) login FISCOSPORT
   field_mail_fisco: (old) email FISCOSPORT
-  field_soc: Società
+  field_soc: Intestatario dell' Abbonamento
   field_note: (old) note
   field_cap: (old) CAP
   field_prov: (old) provincia
@@ -1406,8 +1406,8 @@ it:
   field_mail2: (old)  2nd email
   field_sez: (old) sezione
   field_iva_: (old) IVA
-  field_codicefiscale: (old) Cofice Fiscale
-  field_partitaiva: (old) PIVA
+  field_codicefiscale: Cofice Fiscale
+  field_partitaiva: Partita IVA
   field_registrato: (old) registrato?
   field_num_reg_coni: (old) N° regionale CONI
   field_abbonato: (old) Abbonato
