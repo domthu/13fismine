@@ -3750,7 +3750,7 @@ html>body #ajax-indicator {
 .step input, .step textarea, .step select {
     border: 1px solid #ede3c8;
     margin-left: 7px;
-    font-size: 1em;
+    font-size: 1.2em;
     line-height: 16px;
 }
 

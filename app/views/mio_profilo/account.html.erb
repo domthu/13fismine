@@ -4,16 +4,35 @@
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">
           <div id="fs-abbo-top">
-            <h2><%= l(:label_register) %> <%= link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
 
-            <h3 style="">Modulo di registrazione abbonamento </h3>
+            <div class="fs-abbo-sx1">
+              <h2><%= l(:label_abbo) %> <%= link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
+              <h3 style="">Il tuo abbonamento </h3>
+            </div>
+            <div class="fs-abbo-dx1">
+              <div id="fs-photo-edit">
+              <% if @user_profile.use_gravatar? %>
+                  <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:none;">' + image_tag(@user_profile.photo.url(:l)) + '</div>
+          <div id="fs-photo-edit-g" style="display:block;">' + gravatar_for(@user_profile.user, :size => 120) + ' </div>' %>
+              <% else %>
+                  <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:block;">' + image_tag(@user_profile.photo.url(:l)) + '</div>
+          <div id="fs-photo-edit-g" style="display:none;">' + gravatar_for(@user_profile.user, :size => 120) + ' </div>' %>
+              <% end %>
+            </div>
+              <div class="fs-vuoto-inline-button  fs-profiles-esx-btn">
+                <label><%= radio_button_tag :use_gravatar, true, @user_profile.use_gravatar?, :onchange => "funct_avatar('g')" %> <%= 'Usa mail su Gravatar' %></label><br/>
+                <label><%= radio_button_tag :use_gravatar, false, !@user_profile.use_gravatar?, :onchange => "funct_avatar('a')" %> <%= 'Usa tua immagine Avatar' %></label><br/>
+                <%= file_field_tag :photo %>
+              </div>
+            </div>
+
           </div>
           <blockquote>
             I campi contrassegnati da <b style="color: red;"><strong>*</strong> sono obbligatori</b><br/>
              </blockquote>
           <br />
           <!------  inizio ------ -->
-          <% labelled_form_for @user, :url => {:action => 'register'}, :html => {:method => :post, :class => "register tabular", :class => "step"} do |f| %>
+          <% labelled_form_for @user, :url => {:controller =>'mio_profilo', :action => 'account'}, :html => {:method => :post, :class => "register tabular", :class => "step"} do |f| %>
               <%= error_messages_for 'user' %>
               <fieldset class="fs-abbo-fields">
                 <legend title="Anagrafica"> Dati personali e di accesso</legend>
@@ -31,9 +50,8 @@
                   <div id="no_user_mail" style="display: none;">
                     <img src="/images/false.png" alt="Anagrafica non disponibile. Ci risulta già una registrazione con questa Anagrafica!" title="Anagrafica non disponibile. Ci risuta già una registrazione con questa Anagrafica!"/><br/>
 
-                    <p class="notice-in fs-flash-in"> Informazione già presente nel server: Sei già registrato? Usi
-                      il <%= link_to l(:label_login), :signin %> per accedere di nuovo. Se hai
-                      problemi <%= link_to 'Contattaci', contattaci_path %>. </p>
+                    <p class="fe-alert-in"> Informazione già presente nel server: Sei già registrato? Usi il <%= link_to l(:label_login), :signin %> per accedere di nuovo. Se hai problemi <%= link_to 'Contattaci', contattaci_path %>. </p>
+
                   </div>
                 </div>
                 <div class="fs-abbo-dx1">
@@ -49,8 +67,9 @@
                       <p><%= f.password_field :password_confirmation, {:style => 'width:60%;', :label => l(:field_password_confirmation) + " <span class='required'>*</span>", :maxlength => 255} %></p>
                   <% end %>
 
-                  <div style="width: 69%; margin-left: 7px;">
-                    <%= f.select(:language, lang_options_for_select, :label => l(:field_language) + " <span class='required'>*</span>") %>
+                  <div style="width: 69%; margin: 7px 0 0 7px;">
+                    <p><%= f.select :language, lang_options_for_select %></p>
+
                   </div>
                   <% if Setting.openid? %>
                       <p><label for="user_identity_url"><%= l(:field_identity_url) %></label>
@@ -485,10 +504,7 @@
 </script>
 <hr>
 <div class="clearfix"></div>
-<div class="contextual">
-<%= link_to(l(:button_change_password), {:action => 'password'}, :class => 'icon icon-passwd') if @user.change_password_allowed? %>
-<%= call_hook(:view_my_account_contextual, :user => @user)%>
-</div>
+
 
 <h2><%=l(:label_my_account)%></h2>
 <%= error_messages_for 'user' %>
@@ -533,12 +549,12 @@
   <legend><%=l(:label_convention)%></legend>
   <div class="fs-logged2 fs-blockcontent ">
     <ul>
-      <% if defined?(User.current.convention) %>
+      <% if User.current.convention %>
           <li>
             Coperto dalla convenzione: <br /> <%= link_to h(User.current.convention), convention_path(User.current.convention) %>
           </li>
       <% else %>
-          <% if defined?(User.current.cross_organization) %>
+          <% if User.current.cross_organization %>
               <li>
                 Federato a:<br /> <%= link_to h(User.current.cross_organization), cross_organization_path(User.current.cross_organization) %>
               </li>

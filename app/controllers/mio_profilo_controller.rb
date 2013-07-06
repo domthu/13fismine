@@ -247,6 +247,8 @@ class MioProfiloController < ApplicationController
 
   verify :method => :put, :only => :update, :render => {:nothing => true, :status => :method_not_allowed }
   def update
+    redirect_to :controller => 'mio_profilo', :action => 'account', :id => @user
+    return
     @user.admin = params[:user][:admin] if params[:user][:admin]
     @user.login = params[:user][:login] if params[:user][:login]
     if params[:user][:password].present? && (@user.auth_source_id.nil? || params[:user][:auth_source_id].blank?)
@@ -287,8 +289,7 @@ class MioProfiloController < ApplicationController
         format.api  { render_validation_errors(@user) }
       end
     end
-  rescue ::ActionController::RedirectBackError
-    redirect_to :controller => 'users', :action => 'edit', :id => @user
+      redirect_to :controller => 'mio_profilo', :action => 'account', :id => @user
   end
 
   verify :method => :delete, :only => :destroy, :render => {:nothing => true, :status => :method_not_allowed }
