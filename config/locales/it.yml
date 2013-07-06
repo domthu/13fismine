@@ -1262,6 +1262,9 @@ it:
   label_convention_group_banner_none: Nessun banner per la convenzione (organismo associato)
   label_convention_pact: "Federazione<br />Zona"
   label_convention_ref: "Scadenza<br />responsabile"
+  label_convention_organismo: Organismo sportivo associato
+  label_convention_societa: Società non sportiva
+  label_convention_type: Tipo organismo
 
   label_ragione_sociale: Ragione sociale
   label_email: Email
@@ -1372,7 +1375,7 @@ it:
   label_scadenza_ruolo: Gestione Ruolo <--> Scadenza
   label_is_referente: è responsabile?
   label_gest_privato: Privato == Pagante
-  label_gest_organismo: Organismo associato == Utente non paga
+  label_gest_organismo: Organismo associato o società non sportiva == Utente NON paga
   label_conventions_referee: Responsabili degli organismi convenzionati
   label_conventions_referee_help: Lista dei responsabili
   label_no_referee: Nessun responsabile trovato
@@ -1671,6 +1674,12 @@ it:
   fs_qualifica: 'Qualifica o ruolo su Fiscosport (apparirà negli articoli)'
   notice_register_must_condition: "Dovete dichiarare di avere letto le condizioni d'uso per continuare"
   notice_register_must_consensus: "É necessario dare il consenso per la privacy"
+
+#SCADENZA STATO
+  stato_scadenza: "Stato abbonamento alla scadenza"
+  state_valid: "<span style='color: green; font-weight: bold;'>Abbonamento valido</span>"
+  state_expiring: "<span style='color: orange; font-weight: bold;'>L'abbonamento scadere</span>"
+  state_expired: "<span style='color: red; font-weight: bold;'>Abbonamento SCADUTO</span>"
 
 #EMAIL NEWSLETTER
   label_send_newsletter: Invia quindicinale

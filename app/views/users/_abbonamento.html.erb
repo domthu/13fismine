@@ -18,7 +18,7 @@
 
           <p class="">
             <label for="siglatipo"><%= l(:label_have_sigla_tipo) %></label>
-            <span><% if defined?(@user.cross_organization) %>
+            <span><% if @user.cross_organization %>
                 <%= link_to h(@user.cross_organization), cross_organization_path (@user.cross_organization) %>
               <% else %>
                 <%= l(:label_no_sigla_tipo) %>
@@ -61,13 +61,17 @@
       <fieldset class="box tabular">
         <legend><%=l(:label_gest_organismo)%></legend>
 
-          <div class="convention-select"><%= f.select :convention_id, (Convention.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => 'cambia asso' %></div>
+          <div class="convention-select"></div>
+
+          <%= f.select :convention_id, (Convention.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => 'cambia asso' %>
 
           <p class="">
             <label><%= l(:label_have_convention) %></label>
             <span>
-              <% if defined?(@user.convention) %>
+              <% if @user.convention %>
                   <%= link_to h(@user.convention), convention_path(@user.convention) %>
+                  <br />Copertura geografica:
+                  <br /><%= h(@user.convention.pact) %>
               <% else %>
                 <%= l(:label_no_convention) %>
               <% end %>
@@ -75,6 +79,38 @@
           </p>
 
 <% if @user.convention %>
+
+          <p class="">
+            <label><%= l(:label_convention_type) %></label>
+            <span>
+              <% if @user.convention.cross_organization %>
+                <%= l(:label_convention_organismo) %>
+              <% else %>
+                <%= l(:label_convention_societa) %>
+              <% end %>
+            </span>
+          </p>
+
+          <p class="">
+            <label><%= l(:stato_scadenza) %></label>
+            <span>
+              <%= format_date(@user.convention.data_scadenza) %>
+              -->
+              <% if @user.convention.data_scadenza.is_a?(Date) %>
+                <% if @user.convention.data_scadenza < Date.today %>
+                  <%= l(:state_expired) %>
+                <% else %>
+                <% if ((@user.convention.data_scadenza - Setting.renew_days.to_i.days)  < Date.today) %>
+                  <%= l(:state_valid) %>
+                <% else %>
+                  <%= l(:state_expiring) %>
+                <% end %>
+                <% end %>
+              <% else %>
+                TODO
+              <% end %>
+            </span>
+          </p>
 
           <p class="">
           <label><%=l(:label_referente) %></label><span>

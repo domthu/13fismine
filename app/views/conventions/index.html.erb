@@ -37,8 +37,18 @@
 <% @convs.each do |conv| %>
   <tr class="<%= cycle 'odd', 'even' %>">
     <td><%= link_to(conv, convention_path(conv), :class => 'icon icon-summary') %></td>
-    <td><%= link_to h(conv.cross_organization), cross_organization_path(conv.cross_organization, :id => conv.cross_organization_id) %><br /><%=h conv.get_zone() %></td>
-    <td align="left"><%= format_date(conv.data_scadenza) %><br /><%= link_to(h(conv.user), user_path(conv.user, :id => conv.user_id), :class => "icon " + conv.user_icon() ) %></td>
+    <td>
+      <% if conv.cross_organization %>
+        <%= link_to h(conv.cross_organization), cross_organization_path(conv.cross_organization, :id => conv.cross_organization_id) %>
+      <% end %>
+      <br /><%=h conv.get_zone() %></td>
+    <td align="left">
+      <%= format_date(conv.data_scadenza) %>
+      <br />
+      <% if conv.user %>
+        <%= link_to(h(conv.user), user_path(conv.user, :id => conv.user_id), :class => "icon " + conv.user_icon() ) %>
+      <% end %>
+    </td>
 
     <td>Pre: <%=h conv.presidente %><br />Ref: <%=h conv.referente %><br />Con: <%=h conv.consulente %></td>
 

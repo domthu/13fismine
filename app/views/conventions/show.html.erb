@@ -44,7 +44,10 @@
     <legend><%=l(:label_referente)%></legend>
 
     <p class="<%= 'power_user' unless @conv.havePowerUser? %>"><label>
-      <%= l(:label_manager) %></label><span class="icon<%= @conv.user.icon() %>" ><%= link_to h(@conv.user), user_path(@conv.user, :id => @conv.user_id) %>
+      <%= l(:label_manager) %></label>
+      <% if @conv.user %>
+        <span class="icon<%= @conv.user.icon() %>" ><%= link_to h(@conv.user), user_path(@conv.user, :id => @conv.user_id) %>
+      <% end %>
     </span></p>
     <p><label>
       <%=l(:label_data_scadenza)%></label><span><%= format_date(@conv.data_scadenza) %>
