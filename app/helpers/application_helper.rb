@@ -1109,13 +1109,13 @@ module ApplicationHelper
 
       size = taglia.to_i
       if size < 30 #15
-        return user.user_profile.my_avatar(:xs, classe)
+        return user.my_avatar(:xs, classe)
       elsif size < 50 #20
-        return user.user_profile.my_avatar(:s, classe)
+        return user.my_avatar(:s, classe)
       elsif size < 70 #30
-        return user.user_profile.my_avatar(:m, classe)
+        return user.my_avatar(:m, classe)
       else
-        return user.user_profile.my_avatar(:l, classe)
+        return user.my_avatar(:l, classe)
       end
 
     else

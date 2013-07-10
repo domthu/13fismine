@@ -428,6 +428,7 @@ Ajax.Responders.register({
 
 // valori accettati 1= Immagine Avatar Papareclip , 0 = Immagine Gravatar , 2  = Nuova immagine upload
 function funct_avatar(val) {
+
     if (val == 'g') {
         document.getElementById('fs-photo-edit-i').style.display = 'none';
         document.getElementById('fs-photo-edit-a').style.display = 'none';
@@ -442,12 +443,16 @@ function funct_avatar(val) {
         document.getElementById('fs-photo-edit-i').style.display = 'block';
         document.getElementById('fs-photo-edit-a').style.display = 'none';
         document.getElementById('fs-photo-edit-g').style.display = 'none';
+        //-------------------
         document.getElementById('use_gravatar_false').checked = true;
         document.getElementById('use_gravatar_true').checked = false;
         document.getElementById('use_gravatar_false').setAttribute('checked', 'checked');
     }
 
 }
+
+
+
 /*funzione aggiunta per il preview di paperclip */
 function handleFileSelect(evt, prev_id, avatar) {
     if (!evt) // i.e. the argument is undefined or null

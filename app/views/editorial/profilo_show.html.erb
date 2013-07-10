@@ -5,7 +5,7 @@
           <div class="fs-layout-cell post-layout-item-3" style="width: 100%">
             <article class="fs-post-profile fs-article">
               <div class="fs-profiles-sx">
-                <%= @user_profile.my_avatar(:l) %>
+                <%= @user_profile.user.my_avatar(:l) %>
               </div>
 
               <div class="fs-profiles-us">
@@ -97,7 +97,7 @@
                     <h4> Se vuoi tu puoi modificare i profili nascosti. </h4>
                     <br/>
                     <% @profiles_hidden.each do |item| %>
-                        <div class="fs-profiles-all-itm"> <%= item.my_avatar(:xs) %></dt>
+                        <div class="fs-profiles-all-itm"> <%= item.user.my_avatar(:xs) %></dt>
                           <span> <%= link_to(('[' + item.user.id.to_s + '] ' + item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_edit", :id => item.id) %> </span>
                         </div>
                     <% end %>

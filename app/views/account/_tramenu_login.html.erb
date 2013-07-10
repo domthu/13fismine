@@ -4,7 +4,7 @@
       <div id='fs-login-avatar'>
         <div class="fs-login">
           <% if User.current.user_profile %>
-              <%= User.current.user_profile.my_avatar(:xs) %>
+              <%= User.current.my_avatar(:xs) %>
           <% else %>
               <%= image_tag "/images/commons/xs-no_avatar.jpg", :class => 'fs-vuoto-inline3-button' %>
           <% end %>

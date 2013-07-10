@@ -16,7 +16,7 @@
                  <div class="fs-postmetadata-full">
                    <div class="fs-author">
                      <% if !articolo.author.nil? && !articolo.author.user_profile.nil? %>
-                         <span><%= link_to  articolo.author.user_profile.my_avatar(:s), profile_show_path(articolo.author.user_profile) %> </span><span style="padding-left:10px;"> <%= h articolo.author %>
+                         <span><%= link_to  articolo.author.my_avatar(:s), profile_show_path(articolo.author.user_profile) %> </span><span style="padding-left:10px;"> <%= h articolo.author %>
 
                             <div class="fs-postmetadatafooter-author-qualifica"><%= articolo.author.user_profile.fs_qualifica unless articolo.author.user_profile.fs_qualifica.nil? %>  </div>
 
