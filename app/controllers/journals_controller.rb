@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -67,15 +67,22 @@ class JournalsController < ApplicationController
     end
     # Replaces pre blocks with [...]
     text = text.to_s.strip.gsub(%r{<pre>((.|\s)*?)</pre>}m, '[...]')
-    content = "#{ll(Setting.default_language, :text_user_wrote, user)}\n> "
-    content << text.gsub(/(\r?\n|\r\n?)/, "\n> ") + "\n\n"
+    #content = "#{ll(Setting.default_language, :text_user_wrote, user)}\n> "
+    #content << text.gsub(/(\r?\n|\r\n?)/, "\n> ") + "\n\n"
+    content = "<blockquote  style='padding:10px; background: #D3D3D3;' class='htmldraft' cite='" + user.name + "'>"
+    content << "<p style='font-weight: bold;color:blue;'>#{ll(Setting.default_language, :text_user_wrote, user)}</p>"
+    content << text + "</blockquote><br />&nbsp;"
 
     render(:update) { |page|
-      page.<< "$('fast_reply').value = \"#{escape_javascript content}\";"
-      page << "Form.Element.focus('notes');"
-      page << "var oEditor = CKEDITOR.instances.fast_reply;"
-      page << "oEditor.insertHtml( \"#{escape_javascript content}\" );"
-      page.show 'fast_reply'
+      #page.<< "$('fast_reply').insertHtml(\"#{escape_javascript content}\");"
+      #page << "Form.Element.focus('fast_reply');"
+      #page << "var oEditor = CKEDITOR.instances['fast_reply'];"
+      #page << "oEditor.insertHtml( \"#{escape_javascript content}\" );"
+      page << "CKEDITOR.instances['fast_reply'].setData( \"#{escape_javascript content}\" ).focus();"
+      #page << "Form.Element.focus('fast_reply');"
+      #page << "Form.Element.focus('fast_reply');"
+      #page.show 'fast_reply'
+      page.show 'update'
     }
   end
 
