@@ -254,6 +254,7 @@ it:
 
   gui_validation_error: 1 errore
   gui_validation_error_plural: "%{count} errori"
+  field_photo: 'Carica una immagine'
   field_id: 'Num.#'
   field_name: Nome
   field_description: Testo
