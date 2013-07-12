@@ -5,7 +5,7 @@
                       :rows => (@journal.notes.blank? ? 10 : [[10, @journal.notes.length / 50].max, 100].min) %>
     <%= call_hook(:view_journals_notes_form_after_notes, {:journal => @journal}) %>
     <p style="width: 95%; text-align: right;">
-      <%= submit_tag l(:button_save), :class => 'button-blu' %>
+      <%= submit_tag l(:button_save), { :class => 'button-blu', :onclick => "CKEDITOR_value_for_remote('#{@journal.id}');" } %>
     </p>
       <!--
       <%#link_to_remote l(:label_preview),
@@ -19,19 +19,9 @@
       <%# link_to l(:button_cancel), '#', :onclick => "Element.remove('journal-#{@journal.id}-form'); " +
               "Element.show('journal-#{@journal.id}-notes'); return false;" %>
               -->
-
-    <div id="journal_<%= @journal.id %>_preview" class="wiki"></div>
+  <div id="journal_<%= @journal.id %>_preview" class="wiki"></div>
+  <script type="text/javascript" charset="utf-8">
+      var inst = "journal_" + <%= @journal.id.to_s %> +"_notes"
+      CKEDITOR.replace(inst, { toolbar:'Basic', height:200 });
+  </script>
 <% end %>
-<script type="text/javascript" charset="utf-8">
-    ist = "journal_" + <%= @journal.id.to_s %> +"_notes"
-    if (CKEDITOR.instances[ist]) {
-        delete CKEDITOR.instances[ist]
-    }
-    ;
-    CKEDITOR.replace(ist, { toolbar:'Basic', height:200, on:{
-        blur:function (event) {
-            document.getElementById(ist).value = this.getData();
-        }
-    }
-    });
-</script>

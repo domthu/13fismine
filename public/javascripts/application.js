@@ -512,5 +512,21 @@ function hideOnLoad() {
     Event.observe(window, 'scroll', scrolling_fs);
 }
 
+function CKEDITOR_value_for_remote(journal_id) {
+  //CKEDITOR.replace(ist, { toolbar:'Basic', height:200, on:{
+  //    change:function (event) {
+  //      document.getElementById(ist).value = this.getData();
+  //    }
+  //  }
+  //});
+  //alert("CKEDITOR_for_remote, journal_id: " + journal_id);
+  var inst = "journal_" + journal_id + "_notes"
+  document.getElementById(inst).value = CKEDITOR.instances[inst].getData();
+  //Element.remove("journal-" + journal_id + "-form");
+  if (CKEDITOR.instances[inst]) {
+      delete CKEDITOR.instances[inst]
+  };
+}
+
     //Event.observe(window, 'load', hideOnLoad);
     document.observe("dom:loaded", hideOnLoad);
