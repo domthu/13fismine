@@ -218,7 +218,9 @@ class EditorialController < ApplicationController
       flash[:alert] = l(:notice_not_authorized)
       return redirect_to({:action => 'home'})
     else
-      @issues = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+     # @issues = @project.issues.all(:include => [:section => :top_section],
+     #                     :order => "#{TopSection.table_name}.ordinamento ASC , due_date DESC")
+      @issues = @project.issues.all(:order => "#{TopSection.table_name}.ordinamento ASC , #{Issue.table_name}.due_date DESC", :include => [:section => :top_section])
       @block_projects = Project.latest_fs
     end
   rescue ActiveRecord::RecordNotFound
@@ -704,9 +706,7 @@ class EditorialController < ApplicationController
   def find_articolo
     return reroute_log() unless !params[:article_id].nil?
     @id = params[:article_id].to_i
-    #test render_404_fs
-    #@articolo= Issue.all_public_fs.find(242341234234234)
-    @articolo= Issue.all_public_fs.find(@id)
+    @articolo= Issue.all_public_fs_full.find(@id)
   rescue ActiveRecord::RecordNotFound
     reroute_404("il contenuto cercato è stato rimosso...")
   end

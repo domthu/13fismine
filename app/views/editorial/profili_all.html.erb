@@ -6,7 +6,7 @@
           <h3 class="fs-postheader">DIRETTORI DI REDAZIONE </h3>
           <% @direttori.each do |item| %>
               <div class="fs-chisiamo-item">
-                   <%= link_to(item.user.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.user.id) %>
+                   <%= link_to(item.user.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
                 <p>
                   <span class="fs-chisiamo-item-txt1">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span>
                   <span class="fs-chisiamo-item-txt2">  <%= item.fs_qualifica %> </span>
