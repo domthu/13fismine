@@ -11,12 +11,12 @@
       <%= hidden_field_tag :user_id, @this_user.id %>
       <div class="fs-profiles-esx">
         <div id="fs-photo-edit">
-          <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:none;"></div>
+          <%= '<div id="fs-photo-edit-a" style="display:none;"></div>
           <div id="fs-photo-edit-g" style="display:block;">' + gravatar_for(@this_user, :size => 120) + ' </div>' %>
         </div>
         <div class="fs-vuoto-inline-button  fs-profiles-esx-btn">
-          <label><%= radio_button_tag :use_gravatar, true, :onchange => "funct_avatar('g')" %> <%= 'Usa mail su Gravatar' %></label><br/>
-          <label><%= radio_button_tag :use_gravatar, false, :onchange => "funct_avatar('a')" %> <%= 'Usa tua immagine Avatar' %></label><br/>
+          <label><%= radio_button_tag :use_gravatar, true, :onchange => "funct_avatar('g','fs-photo-edit','use_gravatar_true');" %> <%= 'Usa mail su Gravatar' %></label><br/>
+          <label><%= radio_button_tag :use_gravatar, false, :onchange => "funct_avatar('a','fs-photo-edit','use_gravatar_false');" %> <%= 'Usa tua immagine Avatar' %></label><br/>
           <%= file_field_tag :photo %>
           <h6>nb: usa un'immagine quadrata sarà ridimensionata a 200px per 200px </h6>
         </div>
@@ -92,7 +92,7 @@
     document.getElementById('photo').addEventListener('change', function (event) {
                 if (!event) // i.e. the argument is undefined or null
                     event = window.event;
-                handleFileSelect(event, 'fs-photo-edit-i', 'i')
+                handleFileSelect_fs(event, 'fs-photo-edit', 'use_gravatar_false')
             }, false
     );
 </script>

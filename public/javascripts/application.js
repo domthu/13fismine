@@ -428,7 +428,7 @@ Ajax.Responders.register({
 
 
 /*funzione aggiunta per il preview di paperclip */
-function handleFileSelect(evt, prev_id, avatar) {
+function handleFileSelect(evt, prev_id) {
     if (!evt) // i.e. the argument is undefined or null
       evt = window.event;
     var files = evt.target.files; // FileList object
@@ -456,10 +456,6 @@ function handleFileSelect(evt, prev_id, avatar) {
 
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
-    }
-
-    if (avatar && avatar.length > 0) {
-     funct_avatar(avatar);
     }
 }
 

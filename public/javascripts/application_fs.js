@@ -1,28 +1,28 @@
 /*funzione aggiunta per il preview di paperclip */
 // valori accettati 1= Immagine Avatar Papareclip , 0 = Immagine Gravatar , 2  = Nuova immagine upload
-function funct_avatar(val, grav_id, radio_button_id) {
-    if (val == 'g') {
-        document.getElementById(grav_id + '-i').style.display = 'none';
-        document.getElementById(grav_id + '-a').style.display = 'none';
-        document.getElementById(grav_id + '-g').style.display = 'block';
+function funct_avatar(tipo, grav_id, radio_button_id) {
+    grav_id = '#' + grav_id;
+    radio_button_id = '#' + radio_button_id;
+    if (tipo == 'g') {
+        $(grav_id + '-a').hide();
+        $(grav_id + '-g').show();
     }
-    else if (val == 'a') {
-        document.getElementById(grav_id + '-i').style.display = 'none';
-        document.getElementById(grav_id + '-a').style.display = 'block';
-        document.getElementById(grav_id + '-g').style.display = 'none';
+    else if (tipo == 'a') {
+        $(grav_id + '-a').show();
+        $(grav_id + '-g').hide();
+        $(radio_button_id).prop('checked', true);
     }
-    else if (val == 'i') {
-        document.getElementById(grav_id + '-i').style.display = 'block';
-        document.getElementById(grav_id + '-a').style.display = 'none';
-        document.getElementById(grav_id + '-g').style.display = 'none';
-        //xxxx
-        document.getElementById(radio_button_id).checked = true;
-        document.getElementById(radio_button_id).checked = false;
-        document.getElementById(radio_button_id).setAttribute('checked', 'checked');
+    else{
+      //verificare parametro
     }
 
 }
-function handleFileSelect(evt, prev_id, avatar) {
+//avatar 'i'
+//grav_id 'fs-photo-edit'
+//radio_button_id 'use_gravatar_true'
+function handleFileSelect_fs(evt, grav_id, radio_button_id) {
+    grav_id = grav_id || 'fs-photo-edit';
+    radio_button_id = radio_button_id || 'use_gravatar_false';
     if (!evt) // i.e. the argument is undefined or null
       evt = window.event;
     var files = evt.target.files; // FileList object
@@ -39,12 +39,8 @@ function handleFileSelect(evt, prev_id, avatar) {
         // Closure to capture the file information.
         reader.onload = (function (theFile) {
             return function (e) {
-                // Render thumbnail.
-                // var span = document.createElement('span');
-                var span = document.getElementById(prev_id);
-                span.innerHTML = ['<img class="thumb" src="', e.target.result,
-                    '" title="', escape(theFile.name), '"/>'].join('');
-                //document.getElementById(prev_id).insertBefore(span, null);
+                $('#' + grav_id + "-a").html(['<img class="thumb" src="', e.target.result,
+                    '" title="', escape(theFile.name), '"/>'].join(''));
             };
         })(f);
 
@@ -52,8 +48,8 @@ function handleFileSelect(evt, prev_id, avatar) {
         reader.readAsDataURL(f);
     }
 
-    if (avatar && avatar.length > 0) {
-     funct_avatar(avatar);
+    if (grav_id && grav_id.length > 0) {
+      funct_avatar('a', grav_id, radio_button_id);
     }
 }
 function js_flash(tipo, txt) {
