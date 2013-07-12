@@ -1,24 +1,24 @@
 /*funzione aggiunta per il preview di paperclip */
-
 // valori accettati 1= Immagine Avatar Papareclip , 0 = Immagine Gravatar , 2  = Nuova immagine upload
-function funct_avatar(val) {
+function funct_avatar(val, grav_id, radio_button_id) {
     if (val == 'g') {
-        document.getElementById('fs-photo-edit-i').style.display = 'none';
-        document.getElementById('fs-photo-edit-a').style.display = 'none';
-        document.getElementById('fs-photo-edit-g').style.display = 'block';
+        document.getElementById(grav_id + '-i').style.display = 'none';
+        document.getElementById(grav_id + '-a').style.display = 'none';
+        document.getElementById(grav_id + '-g').style.display = 'block';
     }
     else if (val == 'a') {
-        document.getElementById('fs-photo-edit-i').style.display = 'none';
-        document.getElementById('fs-photo-edit-a').style.display = 'block';
-        document.getElementById('fs-photo-edit-g').style.display = 'none';
+        document.getElementById(grav_id + '-i').style.display = 'none';
+        document.getElementById(grav_id + '-a').style.display = 'block';
+        document.getElementById(grav_id + '-g').style.display = 'none';
     }
     else if (val == 'i') {
-        document.getElementById('fs-photo-edit-i').style.display = 'block';
-        document.getElementById('fs-photo-edit-a').style.display = 'none';
-        document.getElementById('fs-photo-edit-g').style.display = 'none';
-        document.getElementById('use_gravatar_false').checked = true;
-        document.getElementById('use_gravatar_true').checked = false;
-        document.getElementById('use_gravatar_false').setAttribute('checked', 'checked');
+        document.getElementById(grav_id + '-i').style.display = 'block';
+        document.getElementById(grav_id + '-a').style.display = 'none';
+        document.getElementById(grav_id + '-g').style.display = 'none';
+        //xxxx
+        document.getElementById(radio_button_id).checked = true;
+        document.getElementById(radio_button_id).checked = false;
+        document.getElementById(radio_button_id).setAttribute('checked', 'checked');
     }
 
 }

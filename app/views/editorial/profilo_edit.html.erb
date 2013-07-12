@@ -19,8 +19,8 @@
           <% end %>
         </div>
         <div class="fs-vuoto-inline-button  fs-profiles-esx-btn">
-          <label><%= radio_button_tag :use_gravatar, true, @user_profile.use_gravatar?, :onchange => "funct_avatar('g')" %> <%= 'Usa mail su Gravatar' %></label><br/>
-          <label><%= radio_button_tag :use_gravatar, false, !@user_profile.use_gravatar?, :onchange => "funct_avatar('a')" %> <%= 'Usa tua immagine Avatar' %></label><br/>
+          <label><%= radio_button_tag :use_gravatar, true, @user_profile.use_gravatar?, :onchange => "funct_avatar(('g','fs-photo-edit','use_gravatar_true'))" %> <%= 'Usa mail su Gravatar' %></label><br/>
+          <label><%= radio_button_tag :use_gravatar, false, !@user_profile.use_gravatar?, :onchange => "funct_avatar(('a','fs-photo-edit','user_use_gravatar_false'))" %> <%= 'Usa tua immagine Avatar' %></label><br/>
           <%= file_field_tag :photo %>
         </div>
       </div>
