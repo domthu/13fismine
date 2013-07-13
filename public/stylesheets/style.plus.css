@@ -493,12 +493,12 @@ h3.fs-postheader {
 }
 
 #fs-photo-edit {
-    width: 300px;
+    width: 240px;
     display: table-cell;
     vertical-align: middle;
     text-align: center;
-    height: 180px;
-    padding: 0 50px;
+    min-height: 200px;
+    padding: 0 10px;
     border-bottom: solid 2px #dcdcdc;
     border-right: solid 1px #dcdcdc;
     border-left: solid 1px #dcdcdc;

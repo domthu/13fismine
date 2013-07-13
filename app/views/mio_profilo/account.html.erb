@@ -1,30 +1,34 @@
-
 <style>
-    .thumb {
-        height: 200px;
-        border: 1px solid #ededed;
-        margin: 10px 5px 0 0;
-    }
+    .thumb {height: 200px;}
 </style>
-
 <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
 <article class="fs-post fs-article" style="width: 100%;">
 <div class="fs-postcontent clearfix">
 <div class="fs-content-layout">
 <div class="fs-content-layout-row">
-  <div id="fs-abbo-top">
-    <%= "Environment: #{RAILS_ENV}" %>
+  <div>
     <h2><%= l(:label_abbo) %> <%= link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
     <blockquote>
-      In questa pagina puoi gestire i tuoi dati di abbonamento, puoi cambiare i dati di login e password e anche personalizzare il tuo profilo con una foto come "Avatar" oppure in Fiscosport usi una mail registrata su <a target="_blank" href="https://it.gravatar.com/" style="font-weight: bold;"> Gravatar </a> puoi scegliere questa opzione. <br />
-      Ricorda che i campi contrassegnati da <b style="color: red;"><strong>*</strong> sono obbligatori</b><br/>
+      In questa pagina puoi gestire i tuoi<strong> dati di abbonamento</strong>, puoi cambiare i dati di<strong>  login<strong>  e</strong>  password </strong> e anche personalizzare il tuo profilo con una foto come <a target="_blank" href="http://it.wikipedia.org/wiki/Avatar"><strong>Avatar</strong></a>  oppure se in Fiscosport usi una mail registrata su <a target="_blank" href="https://it.gravatar.com/" style="font-weight: bold;"> Gravatar </a> puoi scegliere questa opzione.
+      Ricorda che i campi contrassegnati da <span style="color: red;">*sono obbligatori</span>
     </blockquote>
     <br/>
-  </div><p><%= @user.use_gravatar %></p><!--
-    <!------  inizio ------ -->
+  </div><!------  inizio ------ -->
     <% labelled_form_for @user, :url => {:controller => 'mio_profilo', :action => 'account'}, :html => {:method => :post, :class => "register tabular", :class => "step" , :multipart => true} do |f| %>
         <%= error_messages_for 'user' %>
-    <div class="fs-abbo-sx1 fs-profiles-esx-btn">
+      <!--
+    <h1 class="<%= User.current.role %>"><%= User.current.name %></h1>
+    <h2><%= user_role_iconized(User.current.icon(), :size => 'l', :text => ('Scadenza: ' + link_to( User.current.scadenza.to_s + ' (' + User.current.scadenza_fra + ')', :controller => 'mio_profilo', :action => 'account')), :icon_for => User.current.uicon()) %></h2>
+    -->
+    <fieldset class="fs-abbo-fields">
+      <legend title="Il tuo Abbonamento"> Il tuo Abbonamento e la tua Immagine</legend>
+    <div style="float:left; margin: 10px; padding: 10px; height: 30px; font-weight: bold; line-height: 2em; font-size: 1.3em; width: 95%;"  >
+   Tipo di Abbonamento :   <%= get_status_role(User.current) %>   |  valido fino al:  <%= User.current.scadenza_fra  %>
+      <hr>
+    </div>
+
+      <div class="clearfix"></div>
+    <div class="fs-abbo-sx1 fs-profiles-esx-btn" style="margin-left: 10%;">
        <label><%= f.radio_button :use_gravatar,true, {:checked => @user.use_gravatar == true,  :onchange => "funct_avatar('g','fs-photo-edit','user_use_gravatar_true');"} %> <%= 'Usa mail su Gravatar' %></label><br/>
           <label><%= f.radio_button :use_gravatar,false, {:checked => @user.use_gravatar == false,  :onchange => "funct_avatar('a','fs-photo-edit','user_use_gravatar_false');"} %> <%= 'Usa tua immagine Avatar' %></label><br/>
       <%= f.file_field :photo, :id=> "uphoto"   %>
@@ -37,7 +41,9 @@
                 <%= '<div id="fs-photo-edit-a" style="display:block;">' + image_tag(@user.photo.url(:l)) + '</div>
                              <div id="fs-photo-edit-g" style="display:none;">' + gravatar_for(@user, :size => 120) + ' </div>' %>
             <% end %>
-          </div>
+          </div> </fieldset>
+    <br />
+      <div class="clearfix"></div>
         <fieldset class="fs-abbo-fields">
           <legend title="Anagrafica"> Dati personali e di accesso</legend>
           <div class="fs-abbo-sx1">

@@ -46,10 +46,10 @@ class User < Principal
       ['only_owner', :label_user_mail_option_only_owner],
       ['none', :label_user_mail_option_none]
   ]
-  has_attached_file :photo, :styles => {:l => ["200x200", :png, :jpg],
-                                        :m => ["80x80", :png, :jpg],
-                                        :s => ["48x48", :png, :jpg],
-                                        :xs =>["32x32", :png, :jpg]},
+  has_attached_file :photo, :styles => {:l => ["200x200#", :png, :jpg],
+                                        :m => ["80x80#", :png, :jpg],
+                                        :s => ["48x48#", :png, :jpg],
+                                        :xs => ["32x32#", :png, :jpg]},
                     :url => "users/user_:id/:style_:basename.:extension",
                     :path => "#{RAILS_ROOT}/public/images/users/user_:id/:style_:basename.:extension",
                     :default_url => "commons/:style-no_avatar.jpg"
@@ -144,43 +144,48 @@ class User < Principal
 
   def my_avatar(taglia, other_css='')
 
-       head = ''
+    head = ''
     head = '<div class="' + other_css + ' fs-my-avatar-' + taglia.to_s + '"> ' if other_css != "no-div"
     foot = ''
     foot = '</div>' if other_css != "no-div"
-
-    if self.use_gravatar
-      head + '<img class="gravatar" src="' + my_gravatar_url(self.mail.downcase, taglia) + '" alt="mio-avatar">' + foot
-    else
-      if self.user_profile.nil?
-          case taglia
-            when :l
-              head + '<img class="gravatar" src="/images/' + self.photo.url(:l) + '" alt="mio-avatar">' + foot
-            when :m
-              head + '<img class="gravatar" src="/images/' + self.photo.url(:m) + '" alt="mio-avatar">' + foot
-            when :s
-              head + '<img class="gravatar" src="/images/' + self.photo.url(:s) + '" alt="mio-avatar">' + foot
-            when :xs
-              head + '<img class="gravatar" src="/images/' + self.photo.url(:xs) + '" alt="mio-avatar">' + foot
-            else
-              head + '<img class="gravatar" src="/images/commons/' + taglia.to_s + '-no_avatar.jpg" alt="mio-avatar">' + foot
-          end
+    if self.user_profile.nil?
+      if self.use_gravatar
+        head + '<img class="gravatar" src="' + my_gravatar_url(self.mail.downcase, taglia) + '" alt="mio-avatar">' + foot
       else
-              case taglia
-                when :l
-                  head + '<img class="gravatar" src="/images/' + self.user_profile.photo.url(:l) + '" alt="mio-avatar">' + foot
-                when :m
-                  head + '<img class="gravatar" src="/images/' + self.user_profile.photo.url(:m) + '" alt="mio-avatar">' + foot
-                when :s
-                  head + '<img class="gravatar" src="/images/' + self.user_profile.photo.url(:s) + '" alt="mio-avatar">' + foot
-                when :xs
-                  head + '<img class="gravatar" src="/images/' + self.user_profile.photo.url(:xs) + '" alt="mio-avatar">' + foot
-                else
-                  head + '<img class="gravatar" src="/images/commons/' + taglia.to_s + '-no_avatar.jpg" alt="mio-avatar">' + foot
-              end
+        case taglia
+          when :l
+            head + '<img class="gravatar" src="/images/' + self.photo.url(:l) + '" alt="mio-avatar">' + foot
+          when :m
+            head + '<img class="gravatar" src="/images/' + self.photo.url(:m) + '" alt="mio-avatar">' + foot
+          when :s
+            head + '<img class="gravatar" src="/images/' + self.photo.url(:s) + '" alt="mio-avatar">' + foot
+          when :xs
+            head + '<img class="gravatar" src="/images/' + self.photo.url(:xs) + '" alt="mio-avatar">' + foot
+          else
+            head + '<img class="gravatar" src="/images/commons/' + taglia.to_s + '-no_avatar.jpg" alt="mio-avatar">' + foot
+        end
+      end
+    else
+      if self.user_profile.use_gravatar
+        head + '<img class="gravatar" src="' + my_gravatar_url(self.mail.downcase, taglia) + '" alt="mio-avatar">' + foot
+      else
+        case taglia
+          when :l
+            head + '<img class="gravatar" src="/images/' + self.user_profile.photo.url(:l) + '" alt="mio-avatar">' + foot
+          when :m
+            head + '<img class="gravatar" src="/images/' + self.user_profile.photo.url(:m) + '" alt="mio-avatar">' + foot
+          when :s
+            head + '<img class="gravatar" src="/images/' + self.user_profile.photo.url(:s) + '" alt="mio-avatar">' + foot
+          when :xs
+            head + '<img class="gravatar" src="/images/' + self.user_profile.photo.url(:xs) + '" alt="mio-avatar">' + foot
+          else
+            head + '<img class="gravatar" src="/images/commons/' + taglia.to_s + '-no_avatar.jpg" alt="mio-avatar">' + foot
+        end
+
       end
     end
   end
+
   def my_gravatar_url(user, taglia)
     gravatar_id = Digest::MD5.hexdigest(user)
     case taglia
@@ -210,7 +215,7 @@ class User < Principal
     if self.comune_id && self.comune
       str += " - prov. di " + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
     end
-    return (str.nil? || str.blank?)  ? "-" : str
+    return (str.nil? || str.blank?) ? "-" : str
   end
 
   def getLocalization()
@@ -222,7 +227,7 @@ class User < Principal
       str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
       str += "<br />" + self.comune.province.region.name unless self.comune.province.region.nil?
     end
-    return (str.nil? || str.blank?)  ? "-" : str
+    return (str.nil? || str.blank?) ? "-" : str
   end
 
   def pubblicita()
@@ -340,32 +345,33 @@ class User < Principal
     end
     return str
   end
+
   def uicon()
-      str = ""
-      if self.admin?
-        str += "admin"
-      elsif self.ismanager?
-        str += "man"
-      elsif self.isauthor?
-        str += "auth"
-      elsif self.isvip?
-        str += "vip"
-      elsif self.isabbonato?
-        str += "abbo"
-      elsif self.isregistered?
-        str += "reg"
-      elsif self.isrenewing?
-        str += "renew"
-      elsif self.isexpired?
-        str += "exp"
-      elsif self.isarchivied?
-        str += "arc"
-      else
-        #str += " icon-warning icon-adjust-min"
-        str += "question"
-      end
-      return str
+    str = ""
+    if self.admin?
+      str += "admin"
+    elsif self.ismanager?
+      str += "man"
+    elsif self.isauthor?
+      str += "auth"
+    elsif self.isvip?
+      str += "vip"
+    elsif self.isabbonato?
+      str += "abbo"
+    elsif self.isregistered?
+      str += "reg"
+    elsif self.isrenewing?
+      str += "renew"
+    elsif self.isexpired?
+      str += "exp"
+    elsif self.isarchivied?
+      str += "arc"
+    else
+      #str += " icon-warning icon-adjust-min"
+      str += "question"
     end
+    return str
+  end
 
   def canbackend?
     #puts "self.canbackend?(" + self.role_id.to_s + ")"
@@ -391,7 +397,7 @@ class User < Principal
         #Rails.logger.info("fee canbackend OK is staff #{self}")
         return true
       end
-    #else
+      #else
     end
     return false
   end
@@ -401,9 +407,11 @@ class User < Principal
   def is_referente?
     return (Convention.all(:conditions => {:user_id => self.id}).count > 0)
   end
+
   def responsable?
     return !self.references.nil?
   end
+
   #List of Convention the user is power user
   def responsable_of
     self.references
@@ -980,7 +988,6 @@ class User < Principal
                   'crediti',
                   'annotazioni',
                   :if => lambda { |user, current_user| current_user.admin? }
-
 
 
   safe_attributes 'group_ids',
