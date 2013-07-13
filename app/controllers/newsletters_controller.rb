@@ -2,6 +2,8 @@ class NewslettersController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin
+  before_filter :find_project, :only => [ :invii ]
+  before_filter :find_newsletter, :only => [ :invii ]
 
   verify :method => :post, :only => [ :destroy ],
          :redirect_to => { :action => :index }
@@ -45,33 +47,10 @@ class NewslettersController < ApplicationController
 
   #gestione invii emails di una newsletter e imposti tutti utenti ad essa collegata
   # pass project_id
-  def invii
-    if params[:project_id].empty?
-      flash[:notice] = l(:error_can_not_create_newsletter, :newsletter => "manca id del progetto")
-      return redirect_to :action => 'index'
-    end
-    @project = Project.find(params[:project_id])
-    if @project.nil?
-      flash[:error] = l(:error_can_not_create_newsletter, :newsletter => "edizione non trovata")
-      return redirect_to :action => 'index'
-    end
-    @newsletter = Newsletter.find_by_project(@project.id)
-    if @newsletter.nil?
-      #automatic create Newsletter
-      @newsletter = Newsletter.new
-      #@newsletter.project_id = params[:project_id].to_i
-      @newsletter.project_id = @project.id
-      @newsletter.data = DateTime.now
-      #TODO fare una newsletter vuota
-      #@newsletter.text = @project.newsletter_smtp(User.current)
-      @newsletter.html = "project.rb:934:in newsletter_smtp undefined method > for nil:NilClass"
-      @newsletter.sended = false
-      if !@newsletter.save
-        flash[:error] = l(:error_can_not_create_newsletter, :newsletter => @project.name)
-        return redirect_to :action => 'index'
-      end
-    end
+  #: {"role"=>"1", "convention"=>{"convention_id"=>""}, "project_id"=>"341", "controller"=>"newsletters", "name"=>"domthu", "action"=>"invii"}
 
+  def invii
+    puts "@project id " + @project.id.to_s +  ", @newsletter id " + @newsletter.id.to_s
     #Collect user
     @users_by_roles = User.all(
       :conditions => ['role_id IN (?)', FeeConst::NEWSLETTER_ROLES]
@@ -82,41 +61,50 @@ class NewslettersController < ApplicationController
     #sort and filters users
     sort_init 'login', 'asc'
     #sort_update %w(login firstname lastname mail admin created_on last_login_on)
-    sort_update %w(lastname mail data convention_id)
+    sort_update %w(lastname mail data convention_id role_id)
 
-    @limit = per_page_option
+    #@limit = per_page_option
 
     scope = @users_by_roles
 
-    @role = params[:role] ? params[:role].to_i : 1
-    c = ARCondition.new(@role == 0 ? ["role_id IN (?) ", FeeConst::NEWSLETTER_ROLES] : ["role_id = ?", @role])
-    #ricerca testuale
-    unless params[:name].blank?
-      name = "%#{params[:name].strip.downcase}%"
-      c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
-    end
-    #Convention filter
-    @convention_id = (params[:convention] && params[:convention][:convention_id]) ? params[:convention][:convention_id].to_i : 0
-    if @convention_id > 0
-      c << ["convention_id = ? ", @convention_id.to_s]
+    c = ARCondition.new(["users.type = 'User'"])
+    if request.post?
+      @role = params[:role] ? params[:role].to_i : 0
+      if (@role > 0)
+        c << ["role_id = ?", @role]
+      #else
+      #  c << ["role_id IN (?) ", FeeConst::NEWSLETTER_ROLES]
+      end
+      #ricerca testuale
+      unless params[:name].blank?
+        @name = params[:name]
+        name = "%#{params[:name].strip.downcase}%"
+        c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+      end
+      #Convention filter
+      @convention_id = (params[:convention] && params[:convention][:convention_id]) ? params[:convention][:convention_id].to_i : 0
+      if @convention_id > 0
+        c << ["convention_id = ? ", @convention_id.to_s]
+      end
+    else
+      @role = params[:role] ? params[:role].to_i : 0
+
     end
 
     #@user_count = scope.count(:conditions => c.conditions)
-    @user_count = User.all.count(:conditions => c.conditions)
-    @user_pages = Paginator.new self, @user_count, @limit, params['page']
-    @offset ||= @user_pages.current.offset
+    #@user_count = User.all.count(:conditions => c.conditions)
+    #@user_pages = Paginator.new self, @user_count, @limit, params['page']
+    #@offset ||= @user_pages.current.offset
     #@users =  scope.find :all,
+    #@users =  User.find :all,
+    #            :order => sort_clause,
+    #            :conditions => c.conditions,
+    #            :limit  =>  @limit,
+    #            :offset =>  @offset
+
     @users =  User.find :all,
                 :order => sort_clause,
-                :conditions => c.conditions,
-                :limit  =>  @limit,
-                :offset =>  @offset
-
-#    @cross_groups = CrossGroup.find(:all,
-#                              :order => sort_clause,
-#                              :limit  =>  @cross_group_pages.items_per_page,
-#                              :include => [:convention, :group_banner],
-#                              :offset =>  @cross_group_pages.current.offset)
+                :conditions => c.conditions
 
     respond_to do |format|
       format.html # new.html.erb
@@ -173,4 +161,50 @@ class NewslettersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+
+################################
+  private
+
+    def require_fee
+      if !Setting.fee
+        flash[:notice] = l(:notice_setting_fee_not_allowed)
+        redirect_to editorial_path
+      end
+    end
+
+    def find_project
+      if params[:project_id].empty?
+        flash[:notice] = l(:error_can_not_create_newsletter, :newsletter => "manca id del progetto")
+        return redirect_to :controller => 'projects', :action => 'index'
+      end
+      @project = Project.find(params[:project_id])
+      if @project.nil?
+        flash[:error] = l(:error_can_not_create_newsletter, :newsletter => "edizione non trovata")
+        return redirect_to :controller => 'projects', :action => 'index'
+      end
+    rescue ActiveRecord::RecordNotFound
+      render_404
+    end
+
+    def find_newsletter
+      @newsletter = Newsletter.find_by_project(@project.id)
+      if @newsletter.nil?
+        #automatic create Newsletter
+        @newsletter = Newsletter.new
+        #@newsletter.project_id = params[:project_id].to_i
+        @newsletter.project_id = @project.id
+        @newsletter.data = DateTime.now
+        #TODO fare una newsletter vuota
+        #@newsletter.text = @project.newsletter_smtp(User.current)
+        @newsletter.html = "project.rb:934:in newsletter_smtp undefined method > for nil:NilClass"
+        @newsletter.sended = false
+        if !@newsletter.save
+          flash[:error] = l(:error_can_not_create_newsletter, :newsletter => @project.name)
+          return redirect_to :controller => 'projects', :action => 'show', :id => @project
+        end
+      end
+    end
+
 end

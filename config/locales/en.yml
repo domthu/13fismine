@@ -1583,13 +1583,23 @@ en:
   label_person: Persona
   field_registration_date: Registrazione
   role_manager: Responsabile
+  role_3: Responsabile
   role_author: Redattore, collaboratore
+  role_4: Redattore
   role_vip: Invitato
+  role_10: Invitato
   role_abbonato: Abbonato
+  role_6: Abbonato
   role_registered: Registrato
+  role_9: Registrato
   role_renew: Rinnovo, In scadenza
+  role_11: Rinnovo
   role_expired: Scaduto
+  role_7: Scaduto
   role_archivied: Archiviato
+  role_8: Archiviato
+  role_admin: Amministratore
+  role_0: Amministratore
   button_admin: --> Admin
   button_manager: --> Responsabile
   button_author: --> Redattore
@@ -1692,3 +1702,4 @@ en:
   field_abbonamento: "Abbonamento"
   field_abbonamento_type: "Tipo abbonamento"
   field_user_fee: "Abbonato"
+  label_all_users: "All users"
