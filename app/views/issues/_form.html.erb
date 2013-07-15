@@ -42,14 +42,14 @@
 
 
 <% if !@issue.new_record? %>
-  <p><b>
+  <b style="margin-left: 10px">
     <% if @issue.is_quesito? %>
-      <%= l(:quesito_risposta_rapida, :num => @issue.quesito_news.id.to_s) %>
+      <%= l(:news_reply_text, :num => link_to(@issue.quesito_news.id.to_s, news_path(@issue.quesito_news), { :class => 'icon icon-news_fast_reply', :target => '_blank'})) %>
     <% else %>
       <%= l(:content_articolo) %>
     <% end %>
-  </b></p>
-      <div id="ck-box-issues" ><%= f.cktext_area :description , :height => 800,  :swf_params => {:assetable_type => 'Test', :assetable_id => 1} %></div>
+  </b>
+  <div id="ck-box-issues" ><%= f.cktext_area :description , :height => 800,  :swf_params => {:assetable_type => 'Test', :assetable_id => 1} %></div>
 <% end %>
 
 </div>

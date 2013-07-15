@@ -1,4 +1,5 @@
 <div class="contextual">
+<%= link_to l(:button_show), news_path(@news), :class => 'icon icon-show' %>
 <%= link_to(l(:button_edit),
       edit_news_path(@news),
       :class => 'icon icon-edit',
@@ -13,4 +14,7 @@
 <div class="wiki">
 <%# textilizable(@news.description) %>
 <%= ckeditorzable_fs(@news.description) %>
+</div>
+<div class="responses">
+  <%= render :partial => 'show_quesito_other_issues', :controller => 'issues', :locals => { :issue => @issue } %>
 </div>

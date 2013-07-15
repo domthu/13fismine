@@ -231,8 +231,20 @@ class Issue < ActiveRecord::Base
   end
 
   def quesito_control
-    if self.is_quesito? && self.is_issue_reply? && self.quesito_news.issues.count <= 1
+    if self.is_quesito? && self.quesito_news.is_issue_reply? && self.quesito_news.issues.count <= 1
+      #sto eliminando l'ultimo quindi dovrei considerarlo come in attesa
       self.quesito_news.set_satus(1)
+      #TODO controlare se abbiamo una risposta veloce
+    end
+  end
+
+  def css_box
+    if self.is_convegno?
+      "convegno"
+    elsif self.is_quesito?
+      "quesito"
+    else
+      ""
     end
   end
 

@@ -208,7 +208,7 @@ it:
   notice_failed_to_save_abbonamento: "Impossibile salvare l'abbonamento per l'utente(i): %{errors}."
   notice_failed_to_save_dati: "Impossibile salvare i dati per l'utente(i): %{errors}."
   notice_failed_to_save_fatture: "Impossibile salvare la fattura per l'utente(i): %{errors}."
-  notice_successful_assigned: Assegnazione collaborati effettuata.
+  notice_successful_assigned: Assegnazione al redattore %{author} effettuata.
   notice_failed_to_send_newsletter:  "Impossibile inviare la newsletter errore: %{errors}."
 
   error_can_t_load_default_data: "Non è stato possibile caricare la configurazione predefinita : %{value}"
@@ -1622,7 +1622,7 @@ it:
   empty_description: Inserire una risposta nel campo descrizione ed eseguire di nuovo
   issue_fastreply_not_allowed: Non siete abilitato alla gestione della risposta rapida
   is_not_quesito: "L'articolo non è di tipo quesito-risposta"
-  fast_reply_done: La risposta è stata
+  fast_reply_done: La risposta veloce è stata confermata
   cannot_fast_reply_other_issues: "Non è possibile eseguire la risposta veloce perchè ci sono altre risposte in corso di elaborazione. Vedi la lista degli altri autori qui sotto, mettetevi d'accordo e svuotate i campi descrizione per continuare"
   alert_another_responses: "risposta in corso da parte di %{author}. Contattalo e vedi la sua risposta al link: %{link}"
   deleted_issue: "Eliminato la risposta di %{author}. %{name}"
@@ -1635,7 +1635,8 @@ it:
   details_articolo: Dettaglio di un articolo
   list_quesiti: Lista quesiti
   list_quesiti_response: Lista risposte (%{num}) al quesito
-  quesito_risposta_rapida: Risposta rapida al quesito N°(%{num})
+  news_fast_reply_text: Risposta rapida al quesito N°(%{num})
+  news_reply_text: Risposta al quesito N°(%{num})
   details_quesito: Dettaglio di un quesito
   list_sezioni: Lista categorie articoli
   details_sezione: Dettaglio di una categoria articoli

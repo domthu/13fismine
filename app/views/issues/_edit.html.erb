@@ -5,7 +5,7 @@
                                        :method => :put,
                                        :multipart => true} do |f| %>
     <%= error_messages_for 'issue', 'time_entry' %>
-    <div class="box">
+    <div class="box  <%= @issue.css_box()%>">
       <% if @edit_allowed || !@allowed_statuses.empty? %>
           <fieldset class="tabular">
             <legend><%= l(:label_change_properties) %>

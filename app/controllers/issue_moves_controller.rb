@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -66,7 +66,7 @@ class IssueMovesController < ApplicationController
 
 
   #Filter chain halted as [:authorize] rendered_or_redirected.
-  def fast_reply
+  def news_fast_reply
     @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category, :section, :quesito_news])
     #Domthu [:project, :tracker, :status, :author, :priority, :category])
     puts "###################################################################"
@@ -92,7 +92,8 @@ class IssueMovesController < ApplicationController
                     #se ho già un articolo pubblicato su una
                     @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
                     @news.save
-                    redirect_to :action => 'show', :id => @issue.id
+                    #redirect_to :action => 'show', :id => @issue.id
+                    redirect_to :controller => 'issues', :action => 'show', :id => @issue.id
                     return
                   end
                 end
@@ -100,7 +101,7 @@ class IssueMovesController < ApplicationController
 
               if can_delete
                 #chiedere sandro? se usiamo il campo reply o description
-                @news.description = @issue.description
+                #@news.description = @issue.description Il campo descrizione viene usato da l'utente che pone il quesito
                 @news.reply = @issue.description
                 #Aggiorno lo stato della news
                 @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
@@ -109,12 +110,14 @@ class IssueMovesController < ApplicationController
 
                 #elimina le issue di lavoro temporraneo
                 @news.issues.each_with_index { |del_issue, i |
-                  flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author)
-                  del_issue.destroy
+                  if @issue.id != del_issue.id
+                    flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author)
+                    del_issue.destroy
+                  end
                 }
-                flash[:notice] += "Risposta: " + l(:fast_reply_done)
+                flash[:notice] += "</br>Risposta: " + l(:fast_reply_done)
                 redirect_to :controller => 'news', :action => 'show', :id => @news.id
-
+                return
               else
                 flash[:errors] = l(:cannot_fast_reply_other_issues)
               end
@@ -133,6 +136,7 @@ class IssueMovesController < ApplicationController
         #return
       end
       redirect_to :controller => 'issues', :action => 'show', :id => @issue.id
+      return
     else
       flash[:errors] = l(:none_found_issue)
       redirect_to :controller => 'issues', :action => 'index'

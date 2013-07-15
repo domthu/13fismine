@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -200,10 +200,12 @@ class News < ActiveRecord::Base
     self.save
   end
 
+  def is_wait_reply?
+    self.status_id == FeeConst::QUESITO_STATUS_WAIT
+  end
   def is_fast_reply?
     self.status_id == FeeConst::QUESITO_STATUS_FAST_REPLY #&& self.reply != ''
   end
-
   def is_issue_reply?
     self.status_id == FeeConst::QUESITO_STATUS_ISSUES_REPLY
   end
