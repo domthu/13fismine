@@ -14,7 +14,7 @@ class CrossOrganizationsController < ApplicationController
     #  format.html # index.html.erb
     #  format.xml  { render :xml => @cross_organizations }
     #end
-
+    @type_organizations = TypeOrganization.find(:all)
     #Sorting
     sort_init 'type_organization'
     sort_update 'type_organization' => 'type_organizations.tipo',
