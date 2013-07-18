@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -104,7 +104,8 @@ class NewsController < ApplicationController
     puts "******************ASSIGN************************+"
     return redirect_to :action => 'index'
   end
-    #via js
+
+  #via js
   def assegna_js
     puts "******************ASSEGNA************************+"
     #find_project reccupera il progetto associato
@@ -140,9 +141,9 @@ class NewsController < ApplicationController
                 #new_issue.save!  #--> save_without_transactions
                 new_issue.save
                 if flash[:notice].nil?
-                  flash[:notice] = "<b>" + (i + 1).to_s + "</b>: " + l(:notice_successful_assigned) + @watcher_user_ids.count.to_s
+                  flash[:notice] = "<b>" + (i + 1).to_s + "</b>: " + l(:notice_successful_assigned, :author =>  collaboratore.name) + @watcher_user_ids.count.to_s
                 else
-                  flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + l(:notice_successful_assigned) + @watcher_user_ids.count.to_s
+                  flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + l(:notice_successful_assigned, :author =>  collaboratore.name) + @watcher_user_ids.count.to_s
                 end
                 #Aggiorno lo stato della news
                 @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
@@ -165,8 +166,8 @@ class NewsController < ApplicationController
     respond_to do |format|
       format.js {
         render(:update) {|page|
-          #page.replace_html "tab-content-dati", :partial => 'users/dati'
-          page.visual_effect(:highlight, "asseganti")
+          page.replace_html "responses", :partial => 'show_quesito_issues'
+          page.visual_effect(:highlight, "assegnati")
         }
       }
     end

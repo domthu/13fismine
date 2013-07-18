@@ -1,11 +1,12 @@
 <div class="contextual">
 <%= watcher_tag(@news, User.current) %>
 <% if !@news.is_quesito? %>
-<%= link_to(l(:button_edit),
-      edit_news_path(@news),
-      :class => 'icon icon-edit',
-      :accesskey => accesskey(:edit),
-      :onclick => 'Element.show("edit-news"); return false;') if User.current.allowed_to?(:manage_news, @project) %>
+  <%# Una news di tipo quesito non puoò essere modificata? %>
+  <%= link_to(l(:button_edit),
+        edit_news_path(@news),
+        :class => 'icon icon-edit',
+        :accesskey => accesskey(:edit),
+        :onclick => 'Element.show("edit-news"); return false;') if User.current.allowed_to?(:manage_news, @project) %>
 <% end %>
 <%= link_to(l(:button_delete),
       news_path(@news),
@@ -76,61 +77,6 @@
 
 </div>
 
-<% if @news.is_quesito? %>
-<div class="splitcontentright">
-  <%= @news.get_state_icons_fe %>
-  <%= @news.quesito_status_fs_text %>
-  <% if @news.is_fast_reply? %>
-    <div id="question" style="margin-bottom:16px;" class="box">
-      <b><label><%= l(:label_reply) %><label></b>
-      <br />
-      <p style="color: red;"><%= textilizable(@news.reply) %></p>
-    </div>
-  <% else %>
-  <div class="box">
-    <% if !@news.new_record? && User.current.allowed_to?(:add_issue_watchers, @news.project) %>
-      <%# form_for @news, :url => assign_collaboratore_path do |f_a| %>
-      <%# form_for @news, :controller => 'news', :action => 'assegna' :controller => 'news', :action => 'assegna' , :conditions => {:method => :put} do |f_a| %>
-      <% remote_form_for(:news, :url => { :action => 'assegna_js'}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f_a| %>
-        <%= f_a.error_messages %>
-        <%= f_a.hidden_field :project_id, :value => @news.project.id %>
-        <%= f_a.hidden_field :news_id, :value => @news.id %>
-        <p id="watchers_form"><label><b><%= l(:label_newmembers) %></label></b>
-        <% @news.project.users.sort.each do |user| %>
-          <label class="floating"><%= check_box_tag 'watcher_user_ids[]', user.id, false %> <%=h user %></label>
-        <% end %>
-        </p>
-        <%# f_a.submit 'Assegna uno o più collaboratori per rispondere' unless (!User.current.admin? ||  !User.current.ismanager?) %>
-        <p><%= submit_tag 'Assegna uno o più collaboratori per rispondere' unless (!User.current.admin? ||  !User.current.ismanager?) %></p>
-
-      <% end %>
-      <div class="informa" id="tab-content-dati"> </div>
-    <% end %>
-  </div>
-
-  <div class="box tabular">
-    <div id="responses" style="margin-bottom:16px;">
-      <h3 class="responses"><%= l(:list_quesiti_response, :num => @news.issues.count) %></h3>
-      <% @news.issues.each do |issue| %>
-        <div class="risposta">
-        <div class="contextual">
-        <% if !issue.description? %>
-          <%= link_to_if_authorized(l(:button_reply), {:controller => 'issues', :action => 'news_fast_reply', :id => issue}, :class => 'icon icon-reply') %>
-          <%= link_to_if_authorized l(:button_move), {:controller => 'issue_moves', :action => 'new', :id => issue}, :class => 'icon icon-move' %>
-        <% end %>
-        <%= link_to_if_authorized l(:button_delete), {:controller => 'issues', :action => 'destroy', :id => issue}, :confirm => issues_destroy_confirmation_message(issue), :method => :post, :class => 'icon icon-del' %>
-        </div>
-          <b><%= link_to_issue(issue, :project => true) %></b>
-          <br /><%= l(:field_assigned_to) %> ==> <%= link_to_user(issue.author) %>
-          <br /><% if issue.description? %>
-            <%= issue.description %>
-          <% else %>
-            <%= l(:no_reply_actualy) %>
-          <% end %>
-        </div>
-      <% end if @news.issues.any? %>
-    </div>
-  </div>
-  <% end %>
+<div id="responses">
+  <%= render :partial => 'show_quesito_issues', :locals => { :news => @news } %>
 </div>
-<% end %>

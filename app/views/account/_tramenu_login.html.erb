@@ -3,11 +3,7 @@
     <div class="fs-blockcontent fs-login-logged">
       <div id='fs-login-avatar'>
         <div class="fs-login">
-          <% if User.current.user_profile %>
               <%= User.current.my_avatar(:xs) %>
-          <% else %>
-              <%= image_tag "/images/commons/xs-no_avatar.jpg", :class => 'fs-vuoto-inline3-button' %>
-          <% end %>
         </div>
         <% if User.current.canbackend? %>
             <div class="fs-login" id="fs-login-txt">
@@ -21,13 +17,11 @@
               <% end %>
             </div>
         <% else %>
-            <div class="fs-login">
-              <%= link_to l(:label_my_page), :controller => 'mio_profilo', :action => 'account' %>
+            <div class="fs-login" id="fs-login-txt">
+
+                  <%= link_to "Profilo Utente", url_for( :controller => 'mio_profilo', :action => 'account' , :id => @uid), :class => 'fs-vuoto-inline3-button', :style=> 'line-height:28px; font-size:1em; '   %>
             </div>
         <% end %>
-<%# link_to "Lavora con FISMINE",:controller=> 'mio_profilo', :action=>'page', :class=> 'fs-button'  %>
-<%# link_to l(:label_my_page), :controller => 'my', :action => 'page' %>
-<%# link_to l(:label_my_account), :controller => 'my', :action => 'account' %>
         <div class="fs-login">
           <%= link_to l(:label_logout), :signout, :class => 'fs-vuoto-inline3-button', :id => "fs-login-exit" %>
         </div>

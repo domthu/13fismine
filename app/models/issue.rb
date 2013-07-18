@@ -78,6 +78,9 @@ class Issue < ActiveRecord::Base
   named_scope :all_public_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
                                 :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"],
                                 :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , due_date DESC",}
+  named_scope :all_public_fs_full, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
+                               :conditions => ["#{Project.table_name}.is_public = 1"],
+                               :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , due_date DESC"}
   named_scope :with_filter, lambda { |filter| {:conditions => merge_conditions(filter)} }
   named_scope :solo_convegni, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_CONVEGNI.to_s)
   named_scope :solo_newsport, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_NEWSPORT.to_s)
@@ -228,8 +231,20 @@ class Issue < ActiveRecord::Base
   end
 
   def quesito_control
-    if self.is_quesito? && self.is_issue_reply? && self.quesito_news.issues.count <= 1
+    if self.is_quesito? && self.quesito_news.is_issue_reply? && self.quesito_news.issues.count <= 1
+      #sto eliminando l'ultimo quindi dovrei considerarlo come in attesa
       self.quesito_news.set_satus(1)
+      #TODO controlare se abbiamo una risposta veloce
+    end
+  end
+
+  def css_box
+    if self.is_convegno?
+      "convegno"
+    elsif self.is_quesito?
+      "quesito"
+    else
+      ""
     end
   end
 

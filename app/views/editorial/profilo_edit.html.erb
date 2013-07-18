@@ -11,16 +11,17 @@
       <div class="fs-profiles-esx">
         <div id="fs-photo-edit">
           <% if @user_profile.use_gravatar? %>
-              <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:none;">' + image_tag(@user_profile.photo.url(:l)) + '</div>
+              <%= '<div id="fs-photo-edit-a" style="display:none;">' + image_tag(@user_profile.photo.url(:l)) + '</div>
           <div id="fs-photo-edit-g" style="display:block;">' + gravatar_for(@user_profile.user, :size => 120) + ' </div>' %>
           <% else %>
-              <%= '<div id="fs-photo-edit-i"></div><div id="fs-photo-edit-a" style="display:block;">' + image_tag(@user_profile.photo.url(:l)) + '</div>
+              <%= '<div id="fs-photo-edit-a" style="display:block;">' + image_tag(@user_profile.photo.url(:l)) + '</div>
           <div id="fs-photo-edit-g" style="display:none;">' + gravatar_for(@user_profile.user, :size => 120) + ' </div>' %>
           <% end %>
+          <h1><%=  @user_profile.use_gravatar? %></h1>
         </div>
         <div class="fs-vuoto-inline-button  fs-profiles-esx-btn">
-          <label><%= radio_button_tag :use_gravatar, true, @user_profile.use_gravatar?, :onchange => "funct_avatar('g')" %> <%= 'Usa mail su Gravatar' %></label><br/>
-          <label><%= radio_button_tag :use_gravatar, false, !@user_profile.use_gravatar?, :onchange => "funct_avatar('a')" %> <%= 'Usa tua immagine Avatar' %></label><br/>
+          <label><%= radio_button_tag :use_gravatar, true, @user_profile.use_gravatar?, :onchange => "funct_avatar('g','fs-photo-edit','use_gravatar_true');" %> <%= 'Usa mail su Gravatar' %></label><br/>
+          <label><%= radio_button_tag :use_gravatar, false, !@user_profile.use_gravatar?, :onchange => "funct_avatar('a','fs-photo-edit','use_gravatar_false');" %> <%= 'Usa tua immagine Avatar' %></label><br/>
           <%= file_field_tag :photo %>
         </div>
       </div>
@@ -100,8 +101,7 @@
     document.getElementById('photo').addEventListener('change', function (event) {
         if (!event) // i.e. the argument is undefined or null
             event = window.event;
-            handleFileSelect(event, 'fs-photo-edit-i', 'i')
+            handleFileSelect_fs(event, 'fs-photo-edit', 'use_gravatar_false')
         }, false
     );
 </script>
-

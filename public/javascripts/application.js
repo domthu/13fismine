@@ -426,35 +426,9 @@ Ajax.Responders.register({
     }
 });
 
-// valori accettati 1= Immagine Avatar Papareclip , 0 = Immagine Gravatar , 2  = Nuova immagine upload
-function funct_avatar(val) {
-
-    if (val == 'g') {
-        document.getElementById('fs-photo-edit-i').style.display = 'none';
-        document.getElementById('fs-photo-edit-a').style.display = 'none';
-        document.getElementById('fs-photo-edit-g').style.display = 'block';
-    }
-    else if (val == 'a') {
-        document.getElementById('fs-photo-edit-i').style.display = 'none';
-        document.getElementById('fs-photo-edit-a').style.display = 'block';
-        document.getElementById('fs-photo-edit-g').style.display = 'none';
-    }
-    else if (val == 'i') {
-        document.getElementById('fs-photo-edit-i').style.display = 'block';
-        document.getElementById('fs-photo-edit-a').style.display = 'none';
-        document.getElementById('fs-photo-edit-g').style.display = 'none';
-        //-------------------
-        document.getElementById('use_gravatar_false').checked = true;
-        document.getElementById('use_gravatar_true').checked = false;
-        document.getElementById('use_gravatar_false').setAttribute('checked', 'checked');
-    }
-
-}
-
-
 
 /*funzione aggiunta per il preview di paperclip */
-function handleFileSelect(evt, prev_id, avatar) {
+function handleFileSelect(evt, prev_id) {
     if (!evt) // i.e. the argument is undefined or null
       evt = window.event;
     var files = evt.target.files; // FileList object
@@ -483,10 +457,6 @@ function handleFileSelect(evt, prev_id, avatar) {
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
     }
-
-    if (avatar && avatar.length > 0) {
-     funct_avatar(avatar);
-    }
 }
 
 var statepos_fs = 'hidded';
@@ -511,6 +481,22 @@ function hideOnLoad() {
     });
     //Scroll to top
     Event.observe(window, 'scroll', scrolling_fs);
+}
+
+function CKEDITOR_value_for_remote(journal_id) {
+  //CKEDITOR.replace(ist, { toolbar:'Basic', height:200, on:{
+  //    change:function (event) {
+  //      document.getElementById(ist).value = this.getData();
+  //    }
+  //  }
+  //});
+  //alert("CKEDITOR_for_remote, journal_id: " + journal_id);
+  var inst = "journal_" + journal_id + "_notes"
+  document.getElementById(inst).value = CKEDITOR.instances[inst].getData();
+  //Element.remove("journal-" + journal_id + "-form");
+  if (CKEDITOR.instances[inst]) {
+      delete CKEDITOR.instances[inst]
+  };
 }
 
     //Event.observe(window, 'load', hideOnLoad);

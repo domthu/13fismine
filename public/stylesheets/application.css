@@ -969,7 +969,9 @@ padding-bottom: 3px;
 .icon-unprotected  { background-image: url(../images/ico/unprotected.gif); }
 .icon-globe  { background-image: url(../images/ico/globe.png); }
 .icon-pic  { background-image: url(../images/ico/pic.png); }
-.icon-news_fast_reply  { background-image: url(../images/ico/ticket_edit.png); }
+.icon-news_fast_reply  { background-image: url(../images/ticket_go.png); }
+.icon-news_reply_done  { background-image: url(../images/ticket_checked.png); }
+.icon-news_reply_todo  { background-image: url(../images/ticket_edit.png); }
 .icon-adjust-min { padding-left: 40px; min-height:21px; }
 
 img.gravatar {
@@ -1370,3 +1372,5 @@ p.changeauthor img.gravatar{
     border: 1px solid #d3d6f1;
     padding: 3px 11px 0;
 }
+.quesito, div.issue.quesito{background-color:#FDF5E6;  /*#FFE4B5 #FAFAD2*/}
+.convegno, div.issue.convegno{background-color:#E0FFFF; /*#98FB98 #90C140*/}

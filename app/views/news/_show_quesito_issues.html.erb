@@ -1,0 +1,76 @@
+<% if @news.is_quesito? %>
+<div class="splitcontentright">
+  <%= @news.get_state_icons_fe %>
+  <%= @news.quesito_status_fs_text %>
+  <% if @news.is_fast_reply? %>
+    <div id="question" style="margin-bottom:16px;" class="box">
+      <b><label><%= l(:label_reply) %><label></b>
+      <br />
+      <p style="color: red;"><%= ckeditorzable_fs(@news.reply) %></p>
+    </div>
+  <% else %>
+  <div class="box">
+    <% if User.current.allowed_to?(:add_issue_watchers, @news.project) %>
+      <%# form_for @news, :url => assign_collaboratore_path do |f_a| %>
+      <%# form_for @news, :controller => 'news', :action => 'assegna' :controller => 'news', :action => 'assegna' , :conditions => {:method => :put} do |f_a| %>
+      <% remote_form_for(:news, :url => { :action => 'assegna_js'}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f_a| %>
+        <%= f_a.error_messages %>
+        <%= f_a.hidden_field :project_id, :value => @news.project.id %>
+        <%= f_a.hidden_field :news_id, :value => @news.id %>
+        <p id="watchers_form"><label><b><%= l(:label_newmembers) %></label></b>
+        <% @news.project.users.sort.each do |user| %>
+          <label class="floating"><%= check_box_tag 'watcher_user_ids[]', user.id, false %> <%=h user %></label>
+        <% end %>
+        </p>
+        <%# f_a.submit 'Assegna uno o più collaboratori per rispondere' unless (!User.current.admin? ||  !User.current.ismanager?) %>
+        <p><%= submit_tag 'Assegna uno o più collaboratori per rispondere' unless (!User.current.admin? ||  !User.current.ismanager?) %></p>
+
+      <% end %>
+      <div class="informa" id="tab-content-dati"> </div>
+    <% end %>
+  </div>
+
+  <div class="box tabular">
+    <div style="margin-bottom:16px;">
+      <h3 class="responses"><%= l(:list_quesiti_response, :num => @news.issues.count) %></h3>
+      <% @news.issues.each do |issue| %>
+        <div class="risposta">
+        <div class="contextual">
+          <%= link_to l(:preview_fs_issue_abrv), preview_fs_articolo_path(:article_id => issue.id.to_s), {:target => "_blank", :class => 'icon icon-preview', :title => l(:preview_fs_issue)} %>
+        <% if !issue.description? %>
+        <%# risposta non elaborata: il redatore assegnato deve rispondere %>
+            <%= link_to l(:button_reply), {:controller => 'issues', :action => 'edit', :id => issue}, {:class => 'icon icon-news_reply_todo', :title => 'nessuna risposta: da fare...'} %>
+        <% else %>
+          <%# risposta elaborata: in corso se si trova dentro il progetto QUESITO_KEY
+          il quale vuole dire che è in corso di elaborazione
+          in questo caso se viene usato una risposta veloce dovrebbe essere eliminata?
+
+          se si trova in un altra edizione allora è una risposta confermata!
+          %>
+          <%= link_to_if_authorized(l(:button_update), {:controller => 'issues', :action => 'edit', :id => issue }, :class => 'icon icon-edit', :accesskey => accesskey(:edit)) %>
+          <% if issue.project.identifier == FeeConst::QUESITO_KEY %>
+            <%# risposta in corso: deve essere confermata spostando la risposta in una edizione di tipo newsletter. usando o non usando la procedura riposta veloce %>
+            <% if @news.is_wait_reply? %>
+              <%= link_to(l(:button_news_fast_reply), {:controller => 'issue_moves', :action => 'news_fast_reply', :id => issue}, {:class => 'icon icon-news_fast_reply', :title => 'risposta in corso: deve essere confermata spostando la risposta in una edizione di tipo newsletter usando la procedura di risposta veloce che dovrebbe eliminare altre risposte non elaborate!'}) %>
+            <% end %> <%# issue.news %>
+              <%= link_to_if_authorized l(:button_move), {:controller => 'issue_moves', :action => 'new', :id => issue}, {:class => 'icon icon-move', :title => 'risposta in corso: deve essere confermata spostando la risposta in una edizione di tipo newsletter'} %>
+          <% else %>
+              <%= link_to l(:button_show), {:controller => 'issues', :action => 'show', :id => issue}, {:class => 'icon icon-reply-done', :title => 'risposta in corso: deve essere confermata spostando la risposta in una edizione di tipo newsletter'} %> in <%= link_to_project(issue.project, {}, :class => "icon icon-project") %>
+          <% end %> <%# if issue.project.identifier == FeeConst::QUESITO_KEY %>
+        <% end %>  <%# if !issue.description? %>
+        <%= link_to_if_authorized l(:button_delete), {:controller => 'issues', :action => 'destroy', :id => issue, :back_url => url_for(:controller => 'news', :action => 'show', :id => @news)}, :confirm => issues_destroy_confirmation_message(issue), :method => :post, :class => 'icon icon-del' %>
+        </div>
+          <b><%= link_to_issue(issue, :project => true) %></b>
+          <br /><%= l(:field_assigned_to) %> => <%= link_to_user(issue.author) %>
+          <br /><% if issue.description? %>
+            <%= issue.description %>
+          <% else %>
+            <%= l(:no_reply_actualy) %>
+          <% end %>
+        </div>
+      <% end if @news.issues.any? %>
+    </div>
+  </div>
+  <% end %>
+</div>
+<% end %>

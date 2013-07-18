@@ -363,6 +363,15 @@ private
         end
         @issue.quesito_news = @news
       end
+    else
+      #in fase di edit: solo se siamo davvanti un articolo di tipo risposta a quesito
+      if @issue.news_id && @issue.news_id > 0
+        if @issue.quesito_news
+          @news = @issue.quesito_news
+        else
+          @news = News.find(@issue.news_id)
+        end
+      end
     end
   rescue ActiveRecord::RecordNotFound
     render_404
