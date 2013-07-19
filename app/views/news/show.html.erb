@@ -1,7 +1,7 @@
 <div class="contextual">
 <%= watcher_tag(@news, User.current) %>
 <% if !@news.is_quesito? %>
-  <%# Una news di tipo quesito non puoò essere modificata? %>
+  <%# Una news di tipo quesito non può essere modificata? %>
   <%= link_to(l(:button_edit),
         edit_news_path(@news),
         :class => 'icon icon-edit',
@@ -17,22 +17,24 @@
 
 <h2><%= avatar(@news.author, { :size => "24", :class => "no-div" }) %><%=h @news.title %></h2>
 
-<% if authorize_for('news', 'edit') %>
-<div id="edit-news" style="display:none;">
-<% labelled_tabular_form_for :news, @news, :url => news_path(@news),
-                                           :html => { :id => 'news-form', :method => :put } do |f| %>
-<%= render :partial => 'form', :locals => { :f => f } %>
-<%= submit_tag l(:button_save) %>
-<%= link_to_remote l(:label_preview),
-                   { :url => preview_news_path(:project_id => @project),
-                     :method => 'get',
-                     :update => 'preview',
-                     :with => "Form.serialize('news-form')"
-                   }, :accesskey => accesskey(:preview) %> |
-<%= link_to l(:button_cancel), "#", :onclick => 'Element.hide("edit-news"); return false;' %>
-<% end %>
-<div id="preview" class="wiki"></div>
-</div>
+<% if !@news.is_quesito? %>
+  <% if authorize_for('news', 'edit') %>
+    <div id="edit-news" style="display:none;">
+    <% labelled_tabular_form_for :news, @news, :url => news_path(@news),
+                                               :html => { :id => 'news-form', :method => :put } do |f| %>
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <%= submit_tag l(:button_save) %>
+    <%= link_to_remote l(:label_preview),
+                       { :url => preview_news_path(:project_id => @project),
+                         :method => 'get',
+                         :update => 'preview',
+                         :with => "Form.serialize('news-form')"
+                       }, :accesskey => accesskey(:preview) %> |
+    <%= link_to l(:button_cancel), "#", :onclick => 'Element.hide("edit-news"); return false;' %>
+    <% end %>
+    <div id="preview" class="wiki"></div>
+    </div>
+  <% end %>
 <% end %>
 
 <div class="splitcontentleft">
@@ -43,6 +45,7 @@
   <%= textilizable(@news.description) %>
   </div>
   <br />
+  <%= render :partial => 'form_reply_fast', :locals => { :news => @news } %>
 
 <%#           COMMENTI LEGALTI ALLA NEWS          %>
   <div id="comments" style="margin-bottom:16px;">
@@ -59,14 +62,14 @@
   </div>
 
   <% if authorize_for 'comments', 'create' %>
-  <p><%= toggle_link l(:label_comment_add), "add_comment_form", :focus => "comment_comments" %></p>
-  <% form_tag({:controller => 'comments', :action => 'create', :id => @news}, :id => "add_comment_form", :style => "display:none;") do %>
-  <div class="box">
-      <%= text_area 'comment', 'comments', :cols => 80, :rows => 15, :class => 'wiki-edit' %>
-      <%= wikitoolbar_for 'comment_comments' %>
-  </div>
-  <p><%= submit_tag l(:button_add) %></p>
-  <% end %>
+    <p><%= toggle_link l(:label_comment_add), "add_comment_form", :focus => "comment_comments" %></p>
+    <% form_tag({:controller => 'comments', :action => 'create', :id => @news}, :id => "add_comment_form", :style => "display:none;") do %>
+      <div class="box">
+          <%= text_area 'comment', 'comments', :cols => 80, :rows => 15, :class => 'wiki-edit' %>
+          <%= wikitoolbar_for 'comment_comments' %>
+      </div>
+      <p><%= submit_tag l(:button_add) %></p>
+    <% end %>
   <% end %>
 
   <% html_title @news.title -%>
@@ -77,6 +80,4 @@
 
 </div>
 
-<div id="responses">
-  <%= render :partial => 'show_quesito_issues', :locals => { :news => @news } %>
-</div>
+<%= render :partial => 'show_quesito_issues', :locals => { :news => @news } %>

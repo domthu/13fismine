@@ -18,7 +18,7 @@
 class IssueMovesController < ApplicationController
   menu_item :issues
 
-  include FeesHelper  #Domthu  FeeConst
+  #include FeesHelper  #Domthu  FeeConst
   #include ActionView::Helpers::UrlHelper #use link_to in controller
 
   default_search_scope :issues
@@ -28,6 +28,10 @@ class IssueMovesController < ApplicationController
 
   def new
     prepare_for_issue_move
+    @news = @copy.quesito_news
+    if !@news.nil? && @news.is_quesito?
+      flash[:notice] = "Procedura di risposta al quesito mediante articolo in edizione"
+    end
     render :layout => false if request.xhr?
   end
 
@@ -63,86 +67,6 @@ class IssueMovesController < ApplicationController
       return
     end
   end
-
-
-  #Filter chain halted as [:authorize] rendered_or_redirected.
-  def news_fast_reply
-    @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category, :section, :quesito_news])
-    #Domthu [:project, :tracker, :status, :author, :priority, :category])
-    puts "###################################################################"
-    flash[:notice] = "Procedura risposta veloce"
-    if !@issue.nil? && @issue.is_quesito?
-      #TODO undefined method `authorize_for' for #<IssueMovesController:0xb5e11738>
-      #if User.current.admin? ||  User.current.ismanager? || authorize_for('issues', 'edit')
-      if User.current.admin? ||  User.current.ismanager? || User.current == @issue.author
-      #KAPPAO @issue.visible?
-        if @issue.description?
-          @news = @issue.quesito_news
-          if !@news.nil?
-            if @news.is_quesito?
-              #controllare che la news possa andare in risposta veloce
-              # solo se non ci sono altri issue con campo descrizione già attive
-              can_delete = true
-              @news.issues.each { |issue|
-                if issue.description? && @issue.id != issue.id
-                  can_delete = false
-                  #flash[:notice] += "</br>" + l(:alert_another_responses, :link => link_to(issue), :author => issue.author)
-                  flash[:notice] += "</br>" + l(:alert_another_responses, :link => issue.to_s, :author => issue.author)
-                  if issue.project.identifier != FeeConst::QUESITO_KEY && issue.se_visibile_web && !@news.is_issue_reply?
-                    #se ho già un articolo pubblicato su una
-                    @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
-                    @news.save
-                    #redirect_to :action => 'show', :id => @issue.id
-                    redirect_to :controller => 'issues', :action => 'show', :id => @issue.id
-                    return
-                  end
-                end
-              }
-
-              if can_delete
-                #chiedere sandro? se usiamo il campo reply o description
-                #@news.description = @issue.description Il campo descrizione viene usato da l'utente che pone il quesito
-                @news.reply = @issue.description
-                #Aggiorno lo stato della news
-                @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
-                @news.save
-                flash[:notice] += "</br></br>Quesito: " + l(:notice_successful_update) + "</br>"
-
-                #elimina le issue di lavoro temporraneo
-                @news.issues.each_with_index { |del_issue, i |
-                  if @issue.id != del_issue.id
-                    flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author)
-                    del_issue.destroy
-                  end
-                }
-                flash[:notice] += "</br>Risposta: " + l(:fast_reply_done)
-                redirect_to :controller => 'news', :action => 'show', :id => @news.id
-                return
-              else
-                flash[:errors] = l(:cannot_fast_reply_other_issues)
-              end
-            else
-              flash[:errors] = l(:is_not_quesito)
-            end
-          else
-            flash[:errors] = l(:none_found_news)
-          end
-        else
-          flash[:errors] = l(:empty_description)
-        end
-      else
-        flash[:errors] = l(:issue_fastreply_not_allowed)
-        #deny_access
-        #return
-      end
-      redirect_to :controller => 'issues', :action => 'show', :id => @issue.id
-      return
-    else
-      flash[:errors] = l(:none_found_issue)
-      redirect_to :controller => 'issues', :action => 'index'
-    end
-  end
-
 
   private
 

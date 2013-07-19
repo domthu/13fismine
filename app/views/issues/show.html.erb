@@ -82,7 +82,7 @@
   <% if @issue.description? || @issue.attachments.any? -%>
       <p><strong>
       <% if !@issue.is_quesito? %>
-        <%= l(:news_fast_reply_text, :num => link_to(@issue.quesito_news.id.to_s, news_path(@issue.quesito_news), { :class => 'icon icon-news_reply_done', :target => '_blank'})) %>
+        <%= l(:news_reply_text, :num => link_to(@issue.quesito_news.id.to_s, news_path(@issue.quesito_news), { :class => 'icon icon-news_reply_done', :target => '_blank'})) %>
       <% else %>
         <%= l(:content_articolo) %>
       <% end %>
@@ -109,7 +109,7 @@
       </div>
   <% end %>
 </div>
-<%# inserire qui la risposta veloce %>
+<%# se l'edizione e di tipo QUESITO. Se c'è una risposta allora spostare in edizione reale  %>
 <% if @issue.is_quesito? %>
     <div class="box details <%= @issue.css_box()%>">
       <div class="">
@@ -120,17 +120,15 @@
         </div>
         <hr/>
         <div id="responses" style="margin-bottom:16px;">
-          <h3 class="responses"><%= l(:news_fast_reply_text, :num => link_to(@issue.quesito_news.id.to_s, news_path(@issue.quesito_news), { :class => 'icon icon-news_fast_reply', :target => '_blank'})) %></h3>
-
           <% if @issue.description? %>
-          <%# per generare la risposta rapida la descrizione deve già essere pieno %>
+          <%# per generare la risposta la descrizione deve contenere testo %>
               <% if @issue.quesito_news.is_issue_reply? %>
-                  <% form_for @issue, :url => {:controller => 'issue_moves', :action => 'news_fast_reply', :id => @issue} do |f_r| %>
+                  <% form_for @issue, :url => {:controller => 'issue_moves', :action => 'news_reply', :id => @issue} do |f_r| %>
                       <%= f_r.error_messages %>
                       <%= f_r.hidden_field :id, :value => @issue.id %>
                       <h4><%= l(:label_fast_reply) %></h4>
                       <% if authorize_for('move_issues', 'news_fast_reply') || User.current.admin? || User.current.ismanager? %>
-                          <%= f_r.submit(l(:button_news_fast_reply), :class => "button-blu") %>
+                          <%= f_r.submit(l(:button_issue_reply_article), :class => "button-blu") %>
                       <% end %>
                   <% end %>
               <% end %>
@@ -142,8 +140,7 @@
                   <% end %>
               <% end %>
           <% else %>
-              <p>per creare una <span style="color: red;">risposta rapida*</span> o generare un articolo che andrà a
-                finire su una edizione allora dovete prima scrivere la risposta nel campo
+              <p>per creare una <span style="color: red;">risposta*</span> e generare un articolo che andrà a finire su una edizione allora dovete scrivere la risposta nel campo
                 <b><%= l(:content_articolo) %></b></p>
           <% end %>
           <div class="responses">

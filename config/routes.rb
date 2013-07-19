@@ -325,7 +325,8 @@ ActionController::Routing::Routes.draw do |map|
 
   #map.assign_collaboratore 'news/assign', :controller => 'news', :action => 'assegna' , :conditions => {:method => :put}
   #map.fast_reply 'issues/fast_reply', :controller => 'issues', :action => 'news_fast_reply'
-  map.fast_reply 'quesito/fast_reply', :controller => 'issue_moves', :action => 'news_fast_reply'
+  #map.fast_reply 'quesito/fast_reply', :controller => 'issue_moves', :action => 'news_fast_reply'
+  map.fast_reply 'quesito/fast_reply', :controller => 'news', :action => 'news_fast_reply'
 
   map.resources :projects, :member => {
     :copy => [:get, :post],

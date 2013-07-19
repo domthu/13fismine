@@ -188,13 +188,13 @@ class News < ActiveRecord::Base
 
   def set_satus(limit)
     #se il campo reply è valorizzatto allora forziamo lo status
-    if !self.reply.nil? && self.reply != ''
-      self.status_id == FeeConst::QUESITO_STATUS_FAST_REPLY
+    if self.reply && self.reply != ''
+      self.status_id = FeeConst::QUESITO_STATUS_FAST_REPLY
     else
-      if !self.issues.nil? && self.issues.count > limit
-        self.status_id == FeeConst::QUESITO_STATUS_ISSUES_REPLY
+      if (self.issues && (self.issues.count > limit))
+        self.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
       else
-        self.status_id == FeeConst::QUESITO_STATUS_WAIT
+        self.status_id = FeeConst::QUESITO_STATUS_WAIT
       end
     end
     self.save

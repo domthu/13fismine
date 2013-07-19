@@ -625,11 +625,13 @@ it:
   label_reply_members: Altri collaboratori che potrebbero rispondere oltre a te
   label_reply_article: Pubblica risposta come articolo
   label_fast_reply: Rispondi senza generare articolo
+  label_fast_reply_response: Risposta veloce (senza articolo)
+  label_reply_with_issue: Rispondi attraverso articolo(i)
+  label_reply_with_issue_responses: Risposta(e) tramite articolo(i)
   no_reply_actualy: Nessuna risposta attualmente
   label_news_my: I miei quesiti
   label_no_referente: "Non c'è un referente"
   label_no_soci: "Non ci sono utenti associati"
-
 
   label_settings: Impostazioni
   label_overview: Panoramica
@@ -959,6 +961,8 @@ it:
   button_save_dati: Salva dati
   button_save_fatture: Salva fatture
   button_news_fast_reply: Risposta rapida
+  button_news_fast_reply_create: Dai una risposta veloce
+  button_news_fast_reply_update: Modifica la risposta veloce
   button_issue_reply_article: Pubblica spostando in quindicinale
 
   status_active: attivo

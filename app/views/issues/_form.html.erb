@@ -43,7 +43,7 @@
 
 <% if !@issue.new_record? %>
   <b style="margin-left: 10px">
-    <% if @issue.is_quesito? %>
+    <% if @issue.is_quesito? && @issue.quesito_news %>
       <%= l(:news_reply_text, :num => link_to(@issue.quesito_news.id.to_s, news_path(@issue.quesito_news), { :class => 'icon icon-news_fast_reply', :target => '_blank'})) %>
     <% else %>
       <%= l(:content_articolo) %>
