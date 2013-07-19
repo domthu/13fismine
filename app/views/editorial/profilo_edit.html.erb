@@ -17,7 +17,6 @@
               <%= '<div id="fs-photo-edit-a" style="display:block;">' + image_tag(@user_profile.photo.url(:l)) + '</div>
           <div id="fs-photo-edit-g" style="display:none;">' + gravatar_for(@user_profile.user, :size => 120) + ' </div>' %>
           <% end %>
-          <h1><%=  @user_profile.use_gravatar? %></h1>
         </div>
         <div class="fs-vuoto-inline-button  fs-profiles-esx-btn">
           <label><%= radio_button_tag :use_gravatar, true, @user_profile.use_gravatar?, :onchange => "funct_avatar('g','fs-photo-edit','use_gravatar_true');" %> <%= 'Usa mail su Gravatar' %></label><br/>

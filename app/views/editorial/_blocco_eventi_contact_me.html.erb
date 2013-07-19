@@ -4,16 +4,16 @@
     });
     var urlpropose = '<%= propose_evt_path %>';
     function sendmail() {
-        var email = $("#evtmail").val();
-        if (email.trim.length <= 1)
+        var email = $("#evtmail").val().trim();
+        if (email.length <= 1)
         {
             js_flash("alert", "impostare la mail");
             return false;
         }
-        var msg = $("#message").val();
-        if (msg.trim.length <= 1)
+        var msg = $("#message").val().trim();
+        if (msg.length <= 1)
         {
-            js_flash("alert", "Descrivere il convegno che intendi propore");
+            js_flash("alert", "Descrivi il convegno o l'evento che intendi proporre");
             return false;
         }
         $.post(urlpropose, { user_mail: email, body: msg, authenticity_token:$("input[name='authenticity_token']").val(), back_url:$('#back_url').val() },

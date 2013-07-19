@@ -314,9 +314,8 @@ class Mailer < ActionMailer::Base
            :body => '<div style="font-weight:bold;"> User id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /> <hr> <p>'  + body_as_string + '</p>'
     else #user.anonymous?
       part :content_type => "text/html",
-           :body => '<div style="font-weight:bold;"> Anonymous email:[' + email + '] </div><br /> <hr> <p>'  + body_as_string + '</p>'
+           :body => '<div style="font-weight:bold;"> Email:[' + email + '] </div><br /> <hr> <p>'  + body_as_string + '</p>'
     end
-
 =begin
     if user.nil?
       part :content_type => "text/html",

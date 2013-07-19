@@ -33,6 +33,9 @@ class Convention < ActiveRecord::Base
   has_many :cross_groups, :dependent => :nullify
   #has_many :group_banners, :through => :cross_group, :dependent => :delete
   has_many :group_banners, :through => :cross_groups, :dependent => :delete_all
+  named_scope :conventions_all_logos
+  #              :conditions => "#{Convention.table_name}.se_visibile = #{true} AND #{CrossOrganization.table_name}.image_file_name IS NOT NULL"
+
 
   #string
   validates_presence_of :ragione_sociale
@@ -44,18 +47,10 @@ class Convention < ActiveRecord::Base
 #  validates_uniqueness_of :mail, :if => Proc.new { |user| !user.mail.blank? }, :case_sensitive => false
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :allow_blank => true
   validates_length_of :indirizzo, :maximum => 255
-#  validates_length_of :email, :maximum => 255
-#  validates_length_of :email, :maximum => 255
-#  validates_length_of :email, :maximum => 255
-#  validates_length_of :email, :maximum => 255
-#  validates_length_of :email, :maximum => 255
-#  validates_length_of :email, :maximum => 255
-#  validates_length_of :email, :maximum => 255
   validates_length_of :email_alt, :maximum => 100, :allow_nil => true
 #  validates_uniqueness_of :mail, :if => Proc.new { |user| !user.mail.blank? }, :case_sensitive => false
   validates_format_of :email_alt, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :allow_blank => true
-
-  #text-area? CSS? HTML area
+    #text-area? CSS? HTML area
   validates_length_of :comunicazioni, :maximum => 4000
 
 #  def asso_symbols

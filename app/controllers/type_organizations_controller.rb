@@ -82,23 +82,18 @@ class TypeOrganizationsController < ApplicationController
   # PUT /type_organizations/1
   # PUT /type_organizations/1.xml
   def update
-
     @type_organization = TypeOrganization.find(params[:id])
 
     respond_to do |format|
       if @type_organization.update_attributes(params[:type_organization])
         format.html { redirect_to(@type_organization, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
-        format.json  { head :ok }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @type_organization.errors, :status => :unprocessable_entity }
-        format.json {  head :ko }
       end
-
     end
   end
-
   # DELETE /type_organizations/1
   # DELETE /type_organizations/1.xml
   def destroy
