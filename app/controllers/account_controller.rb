@@ -276,7 +276,7 @@ class AccountController < ApplicationController
       #htmlpartial = getuserhtml(@user)
       htmlpartial = ''
       @tmail = Mailer.deliver_prova_gratis(@user, @stat + "<br />" + htmlpartial)
-      @stat += "Email inviato correttamente: <br /><strong>Verifichi la tua cassela postale e confermi la tua email</strong>"
+      @stat += "Email inviata correttamente: <br /><strong>Verifichi la sua casella postale e confermi la sua email</strong>"
     rescue Exception => e
       @errors += "<span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
     end

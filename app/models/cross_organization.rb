@@ -10,24 +10,17 @@ class CrossOrganization < ActiveRecord::Base
   validates_attachment_size :image, :less_than => 200.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 
-  #domthu20120516
-  #ERROR undefined local variable or method `null' for #<Class:0xb656c5b4>
   has_many :conventions#, :dependent => :nullify
 
   has_many :users #, :dependent => :nullify
   belongs_to :type_organization, :class_name => 'TypeOrganization', :foreign_key => 'type_organization_id'
-
-  #named_scope :federati, :order => "#{User.table_name}.status = #{STATUS_ACTIVE}"
-  #, :conditions => "#{User.table_name}.status = #{STATUS_ACTIVE}"
-
-  #validation on uniqueness on two attributes
   validates_uniqueness_of :sigla, :scope => :type_organization_id
   #rails 3 validates :zipcode, :uniqueness => {:scope => :recorded_at}
   named_scope :cross_organizations_all_logos,
                 :conditions => "#{CrossOrganization.table_name}.se_visibile = #{true} AND #{CrossOrganization.table_name}.image_file_name IS NOT NULL"
 
   def to_s
-    if (self.type_organization.nil?)
+    if self.type_organization.nil?
       'type? :: ' + (self.sigla.nil? ? "sigla?" : self.sigla) #to_s
     else
       self.type_organization.to_s + ' :: ' + (self.sigla.nil? ? "sigla?" : self.sigla) #to_s

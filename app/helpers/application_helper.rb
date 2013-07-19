@@ -1208,8 +1208,8 @@ module ApplicationHelper
   end
 
   # ------ BANNERS ------
-  def cross_org_logos
-    CrossOrganization.cross_organizations_all_logos
+  def tramenu_convenctions_logo
+    Convention.conventions_all_logos
   end
 
   def banners_block_l

@@ -336,7 +336,7 @@ class EditorialController < ApplicationController
       @tmail = Mailer.deliver_proposal_meeting(@email, User.current, @msg)
       #notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
       #flash[:notice] = l(:notice_user_newsletter_email_sent)
-      @stat = 'Email inviato correttamente <br />'
+      @stat = 'Email inviata correttamente <br />'
     rescue Exception => e
       @errors << l(:notice_email_error, e.message)
       @errors << @stat
