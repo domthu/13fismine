@@ -126,7 +126,6 @@ class IssuesController < ApplicationController
     end
 
     @relations = @issue.relations.select {|r| r.other_issue(@issue) && r.other_issue(@issue).visible? }
-    puts "***************************show *****************************************+"
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current)
     @edit_allowed = User.current.allowed_to?(:edit_issues, @project)
     @priorities = IssuePriority.active
@@ -332,7 +331,6 @@ private
   # from the params
   # TODO: Refactor, not everything in here is needed by #edit
   def update_issue_from_params
-    puts "*************************** update_issue_from_params *****************************************+"
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current)
     @priorities = IssuePriority.active
     @edit_allowed = User.current.allowed_to?(:edit_issues, @project)
@@ -426,7 +424,6 @@ private
       end
     end
     @priorities = IssuePriority.active
-    puts "*************************** build_new_issue_from_params *****************************************+"
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current, true)
   end
 

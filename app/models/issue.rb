@@ -645,13 +645,19 @@ class Issue < ActiveRecord::Base
 
   # Returns an array of status that user is able to apply
   def new_statuses_allowed_to(user, include_default=false)
+    #xroles = user.roles_for_project(project)
+    #puts "--------------new_statuses_allowed_to PROJECT " + project.to_s
+    #puts "--------------new_statuses_allowed_to ROLES => > #{xroles.inspect} "
+    #puts "--------------new_statuses_allowed_to TRACKER " + tracker.to_s
+    #puts "--------------new_statuses_allowed_to USER " + user.name
+    #puts "--------------new_statuses_allowed_to ASSIGNED " + (assigned_to_id_changed? ? (assigned_to_id_was == user.id).to_s : (assigned_to_id == user.id).to_s)
     statuses = status.find_new_statuses_allowed_to(
         user.roles_for_project(project),
         tracker,
         author == user,
         assigned_to_id_changed? ? assigned_to_id_was == user.id : assigned_to_id == user.id
     )
-    statuses << status unless statuses.empty?
+    #puts "--------------> statuses => #{statuses.inspect}"
     statuses << IssueStatus.default if include_default
     statuses = statuses.uniq.sort
     blocked? ? statuses.reject { |s| s.is_closed? } : statuses

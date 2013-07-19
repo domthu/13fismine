@@ -1388,6 +1388,7 @@ en:
   field_telefono2: (old) 2nd telefono
   field_mail2: (old)  2nd email
   field_sez: (old) sezione
+  field_codice_attivazione: voucher
   field_iva_: (old) IVA
   field_codicefiscale: Cofice Fiscale
   field_partitaiva: Partita IVA
@@ -1704,4 +1705,4 @@ en:
   field_abbonamento: "Abbonamento"
   field_abbonamento_type: "Tipo abbonamento"
   field_user_fee: "Abbonato"
-  label_all_users: "All users"
+  label_all_users: "Tutti utenti"

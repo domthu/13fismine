@@ -1398,6 +1398,7 @@ it:
   field_telefono2: (old) 2nd telefono
   field_mail2: (old)  2nd email
   field_sez: (old) sezione
+  field_codice_attivazione: voucher
   field_iva_: (old) IVA
   field_codicefiscale: Cofice Fiscale
   field_partitaiva: Partita IVA
