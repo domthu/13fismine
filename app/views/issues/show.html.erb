@@ -81,7 +81,7 @@
 
   <% if @issue.description? || @issue.attachments.any? -%>
       <p><strong>
-      <% if !@issue.is_quesito? %>
+      <% if @issue.is_quesito? %>
         <%= l(:news_reply_text, :num => link_to(@issue.quesito_news.id.to_s, news_path(@issue.quesito_news), { :class => 'icon icon-news_reply_done', :target => '_blank'})) %>
       <% else %>
         <%= l(:content_articolo) %>

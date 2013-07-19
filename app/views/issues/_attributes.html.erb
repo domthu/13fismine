@@ -65,6 +65,8 @@
       <% else %>
           <div class="splitcontentright">
       <% end %>
+      <h1><%= @issue.new_record?.to_s %></h1>
+      <h1><%= @allowed_statuses.count.to_s %></h1>
       <% if @issue.new_record? || @allowed_statuses.any? %>
           <p><%= f.select :status_id, (@allowed_statuses.collect { |p| [p.name, p.id] }), :required => true %></p>
       <% else %>

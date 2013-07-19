@@ -126,6 +126,7 @@ class IssuesController < ApplicationController
     end
 
     @relations = @issue.relations.select {|r| r.other_issue(@issue) && r.other_issue(@issue).visible? }
+    puts "***************************show *****************************************+"
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current)
     @edit_allowed = User.current.allowed_to?(:edit_issues, @project)
     @priorities = IssuePriority.active
@@ -327,6 +328,27 @@ class IssuesController < ApplicationController
   end
 
 private
+  # Used by #edit and #update to set some common instance variables
+  # from the params
+  # TODO: Refactor, not everything in here is needed by #edit
+  def update_issue_from_params
+    puts "*************************** update_issue_from_params *****************************************+"
+    @allowed_statuses = @issue.new_statuses_allowed_to(User.current)
+    @priorities = IssuePriority.active
+    @edit_allowed = User.current.allowed_to?(:edit_issues, @project)
+    @time_entry = TimeEntry.new(:issue => @issue, :project => @issue.project)
+    @time_entry.attributes = params[:time_entry]
+
+    @notes = params[:notes] || (params[:issue].present? ? params[:issue][:notes] : nil)
+    @issue.init_journal(User.current, @notes)
+
+    #domthu 20120710
+    #@issue.summary =  (params[:summary].present? ? params[:summary] : 'updt')
+    #@issue.summary =  (params[:issue][:summary].present? ? params[:issue][:summary] : 'updt2')
+    #--> Add to safe_attribute
+    @issue.safe_attributes = params[:issue]
+  end
+
   def find_issue
     # Issue.visible.find(...) can not be used to redirect user to the login form
     # if the issue actually exists but requires authentication
@@ -377,26 +399,6 @@ private
     render_404
   end
 
-  # Used by #edit and #update to set some common instance variables
-  # from the params
-  # TODO: Refactor, not everything in here is needed by #edit
-  def update_issue_from_params
-    @allowed_statuses = @issue.new_statuses_allowed_to(User.current)
-    @priorities = IssuePriority.active
-    @edit_allowed = User.current.allowed_to?(:edit_issues, @project)
-    @time_entry = TimeEntry.new(:issue => @issue, :project => @issue.project)
-    @time_entry.attributes = params[:time_entry]
-
-    @notes = params[:notes] || (params[:issue].present? ? params[:issue][:notes] : nil)
-    @issue.init_journal(User.current, @notes)
-
-    #domthu 20120710
-    #@issue.summary =  (params[:summary].present? ? params[:summary] : 'updt')
-    #@issue.summary =  (params[:issue][:summary].present? ? params[:issue][:summary] : 'updt2')
-    #--> Add to safe_attribute
-    @issue.safe_attributes = params[:issue]
-  end
-
   # TODO: Refactor, lots of extra code in here
   # TODO: Changing tracker on an existing issue should not trigger this
   def build_new_issue_from_params
@@ -424,6 +426,7 @@ private
       end
     end
     @priorities = IssuePriority.active
+    puts "*************************** build_new_issue_from_params *****************************************+"
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current, true)
   end
 
