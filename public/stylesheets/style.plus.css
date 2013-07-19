@@ -1770,8 +1770,13 @@ h3.fs-postheader {
 }
 
 .fs-profiles-esx-btn {
-    width: 93%;
-    margin-left: 5px;
+     width: 93%;
+     margin-left: 5px;
+
+ }
+.fs-profiles-esx-btn label {
+    display: table-cell;
+    vertical-align: middle;
 
 }
 
