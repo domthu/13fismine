@@ -1312,6 +1312,15 @@ it:
   label_se_prenotazione: Gestione convegno?
   label_impressions_history: Storico impressione
 
+  label_priorita_logo_fe: Priorità logo in home
+  label_logo_in_fe: Logo visibile in home
+  label_visibile_web: Visibile nel sito
+  label_visibile_mail: Visibile nelle Mail
+  field_visibile_web: Visibile nel WebSite
+  field_visibile_mail: Visibile nelle Mail
+  field_priorita_logo_fe: Priorità logo in home
+  field_logo_in_fe: Logo visibile in home
+
   field_espositore: Espositore
   field_url: Url
   field_priorita: Priorita

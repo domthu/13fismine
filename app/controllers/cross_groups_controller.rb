@@ -15,8 +15,7 @@ class CrossGroupsController < ApplicationController
     sort_init 'convention'
     sort_update 'id' => 'id',
                 'convention' => "conventions.ragione_sociale",   #related table.Field
-                'group banner' => "group_banners.espositore",   #related table.Field
-                'se_visibile' => 'cross_groups.se_visibile'
+                'group banner' => "group_banners.espositore"   #related table.Field
 
 
     respond_to do |format|

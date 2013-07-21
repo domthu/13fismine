@@ -15,21 +15,6 @@
   <%= sort_header_tag('indirizzo', :title => l(:label_convention_address), :style => 'width: 15%;text-align:left;')%>
   <%= sort_header_tag('telefono', :title => l(:label_convention_contact), :style => 'width: 15%;text-align:left;')%>
 
-  <%# sort_header_tag('Tipo_Sigla', :title => l(:label_cross_organization), :style => 'width: 15%;text-align:left;')%>
-  <%# sort_header_tag('region', :title => l(:label_region), :style => 'width: 10%;')%>
-  <%# sort_header_tag('province', :title => l(:label_province), :style => 'width: 10%;')%>
-  <%# sort_header_tag('data_scadenza', :title => l(:label_data_scadenza), :style => 'width: 10%;')%>
-  <%# sort_header_tag('responsabile', :title => l(:label_manager), :style => 'width: 15%;text-align:left;')%>
-  <%# sort_header_tag('ConiNum?', :title => l(:label_richiedinumeroregistrazione), :style => 'width: 5%;')%>
-  <%# sort_header_tag('presidente', :title => l(:label_presidente), :style => 'width: 10%;text-align:left;')%>
-  <%# sort_header_tag('referente', :title => l(:label_referente), :style => 'width: 10%;text-align:left;')%>
-  <%# sort_header_tag('consulente', :title => l(:label_consulente), :style => 'width: 10%;text-align:left;')%>
-  <%# sort_header_tag('indirizzo', :title => l(:label_indirizzo), :style => 'width: 10%;text-align:left;')%>
-  <%# sort_header_tag('comune', :title => l(:label_comune), :style => 'width: 10%;')%>
-  <%# sort_header_tag('logo', :title => l(:label_logo), :style => 'width: 10%;text-align:left;')%>
-  <%# sort_header_tag('telefono', :title => l(:label_telefono), :style => 'width: 10%;text-align:left;')%>
-  <%# sort_header_tag('fax', :title => l(:label_fax), :style => 'width: 10%;text-align:left;')%>
-  <%# sort_header_tag('email', :title => l(:label_email), :style => 'width: 10%;text-align:left;')%>
   <th style='width: 5%;'></th>
   <th style='width: 5%;'></th>
   </tr></thead>
@@ -50,18 +35,11 @@
       <% end %>
     </td>
 
-    <td>Pre: <%=h conv.presidente %><br />Ref: <%=h conv.referente %><br />Con: <%=h conv.consulente %></td>
+    <td>Pre: <%=h conv.presidente %><br />Ref: <%=h conv.referente %><br /></td>
 
     <td><%=h conv.indirizzo %><br /><%=h conv.comune %></td>
 
     <td>Mail: <%=h conv.email %><br />Tel: <%=h conv.telefono %><br />Fax: <%=h conv.fax %></td>
-
-<!--
-    <td align="left"><%=h conv.region %></td>
-    <td align="left"><%=h conv.province %></td>
-    <td align="center"><%= check_box_tag '', 1, conv.richiedinumeroregistrazione, :disabled => 'disabled' %></td>
-    <td><%=h conv.logo %></td>
--->
     <td class="buttons"><%= link_to('', edit_convention_path(conv), :class => 'icon icon-edit') if User.current.admin? %></td>
     <td class="buttons"><%= link_to ('', conv, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
   </tr>

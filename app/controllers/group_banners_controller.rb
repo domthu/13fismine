@@ -16,13 +16,7 @@ class GroupBannersController < ApplicationController
     sort_update 'espositore' => 'espositore',
                 'url' => 'url',
                 'priorita' => 'priorita',
-                'posizione' => 'posizione',
-                'se_visibile' => 'se_visibile',
-                'banner' => 'banner',
-                'impressions' => 'impressions',
-                'clicks' => 'clicks',
-                'se_prima_pagina' => 'se_prima_pagina',
-                'impressions_history' => 'impressions_history'
+                'posizione' => 'posizione'
 
     respond_to do |format|
       #ovverride for paging format.html # index.html.erb

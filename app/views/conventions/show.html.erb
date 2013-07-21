@@ -22,22 +22,21 @@
         <p>Associazione NON sportiva. Numero di attivazione <%= @conv.Codice %> </p>
       <% end %>
     </span></p>
-    <p><label>
+    <p>
       <% if  !@conv.province.nil? %>
-          <%= l(:label_province) %></label><span>
+          <label>  <%= l(:label_province) %></label><span>
           <%= link_to(h(@conv.province.name), province_path(@conv.province), :class => 'icon icon-globe') if User.current.admin?   %>
-          <%=h @conv.province if !User.current.admin? %>
+          <%=h @conv.province if !User.current.admin? %>  </span>
       <% else
         if !@conv.region.nil? %>
-          <%= l(:label_region) %></label><span>
+              <label>  <%= l(:label_region) %></label><span>
           <%= link_to(h(@conv.region.name), region_path(@conv.region), :class => 'icon icon-globe') if User.current.admin?   %>
-          <%=h @conv.region if !User.current.admin? %>
+          <%=h @conv.region if !User.current.admin? %> </span>
       <% else %>
-        <%= l(:label_nationale_pact) %></label><span class="icon icon-globe">
+        <%= l(:label_nationale_pact) %></label><span class="icon icon-globe"></span>
       <% end
       end %>
-    </span></p>
-
+    </p>
   </fieldset>
 
   <fieldset class="box tabular">
@@ -82,12 +81,6 @@
         <%= l(:label_referente) %></label><span><%=h @conv.referente %>
     </span></p>
     <p><label>
-        <%= l(:label_consulente) %></label><span><%=h @conv.consulente %>
-    </span></p>
-    <p><label>
-        <%= l(:label_logo) %></label><span><%=h @conv.logo %>
-    </span></p>
-    <p><label>
         <%= l(:label_telefono) %></label><span><%=h @conv.telefono %>
     </span></p>
     <p><label>
@@ -99,11 +92,17 @@
     <p><label>
         <%= l(:label_email_alt) %></label><span><%=h @conv.email_alt %>
     </span></p>
+    <p><label>
+        <%= l(:label_logo_in_fe) %></label><span><%=h @conv.logo_in_fe %>
+    </span></p>
+    <p><label>
+        <%= l(:label_priorita_logo_fe) %></label><span><%=h @conv.priorita_logo_fe %>
+    </span></p>
   </fieldset>
 
   <fieldset class="box tabular">
     <legend><%=l(:label_convention_group_banner)%></legend>
-      <% if @conv.group_banners.any? %>
+      <% if !@conv.group_banner.nil? %>
       <table>
         <tr>
           <th><%=l(:label_group_banner)%></th>

@@ -30,16 +30,16 @@
   <p><%= f.text_field :email, :label => :field_email, :required => true, :size => 20 %></p>
   <p><%= f.text_field :presidente, :label => :field_presidente, :size => 40  %></p>
   <p><%= f.text_field :referente, :label => :field_referente, :size => 40  %></p>
-  <p><%= f.text_field :consulente, :label => :field_consulente, :size => 40  %></p>
-  <p><%= f.text_field :logo, :label => :field_logo, :size => 40  %></p>
   <p><%= f.text_field :telefono, :label => :field_telefono, :size => 40  %></p>
   <p><%= f.text_field :telefono_alt, :label => :field_telefono_alt, :size => 40  %></p>
-  <p><%= f.text_field :fax, :label => :field_fax, :fax => 40  %></p>
-  <p><%= f.text_area :comunicazioni, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
   <p><%= f.text_field :email_alt, :label => :field_email_alt, :size => 20 %></p>
+  <p><%= f.text_field :fax, :label => :field_fax, :fax => 40  %></p>
+  <p><%= f.check_box :logo_in_fe, :label => :field_logo_in_fe %></p>
+  <p><%= f.text_field :priorita_logo_fe, :label => :field_priorita_logo_fe %></p>
+  <p><%= f.text_area :comunicazioni, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
   <p><%= f.file_field :image, :label => :field_immagine %> </p>
   <p id="prev" style="max-height: 300px;"> <%= image_tag @conv.image.url(:m) %>   </p>
-  <p>
+
     <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
       <li>
         Immagini stili e misure:
@@ -58,9 +58,10 @@
         l'immagine verrà non deve superare i 200kb e di formato jpg/png/gif/bmp
       </li>
     </ul>
-  </p>
+
  </div>
- <script type="text/javascript">
+
+<script type="text/javascript">
     (function () {
       document.getElementById('Convention_image').addEventListener('change', function(event) {
               if (!event) // i.e. the argument is undefined or null

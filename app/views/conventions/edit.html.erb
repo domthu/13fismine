@@ -3,6 +3,9 @@
 <% labelled_form_for (@conv), :html => {:multipart => true} do |f| %>
 <%= submit_tag l(:button_save) %>
 <%= render :partial => 'form', :locals => { :f => f } %>
+    <p style="width:95%; text-align: right;">
+    <%= link_to ( 'Nuova Pubblicità' ,{:controller=>"group_banners", :action=>"new", :convention_id => @conv.id },:class=> "button-grey"  )   %>
+    </p>
 <%= submit_tag l(:button_save) %>
 <!-- <%= f.submit 'Update' %> -->
 

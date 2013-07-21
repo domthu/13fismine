@@ -1,28 +1,31 @@
+<style type="text/css">
+  #group_banner_convention_id{
+   width: 98%;
+
+  }
+</style>
 <%= f.error_messages %>
 <div class="box tabular">
   <p><%= f.text_field :espositore, :label => :field_espositore, :required => true %></p>
-
   <p><%= f.text_field :url, :label => :field_url, :required => false, :size => 80 %></p>
-
-  <p><%= f.check_box :se_visibile, :label => :field_se_visibile %></p>
-
-  <p><%= f.text_field :priorita, :label => :field_priorita, :size => 3 %></p>
-
-  <p><%# f.text_field :posizione, :label => :field_posizione, :required => true, :size => 80 %></p>
-
-  <p><%= f.text_field :impressions, :label => :field_impressions, :size => 3 %></p>
-
-  <p><%= f.text_field :clicks, :label => :field_clicks, :size => 3 %></p>
-
-  <p><%= f.text_field :impressions_history, :label => :field_impressions_history, :size => 3 %></p>
+  <span class="span3col">
+    <p><%= f.check_box :visibile_web, :label => :field_visibile_web %></p></span>
+  <span class="span3col">
+  <p><%= f.check_box :visibile_mail, :label => :field_visibile_mail %></p></span>
+  <span class="span3col">
+  <p><%= f.text_field :priorita, :label => :field_priorita, :size => 3 %></p> </span>
 
   <p> <%= f.select(:posizione, ['associazione', 'block_l', 'block_s', 'tramenu'], {}, {:class => '', :label => :field_posizione}) %>
-    <span class="mini-legend"> * NB: se si seleziona 'associazione' verrà visualizzato il 'Banner Associazione' negli
-    altri casi verrà visualizzato il campo 'Immagine' </span></p>
-
-  <p><%= f.file_field :image, :label => :field_immagine %> </p>
+      <span class="mini-legend"> * NB: se si seleziona 'associazione' verrà visualizzato il 'Banner Associazione' negli
+      altri casi verrà visualizzato il campo 'Immagine' </span></p>
+  <div style="background-color: #fff; border: solid 1px #e4e4e4;"><div style="text-align: right; padding-right: 15px;"> Banner generico visibile nel sito nella posizione selezionata</div>
+  <p>   <%= f.file_field :image, :label => :field_immagine %> </p>
 
   <p id="prev" style="max-height: 300px;"> <%= image_tag @group_banner.image.url(:original) %>   </p>
+</div>
+  <p style="text-align: right; font-weight: bold; width: 83%; margin:15px 0;"> Zona riservata alla pubblicità dei "Convenzionati" </p>
+  <p><%= params[:convention_id]  %></p>
+  <p ><%= f.select :convention_id, (Convention.all.collect {|c| [c.id.to_s + c.ragione_sociale , c.id]}),{:include_blank => true,  :selected => params[:convention_id] , :default => params[:convention_id] , :required => false}, :title => l(:label_convention) %></p>
 
   <p><label>Banner
     Associazione </label> <%= f.cktext_area :didascalia, :width => 775, :label => :field_banner, :height => 456, :swf_params => {:assetable_type => 'Test', :assetable_id => 1} %>
@@ -55,11 +58,8 @@
       </li>
     </ul>
   </div>
-  <p><%= f.text_field :banner, :label => :field_banner, :required => false, :size => 80 %>
-    <span class="mini-legend">*obsoleto</span></p>
 
-  <p><%= f.check_box :se_prima_pagina, :label => :field_se_prima_pagina %> <span class="mini-legend">*obsoleto</span>
-  </p>
+
 </div>
 <script type="text/javascript">
     (function () {

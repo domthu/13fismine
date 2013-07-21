@@ -1193,7 +1193,7 @@ textarea#issue_subject{
     color: #333333;
     cursor: pointer;
     /*display: none;  ok con Jquery ma non con Prototype*/
-    font-family: verdana;
+    font-family: verdana, sans-serif;
     font-size: 11px;
     height: 40px;
     padding: 5px;
@@ -1297,7 +1297,10 @@ textarea#issue_subject{
  /*  fine del fee roles icons */
 
 div .watchers_lst{
-  float: left; margin 10px; padding: 10px; width: 45%; border: solid 0px red;
+  float: left;
+    margin: 10px ;
+    padding: 10px;
+    width: 45%;
 }
 p.changeauthor img.gravatar{
     float: left;
@@ -1343,7 +1346,7 @@ p.changeauthor img.gravatar{
 	border:1px solid #dcdcdc;
 	display:inline-block;
 	color:#fff7ff;
-	font-family:arial;
+	font-family: arial , sans-serif;
 	font-size:15px;
 	font-weight:bold;
 	padding:6px 24px;
@@ -1374,3 +1377,11 @@ p.changeauthor img.gravatar{
 }
 .quesito, div.issue.quesito{background-color:#FDF5E6;  /*#FFE4B5 #FAFAD2*/}
 .convegno, div.issue.convegno{background-color:#E0FFFF; /*#98FB98 #90C140*/}
+.span3col {
+   width: 33%;
+   display: inline-block
+}
+.span2col {
+   width: 50%;
+   display: inline-block
+}

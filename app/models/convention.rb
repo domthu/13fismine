@@ -15,28 +15,19 @@ class Convention < ActiveRecord::Base
 
   #domthu20120516
   has_many :users, :dependent => :nullify #Non fare niente dobbiamo eliminare convention_id
-
   belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id'#, :default => null
   #Il responsabile del patto - contratto
   #2.7 Choosing Between belongs_to and has_one
   #belongs_to :referente, :class_name => 'User', :foreign_key => 'user_id'#, :default => null
   belongs_to :user #, :class_name => 'User', :foreign_key => 'user_id'#, :default => null
-
   #Con questi 3 campi siamo in grado di definire quale organismo con quale copertura geografica
   belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
   belongs_to :region, :class_name => 'Region', :foreign_key => 'region_id'#, :default => null
   belongs_to :province, :class_name => 'Province', :foreign_key => 'province_id'#, :default => null
-
-  #has_one :cross_organization, :through => :organization, :dependent => :delete_all
-  #http://guides.rubyonrails.org/v2.3.8/association_basics.html#choosing-between-belongs-to-and-has-one
-  #2.8 Choosing Between has_many :through and has_and_belongs_to_many
-  has_many :cross_groups, :dependent => :nullify
   #has_many :group_banners, :through => :cross_group, :dependent => :delete
-  has_many :group_banners, :through => :cross_groups, :dependent => :delete_all
+  has_one :group_banner, :dependent => :destroy, :class_name => 'GroupBanner'
   named_scope :conventions_all_logos
   #              :conditions => "#{Convention.table_name}.se_visibile = #{true} AND #{CrossOrganization.table_name}.image_file_name IS NOT NULL"
-
-
   #string
   validates_presence_of :ragione_sociale
   validates_uniqueness_of :ragione_sociale, :case_sensitive => false

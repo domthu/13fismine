@@ -20,7 +20,7 @@ class EditorialController < ApplicationController
   caches_action :robots
   #HOME > TOP_MENU > TOP_SECTION > SECTION > ARTICOLO
   def home
-    @xbanner = GroupBanner.find(:all, :order => 'priorita DESC', :conditions => ["se_visibile = 1"])
+    @xbanner = GroupBanner.find(:all, :order => 'priorita DESC', :conditions => ["visibile_web = 1"])
     @base_url = params[:pages]
     @block_projects = Project.latest_fs
     @projects = Project.latest_fs
