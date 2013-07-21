@@ -1146,7 +1146,7 @@ it:
   label_type_organization_plural: Org. Tipi
   label_type_organization_new: Nuovo tipo di organismo
   label_type_organization_plural_long: Tipi di organismo
-
+  label_visibilita: Visibilità
   label_is_responsable: é responsabile?
   label_not_responsable: "L'utente non gestisce organismi convenzionati"
   label_have_convention: Non pagante?
@@ -1254,14 +1254,13 @@ it:
 
 # convention (Organismo convenzionato) e group_banner (Banner) sono associati tramite cross_group (banner utente)
 # convention (Organismo convenzionato) ha tanti utenti non paganti
-  field_convention: Convenzioni
-  label_convention: Convenzioni
+  field_convention: Convenzione
+  label_convention: Convenzione
   label_convention_full: Organismi aderenti (convenzionati)
-  label_convention_plural: Organismi convenzionati
-  label_convention_new: Nuova organismo aderente
+  label_convention_plural: Convenzioni
+  label_convention_new: Nuova convenzione
   label_conventions_users: Utenti soci non paganti (sotto convenzione)
   label_convention_user: Responsabile convenzione
-  label_convention: Convenzione
   label_convention_none: Nessuna convenzione (organismo associato)
   label_convention_group_banner: Banner convenzione
   label_convention_group_banner_none: Nessun banner per la convenzione (organismo associato)
@@ -1283,7 +1282,7 @@ it:
   label_telefono_alt: Telefono alternativo
   label_fax: Fax
   label_comunicazioni: Comunicazioni
-  label_email_alt: Email alternativo
+  label_email_alt: Email alternativa
 
   field_ragione_sociale: Ragione sociale
   field_email: Email
@@ -1312,14 +1311,14 @@ it:
   label_se_prenotazione: Gestione convegno?
   label_impressions_history: Storico impressione
 
-  label_priorita_logo_fe: Priorità logo in home
-  label_logo_in_fe: Logo visibile in home
-  label_visibile_web: Visibile nel sito
+  label_priorita_logo_fe: Priorità
+  label_logo_in_fe: Logo in Home?
+  label_visibile_web: Visibile nel WebSite
   label_visibile_mail: Visibile nelle Mail
   field_visibile_web: Visibile nel WebSite
   field_visibile_mail: Visibile nelle Mail
-  field_priorita_logo_fe: Priorità logo in home
-  field_logo_in_fe: Logo visibile in home
+  field_priorita_logo_fe: Priorità
+  field_logo_in_fe: Logo in Home?
 
   field_espositore: Espositore
   field_url: Url
@@ -1407,7 +1406,7 @@ it:
   field_telefono2: (old) 2nd telefono
   field_mail2: (old)  2nd email
   field_sez: (old) sezione
-  field_codice_attivazione: voucher
+  field_codice_attivazione: Codice di Attivazione
   field_iva_: (old) IVA
   field_codicefiscale: Cofice Fiscale
   field_partitaiva: Partita IVA

@@ -1,12 +1,7 @@
 <h2><%= link_to l(:label_convention_plural), conventions_path %> &#187; <%= h(@conv) %></h2>
-
 <% labelled_form_for (@conv), :html => {:multipart => true} do |f| %>
-<%= submit_tag l(:button_save) %>
 <%= render :partial => 'form', :locals => { :f => f } %>
-    <p style="width:95%; text-align: right;">
-    <%= link_to ( 'Nuova Pubblicità' ,{:controller=>"group_banners", :action=>"new", :convention_id => @conv.id },:class=> "button-grey"  )   %>
-    </p>
-<%= submit_tag l(:button_save) %>
+ <div class="btn-footer"><%= submit_tag l(:button_save),:class=> "button-blu" %></div>
 <!-- <%= f.submit 'Update' %> -->
 
 <% end %>

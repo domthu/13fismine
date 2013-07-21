@@ -1,7 +1,6 @@
 <style type="text/css">
   #group_banner_convention_id{
    width: 98%;
-
   }
 </style>
 <%= f.error_messages %>
@@ -14,16 +13,44 @@
   <p><%= f.check_box :visibile_mail, :label => :field_visibile_mail %></p></span>
   <span class="span3col">
   <p><%= f.text_field :priorita, :label => :field_priorita, :size => 3 %></p> </span>
-
-  <p> <%= f.select(:posizione, ['associazione', 'block_l', 'block_s', 'tramenu'], {}, {:class => '', :label => :field_posizione}) %>
+   <br>
+  <div style="background-color: #2c4056; padding: 10px 0; color: #fff;">
+  <p>
+    <%= f.select(:posizione, ['associazione', 'block_l', 'block_s', 'tramenu'], {}, {:class => '', :label => :field_posizione}) %>
       <span class="mini-legend"> * NB: se si seleziona 'associazione' verrà visualizzato il 'Banner Associazione' negli
-      altri casi verrà visualizzato il campo 'Immagine' </span></p>
+      altri casi verrà visualizzato il campo 'Immagine' </span></p></div>
   <div style="background-color: #fff; border: solid 1px #e4e4e4;"><div style="text-align: right; padding-right: 15px;"> Banner generico visibile nel sito nella posizione selezionata</div>
   <p>   <%= f.file_field :image, :label => :field_immagine %> </p>
 
   <p id="prev" style="max-height: 300px;"> <%= image_tag @group_banner.image.url(:original) %>   </p>
+    <div>
+      <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
+        <li>
+          Info casella POSIZIONE:
+
+        </li>
+        <li>
+          ":associazione" verrà visualizzato il contenuto qui sopra in un blocco laterale o in una newsletter
+        </li>
+        <li>
+          nb: le altre opzioni qui sotto sono per le postazioni fisse dentro le pagine principali
+        </li>
+        <li>
+          blocco grande a sinistra: :block_l => "256x216#"
+        </li>
+        <li>
+          blocco piccolo come dentro un articolo: :block_s => "194x154#"
+        </li>
+        <li>
+          blocco tra i menu a destra :tramenu => "290x94#"
+        </li>
+        <li>
+          l'immagine verrà non deve superare i 200kb e di formato jpg/png/gif/bmp
+        </li>
+      </ul>
+    </div>
 </div>
-  <p style="text-align: right; font-weight: bold; width: 83%; margin:15px 0;"> Zona riservata alla pubblicità dei "Convenzionati" </p>
+  <p style="text-align: right; width: 83%; margin:10px 0;"> Zona riservata alla pubblicità dei "Convenzionati" </p>
   <p><%= params[:convention_id]  %></p>
   <p ><%= f.select :convention_id, (Convention.all.collect {|c| [c.id.to_s + c.ragione_sociale , c.id]}),{:include_blank => true,  :selected => params[:convention_id] , :default => params[:convention_id] , :required => false}, :title => l(:label_convention) %></p>
 
@@ -32,32 +59,7 @@
   </p>
 
   <hr/>
-  <div>
-    <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
-      <li>
-        Info casella POSIZIONE:
 
-      </li>
-      <li>
-        ":associazione" verrà visualizzato il contenuto qui sopra in un blocco laterale o in una newsletter
-      </li>
-      <li>
-        nb: le altre opzioni qui sotto sono per le postazioni fisse dentro le pagine principali
-      </li>
-      <li>
-        blocco grande a sinistra: :block_l => "256x216#"
-      </li>
-      <li>
-        blocco piccolo come dentro un articolo: :block_s => "194x154#"
-      </li>
-      <li>
-        blocco tra i menu a destra :tramenu => "290x94#"
-      </li>
-      <li>
-        l'immagine verrà non deve superare i 200kb e di formato jpg/png/gif/bmp
-      </li>
-    </ul>
-  </div>
 
 
 </div>

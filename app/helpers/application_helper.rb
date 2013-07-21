@@ -1289,7 +1289,7 @@ module ApplicationHelper
   #usr utente , parametro obbligatorio occorre sempre per primo
   #size: l per large 50px  :s per small 25px
   #text = la didascalia se omesso prende iol nome dell'utente
-  #icon_for: stampa solo l'icona da un parametro parametri accettati= admin + man  +auth + vip + abbo +reg +renew +exp  + arc
+  #icon_for:  stampa solo l'icona ,  per il get icona usare @user.uicon() oppure settare da un parametro accettato come : admin + man  +auth + vip + abbo +reg +renew +exp  + arc
 
 
   def user_role_iconized(usr = nil, params={})
@@ -1308,7 +1308,6 @@ module ApplicationHelper
       else
         s = '<div class="user-role-icon-only-' + t + '"><span class=' + t + '-' + ico +'></span></div >'
       end
-
       return s
     end
 

@@ -1295,7 +1295,7 @@ textarea#issue_subject{
  .s-question { background: url(../images/ico/users_sprite.png) no-repeat -50px -460px; }
  .s-exclamation { background: url(../images/ico/users_sprite.png) no-repeat -50px -510px; }
  /*  fine del fee roles icons */
-
+ .user-key-s { background-image: url(../images/ico/user_key.png);  padding-left: 40px; min-height:24px;}
 div .watchers_lst{
   float: left;
     margin: 10px ;
@@ -1349,7 +1349,7 @@ p.changeauthor img.gravatar{
 	font-family: arial , sans-serif;
 	font-size:15px;
 	font-weight:bold;
-	padding:6px 24px;
+	padding:8px 30px;
 	text-decoration:none;
 }.button-blu:hover {
 	background-color:#80826b;
@@ -1384,4 +1384,17 @@ p.changeauthor img.gravatar{
 .span2col {
    width: 50%;
    display: inline-block
+}
+.span40x {
+   width: 40%;
+   display: inline-block
+}
+.cleared {
+   font: 0/0 serif;
+   clear: both;
+}
+.btn-footer{
+    width:95%;
+    text-align: right;
+    padding:10px 0;
 }

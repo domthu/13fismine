@@ -1,74 +1,98 @@
 <%= f.error_messages %>
+<div class="box tabular" xmlns="http://www.w3.org/1999/html">
+  <h3><%= l(:label_abbo) %></h3>
 
-<div class="box tabular">
-  <h3>Convenzione - competenza geografica</h3>
-  <% if @conv.new_record? %>
-    <h4><%= @conv.pact %></h4>
-  <% end %>
-  <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_cross_organization) %></p>
-  <p><%= f.select :region_id, (Region.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_region) %></p>
-  <p><%= f.select :province_id, (Province.all.collect {|c| [c.name + ' (' + c.sigla + ')', c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_province) %></p>
-</div>
+  <p><%= f.select :user_id, (User.all.collect { |c| [c.lastname + ' ' + c.firstname + ' (' + c.login + ')', c.id] }), :include_blank => false, :required => true, :size => 60, :title => l(:label_manager) %></p>
 
-<div class="box tabular">
-  <h3>Responsabile</h3>
-  <p><%= f.select :user_id, (User.all.collect {|c| [c.lastname + ' ' + c.firstname +  ' (' + c.login + ')', c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_manager) %></p>
   <p><%= f.check_box :richiedinumeroregistrazione, :label => :label_richiedinumeroregistrazione %></p>
+
   <p><%= f.date_select :data_scadenza, :label => :field_data_scadenza %></p>
-  <p><%= f.text_field :nota, :label => :field_nota, :size => 40  %></p>
+
+  <p><%= f.text_field :codice_attivazione, :label => :field_codice_attivazione, :size => 40 %></p>
+
+  <p><%= f.text_field :nota, :label => :field_nota, :size => 60 %></p>
 </div>
 
-
 <div class="box tabular">
-  <h3>Dati newsletter</h3>
+  <h3><%= l(:label_convention) %> </h3>
   <% if @conv.new_record? %>
-    <h4><%= @conv.name %></h4>
+      <h4><%= @conv.pact %></h4>
+  <% end %>
+  <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect { |c| [c.name, c.id] }), :include_blank => false, :required => true, :size => 60, :title => l(:label_cross_organization) %></p>
+
+  <p><%= f.select :region_id, (Region.all.collect { |c| [c.name, c.id] }), :include_blank => false, :required => true, :size => 60, :title => l(:label_region) %></p>
+
+  <p><%= f.select :province_id, (Province.all.collect { |c| [c.name + ' (' + c.sigla + ')', c.id] }), :include_blank => false, :required => true, :size => 60, :title => l(:label_province) %></p>
+  <hr>
+  <% if @conv.new_record? %>
+      <h4><%= @conv.name %></h4>
   <% end %>
   <p><%= f.text_field :ragione_sociale, :label => :field_ragione_sociale, :required => true, :size => 40 %></p>
+
   <p><%= f.text_field :indirizzo, :label => :field_indirizzo, :size => 50 %></p>
-  <p><%= f.select :comune_id, (Comune.all.collect {|c| [c.name, c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_comune) %></p>
+
+  <p><%= f.select :comune_id, (Comune.all.collect { |c| [c.name, c.id] }), :include_blank => false, :required => true, :size => 60, :title => l(:label_comune) %></p>
+
   <p><%= f.text_field :email, :label => :field_email, :required => true, :size => 20 %></p>
-  <p><%= f.text_field :presidente, :label => :field_presidente, :size => 40  %></p>
-  <p><%= f.text_field :referente, :label => :field_referente, :size => 40  %></p>
-  <p><%= f.text_field :telefono, :label => :field_telefono, :size => 40  %></p>
-  <p><%= f.text_field :telefono_alt, :label => :field_telefono_alt, :size => 40  %></p>
+
+  <p><%= f.text_field :presidente, :label => :field_presidente, :size => 40 %></p>
+
+  <p><%= f.text_field :referente, :label => :field_referente, :size => 40 %></p>
+
+  <p><%= f.text_field :telefono, :label => :field_telefono, :size => 40 %></p>
+
+  <p><%= f.text_field :telefono_alt, :label => :field_telefono_alt, :size => 40 %></p>
+
   <p><%= f.text_field :email_alt, :label => :field_email_alt, :size => 20 %></p>
-  <p><%= f.text_field :fax, :label => :field_fax, :fax => 40  %></p>
-  <p><%= f.check_box :logo_in_fe, :label => :field_logo_in_fe %></p>
-  <p><%= f.text_field :priorita_logo_fe, :label => :field_priorita_logo_fe %></p>
-  <p><%= f.text_area :comunicazioni, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+
+  <p><%= f.text_field :fax, :label => :field_fax, :fax => 40 %></p>
+</div>
+<div class="box tabular">
+  <h3><%= l(:label_visibilita) %> </h3>
+
+  <div class="splitcontentleft">
+    <p><%= f.check_box :logo_in_fe, :label => :field_logo_in_fe %></p>
+
+    <p><%= f.text_field :priorita_logo_fe, :label => :field_priorita_logo_fe, :size => 5 %></p></div>
+  <div class="splitcontentright" style="text-align: right;">
+    <% if @conv.new_record? %>
+        <%= link_to ('Nuovo banner', {:controller => "group_banners", :action => "new", :convention_id => @conv.id}, :class => "button-grey") %>
+    <% else %>
+        <%= link_to ('Visualizza Banner', {:controller => "group_banners", :action => "show", :id => @conv.group_banner}, :class => "button-grey") %>
+    <% end %>
+  </div>
+
   <p><%= f.file_field :image, :label => :field_immagine %> </p>
+
   <p id="prev" style="max-height: 300px;"> <%= image_tag @conv.image.url(:m) %>   </p>
 
-    <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
-      <li>
-        Immagini stili e misure:
+  <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
+    <li>
+      Questo logo si visualizzerà nel sito centralmente, accanto all'utente associato e nella newsletter.
+    </li>
+    <li>
+      L'immagine è meglio sia già quadrata e verrà ridimensionata 200px x 200px
+    </li>
+    <li>
+      l'immagine non deve superare i 200kb e di formato jpg/png/gif/bmp
+    </li>
+  </ul>
+  <br>
 
-      </li>
-      <li>
-        blocco grande a sinistra: :block_l => "256x216#"
-      </li>
-      <li>
-        blocco piccolo come dentro un articolo: :block_s => "194x154#"
-      </li>
-      <li>
-        blocco tra i menu a destra :tramenu => "290x94#"
-      </li>
-      <li>
-        l'immagine verrà non deve superare i 200kb e di formato jpg/png/gif/bmp
-      </li>
-    </ul>
+  <div class="cleared"></div>
 
- </div>
+  <p><%= f.text_area :comunicazioni, :required => false, :lebel => :field_comunicazioni %></p>
+</div>
 
 <script type="text/javascript">
+    CKEDITOR.replace('convention_comunicazioni', { toolbar:'Light', height:'500' });
     (function () {
-      document.getElementById('Convention_image').addEventListener('change', function(event) {
-              if (!event) // i.e. the argument is undefined or null
+        document.getElementById('Convention_image').addEventListener('change', function (event) {
+            if (!event) // i.e. the argument is undefined or null
                 event = window.event;
-                handleFileSelect(event, 'prev', '')
-      }, false);
+            handleFileSelect(event, 'prev', '')
+        }, false);
 
     })
             ();
- </script>
+</script>
