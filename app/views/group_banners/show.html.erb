@@ -6,7 +6,7 @@
               :method => :delete,
               :class => 'icon icon-del') if User.current.admin? %>
 </div>
-<h2><%= link_to l(:label_group_banner_plural), group_banners_path %> &#187; <%=h @group_banner %></h2>
+<h2><%= link_to l(:label_group_banner_plural), group_banners_path %> &#187; <%= h @group_banner %></h2>
 <div id="footer-menu" class="box">
   <%= render_menu :menu_table_fs %>
 </div>
@@ -26,37 +26,35 @@
       <%= h @group_banner.url %>
     </p>
 
-    <p>
-      <%= l(:label_priorita) %>: <%= h @group_banner.priorita %>
-    </p>
+    <p> <%= l(:label_priorita) %>: <%= h @group_banner.priorita %></p>
 
-    <p>
-      <%= l(:label_posizione) %>: <%= h @group_banner.posizione %>
-    </p>
+    <p><%= l(:label_visibile_web) %>:<%= check_box_tag '', :visibile_web, :disabled => true %></p>
 
-    <p><%= l(:label_visibile_web) %><%= check_box_tag '', :visibile_web, :disabled => true %></p>
-
-    <p><%= l(:label_visibile_mail) %><%= check_box_tag '', :visibile_mail, :disabled => true %></p>
+    <p><%= l(:label_visibile_mail) %>:<%= check_box_tag '', :visibile_mail, :disabled => true %></p>
 
     <p><%= l(:label_priorita) %>: <%= h @group_banner.priorita %></p>
-    <p><%= l(:label_posizione) %>: <%= h @group_banner.posizione %></p>
-
-    <p> <%= l(:label_immagine) %>:
-        <%= image_tag @group_banner.image.url(:m) %>
-      </p>
 
   </fieldset>
 </div>
 
+<div class="splitcontentright">
+  <p style="background-color: #2C4056; padding: 3px 0; color: #fff; display: table; width: 100%; margin:10px 0;">
+    <%= l(:label_posizione) %> <%= h @group_banner.posizione %></p>
+  <div>
+    <fieldset class="htmldraft">
+      <% if @group_banner.posizione == "convenzionato" %>
+          <legend><%= l(:label_didascalia) %>:</legend>
+          <% unless @group_banner.didascalia.nil? %>
+              <%= @group_banner.didascalia.html_safe %>
+          <% end %>
+      <% else %>
+          <% unless @group_banner.posizione.nil? %>
+              <p> <%= l(:label_immagine) %>
+                <%= image_tag @group_banner.image.url(@group_banner.posizione.to_sym) %>
+              </p>
+          <% end %>
+      <% end %>
+    </fieldset>
+  </div>
+</div>
 <div style="clear:both;"></div>
-<div>
-  <fieldset class="htmldraft">
-    <legend><%= l(:label_didascalia) %>:</legend>
-    <% unless @group_banner.didascalia.nil? %>
-        <%= @group_banner.didascalia.html_safe %>
-    <% end %>
-    <div class="wiki hide">
-      <%# textilizable(@group_banner.didascalia) %>
-    </div>
-  </fieldset>
-</div>

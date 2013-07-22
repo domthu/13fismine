@@ -86,6 +86,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.register '/account/registrati', :controller => 'account', :action => 'register'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
   map.prova_gratis 'prova_gratis', :controller => 'account', :action => 'prova', :conditions => {:method => [:post]}
+  map.banners_position '/group_banners/position',:controller => 'group_banners', :action=> 'positions', :conditions => {:method => [:get]}
 =begin
   map.with_options :controller => 'editorial' , :conditions => {:method => :get} do |user_profiles_views|
       user_profiles_views.connect '/chi-siamo', :action => 'profili_all'

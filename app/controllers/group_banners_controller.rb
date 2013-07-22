@@ -104,4 +104,9 @@ class GroupBannersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  def positions
+    respond_to do |format|
+       format.html
+    end
+    end
 end

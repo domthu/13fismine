@@ -14,53 +14,28 @@
   <span class="span3col">
   <p><%= f.text_field :priorita, :label => :field_priorita, :size => 3 %></p> </span>
    <br>
-  <div style="background-color: #2C4056; padding: 10px 0; color: #fff;">
-  <p>
-    <%= f.select(:posizione, ['associazione', 'block_l', 'block_s', 'tramenu'], {}, {:class => '', :label => :field_posizione}) %>
-      <span class="mini-legend"> * NB: se si seleziona 'associazione' verrà visualizzato il 'Banner Associazione' negli
-      altri casi verrà visualizzato il campo 'Immagine' </span></p></div>
-  <div style="background-color: #fff; border: solid 1px #e4e4e4;"><div style="text-align: right; padding-right: 15px;"> Banner generico visibile nel sito nella posizione selezionata</div>
+
+  <div style="background-color: #2C4056; padding: 3px 0; color: #fff; display: table; width: 100%; margin:10px 0;">
+  <p style="display: table-cell; vertical-align: middle;">
+    <%= f.select(:posizione, ['convenzionato', 'block_l', 'block_s', 'tramenu'], {}, {:class => '', :label => :field_posizione}) %>
+      <span style="float: right; margin-right: 5px;">
+          <%= link_to ('visualizza le posizioni', banners_position_path,  :class => "button-grey" ,:style => "font-size:1em") %>
+        </span>
+    </p>
+      </div>
+  <div style="background-color: #fff; border: solid 1px #e4e4e4;"><div style="text-align: right; padding-right: 15px; font-style: italic;"> Banner immagine</div>
   <p>   <%= f.file_field :image, :label => :field_immagine %> </p>
 
-  <p id="prev" style="max-height: 300px;"> <%= image_tag @group_banner.image.url(:original) %>   </p>
-    <div>
-      <ul style="font-size: 0.8em; color: #aeaeae; margin: 5px 0 5px  11%;">
-        <li>
-          Info casella POSIZIONE:
+  <p id="prev" style="max-height: 300px;"> <%= image_tag @group_banner.image.url(:original) %>
 
-        </li>
-        <li>
-          ":associazione" verrà visualizzato il contenuto qui sopra in un blocco laterale o in una newsletter
-        </li>
-        <li>
-          nb: le altre opzioni qui sotto sono per le postazioni fisse dentro le pagine principali
-        </li>
-        <li>
-          blocco grande a sinistra: :block_l => "256x216#"
-        </li>
-        <li>
-          blocco piccolo come dentro un articolo: :block_s => "194x154#"
-        </li>
-        <li>
-          blocco tra i menu a destra :tramenu => "290x94#"
-        </li>
-        <li>
-          l'immagine verrà non deve superare i 200kb e di formato jpg/png/gif/bmp
-        </li>
-      </ul>
-    </div>
 </div>
-  <p style="text-align: right; width: 83%; margin:10px 0;"> Zona riservata alla pubblicità dei "Convenzionati" </p>
+  <p style="text-align: right; width: 83%; margin:10px 0; font-style: italic; "> Pubblicità "Convenzionati" </p>
   <p><%= params[:convention_id]  %></p>
   <p ><%= f.select :convention_id, (Convention.all.collect {|c| [c.id.to_s + c.ragione_sociale , c.id]}),{:include_blank => true,  :selected => params[:convention_id] , :default => params[:convention_id] , :required => false}, :title => l(:label_convention) %></p>
 
   <p><label>Banner
     Associazione </label> <%= f.cktext_area :didascalia, :width => 775, :label => :field_banner, :height => 456, :swf_params => {:assetable_type => 'Test', :assetable_id => 1} %>
   </p>
-
-  <hr/>
-
-
 
 </div>
 <script type="text/javascript">

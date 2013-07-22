@@ -7,7 +7,7 @@
               :class => 'icon icon-del') if User.current.admin? %>
 </div>
 
-s<h2><%= link_to l(:label_convention_plural), conventions_path %> &#187; <%=h @conv %></h2>
+<h2><%= link_to l(:label_convention_plural), conventions_path %> &#187; <%=h @conv.ragione_sociale %></h2>
 <div id="footer-menu" class="box">
   <%= render_menu :menu_table_fs %>
 </div>

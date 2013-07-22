@@ -104,9 +104,6 @@ class EditorialController < ApplicationController
       end
     end
 
-  #dal menu sezione si accede all'insieme degli articoli riferiti alla sezione
-  #map.sezione_page '/editorial/:topmenu_key/sezione/:topsection_id'
-  #link_to sezione_page_url
   def top_sezione
     #inizio box convegni
     @conv_prossimo = Issue.all_public_fs.solo_convegni.first(
@@ -128,12 +125,6 @@ class EditorialController < ApplicationController
     # @topsection_id = params[:topsection_id]
     @topsection_key = params[:topsection_key]
     @topsection = TopSection.find(:first, :conditions => ["top_sections.`key` = ?", @topsection_key])
-    #flash[:notice] = l(:notice_missing_parameters) + " -->  @section_id="+ @topsection.id.to_s   + @topsection_key
-    # if @topsection_id.nil?
-    #         flash[:notice] = l(:notice_missing_parameters) + " --> 1 @key_url=" + @key_url + ", @topsection_id=" + @topsection_id.to_s
-    #         redirect_to :action => 'home'
-    #         return
-    #     end
     if @topsection.nil?
       flash[:alert] = :notice_missing_parameters + " --> 3 @section_id="+ @topsection.id.to_s
       redirect_to :action => 'home'

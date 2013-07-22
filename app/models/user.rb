@@ -46,15 +46,12 @@ class User < Principal
       ['only_owner', :label_user_mail_option_only_owner],
       ['none', :label_user_mail_option_none]
   ]
-  has_attached_file :photo, :styles => {:l => ["200x200#", :png, :jpg],
-                                        :m => ["80x80#", :png, :jpg],
-                                        :s => ["48x48#", :png, :jpg],
-                                        :xs => ["32x32#", :png, :jpg]},
+  has_attached_file :image, :styles => {:l => "200x200#", :m => "80x80#", :s => "48x48#", :xs => "32x32#"},
                     :url => "users/user_:id/:style_:basename.:extension",
                     :path => "#{RAILS_ROOT}/public/images/users/user_:id/:style_:basename.:extension",
                     :default_url => "commons/:style-no_avatar.jpg"
-  validates_attachment_size :photo, :less_than => 500.kilobytes
-  validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png']
+  validates_attachment_size :image, :less_than => 300.kilobytes
+  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 
   has_and_belongs_to_many :groups, :after_add => Proc.new { |user, group| group.user_added(user) },
                           :after_remove => Proc.new { |user, group| group.user_removed(user) }

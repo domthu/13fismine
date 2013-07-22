@@ -346,9 +346,11 @@
 .fs-logged2 {
     float: left;
     display: table;
-    width: 98%;
-    height: auto;
+    width: 246px;
+    height: 59px;
     overflow: hidden;
+    position: relative;
+
 }
 
 .fs-logged2 a,
@@ -371,16 +373,18 @@
 
 .fs-logged2 img {
     float: right;
+    margin-top: 6px;
+
 }
 
 .fs-logged2 span {
-    height: 50px;
-    display: table-cell;
-    vertical-align: middle;
     font-variant: small-caps;
     overflow: hidden;
     font-size: 1.2em;
-    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    padding-left: 5px;
+    max-width: 188px;
 }
 
 #fs-login2-asso {
@@ -3707,27 +3711,6 @@ html>body #ajax-indicator {
     float: right;
 }
 
-/*
-.button-back, .button-next, .finish {
-  border: 1px solid #327E04;
-  color: #FFF;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1.1em;
-  padding: 3px 10px;
-  text-decoration: none;
-  -khtml-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -opera-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-}
-
-.button-back:hover, .button-next:hover, .finish:hover {
-  border-color: #9FC898;
-  color: #9FC898;
-}
-*/
 .step {
 
     font: 10px verdana;

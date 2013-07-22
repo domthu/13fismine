@@ -57,6 +57,15 @@ class Convention < ActiveRecord::Base
 
   alias :name :to_s
 
+  def index()
+    str = ""
+    #str = "[" << self.id.to_s << "] "
+    str = '<div class="count">' + (self.users.any? ? self.users.count.to_s : "0") + ' </div><strong> '
+    str << (self.ragione_sociale.blank? ? "?" : self.ragione_sociale)+'</strong><br /><span style="color:#484848">'
+    str << (self.presidente.blank? ? "" : " presidente: " + self.presidente + "</span>")
+    return str
+
+  end
   #nome del patto: Federazione con copertura geografica
   def pact
     str = ""

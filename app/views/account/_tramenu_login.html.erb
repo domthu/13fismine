@@ -29,8 +29,8 @@
         <div class="fs-login-my-abbo">
           <%= User.current.privato? ? '' :'Associato a...' %>
         </div>
-        <div class="fs-logged2"><span>  <%= user_myasso_text(User.current) %></span>
-          <%= image_tag(user_myasso_icon(User.current, :s), :width => 48, :height => 48) %>
+        <div class="fs-logged2"><span>  <%= user_myasso_text(User.current) %></span> <div class="fs-logged2-img" >
+          <%= image_tag(user_myasso_icon(User.current, :s), :width => 48, :height => 48) %></div>
           <%# link_to(User.current.user_myasso_icon , asso_path(User.current.user_myasso_text)) %>
         </div>
       </div>

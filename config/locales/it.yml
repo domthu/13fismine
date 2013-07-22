@@ -1298,6 +1298,7 @@ it:
   field_comunicazioni: Comunicazioni
   field_email_alt: Email alternativo
 
+  label_conv_pubblicita: Pubblicità (Convenzionato)
   label_espositore: Espositore
   label_url: Url
   label_priorita: Priorita
@@ -1306,7 +1307,7 @@ it:
   label_banner: Banner
   label_impressions: Impressions
   label_clicks: Clicks
-  label_didascalia: Didascalia
+  label_didascalia: Banner Associazione
   label_se_prima_pagina: In prima pagina?
   label_se_prenotazione: Gestione convegno?
   label_impressions_history: Storico impressione

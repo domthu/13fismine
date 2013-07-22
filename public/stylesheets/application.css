@@ -1118,7 +1118,7 @@ h2 img { vertical-align:middle; }
     background-position: 0 -300px;
 }
 .total{font-weight: bold;color: #2C4056; background-color:#FFFFDD; padding: 5px;}
-.htmldraft{padding:20px; margin-top: 1em; background: url(../images/draft.png)}
+.htmldraft{padding:15px; margin-top: 1em; overflow: auto; background: url(../images/draft.png)}
 .hide{display: none;}
 div.conv-select{float:right; right:10px;}
 /* sandro per implementazione paperclip  */
@@ -1324,12 +1324,21 @@ p.changeauthor img.gravatar{
 	border-radius:6px;
 	border:1px solid #dcdcdc;
 	display:inline-block;
-	color: #323232;
-	font-size:15px;
+	color: #2A5685;
+	font-size:1em;
 	font-weight:bold;
-	padding:6px 24px;
+	padding:4px 24px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #ffffff;
+}
+a.button-grey,
+a.button-grey:link,
+a:link.button-grey:link,
+body a.button-grey:link,
+a.button-grey:visited,
+body a.button-grey:visited{
+    text-decoration: none;
+    color: #2A5685;
 }
 .button-grey:hover {
 	background-color:#dfdfdf;
@@ -1360,6 +1369,15 @@ p.changeauthor img.gravatar{
 }.button-blu:active {
 	position:relative;
 	top:1px;
+}
+a.button-blu,
+a.button-blu:link,
+a:link.button-blu:link,
+body a.button-blu:link,
+a.button-blu:visited,
+body a.button-blu:visited{
+    text-decoration: none;
+    color:#fff7ff;
 }
 .gradient-dx-blu {
     background: -moz-linear-gradient(left, rgb(44, 64, 86) 0%, rgba(255, 246, 196, 0) 100%);
@@ -1400,4 +1418,21 @@ p.changeauthor img.gravatar{
     width:95%;
     text-align: right;
     padding:10px 0;
+}
+.count{
+    background: url(../images/ico/users_count.png);
+    width: 50px;
+    min-height: 20px;
+    margin: 0 3px;
+    display: inline-block;
+    text-align: center;
+  color: #fff;
+}
+a.count,
+a.count:link,
+a:link.count:link,
+body a.count:link,
+a.count:visited{
+    text-decoration: none;
+    color: #fff;
 }

@@ -80,14 +80,13 @@
   <br>
 
   <div class="cleared"></div>
-
   <p><%= f.text_area :comunicazioni, :required => false, :lebel => :field_comunicazioni %></p>
 </div>
 
 <script type="text/javascript">
     CKEDITOR.replace('convention_comunicazioni', { toolbar:'Light', height:'500' });
     (function () {
-        document.getElementById('Convention_image').addEventListener('change', function (event) {
+        document.getElementById('convention_image').addEventListener('change', function (event) {
             if (!event) // i.e. the argument is undefined or null
                 event = window.event;
             handleFileSelect(event, 'prev', '')

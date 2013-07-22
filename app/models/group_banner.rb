@@ -3,11 +3,11 @@ class GroupBanner < ActiveRecord::Base
                     :url => "commons/banners/:id:style.:extension",
                     :path => "#{RAILS_ROOT}/public/images/commons/banners/:id:style.:extension",
                     :default_url => "commons/:style_ban-no-image.jpg"
-  validates_attachment_size :image, :less_than => 200.kilobytes
+  validates_attachment_size :image, :less_than => 300.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
   #has_many :cross_groups, :dependent => :nullify
   belongs_to :convention, :class_name => 'Convention'
-  validates_presence_of :espositore , :espositore
+  validates_presence_of :espositore , :posizione
   # validates_uniqueness_of :espositore, :case_sensitive => false
   validates_length_of :espositore, :maximum => 255
   # scope per i banner nel fe

@@ -1,0 +1,98 @@
+<%= stylesheet_link_tag 'style.css', :media => 'all' %>
+<%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
+
+<div id="fs-main">
+  <div id="fs-header-bg" class="clearfix">
+  </div>
+  <div class="fs-sheet clearfix" style="width:auto!important;">
+    <header class="fs-header clearfix">
+      <div class="fs-shapes">
+        <h1 class="fs-headline" data-left="58%">
+          <%= Setting.welcome_text_fs %>
+        </h1>
+      </div>
+      <div class="fs-textblock fs-object375974515" data-left="80%">
+        <%= text_field_tag 'q', @question, :accesskey => accesskey(:quick_search) %>
+      </div>
+    </header>
+    <nav class="fs-nav clearfix">
+      <nav class="fs-nav clearfix">
+        <ul class="fs-hmenu">
+          <li><a>Home</a></li>
+          <li><a>Chi Siamo</a></li>
+          <li><a>Cosa Offriamo</a></li>
+          <li><a>Lavora con Noi</a></li>
+          <li><a>Eventi e Convegni</a></li>
+          <li><a>Abbonamenti</a></li>
+          <li><a>Progetto Fiscosport</a></li>
+          <li><a>Contattaci</a></li>
+        </ul>
+      </nav>
+    </nav>
+    <div id="fs-tramenu-wrapper" style="display: table;">
+      <div id="fs-tramenu-blocco1" style="text-align: center; display: table-cell;vertical-align: middle;">
+        <div style="height: 90px; width: 98%; border: dotted 3px #005D7E;">
+          <h5>banner sponsor</h5>
+
+          <h1>tramenu</h1>
+          <h5 style="color: #b22222;">dimensioni immagine: larg=290px alt=94px </h5>
+        </div>
+      </div>
+      <div id="fs-tramenu-blocco2" style="text-align: center; display: table-cell;vertical-align: middle; width: 333px!important;">
+        <div style="height: 90px; width:98%; border: dotted 3px #005D7E;">
+          <h5>loghi dei convenzionati</h5>
+          <h6>riservato ai loghi degli organismi convenzionati editabile in /conventions/(id)/edit spunta sul "Logo in
+            Home" </h6>
+          <h5 style="color: #b22222;">dimensioniimmagine: larg=200px alt=200px </h5>
+        </div>
+      </div>
+      <div id="fs-tramenu-blocco3" style="text-align: center; display: table-cell;vertical-align: middle;">
+        <div style="height: 90px; width: 98%; border: dotted 3px #d0d0d0;">
+          <h5>zona utente</h5>
+          <h6>riservato ai dati degli utenti </h6>
+        </div>
+      </div>
+    </div>
+    <div style="height: 300px; width: 190px; border: dotted 3px #005D7E; margin-right: 10px; float: left; padding: 3px;">
+      <h5>banner laterale piccolo</h5>
+
+      <h1>block_s</h1>
+      <h6>si utilizza nelle pagine interne es. visualizzazione intera di un articolo </h6>
+      <h5 style="color: #b22222;">dimensioni immagine: larg=194px alt=154px </h5>
+    </div>
+    <div style="height: 600px;float: right;">
+      <div style="height: 300px; width: 270px; border: dotted 3px #005D7E; padding: 3px;">
+        <h5>banner laterale grande</h5>
+
+        <h1>block_l</h1>
+        <h6>si utilizzanella home e nelle pagine interne. i banner sono rotanti come gli altri </h6>
+        <h5 style="color: #b22222;">dimensioni immagine: larg=256px alt=216px </h5>
+      </div>
+      <div style="height: 300px; width: 270px; border: dotted 3px #005D7E; float: right; padding: 3px;">
+        <h5>banner laterale per convenzioni</h5>
+        <h1>convenzione</h1>
+        <h5>verrà visualizzato il contenuto in questo blocco quando un utente è loggato e legato ad un
+          organismo convenzionato </h5>
+        <br>
+        <h5 style="color: #b22222;">
+          Il testo in html modificabile in group_banners/(id)/edit nella zona "Pubblicità (Convenzionato)" . <br/> Se si
+          vuole caricare immagine le larghezza massima è 256px </h5>
+        <br>
+        <h5>si puo' decidere di far apparire o meno tramite l'opzione "Visibile nel Web" inoltre selezionando "Visibile
+                  Mail" questa pubblicità puo' essere inserita anche nella newsletter.  </h5>
+      </div>
+    </div>
+    <div style="padding: 2%; color: #016285;">
+      <h1 style="color: #323232; font-style: italic;">Pagina informativa sul posizionamento dei banner pubblicitari</h1><br> <p>
+      Nello stesso form si possono creare banner di 2 tipi : banner immagine e banner pubblicitari in html per l'organismo convenzionato.
+      Se il campo richiede una immagine la stessa non dovrà superare i 300kb, <br> i formati accettati sono : jpg/png/gif/bmp. </p><p>
+      Pe i banner immagine attenersi strettamente alle misure altrimenti questa verrà ritagliata automaticamente.</p><p>Ricordarsi di mettere la url di destinazione per far funzionare il link.
+      la posizione "convenzione" è in formato html di conseguenza si possono usare immagini e testo.</p>
+      <br>&nbsp;<br>&nbsp;<br><p style="text-align:center ;">
+      <%= link_to("indietro", :back,   :class => "button-grey") %>
+      </p>
+    </div>
+
+
+  </div>
+</div>
