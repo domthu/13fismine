@@ -7,6 +7,9 @@
       :class => 'icon icon-del') if User.current.admin? %>
 </div>
 <h2><%= link_to l(:label_invoice_plural), invoices_path %> &#187; <%=h @invoice %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_payment_fs %>
+</div>
 
 <div class="splitcontentleft">
   <fieldset class="box tabular">
@@ -33,7 +36,7 @@
         <%= l(:label_tariffa) %>: <%=h @invoice.tariffa %>
     </p>
     <p>
-      <%= l(:label_sconto) %>: 
+      <%= l(:label_sconto) %>:
       <div class="wiki">
         <%= textilizable(@invoice.sconto) %>
       </div>
@@ -76,4 +79,3 @@
     </table>
   </fieldset>
 </div>
-

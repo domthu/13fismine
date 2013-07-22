@@ -1,4 +1,7 @@
 <h2><%= link_to l(:label_cross_organization_plural), cross_organizations_path %> &#187; <%= l(:label_cross_organization_new) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
 
 <% labelled_form_for @cross_organization ,:html =>{:multipart =>true} do |f| %>
 

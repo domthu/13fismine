@@ -3,6 +3,9 @@
 </div>
 
 <h2><%= l(:label_invoice_plural) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_payment_fs %>
+</div>
 
 <% if @invoices.any? %>
 <table class="list invoices">

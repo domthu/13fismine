@@ -17,6 +17,7 @@ module FeeConst
   #Scaduto: user.data_scadenza < today<br />
   ROLE_ARCHIVIED=8
   #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED, cambio ruolo...)<br />
+
   ROLES =[ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW, ROLE_EXPIRED, ROLE_ARCHIVIED]
 
   AUTHORED_ROLES =[ROLE_ADMIN, ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW]
@@ -59,6 +60,7 @@ module FeesHelper
   include ActionView::Helpers::DateHelper
   #include ApplicationHelper   NO utc? in format_time
   #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
+  #per traduzione l(:role_author) --> undefined method `l'
 
   def link_to_top_section(ts)
     if ts.is_a?(TopSection)
@@ -95,14 +97,14 @@ module FeesHelper
   #<%= select_tag 'block', "<option></option>" + options_for_select(@block_options), :id => "block-select" %>
   def fee_roles_options_for_select(selected)
     options_for_select([[l(:label_all), ''],
-                        ["#{l(:role_manager)}", "#{FeeConst::ROLE_MANAGER.to_i}"],
-                        ["#{l(:role_author)}", "#{FeeConst::ROLE_AUTHOR.to_i}"],
-                        ["#{l(:role_vip)}", "#{FeeConst::ROLE_VIP.to_i}"],
-                        ["#{l(:role_abbonato)}", "#{FeeConst::ROLE_ABBONATO.to_i}"],
-                        ["#{l(:role_registered)}", "#{FeeConst::ROLE_REGISTERED.to_i}"],
-                        ["#{l(:role_renew)}", "#{FeeConst::ROLE_RENEW.to_i}"],
-                        ["#{l(:role_expired)}", "#{FeeConst::ROLE_EXPIRED.to_i}"],
-                        ["#{l(:role_archivied)}", "#{FeeConst::ROLE_ARCHIVIED.to_i}"]
+                        [l(:role_manager), FeeConst::ROLE_MANAGER.to_s],
+                        [l(:role_author), FeeConst::ROLE_AUTHOR.to_s],
+                        [l(:role_vip), FeeConst::ROLE_VIP.to_s],
+                        [l(:role_abbonato), FeeConst::ROLE_ABBONATO.to_s],
+                        [l(:role_registered), FeeConst::ROLE_REGISTERED.to_s],
+                        [l(:role_renew), FeeConst::ROLE_RENEW.to_s],
+                        [l(:role_expired), FeeConst::ROLE_EXPIRED.to_s],
+                        [l(:role_archivied), FeeConst::ROLE_ARCHIVIED.to_s]
                         ], selected.to_s)
   end
   #  def change_status_link(user)
@@ -183,47 +185,95 @@ module FeesHelper
 #.icon-exp { background-image: url(../images/delete.png); }
 #.icon-arc { background-image: url(../images/delete.png); }
   def get_status_role(user)
-    str = ""
-    if Setting.fee?
-      str += "<span class='"
-      str += get_role_css(user)
-      str += "'>"
-      str += user.role.name
-      str += "</span>"
-    end
-    return str
+    #abbonamento_name = FeeConst::ROLES_NAMES[user.role_id].to_s
+    #abbonamento_name = ROLES_NAMES[user.role_id].to_s
+    abbonamento_name = get_abbonamento_name(user)
+    return user_role_iconized(user, :size => "s", :icon_for => user.uicon, :text => abbonamento_name)
+    #str = ""
+    #if Setting.fee?
+    #  str += "<span class='"
+    #  str += get_role_css(user)
+    #  str += "'>"
+    #  str += user.role.name
+    #  str += "</span>"
+    #end
+    #return str
   end
 
   def get_role_css(user)
-    case user.role_id
+    if user.is_a?(User)
+      user_role_iconized(user, :size => "s", :icon_for => user.uicon, :text => '')
+    else
+      #TODO similare def uicon()
+      case user #integer
+        #FeeConst::ROLE_MANAGER
+        when 3
+          return "admin" #"icon icon-man"
+        #FeeConst::ROLE_AUTHOR
+        when 4
+          return "man" #"icon icon-auth"
+        #FeeConst::ROLE_VIP
+        when 10
+          return "vip" #"icon icon-vip"
+        #FeeConst::ROLE_ABBONATO
+        when 6
+          return "abbo" #"icon icon-abbo"
+        #FeeConst::ROLE_REGISTERED
+        when 9
+          return "reg" #"icon icon-reg"
+        #FeeConst::ROLE_RENEW
+        when 11
+          return "renew" #"icon icon-renew"
+        #FeeConst::ROLE_EXPIRED
+        when 7
+          return "exp" #"icon icon-exp"
+        #FeeConst::ROLE_ARCHIVIED
+        when 8
+          return "arc" #"icon icon-arc"
+        else
+          return "question"
+      end
+    end
+  end
+
+  #ROLES_NAMES =[l(:role_manager), l(:role_author), l(:role_vip), l(:role_abbonato), l(:role_registered), l(:role_renew), l(:role_expired), l(:role_archivied)]
+  def get_abbonamento_name(user)
+    if user.is_a?(User)
+      abbo = user.role_id
+    else
+      abbo = user
+    end
+    case abbo
       #FeeConst::ROLE_MANAGER
       when 3
-        return "icon icon-man"
+       return l(:role_manager)
+
       #FeeConst::ROLE_AUTHOR
       when 4
-        return "icon icon-auth"
+        return l(:role_author_abrv)
       #FeeConst::ROLE_VIP
       when 10
-        return "icon icon-vip"
+        return l(:role_vip)
       #FeeConst::ROLE_ABBONATO
       when 6
-        return "icon icon-abbo"
+        return l(:role_abbonato)
       #FeeConst::ROLE_REGISTERED
       when 9
-        return "icon icon-reg"
+        return l(:role_registered)
       #FeeConst::ROLE_RENEW
       when 11
-        return "icon icon-renew"
+        return l(:role_renew)
       #FeeConst::ROLE_EXPIRED
       when 7
-        return "icon icon-exp"
+        return l(:role_expired)
       #FeeConst::ROLE_ARCHIVIED
       when 8
-        return "icon icon-arc"
+        return l(:role_archivied)
       else
         return ""
     end
   end
+
 
   #per ogni utente
   # prendere codice utente e data scadenza

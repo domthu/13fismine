@@ -1,10 +1,12 @@
 <h2><%= link_to l(:label_section_plural), sections_path %> &#187; <%= h(@section) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
 
 <% labelled_form_for @section, :html =>{:multipart =>true} do |f| %>
 <%= submit_tag l(:button_save) %>
 <%= render :partial => 'form', :locals => { :f => f } %>
 <%= submit_tag l(:button_save) %>
-<!-- <%= f.submit 'Update' %> --> 
+<!-- <%= f.submit 'Update' %> -->
 
 <% end %>
-

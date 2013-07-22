@@ -1,4 +1,8 @@
 <h2><%= link_to l(:label_top_section_plural), top_sections_path %> &#187; <%= l(:label_top_section_new) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
+
 <% labelled_form_for @top_section, :html => {:multipart => true} do |f| %>
     <%= render :partial => 'form', :locals => {:f => f} %>
     <p>

@@ -297,27 +297,25 @@ end
 
 Redmine::MenuManager.map :application_menu do |menu|
   # Empty
-  #domthu 20120517
-
-  menu.push :top_menu, :top_menus_path, :if => Proc.new { User.current.admin? }
-  menu.push :top_section, :top_sections_path, :if => Proc.new { User.current.admin? }
-  menu.push :section, :sections_path, :if => Proc.new { User.current.admin? }
-  #menu.push :region, :regions_path, :if => Proc.new { User.current.admin? }
-  #menu.push :province, :provinces_path, :if => Proc.new { User.current.admin? }
-  #menu.push :comune, :comunes_path, :if => Proc.new { User.current.admin? }
-  menu.push :type_organization, :type_organizations_path, :if => Proc.new { User.current.admin? }
-  menu.push :cross_organization, :cross_organizations_path, :if => Proc.new { User.current.admin? }
-  menu.push :convention, :conventions_path, :if => Proc.new { User.current.admin? }
-  menu.push :cross_group, :cross_groups_path, :if => Proc.new { User.current.admin? }
-  menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
-  #menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
-  menu.push :fee, :fee_path, :if => Proc.new { User.current.admin? && Setting.fee? }
+  #menu fiscosport
+  menu.push :table_fs, :conventions_path, :if => Proc.new { User.current.admin? }
+  #menu abbonamento
+  menu.push :fee_manage, :fee_path, :if => Proc.new { User.current.admin? && Setting.fee? }
+  #menu.push :fee_manage, :registrati_path, :if => Proc.new { User.current.admin? && Setting.fee? }
+  #menu pagamenti
+  menu.push :payment, :pagamento_path, :if => Proc.new { User.current.admin? && Setting.fee? }
 end
 
 Redmine::MenuManager.map :admin_menu do |menu|
   menu.push :projects, {:controller => 'admin', :action => 'projects'}, :caption => :label_project_plural
   menu.push :users, {:controller => 'users'}, :caption => :label_user_plural
+  #menu fiscosport
+  menu.push :table_fs, :conventions_path
+  #menu abbonamento
   menu.push :abbo, {:controller => 'fees', :action => 'index'}, :caption => :label_abbo_plural, :if => Proc.new { Setting.fee? }
+  #menu.push :abbo, {:controller => 'fees', :action => 'registrati'}, :caption => :label_abbo_plural, :if => Proc.new { Setting.fee? }
+  #menu pagamenti
+  menu.push :payment, :pagamento_path, :if => Proc.new { Setting.fee? }
 
   menu.push :groups, {:controller => 'groups'}, :caption => :label_group_plural
   menu.push :roles, {:controller => 'roles'}, :caption => :label_role_and_permissions
@@ -358,13 +356,15 @@ Redmine::MenuManager.map :project_menu do |menu|
 end
 
 Redmine::MenuManager.map :menu_fee_fs do |menu|
-  menu.push :registrati, :registrati_path
   menu.push :abbonamenti, :abbonamenti_path
-  menu.push :privati, :privati_path
+  menu.push :registrati, :registrati_path
+  #menu.push :privati, :privati_path
   menu.push :associati, :associati_path
-  menu.push :scaduti, :scaduti_path
-  menu.push :archiviati, :archiviati_path
+  #menu.push :scaduti, :scaduti_path
+  #menu.push :archiviati, :archiviati_path
   menu.push :paganti, :paganti_path
+end
+Redmine::MenuManager.map :menu_payment_fs do |menu|
   menu.push :pagamento, :pagamento_path
   menu.push :invia_fatture, :invia_fatture_path
   menu.push :email_fee, :email_fee_path
@@ -372,6 +372,20 @@ Redmine::MenuManager.map :menu_fee_fs do |menu|
   menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
   menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
 end
+Redmine::MenuManager.map :menu_table_fs do |menu|
+  menu.push :top_menu, :top_menus_path, :if => Proc.new { User.current.admin? }
+  menu.push :top_section, :top_sections_path, :if => Proc.new { User.current.admin? }
+  menu.push :section, :sections_path, :if => Proc.new { User.current.admin? }
+  #menu.push :region, :regions_path, :if => Proc.new { User.current.admin? }
+  #menu.push :province, :provinces_path, :if => Proc.new { User.current.admin? }
+  #menu.push :comune, :comunes_path, :if => Proc.new { User.current.admin? }
+  #menu.push :type_organization, :type_organizations_path, :if => Proc.new { User.current.admin? }
+  menu.push :cross_organization, :cross_organizations_path, :if => Proc.new { User.current.admin? }
+  menu.push :convention, :conventions_path, :if => Proc.new { User.current.admin? }
+  menu.push :cross_group, :cross_groups_path, :if => Proc.new { User.current.admin? }
+  menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
+end
+
 # pagina principale vista
 #pagina lista utenti con relativi azione
 #selettore di ruolo

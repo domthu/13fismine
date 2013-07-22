@@ -1149,7 +1149,7 @@ it:
 
   label_is_responsable: é responsabile?
   label_not_responsable: "L'utente non gestisce organismi convenzionati"
-  label_have_convention: Non pagante?
+  label_have_convention: Non paga?
   label_no_convention: "Utente pagante. L'utente non fa parte di un'organismo convenzionato"
   label_list_responsable_for: "Lista organismi convenzionati dove é responsabile:"
   label_have_sigla_tipo: Federato?
@@ -1435,6 +1435,11 @@ it:
   label_home_fs: Prima pagina
   label_workon: Lavora con noi
 
+#Menu
+  label_table_fs: Fiscosport
+  label_fee_manage: Abbonamenti
+  label_payment: Pagamenti
+
 #Fee
   label_fee: Abbonamento
   label_fee_plural: Abbonamenti
@@ -1597,6 +1602,7 @@ it:
   role_manager: Responsabile
   role_3: Responsabile
   role_author: Redattore, collaboratore
+  role_author_abrv: Redattore
   role_4: Redattore
   role_vip: Invitato
   role_10: Invitato

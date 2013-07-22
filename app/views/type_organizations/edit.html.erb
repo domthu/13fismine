@@ -1,10 +1,12 @@
 <h2><%= link_to l(:label_type_organization_plural_long), type_organizations_path %> &#187; <%= h(@type_organization) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
 
 <% labelled_form_for @type_organization do |f| %>
 <%= submit_tag l(:button_save) %>
 <%= render :partial => 'form', :locals => { :f => f } %>
 <%= submit_tag l(:button_save) %>
-<!-- <%= f.submit 'Update' %> --> 
+<!-- <%= f.submit 'Update' %> -->
 
 <% end %>
-

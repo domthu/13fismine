@@ -3,6 +3,9 @@
 </div>
 
 <h2><%= l(:label_type_organization_plural_long) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
 
 <% if @type_organizations.any? %>
     <table class="list type_organizations">

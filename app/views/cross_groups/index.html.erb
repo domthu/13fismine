@@ -3,6 +3,9 @@
 </div>
 
 <h2><%= l(:label_cross_group_plural) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
 
 <% if @cross_groups.any? %>
 <table class="list cross_groups">

@@ -7,8 +7,7 @@
 <fieldset><legend><%= l(:label_filter_plural) %></legend>
 
 <label for='role_id'><%= l(:label_role) %>:</label>
-<%= select_tag 'role_id', fee_roles_options_for_select(@roleid), :onchange => "this.form.submit(); return false;"  %><%= "(" + @roleid.to_s + ")" %>
-<%# params[:role_id].to_i o allora @roleid %>
+<%= select_tag 'role_id', fee_roles_options_for_select(@roleid), :onchange => "this.form.submit(); return false;"  %>
 
 <label for='name'><%= l(:label_user) %>:</label>
 <%= text_field_tag 'name', params[:name], :size => 30 %>
@@ -24,7 +23,7 @@
   <%= sort_header_tag('person', :caption => l(:label_person)) %>
   <%= sort_header_tag('role', :caption => l(:label_role)) %>
   <%= sort_header_tag('registration', :caption => l(:field_registration_date), :default_order => 'desc') %>
-  <%= sort_header_tag('asso', :caption => l(:label_asso), :default_order => 'desc') %>
+  <%= sort_header_tag('asso', :caption => l(:label_have_convention), :default_order => 'desc') %>
   <%= sort_header_tag('scadenza', :caption => l(:field_due_date), :default_order => 'desc') %>
     <th></th>
   </tr></thead>
@@ -32,7 +31,8 @@
 <% for user in @users -%>
   <tr class="user <%= cycle("odd", "even") %> <%= %w(anon active registered locked)[user.status] %>">
   <td class="firstname"><%= avatar(user, { :size => "14", :class => "no-div" }) %><%= link_to h(user.name), edit_user_path(user) %></td>
-  <td class="<%= user.role %>"><%= get_status_role(user) %></td>
+  <td class="role" align="left"><%= get_status_role(user) %></td>
+
   <td class="created_on" align="center"><%= format_time(user.created_on) %></td>
   <td align="center"><%= checked_image user.privato? %></td>
   <td class="scadenza" align="center"><%= format_date(user.scadenza) unless user.scadenza.nil? %></td>
