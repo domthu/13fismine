@@ -1,9 +1,9 @@
 <h2><%= link_to l(:label_group_banner_plural), group_banners_path %> &#187; <%= h(@group_banner) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
 
 <% labelled_form_for @group_banner, :html => {:multipart => true}  do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>
     <div class="btn-footer"><%= submit_tag l(:button_save),:class=> "button-blu" %></div>
-<!-- <%= f.submit 'Update' %> --> 
-
 <% end %>
-

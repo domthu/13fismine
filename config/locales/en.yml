@@ -710,7 +710,7 @@ en:
   label_more_than_ago: more than days ago
   label_ago: days ago
   label_contains: contains
-  label_not_contains: doesn't contain
+  label_not_contains: "doesn't contain"
   label_day_plural: days
   label_repository: Repository
   label_repository_plural: Repositories
@@ -811,7 +811,7 @@ en:
   label_week: Week
   label_date_from: From
   label_date_to: To
-  label_language_based: Based on user's language
+  label_language_based: "Based on user's language"
   label_sort_by: "Sort by %{value}"
   label_send_test_email: Send a test email
   label_feeds_access_key: RSS access key
@@ -1434,6 +1434,11 @@ en:
   label_home_fs: Prima pagina
   label_workon: Lavora con noi
 
+#Menu
+  label_table_fs: Fiscosport
+  label_fee_manage: Abbonamenti
+  label_payment: Pagamenti
+
 #Fee
   label_fee: Abbonamento
   label_fee_plural: Abbonamenti
@@ -1596,6 +1601,7 @@ en:
   role_manager: Responsabile
   role_3: Responsabile
   role_author: Redattore, collaboratore
+  role_author_abrv: Redattore
   role_4: Redattore
   role_vip: Invitato
   role_10: Invitato

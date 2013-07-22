@@ -1,7 +1,12 @@
 <div class="contextual">
   <%= link_to l(:label_top_section_new), new_top_section_path, :class => 'icon icon-add' %>
 </div>
+
 <h2><%= l(:label_top_section_plural) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
+
 <% if @top_sections && @top_sections.any? %>
     <table class="list top_sections">
       <thead>

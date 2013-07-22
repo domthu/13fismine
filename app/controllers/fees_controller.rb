@@ -115,24 +115,6 @@ class FeesController < ApplicationController
 
 
 ###########LISTE UTENTI PER RUOLO##############
-  def paganti
-    #  FeeConst::ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
-    #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
-    @users = User.find(
-    :all,
-    :conditions => ["role_id = :role_1 OR role_id = :role_2 ", { :role_1 => FeeConst::ROLE_ABBONATO, :role_2 => FeeConst::ROLE_RENEW } ],
-    :include => :role)
-    #:conditions => {:role_id => FeeConst::ROLE_ABBONATO, :role_id => FeeConst::ROLE_RENEW },
-
-#    workflows.find(:all,
-#        :include => :new_status,
-#        :conditions => ["role_id IN (:role_ids) AND tracker_id = :tracker_id AND (#{conditions})",
-#          {:role_ids => roles.collect(&:id), :tracker_id => tracker.id, :true => true, :false => false}
-#          ]
-#        ).collect{|w| w.new_status}.compact.sort
-
-  end
-
   def registrati
     #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
     #@users = User.all(:conditions => {:role_id => FeeConst::ROLE_REGISTERED}, :include => :role)
@@ -198,6 +180,105 @@ class FeesController < ApplicationController
   end
 
   def associati
+      #sort and filters users
+    sort_init 'login', 'asc'
+    #sort_update %w(login firstname lastname mail admin created_on last_login_on)
+    sort_update %w(lastname mail data convention_id role_id)
+
+    #@limit = per_page_option
+
+    scope = @users_by_roles
+
+    c = ARCondition.new(["users.type = 'User'"])
+    c << ["convention_id is not null"]
+    if request.post?
+      #ricerca testuale
+      unless params[:name].blank?
+        @name = params[:name]
+        name = "%#{params[:name].strip.downcase}%"
+        c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+      end
+      #Convention filter
+      @convention_id = (params[:convention] && params[:convention][:convention_id]) ? params[:convention][:convention_id].to_i : 0
+      if @convention_id > 0
+        c << ["convention_id = ? ", @convention_id.to_s]
+      end
+    else
+      @convention_id = Convention.All(:first).id
+      c << ["convention_id = ?", @convention_id]
+
+    end
+
+    @users =  User.find :all,
+                :order => sort_clause,
+                :conditions => c.conditions
+  end
+
+  def paganti
+    #  FeeConst::ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
+    #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
+    #@users = User.find(
+    #:all,
+    #:conditions => ["role_id = :role_1 OR role_id = :role_2 ", { :role_1 => FeeConst::ROLE_ABBONATO, :role_2 => FeeConst::ROLE_RENEW } ],
+    #:include => :role)
+    #:conditions => {:role_id => FeeConst::ROLE_ABBONATO, :role_id => FeeConst::ROLE_RENEW },
+
+#    workflows.find(:al,
+#        :include => :new_status,
+#        :conditions => ["role_id IN (:role_ids) AND tracker_id = :tracker_id AND (#{conditions})",
+#          {:role_ids => roles.collect(&:id), :tracker_id => tracker.id, :true => true, :false => false}
+#          ]
+#        ).collect{|w| w.new_status}.compact.sort
+
+    #sort and filters users
+    sort_init 'login', 'asc'
+    #sort_update %w(login firstname lastname mail admin created_on last_login_on)
+    sort_update %w(lastname mail data convention_id role_id)
+
+    #@limit = per_page_option
+
+    scope = @users_by_roles
+
+    c = ARCondition.new(["users.type = 'User'"])
+    c << ["convention_id is null"]
+    if request.post?
+      @abbo = params[:abbo] ? params[:abbo].to_i : 0
+      if (@abbo > 0)
+        c << ["role_id = ?", @abbo]
+      #else
+      #  c << ["role_id IN (?) ", FeeConst::NEWSLETTER_ROLES]
+      end
+      #ricerca testuale
+      unless params[:name].blank?
+        @name = params[:name]
+        name = "%#{params[:name].strip.downcase}%"
+        c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+      end
+      #Convention filter
+      #@convention_id = (params[:convention] && params[:convention][:convention_id]) ? params[:convention][:convention_id].to_i : 0
+      #if @convention_id > 0
+      #  c << ["convention_id = ? ", @convention_id.to_s]
+      #end
+    else
+      @abbo = FeeConst::ROLE_ABBONATO
+      c << ["role_id = ?", @abbo]
+
+    end
+
+    #@user_count = scope.count(:conditions => c.conditions)
+    #@user_count = User.all.count(:conditions => c.conditions)
+    #@user_pages = Paginator.new self, @user_count, @limit, params['page']
+    #@offset ||= @user_pages.current.offset
+    #@users =  scope.find :all,
+    #@users =  User.find :all,
+    #            :order => sort_clause,
+    #            :conditions => c.conditions,
+    #            :limit  =>  @limit,
+    #            :offset =>  @offset
+
+    @users =  User.find :all,
+                :order => sort_clause,
+                :conditions => c.conditions
   end
 
 ##########GESTIONE PAGAMENTI ABBONAMENTO

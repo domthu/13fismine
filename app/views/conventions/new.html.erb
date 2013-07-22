@@ -1,4 +1,8 @@
 <h2><%= link_to l(:label_convention_plural), conventions_path %> &#187; <%= l(:label_convention_new) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
+
 <% labelled_form_for @conv, :html => {:multipart => true} do |f| %>
     <%= render :partial => 'form', :locals => {:f => f} %>
     <p>

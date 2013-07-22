@@ -69,7 +69,9 @@ margin-right: 0.5em;}
 #admin-menu a.plugins { background-image: url(../images/plugin.png); }
 #admin-menu a.info { background-image: url(../images/help.png); }
 #admin-menu a.server_authentication { background-image: url(../images/server_key.png); }
-#admin-menu a.abbo { background-image: url(../images/server_key.png); }
+#admin-menu a.table_fs { background-image: url(../images/server_key.png); }
+#admin-menu a.abbo { background-image: url(../images/locked.png); }
+#admin-menu a.payment { background-image: url(../images/report.png); }
 
 #main {background-color:#EEEEEE;}
 
@@ -973,6 +975,7 @@ padding-bottom: 3px;
 .icon-news_reply_done  { background-image: url(../images/ticket_checked.png); }
 .icon-news_reply_todo  { background-image: url(../images/ticket_edit.png); }
 .icon-adjust-min { padding-left: 40px; min-height:21px; }
+.icon-newsletter { background-image: url(../images/news.png); }
 
 img.gravatar {
     padding: 2px;

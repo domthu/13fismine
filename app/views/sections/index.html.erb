@@ -3,6 +3,9 @@
 </div>
 
 <h2><%= l(:label_section_plural) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
 
 <% if @sections.any? %>
     <table class="list sections">

@@ -7,64 +7,52 @@
 
 </div>
 
-<div class="box">
- <%= render :partial => 'show', :newsletter => @newsletter %>
-</div>
+<%= render :partial => 'show', :newsletter => @newsletter %>
 
-<h2><%=l(:label_user_plural)%></h2>
+<h2><%=l(:label_newsletter)%></h2>
 
-<% form_tag({}, :method => :get) do %>
-<fieldset><legend><%= l(:label_filter_plural) %></legend>
-<p class="convention-select">
-<label for='convention_id'><%= l(:field_convention) %>:</label>
-<%= select(:convention,
-           :convention_id,
-           Convention.all.collect{ |s| [truncate(s.name, :length => 120), s.id] },
-           {:include_blank => 'Tutti', :class => "small", :selected => @convention_id, :onchange => "this.form.submit(); return false;" }) %>
-</p>
-
-<label for='role'><%= l(:field_abbonamento_type) %>:</label>
-<%= users_roles_options_for_select(@role.to_s) %>
-<%# select_tag 'role', users_roles_options_for_select(@role.to_s), :class => "small", :onchange => "this.form.submit(); return false;", :selected => @role.to_s  %>
-
-<label for='name'><%= l(:label_user) %>:</label>
-<%= text_field_tag 'name', params[:name], :size => 30 %>
-<%= submit_tag l(:button_apply), :class => "small", :name => nil %>
-<%= link_to l(:button_clear), newsletter_invii_path(:project_id => @project.id), :class => 'icon icon-reload' %>
-</fieldset>
-<% end %>
-&nbsp;
 
 <div class="autoscroll">
 <table id="tblinvii" class="list">
   <thead><tr>
-  <%= sort_header_tag('lastname', :caption => l(:field_user_fee)) %>
-  <%# sort_header_tag('firstname', :caption => l(:field_firstname)) %>
-  <%# sort_header_tag('lastname', :caption => l(:field_lastname)) %>
-  <%= sort_header_tag('mail', :caption => l(:field_mail)) %>
-  <%= sort_header_tag('datascadenza', :caption => l(:field_data_scadenza), :default_order => 'desc') %>
-  <%= sort_header_tag('role_id', :caption => l(:field_ruolo), :default_order => 'desc') %>
-  <%= sort_header_tag('convention_id', :caption => l(:field_convention), :default_order => 'desc') %>
-    <th style="text-align:left; width: 40px;"><i class="icon icon-email" title="Imposti per l'invio email"></i><input id="checkbox_selector" type="checkbox" name="invia" class="selectall" checked="checked" /></th>
+  <th style="text-align:left; width: 10%;"></th>
+  <th style="text-align:left; width: 65%;"><%= l(:field_role) %><br /><%= l(:field_convention) %></th>
+  <th style="text-align:left; width: 10%;"><%= l(:field_data_scadenza) %></th>
+  <th style="text-align:left; width: 5%;"><%= l(:field_users) %></th>
+  <th style="text-align:left; width: 5%;"></th>
+    <input id="checkbox_selector" type="checkbox" name="invia" class="selectall" checked="checked" />
+  </th>
+  <th style="text-align:left; width: 5%;">
+    <i class="icon icon-email" title="email già inviato?"></i>
+  </th>
   </tr></thead>
   <tbody>
-<% for user in @users -%>
-  <tr class="user <%= cycle("odd", "even") %> <%= %w(anon active registered locked)[user.status] %>">
-
-<%# user.login user.firstname user.lastname %>
-  <td class="username"><%= avatar(user, { :size => "14", :class => "no-div" }) %><%= link_to h(user.name), edit_user_path(user) %></td>
-  <td class="email"><%= mail_to(h(user.mail)) %></td>
-  <%# align="center"><%= checked_image user.admin? %>
-  <td class="datascadenza" align="left"><%= format_date(user.scadenza) %></td>
-  <td class="role" align="left"> <%= user_role_iconized(user, :size => "s", :icon_for => user.uicon, :text => '') %>
-</td>
-  <td class="convention_id" align="left"><%= h truncate(user.convention.name, :length => 30) unless user.privato? %></td>
-  <td class="checkbox"><%= check_box_tag 'ids[]', user.id, {:name => "invia"} %></td>
-      <%# change_status_link(user) %>
-      <%# link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
+<% for abbo in FeeConst::ROLES -%>
+  <tr class='user <%= cycle("odd", "even") %>'>
+    <td class="ico" align="left"><%= user_role_iconized(nil, :size => "l", :icon_for => abbo, :text => '') %></td>
+    <td class="role" align="left"> <%= get_abbonamento_name(abbo) %>
+  </td>
+    <td class="datascadenza" align="left"><%= abbo.to_s %></td>
+    <td class="cnt" align="left"><%= User.all(:conditions => ["convention_id is null AND role_id=?", abbo]).count %></td>
+    <td class="checkbox">
+      <%= check_box_tag 'abbo_ids[]', abbo, {:name => "invia"} %></td>
     </td>
     <td>
-      <%# user.scoped_by_newsletter_users(@).nil? %>
+        <%# user.scoped_by_newsletter_users(@).nil? %>
+    </td>
+  </tr>
+<% end -%>
+<% for convention in Convention.all -%>
+  <tr class='convention <%= cycle("odd", "even") %>'>
+    <td class="ico" align="left"></td>
+    <td class="convention" align="left"><%= h truncate(convention.name, :length => 300)%></td>
+    <td class="datascadenza" align="left"><%= format_date(convention.scadenza) %></td>
+    <td class="cnt" align="left"><%= convention.users.count %></td>
+    <td class="checkbox">
+      <%= check_box_tag 'conv_ids[]', convention.id, {:name => "invia"} %></td>
+    </td>
+    <td>
+        <%# user.scoped_by_newsletter_users(@).nil? %>
     </td>
   </tr>
 <% end -%>

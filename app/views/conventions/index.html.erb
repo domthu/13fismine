@@ -3,6 +3,9 @@
 </div>
 
 <h2><%= l(:label_convention_plural) %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
 
 <% if @convs.any? %>
 <div style="max-width: 960px; overflow: auto;">

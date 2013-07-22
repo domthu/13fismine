@@ -6,7 +6,10 @@
               :method => :delete,
               :class => 'icon icon-del') if User.current.admin? %>
 </div>
-<h2><%= link_to l(:label_group_banner_plural), group_banners_path %> &#187; <%= h @group_banner %></h2>
+<h2><%= link_to l(:label_group_banner_plural), group_banners_path %> &#187; <%=h @group_banner %></h2>
+<div id="footer-menu" class="box">
+  <%= render_menu :menu_table_fs %>
+</div>
 
 <div class="splitcontentleft">
   <fieldset class="box tabular">
