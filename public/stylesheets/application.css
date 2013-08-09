@@ -11,17 +11,20 @@ h4, .wiki h3 {font-size: 13px;padding: 2px 10px 1px 0px;margin-bottom: 5px; bord
 #wrapper {background: white;}
 
 #top-menu {background: #2C4056; color: #fff; height:1.8em; font-size: 0.8em; padding: 2px 2px 0px 6px;}
-#footer-menu {height:1.8em; font-size: 1em; padding: 2px 2px 0px 6px; text-align: center;
-margin-right: 0.5em;}
+#footer-menu {height:2em; font-size: 1em; text-align: center;
+margin:-1px 0 0 -11px; background-color: #336BA8; color: #f8f8f8; font-weight: bold; width: 100.8%;}
 #top-menu ul, #footer-menu ul {margin: 0;  padding: 0;}
 #top-menu li, #footer-menu li {
   float:left;
   list-style-type:none;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
+  margin: 0;
+  padding: 3px;
   white-space:nowrap;
 }
 #footer-menu li {margin-right: 10px;}
+#footer-menu a{
+    color:#f8f8f8;
+}
 #top-menu a {color: #fff; margin-right: 8px; font-weight: bold;}
 #top-menu #loggedas { float: right; margin-right: 0.5em; color: #fff; }
 
@@ -72,6 +75,8 @@ margin-right: 0.5em;}
 #admin-menu a.table_fs { background-image: url(../images/server_key.png); }
 #admin-menu a.abbo { background-image: url(../images/locked.png); }
 #admin-menu a.payment { background-image: url(../images/report.png); }
+#admin-menu a.table-fs { background-image: url(../images/fs.png); }
+#admin-menu a.comunes { background-image: url(../images/it.png); }
 
 #main {background-color:#EEEEEE;}
 
@@ -82,8 +87,8 @@ margin-right: 0.5em;}
 * html #sidebar hr{ width: 95%; position: relative; left: -6px; color: #ccc; }
 #sidebar .contextual { margin-right: 1em; }
 
-#content { width: 75%; background-color: #fff; margin: 0px; border-right: 1px solid #ddd; padding: 6px 10px 10px 10px; z-index: 10; }
-* html #content{ width: 75%; padding-left: 0; margin-top: 0px; padding: 6px 10px 10px 10px;}
+#content { width: 75%; background-color: #fff; margin:-1px 0; border-right: 1px solid #ddd; padding: 0 10px 10px;}
+* html #content{ width: 75%; padding: 0 10px 10px;}
 html>body #content { min-height: 600px; }
 * html body #content { height: 600px; } /* IE */
 

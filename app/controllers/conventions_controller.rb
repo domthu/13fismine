@@ -5,7 +5,12 @@ class ConventionsController < ApplicationController
 
   helper :sort
   include SortHelper
-
+  #
+  menu_item :conventions
+  before_filter :set_menu
+  def set_menu
+    @menu_fs = :menu_fiscosport
+  end
   # GET /conventions
   # GET /conventions.xml
   def index

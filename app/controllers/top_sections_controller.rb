@@ -4,7 +4,11 @@ class TopSectionsController < ApplicationController
   helper :sort
   include SortHelper
   include FeesHelper
-
+  before_filter :set_menu
+  menu_item :top_sections
+  def set_menu
+    @menu_fs = :menu_fiscosport
+  end
   def index
     sort_init 'sezione_top'
     sort_update 'sezione_top' => 'sezione_top',

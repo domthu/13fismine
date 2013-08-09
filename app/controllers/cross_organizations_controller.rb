@@ -5,7 +5,11 @@ class CrossOrganizationsController < ApplicationController
 
   helper :sort
   include SortHelper
-
+  before_filter :set_menu
+  menu_item :cross_organizations
+  def set_menu
+    @menu_fs = :menu_fiscosport
+  end
   # GET /cross_organizations
   # GET /cross_organizations.xml
   def index

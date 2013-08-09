@@ -1,8 +1,4 @@
 <h2><%= link_to l(:label_convention), conventions_path %> &#187; <%= h(@conv.ragione_sociale) %></h2>
-
-<div id="footer-menu" class="box">
-  <%= render_menu :menu_table_fs %>
-</div>
 <% labelled_form_for (@conv), :html => {:multipart => true} do |f| %>
     <%= render :partial => 'form', :locals => {:f => f} %>
     <div class="btn-footer"><%= submit_tag l(:button_save), :class => "button-blu" %></div>

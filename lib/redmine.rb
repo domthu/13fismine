@@ -206,76 +206,6 @@ Redmine::MenuManager.map :footer_menu_fs do |menu|
   menu.push :quesito_full, :quesito_path
 end
 
-#Lista delle categorie
-Redmine::MenuManager.map :application_menu_fs do |menu|
-
-#test children menu result unattached menu
-  #menu.push :test, { :controlle => 'editorial', :action => 'sezione' }, { :children => Proc.new {[
-  #Redmine::MenuManager::MenuItem.new(:stampa, { :controller => 'editorial', :action => 'sezione', :id => 18 }, {})
-  #] } }
-
-#test parent menu result subtree attached but css not ok
-
-#18, 'Comunicati stampa', 0
-  menu.push :stampa, { :controller => 'editorial', :action => 'sezione', :id => 18 }
-#10, 'Le newsletters', 0
-  #menu.push :newsletters, { :controller => 'editorial', :action => 'sezione', :id => 10 }, { :parent => :stampa}
-  menu.push :newsletters, { :controller => 'editorial', :action => 'sezione', :id => 10 }
-#16, 'Progetto Fiscosport', 1
-  menu.push :prjfisco, { :controller => 'editorial', :action => 'sezione', :id => 16 }
-#29, 'Revisione newsletter', 1
-  menu.push :revnews, { :controller => 'editorial', :action => 'sezione', :id => 29 }
-#24, 'Tariffe Utenti', 1
-  menu.push :feeusr, { :controller => 'editorial', :action => 'sezione', :id => 24 }
-#4, 'Convegni ed eventi', 3
-  menu.push :evt, { :controller => 'editorial', :action => 'sezione', :id => 4 }
-#14, 'News dal mondo sportivo ', 4
-  menu.push :newssport, { :controller => 'editorial', :action => 'sezione', :id => 14 }
-#12, 'Le risposte ai quesiti', 4
-  menu.push :respreq, { :controller => 'editorial', :action => 'sezione', :id => 12 }
-#25, 'Le dichiarazioni', 5
-  menu.push :declare, { :controller => 'editorial', :action => 'sezione', :id => 25 }
-#23, 'Casi pratici ', 6
-  menu.push :usecase, { :controller => 'editorial', :action => 'sezione', :id => 23 }
-#19, 'Circolari e risoluzioni', 8
-  menu.push :risolve, { :controller => 'editorial', :action => 'sezione', :id => 19 }
-#15, 'Normativa', 8
-  menu.push :law, { :controller => 'editorial', :action => 'sezione', :id => 15 }
-#5, 'Giurisprudenza', 8
-  menu.push :guild, { :controller => 'editorial', :action => 'sezione', :id => 5 }
-#9, 'Lavoro e previdenza', 9
-  menu.push :welfare, { :controller => 'editorial', :action => 'sezione', :id => 9 }
-#7, 'La modulistica', 9
-  menu.push :moduli, { :controller => 'editorial', :action => 'sezione', :id => 7 }
-#11, 'Le pillole di Fiscosport', 10
-  menu.push :pillole, { :controller => 'editorial', :action => 'sezione', :id => 11 }
-#28, 'I nuovi consulenti/collaboratori Fiscosport', 10
-  menu.push :newmembers, { :controller => 'editorial', :action => 'sezione', :id => 28 }
-#2, 'Ultima ora', 10
-  menu.push :lasthour, { :controller => 'editorial', :action => 'sezione', :id => 2 }
-#13, 'Lo scadenzario', 11
-  menu.push :cadence, { :controller => 'editorial', :action => 'sezione', :id => 13 }
-#26, 'Agenzia delle Entrate', 12
-  menu.push :agenda, { :controller => 'editorial', :action => 'sezione', :id => 26 }
-#21, '5 per mille', 12
-  menu.push :cinquepermille, { :controller => 'editorial', :action => 'sezione', :id => 21 }
-#17, 'Rassegna stampa', 13
-  menu.push :primapagina, { :controller => 'editorial', :action => 'sezione', :id => 17 }
-#6, 'Guide e Vademecum', 15
-  menu.push :guide, { :controller => 'editorial', :action => 'sezione', :id => 6 }
-#1, 'Approfondimenti', 18
-  menu.push :understand, { :controller => 'editorial', :action => 'sezione', :id => 1 }
-#22, 'Registro CONI', 19
-  menu.push :regconi, { :controller => 'editorial', :action => 'sezione', :id => 22 }
-#27, 'Attualità_', 25
-  menu.push :actual, { :controller => 'editorial', :action => 'sezione', :id => 27 }
-#8, 'La redazione', 26
-  menu.push :redaction, { :controller => 'editorial', :action => 'sezione', :id => 8 }
-#20, 'UTILITY', 99
-  menu.push :utility, { :controller => 'editorial', :action => 'sezione', :id => 20 }, :if => Proc.new { User.current.logged? }
-#3, 'Comunicazioni FORUM', 99
-  menu.push :comforum, { :controller => 'editorial', :action => 'sezione', :id => 3 }, :if => Proc.new { User.current.logged? }
-end
 # < sandro >
 
 Redmine::MenuManager.map :account_fe_menu do |menu|
@@ -307,8 +237,6 @@ Redmine::MenuManager.map :application_menu do |menu|
 end
 
 Redmine::MenuManager.map :admin_menu do |menu|
-  menu.push :projects, {:controller => 'admin', :action => 'projects'}, :caption => :label_project_plural
-  menu.push :users, {:controller => 'users'}, :caption => :label_user_plural
   #menu fiscosport
   menu.push :table_fs, :conventions_path
   #menu abbonamento
@@ -316,7 +244,9 @@ Redmine::MenuManager.map :admin_menu do |menu|
   #menu.push :abbo, {:controller => 'fees', :action => 'registrati'}, :caption => :label_abbo_plural, :if => Proc.new { Setting.fee? }
   #menu pagamenti
   menu.push :payment, :pagamento_path, :if => Proc.new { Setting.fee? }
-
+  #menu.push :projects, {:controller => 'admin', :action => 'projects'}, :caption => :label_project_plural
+  menu.push :users, {:controller => 'users'}, :caption => :label_user_plural
+  menu.push :comunes, :comunes_path, :caption => :label_comune_plural, :if => Proc.new { User.current.admin? }
   menu.push :groups, {:controller => 'groups'}, :caption => :label_group_plural
   menu.push :roles, {:controller => 'roles'}, :caption => :label_role_and_permissions
   menu.push :trackers, {:controller => 'trackers'}, :caption => :label_tracker_plural
@@ -363,7 +293,14 @@ Redmine::MenuManager.map :menu_fee_fs do |menu|
   #menu.push :scaduti, :scaduti_path
   #menu.push :archiviati, :archiviati_path
   menu.push :paganti, :paganti_path
+  menu.push :pagamento, :pagamento_path
+  menu.push :invia_fatture, :invia_fatture_path
+  menu.push :email_fee, :email_fee_path
+  menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
+  menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
+  menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
 end
+=begin
 Redmine::MenuManager.map :menu_payment_fs do |menu|
   menu.push :pagamento, :pagamento_path
   menu.push :invia_fatture, :invia_fatture_path
@@ -382,10 +319,21 @@ Redmine::MenuManager.map :menu_table_fs do |menu|
   #menu.push :type_organization, :type_organizations_path, :if => Proc.new { User.current.admin? }
   menu.push :cross_organization, :cross_organizations_path, :if => Proc.new { User.current.admin? }
   menu.push :convention, :conventions_path, :if => Proc.new { User.current.admin? }
-  menu.push :cross_group, :cross_groups_path, :if => Proc.new { User.current.admin? }
-  menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
+   menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
 end
+=end
+Redmine::MenuManager.map :menu_fiscosport do |menu|
+  menu.push :top_menus, :top_menus_path, :caption => :label_top_menu , :if => Proc.new { User.current.admin? }
+  menu.push :top_sections, :top_sections_path, :caption => :label_top_section_plural , :if => Proc.new { User.current.admin? }
+  menu.push :sections, :sections_path, :caption => :label_section_plural , :if => Proc.new { User.current.admin? }
+  #menu.push :region, :regions_path, :if => Proc.new { User.current.admin? }
+  #menu.push :province, :provinces_path, :if => Proc.new { User.current.admin? }
+  #menu.push :type_organization, :type_organizations_path, :if => Proc.new { User.current.admin? }
+  menu.push :cross_organizations, :cross_organizations_path, :caption => :label_cross_organization_plural , :if => Proc.new { User.current.admin? }
+  menu.push :conventions, :conventions_path, :caption => :label_convention_plural , :if => Proc.new { User.current.admin? }
+  menu.push :group_banners, :group_banners_path, :caption => :label_group_banner_plural , :if => Proc.new { User.current.admin? }
 
+end
 # pagina principale vista
 #pagina lista utenti con relativi azione
 #selettore di ruolo

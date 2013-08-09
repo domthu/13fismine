@@ -165,7 +165,17 @@ module Redmine
 
       # Renders the application main menu
       def render_main_menu(project)
-        render_menu((project && !project.new_record?) ? :project_menu : :application_menu, project)
+        if @menu_fs
+          render_menu @menu_fs, project
+        else
+          render_menu( :project_menu , project)
+          #render_menu((project && !project.new_record?) ? :project_menu : :application_menu, project)
+        end
+
+      #render_menu((project && !project.new_record?) ? :project_menu : :application_menu, project)
+      end
+      def render_mmenu?
+        (@project && !@project.new_record?) || !@menu_fs.nil? ? true : false
       end
 
       def display_main_menu?(project)
@@ -273,6 +283,8 @@ module Redmine
           item.url
         end
         caption = item.caption(project)
+        puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' + current_menu_item.to_s
+        puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' + item.name.to_s
         return [caption, url, (current_menu_item == item.name)]
       end
 

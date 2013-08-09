@@ -3,7 +3,11 @@ class GroupBannersController < ApplicationController
   before_filter :require_admin
   helper :sort
   include SortHelper
-
+  before_filter :set_menu
+  menu_item :group_banners
+  def set_menu
+    @menu_fs = :menu_fiscosport
+  end
 
   # GET /group_banners
   # GET /group_banners.xml

@@ -3,12 +3,20 @@ class TopMenusController < ApplicationController
 
   before_filter :require_admin
 
+
+
   helper :sort
   include SortHelper
   include FeesHelper
 
+  before_filter :set_menu
+  menu_item :top_menus
+  def set_menu
+    @menu_fs = :menu_fiscosport
+  end
   # GET /top_menus
   # GET /top_menus.xml
+
   def index
     #@top_menus = TopMenu.all
 

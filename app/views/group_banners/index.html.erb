@@ -1,12 +1,7 @@
 <div class="contextual">
 <%= link_to l(:label_group_banner_new), new_group_banner_path, :class => 'icon icon-add' %>
 </div>
-
 <h2><%= l(:label_group_banner_plural) %></h2>
-<div id="footer-menu" class="box">
-  <%= render_menu :menu_table_fs %>
-</div>
-
 <% if @group_banners.any? %>
 <table class="list group_banners">
   <thead><tr>

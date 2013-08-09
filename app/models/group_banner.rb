@@ -5,7 +5,6 @@ class GroupBanner < ActiveRecord::Base
                     :default_url => "commons/:style_ban-no-image.jpg"
   validates_attachment_size :image, :less_than => 300.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
-  #has_many :cross_groups, :dependent => :nullify
   belongs_to :convention, :class_name => 'Convention'
   validates_presence_of :espositore , :posizione
   # validates_uniqueness_of :espositore, :case_sensitive => false

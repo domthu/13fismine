@@ -1,11 +1,7 @@
 <div class="contextual">
-<%= link_to l(:label_convention_new), new_convention_path, :class => 'icon icon-add' %>
+  <%= link_to l(:label_convention_new), new_convention_path, :class => 'icon icon-add' %>
 </div>
-
 <h2><%= l(:label_convention_plural) %></h2>
-<div id="footer-menu" class="box">
-  <%= render_menu :menu_table_fs %>
-</div>
 
 <% if @convs.any? %>
 <div style="max-width: 960px; overflow: auto;">
@@ -45,7 +41,7 @@
     <!--     <td style="font-size: 0.9em;">Pre: <%#h conv.presidente %><br />Ref: <%#h conv.referente %><br /></td>  -->
     <td>Mail: <%=h conv.email %><br />Tel: <%=h conv.telefono %><br />Fax: <%=h conv.fax %></td>
     <td class="buttons"><%= link_to('', edit_convention_path(conv), :class => 'icon icon-edit') if User.current.admin? %></td>
-    <td class="buttons"><%= link_to ('', conv, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
+    <td class="buttons"><%= link_to('', conv, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
   </tr>
 <% end %>
 </table>

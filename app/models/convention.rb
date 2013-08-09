@@ -21,7 +21,6 @@ class Convention < ActiveRecord::Base
   belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
   belongs_to :region, :class_name => 'Region', :foreign_key => 'region_id' #, :default => null
   belongs_to :province, :class_name => 'Province', :foreign_key => 'province_id' #, :default => null
-  #has_many :group_banners, :through => :cross_group, :dependent => :delete
   has_one :group_banner, :dependent => :destroy, :class_name => 'GroupBanner'
   named_scope :conventions_all_logos
   #              :conditions => "#{Convention.table_name}.se_visibile = #{true} AND #{CrossOrganization.table_name}.image_file_name IS NOT NULL"

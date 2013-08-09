@@ -148,8 +148,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :provinces, :has_many => :regions
   #map.resources :comunes
   map.resources :comunes, :has_many => :provinces
-
-  map.resources :cross_groups
   map.resources :group_banners
 
   map.resources :conventions

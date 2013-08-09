@@ -1,8 +1,4 @@
 <h2><%= link_to l(:label_type_organization_plural_long), type_organizations_path %> &#187; <%= l(:label_type_organization_new) %></h2>
-<div id="footer-menu" class="box">
-  <%= render_menu :menu_table_fs %>
-</div>
-
 <% labelled_form_for @type_organization do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>
 <p>

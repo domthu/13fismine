@@ -2,7 +2,11 @@ class ProvincesController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin
-
+  before_filter :set_menu
+  menu_item :comunes
+  def set_menu
+    @menu_fs = :menu_fiscosport
+  end
   # GET /provinces
   # GET /provinces.xml
   def index

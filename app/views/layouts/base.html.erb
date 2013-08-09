@@ -51,7 +51,8 @@
     </div>
     <% end %>
     <h1 style="color:#F5BC13;"><%= page_header_title %></h1>
-    <% if display_main_menu?(@project) %>
+    <% if render_mmenu?()  %>
+      <%# if display_main_menu?(@project) %>
       <div id="main-menu">
           <%= render_main_menu(@project) %>
       </div>

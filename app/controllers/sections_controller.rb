@@ -6,7 +6,11 @@ class SectionsController < ApplicationController
   helper :sort
   include SortHelper
   include FeesHelper
-
+  before_filter :set_menu
+  menu_item :sections
+  def set_menu
+    @menu_fs = :menu_fiscosport
+  end
   # GET /sections
   # GET /sections.xml
   def index

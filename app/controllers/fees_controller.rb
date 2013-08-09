@@ -22,7 +22,11 @@ class FeesController < ApplicationController
   #FeeConst::ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo
   include ActionView::Helpers::DateHelper
   #undefined method `utc?' for Wed, 15 Oct 2008:Date  format_time --> format_date
+  before_filter :set_menu
 
+  def set_menu
+    @menu_fs = :menu_fee_fs
+  end
   def index
     #@msg[] << ""
     #__User_all = User.all()
@@ -204,7 +208,7 @@ class FeesController < ApplicationController
         c << ["convention_id = ? ", @convention_id.to_s]
       end
     else
-      @convention_id = Convention.All(:first).id
+      @convention_id = Convention.find(:first).id
       c << ["convention_id = ?", @convention_id]
 
     end
@@ -283,6 +287,7 @@ class FeesController < ApplicationController
 
 ##########GESTIONE PAGAMENTI ABBONAMENTO
   def pagamento
+    @payment =  User.find :all
   end
 
   def invia_fatture

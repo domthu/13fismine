@@ -46,7 +46,7 @@ class User < Principal
       ['only_owner', :label_user_mail_option_only_owner],
       ['none', :label_user_mail_option_none]
   ]
-  has_attached_file :image, :styles => {:l => "200x200#", :m => "80x80#", :s => "48x48#", :xs => "32x32#"},
+  has_attached_file :photo, :styles => {:l => "200x200#", :m => "80x80#", :s => "48x48#", :xs => "32x32#"},
                     :url => "users/user_:id/:style_:basename.:extension",
                     :path => "#{RAILS_ROOT}/public/images/users/user_:id/:style_:basename.:extension",
                     :default_url => "commons/:style-no_avatar.jpg"
@@ -75,14 +75,6 @@ class User < Principal
 
   #l'utente può essere affiliato
   belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
-
-  ##su cross_group.rb è :
-  #  belongs_to :user
-  #  belongs_to :group_banner
-  has_many :cross_groups
-  has_many :group_banners, :through => :cross_groups
-
-
   #2.7 Choosing Between belongs_to and has_one. La foreign key si trova sulla tabella che fa belongs_to
   has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
   #invvi emails

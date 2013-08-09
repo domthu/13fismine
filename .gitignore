@@ -3,6 +3,7 @@
 /config/additional_environment.rb
 /config/configuration.yml
 /config/environments/development.rb
+/config/environments/production.rb
 /config/database.yml
 /config/email.yml
 /config/old_email.yml

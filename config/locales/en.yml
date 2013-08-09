@@ -1090,7 +1090,6 @@ en:
 
   field_summary: Sommario
   label_summary: Sommario
-  field_cross_group: AssoGRPO
   field_Invoice: Fattura
   field_Date_from: Valido dal
   field_Date_to: fino al
@@ -1117,11 +1116,6 @@ en:
   field_iva: IVA
   field_pagamento: Pagamento
 
-  field_cross_group: Banner utente
-  #label_cross_group: Banner utente
-  label_cross_group: Asso. Banner
-  label_cross_group_plural: Banner Utenti
-  label_cross_group_new: Nuovo banner per utente
 
   field_group_banner: Banner
   label_group_banner: Banner
@@ -1129,8 +1123,6 @@ en:
   label_group_banner_new: Nuovo banner
   label_group_banner_convention: Categorie utenti associate
   label_group_banner_convention_none: Nessuna categoria utente associata
-  label_cross_groups_from_group_banner: "Associazione Banner Utente (Banner <--> Categoria) per questo banner"
-
 #Organismo convenzionato collegato a type_organization e sigla
   label_type_organization: Org. Tipo
   label_type_organization_plural: Org. Tipi

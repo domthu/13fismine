@@ -1,12 +1,7 @@
 <h2><%= link_to l(:label_cross_organization_plural), cross_organizations_path %> &#187; <%= h(@cross_organization) %></h2>
-<div id="footer-menu" class="box">
-  <%= render_menu :menu_table_fs %>
-</div>
-
-<% labelled_form_for @cross_organization, :html =>{:multipart =>true} do |f| %>
-<%= submit_tag l(:button_save) %>
-<%= render :partial => 'form', :locals => { :f => f } %>
-<%= submit_tag l(:button_save) %>
-<!-- <%= f.submit 'Update' %> -->
-
+<% labelled_form_for @cross_organization, :html => {:multipart => true} do |f| %>
+    <%= submit_tag l(:button_save) %>
+    <%= render :partial => 'form', :locals => {:f => f} %>
+    <%= submit_tag l(:button_save) %>
+    <!-- <%= f.submit 'Update' %> -->
 <% end %>
