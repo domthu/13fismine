@@ -1425,13 +1425,14 @@ body a.button-blu:visited{
     padding:10px 0;
 }
 .count{
-    background: url(../images/ico/users_count.png);
-    width: 50px;
-    min-height: 20px;
+    background: url(../images/ico/users-count.png);
+    width: 42px;
     margin: 0 3px;
-    display: inline-block;
+    display: block;
     text-align: center;
   color: #fff;
+    float: left;
+    padding: 12px 0 2px ;
 }
 a.count,
 a.count:link,

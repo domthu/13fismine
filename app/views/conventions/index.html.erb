@@ -7,18 +7,20 @@
 <div style="max-width: 960px; overflow: auto;">
 <table class="list conventions">
   <thead><tr>
-  <%= sort_header_tag('ragione_sociale', :title => l(:label_ragione_sociale), :style => 'width: 40%;text-align:left;')%>
+    <th style='width: 5%; color: #2A5685;'>Logo</th>
+  <%= sort_header_tag('ragione_sociale', :title => l(:label_ragione_sociale), :style => 'width: 35%;text-align:left;')%>
   <%= sort_header_tag('Tipo_Sigla', :title => l(:label_convention_pact), :style => 'width: 20%;text-align:left;')%>
-  <%= sort_header_tag('data_scadenza', :title => l(:label_convention_ref), :style => 'width: 20%;')%>
+  <%= sort_header_tag('data_scadenza', :title => l(:label_condisabledvention_ref), :style => 'width: 20%;')%>
   <%#sort_header_tag('presidente', :title => l(:label_convention_people), :style => 'width: 15%;text-align:left;')%>
   <%= sort_header_tag('contatti', :title => l(:label_convention_contact), :style => 'width: 15%;text-align:left;')%>
 
-  <th style='width: 5%;'></th>
-  <th style='width: 5%;'></th>
+  <th style='width: 2%;'></th>
+  <th style='width: 2%;'></th>
   </tr></thead>
   <tbody>
 <% @convs.each do |conv| %>
   <tr class="<%= cycle 'odd', 'even' %>">
+    <td  style='width: 50px;'> <%= image_tag conv.image.url(:xs)%> <div style='margin-left:6px;'> <%= conv.logo_in_fe? ?  (image_tag '/images/eye.gif'):(image_tag '/images/eye-no.gif')%></div></td>
     <td><%= link_to(conv.index, convention_path(conv)) %></td>
     <td>
       <% if conv.cross_organization %>
