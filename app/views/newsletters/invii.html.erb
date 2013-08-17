@@ -26,16 +26,19 @@
   </tr></thead>
   <tbody>
 <% for abbo in FeeConst::ROLES -%>
-  <tr class='user <%= cycle("odd", "even") %>'>
+  <% @abbo_users = User.all(:conditions => ["convention_id is null AND role_id=?", abbo]).count %>
+  <tr class='user'>
     <td class="ico" align="left">
         <%= user_role_iconized(nil, :size => 'l', :icon_for => get_role_css(abbo), :text =>  get_abbonamento_name(abbo)) %>
     </td>
-    <td class="cnt" align="left"><%= User.all(:conditions => ["convention_id is null AND role_id=?", abbo]).count %></td>
+    <td class="cnt" align="left"><%= @abbo_users %></td>
     <td class="checkbox">
-      <% if FeeConst::AUTHORED_ROLES.include? abbo %>
-        <%= check_box_tag 'abbo_ids[]', abbo, true, {:name => "invia"} %></td>
-      <% else %>
-        <%= check_box_tag 'abbo_ids[]', abbo, false, {:name => "invia"} %></td>
+      <% if @abbo_users > 0 %>
+        <% if FeeConst::AUTHORED_ROLES.include? abbo %>
+          <%= check_box_tag 'abbo_ids[]', abbo, true, {:name => "invia"} %></td>
+        <% else %>
+          <%= check_box_tag 'abbo_ids[]', abbo, false, {:name => "invia"} %></td>
+        <% end %>
       <% end %>
     </td>
     <td>
@@ -61,6 +64,7 @@
   </tr></thead>
   <tbody>
 <% for conv in Convention.all -%>
+  <% @conv_users = conv.users.count %>
   <tr class='convention <%= cycle("odd", "even") %>'>
     <td class="convention" align="left"><%= h truncate(conv.name, :length => 300)%></td>
     <td class="datascadenza" align="left">
@@ -79,14 +83,15 @@
       </span></strong>
 
     </td>
-    <td class="cnt" align="left"><%= conv.users.count %></td>
+    <td class="cnt" align="left"><%= @conv_users %></td>
     <td class="checkbox">
     <%# check_box_tag "permissins[#{role.id}][]", permission.name, (role.permissions.include? permission.name), :id => nil, :class => "role-#{role.id}" %>
-
-      <% if conv.data_scadenza && DateTime.now < conv.data_scadenza %>
-        <%= check_box_tag 'conv_ids[]', conv.id, true, {:name => "invia"} %></td>
-      <% else %>
-        <%= check_box_tag 'conv_ids[]', conv.id, false, {:name => "invia"} %></td>
+      <% if @conv_users > 0 %>
+        <% if conv.data_scadenza && DateTime.now < conv.data_scadenza %>
+          <%= check_box_tag 'conv_ids[]', conv.id, true, {:name => "invia"} %></td>
+        <% else %>
+          <%= check_box_tag 'conv_ids[]', conv.id, false, {:name => "invia"} %></td>
+        <% end %>
       <% end %>
     </td>
     <td>
@@ -100,14 +105,17 @@
 
     var checkboxes = $$("#tblinvii input[type=checkbox]");
     var cbControl = $("checkbox_selector");
-
-    var checkboxes_convs = $$("#tblinvii_convs input[type=checkbox]");
-    var cbControl_convs = $("checkbox_selector_convs");
-
-
     cbControl.observe("click", function(){
       checkboxes.each(function(box){
         box.checked = cbControl.checked;
+      });
+    });
+
+    var checkboxes_convs = $$("#tblinvii_convs input[type=checkbox]");
+    var cbControl_convs = $("checkbox_selector_convs");
+    cbControl_convs.observe("click", function(){
+      checkboxes_convs.each(function(box){
+        box.checked = cbControl_convs.checked;
       });
     });
 
