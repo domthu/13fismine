@@ -15,11 +15,9 @@
 <div class="autoscroll">
 <table id="tblinvii" class="list">
   <thead><tr>
-  <th style="text-align:left; width: 10%;"></th>
-  <th style="text-align:left; width: 65%;"><%= l(:field_role) %><br /><%= l(:field_convention) %></th>
-  <th style="text-align:left; width: 10%;"><%= l(:field_data_scadenza) %></th>
-  <th style="text-align:left; width: 5%;"><%= l(:field_users) %></th>
-  <th style="text-align:left; width: 5%;"></th>
+  <th style="text-align:left; width: 65%;"><%= l(:field_role) %></th>
+  <th style="text-align:left; width: 10%;"><%= l(:field_users) %></th>
+  <th style="text-align:left; width: 10%;">
     <input id="checkbox_selector" type="checkbox" name="invia" class="selectall" checked="checked" />
   </th>
   <th style="text-align:left; width: 5%;">
@@ -29,27 +27,67 @@
   <tbody>
 <% for abbo in FeeConst::ROLES -%>
   <tr class='user <%= cycle("odd", "even") %>'>
-    <td class="ico" align="left"><%= user_role_iconized(nil, :size => "l", :icon_for => abbo, :text => '') %></td>
-    <td class="role" align="left"> <%= get_abbonamento_name(abbo) %>
-  </td>
-    <td class="datascadenza" align="left"><%= abbo.to_s %></td>
+    <td class="ico" align="left">
+        <%= user_role_iconized(nil, :size => 'l', :icon_for => get_role_css(abbo), :text =>  get_abbonamento_name(abbo)) %>
+    </td>
     <td class="cnt" align="left"><%= User.all(:conditions => ["convention_id is null AND role_id=?", abbo]).count %></td>
     <td class="checkbox">
-      <%= check_box_tag 'abbo_ids[]', abbo, {:name => "invia"} %></td>
+      <% if FeeConst::AUTHORED_ROLES.include? abbo %>
+        <%= check_box_tag 'abbo_ids[]', abbo, true, {:name => "invia"} %></td>
+      <% else %>
+        <%= check_box_tag 'abbo_ids[]', abbo, false, {:name => "invia"} %></td>
+      <% end %>
     </td>
     <td>
         <%# user.scoped_by_newsletter_users(@).nil? %>
     </td>
   </tr>
 <% end -%>
-<% for convention in Convention.all -%>
+  </tbody>
+</table>
+
+
+<table id="tblinvii_convs" class="list">
+  <thead><tr>
+  <th style="text-align:left; width: 75%;"><%= l(:field_convention) %></th>
+  <th style="text-align:left; width: 10%;"><%= l(:field_data_scadenza) %></th>
+  <th style="text-align:left; width: 5%;"><%= l(:field_users) %></th>
+  <th style="text-align:left; width: 5%;">
+    <input id="checkbox_selector_convs" type="checkbox" name="invia" class="selectall" checked="checked" />
+  </th>
+  <th style="text-align:left; width: 5%;">
+    <i class="icon icon-email" title="email già inviato?"></i>
+  </th>
+  </tr></thead>
+  <tbody>
+<% for conv in Convention.all -%>
   <tr class='convention <%= cycle("odd", "even") %>'>
-    <td class="ico" align="left"></td>
-    <td class="convention" align="left"><%= h truncate(convention.name, :length => 300)%></td>
-    <td class="datascadenza" align="left"><%= format_date(convention.scadenza) %></td>
-    <td class="cnt" align="left"><%= convention.users.count %></td>
+    <td class="convention" align="left"><%= h truncate(conv.name, :length => 300)%></td>
+    <td class="datascadenza" align="left">
+      <strong>
+      <% if conv.data_scadenza %>
+        <% if DateTime.now > conv.data_scadenza %>
+          <span class="scadenza-ko"> <%= format_date(conv.data_scadenza) %>
+        <% elsif conv.data_scadenza < (DateTime.now + Setting.renew_days.to_i.days) %>
+          <span class="scadenza-renewing"><%= format_date(conv.data_scadenza) %>
+        <% else  %>
+          <span class="scadenza-ok"><%= format_date(conv.data_scadenza) %>
+        <% end  %>
+      <% else  %>
+        <span class="scadenza-none">Senza data di scadenza
+      <%	end  %>
+      </span></strong>
+
+    </td>
+    <td class="cnt" align="left"><%= conv.users.count %></td>
     <td class="checkbox">
-      <%= check_box_tag 'conv_ids[]', convention.id, {:name => "invia"} %></td>
+    <%# check_box_tag "permissins[#{role.id}][]", permission.name, (role.permissions.include? permission.name), :id => nil, :class => "role-#{role.id}" %>
+
+      <% if conv.data_scadenza && DateTime.now < conv.data_scadenza %>
+        <%= check_box_tag 'conv_ids[]', conv.id, true, {:name => "invia"} %></td>
+      <% else %>
+        <%= check_box_tag 'conv_ids[]', conv.id, false, {:name => "invia"} %></td>
+      <% end %>
     </td>
     <td>
         <%# user.scoped_by_newsletter_users(@).nil? %>
@@ -62,6 +100,10 @@
 
     var checkboxes = $$("#tblinvii input[type=checkbox]");
     var cbControl = $("checkbox_selector");
+
+    var checkboxes_convs = $$("#tblinvii_convs input[type=checkbox]");
+    var cbControl_convs = $("checkbox_selector_convs");
+
 
     cbControl.observe("click", function(){
       checkboxes.each(function(box){
