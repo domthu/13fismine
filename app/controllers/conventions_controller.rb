@@ -17,7 +17,7 @@ class ConventionsController < ApplicationController
     #@convs = Convention.all
 
     #Sorting
-    sort_init 'ragione_sociale'
+    sort_init 'data_scadenza DESC'
     sort_update 'ragione_sociale' => 'ragione_sociale',
                 'email' => 'email',
                 'indirizzo' => "indirizzo",
@@ -38,14 +38,19 @@ class ConventionsController < ApplicationController
     respond_to do |format|
       #ovverride for paging format.html # index.html.erb
       format.html {
-        # Paginate results
-        @conv_count = Convention.all.count
-        @conv_pages = Paginator.new self, @conv_count, per_page_option, params['page']
+#        # Paginate results
+#        @conv_count = Convention.all.count
+#        @conv_pages = Paginator.new self, @conv_count, per_page_option, params['page']
+#        @convs = Convention.find(:all,
+#                          :order => sort_clause,
+#                          :limit  =>  @conv_pages.items_per_page,
+#                          :include => [:province, :comune, :user, {:cross_organization => [:type_organization]}],
+#                          :offset =>  @conv_pages.current.offset)
+        # Unpaginate results
         @convs = Convention.find(:all,
                           :order => sort_clause,
-                          :limit  =>  @conv_pages.items_per_page,
-                          :include => [:province, :comune, :user, {:cross_organization => [:type_organization]}],
-                          :offset =>  @conv_pages.current.offset)
+                          :include => [:province, :comune, :user, {:cross_organization => [:type_organization]}]
+                          )
         render :layout => !request.xhr?
       }
       format.xml  { render :xml => @convs }

@@ -6,7 +6,19 @@
 
   <p><%= f.check_box :richiedinumeroregistrazione, :label => :label_richiedinumeroregistrazione %></p>
 
-  <p><%= f.date_select :data_scadenza, :label => :field_data_scadenza %></p>
+  <% if @conv.data_scadenza %>
+    <% if DateTime.now > @conv.data_scadenza %>
+      <p class="scadenza-ko">
+    <% elsif @conv.data_scadenza < (DateTime.now + Setting.renew_days.to_i.days) %>
+      <p class="scadenza-renewing">
+    <% else  %>
+      <p class="scadenza-ok">
+    <% end  %>
+  <% else  %>
+    <p class="scadenza-none">
+  <% end  %>
+  <%= f.date_select :data_scadenza, :label => :field_data_scadenza %>
+  </p>
 
   <p><%= f.text_field :codice_attivazione, :label => :field_codice_attivazione, :size => 40 %></p>
 

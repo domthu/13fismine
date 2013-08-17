@@ -1442,3 +1442,7 @@ a.count:visited{
     text-decoration: none;
     color: #fff;
 }
+.scadenza-none{background-color: #b22222;color: #FFFFFF;}
+.scadenza-ok{font-weight: bold; color: #498204;}
+.scadenza-ko{color: #b22222;}
+.scadenza-renewing{color: #F6691D;}
