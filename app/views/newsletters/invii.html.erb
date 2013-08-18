@@ -1,18 +1,17 @@
 <div class="contextual">
-<em class="hide">Limit <%# @limit %></em>
-<em class="hide">offset <%# @offset %></em>
-<em class="hide">convention id <%= @convention_id %></em>
-<em class="hide">role id <%= @role %></em>
-<em class="hide">name <%= @name %></em>
-
+  <em class="hide">Limit <%# @limit %></em>
+  <em class="hide">offset <%# @offset %></em>
+  <em class="hide">convention id <%= @convention_id %></em>
+  <em class="hide">role id <%= @role %></em>
+  <em class="hide">name <%= @name %></em>
 </div>
 
 <%= render :partial => 'show', :newsletter => @newsletter %>
 
-<h2><%=l(:label_newsletter)%></h2>
-
+<h2><%=l(:label_send_newsletter)%></h2>
 
 <div class="autoscroll">
+  <p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %></p>
 <table id="tblinvii" class="list">
   <thead><tr>
   <th style="text-align:left; width: 65%;"><%= l(:field_role) %></th>
@@ -49,6 +48,7 @@
   </tbody>
 </table>
 
+<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %></p>
 
 <table id="tblinvii_convs" class="list">
   <thead><tr>
@@ -86,8 +86,8 @@
     <td class="cnt" align="left"><%= @conv_users %></td>
     <td class="checkbox">
     <%# check_box_tag "permissins[#{role.id}][]", permission.name, (role.permissions.include? permission.name), :id => nil, :class => "role-#{role.id}" %>
-      <% if @conv_users > 0 %>
-        <% if conv.data_scadenza && DateTime.now < conv.data_scadenza %>
+      <% if conv.data_scadenza && @conv_users > 0 %>
+        <% if DateTime.now < conv.data_scadenza %>
           <%= check_box_tag 'conv_ids[]', conv.id, true, {:name => "invia"} %></td>
         <% else %>
           <%= check_box_tag 'conv_ids[]', conv.id, false, {:name => "invia"} %></td>
@@ -101,26 +101,24 @@
 <% end -%>
   </tbody>
 </table>
-<script type="text/javascript" charset="utf-8">
 
-    var checkboxes = $$("#tblinvii input[type=checkbox]");
-    var cbControl = $("checkbox_selector");
-    cbControl.observe("click", function(){
-      checkboxes.each(function(box){
-        box.checked = cbControl.checked;
-      });
-    });
-
-    var checkboxes_convs = $$("#tblinvii_convs input[type=checkbox]");
-    var cbControl_convs = $("checkbox_selector_convs");
-    cbControl_convs.observe("click", function(){
-      checkboxes_convs.each(function(box){
-        box.checked = cbControl_convs.checked;
-      });
-    });
-
-  </script>
+<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %></p>
 </div>
-<p class="pagination"><%# pagination_links_full @user_pages, @user_count %></p>
 
-<% html_title(l(:label_user_plural)) -%>
+<script type="text/javascript" charset="utf-8">
+  var checkboxes = $$("#tblinvii input[type=checkbox]");
+  var cbControl = $("checkbox_selector");
+  cbControl.observe("click", function(){
+    checkboxes.each(function(box){
+      box.checked = cbControl.checked;
+    });
+  });
+
+  var checkboxes_convs = $$("#tblinvii_convs input[type=checkbox]");
+  var cbControl_convs = $("checkbox_selector_convs");
+  cbControl_convs.observe("click", function(){
+    checkboxes_convs.each(function(box){
+      box.checked = cbControl_convs.checked;
+    });
+  });
+</script>
