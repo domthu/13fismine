@@ -5,6 +5,7 @@ class GroupBannersController < ApplicationController
   include SortHelper
   before_filter :set_menu
   menu_item :group_banners
+
   def set_menu
     @menu_fs = :menu_fiscosport
   end
@@ -29,12 +30,12 @@ class GroupBannersController < ApplicationController
         @group_banner_count = GroupBanner.all.count
         @group_banner_pages = Paginator.new self, @group_banner_count, per_page_option, params['page']
         @group_banners = GroupBanner.find(:all,
-                                  :order => sort_clause,
-                                  :limit  =>  @group_banner_pages.items_per_page,
-                                  :offset =>  @group_banner_pages.current.offset)
+                                          :order => sort_clause,
+                                          :limit => @group_banner_pages.items_per_page,
+                                          :offset => @group_banner_pages.current.offset)
         render :layout => !request.xhr?
       }
-      format.xml  { render :xml => @group_banners }
+      format.xml { render :xml => @group_banners }
     end
   end
 
@@ -45,7 +46,7 @@ class GroupBannersController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @group_banner }
+      format.xml { render :xml => @group_banner }
     end
   end
 
@@ -56,7 +57,7 @@ class GroupBannersController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @group_banner }
+      format.xml { render :xml => @group_banner }
     end
   end
 
@@ -73,10 +74,10 @@ class GroupBannersController < ApplicationController
     respond_to do |format|
       if @group_banner.save
         format.html { redirect_to(@group_banner, :notice => l(:notice_successful_create)) }
-        format.xml  { render :xml => @group_banner, :status => :created, :location => @group_banner }
+        format.xml { render :xml => @group_banner, :status => :created, :location => @group_banner }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @group_banner.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @group_banner.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -89,10 +90,10 @@ class GroupBannersController < ApplicationController
     respond_to do |format|
       if @group_banner.update_attributes(params[:group_banner])
         format.html { redirect_to(@group_banner, :notice => l(:notice_successful_update)) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @group_banner.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @group_banner.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -105,12 +106,21 @@ class GroupBannersController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(group_banners_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
+
   def positions
     respond_to do |format|
-       format.html
+      format.html
     end
-    end
+  end
+  def paperclip_img_destroy
+    @group_banner = GroupBanner.find(params[:id])
+    @group_banner.image.clear
+    @group_banner.image.destroy
+    @group_banner.save
+    #redirect_to :back
+    redirect_to :action => 'edit', :id => params[:id]
+  end
 end

@@ -1,5 +1,12 @@
 <h1>Listing comunes</h1>
+ <div style="width: 100%; height: 66px; background-color: #B6B6B6; text-align: center;" >
+   <% ("A".."Z").map do |l|  %>
+       <%= link_to(l, {:controller => 'comunes', :action=>'index' , :letter => l },  {:class => "button-grey " , :style => "margin: 4px;"} ) %>
+   <% end %>
 
+ </div>
+
+<% if @comunes.count > 0 %>
 <table>
   <tr>
     <th>Name</th>
@@ -18,6 +25,9 @@
   </tr>
 <% end %>
 </table>
+    <% else %>
+    <h1> Nessun comune inizia per <%= params[:letter] %>  </h1>
+    <%	end  %>
 
 <br />
 

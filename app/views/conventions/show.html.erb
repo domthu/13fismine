@@ -24,16 +24,16 @@
       <%= l(:label_data_scadenza) %></label>
       <% if @conv.data_scadenza %>
         <% if DateTime.now > @conv.data_scadenza %>
-          <span class="scadenza-ko"> <%= format_date(@conv.data_scadenza) %>
+          <span class="scadenza-ko"> <%= format_date(@conv.data_scadenza) %> </span>
         <% elsif @conv.data_scadenza < (DateTime.now + Setting.renew_days.to_i.days) %>
-          <span class="scadenza-renewing"><%= format_date(@conv.data_scadenza) %>
+          <span class="scadenza-renewing"><%= format_date(@conv.data_scadenza) %></span>
         <% else  %>
-          <span class="scadenza-ok"><%= format_date(@conv.data_scadenza) %>
+          <span class="scadenza-ok"><%= format_date(@conv.data_scadenza) %> </span>
         <% end  %>
       <% else  %>
-        <span class="scadenza-none">Senza data di scadenza
+        <span class="scadenza-none">Senza data di scadenza  </span>
       <% end  %>
-    </span></p>
+   </p>
 
     <p><label><%= l(:label_richiedinumeroregistrazione) %></label><span>
         <%= check_box_tag '', 1, @conv.richiedinumeroregistrazione, :disabled => 'disabled' %>

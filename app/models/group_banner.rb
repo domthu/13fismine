@@ -2,7 +2,7 @@ class GroupBanner < ActiveRecord::Base
   has_attached_file :image, :styles => {:block_l => "256x215#", :block_s => "194x154#", :tramenu => "290x94#"},
                     :url => "commons/banners/:id:style.:extension",
                     :path => "#{RAILS_ROOT}/public/images/commons/banners/:id:style.:extension",
-                    :default_url => "commons/:style_ban-no-image.jpg"
+                    :default_url => "commons/blankimage.png"
   validates_attachment_size :image, :less_than => 300.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
   belongs_to :convention, :class_name => 'Convention'
@@ -22,4 +22,5 @@ class GroupBanner < ActiveRecord::Base
   end
 
   alias :name :to_s
+
 end

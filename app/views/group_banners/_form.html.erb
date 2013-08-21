@@ -1,11 +1,13 @@
 <style type="text/css">
-  #group_banner_convention_id{
-   width: 98%;
-  }
+    #group_banner_convention_id {
+        width: 98%;
+    }
 </style>
+<% @sel = params[:convention_id].nil? ? @group_banner.convention_id : params[:convention_id] %>
 <%= f.error_messages %>
 <div class="box tabular">
   <p><%= f.text_field :espositore, :label => :field_espositore, :required => true %></p>
+
   <p><%= f.text_field :url, :label => :field_url, :required => false, :size => 80 %></p>
   <span class="span3col">
     <p><%= f.check_box :visibile_web, :label => :field_visibile_web %></p></span>
@@ -13,41 +15,63 @@
   <p><%= f.check_box :visibile_mail, :label => :field_visibile_mail %></p></span>
   <span class="span3col">
   <p><%= f.text_field :priorita, :label => :field_priorita, :size => 3 %></p> </span>
-   <br>
+  <br>
 
   <div style="background-color: #2C4056; padding: 3px 0; color: #fff; display: table; width: 100%; margin:10px 0;">
-  <p style="display: table-cell; vertical-align: middle;">
-    <%= f.select(:posizione, ['convenzionato', 'block_l', 'block_s', 'tramenu'], {}, {:class => '', :label => :field_posizione}) %>
+    <p style="display: table-cell; vertical-align: middle;">
+      <%= f.select(:posizione, ['convenzionato', 'block_l', 'block_s', 'tramenu'], {}, {:class => '', :label => :field_posizione}) %>
       <span style="float: right; margin-right: 5px;">
-          <%= link_to ('visualizza le posizioni', banners_position_path,  :class => "button-grey" ,:style => "font-size:1em") %>
+          <%= link_to ('visualizza le posizioni', banners_position_path, :class => "button-grey", :style => "font-size:1em") %>
         </span>
     </p>
-      </div>
-  <div style="background-color: #fff; border: solid 1px #e4e4e4;"><div style="text-align: right; padding-right: 15px; font-style: italic;"> Banner immagine</div>
-  <p>   <%= f.file_field :image, :label => :field_immagine %> </p>
+  </div>
+  <div id="is_ban" style="background-color: #fff; border: solid 1px #e4e4e4;">
+    <div style="text-align: right; padding-right: 15px; font-style: italic;"> Banner immagine <br />
+      <%= link_to 'Rimuovi immagine', :controller => 'group_banners', :action => 'paperclip_img_destroy', :id => @group_banner.id %>
 
-  <p id="prev" style="max-height: 300px;"> <%= image_tag @group_banner.image.url(:original) %>
+    </div>
+    <p>   <%= f.file_field :image, :label => :field_immagine %> </p>
 
-</div>
-  <p style="text-align: right; width: 83%; margin:10px 0; font-style: italic; "> Pubblicità "Convenzionati" </p>
-  <p><%= params[:convention_id]  %></p>
-  <p ><%= f.select :convention_id, (Convention.all.collect {|c| [c.id.to_s + c.ragione_sociale , c.id]}),{:include_blank => true,  :selected => params[:convention_id] , :default => params[:convention_id] , :required => false}, :title => l(:label_convention) %></p>
+    <p id="prev" style="max-height: 300px;"> <%= image_tag @group_banner.image.url(:original) %>
 
-  <p><label>Banner
-    Associazione </label> <%= f.cktext_area :didascalia, :width => 775, :label => :field_banner, :height => 456, :swf_params => {:assetable_type => 'Test', :assetable_id => 1} %>
-  </p>
+  </div>
+  <div id='is_con'>
+    <p style="text-align: right; width: 83%; margin:10px 0; font-style: italic; "> Pubblicità "Convenzionati" </p>
+
+    <p><%= params[:convention_id] %></p>
+
+    <p><%= f.select :convention_id, options_for_select(Convention.all.collect { |c| [c.ragione_sociale, c.id] }, @sel.to_i), {:include_blank => true, :required => false}, :title => l(:label_convention) %></p>
+
+    <p><label>Banner
+      Associazione </label> <%= f.cktext_area :didascalia, :width => 775, :label => :field_banner, :height => 356, :swf_params => {:assetable_type => 'Test', :assetable_id => 1} %>
+    </p>
+  </div>
+
 
 </div>
 <script type="text/javascript">
-    (function () {
+    function ShowHideMe() {
+        var el = document.getElementById('group_banner_posizione');
+        if (el.value == 'convenzionato') {
+            document.getElementById('is_ban').className = 'hide';
+            document.getElementById('is_con').className = '';
 
+        } else {
+            document.getElementById('is_con').className = 'hide';
+            document.getElementById('is_ban').className = '';
+        }
+    }
+    ;
+
+    document.getElementById('group_banner_posizione').addEventListener('change', ShowHideMe, false);
+    window.onload = ShowHideMe;
+</script>
+<script type="text/javascript">
+    (function () {
         document.getElementById('group_banner_image').addEventListener('change', function (event) {
             if (!event) // i.e. the argument is undefined or null
                 event = window.event;
             handleFileSelect(event, 'prev', '')
         }, false);
-
-    })
-            ();
-
+    })();
 </script>

@@ -1316,7 +1316,7 @@ it:
   field_priorita_logo_fe: Priorità
   field_logo_in_fe: Logo in Home?
 
-  field_espositore: Espositore
+  field_espositore: Nome
   field_url: Url
   field_priorita: Priorita
   field_posizione: Posizione

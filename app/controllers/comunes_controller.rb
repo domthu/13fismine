@@ -10,8 +10,7 @@ class ComunesController < ApplicationController
   # GET /comunes
   # GET /comunes.xml
   def index
-    @comunes = Comune.all
-
+    @comunes =  Comune.find_by_first_letter(params[:letter])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @comunes }

@@ -6,10 +6,12 @@ class Comune < ActiveRecord::Base
 
   belongs_to :province, :class_name => 'Province', :foreign_key => 'province_id'
 
+  def self.find_by_first_letter(chr)
+    letter= chr || 'A'
+      find(:all, :conditions => ['name LIKE ?', "#{letter}%"], :order => 'name ASC')
+    end
   def to_s
     name #+ '(' + ?codice fiscale? + ')'
   end
-
-  #alias :name :to_s
 
 end
