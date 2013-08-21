@@ -10,7 +10,7 @@
     <th style='width: 5%; color: #2A5685;'>Logo</th>
   <%= sort_header_tag('ragione_sociale', :title => l(:label_ragione_sociale), :style => 'width: 35%;text-align:left;')%>
   <%= sort_header_tag('Tipo_Sigla', :title => l(:label_convention_pact), :style => 'width: 20%;text-align:left;')%>
-  <%= sort_header_tag('data_scadenza', :title => l(:label_condisabledvention_ref), :style => 'width: 20%;')%>
+  <%= sort_header_tag('scadenza', :title => l(:label_condisabledvention_ref), :style => 'width: 20%;')%>
   <%#sort_header_tag('presidente', :title => l(:label_convention_people), :style => 'width: 15%;text-align:left;')%>
   <%= sort_header_tag('contatti', :title => l(:label_convention_contact), :style => 'width: 15%;text-align:left;')%>
 
@@ -29,12 +29,18 @@
       <br /><%=h conv.get_zone() %></td>
     <td align="left">
       <strong>
-        <% if DateTime.now > conv.data_scadenza  %>
-     <span style="color: #b22222;"> <%= format_date(conv.data_scadenza) %>  </span>
-            <%	else  %>
-            <%= format_date(conv.data_scadenza) %>
-        <%	end  %>
-      </strong>
+      <% if conv.data_scadenza %>
+        <% if DateTime.now > conv.data_scadenza %>
+          <span class="scadenza-ko"> <%= format_date(conv.data_scadenza) %>
+        <% elsif conv.data_scadenza < (DateTime.now + Setting.renew_days.to_i.days) %>
+          <span class="scadenza-renewing"><%= format_date(conv.data_scadenza) %>
+        <% else  %>
+          <span class="scadenza-ok"><%= format_date(conv.data_scadenza) %>
+        <% end  %>
+      <% else  %>
+        <span class="scadenza-none">Senza data di scadenza
+      <%	end  %>
+      </span></strong>
       <br />
       <% if conv.user %>
         <%= link_to(h(conv.user), user_path(conv.user, :id => conv.user_id) ) %>
@@ -49,7 +55,7 @@
 </table>
 </div>
 
-<p class="pagination"><%= pagination_links_full @conv_pages, @conv_count %></p>
+<p class="pagination"><%# pagination_links_full @conv_pages, @conv_count %></p>
 
 <% else %>
 <p class="nodata"><%= l(:label_no_data) %></p>

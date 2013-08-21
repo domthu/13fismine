@@ -4,7 +4,7 @@ class NewslettersController < ApplicationController
   before_filter :require_admin
   before_filter :find_project, :only => [ :invii ]
   before_filter :find_newsletter, :only => [ :invii ]
-  before_filter :newsletter_members, :only => [ :invii ]
+  #before_filter :newsletter_members, :only => [ :invii ]
 
   verify :method => :post, :only => [ :destroy ],
          :redirect_to => { :action => :index }
@@ -13,51 +13,42 @@ class NewslettersController < ApplicationController
   helper :sort
   include SortHelper
 
-  # GET /newsletters
-  # GET /newsletters.xml
-  def index
-    @newsletters = Newsletter.all
+  #gestione invii emails di una newsletter e imposti tutti utenti ad essa collegata
+  # pass project_id
+  #: {"role"=>{"role_id"=>"1"}, "convention"=>{"convention_id"=>""}, "project_id"=>"341", "controller"=>"newsletters", "name"=>"domthu", "action"=>"invii"}
+  def invii
+    puts "@project id " + @project.id.to_s +  ", @newsletter id " + @newsletter.id.to_s
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @newsletters }
+    #if params[:member] && request.post?
+    if request.post?
+
+    else
+      if @newsletter.newsletter_users.count > 0
+        @last_date = @newsletter.newsletter_users.sort_by(&:updated_at).reverse.first.updated_at
+        if @last_date && @newsletter.data < @last_date
+          @newsletter.data = @last_date
+          @newsletter.save
+        end
+      else
+        @newsletter.data = DateTime.now
+        @newsletter.save
+      end
     end
-  end
-
-  # GET /newsletters/1
-  # GET /newsletters/1.xml
-  def show
-    @newsletter = Newsletter.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @newsletter }
-    end
-  end
-
-  # GET /newsletters/new
-  # GET /newsletters/new.xml
-  def new
-    @newsletter = Newsletter.new
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @newsletter }
+      format.xml  { render :xml => @newsletter_user }
     end
   end
 
-  #gestione invii emails di una newsletter e imposti tutti utenti ad essa collegata
-  # pass project_id
-  #: {"role"=>"1", "convention"=>{"convention_id"=>""}, "project_id"=>"341", "controller"=>"newsletters", "name"=>"domthu", "action"=>"invii"}
-  def invii
-    puts "@project id " + @project.id.to_s +  ", @newsletter id " + @newsletter.id.to_s
+
     #Collect user
 #    @users_by_roles = User.all(
 #      :conditions => ['role_id IN (?)', FeeConst::NEWSLETTER_ROLES]
 #      )
 
     # if convention_id is not null allora sono NON pagante
-    @users_emailed = @newsletter.newsletter_users
+    #@users_emailed = @newsletter.newsletter_users
 
 #    #sort and filters users
 #    sort_init 'login', 'asc'
@@ -107,12 +98,39 @@ class NewslettersController < ApplicationController
 #                :order => sort_clause,
 #                :conditions => c.conditions
 
+
+  # GET /newsletters
+  # GET /newsletters.xml
+  def index
+    @newsletters = Newsletter.all
+
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @newsletter_user }
+      format.html # index.html.erb
+      format.xml  { render :xml => @newsletters }
     end
   end
 
+  # GET /newsletters/1
+  # GET /newsletters/1.xml
+  def show
+    @newsletter = Newsletter.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @newsletter }
+    end
+  end
+
+  # GET /newsletters/new
+  # GET /newsletters/new.xml
+  def new
+    @newsletter = Newsletter.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @newsletter }
+    end
+  end
 
   # GET /newsletters/1/edit
   def edit
@@ -163,46 +181,44 @@ class NewslettersController < ApplicationController
     end
   end
 
-  private
-
 ################################
   private
 
-    def newsletter_members
+#    def newsletter_members
 
-      #ruoli
-      @num_no_role_count = User.all(:conditions => {:role_id => nil || 2}).count
-      @name_admin_count = User.all(:conditions => {:admin => 1}).count
-      @name_manager_count = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER}).count
-      @name_author_count = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR}).count
-      #@name_collaboratori_count = User.all(:conditions => {:role_id => ROLE_COLLABORATOR}).count
-      @name_invitati_count = User.all(:conditions => {:role_id => FeeConst::ROLE_VIP}).count
-      @num_uncontrolled_TOTAL = @name_manager_count + @name_author_count + @name_invitati_count
+#      #ruoli
+#      @num_no_role_count = User.all(:conditions => {:role_id => nil || 2}).count
+#      @name_admin_count = User.all(:conditions => {:admin => 1}).count
+#      @name_manager_count = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER}).count
+#      @name_author_count = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR}).count
+#      #@name_collaboratori_count = User.all(:conditions => {:role_id => ROLE_COLLABORATOR}).count
+#      @name_invitati_count = User.all(:conditions => {:role_id => FeeConst::ROLE_VIP}).count
+#      @num_uncontrolled_TOTAL = @name_manager_count + @name_author_count + @name_invitati_count
 
 
-      #BY CLIENT ROLE
-      #  FeeConst::ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
-      #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
-      #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
-      #  FeeConst::ROLE_EXPIRED        = 6  #user.data_scadenza < today
-      #  FeeConst::ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED)
-      @num_abbonati = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_ABBONATO}).count
-      @num_rinnovamento = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_RENEW}).count
-      @num_registrati = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_REGISTERED}).count
-      @num_scaduti = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_EXPIRED}).count
-      @num_archiviati = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_ARCHIVIED}).count
-      @num_controlled_TOTAL = @num_abbonati + @num_rinnovamento + @num_registrati + @num_scaduti + @num_archiviati
+#      #BY CLIENT ROLE
+#      #  FeeConst::ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
+#      #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
+#      #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
+#      #  FeeConst::ROLE_EXPIRED        = 6  #user.data_scadenza < today
+#      #  FeeConst::ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED)
+#      @num_abbonati = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_ABBONATO}).count
+#      @num_rinnovamento = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_RENEW}).count
+#      @num_registrati = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_REGISTERED}).count
+#      @num_scaduti = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_EXPIRED}).count
+#      @num_archiviati = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_ARCHIVIED}).count
+#      @num_controlled_TOTAL = @num_abbonati + @num_rinnovamento + @num_registrati + @num_scaduti + @num_archiviati
 
-      #Who pay? User member of organismo convenzionato
-      @num_Associations =  Convention.all.count
-      #questi utenti non pagano. Paga l'organismo convenzionato
-      @num_Associated_COUNT =  User.all(:conditions => 'convention_id IS NOT NULL').count
+#      #Who pay? User member of organismo convenzionato
+#      @num_Associations =  Convention.all.count
+#      #questi utenti non pagano. Paga l'organismo convenzionato
+#      @num_Associated_COUNT =  User.all(:conditions => 'convention_id IS NOT NULL').count
 
-      #@roles = []
-      #@roles << FeeConst::ROLE_MANAGER << FeeConst::ROLE_AUTHOR << FeeConst::ROLE_VIP
-      #@num_privati_COUNT = User.all(:conditions => ['convention_id is null AND role_id not IN (?)', @roles]).count
+#      #@roles = []
+#      #@roles << FeeConst::ROLE_MANAGER << FeeConst::ROLE_AUTHOR << FeeConst::ROLE_VIP
+#      #@num_privati_COUNT = User.all(:conditions => ['convention_id is null AND role_id not IN (?)', @roles]).count
 
-    end
+#    end
 
     def require_fee
       if !Setting.fee
@@ -216,7 +232,8 @@ class NewslettersController < ApplicationController
         flash[:notice] = l(:error_can_not_create_newsletter, :newsletter => "manca id del progetto")
         return redirect_to :controller => 'projects', :action => 'index'
       end
-      @project = Project.find(params[:project_id])
+      #@project = Project.find(params[:project_id])
+      @project = Project.all_public_fs.find_by_id params[:project_id].to_i
       if @project.nil?
         flash[:error] = l(:error_can_not_create_newsletter, :newsletter => "edizione non trovata")
         return redirect_to :controller => 'projects', :action => 'index'
@@ -234,8 +251,19 @@ class NewslettersController < ApplicationController
         @newsletter.project_id = @project.id
         @newsletter.data = DateTime.now
         #TODO fare una newsletter vuota
-        #@newsletter.text = @project.newsletter_smtp(User.current)
-        @newsletter.html = "project.rb:934:in newsletter_smtp undefined method > for nil:NilClass"
+        #@newsletter.html = @project.newsletter_smtp(nil)
+        #@newsletter.html = @project.newsletter_smtp(User.current)
+        #@newsletter.html = "project.rb:934:in newsletter_smtp undefined method > for nil:NilClass"
+        #undefined method `image_tag' for #<Project:0xb5934b0c>
+        @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+        @newsletter.html = render_to_string(
+                :layout => false,
+                :partial => 'editorial/edizione_smtp',
+                :locals => { :id => @id, :project => @project, :art => @art, :user => nil }
+              )
+        #@@user_name
+        #@@user_convention
+        #@@user_convention_icon
         @newsletter.sended = false
         if !@newsletter.save
           flash[:error] = l(:error_can_not_create_newsletter, :newsletter => @project.name)

@@ -951,6 +951,7 @@ it:
   button_quote: Quota
   button_duplicate: Duplica
   button_show: Mostra
+  button_hide: Nascondi
   button_edit_section: Modifica questa sezione
   button_export: Esporta
   button_prova: Leggi Gratis!
@@ -1720,6 +1721,7 @@ it:
   label_sended: 'email inviata'
   label_html: 'testo del messaggio'
   label_data: 'data invio'
+  label_first_sent: 'data primo invio'
   label_newsletter_none: "Nessun invio fatto a questo giorno"
   field_abbonamento: "Abbonamento"
   field_abbonamento_type: "Tipo abbonamento"

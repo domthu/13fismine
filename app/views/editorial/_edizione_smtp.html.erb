@@ -76,7 +76,12 @@
               <tr>
                 <td height="50" align="center" valign="center" style="text-align: center;">
                   <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:18px; color:#333333; line-height: 25px;">
-                    <%= @user.firstname %> &nbsp; <%= @user.lastname %></font>
+                      <% if @user %>
+                        <%= @user.firstname %> &nbsp; <%= @user.lastname %>
+                      <% else %>
+                        @@user_name
+                      <% end %>
+                    </font>
                 </td>
               </tr>
             </table>
@@ -104,16 +109,24 @@
   <tr>
     <td width="500" bgcolor="#ffffff" align="right" style="vertical-align: middle;">
       <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:15px; color:#1e1e1e; line-height:18px; font-weight: bold;">
-        <%= user_myasso_text(@user) %>
+        <% if @user %>
+          <%= user_myasso_text(@user) %>
+        <% else %>
+          @@user_convention
+        <% end %>
       </font>
     </td>
     <td width="60" valign="bottom" align="right">
-      <%= image_tag(defurl + user_myasso_icon(@user, :s), :width => 48, :height => 48) %>
+      <% if @user %>
+        <%= image_tag(defurl + user_myasso_icon(@user, :s), :width => 48, :height => 48) %>
+      <% else %>
+        @@user_convention_icon
+      <% end %>
     </td>
   </tr>
 </table>
 
-<!-- fine riga visibile solo se associato o è affiliato'  / sotto un'ummagine di spazio -->
+<!-- fine riga visibile solo se associato o è affiliato'  / sotto un'immagine di spazio -->
 <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
   <tr>
     <td width="560" valign="bottom" bgcolor="#ffffff" height="6">
@@ -166,9 +179,7 @@
                         <span style="color: #0C4481;"><%= (nart.section.nil? ? "? non trovata la sezione ?" : nart.section.top_section.to_s) %> </span>
                         :: <span style="color: #e95f03;"> <%= nart.section.to_s %></span> </strong></font>
                   </td>
-
                 </tr>
-
               </table>
             </td>
           </tr>
@@ -298,6 +309,8 @@
 <!-- fine sezione loop articoli -->
 <!------------------------------------------------------------------------->
 <!-- !importante fine   contenuto  email-->
+</td>
+</tr>
 </table>
 </td>
 </tr>
@@ -312,6 +325,7 @@
       &nbsp;
     </font>
   </td>
+</tr>
 </table>
 </td>
 </tr>

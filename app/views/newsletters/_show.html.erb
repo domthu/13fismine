@@ -8,9 +8,20 @@
       <%= check_box_tag '', 1, @newsletter.sended, :disabled => 'disabled'  %>
   </span></p>
   <p><label>
-    <%=l(:label_data)%></label><span><%= format_date(@newsletter.data) %>
+    <%=l(:label_first_sent)%></label><span><%= format_date(@newsletter.data) %>
   </span></p>
-  <p><label>
-    <%= l(:label_html) %></label><span><%=h @newsletter.html %>
-  </span></p>
+  <hr />
+  <div class="contextual">
+    <%= link_to_function(image_tag('eye-no.gif'), "setVisible('div_newsletter', false)",
+        :title => "#{l(:button_show)}") %>
+    <%= link_to_function(image_tag('eye.gif'), "setVisible('div_newsletter', true)",
+        :title => "#{l(:button_hide)}") %>
+  </div>
+
+  <div id='div_newsletter' ><%= @newsletter.html %></div>
+
 </fieldset>
+
+<script type="text/javascript" charset="utf-8">
+  setVisible('div_newsletter', false);
+</script>
