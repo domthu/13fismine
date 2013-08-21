@@ -1,6 +1,3 @@
-   <div id="footer-menu" class="box">
-    <%= render_menu :menu_fee_fs %>
-  </div>
 <h2><%=l(:list_registrati)%></h2>
 <% form_tag({}, :method => :get) do %>
 <fieldset><legend><%= l(:label_filter_plural) %></legend>
@@ -11,7 +8,7 @@
 <label for='name'><%= l(:label_user) %>:</label>
 <%= text_field_tag 'name', params[:name], :size => 30 %>
 <%= submit_tag l(:button_apply), :class => "small", :name => nil %>
-<%= link_to l(:button_clear), registrati_path, :class => 'icon icon-reload' %>
+<%= link_to l(:button_clear), liste_utenti_path, :class => 'icon icon-reload' %>
 </fieldset>
 <% end %>
 &nbsp;

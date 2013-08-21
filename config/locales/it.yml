@@ -1590,7 +1590,7 @@ it:
   invia_fatture: Pagina di invio delle fattture
   list_pagamento: Lista pagamenti --> Invoices list?
   list_paganti: Lista dei paganti
-  list_registrati: Lista dei registrati
+  list_registrati: Liste
   list_scaduti: Lista dei scaduti
   control_fee: Gestione abbonamenti --> Pannello di controllo
   stato_utenze: Stato delle utenze FISCOSPORT

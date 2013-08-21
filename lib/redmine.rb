@@ -286,13 +286,14 @@ Redmine::MenuManager.map :project_menu do |menu|
 end
 
 Redmine::MenuManager.map :menu_fee_fs do |menu|
-  menu.push :abbonamenti, :abbonamenti_path
-  menu.push :registrati, :registrati_path
+  menu.push :panoramica, :fee_path
+  menu.push :liste, :liste_utenti_path
   #menu.push :privati, :privati_path
   menu.push :associati, :associati_path
   #menu.push :scaduti, :scaduti_path
   #menu.push :archiviati, :archiviati_path
   menu.push :paganti, :paganti_path
+  menu.push :abbonamenti, :abbonamenti_path
   menu.push :pagamento, :pagamento_path
   menu.push :invia_fatture, :invia_fatture_path
   menu.push :email_fee, :email_fee_path

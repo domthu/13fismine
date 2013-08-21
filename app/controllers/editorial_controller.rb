@@ -727,7 +727,7 @@ class EditorialController < ApplicationController
   def reroute_auth()
     flash[:notice] = "Per accedere devi avere un abbonamento valido..."
     #redirect_to(signin_path)
-    redirect_to(abbonamenti_path)
+    redirect_to(page_abbonamento_path)
   end
 
   #privato. Usato sia per articolo che preview (anche se non pubblico il project ed issue)

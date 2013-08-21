@@ -4,13 +4,13 @@ class FeesController < ApplicationController
 
   before_filter :require_admin, :require_fee
   #before_filter :find_user, :only => [:registrati, :associati, :privati, :archiviati, :scaduti]
-  before_filter :get_statistics, :only => [:index, :registrati, :associati, :privati, :archiviati, :scaduti]
+  before_filter :get_statistics, :only => [:index, :liste_utenti, :associati, :privati, :archiviati, :scaduti]
 
   helper :sort
   include SortHelper
 
   #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
-  include FeesHelper  #ROLE_XXX  gedate
+  include FeesHelper #ROLE_XXX  gedate
   #FeeConst::ROLE_MANAGER        = 3  #Manager<br />
   #FeeConst::ROLE_AUTHOR         = 4  #Redattore  <br />
   #FeeConst::ROLE_COLLABORATOR   = 4  #ROLE_REDATTORE   autore, redattore e collaboratore
@@ -23,10 +23,23 @@ class FeesController < ApplicationController
   include ActionView::Helpers::DateHelper
   #undefined method `utc?' for Wed, 15 Oct 2008:Date  format_time --> format_date
   before_filter :set_menu
+  menu_item :overview
+  menu_item :menu_fee_fs, :only => [:panoramica, :liste, :associati, :paganti, :abbonamenti]
+  menu_item :menu_payment_fs, :only => [:pagamento, :invia_fatture, :email_fee, :invoice, :contract, :contract_per_user]
 
   def set_menu
+    case self.action_name
+      when 'index', 'liste_utenti', 'liste_utenti', 'associatii', 'paganti'
+        @menu_fs = :menu_fee_fs
+      when 'pagamento', 'fatture', 'email_fee', 'invia_fatture'
+        @menu_fs = :menu_fee_fs
+      else
+        @menu_fs = :application_menu
+    end
+
     @menu_fs = :menu_fee_fs
   end
+
   def index
     #@msg[] << ""
     #__User_all = User.all()
@@ -84,15 +97,15 @@ class FeesController < ApplicationController
     #BY PAYMENTS PRIVATE or CONVENTION
     #@num_power_user = User.all(:conditions => {:power_user => 1}).count
     #User member of organismo convenzionato
-    @num_Associations =  Convention.all.count
+    @num_Associations = Convention.all.count
     @referee = User.find_by_sql("select * from users where id IN (select distinct user_id from conventions)")
     #questi utenti non pagano. Paga l'organismo convenzionato
-    @num_Associated_COUNT =  User.all(:conditions => 'convention_id IS NOT NULL').count
-    @num_Associated_ABBONATO =  User.all(:conditions => ['convention_id IS NOT NULL AND role_id = ?',  FeeConst::ROLE_ABBONATO]).count
-    @num_Associated_REGISTERED =  User.all(:conditions => ['convention_id IS NOT NULL AND role_id = ?',  FeeConst::ROLE_REGISTERED]).count
-    @num_Associated_RENEW =  User.all(:conditions => ['convention_id IS NOT NULL AND role_id = ?',  FeeConst::ROLE_RENEW]).count
-    @num_Associated_EXPIRED =  User.all(:conditions => ['convention_id IS NOT NULL AND role_id = ?',  FeeConst::ROLE_EXPIRED]).count
-    @num_Associated_ARCHIVIED =  User.all(:conditions => ['convention_id IS NOT NULL AND role_id = ?',  FeeConst::ROLE_ARCHIVIED]).count
+    @num_Associated_COUNT = User.all(:conditions => 'convention_id IS NOT NULL').count
+    @num_Associated_ABBONATO = User.all(:conditions => ['convention_id IS NOT NULL AND role_id = ?', FeeConst::ROLE_ABBONATO]).count
+    @num_Associated_REGISTERED = User.all(:conditions => ['convention_id IS NOT NULL AND role_id = ?', FeeConst::ROLE_REGISTERED]).count
+    @num_Associated_RENEW = User.all(:conditions => ['convention_id IS NOT NULL AND role_id = ?', FeeConst::ROLE_RENEW]).count
+    @num_Associated_EXPIRED = User.all(:conditions => ['convention_id IS NOT NULL AND role_id = ?', FeeConst::ROLE_EXPIRED]).count
+    @num_Associated_ARCHIVIED = User.all(:conditions => ['convention_id IS NOT NULL AND role_id = ?', FeeConst::ROLE_ARCHIVIED]).count
     @num_associated_TOTAL = @num_Associated_ABBONATO + @num_Associated_REGISTERED + @num_Associated_RENEW + @num_Associated_EXPIRED + @num_Associated_ARCHIVIED
 
     #Utenti che non dipendono di un associazione PAGANTI
@@ -102,34 +115,34 @@ class FeesController < ApplicationController
     @num_privati_COUNT = User.all(:conditions => ['convention_id is null AND role_id not IN (?)', @roles]).count
     #@num_privati_AUTHOR =  User.all(:conditions => {:convention_id => nil, :role_id =>  FeeConst::ROLE_AUTHOR}).count
     #@num_privati_VIP =  User.all(:conditions => {:convention_id => nil, :role_id =>  FeeConst::ROLE_VIP}).count
-    @num_privati_ABBONATO =  User.all(:conditions => {:convention_id => nil, :role_id =>  FeeConst::ROLE_ABBONATO}).count
-    @num_privati_REGISTERED =  User.all(:conditions => {:convention_id => nil, :role_id =>  FeeConst::ROLE_REGISTERED}).count
-    @num_privati_RENEW =  User.all(:conditions => {:convention_id => nil, :role_id =>  FeeConst::ROLE_RENEW}).count
-    @num_privati_EXPIRED =  User.all(:conditions => {:convention_id => nil, :role_id =>  FeeConst::ROLE_EXPIRED}).count
-    @num_privati_ARCHIVIED =  User.all(:conditions => {:convention_id => nil, :role_id =>  FeeConst::ROLE_ARCHIVIED}).count
+    @num_privati_ABBONATO = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_ABBONATO}).count
+    @num_privati_REGISTERED = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_REGISTERED}).count
+    @num_privati_RENEW = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_RENEW}).count
+    @num_privati_EXPIRED = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_EXPIRED}).count
+    @num_privati_ARCHIVIED = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_ARCHIVIED}).count
     @num_privati_TOTAL = @num_privati_ABBONATO + @num_privati_REGISTERED + @num_privati_RENEW + @num_privati_EXPIRED + @num_privati_ARCHIVIED
     @num_controlled_TOTAL
 
     #Affiliati ad una federazione (cross organization)
     #CONI è nazionale
     @num_organismi = CrossOrganization.all.count
-    @num_members =  User.all(:conditions => {:cross_organization_id => !nil}).count
+    @num_members = User.all(:conditions => {:cross_organization_id => !nil}).count
 
   end
 
 
 ###########LISTE UTENTI PER RUOLO##############
-  def registrati
+  def liste_utenti
     #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
     #@users = User.all(:conditions => {:role_id => FeeConst::ROLE_REGISTERED}, :include => :role)
     sort_init 'person', 'asc'
     sort_update %w(firstname lastname role_id created_on convention_id datascadenza)
 
     case params[:format]
-    when 'xml', 'json'
-      @offset, @limit = api_offset_and_limit
-    else
-      @limit = per_page_option
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        @limit = per_page_option
     end
 
     scope = User
@@ -147,11 +160,11 @@ class FeesController < ApplicationController
     @user_count = scope.count(:conditions => c.conditions)
     @user_pages = Paginator.new self, @user_count, @limit, params['page']
     @offset ||= @user_pages.current.offset
-    @users =  scope.find :all,
+    @users = scope.find :all,
                         :order => sort_clause,
                         :conditions => c.conditions,
-                        :limit  =>  @limit,
-                        :offset =>  @offset
+                        :limit => @limit,
+                        :offset => @offset
 
     respond_to do |format|
       format.html {
@@ -184,7 +197,7 @@ class FeesController < ApplicationController
   end
 
   def associati
-      #sort and filters users
+    #sort and filters users
     sort_init 'login', 'asc'
     #sort_update %w(login firstname lastname mail admin created_on last_login_on)
     sort_update %w(lastname mail data convention_id role_id)
@@ -213,9 +226,9 @@ class FeesController < ApplicationController
 
     end
 
-    @users =  User.find :all,
-                :order => sort_clause,
-                :conditions => c.conditions
+    @users = User.find :all,
+                       :order => sort_clause,
+                       :conditions => c.conditions
   end
 
   def paganti
@@ -227,12 +240,12 @@ class FeesController < ApplicationController
     #:include => :role)
     #:conditions => {:role_id => FeeConst::ROLE_ABBONATO, :role_id => FeeConst::ROLE_RENEW },
 
-#    workflows.find(:al,
-#        :include => :new_status,
-#        :conditions => ["role_id IN (:role_ids) AND tracker_id = :tracker_id AND (#{conditions})",
-#          {:role_ids => roles.collect(&:id), :tracker_id => tracker.id, :true => true, :false => false}
-#          ]
-#        ).collect{|w| w.new_status}.compact.sort
+    #    workflows.find(:al,
+    #        :include => :new_status,
+    #        :conditions => ["role_id IN (:role_ids) AND tracker_id = :tracker_id AND (#{conditions})",
+    #          {:role_ids => roles.collect(&:id), :tracker_id => tracker.id, :true => true, :false => false}
+    #          ]
+    #        ).collect{|w| w.new_status}.compact.sort
 
     #sort and filters users
     sort_init 'login', 'asc'
@@ -249,8 +262,8 @@ class FeesController < ApplicationController
       @abbo = params[:abbo] ? params[:abbo].to_i : 0
       if (@abbo > 0)
         c << ["role_id = ?", @abbo]
-      #else
-      #  c << ["role_id IN (?) ", FeeConst::NEWSLETTER_ROLES]
+        #else
+        #  c << ["role_id IN (?) ", FeeConst::NEWSLETTER_ROLES]
       end
       #ricerca testuale
       unless params[:name].blank?
@@ -280,14 +293,14 @@ class FeesController < ApplicationController
     #            :limit  =>  @limit,
     #            :offset =>  @offset
 
-    @users =  User.find :all,
-                :order => sort_clause,
-                :conditions => c.conditions
+    @users = User.find :all,
+                       :order => sort_clause,
+                       :conditions => c.conditions
   end
 
 ##########GESTIONE PAGAMENTI ABBONAMENTO
   def pagamento
-    @payment =  User.find :all
+    @payment = User.find :all
   end
 
   def invia_fatture
@@ -327,7 +340,8 @@ class FeesController < ApplicationController
     redirect_to :controller => 'settings', :action => 'edit', :tab => 'fee'
   end
 
-  verify :method => :put, :only => :update, :render => {:nothing => true, :status => :method_not_allowed }
+  verify :method => :put, :only => :update, :render => {:nothing => true, :status => :method_not_allowed}
+
   def update_role
     @user.admin = params[:user][:admin] if params[:user][:admin]
     @user.login = params[:user][:login] if params[:user][:login]
@@ -353,7 +367,7 @@ class FeesController < ApplicationController
           flash[:notice] = l(:notice_successful_update)
           redirect_to :back
         }
-        format.api  { head :ok }
+        format.api { head :ok }
       end
     else
       @auth_sources = AuthSource.find(:all)
@@ -363,7 +377,7 @@ class FeesController < ApplicationController
 
       respond_to do |format|
         format.html { render :action => :edit }
-        format.api  { render_validation_errors(@user) }
+        format.api { render_validation_errors(@user) }
       end
     end
   rescue ::ActionController::RedirectBackError
@@ -374,27 +388,27 @@ class FeesController < ApplicationController
 ################################
   private
 
-    def get_statistics
-      @num_users = User.count
-      #@num_users = User.all.count
-    end
+  def get_statistics
+    @num_users = User.count
+    #@num_users = User.all.count
+  end
 
-    def require_fee
-      if !Setting.fee
-        flash[:notice] = l(:notice_setting_fee_not_allowed)
-        redirect_to editorial_path
-      end
+  def require_fee
+    if !Setting.fee
+      flash[:notice] = l(:notice_setting_fee_not_allowed)
+      redirect_to editorial_path
     end
+  end
 
-    def find_user
-      if params[:id] == 'current'
-        require_login || return
-        @user = User.current
-      else
-        @user = User.find(params[:id])
-      end
-    rescue ActiveRecord::RecordNotFound
-      render_404
+  def find_user
+    if params[:id] == 'current'
+      require_login || return
+      @user = User.current
+    else
+      @user = User.find(params[:id])
     end
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
 
 end
