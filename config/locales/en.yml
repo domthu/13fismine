@@ -1162,19 +1162,16 @@ en:
   label_data_scadenza: Data scadenza
   label_nota: Note
   label_region: Regione
+  label_region_plural: Regioni
   label_province: Provincia
+  label_province_plural: Provincia
   label_comune: Comune
-  label_testo2: Testo 2
-  label_testo3: Testo 3
-  label_numero1: Numero 1
-  label_numero2: Numero 2
-  label_numero3: Numero 3
-  label_data1: Data 1
-  label_data2: Data 2
-  label_data3: Data 3
-  label_flag1: Flag 1
-  label_flag2: Flag 2
-  label_flag3: Flag 3
+  label_comune_plural: Comuni
+  label_abitanti: Abitanti
+  label_cap: Cap
+  label_prefisso_tel: Prefisso Tel.
+  label_cod_fisco: Cod. Fisco
+  label_link_to_comune: Link
 
   field_cross_organization: Sigla
   field_richiedinumeroregistrazione: Richiedi N° Reg.
@@ -1187,17 +1184,10 @@ en:
   field_region: Regione
   field_province: Provincia
   field_comune: Comune
-  field_testo2: Testo 2
-  field_testo3: Testo 3
-  field_numero1: Numero 1
-  field_numero2: Numero 2
-  field_numero3: Numero 3
-  field_data1: Data 1
-  field_data2: Data 2
-  field_data3: Data 3
-  field_flag1: Flag 1
-  field_flag2: Flag 2
-  field_flag3: Flag 3
+  field_cap: Cap
+  field_prefisso_tel: Prefisso Tel.
+  field_cod_fisco: Cod. Fisco
+  field_link_to_comune: Link al sito del comune
 
 #top_section
   label_top_section: Categoria

@@ -1,20 +1,26 @@
-<h1>Listing regions</h1>
-
+<h2 style="display:inline-block; width: 100%;"><%= link_to '&nbsp;', regions_path %>  </h2>
+<span style="display: inline; position: absolute; left: 65%; margin-top: -30px;">
+  <%= link_to l(:label_new_region), new_region_path, :class => 'icon icon-add' %></span>
+<br/>
 <table>
-  <tr>
-    <th>Name</th>
+  <tr style="text-align:left;">
+    <th style="width: 65%;"><%= l :label_region %></th>
+    <th style="width: 15%;"><%= l :label_abbrev %></th>
+    <th style="width: 5%;">id</th>
+    <th style="width: 5%;"></th>
+    <th style="width: 5%;"></th>
   </tr>
 
-<% @regions.each do |region| %>
-  <tr>
-    <td><%=h region.name %></td>
-    <td><%= link_to 'Show', region %></td>
-    <td><%= link_to 'Edit', edit_region_path(region) %></td>
-    <td><%= link_to 'Destroy', region, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <% @regions.each do |item| %>
+      <tr>
+        <td style="border: solid 1px #d3d3d3; font-weight: bold;"><%= link_to item.name.to_s, :action => 'show', :id => item.id %></td>
+        <td style="border: solid 1px #d3d3d3;"> <%= item.abbrev %></td>
+        <td style="border: solid 1px #d3d3d3;"> <%= item.id.to_s %></td>
+        <td><%= link_to (l :button_edit), {:action => 'edit', :id => item}, :class => 'icon icon-edit' %>&nbsp;</td>
+        <td><%= link_to (l :button_delete), {:action => 'destroy', :id => item}, :confirm => 'Sei certo di voler eliminare?', :method => :delete, :class => 'icon icon-del' %></td>
+      </tr>
+  <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New region', new_region_path %>
+<h1 style="color: red;">!!! importante fare in phpmyadmin ... <br> ALTER TABLE `regions` CHANGE `id` `id` INT( 11 ) NOT
+  NULL AUTO_INCREMENT</h1>

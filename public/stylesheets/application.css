@@ -1347,6 +1347,7 @@ body a.button-grey:visited{
 }
 .button-grey:hover {
 	background-color:#dfdfdf;
+    cursor: pointer ;
 }
 .button-grey:active {
 	position:relative;
@@ -1442,6 +1443,8 @@ a.count:visited{
     text-decoration: none;
     color: #fff;
 }
+#comunes-form input , #comunes-form select { width: 63%; }
+
 .scadenza-none{background-color: #b22222;color: #FFFFFF;}
 .scadenza-ok{font-weight: bold; color: #498204;}
 .scadenza-ko{color: #b22222;}

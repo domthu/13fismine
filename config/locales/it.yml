@@ -1173,20 +1173,23 @@ it:
   label_data_scadenza: Data scadenza
   label_nota: Note
   label_region: Regione
+  label_region_plural: Regioni
   label_province: Provincia
+  label_province_plural: Province
   label_comune: Comune
   label_comune_plural: Comuni
-  label_testo2: Testo 2
-  label_testo3: Testo 3
-  label_numero1: Numero 1
-  label_numero2: Numero 2
-  label_numero3: Numero 3
-  label_data1: Data 1
-  label_data2: Data 2
-  label_data3: Data 3
-  label_flag1: Flag 1
-  label_flag2: Flag 2
-  label_flag3: Flag 3
+  label_abitanti: Abitanti
+  label_cap: Cap
+  label_prefisso_tel: Prefisso Tel.
+  label_cod_fisco: Cod. Fisco
+  label_link_to_comune: Link
+  label_abbrev: Abbreviazione
+  label_new_comune: Nuovo Comune
+  label_new_province: Nuova Provincia
+  label_new_region: Nuova Regione
+  label_edit_comune: Modifica Comune
+  label_edit_province: Modifica Provincia
+  label_edit_region: Modifica Regione
 
   field_cross_organization: Sigla
   field_richiedinumeroregistrazione: Richiedi N° Reg.
@@ -1195,21 +1198,15 @@ it:
   field_region: Regione
   field_province: Provincia
   field_comune: Comune
+  field_abbrev: Abbreviazione
   field_nota: Note
   field_region: Regione
   field_province: Provincia
   field_comune: Comune
-  field_testo2: Testo 2
-  field_testo3: Testo 3
-  field_numero1: Numero 1
-  field_numero2: Numero 2
-  field_numero3: Numero 3
-  field_data1: Data 1
-  field_data2: Data 2
-  field_data3: Data 3
-  field_flag1: Flag 1
-  field_flag2: Flag 2
-  field_flag3: Flag 3
+  field_cap: Cap
+  field_prefisso_tel: Prefisso Tel.
+  field_cod_fisco: Cod. Fisco
+  field_link_to_comune: Link al sito
 
 #top_section
   label_top_section: Categoria
@@ -1395,8 +1392,7 @@ it:
   field_login_fisco: (old) login FISCOSPORT
   field_mail_fisco: (old) email FISCOSPORT
   field_soc: "Intestatario dell'abbonamento"
-  field_note: (old) note
-  field_cap: (old) CAP
+  field_note: Note
   field_prov: (old) provincia
   field_sede: (old) sede
   field_telefono2: (old) 2nd telefono

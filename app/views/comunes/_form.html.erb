@@ -1,0 +1,47 @@
+<%= f.error_messages %>
+
+  <fieldset class="box tabular" id="comunes-form">
+    <legend style="font-weight: bold; font-size: 1em;"><%= @comune.new_record? ? l(:label_new_comune) : l(:label_edit_comune) %></legend>
+    <blockquote>
+      <br/>
+      <p>
+        <%= f.label :name %>
+        <%= f.text_field :name, :required => true %>
+      </p>
+
+      <p>
+        <%= f.label :province %>
+        <%= f.select :province_id, options_for_select(Province.all.collect { |itm| [itm.name, itm.id] },@comune.province_id), {:disabled => false, :include_blank => false, :required => true} %>
+      </p>
+
+      <p>
+        <%= f.label :region %>
+        <%= f.select :region_id, options_for_select(Region.all.collect { |itm| [itm.name, itm.id] },@comune.region_id), {:disabled => false, :include_blank => false, :required => true} %>
+      </p>
+
+      <p>
+        <%= f.label :abitanti %>
+        <%= f.text_field :abitanti %>
+      </p>
+
+      <p>
+        <%= f.label :cap %>
+        <%= f.text_field :cap %>
+      </p>
+
+      <p>
+        <%= f.label :prefisso_tel %>
+        <%= f.text_field :prefisso_tel %>
+      </p>
+
+      <p>
+        <%= f.label :cod_fisco %>
+        <%= f.text_field :cod_fisco %>
+      </p>
+
+      <p>
+        <%= f.label :link_to_comune %>
+        <%= f.text_field :link_to_comune %>
+      </p>
+    </blockquote>
+  </fieldset>

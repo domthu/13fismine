@@ -1,18 +1,45 @@
-<p>
-  <b>Name:</b>
-  <%=h @comune.name %>
-</p>
+<h2 style="display:inline-block; width: 100%;"><%= link_to '&nbsp;', comunes_path %>  </h2>
+<span style="display: inline; position: absolute; left: 50%; margin-top: -30px;">
+  <%= link_to 'Aggiungi', new_comune_path, :class => 'icon icon-add' %> &nbsp;
+  <%= link_to (l :button_edit), edit_comune_path(@comune), :class => 'icon icon-edit' %>&nbsp;
+  <%= link_to (l :button_delete), @comune, :confirm => 'Sei certo di voler eliminare?', :method => :delete, :class => 'icon icon-del' %>
+  <%= link_to (l :button_back), :back, :class => 'icon icon-cancel' %>&nbsp;</span>
+<p>&nbsp;</p>
+<fieldset class="box tabular" id="comunes-form">
+  <legend style="font-weight: bold; font-size: 1.5em;"><%= @comune.name %></legend>
+  <blockquote>
+    <br/>
 
-<p>
-  <b>province_id:</b>
-  <%=h @comune.province_id %>
-</p>
+    <p>
+      <label>
+        Provincia </label>: <%= select_tag 'province_id', options_for_select(Province.all.collect { |itm| [itm.name, itm.id] }, @comune.province_id), {:disabled => true} %> &nbsp;
+      [id:  <%= @comune.province_id %>]
+    </p>
 
-<p>
-  <b>region_id:</b>
-  <%=h @comune.region_id %>
-</p>
+    <p>
+      <label>
+        Regione </label>: <%= select_tag 'regione_id', options_for_select(Region.all.collect { |itm| [itm.name, itm.id] }, @comune.region_id), {:disabled => true} %> &nbsp;
+      [id: <%= @comune.region_id %>]
+    </p>
 
+    <p>
+      <label> Abitanti </label>: <%= @comune.abitanti %>
+    </p>
 
-<%= link_to 'Edit', edit_comune_path(@comune) %> |
-<%= link_to 'Back', comunes_path %>
+    <p>
+      <label> Cap </label>: <%= @comune.cap %>
+    </p>
+
+    <p>
+      <label> Prefisso Tel. </label>: <%= @comune.prefisso_tel %>
+    </p>
+
+    <p>
+      <label> Cod. Fisco </label>: <%= @comune.cod_fisco %>
+    </p>
+
+    <p>
+      <label> Link </label>: <%= link_to @comune.link_to_comune, @comune.link_to_comune %>
+    </p>
+  </blockquote>
+</fieldset>

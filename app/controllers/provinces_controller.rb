@@ -3,14 +3,14 @@ class ProvincesController < ApplicationController
 
   before_filter :require_admin
   before_filter :set_menu
-  menu_item :comunes
+  menu_item :provinces
   def set_menu
-    @menu_fs = :menu_fiscosport
+    @menu_fs = :menu_comuni
   end
   # GET /provinces
   # GET /provinces.xml
   def index
-    @provinces = Province.all
+    @provinces = Province.find(:all, :order => 'name ASC')
 
     respond_to do |format|
       format.html # index.html.erb

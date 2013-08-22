@@ -2,7 +2,11 @@ class RegionsController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin
-
+  before_filter :set_menu
+  menu_item :regions
+  def set_menu
+    @menu_fs = :menu_comuni
+  end
   # GET /regions
   # GET /regions.xml
   def index

@@ -1,0 +1,20 @@
+<%= f.error_messages %>
+
+<fieldset class="box tabular" id="comunes-form">
+  <legend style="font-weight: bold; font-size: 1em;"><%= @region.new_record? ? l(:label_new_region) : l(:label_edit_region) %></legend>
+  <blockquote>
+    <br/>
+
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name, :required => true %>
+    </p>
+
+    <p>                <%= f.label :abbrev %>
+      <%= f.text_field :abbrev, :required => true %>
+    </p>
+
+
+
+  </blockquote>
+</fieldset>

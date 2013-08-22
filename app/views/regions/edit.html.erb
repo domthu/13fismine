@@ -1,16 +1,8 @@
-<h1>Editing region</h1>
-
-<% form_for(@region) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
+<h2 style="display:inline-block; width: 100%;"><%= link_to '&nbsp', regions_path %>  </h2>
+<span style="display: inline; position: absolute; left:65%; margin-top: -30px;">
+  <%= link_to (l :button_back), :back, :class => 'icon icon-cancel' %>&nbsp;</span>
+<p>&nbsp;</p>
+<% form_for @region do |f| %>
+    <%= render :partial => 'form', :locals => {:f => f} %>
+    <div class="btn-footer"><%= f.submit l(:button_save), :class => "button-blu" %></div>
 <% end %>
-
-<%= link_to 'Show', @region %> |
-<%= link_to 'Back', regions_path %>

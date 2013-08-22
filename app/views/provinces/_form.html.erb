@@ -1,0 +1,24 @@
+<%= f.error_messages %>
+
+<fieldset class="box tabular" id="comunes-form">
+  <legend style="font-weight: bold; font-size: 1em;"><%= @province.new_record? ? l(:label_new_province) : l(:label_edit_province) %></legend>
+  <blockquote>
+    <br/>
+
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name, :required => true %>
+    </p>
+
+    <p>
+      <%= f.label :sigla %>
+      <%= f.text_field :sigla, :required => true %>
+    </p>
+
+    <p>
+      <%= f.label :region %>
+      <%= f.select :region_id, options_for_select(Region.all.collect { |itm| [itm.name, itm.id] }, @province.region_id), {:disabled => false, :include_blank => false, :required => true} %>
+    </p>
+
+  </blockquote>
+</fieldset>

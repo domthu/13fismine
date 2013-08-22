@@ -335,6 +335,11 @@ Redmine::MenuManager.map :menu_fiscosport do |menu|
   menu.push :group_banners, :group_banners_path, :caption => :label_group_banner_plural , :if => Proc.new { User.current.admin? }
 
 end
+Redmine::MenuManager.map :menu_comuni do |menu|
+  menu.push :comunes, :comunes_path, :caption => :label_comune_plural , :if => Proc.new { User.current.admin? }
+  menu.push :provinces, :provinces_path, :caption => :label_province_plural , :if => Proc.new { User.current.admin? }
+  menu.push :regions, :regions_path, :caption => :label_region_plural , :if => Proc.new { User.current.admin? }
+end
 # pagina principale vista
 #pagina lista utenti con relativi azione
 #selettore di ruolo

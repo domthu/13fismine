@@ -1,8 +1,20 @@
-<p>
-  <b>Name:</b>
-  <%=h @region.name %>
-</p>
-
-
-<%= link_to 'Edit', edit_region_path(@region) %> |
-<%= link_to 'Back', regions_path %>
+<h2 style="display:inline-block; width: 100%;"><%= link_to '&nbsp', regions_path %>  </h2>
+<span style="display: inline; position: absolute; left: 50%; margin-top: -30px;">
+  <%= link_to 'Aggiungi', new_region_path, :class => 'icon icon-add' %> &nbsp;
+  <%= link_to (l :button_edit), edit_region_path(@regions), :class => 'icon icon-edit' %>&nbsp;
+  <%= link_to (l :button_delete), @region, :confirm => 'Sei certo di voler eliminare?', :method => :delete, :class => 'icon icon-del' %>
+  <%= link_to (l :button_back), :back, :class => 'icon icon-cancel' %>&nbsp;</span>
+<p>&nbsp;</p>
+<fieldset class="box tabular" id="comunes-form">
+  <legend style="font-weight: bold; font-size: 1.5em;"><%= @region.name %></legend>
+  <blockquote>
+    <br/>
+    <p>
+          <label> <%= l(:label_region) %> </label>:  <%= select_tag 'regione_id', options_for_select(Region.all.collect { |itm| [itm.name, itm.id] }, @region), {:disabled => true} %> &nbsp;
+          [id: <%= @id.to_s %>]
+        </p>
+    <p>
+      <label> <%= l(:label_abbrev) %> </label>: <%= @region.abbrev %>
+    </p>
+  </blockquote>
+</fieldset>_path %>

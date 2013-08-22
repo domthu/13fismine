@@ -1,18 +1,28 @@
-<p>
-  <b>Name:</b>
-  <%=h @province.name %>
-</p>
+<h2 style="display:inline-block; width: 100%;"><%= link_to '&nbsp', provinces_path %>  </h2>
+<span style="display: inline; position: absolute; left: 50%; margin-top: -30px;">
+  <%= link_to 'Aggiungi', new_province_path, :class => 'icon icon-add' %> &nbsp;
+  <%= link_to (l :button_edit), edit_province_path(@province), :class => 'icon icon-edit' %>&nbsp;
+  <%= link_to (l :button_delete), @province, :confirm => 'Sei certo di voler eliminare?', :method => :delete, :class => 'icon icon-del' %>
+  <%= link_to (l :button_back), :back, :class => 'icon icon-cancel' %>&nbsp;</span>
+<p>&nbsp;</p>
+<fieldset class="box tabular" id="comunes-form">
+  <legend style="font-weight: bold; font-size: 1.5em;"><%= @province.name %></legend>
+  <blockquote>
+    <br/>
 
-<p>
-  <b>region_id:</b>
-  <%=h @province.region_id %>
-</p>
+    <p>
+      <label> <%= l(:label_sigla) %> </label>: <%= @province.sigla %>
+    </p>
 
-<p>
-  <b>sigla:</b>
-  <%=h @province.sigla %>
-</p>
+    <p>
+      <label> <%= l(:label_province) %> </label>:
+      <%= select_tag 'province_id', options_for_select(Province.all.collect { |itm| [itm.name, itm.id] }, @province), {:disabled => true} %> &nbsp;
+      [id:  <%= @id.to_s %>]
+    </p>
 
-
-<%= link_to 'Edit', edit_province_path(@province) %> |
-<%= link_to 'Back', provinces_path %>
+    <p>
+      <label> <%= l(:label_region) %> </label>:  <%= select_tag 'regione_id', options_for_select(Region.all.collect { |itm| [itm.name, itm.id] }, @province.region_id), {:disabled => true} %> &nbsp;
+      [id: <%= @province.region_id %>]
+    </p>
+  </blockquote>
+</fieldset>

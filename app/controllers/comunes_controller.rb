@@ -5,7 +5,7 @@ class ComunesController < ApplicationController
   before_filter :set_menu
   menu_item :comunes
   def set_menu
-    @menu_fs = :menu_fiscosport
+    @menu_fs = :menu_comuni
   end
   # GET /comunes
   # GET /comunes.xml

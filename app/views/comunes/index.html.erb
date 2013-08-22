@@ -1,5 +1,5 @@
-<h1>Listing comunes</h1>
- <div style="width: 100%; height: 66px; background-color: #B6B6B6; text-align: center;" >
+<h2 style="display:inline-block; width: 100%;"><%=link_to 'Indice dei Comuni Italiani', comunes_path %>  </h2><span style="display: inline; position: absolute; left: 65%; margin-top: -30px;" > <%= link_to 'Aggiungi comune', new_comune_path, :class => 'icon icon-add' %></span>
+ <div style="width: 100%;  background-color: #B6B6B6; text-align: center;" >
    <% ("A".."Z").map do |l|  %>
        <%= link_to(l, {:controller => 'comunes', :action=>'index' , :letter => l },  {:class => "button-grey " , :style => "margin: 4px;"} ) %>
    <% end %>
@@ -8,20 +8,22 @@
 
 <% if @comunes.count > 0 %>
 <table>
-  <tr>
-    <th>Name</th>
-    <th>province_id</th>
-    <th>region_id</th>
+  <tr style="text-align:left;">
+    <th style="width: 55%;"><%=l :label_comune %></th>
+    <th style="width: 15%;"><%=l :label_region %></th>
+    <th style="width: 15%;"><%=l :label_province %></th>
+    <th style="width: 5%;"></th>
+    <th style="width: 5%;"></th>
   </tr>
 
 <% @comunes.each do |comune| %>
   <tr>
-    <td><%=h comune.name %></td>
-    <td><%=h comune.province_id %></td>
-    <td><%=h comune.region_id %></td>
-    <td><%= link_to 'Show', comune %></td>
-    <td><%= link_to 'Edit', edit_comune_path(comune) %></td>
-    <td><%= link_to 'Destroy', comune, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td style="border: solid 1px #d3d3d3; font-weight: bold;"><%= link_to comune.name, comune %></td>
+    <td> <%= select_tag 'region_id', options_for_select(Region.all.collect { |itm| [itm.name.upcase, itm.id] }, comune.region_id ),{:disabled=>true}  %></td>
+    <td> <%= select_tag 'province_id', options_for_select(Province.all.collect { |itm| [itm.name, itm.id] }, comune.province_id ),{:disabled => true}  %></td>
+
+      <td><%= link_to (l:button_edit), edit_comune_path(comune), :class => 'icon icon-edit' %>&nbsp;</td>
+    <td><%= link_to (l:button_delete), comune, :confirm => 'Sei certo di voler eliminare?', :method => :delete, :class => 'icon icon-del' %></td>
   </tr>
 <% end %>
 </table>
@@ -31,4 +33,3 @@
 
 <br />
 
-<%= link_to 'New comune', new_comune_path %>
