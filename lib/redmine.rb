@@ -96,7 +96,7 @@ Redmine::AccessControl.map do |map|
     map.permission :log_time, {:timelog => [:new, :create]}, :require => :loggedin
     map.permission :view_time_entries, :timelog => [:index, :show], :time_entry_reports => [:report]
     map.permission :edit_time_entries, {:timelog => [:edit, :update, :destroy, :bulk_edit, :bulk_update]}, :require => :member
-    map.permission :edit_own_time_entries, {:timelog => [:edit, :update, :destroy,:bulk_edit, :bulk_update]}, :require => :loggedin
+    map.permission :edit_own_time_entries, {:timelog => [:edit, :update, :destroy, :bulk_edit, :bulk_update]}, :require => :loggedin
     map.permission :manage_project_activities, {:project_enumerations => [:update, :destroy]}, :require => :member
   end
 
@@ -160,11 +160,11 @@ Redmine::MenuManager.map :top_menu do |menu|
   #domthu 20120517
   #menu.push :section, :sections_path
   #menu.push :my_page, :table_path
-  menu.push :my_page, { :controller => 'my', :action => 'page' }, :if => Proc.new { User.current.logged? }
-  menu.push :projects, { :controller => 'projects', :action => 'index' }, :caption => :label_project_plural, :if => Proc.new { User.current.logged? }
-  menu.push :activity, { :controller => 'activities', :action => 'index' }, :caption => :label_activity_plural, :if => Proc.new { User.current.logged? }
+  menu.push :my_page, {:controller => 'my', :action => 'page'}, :if => Proc.new { User.current.logged? }
+  menu.push :projects, {:controller => 'projects', :action => 'index'}, :caption => :label_project_plural, :if => Proc.new { User.current.logged? }
+  menu.push :activity, {:controller => 'activities', :action => 'index'}, :caption => :label_activity_plural, :if => Proc.new { User.current.logged? }
   #menu.push :forum, Setting.host_name + "/projects/sys-quesiti", :if => Proc.new { !Project.find_by_identifier('sys-quesiti').nil? }
-  menu.push :administration, { :controller => 'admin', :action => 'index' }, :if => Proc.new { User.current.admin? }, :last => true
+  menu.push :administration, {:controller => 'admin', :action => 'index'}, :if => Proc.new { User.current.admin? }, :last => true
   #menu.push :help, Redmine::Info.help_url, :last => true
   menu.push :help, Redmine::Info.help_url, :if => Proc.new { User.current.admin? }, :html => {:target => '_blank'}
   menu.push :help_user, Redmine::Info.help_user_url, :if => Proc.new { User.current.admin? }, :html => {:target => '_blank'}
@@ -174,17 +174,17 @@ end
 Redmine::MenuManager.map :top_menu_fs do |menu|
   menu.push :public_site_home, :editorial_path
   menu.push :home, :home_path, :if => Proc.new { User.current.logged? && User.current.allowed_to?(:access_back_end, nil, :global => true) }
-  menu.push :my_page, { :controller => 'my', :action => 'page' }, :if => Proc.new { User.current.logged?  && User.current.allowed_to?(:access_back_end, nil, :global => true) }
-  menu.push :projects, { :controller => 'editorial', :action => 'edizioni' }, :caption => :label_project_plural
+  menu.push :my_page, {:controller => 'my', :action => 'page'}, :if => Proc.new { User.current.logged? && User.current.allowed_to?(:access_back_end, nil, :global => true) }
+  menu.push :projects, {:controller => 'editorial', :action => 'edizioni'}, :caption => :label_project_plural
   #menu.push :issues, { :controller => 'editorial', :action => 'articoli' }, :caption => :label_issue_plural
   #menu.push :news, { :controller => 'editorial', :action => 'quesiti' }, :caption => :label_news_plural
-  menu.push :quesito_nuovo, { :controller => 'editorial', :action => 'quesito_nuovo' }, :if => Proc.new { User.current.logged? && User.current.allowed_to?(:front_end_quesito, nil, :global => true) }
+  menu.push :quesito_nuovo, {:controller => 'editorial', :action => 'quesito_nuovo'}, :if => Proc.new { User.current.logged? && User.current.allowed_to?(:front_end_quesito, nil, :global => true) }
   menu.push :aboutus, :about_path
   menu.push :faq, :help_path
   menu.push :contact, :contact_path
   menu.push :login, :signin_path, :if => Proc.new { !User.current.logged? }
-  menu.push :register, { :controller => 'account', :action => 'register' }, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
-  menu.push :mio_profilo, { :controller => 'mio_profilo', :action => 'account' }, :if => Proc.new { User.current.logged? }
+  menu.push :register, {:controller => 'account', :action => 'register'}, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
+  menu.push :mio_profilo, {:controller => 'mio_profilo', :action => 'account'}, :if => Proc.new { User.current.logged? }
   menu.push :logout, :signout_path, :if => Proc.new { User.current.logged? }
 
 end
@@ -210,8 +210,8 @@ end
 
 Redmine::MenuManager.map :account_fe_menu do |menu|
   menu.push :login, :signin_path, :if => Proc.new { !User.current.logged? }
-  menu.push :register, { :controller => 'account', :action => 'register' }, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
-  menu.push :mio_profilo, { :controller => 'mio_profilo', :action => 'account' }, :if => Proc.new { User.current.logged? }
+  menu.push :register, {:controller => 'account', :action => 'register'}, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
+  menu.push :mio_profilo, {:controller => 'mio_profilo', :action => 'account'}, :if => Proc.new { User.current.logged? }
   menu.push :logout, :signout_path, :if => Proc.new { User.current.logged? }
 end
 
@@ -220,8 +220,8 @@ end
 
 Redmine::MenuManager.map :account_menu do |menu|
   menu.push :login, :signin_path, :if => Proc.new { !User.current.logged? }
-  menu.push :register, { :controller => 'account', :action => 'register' }, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
-  menu.push :my_account, { :controller => 'my', :action => 'account' }, :if => Proc.new { User.current.logged? }
+  menu.push :register, {:controller => 'account', :action => 'register'}, :if => Proc.new { !User.current.logged? && Setting.self_registration? }
+  menu.push :my_account, {:controller => 'my', :action => 'account'}, :if => Proc.new { User.current.logged? }
   menu.push :logout, :signout_path, :if => Proc.new { User.current.logged? }
 end
 
@@ -253,7 +253,7 @@ Redmine::MenuManager.map :admin_menu do |menu|
   menu.push :issue_statuses, {:controller => 'issue_statuses'}, :caption => :label_issue_status_plural,
             :html => {:class => 'issue_statuses'}
   menu.push :workflows, {:controller => 'workflows', :action => 'edit'}, :caption => :label_workflow
-  menu.push :custom_fields, {:controller => 'custom_fields'},  :caption => :label_custom_field_plural,
+  menu.push :custom_fields, {:controller => 'custom_fields'}, :caption => :label_custom_field_plural,
             :html => {:class => 'custom_fields'}
   menu.push :enumerations, {:controller => 'enumerations'}
   menu.push :settings, {:controller => 'settings'}
@@ -264,25 +264,25 @@ Redmine::MenuManager.map :admin_menu do |menu|
 end
 
 Redmine::MenuManager.map :project_menu do |menu|
-  menu.push :overview, { :controller => 'projects', :action => 'show' }
-  menu.push :activity, { :controller => 'activities', :action => 'index' }
-  menu.push :roadmap, { :controller => 'versions', :action => 'index' }, :param => :project_id,
-              :if => Proc.new { |p| p.shared_versions.any? }
-  menu.push :issues, { :controller => 'issues', :action => 'index' }, :param => :project_id, :caption => :label_issue_plural
-  menu.push :new_issue, { :controller => 'issues', :action => 'new' }, :param => :project_id, :caption => :label_issue_new,
-              :html => { :accesskey => Redmine::AccessKeys.key_for(:new_issue) }
-  menu.push :gantt, { :controller => 'gantts', :action => 'show' }, :param => :project_id, :caption => :label_gantt
-  menu.push :calendar, { :controller => 'calendars', :action => 'show' }, :param => :project_id, :caption => :label_calendar
-  menu.push :news, { :controller => 'news', :action => 'index' }, :param => :project_id, :caption => :label_news_plural
-  menu.push :documents, { :controller => 'documents', :action => 'index' }, :param => :project_id, :caption => :label_document_plural
-  menu.push :wiki, { :controller => 'wiki', :action => 'show', :id => nil }, :param => :project_id,
-              :if => Proc.new { |p| p.wiki && !p.wiki.new_record? }
-  menu.push :boards, { :controller => 'boards', :action => 'index', :id => nil }, :param => :project_id,
-              :if => Proc.new { |p| p.boards.any? }, :caption => :label_board_plural
-  menu.push :files, { :controller => 'files', :action => 'index' }, :caption => :label_file_plural, :param => :project_id
-  menu.push :repository, { :controller => 'repositories', :action => 'show' },
-              :if => Proc.new { |p| p.repository && !p.repository.new_record? }
-  menu.push :settings, { :controller => 'projects', :action => 'settings' }, :last => true
+  menu.push :overview, {:controller => 'projects', :action => 'show'}
+  menu.push :activity, {:controller => 'activities', :action => 'index'}
+  menu.push :roadmap, {:controller => 'versions', :action => 'index'}, :param => :project_id,
+            :if => Proc.new { |p| p.shared_versions.any? }
+  menu.push :issues, {:controller => 'issues', :action => 'index'}, :param => :project_id, :caption => :label_issue_plural
+  menu.push :new_issue, {:controller => 'issues', :action => 'new'}, :param => :project_id, :caption => :label_issue_new,
+            :html => {:accesskey => Redmine::AccessKeys.key_for(:new_issue)}
+  menu.push :gantt, {:controller => 'gantts', :action => 'show'}, :param => :project_id, :caption => :label_gantt
+  menu.push :calendar, {:controller => 'calendars', :action => 'show'}, :param => :project_id, :caption => :label_calendar
+  menu.push :news, {:controller => 'news', :action => 'index'}, :param => :project_id, :caption => :label_news_plural
+  menu.push :documents, {:controller => 'documents', :action => 'index'}, :param => :project_id, :caption => :label_document_plural
+  menu.push :wiki, {:controller => 'wiki', :action => 'show', :id => nil}, :param => :project_id,
+            :if => Proc.new { |p| p.wiki && !p.wiki.new_record? }
+  menu.push :boards, {:controller => 'boards', :action => 'index', :id => nil}, :param => :project_id,
+            :if => Proc.new { |p| p.boards.any? }, :caption => :label_board_plural
+  menu.push :files, {:controller => 'files', :action => 'index'}, :caption => :label_file_plural, :param => :project_id
+  menu.push :repository, {:controller => 'repositories', :action => 'show'},
+            :if => Proc.new { |p| p.repository && !p.repository.new_record? }
+  menu.push :settings, {:controller => 'projects', :action => 'settings'}, :last => true
 end
 
 Redmine::MenuManager.map :menu_fee_fs do |menu|
@@ -294,14 +294,16 @@ Redmine::MenuManager.map :menu_fee_fs do |menu|
   #menu.push :archiviati, :archiviati_path
   menu.push :paganti, :paganti_path
   menu.push :abbonamenti, :abbonamenti_path
+=begin
   menu.push :pagamento, :pagamento_path
   menu.push :invia_fatture, :invia_fatture_path
   menu.push :email_fee, :email_fee_path
   menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
   menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
   menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
+=end
 end
-=begin
+
 Redmine::MenuManager.map :menu_payment_fs do |menu|
   menu.push :pagamento, :pagamento_path
   menu.push :invia_fatture, :invia_fatture_path
@@ -310,35 +312,20 @@ Redmine::MenuManager.map :menu_payment_fs do |menu|
   menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
   menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
 end
-Redmine::MenuManager.map :menu_table_fs do |menu|
-  menu.push :top_menu, :top_menus_path, :if => Proc.new { User.current.admin? }
-  menu.push :top_section, :top_sections_path, :if => Proc.new { User.current.admin? }
-  menu.push :section, :sections_path, :if => Proc.new { User.current.admin? }
-  #menu.push :region, :regions_path, :if => Proc.new { User.current.admin? }
-  #menu.push :province, :provinces_path, :if => Proc.new { User.current.admin? }
-  #menu.push :comune, :comunes_path, :if => Proc.new { User.current.admin? }
-  #menu.push :type_organization, :type_organizations_path, :if => Proc.new { User.current.admin? }
-  menu.push :cross_organization, :cross_organizations_path, :if => Proc.new { User.current.admin? }
-  menu.push :convention, :conventions_path, :if => Proc.new { User.current.admin? }
-   menu.push :group_banner, :group_banners_path, :if => Proc.new { User.current.admin? }
-end
-=end
-Redmine::MenuManager.map :menu_fiscosport do |menu|
-  menu.push :top_menus, :top_menus_path, :caption => :label_top_menu , :if => Proc.new { User.current.admin? }
-  menu.push :top_sections, :top_sections_path, :caption => :label_top_section_plural , :if => Proc.new { User.current.admin? }
-  menu.push :sections, :sections_path, :caption => :label_section_plural , :if => Proc.new { User.current.admin? }
-  #menu.push :region, :regions_path, :if => Proc.new { User.current.admin? }
-  #menu.push :province, :provinces_path, :if => Proc.new { User.current.admin? }
-  #menu.push :type_organization, :type_organizations_path, :if => Proc.new { User.current.admin? }
-  menu.push :cross_organizations, :cross_organizations_path, :caption => :label_cross_organization_plural , :if => Proc.new { User.current.admin? }
-  menu.push :conventions, :conventions_path, :caption => :label_convention_plural , :if => Proc.new { User.current.admin? }
-  menu.push :group_banners, :group_banners_path, :caption => :label_group_banner_plural , :if => Proc.new { User.current.admin? }
 
+Redmine::MenuManager.map :menu_fiscosport do |menu|
+  menu.push :top_menus, :top_menus_path, :caption => :label_top_menu, :if => Proc.new { User.current.admin? }
+  menu.push :top_sections, :top_sections_path, :caption => :label_top_section_plural, :if => Proc.new { User.current.admin? }
+  menu.push :sections, :sections_path, :caption => :label_section_plural, :if => Proc.new { User.current.admin? }
+  menu.push :cross_organizations, :cross_organizations_path, :caption => :label_cross_organization_plural, :if => Proc.new { User.current.admin? }
+  menu.push :conventions, :conventions_path, :caption => :label_convention_plural, :if => Proc.new { User.current.admin? }
+  menu.push :group_banners, :group_banners_path, :caption => :label_group_banner_plural, :if => Proc.new { User.current.admin? }
 end
+
 Redmine::MenuManager.map :menu_comuni do |menu|
-  menu.push :comunes, :comunes_path, :caption => :label_comune_plural , :if => Proc.new { User.current.admin? }
-  menu.push :provinces, :provinces_path, :caption => :label_province_plural , :if => Proc.new { User.current.admin? }
-  menu.push :regions, :regions_path, :caption => :label_region_plural , :if => Proc.new { User.current.admin? }
+  menu.push :comunes, :comunes_path, :caption => :label_comune_plural, :if => Proc.new { User.current.admin? }
+  menu.push :provinces, :provinces_path, :caption => :label_province_plural, :if => Proc.new { User.current.admin? }
+  menu.push :regions, :regions_path, :caption => :label_region_plural, :if => Proc.new { User.current.admin? }
 end
 # pagina principale vista
 #pagina lista utenti con relativi azione
@@ -357,7 +344,6 @@ end
 #  ROLE_RENEW          = 11  #Rinnovo: periodo prima della scadenza dipende da Setting.renew_days<br />
 #  ROLE_EXPIRED        = 7  #Scaduto: user.data_scadenza < today<br />
 #  ROLE_ARCHIVIED      = 8  #Archiviato: bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di
-
 
 
 Redmine::Activity.map do |activity|
