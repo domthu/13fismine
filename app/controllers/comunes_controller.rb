@@ -1,6 +1,7 @@
 class ComunesController < ApplicationController
   layout 'admin'
-
+  helper :sort
+  include SortHelper
   before_filter :require_admin
   before_filter :set_menu
   menu_item :comunes
@@ -10,7 +11,13 @@ class ComunesController < ApplicationController
   # GET /comunes
   # GET /comunes.xml
   def index
-    @comunes =  Comune.find_by_first_letter(params[:letter])
+    #Sorting
+    sort_init 'comune'
+    sort_update 'comune' => 'comunes.name',
+                'provincia' => 'provinces.name',
+                'regione' => "regions.name"
+
+    @comunes =  Comune.find_by_first_letter(params[:letter], sort_clause)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @comunes }

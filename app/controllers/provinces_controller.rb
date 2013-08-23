@@ -1,6 +1,7 @@
 class ProvincesController < ApplicationController
   layout 'admin'
-
+  helper :sort
+  include SortHelper
   before_filter :require_admin
   before_filter :set_menu
   menu_item :provinces
@@ -10,7 +11,12 @@ class ProvincesController < ApplicationController
   # GET /provinces
   # GET /provinces.xml
   def index
-    @provinces = Province.find(:all, :order => 'name ASC')
+    #Sorting
+    sort_init 'provincia'
+    sort_update 'provincia' => 'provinces.name',
+                'regione' => "regions.name"
+
+    @provinces = Province.find(:all, :include => :region ,:order => sort_clause )
 
     respond_to do |format|
       format.html # index.html.erb

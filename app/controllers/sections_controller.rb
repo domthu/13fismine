@@ -19,12 +19,9 @@ class SectionsController < ApplicationController
     #Sorting
     sort_init 'categoria'
     sort_update 'categoria' => 'sezione',
-                #'sezione' => 'sezione_top_id',
                 'sezione' => "top_sections.sezione_top",   #related table.Field
                 'ord.' => 'sections.ordinamento',
                 'protetto' => 'protetto'
-
-
     respond_to do |format|
       #ovverride for paging format.html # index.html.erb
       format.html {

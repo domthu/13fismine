@@ -4,10 +4,11 @@
 <br />
 <table>
   <tr style="text-align:left;">
-    <th style="width: 55%;"><%=l :label_province %></th>
-    <th style="width: 15%;"><%=l :label_sigla %></th>
+
+    <%= sort_header_tag('provincia', :title => l(:label_province), :style => 'width: 55%;') %>
+    <th style="width: 10%;"><%=l :label_sigla %></th>
     <th style="width: 5%;">id</th>
-    <th style="width: 15%;"><%=l :label_region %></th>
+    <%= sort_header_tag('regione', :title => l(:label_region), :style => 'width: 15%;') %>
     <th style="width: 5%;"></th>
     <th style="width: 5%;"></th>
   </tr>
@@ -17,7 +18,7 @@
     <td style="border: solid 1px #d3d3d3; font-weight: bold;"><%= link_to item.name, item %></td>
     <td style="border: solid 1px #d3d3d3;"> <%=  item.sigla  %></td>
     <td style="border: solid 1px #d3d3d3;"> <%=  item.id.to_s  %></td>
-    <td> <%= select_tag 'region_id', options_for_select(Region.all.collect { |itm| [itm.name, itm.id] }, item.region_id ),{:disabled => true}  %></td>
+    <td style="border: solid 1px #d3d3d3;"><%= link_to image_tag('Regione/reg_' + item.region.id.to_s + '.png') + '&nbsp;' + item.region.name, region_path(item.region)  %></td>
       <td><%= link_to (l:button_edit), edit_province_path(item), :class => 'icon icon-edit' %>&nbsp;</td>
     <td><%= link_to (l:button_delete), item, :confirm => 'Sei certo di voler eliminare?', :method => :delete, :class => 'icon icon-del' %></td>
   </tr>

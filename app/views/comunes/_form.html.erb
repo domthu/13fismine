@@ -13,12 +13,6 @@
         <%= f.label :province %>
         <%= f.select :province_id, options_for_select(Province.all.collect { |itm| [itm.name, itm.id] },@comune.province_id), {:disabled => false, :include_blank => false, :required => true} %>
       </p>
-
-      <p>
-        <%= f.label :region %>
-        <%= f.select :region_id, options_for_select(Region.all.collect { |itm| [itm.name, itm.id] },@comune.region_id), {:disabled => false, :include_blank => false, :required => true} %>
-      </p>
-
       <p>
         <%= f.label :abitanti %>
         <%= f.text_field :abitanti %>

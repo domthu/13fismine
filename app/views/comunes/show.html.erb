@@ -10,16 +10,16 @@
   <blockquote>
     <br/>
 
+
     <p>
       <label>
-        Provincia </label>: <%= select_tag 'province_id', options_for_select(Province.all.collect { |itm| [itm.name, itm.id] }, @comune.province_id), {:disabled => true} %> &nbsp;
-      [id:  <%= @comune.province_id %>]
+        <br>
+        Regione </label>: <%= link_to image_tag('Regione/reg_' + @comune.province.region.id.to_s + '.png') + '&nbsp;' + @comune.province.region.name, region_path(@comune.province.region) %>
     </p>
 
     <p>
       <label>
-        Regione </label>: <%= select_tag 'regione_id', options_for_select(Region.all.collect { |itm| [itm.name, itm.id] }, @comune.region_id), {:disabled => true} %> &nbsp;
-      [id: <%= @comune.region_id %>]
+        Provincia </label>: <%=  link_to @comune.province , province_path %>
     </p>
 
     <p>

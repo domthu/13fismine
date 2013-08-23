@@ -5,22 +5,22 @@
    <% end %>
 
  </div>
-
+                         <br />
 <% if @comunes.count > 0 %>
 <table>
   <tr style="text-align:left;">
-    <th style="width: 55%;"><%=l :label_comune %></th>
-    <th style="width: 15%;"><%=l :label_province %></th>
-    <th style="width: 15%;"><%=l :label_region %></th>
+    <%= sort_header_tag('comune', :title => l(:label_comune), :style => 'width: 55%;') %>
+    <%= sort_header_tag('regione', :title => l(:label_region), :style => 'width: 15%;') %>
+    <%= sort_header_tag('provincia', :title => l(:label_province), :style => 'width: 15%;') %>
     <th style="width: 5%;"></th>
     <th style="width: 5%;"></th>
   </tr>
 
 <% @comunes.each do |comune| %>
-  <tr>
-    <td style="border: solid 1px #d3d3d3; font-weight: bold;"><%= link_to comune.name, comune %></td>
-    <td><%= link_to comune.province.name, comune_path(comune.province) %></td>
-    <td><%= link_to image_tag('Regione/reg_' + comune.province.region.id.to_s + '.png') + '&nbsp;' + comune.province.region.name, region_path(comune.province.region) %>&nbsp;</td>
+  <tr valign="bottom">
+    <td style="border-bottom: solid 1px #d3d3d3; font-weight: bold;"><%= link_to comune.name, comune %></td>
+    <td  style="border-bottom: solid 1px #d3d3d3; font-weight: bold;"><%= link_to image_tag('Regione/reg_' + comune.province.region.id.to_s + '.png') + '&nbsp;' + comune.province.region.name, region_path(comune.province.region) %>&nbsp;</td>
+    <td style="border-bottom: solid 1px #d3d3d3; font-weight: bold;"><%= link_to comune.province.name, comune_path(comune.province) %></td>
     <td><%= link_to (l:button_edit), edit_comune_path(comune), :class => 'icon icon-edit' %>&nbsp;</td>
     <td><%= link_to (l:button_delete), comune, :confirm => 'Sei certo di voler eliminare?', :method => :delete, :class => 'icon icon-del' %></td>
   </tr>
