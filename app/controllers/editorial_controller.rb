@@ -715,7 +715,7 @@ class EditorialController < ApplicationController
   end
 
   def reroute_log()
-    flash[:alert] = "Per accedere al contenuto devi essere authentificato. <br /> Fai il login per favore..."
+    flash[:alert] = "Per accedere al contenuto devi essere abbonato e autenticato <br /> Fai il login per favore..."
   end
 
   def enabled_user_article
@@ -725,7 +725,7 @@ class EditorialController < ApplicationController
   end
 
   def reroute_auth()
-    flash[:notice] = "Per accedere devi avere un abbonamento valido..."
+   # flash[:notice] = "Per accedere devi avere un abbonamento valido..."
     #redirect_to(signin_path)
     redirect_to(page_abbonamento_path)
   end

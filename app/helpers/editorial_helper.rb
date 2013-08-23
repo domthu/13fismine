@@ -57,7 +57,7 @@ module EditorialHelper
     #printf("evturl    --->   %s", evturl[:controller])
     if (evturl[:controller] == "news")
       evturl[:controller] = "editoriale"
-      evturl[:action] = "quesito_full"
+      evturl[:action] = "quesito"
     end
     if (evturl[:controller] == "issues")
       evturl[:controller] = "editoriale"
@@ -67,10 +67,36 @@ module EditorialHelper
       evturl[:controller] = "editoriale"
       evturl[:action] = "newsletter"
     end
+
     #url = url.gsub(/\/news\//, '/editoriale/quesito_full/').gsub(/\/issues\//, '/editoriale/articolo/').gsub(/\/projects\//, '/editoriale/newsletter/')
     return evturl
   end
 
+  def url_for_result(e = nil, options = {})
+      evturl = e.event_url(options)
+    #puts evturl
+    #puts "#####################"
+    #printf("evturl    --->   %s", evturl[:controller])
+    if (evturl[:controller] == "news")
+
+      return link_to highlight_tokens(truncate(e.title, :length => 255), @tokens), url_for(:controller => 'editorial', :action => 'quesito_show', :id => e.id.to_s, :slug => h(truncate(e.title, :length => 125).to_slug))
+    end
+    if (evturl[:controller] == "issues")
+      if e.is_convegno?
+        return link_to highlight_tokens(truncate(e.subject, :length => 255), @tokens),  url_for(:controller => 'editorial', :action => 'evento', :id => e.id.to_s, :slug => h(truncate(e.subject, :length => 125).to_slug))
+      else
+        return link_to highlight_tokens(truncate(e.subject, :length => 255), @tokens), url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => e.section.top_section.top_menu.key, :topsection_key => e.section.top_section.key, :article_id => e.id.to_s, :article_slug => h(truncate(e.subject, :length => 125).to_slug))
+      end
+    end
+    if (evturl[:controller] == "projects")
+      #evturl[:controller] = "editoriale"
+      #evturl[:action] = "newsletter"
+      return link_to highlight_tokens(truncate(e.name, :length => 255), @tokens) ,url_for(:controller => 'editorial', :action => 'edizione', :id => e.id.to_s, :slug => h(truncate(e.name, :length => 125).to_slug))
+    end
+    #url = url.gsub(/\/news\//, '/editoriale/quesito_full/').gsub(/\/issues\//, '/editoriale/articolo/').gsub(/\/projects\//, '/editoriale/newsletter/')
+    flash[:error] = "Risultati di ricerca: errore nel reindirizzamento link "
+    redirect_to :back
+  end
 
 
 end

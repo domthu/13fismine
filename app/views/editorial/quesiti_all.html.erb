@@ -10,7 +10,7 @@
                     <% @quesiti_news.each do |q| %>
                         <article class="fs-article">
                       <div class="fs-convegni-border">
-                        <div class="fs-quesiti-data">  <span>
+                        <div class="fs-quesiti-data">
                          <%= q.author.hide_name unless !q.author %>
                           <span class="fs-quesiti-data-data"><%= I18n.localize(q.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
                         </div>
@@ -22,7 +22,7 @@
                           <%= link_to('Visualizza',url_for(:controller => 'editorial', :action => "quesito_show", :id => q.id), :class => "fs-vuoto-inline-button", :style => "float:right; margin:-5px 10px 0 0;")%>
                         <!-- %>  <h3> debug issues? <%# @issues  %>  conta =<%# @ic.to_s  %>    </h3>  -->
                           <%# link_to('Articolo',url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => q.section.top_section.top_menu.key, :topsection_key => q.section.top_section.key, :article_id => q.id.to_s, :article_slug => h(truncate(q.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button", :style => "float:right; margin:-5px 10px 0 0;")%>
-                          <br/> &nbsp;
+                          <br/> &nbsp;   <br/>
                         </div>
                       </div>
                       <div class="clearfix"></div>
