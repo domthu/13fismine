@@ -6,6 +6,7 @@
           <div class="fs-layout-cell layout-item-0" style="width: 99%;">
             <h2><%= l(:label_search) %> </h2>
             <div class="fs-ricerca-header">
+              <h1>@tokens: <%= @tokens%></h1>
               <% form_tag({}, :method => :get) do %>
                   <div class="fs-ricerca-sx">
                     <%#label_tag "search-input", l(:description_search), :class => "hidden-for-sighted" %>
@@ -36,8 +37,8 @@
                     <h3><%= l(:label_result_plural) %> (<%= @results_by_type.values.sum %>)</h3>
                     <dl id="search-results">
                       <% @results.each do |e| %>
-                          <dt class="<%= e.event_type %>"><%= content_tag('span', h(e.project) , :class => 'project') unless @project == e.project %> <%= link_to highlight_tokens(truncate(h(e.event_title), :length => 255), @tokens), event_url_fs(e)  %></dt>
-                          <dd><span class="description"><%= raw(highlight_tokens(e.event_description, @tokens)).html_safe %></span>
+                          <dt class="<%= e.event_type %>"><%= content_tag('span', h(e.project) , :class => 'project') unless @project == e.project %> <%= link_to highlight_tokens(truncate(e.event_title, :length => 255), @tokens), event_url_fs(e)  %></dt>
+                          <dd><span class="description"><%= e.is_a?(Issue) ? highlight_tokens(truncate(e.summary, :length => 255), @tokens) : format_activity_description(e.event_description) %></span>
                         <!--  <dd><span class="description"><%# highlight_tokens(raw(e.event_description.html_safe), @tokens) %></span>  -->
                             <span class="author"><%= format_time(e.event_datetime) %></span></dd>
                           <hr class="abbosepsup"/>
@@ -78,4 +79,3 @@
 <% content_for :header_yui do %>
     <%= stylesheet_link_tag 'application.css', :media => 'all' %>
 <% end %>
-
