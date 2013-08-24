@@ -1304,6 +1304,10 @@ textarea#issue_subject{
  .s-exclamation { background: url(../images/ico/users_sprite.png) no-repeat -50px -510px; }
  /*  fine del fee roles icons */
  /*regios*/
+table#ico-regions { border-collapse: collapse; vertical-align: middle; }
+#ico-regions th{padding-bottom: 10px;}
+#ico-regions td{border-bottom: solid 1px #d3d3d3;}
+#ico-regions p{background-color: #fff; }
  .l-r-14 { background: url(../images/ico/regions_sprite.png) no-repeat 0 0;}/*abruzzo    */
  .l-r-18 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -50px;} /*basilicata*/
  .l-r-10{ background: url(../images/ico/regions_sprite.png) no-repeat 0 -100px; }  /*calabria*/
