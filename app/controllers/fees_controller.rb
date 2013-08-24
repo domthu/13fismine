@@ -23,26 +23,28 @@ class FeesController < ApplicationController
   include ActionView::Helpers::DateHelper
   #undefined method `utc?' for Wed, 15 Oct 2008:Date  format_time --> format_date
   before_filter :set_menu
-
-  # menu_item :menu_payment_fs, :only => [:pagamento, :invia_fatture, :email_fee, :invoice, :contract, :contract_per_user]
-
+  #selected  menu  fee
+  menu_item :index, :only => [:index]
+  menu_item :liste_utenti, :only => [:liste_utenti]
+  menu_item :associati, :only => [:associati]
+  menu_item :paganti, :only => [:paganti]
+  #selected menu payments
+  menu_item :pagamento, :only => [:pagamento]
+  menu_item :invoices, :only => [:invoices]
+  menu_item :email_fee, :only => [:email_fee]
+  menu_item :invia_fatture, :only => [:invia_fatture]
 
   def set_menu
-    a = self.action_name
-
-    case a
-      when 'index', 'liste_utenti', 'liste_utenti', 'associatii', 'paganti'
+    case self.action_name
+      when 'index', 'liste_utenti', 'associati', 'paganti'
         @menu_fs = :menu_fee_fs
-
-
       when 'pagamento', 'fatture', 'email_fee', 'invia_fatture'
         @menu_fs = :menu_payment_fs
       else
         @menu_fs = :application_menu
     end
-   return a
    end
-  puts '_self action__________________>'  + set_menu
+
   def index
     #@msg[] << ""
     #__User_all = User.all()
