@@ -13,13 +13,12 @@
       Ricorda che i campi contrassegnati da <span style="color: red;">*sono obbligatori</span>
     </blockquote>
     <br/>
-  </div><!------  inizio ------ -->
-    <% labelled_form_for @user, :url => {:controller => 'mio_profilo', :action => 'account'}, :html => {:method => :post, :class => "register tabular", :class => "step" , :multipart => true} do |f| %>
+  </div>
+  <p><%= link_to(l(:button_show_profile), my_profile_show_url, :class => 'button-grey') %></p>
+
+  <!------  inizio ------ -->
+    <% labelled_form_for @user, :url => my_profile_edit_url, :html => {:method => :post, :class => "register tabular", :class => "step" , :multipart => true} do |f| %>
         <%= error_messages_for 'user' %>
-      <!--
-    <h1 class="<%= User.current.role %>"><%= User.current.name %></h1>
-    <h2><%= user_role_iconized(User.current.icon(), :size => 'l', :text => ('Scadenza: ' + link_to( User.current.scadenza.to_s + ' (' + User.current.scadenza_fra + ')', :controller => 'mio_profilo', :action => 'account')), :icon_for => User.current.uicon()) %></h2>
-    -->
     <fieldset class="fs-abbo-fields">
       <legend title="Il tuo Abbonamento"> Il tuo Abbonamento e la tua Immagine</legend>
     <div style="float:left; margin: 10px; padding: 10px; height: 30px; font-weight: bold; line-height: 2em; font-size: 1.3em; width: 95%;"  >
@@ -208,7 +207,7 @@
         <div class="clearfix"></div>
 
         <div id="pops" title="" class="hidden" style="overflow: hidden;"></div>
-        <%= submit_tag l(:button_submit), :class => "finish" %>
+        <%= submit_tag l(:button_submit), :class => 'button-blu' %>
     <% end %>
 
   </div>

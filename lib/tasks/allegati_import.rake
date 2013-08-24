@@ -56,6 +56,18 @@ namespace :migrate do
 #Attenzione http://www.fiscosport.it/Allegati/841.pdf
 
     puts "\n..........................................\n"
+
+    #ATTACHMENT vanno a salvare nella cartella "Files nella root application. Present in .gitignore
+    #puts File.join(File.dirname(__FILE__), '/../../files', "/Allegati/470.pps")
+    #puts File.join('#{application_root}', "/Allegati/470.pps")
+    dest_dir = Redmine::Configuration['attachments_storage_path'] || "#{Rails.root}/files"
+    #puts dest_dir
+    Dir.mkdir(dest_dir) unless File.exists?(dest_dir)
+    #Dir.mkdir(dest_dir, 777) unless File.directory?(dest_dir)
+    #Dir.mkdir(dest_dir, 777) unless File.dir?(dest_dir)
+    #Dir.mkdir(dest_dir) unless Dir.exists?(dest_dir) Rails 3
+
+
     #existing_issues = Issue.all()
     #existing_attachments = Issue.all().limit(10)
     sql = "SELECT * FROM allegati_fs"
@@ -84,36 +96,11 @@ namespace :migrate do
         if (extension && !extension.nil? && VALID_EXTENSIONS.include?(extension))
 
           ye += 1
-          puts "[rec: " + i.to_s + "/" + ye.to_s + "/" + no.to_s + "] --> " + extension + ', description: ' + description
-          #record.image = File.open("...")
-          #record.image = open(url)  #require 'rest-open-uri'
-
-#          io = open(URI.escape(url))
-
-#          if io
-#            def io.filename_toload; base_uri.path.split('/').last; end
-#            io.filename_toload.blank? ? nil : io
-#            puts "; io.filename_toload('" + io.filename_toload + "')"
-#            record.image = io
-#          end
-#          #record.save!
-#          #record.save()
-#          record.save(false)
-
-          #ATTACHMENT vanno a salvare nella artella "Files nella root application. Present in .gitignore
-          #puts File.join(File.dirname(__FILE__), '/../../files', "/Allegati/470.pps")
-          #puts File.join('#{application_root}', "/Allegati/470.pps")
-          dest_dir = Redmine::Configuration['attachments_storage_path'] || "#{Rails.root}/files"
-          puts dest_dir
-          Dir.mkdir(dest_dir) unless File.exists?(dest_dir)
-#          #Dir.mkdir(dest_dir, 777) unless File.directory?(dest_dir)
-#          #Dir.mkdir(dest_dir, 777) unless File.dir?(dest_dir)
-#          #Dir.mkdir(dest_dir) unless Dir.exists?(dest_dir) Rails 3
 
           #find_articolo
           articolo = Issue.find_by_id(id_articolo.to_i)
           if articolo
-            puts '  ARTICOLO TROVATO (' + articolo.id.to_s + '): ' + articolo.to_s
+            #puts '  ARTICOLO TROVATO (' + articolo.id.to_s + '): ' + articolo.to_s
             # see existing Attachments
             exist_yet = false
             articolo.attachments.each do |attachment|
@@ -126,15 +113,17 @@ namespace :migrate do
               #    a.description = attachment.description
               #    migrated_ticket_attachments += 1 if a.save
               #  }
-              puts '  EXISTING ATTACHMENT ()-----------' + attachment.filename
+              #puts '  EXISTING ATTACHMENT ()-----------' + attachment.filename
               if (attachment.filename == filename_toload)
                 exist_yet = true
-                puts '  ALREADY EXIST do nothing'
+                #puts '  ALREADY EXIST do nothing'
                 break
               end
             end
 
             if (exist_yet == false)
+              puts "[rec: " + i.to_s + "/" + ye.to_s + "/" + no.to_s + "] --> " + extension + ',  description: ' + description
+              puts '  ARTICOLO TROVATO (' + articolo.id.to_s + '): ' + articolo.to_s
               puts '    UPLOAD ATTACHMENT'
               #create new attachment
               attachment_url = 'http://www.fiscosport.it/Allegati/' + filename_toload
@@ -160,6 +149,10 @@ namespace :migrate do
                 attachment_file.rewind
 
                 #Create attachment with the uploaded file and other settings defined earlier
+                if articolo.author.nil?
+                  articolo.author = User.find_by_id(2232)
+                  articolo.save
+                end
                 new_attachment=Attachment.create(
                         :container => articolo,           #Issue object defined earlier
                         :file => attachment_file,
@@ -196,9 +189,9 @@ namespace :migrate do
 
         else
           no += 1
-          puts 'Kappao -----------' + extension + '---------> ' + filename_toload
+          #puts 'Kappao -----------' + extension + '---------> ' + filename_toload
         end
-        puts "!!" + id_att +'/articolo: ' + id_articolo + "!!!!!\n\n"
+        #puts "!!" + id_att +'/articolo: ' + id_articolo + "!!!!!\n\n"
 
       rescue Exception => e
         puts "\nEXCEPTION# #{e.message}\n"
@@ -207,6 +200,13 @@ namespace :migrate do
     puts "\n..........................................\n"
     puts "FINAL [rec: " + i.to_s + "/" + ye.to_s + "/" + no.to_s + "]"
     puts "imported " + imported.to_s
-    #FINAL [rec: 572/512/60]
+#FINAL [rec: 572/512/60]
+#imported 456  con limite a 5120 Kb
+#imported 11  con limite a 15120 Kb
+#imported 1  con limite a 50120 Kb  470.pps articolo 2502  5438464
+#imported 8 cambia utente con 2232 in caso non c'è
+
+
+#FINAL 479
   end
 end

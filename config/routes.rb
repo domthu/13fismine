@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_profiles
   map.resources :reservations
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "reply"
+#rake routes | grep -r "lost_password"
   map.resources :top_menus
   map.resources :contract_users
   map.resources :contracts
@@ -39,6 +39,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.tiposigla 'tiposigla', :controller => 'services', :action => 'tiposigla', :conditions => {:method => [:get]}
   map.art_extend 'art_extend', :controller => 'services', :action => 'articolo_extend', :conditions => {:method => [:get]}
+
+  map.my_profile_show 'my_profile_show', :controller => 'mio_profilo', :action => 'page'
+  map.my_profile_edit 'my_profile_edit', :controller => 'mio_profilo', :action => 'account'
 
   # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome' #REDMINE HOME
