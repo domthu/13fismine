@@ -303,8 +303,8 @@ class User < Principal
     end
     if self.isregistered?
       #TODO Elabore date from elapsed time from registration compared with today + Setting.register_days
-      Rails.logger.info("isfee OK MUST RENEW  #{self}")
-      return true
+      Rails.logger.info("isfee OK MUST BE ACTIVATED  #{self}")
+      return false
     end
   end
 

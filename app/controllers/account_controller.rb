@@ -512,7 +512,8 @@ class AccountController < ApplicationController
 
   def reroute_if_logged
     if User.current.logged?
-      redirect_to :controller => 'mio_profilo', :action => 'index'
+      #redirect_to :controller => 'mio_profilo', :action => 'index'
+      redirect_to my_profile_show_url
     end
   end
 end

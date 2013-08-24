@@ -9,7 +9,7 @@ class EditorialController < ApplicationController
   before_filter :find_articolo, :only => [:articolo] #, :preview_articolo can be not visible]  #recupero articolo status
                      #  #before_filter :get_news, :only => [:news, :articolo_full]  #recupero articolo status
   before_filter :correct_user_article, :only => [:articolo] #LOGGATO O ARTICOLO LIBERO
-  before_filter :enabled_user_article, :only => [:articolo] #ABBONATO E CONTENUTO PROTETTO
+  before_filter :enabled_user_article, :only => [:articolo] #ABBONATO E ARTICOLO protetto o SECTION protetto
   before_filter :find_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_show]
   before_filter :correct_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_create] #Admin o se stesso
   before_filter :find_quesito_fs, :only => [:quesito_destroy, :quesito_edit, :quesito_show]
@@ -702,10 +702,6 @@ class EditorialController < ApplicationController
     reroute_404("il contenuto cercato è stato rimosso...")
   end
 
-  def correct_user_article
-    reroute_log() unless (User.current.logged? || !@articolo.se_protetto)
-  end
-
   def reroute_404(_message = nil)
     #flash[:notice] = "Per accedere al contenuto devi essere authentificato. Fai il login per favore..."
     flash[:alert] = "Problemi incontrati nel recupero dei dati..."
@@ -715,19 +711,38 @@ class EditorialController < ApplicationController
   end
 
   def reroute_log()
-    flash[:alert] = "Per accedere al contenuto devi essere abbonato e autenticato <br /> Fai il login per favore..."
+    flash[:notice] = "Per accedere al contenuto devi essere autenticato <br /> Fai il login per favore... Se non hai abbonamento, registrati ora!"
+    #redirect_to(signin_path)
+    redirect_to(page_abbonamento_path)
   end
 
+  #definisce se l'utente è loggato o no
+  def correct_user_article
+    reroute_log() unless (User.current.logged?)
+  end
+
+  #
   def enabled_user_article
-    if @articolo.se_protetto
-      reroute_auth() unless User.current.isfee?(@articolo)
+    if @articolo.se_protetto || @articolo.section.protetto
+      if User.current.isfee?(@articolo)
+        if User.current.isarchivied?
+          reroute_auth("Per accedere deve abbonarti di nuovo")
+        elsif User.current.isexpired?
+          reroute_auth("Il tuo abbonamento è scaduto. Per vedere di nuovo gli articoli protetti devi fare il rinovo")
+        elsif User.current.isregistered?
+          reroute_auth("Durante il periodo di prova solo gli abbonati regolari possono vedere i contenuti protetti. Abbonati anche tu!")
+        end
+      end
     end
   end
 
-  def reroute_auth()
-   # flash[:notice] = "Per accedere devi avere un abbonamento valido..."
-    #redirect_to(signin_path)
-    redirect_to(page_abbonamento_path)
+  def reroute_auth(msg)
+    if msg
+      flash[:notice] = msg
+    else
+      flash[:notice] = "Per accedere devi avere un abbonamento valido..."
+    end
+    redirect_to(my_profile_edit_path)
   end
 
   #privato. Usato sia per articolo che preview (anche se non pubblico il project ed issue)
