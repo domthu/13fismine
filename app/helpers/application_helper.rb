@@ -1322,7 +1322,34 @@ module ApplicationHelper
       return s
     end
   end
+  def user_role_iconized(usr = nil, params={})
+    t = params[:size].to_s
+    txt = params[:text].to_s
+    ico = params[:icon_for].to_s
 
+
+    if usr.nil? && ico.nil?
+      ico = 'question'
+    end
+    s = ""
+    unless usr.nil?
+      if  !txt.nil?
+        s = '<div class="user-role-icon-' + t + '"><span class="' + t + '-' + ico + '"></span><p>' + txt + '</p></div>'
+      else
+        s = '<div class="user-role-icon-only-' + t + '"><span class=' + t + '-' + ico +'></span></div >'
+      end
+      return s
+    end
+
+    unless ico.nil?
+      if !txt.nil?
+        s = '<div class="user-role-icon-' + t + '"><span class=' + t + '-' + ico +'></span><p>' + txt + '</p></div>'
+      else
+        s = '<div class="user-role-icon-' + t + '"><span class=' + t + '-' + ico +'></span></div >'
+      end
+      return s
+    end
+  end
 
 #######################
   private

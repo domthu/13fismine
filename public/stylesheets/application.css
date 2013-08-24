@@ -1303,6 +1303,50 @@ textarea#issue_subject{
  .s-question { background: url(../images/ico/users_sprite.png) no-repeat -50px -460px; }
  .s-exclamation { background: url(../images/ico/users_sprite.png) no-repeat -50px -510px; }
  /*  fine del fee roles icons */
+ /*regios*/
+ .l-r-14 { background: url(../images/ico/regions_sprite.png) no-repeat 0 0;}/*abruzzo    */
+ .l-r-18 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -50px;} /*basilicata*/
+ .l-r-10{ background: url(../images/ico/regions_sprite.png) no-repeat 0 -100px; }  /*calabria*/
+ .l-r-2 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -150px; }   /*campania*/
+ .l-r-8 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -200px; }   /*emilia*/
+ .l-r-15 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -250px;}   /*friuli*/
+ .l-r-3 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -300px; } /*lazio*/
+ .l-r-12 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -350px; }  /*liguria*/
+ .l-r-1 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -400px; }  /*lombardia*/
+ .l-r-13 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -450px; }   /*marche*/
+ .l-r-19 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -500px; }   /*molise*/
+ .l-r-6 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -550px; }    /*pemonte*/
+ .l-r-7 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -600px; }    /*puglia*/
+ .l-r-11 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -650px; }  /*sardegna*/
+ .l-r-4 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -700px; }   /*sicilia*/
+ .l-r-9 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -750px; }   /*toscana*/
+ .l-r-16 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -800px; } /*trentino*/
+ .l-r-17 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -850px; }  /*umbria*/
+ .l-r-20 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -900px; }   /*valleaosta*/
+ .l-r-5 { background: url(../images/ico/regions_sprite.png) no-repeat 0 -950px; }   /*veneto*/
+
+ .s-r-14 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -10px;}
+ .s-r-18 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -60px;}
+ .s-r-10 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -110px; }
+ .s-r-2 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -160px; }
+ .s-r-8 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -210px; }
+ .s-r-15 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -260px; }
+ .s-r-3 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -310px; }
+ .s-r-12 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -360px; }
+ .s-r-1 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -410px; }
+ .s-r-13 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -460px; }
+ .s-r-19 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -510px; }
+ .s-r-6 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -560px; }
+ .s-r-7 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -610px;}
+ .s-r-11 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -660px;}
+ .s-r-4 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -710px; }
+ .s-r-9 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -760px; }
+ .s-r-16 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -810px; }
+ .s-r-17 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -860px; }
+ .s-r-20 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -910px; }
+ .s-r-5 { background: url(../images/ico/regions_sprite.png) no-repeat -50px -960px; }
+
+ /* regions */
  .user-key-s { background-image: url(../images/ico/user_key.png);  padding-left: 40px; min-height:24px;}
 div .watchers_lst{
   float: left;

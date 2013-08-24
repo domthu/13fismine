@@ -13,8 +13,10 @@
 
   <% @regions.each do |item| %>
       <tr valign="middle">
-        <td style="border: solid 1px #d3d3d3; font-weight: bold;">
-         <%= link_to image_tag('Regione/reg_' + item.id.to_s + '.png', :style => "vertical-align: middle; " ) + '&nbsp;' + item.name  + '&nbsp' , region_path(item)%></td>
+        <td >
+          <%= user_role_iconized(item, :size => "l", :icon_for => 'r-' + item.id.to_s , :text => item.name)%>
+          </td>
+                   <%# link_to image_tag('Regione/reg_' + item.id.to_s + '.png', :style => "vertical-align: middle; " ) + '&nbsp;' + item.name  + '&nbsp' , region_path(item)%>
         <td style="border: solid 1px #d3d3d3;"> <%= item.abbrev %></td>
         <td style="border: solid 1px #d3d3d3;"> <%= item.id.to_s %></td>
         <td><%= link_to (l :button_edit), {:action => 'edit', :id => item}, :class => 'icon icon-edit' %>&nbsp;</td>
