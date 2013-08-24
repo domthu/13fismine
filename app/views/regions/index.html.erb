@@ -2,23 +2,18 @@
 <span style="display: inline; position: absolute; left: 65%; margin-top: -30px;">
   <%= link_to l(:label_new_region), new_region_path, :class => 'icon icon-add' %></span>
 <br/>
-<table>
+<table id='ico-regions'>
   <tr style="text-align:left;">
     <th style="width: 65%;"><%= l :label_region %></th>
-    <th style="width: 15%;"><%= l :label_abbrev %></th>
-    <th style="width: 5%;">id</th>
+    <th style="width: 25%;"><%= l :label_abbrev %></th>
     <th style="width: 5%;"></th>
     <th style="width: 5%;"></th>
   </tr>
 
   <% @regions.each do |item| %>
       <tr valign="middle">
-        <td >
-          <%= user_role_iconized(item, :size => "l", :icon_for => 'r-' + item.id.to_s , :text => item.name)%>
-          </td>
-                   <%# link_to image_tag('Regione/reg_' + item.id.to_s + '.png', :style => "vertical-align: middle; " ) + '&nbsp;' + item.name  + '&nbsp' , region_path(item)%>
-        <td style="border: solid 1px #d3d3d3;"> <%= item.abbrev %></td>
-        <td style="border: solid 1px #d3d3d3;"> <%= item.id.to_s %></td>
+        <td><%= user_role_iconized(item, :size => "l", :icon_for => 'r-' + item.id.to_s , :text => item.name)%> </td>                <%# link_to image_tag('Regione/reg_' + item.id.to_s + '.png', :style => "vertical-align: middle; " ) + '&nbsp;' + item.name  + '&nbsp' , region_path(item)%>
+        <td> <%= item.abbrev %></td>
         <td><%= link_to (l :button_edit), {:action => 'edit', :id => item}, :class => 'icon icon-edit' %>&nbsp;</td>
         <td><%= link_to (l :button_delete), {:action => 'destroy', :id => item}, :confirm => 'Sei certo di voler eliminare?', :method => :delete, :class => 'icon icon-del' %></td>
       </tr>
