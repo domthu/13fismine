@@ -427,7 +427,13 @@ class AccountController < ApplicationController
       #redirect_back_or_default :controller => 'editorial', :action => 'home'
     else
       if (Setting.fee?)
-        #TODO Controllare la scadenza se è di RUOLO
+        user.control_state
+        if user.isregistered?
+           flash[:notice] = "Periodo di prova valido ancora per " + distance_of_date_in_words(user.scadenza, Time.now)
+        end
+        if user.isrenewing?
+           flash[:notice] = "Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, self.scadenza) + "<br />Rinnovare l'abbonamento."
+        end
 
         # str = control_assign_role(user)
         # Rails.logger.info("Login controllo ruolo: " + str)
