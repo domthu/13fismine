@@ -50,8 +50,8 @@ class User < Principal
                     :url => "users/user_:id/:style_:basename.:extension",
                     :path => "#{RAILS_ROOT}/public/images/users/user_:id/:style_:basename.:extension",
                     :default_url => "commons/:style-no_avatar.jpg"
-  validates_attachment_size :image, :less_than => 300.kilobytes
-  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
+  validates_attachment_size :photo, :less_than => 300.kilobytes
+  validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 
   has_and_belongs_to_many :groups, :after_add => Proc.new { |user, group| group.user_added(user) },
                           :after_remove => Proc.new { |user, group| group.user_removed(user) }
@@ -1013,7 +1013,7 @@ class User < Principal
                   'num_reg_coni',
                   'se_condition',
                   'use_gravatar',
-                  'photo',
+                  'photo',  #user paperclip image undefined method `image_file_size' for #<User:0xb684d634>
                   'se_privacy'
 
 
@@ -1036,7 +1036,6 @@ class User < Principal
                   'crediti',
                   'annotazioni',
                   :if => lambda { |user, current_user| current_user.admin? }
-
 
   safe_attributes 'group_ids',
                   :if => lambda { |user, current_user| current_user.admin? && !user.new_record? }
