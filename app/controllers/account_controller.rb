@@ -59,7 +59,7 @@ class AccountController < ApplicationController
         if @user.save
           @token.destroy
           flash[:notice] = l(:notice_account_password_updated)
-          redirect_to :action => 'login'
+          redirect_to :back
           return
         end
       end
@@ -78,7 +78,7 @@ class AccountController < ApplicationController
         if token.save
           Mailer.deliver_lost_password(token)
           flash[:notice] = l(:notice_account_lost_email_sent)
-          redirect_to :action => 'login'
+          redirect_to  :back
           return
         end
       end

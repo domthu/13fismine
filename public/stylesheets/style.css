@@ -221,7 +221,7 @@ ul.fs-vmenu a
 
 .fs-postcontent h4
 {
-   color: #00678C;
+   color: #016285;
    margin: 10px 0 0;
    font-size: 16px;
    font-family:  Arial, Helvetica, Sans-Serif;
@@ -231,6 +231,7 @@ ul.fs-vmenu a
 
 .fs-blockcontent h4
 {
+    color: #016285;
    margin: 10px 0 0;
    font-size: 16px;
    font-family:  Arial, Helvetica, Sans-Serif;
@@ -276,9 +277,8 @@ ul.fs-vmenu a
 
 .fs-postcontent h6
 {
-    color: #016285;
-    margin: 10px 0 0;
-    font-size: 16px;
+
+    font-size: 12px;
     font-family:  Arial, Helvetica, Sans-Serif;
     line-height: 2em;
    /* font-variant: small-caps;
@@ -288,16 +288,15 @@ ul.fs-vmenu a
 
 .fs-blockcontent h6
 {
-    color: #016285;
-    margin: 10px 0 0;
-    font-size: 16px;
+
+    font-size: 12px;
     font-family:  Arial, Helvetica, Sans-Serif;
      line-height: 2em;
 }
 
 .fs-postcontent h6 a, .fs-postcontent h6 a:link, .fs-postcontent h6 a:hover, .fs-postcontent h6 a:visited, .fs-blockcontent h6 a, .fs-blockcontent h6 a:link, .fs-blockcontent h6 a:hover, .fs-blockcontent h6 a:visited
 {
-    font-size: 16px;
+    font-size: 12px;
     font-family:  Arial, Helvetica, Sans-Serif;
     text-decoration: none;
     color: #016285;

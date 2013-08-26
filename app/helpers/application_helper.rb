@@ -1322,34 +1322,6 @@ module ApplicationHelper
       return s
     end
   end
-  def user_role_iconized(usr = nil, params={})
-    t = params[:size].to_s
-    txt = params[:text].to_s
-    ico = params[:icon_for].to_s
-
-
-    if usr.nil? && ico.nil?
-      ico = 'question'
-    end
-    s = ""
-    unless usr.nil?
-      if  !txt.nil?
-        s = '<div class="user-role-icon-' + t + '"><span class="' + t + '-' + ico + '"></span><p>' + txt + '</p></div>'
-      else
-        s = '<div class="user-role-icon-only-' + t + '"><span class=' + t + '-' + ico +'></span></div >'
-      end
-      return s
-    end
-
-    unless ico.nil?
-      if !txt.nil?
-        s = '<div class="user-role-icon-' + t + '"><span class=' + t + '-' + ico +'></span><p>' + txt + '</p></div>'
-      else
-        s = '<div class="user-role-icon-' + t + '"><span class=' + t + '-' + ico +'></span></div >'
-      end
-      return s
-    end
-  end
 
 #######################
   private
@@ -1364,15 +1336,6 @@ module ApplicationHelper
     link_to(text, url_params, html_options)
   end
 end
-#  def link_to_content_update(text, url_params = {}, html_options = {}, path_prefix=nil)
-#    if path_prefix.nil?
-#      link_to(text, url_params, html_options)
-#    else
-#      #'*' + path_prefix + '*' + link_to_articoli(text, path_prefix.merge(url_params), html_options)
-#      '*' + path_prefix + '*' + link_to(text, url_for, html_options)
-#    end
-#  end
-
 
 def smart_truncate(text, char_limit)
   text = text.squish
