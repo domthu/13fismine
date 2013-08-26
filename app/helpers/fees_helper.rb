@@ -444,8 +444,25 @@ module FeesHelper
     str = " [Ruolo da " + oldrole.to_s + " a " + nextroleid.to_s + "] "
     if _usr.role_id.nil? || ( oldrole != nextroleid )
       _usr.role_id = nextroleid
-      _usr.save  #Kappao _usr.save()
-      str << "<span class='" << get_role_css(User.find(_usr.id)) << "'> modificato ruolo!</span>"
+      #_usr.save  #Kappao _usr.save()
+      if !_usr.valid?
+        if !_usr.errors.empty? && _usr.errors.any?
+          #@errors += @user.errors.join(', ') undefined method join
+          if _usr.errors.full_messages
+            str << "Errore incontrate: " << _usr.errors.full_messages.join('<br />')
+          else
+            str << "Errore incontrate: " << _usr.errors.join('<br />')
+          end
+        else
+          str << "<span class='red " << get_role_css(User.find(_usr.id)) << "'> NON MODIFICATO!</span>"
+        end
+      else
+        if _usr.save  #Kappao _usr.save()
+          str << "<span class='" << get_role_css(User.find(_usr.id)) << "'> modificato ruolo!</span>"
+        else
+          str << "<span class='red " << get_role_css(User.find(_usr.id)) << "'> NON SALVATO!</span>"
+        end
+      end
     else
       str << " == Ruolo non cambiato"
     end
