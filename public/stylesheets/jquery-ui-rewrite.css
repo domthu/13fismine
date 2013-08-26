@@ -1,39 +1,44 @@
 /* rewrites jquery ui classes  */
 /*inizio  per edizioni */
 #accordion-events-contact .ui-accordion-header {
-margin: 0;
-padding: 0;
+    margin: 0;
+    padding: 0;
 }
+
 #accordion-events-contact .ui-accordion-content {
- padding:0;
+    padding: 0;
 }
 
-#accordion-events-contact .ui-state-default   {
+#accordion-events-contact .ui-state-default {
     border: 0;
-     border-collapse: separate;
-     -webkit-border-radius: 0;
-     -moz-border-radius: 0;
-     border-radius: 0;
-     -webkit-box-shadow: none;
-     -moz-box-shadow: none;
-     box-shadow: none;
-     padding: 0;
-     margin: 0;
-     color: #FFFFFF;
+    border-collapse: separate;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    color: #FFFFFF;
 
 }
-#accordion-events-contact .ui-accordion-icons  {
-padding: 0;
+
+#accordion-events-contact .ui-accordion-icons {
+    padding: 0;
 
 }
-#accordion-events-contact .ui-accordion-header-active   {
+
+#accordion-events-contact .ui-accordion-header-active {
 
 }
-#accordion-events-contact .ui-state-active  {
+
+#accordion-events-contact .ui-state-active {
 
 }
+
 #accordion-events-contact textarea, #accordion-events-contact input[type="text"] {
-    color: inherit!important;
+    color: inherit !important;
     font-size: 0.9em;
     font-weight: normal;
     padding: 5px;
@@ -43,24 +48,19 @@ padding: 0;
 }
 
 #accordion-basic .ui-state-active .ui-icon {
- background: none ;
+    background: none;
 }
+
 #accordion-events-contact .ui-state-default .ui-icon {
- background: none ;
+    background: none;
 }
 
-
-
-
-
-
-
-
-.ui-widget input{
-    font-family:  Arial, Helvetica, Sans-Serif;
-    font-size:inherit ;
+.ui-widget input {
+    font-family: Arial, Helvetica, Sans-Serif;
+    font-size: inherit;
     text-align: center;
-  }
+}
+
 .ui-accordion .ui-accordion-header {
     display: block;
     cursor: pointer;
@@ -171,55 +171,63 @@ padding: 0;
     color: #Df0000;
     text-decoration: none;
 }
+
 .ui-widget-content {
     border: 0;
     background: white;
 }
+
 /* fine per edizioni */
 
 /* ----------------------------------------------------------------- ACCORDION BASIC ---
 /* rewrites jquery ui classes */
 #accordion-basic .ui-accordion-header {
-margin: 0;
-padding: 0;
+    margin: 0;
+    padding: 0;
 }
+
 #accordion-basic .ui-accordion-content {
- padding:0;
+    padding: 0;
 }
 
-#accordion-basic .ui-state-default   {
+#accordion-basic .ui-state-default {
     border: 0;
-     border-collapse: separate;
-     -webkit-border-radius: 0;
-     -moz-border-radius: 0;
-     border-radius: 0;
-     -webkit-box-shadow: none;
-     -moz-box-shadow: none;
-     box-shadow: none;
-     padding: 0;
-     margin: 0;
+    border-collapse: separate;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
     font-size: 1em;;
-     color: #2c4056;
+    color: #2c4056;
     font-weight: bold;
-    background: none ;
+    background: none;
 
 }
-#accordion-basic .ui-accordion-icons  {
-padding: 0;
+
+#accordion-basic .ui-accordion-icons {
+    padding: 0;
 
 }
-#accordion-basic .ui-accordion-header-active   {
+
+#accordion-basic .ui-accordion-header-active {
 
 }
-#accordion-basic .ui-state-active  {
+
+#accordion-basic .ui-state-active {
 
 }
+
 #accordion-basic textarea, #accordion-basic input[type="text"] {
- text-align: left;
+    text-align: left;
 
 }
+
 #accordion-basic input[type="submit"] {
- text-align: center;
+    text-align: center;
 }
 
 #accordion-basic .ui-state-default .ui-icon {
@@ -239,42 +247,66 @@ padding: 0;
 }
 
 #accordion-basic  .ui-icon-triangle-1-e {
-    background-position: 0 0 ;
+    background-position: 0 0;
 }
+
 #accordion-basic  .ui-icon-triangle-1-s {
-    background-position: 0 0 ;
+    background-position: 0 0;
 }
+
 .accordion-basic .txt {
- margin-left: 10px;
-    border:solid 1px #5f9ea0;
+    margin-left: 10px;
+    border: solid 1px #5f9ea0;
 
 }
-h6.accordion-basic{
+
+h6.accordion-basic {
     line-height: 2.5em;
 }
 
-.ui-widget{
+.ui-widget {
     font-family: Arial, Helvetica, Sans-Serif;
     font-size: 1em !important;
 }
-.fdialog .ui-dialog-content{
-    font-family:  Helvetica, Arial, Sans-Serif;
-    font-size: 1.5em!important;
 
+.error-dialog  .ui-dialog-titlebar {
+    display: none;
 }
-/*.fdialog .ui-dialog-titlebar{display:none;}    */
 
-#fs-flash-dialog.ui-dialog-content.ui-widget-content, .error-dialog {
- background-color: #ffa07a;
+.success-dialog .ui-dialog-titlebar {
+    display: none;
 }
-.success-dialog {
- background-color: #faffc5;
+.alert-dialog  .ui-dialog-titlebar {
+    display: none;
 }
-.notice-dialog {
- background-color: #d2e8ff;
+
+.notice-dialog .ui-dialog-titlebar {
+    display: none;
 }
-#fs-flash-dialog.ui-dialog-content.ui-widget-content, .alert-dialog {
- background-color: #ffce0b;
+
+
+.error-dialog .ui-dialog-content, .error {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #ffa07a;
+}
+
+.success-dialog .ui-dialog-content, .success {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #faffc5;
+}
+
+.notice-dialog .ui-dialog-content, .notice {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #faffc5;
+}
+
+.alert-dialog .ui-dialog-content, .alert {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #ffa07a;
 }
 
 .notice {
