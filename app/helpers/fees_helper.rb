@@ -405,15 +405,15 @@ module FeesHelper
 
     if data_scadenza.nil? || !data_scadenza.is_a?(Date)
         #  FeeConst::ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
-        str << ", <b style='color:red'> Scadenza "
+        str << ", <b style='color:black'> Scadenza "
         if (data_scadenza.nil?)
           str << " NULL["
         else
-          str << " DATA?" << data_scadenza.to_s << "["
+          str << " Data elaborata " << data_scadenza.strftime("%Y-%m-%d") << "["
         end
-        str << " convention.id: " << (_usr.convention_id.nil? ? "" : ("(" << _usr.convention_id.to_s << ")--> " << ((_usr.convention.nil? || _usr.convention.scadenza.nil?) ? "/user.scadenza" : _usr.convention.scadenza.to_s)))
-        str << "/user.data: " << (_usr.data.nil? ? "" : _usr.data.to_s)
-        str << "/user.datascadenza" << (_usr.datascadenza.nil? ? " " : _usr.datascadenza.to_s)
+        str << " convention" << (_usr.convention_id.nil? ? "" : ("(" << _usr.convention_id.to_s << ") " << ((_usr.convention.nil? || _usr.convention.scadenza.nil?) ? " scadenza " : _usr.convention.scadenza.strftime("%Y-%m-%d"))))
+        str << "/user datascadenza: " << (_usr.datascadenza.nil? ? " " : _usr.datascadenza.to_s)
+        str << " (dal " << (_usr.data.nil? ? "" : _usr.data.to_s)  << ")"
         str << "]</b>"
         str << ensure_role(_usr, FeeConst::ROLE_EXPIRED)
     else
