@@ -409,11 +409,11 @@ module FeesHelper
         if (data_scadenza.nil?)
           str << " NULL["
         else
-          str << " Data elaborata " << data_scadenza.strftime("%Y-%m-%d") << "["
+          str << " Data elaborata " << data_scadenza.strftime("%Y-%m-%d") << " ["
         end
-        str << " convention" << (_usr.convention_id.nil? ? "" : ("(" << _usr.convention_id.to_s << ") " << ((_usr.convention.nil? || _usr.convention.scadenza.nil?) ? " scadenza " : _usr.convention.scadenza.strftime("%Y-%m-%d"))))
-        str << "/user datascadenza: " << (_usr.datascadenza.nil? ? " " : _usr.datascadenza.to_s)
-        str << " (dal " << (_usr.data.nil? ? "" : _usr.data.to_s)  << ")"
+        str << "convention " << (_usr.convention_id.nil? ? " -no- " : ("(" << _usr.convention_id.to_s << ") " << ((_usr.convention.nil? || _usr.convention.scadenza.nil?) ? " scadenza " : _usr.convention.scadenza.strftime("%Y-%m-%d"))))
+        str << "/user datascadenza: " << (_usr.datascadenza.nil? ? " null " : _usr.datascadenza.to_s)
+        str << " (dal " << (_usr.data.nil? ? " null " : _usr.data.to_s)  << ")"
         str << "]</b>"
         str << ensure_role(_usr, FeeConst::ROLE_EXPIRED)
     else
