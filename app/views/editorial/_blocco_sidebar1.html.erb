@@ -1,24 +1,21 @@
 <div class="fs-layout-cell fs-sidebar1 clearfix">
-  <%= render :partial => 'blocco_user_state' %>
-  <%= render :partial => 'blocco_informa' %>
+  <%= render :partial => 'editorial/blocco_user_state' %>
+  <%= render :partial => 'editorial/blocco_informa' %>
   <% unless @topsection.nil? && @top_menu.nil? %>
-      <%= render :partial => 'blocco_quick_search' %>
+      <%= render :partial => 'editorial/blocco_quick_search' %>
   <% end %>
   <% unless request.url.match('/event').nil? %>
-      <%= render :partial => 'blocco_eventi_contact_me' %>
+      <%= render :partial => 'editorial/blocco_eventi_contact_me' %>
       <% unless @conv_prossimo.nil? %>
-          <%= render :partial => 'blocco_eventi' %>
+          <%= render :partial => 'editorial/blocco_eventi' %>
       <% end %>
   <% end %>
-  <%=   render :partial => 'blocco_banners_l' %>
+  <%= render :partial => 'editorial/blocco_banners_l' %>
   <% unless @block_projects.nil? %>
-      <%= render :partial => 'blocco_edizioni' %>
+      <%= render :partial => 'editorial/blocco_edizioni' %>
   <% end %>
-  <%# render :partial =>  'blocco_ricerca' %>
-  <%# render :partial => 'blocco_banners1' %>
-  <%# render :partial => 'blocco_account' %>
   <% unless @articolo.nil? %>
-      <%= render :partial => 'blocco_art_evidenziati' %>
+      <%= render :partial => 'editorial/blocco_art_evidenziati' %>
   <% end %>
-  <%= render :partial => 'blocco_social' %>
+  <%= render :partial => 'editorial/blocco_social' %>
 </div>

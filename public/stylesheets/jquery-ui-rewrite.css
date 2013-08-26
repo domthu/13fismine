@@ -1,39 +1,44 @@
 /* rewrites jquery ui classes  */
 /*inizio  per edizioni */
 #accordion-events-contact .ui-accordion-header {
-margin: 0;
-padding: 0;
+    margin: 0;
+    padding: 0;
 }
+
 #accordion-events-contact .ui-accordion-content {
- padding:0;
+    padding: 0;
 }
 
-#accordion-events-contact .ui-state-default   {
+#accordion-events-contact .ui-state-default {
     border: 0;
-     border-collapse: separate;
-     -webkit-border-radius: 0;
-     -moz-border-radius: 0;
-     border-radius: 0;
-     -webkit-box-shadow: none;
-     -moz-box-shadow: none;
-     box-shadow: none;
-     padding: 0;
-     margin: 0;
-     color: #FFFFFF;
+    border-collapse: separate;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    color: #FFFFFF;
 
 }
-#accordion-events-contact .ui-accordion-icons  {
-padding: 0;
+
+#accordion-events-contact .ui-accordion-icons {
+    padding: 0;
 
 }
-#accordion-events-contact .ui-accordion-header-active   {
+
+#accordion-events-contact .ui-accordion-header-active {
 
 }
-#accordion-events-contact .ui-state-active  {
+
+#accordion-events-contact .ui-state-active {
 
 }
+
 #accordion-events-contact textarea, #accordion-events-contact input[type="text"] {
-    color: inherit!important;
+    color: inherit !important;
     font-size: 0.9em;
     font-weight: normal;
     padding: 5px;
@@ -42,25 +47,20 @@ padding: 0;
 
 }
 
-#accordion-events-contact .ui-state-active .ui-icon {
- background: none ;
+#accordion-basic .ui-state-active .ui-icon {
+    background: none;
 }
+
 #accordion-events-contact .ui-state-default .ui-icon {
- background: none ;
+    background: none;
 }
 
-
-
-
-
-
-
-
-.ui-widget input{
-    font-family:  Arial, Helvetica, Sans-Serif;
-    font-size:inherit ;
+.ui-widget input {
+    font-family: Arial, Helvetica, Sans-Serif;
+    font-size: inherit;
     text-align: center;
-  }
+}
+
 .ui-accordion .ui-accordion-header {
     display: block;
     cursor: pointer;
@@ -169,98 +169,172 @@ padding: 0;
 
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
     color: #Df0000;
-    text-decoration: none
+    text-decoration: none;
 }
+
 .ui-widget-content {
     border: 0;
     background: white;
 }
+
 /* fine per edizioni */
-/* ------------------------------------------------------------------------*/
-/* inizio  per EVENTI */
+
+/* ----------------------------------------------------------------- ACCORDION BASIC ---
 /* rewrites jquery ui classes */
-#accordion-events {
-    width: 99%;
+#accordion-basic .ui-accordion-header {
+    margin: 0;
+    padding: 0;
 }
 
-/* inizio bootone inattivo */
-#accordion-events .ui-state-hover {
-    background: transparent;
-    -webkit-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 1px;
-    -opera-border-radius: 1px;
-    -moz-border-radius: 1px;
-    color: #000;
-    padding: 6px 0 0 48px;
-    margin: 0 auto;
-    height: 30px;
-
+#accordion-basic .ui-accordion-content {
+    padding: 0;
 }
 
-#accordion-events .ui-state-default a, #accordion-events .ui-state-default a:link, #accordion-events .ui-state-default a:visited {
-    ccolor: #000000 !important;
-    text-decoration: none
-}
-
-#accordion-events .ui-state-active {
-    background: transparent;
-    -webkit-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 1px;
-    -opera-border-radius: 1px;
-    -moz-border-radius: 1px;
-    padding: 6px 0 0 48px;
-    margin: 0 auto;
-    height: 30px;
+#accordion-basic .ui-state-default {
+    border: 0;
+    border-collapse: separate;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1em;;
+    color: #2c4056;
+    font-weight: bold;
+    background: none;
 
 }
 
-#accordion-events .ui-state-default {
-    background: transparent;
-    -webkit-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 1px;
-    -opera-border-radius: 1px;
-    -moz-border-radius: 1px;
-    padding: 6px 0 0 48px;
-    margin: 0 auto;
-    height: 30px;
+#accordion-basic .ui-accordion-icons {
+    padding: 0;
 
 }
 
-/*  ui-accordion-header-icon ui-icon ui-icon-triangle-1-e   */
-#accordion-events .ui-icon-triangle-1-e {
-    background: url('/images/ico/bullet-b.png') top left no-repeat;
+#accordion-basic .ui-accordion-header-active {
+
 }
 
-#accordion-events .ui-icon-triangle-1-s {
-    background: url('/images/ico/bullet-y.png') top left no-repeat;
+#accordion-basic .ui-state-active {
+
 }
 
-#accordion-events .ui-icon-triangle-1-w {
-    background: url('/images/ico/bullet-a.png') top left no-repeat;
+#accordion-basic textarea, #accordion-basic input[type="text"] {
+    text-align: left;
+
 }
 
-#accordion-events .ui-icon {
-    width: 30px;
-    height: 30px;
+#accordion-basic input[type="submit"] {
+    text-align: center;
 }
 
-#accordion-events .ui-accordion-header-icon {
-     top: 12px;
- }
-#accordion-events h6{
-    color: #000;
-       font-family: 'Allerta', arial, sans-serif;
-       font-size: 15px;
-       text-transform: uppercase;
-    line-height: 2em;
+#accordion-basic .ui-state-default .ui-icon {
+    background-image: url("/images/bullet_arrow_right.png")
 }
-#accordion-events .ui-accordion-content{
-padding: 1em;
-    outline: hidden;
+
+#accordion-basic .ui-state-hover .ui-icon, .ui-state-focus .ui-icon {
+    background-image: url("/images/bullet_arrow_right_s.png")
 }
+
+#accordion-basic .ui-state-active .ui-icon {
+    background-image: url("/images/arrow_expanded.png")
+}
+
+#accordion-basic .ui-state-highlight .ui-icon {
+    background-image: url("/images/arrow_expanded.png")
+}
+
+#accordion-basic  .ui-icon-triangle-1-e {
+    background-position: 0 0;
+}
+
+#accordion-basic  .ui-icon-triangle-1-s {
+    background-position: 0 0;
+}
+
+.accordion-basic .txt {
+    margin-left: 10px;
+    border: solid 1px #5f9ea0;
+
+}
+
+h6.accordion-basic {
+    line-height: 2.5em;
+}
+
+.ui-widget {
+    font-family: Arial, Helvetica, Sans-Serif;
+    font-size: 1em !important;
+}
+
+.error-dialog  .ui-dialog-titlebar {
+    display: none;
+}
+
+.success-dialog .ui-dialog-titlebar {
+    display: none;
+}
+.alert-dialog  .ui-dialog-titlebar {
+    display: none;
+}
+
+.notice-dialog .ui-dialog-titlebar {
+    display: none;
+}
+
+
+.error-dialog .ui-dialog-content, .error {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #ffa07a;
+}
+
+.success-dialog .ui-dialog-content, .success {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #faffc5;
+}
+
+.notice-dialog .ui-dialog-content, .notice {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #faffc5;
+}
+
+.alert-dialog .ui-dialog-content, .alert {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #ffa07a;
+}
+
+.notice {
+    background: url('/images/ico/flash_notice.png') center center no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
+}
+
+.success {
+    background: url('/images/ico/flash_success.png') center right no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
+}
+
+.alert {
+    background: url('/images/ico/flash_alert.png') center center no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
+}
+
+.error {
+    background: url('/images/ico/flash_error.png') center center no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
+}
+
+

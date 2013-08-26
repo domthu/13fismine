@@ -15,7 +15,7 @@
           <!-- convegni futuri -->
           <% if @conv_futuri.nil? %>
           <% else %>
-              <h6>Convegni/Eventi Futuri </h6>
+              <h4>Convegni/Eventi Futuri </h4>
               <article class="fs-post-convegni fs-article">
                 <% @conv_futuri.each do |con| %>
                     <div class="fs-convegni-border">
@@ -39,7 +39,7 @@
               </article>
           <% end %>
           <!--convegno prossimo -->
-          <h6>Convegno/Evento Prossimo </h6>
+          <h4>Convegno/Evento Prossimo </h4>
           <% if @conv_prossimo.nil? %>
               <div> Nessun evento o convegno in corso o previsto.
               </div>
@@ -125,7 +125,7 @@
               </article>
           <% end %>
           <!-- convegni passati -->
-          <h6>Convegni/Eventi Passati </h6>
+          <h4>Convegni/Eventi Passati </h4>
           <% if @conv_passati.nil? %>
               <div> Nessun evento o convegno passato.
               </div>
