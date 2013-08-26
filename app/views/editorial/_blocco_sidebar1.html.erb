@@ -1,5 +1,6 @@
 <div class="fs-layout-cell fs-sidebar1 clearfix">
-  <%= render :partial => 'editorial/blocco_informa' %>
+  <%= render :partial => 'blocco_user_state' %>
+  <%= render :partial => 'blocco_informa' %>
   <% unless @topsection.nil? && @top_menu.nil? %>
       <%= render :partial => 'editorial/blocco_quick_search' %>
   <% end %>
@@ -9,13 +10,10 @@
           <%= render :partial => 'editorial/blocco_eventi' %>
       <% end %>
   <% end %>
-  <%=   render :partial => 'editorial/blocco_banners_l' %>
+  <%= render :partial => 'editorial/blocco_banners_l' %>
   <% unless @block_projects.nil? %>
       <%= render :partial => 'editorial/blocco_edizioni' %>
   <% end %>
-  <%# render :partial =>  'blocco_ricerca' %>
-  <%# render :partial => 'blocco_banners1' %>
-  <%# render :partial => 'blocco_account' %>
   <% unless @articolo.nil? %>
       <%= render :partial => 'editorial/blocco_art_evidenziati' %>
   <% end %>

@@ -59,7 +59,7 @@ class AccountController < ApplicationController
         if @user.save
           @token.destroy
           flash[:notice] = l(:notice_account_password_updated)
-          redirect_to :back
+          redirect_to editorial_url
           return
         end
       end
@@ -148,7 +148,8 @@ class AccountController < ApplicationController
           session[:auth_source_registration] = nil
           self.logged_user = @user
           flash[:notice] = l(:notice_account_activated)
-          redirect_to :controller => 'my', :action => 'account'
+          #redirect_to :controller => 'my', :action => 'account'
+          redirect_to my_profile_show_url
         end
       else
         @user.login = params[:user][:login]
@@ -189,6 +190,7 @@ class AccountController < ApplicationController
 
     @stat =''
     @errors = ''
+    #NoMethodError (undefined method `image_file_size' for #<User:0xb6c653ac>):
     if !@user.valid?
       if !@user.errors.empty?
         #@errors += @user.errors.join(', ') undefined method join
@@ -332,7 +334,8 @@ class AccountController < ApplicationController
       token.destroy
       flash[:notice] = l(:notice_account_activated)
     end
-    redirect_to :action => 'login'
+    #redirect_to :action => 'login'
+    redirect_to editorial_url
   end
 
   private
@@ -420,19 +423,22 @@ class AccountController < ApplicationController
     #if User.current.allowed_to?(:access_back_end, nil, :global => true)
     #if self.logged_user.allowed_to?(:access_back_end, nil, :global => true)
     if user.allowed_to?(:access_back_end, nil, :global => true)
-      Rails.logger.info("login ok collaboratore  #{home_url}  <-Home  editorial-> #{editorial_url}")
+      #Rails.logger.info("login ok collaboratore  #{home_url}  <-Home  editorial-> #{editorial_url}")
       #redirect_to(home_url)
       #redirect_back_or_default :controller => 'my', :action => 'page'
       redirect_to(editorial_url)
       #redirect_back_or_default :controller => 'editorial', :action => 'home'
     else
       if (Setting.fee?)
-        #TODO Controllare la scadenza se è di RUOLO
-
-        # str = control_assign_role(user)
-        # Rails.logger.info("Login controllo ruolo: " + str)
+        user.control_state
+        if user.isregistered?
+           flash[:notice] = "Periodo di prova valido ancora per " + distance_of_date_in_words(user.scadenza, Time.now)
+        end
+        if user.isrenewing?
+           flash[:notice] = "Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, self.scadenza) + "<br />Rinnovare l'abbonamento."
+        end
       end
-      Rails.logger.info("login ok membro")
+      #Rails.logger.info("login ok membro")
       redirect_to(editorial_url)
     end
   end
@@ -469,8 +475,13 @@ class AccountController < ApplicationController
     token = Token.new(:user => user, :action => "register")
     if user.save and token.save
       Mailer.deliver_register(token)
+      if user.isregistered?
+        Mailer.deliver_account_information(user, user.password)
+        Mailer.fee(self, 'thanks', Setting.template_fee_thanks)
+      end
       flash[:notice] = l(:notice_account_register_done)
-      redirect_to :action => 'login'
+      #redirect_to :action => 'login'
+      redirect_to editorial_url
     else
       yield if block_given?
     end
@@ -486,7 +497,8 @@ class AccountController < ApplicationController
     if user.save
       self.logged_user = user
       flash[:notice] = l(:notice_account_activated)
-      redirect_to :controller => 'my', :action => 'account'
+      #redirect_to :controller => 'my', :action => 'account'
+      redirect_to editorial_url
     else
       yield if block_given?
     end
@@ -507,7 +519,8 @@ class AccountController < ApplicationController
 
   def account_pending
     flash[:notice] = l(:notice_account_pending)
-    redirect_to :action => 'login'
+    #redirect_to :action => 'login'
+    redirect_to editorial_url
   end
 
   def reroute_if_logged

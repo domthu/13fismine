@@ -1,5 +1,5 @@
 # redMine - project management software
-# Copyright (C) 2006-2007  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2007  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -225,7 +225,8 @@ fee_bcc_recipients:
   default: "dom_thual@yahoo.fr"
 template_fee_register_asso:
   default: "Caro @@poweruser_username@@. Codice Fiscosport è @@poweruser_codice@@.
-    E stato fatta una nuova registrazione per l'utente @@uer_username@@ con codice @@user_codice@@
+    La password utente è @@user_password@@.
+    E stato fatta una nuova registrazione per l'utente @@user_username@@ con codice @@user_codice@@
     Ti invitiamo ad usare uno dei due link cui sotto per confermare o disabilitare questa nuova registrazione
     In caso di dubbio, contattaci al 0000 o via email.
     La squadra di Fiscosport
@@ -237,6 +238,10 @@ template_fee_renew:
     Ti invitiamo a rinnovarlo.
     Contattaci al 0000 o via email.
     Usi questa pagina per rinnovarlo da solo.
+
+    @@user_convention@@
+    @@poweruser_username@@
+
     La squadra di Fiscosport
     @@logged_username@@
   "
@@ -290,5 +295,3 @@ static_page_progettofs:
 
 static_page_contattaci:
   default: "Pagina contattaci"
-
-

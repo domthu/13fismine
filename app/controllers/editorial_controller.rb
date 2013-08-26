@@ -742,7 +742,8 @@ class EditorialController < ApplicationController
     else
       flash[:notice] = "Per accedere devi avere un abbonamento valido..."
     end
-    redirect_to(my_profile_edit_path)
+    #redirect_to(my_profile_edit_path)
+    redirect_to(my_profile_show_path)
   end
 
   #privato. Usato sia per articolo che preview (anche se non pubblico il project ed issue)

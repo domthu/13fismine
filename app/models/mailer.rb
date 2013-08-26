@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -243,7 +243,8 @@ class Mailer < ActionMailer::Base
     subject l(:mail_subject_register, Setting.app_title)
     body :user => user,
          :password => password,
-         :login_url => url_for(:controller => 'account', :action => 'login')
+         :login_url => url_for(:controller => 'editorial', :action => 'home')
+         #:login_url => url_for(:controller => 'account', :action => 'login')
     render_multipart('account_information', body)
   end
 
@@ -273,7 +274,8 @@ class Mailer < ActionMailer::Base
     recipients user.mail
     subject l(:mail_subject_register, Setting.app_title)
     body :user => user,
-         :login_url => url_for(:controller => 'account', :action => 'login')
+         :login_url => url_for(:controller => 'editorial', :action => 'home')
+         #:login_url => url_for(:controller => 'account', :action => 'login')
     render_multipart('account_activated', body)
   end
 
@@ -363,6 +365,24 @@ class Mailer < ActionMailer::Base
     #     :document_url => url_for(:controller => 'documents', :action => 'show', :id => document)
     #render_multipart('document_added', body)
     #body :fee_type => type, :fee_text => setting_text, :fee_url => url_for(:controller => 'fees')
+    if user
+      setting_text = setting_text.replace('@@user_username@@', user.name)
+      setting_text = setting_text.replace('@@logged_username@@', User.current.name)
+      setting_text = setting_text.replace('@@user_password@@', user.password)
+      if user.scadenza
+        setting_text = setting_text.replace('@@user_scadenza@@', user.scadenza + ", " + user.scadenza_fra)
+      else
+        setting_text = setting_text.replace('@@user_scadenza@@'," -non definita- ")
+      end
+      setting_text = setting_text.replace('@@user_codice@@', user.id.to_s)
+      if user.convention
+        setting_text = setting_text.replace('@@user_convention@@', "Sei conventionato a " + user.convention.name)
+        if user.convention.user
+          setting_text = setting_text.replace('@@poweruser_username@@', user.convention.user.name)
+          setting_text = setting_text.replace('@@poweruser_codice@@', user.convention.user.id.to_s)
+        end
+      end
+    end
     body :fee_type => type, :fee_text => setting_text, :fee_url => self.default_url_options
     render_multipart('fee', body)
     #domthu TODO

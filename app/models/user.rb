@@ -199,6 +199,81 @@ class User < Principal
     News.all(:conditions => ['author_id = ?', self.id], :order => "created_on DESC")
   end
 
+  def state
+    str = ''
+    #Control user status
+    if self.locked?
+     str += "<br />Utente bloccato. Contattare l'amministratore o acquistare abbonamento"
+#     if self.last_login_on
+#        str += "<br />Inattivo da " + distance_of_date_in_words(Time.now, self.last_login_on)
+#     end
+    end
+    if !self.active?
+     str += "<br />Utente non attivo"
+    end
+
+    #PUBLIC INSTALLATION con uso gestione abbonamento
+    if Setting.fee?
+      #Control Always abilitated User RoleId
+      #if self.ismanager? || self.isauthor? || self.isvip?
+      #if self.isabbonato?
+
+      #Control Always Undesired User RoleId
+      if self.isarchivied?
+       str += "<br />Utente senza abbonamento valido da " + distance_of_date_in_words(Time.now, self.scadenza)
+      end
+      if self.isexpired?
+        str += "<br />Abbonamento scaduto: " + distance_of_date_in_words(Time.now, self.scadenza)
+      end
+      if self.isrenewing?
+        str += "<br />Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, self.scadenza)
+        str += "<br />Rinnovare l'abbonamento."
+      end
+      if self.isregistered?
+        str += "<br />Valido ancora per " + distance_of_date_in_words(self.scadenza, Time.now)
+        str += "<br />periodo di prova."
+      end
+    end
+    return str
+  end
+
+  def control_state
+    if self.locked? || !self.active? || !Setting.fee? || self.scadenza.nil?
+      return
+    end
+    today = Date.today
+    if self.isabbonato?
+      renew_deadline = self.scadenza - Setting.renew_days.to_i.days
+      if (today > renew_deadline)
+        self.role_id = FeeConst::ROLE_RENEW
+        if save
+          #send email to invite renew? Macristina
+          flash[:notice] = "Il tuo abbonamento scade a breve: " + distance_of_date_in_words(Time.now, self.scadenza) + "<br />  <strong>Rinnovalo</strong>"
+        end
+      end
+    end
+    if self.isrenewing?
+      if (today > self.scadenza)
+        self.role_id = FeeConst::ROLE_EXPIRED
+        if save
+          #TODO send email to re-fee
+          Mailer.deliver_account_information(self, self.password)
+          Mailer.fee(self, 'renew', Setting.template_fee_renew)
+          flash[:notice] = "Il tuo abbonamento è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati di nuovo</strong>"
+        end
+      end
+    end
+    if self.isregistered?
+      if (today > self.scadenza)
+        self.role_id = FeeConst::ROLE_EXPIRED
+        if save
+          #TODO send email to re-fee
+          flash[:notice] = "Il tuo periodo di prova è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati</strong>"
+        end
+      end
+    end
+  end
+
   def hide_name
     str = " utente Fiscosport n° " + self.id.to_s
     if self.comune_id && self.comune
@@ -234,76 +309,61 @@ class User < Principal
 
   #CALL this procedure from Frontend only
   def isfee?(issue = nil)
+    #Control Always Undesired User RoleId
+    if self.isarchivied?
+      return false
+    end
+
     #return false
     #Control issue status
     if issue && !issue.se_protetto
       return true
     end
 
-    #Control user status
+    #Control fismine user status
     if self.locked?
-      Rails.logger.info("isfee False is LOCKED  #{self}")
       return false
     end
     if self.registered?
       #USER Must be confirmed by administrator
-      Rails.logger.info("isfee False is registered  #{self}")
       return false
     end
     if !self.active?
-      Rails.logger.info("isfee False not active  #{self}")
       return false
     end
+
     #PUBLIC INSTALLATION
     if !Setting.fee?
-      #Rails.logger.info("isfee OK fee not operated in this installation  #{self}")
       return true #PUBLIC AREA
     end
+
     #Control Always abilitated User RoleId
     if self.ismanager? || self.isauthor? || self.isvip?
-      #Rails.logger.info("isfee OK is staff member  #{self}")
       return true
     end
+
     #Control Always Undesired User RoleId
-    if !self.isarchivied?
-      Rails.logger.info("isfee False ARCHIVIED  #{self}")
-      return false
-    end
-    if !self.isexpired?
-      Rails.logger.info("isfee False EXPIRED  #{self}")
-      return false
-    end
-    if !self.active?
-      Rails.logger.info("isfee False not active  #{self}")
+    if self.isexpired?
       return false
     end
 
     #Control content if public
-    if issueid #!issueid.nil?
-      @article = Issue.find(issueid)
-      #Show if it is public content
-      if @article.nil? || !@article.se_visible_web?
-        return false
-      end
+    if issue && !issue.se_visible_web?
+      flash[:notice] = "Articolo ancora non in linea. A breve verrà reso disponibile."
+      return false
     end
+
+    #control fee state
+    self.control_state
 
     if self.isabbonato?
-      #TODO Elabore date from scadenza compared with today
-      #TODO Elabore date from scadenza compared with today - Setting.renew_days
-      #Control if must be set as  FeeConst::ROLE_RENEW or FeeConst::ROLE_EXPIRED
-      Rails.logger.info("isfee OK ABBONATO  #{self}")
       return true
     end
-
     if self.isrenewing?
-      #TODO Elabore date from scadenza compared with today
-      #Control if must be set as FeeConst::ROLE_EXPIRED
-      Rails.logger.info("isfee OK MUST RENEW  #{self}")
       return true
     end
     if self.isregistered?
-      #TODO Elabore date from elapsed time from registration compared with today + Setting.register_days
-      Rails.logger.info("isfee OK MUST BE ACTIVATED  #{self}")
+      #periodo di prova non accede ai contenuti rossi
       return false
     end
   end
@@ -405,7 +465,6 @@ class User < Principal
   def responsable_of
     self.references
   end
-
 
   #Return friendly String
   def scadenza_fra
