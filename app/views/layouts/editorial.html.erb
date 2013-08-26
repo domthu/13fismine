@@ -109,25 +109,22 @@
               jQuery('body,html').animate({scrollTop:0}, 800);
           });
 
-          if ($('#fs-flash-dialog').html().trim().length > 0) {
-                var fclass = $('#flashme').html()
-              $('#fs-flash-dialog').dialog({bgiframe: true, dialogClass: fclass, resizable: true, draggable: true, modal: true, height: 334, width: 450, autoOpen:true, show: 'fade'});
-               $('#fs-flash-dialog').dialog('open');
-              setTimeout(function() {
-
-                  $('#fs-flash-dialog').fadeOut(2000, function () {
-                       $('#fs-flash-dialog').dialog("destroy")
-                   });
-                        }, 6000);
-                        };
-
-
-
+          if ($('#fs-flash').html().trim().length > 0) {
+            var fclass = $('#flashme').html()
+            $('#fs-flash').dialog({bgiframe: true, dialogClass: fclass, resizable: true, draggable: true, modal: true, height: 334, width: 450, autoOpen:true, show: 'fade'});
+            $('#fs-flash').dialog('open');
+            setTimeout(function() {
+              $('#fs-flash').fadeOut(4000, function () {
+                   $('#fs-flash').dialog("destroy")
+               });
+            }, 10000);
+          };
+          //focus via javascript during ajax response
           $('#fs-flash').focus(function () {
               $('#fs-flash').show();
               setTimeout(function () {
                   $('#fs-flash').fadeOut(2400);
-              }, 6000);
+              }, 10000);
           });
           /*          if ($('#fs-flash').html().trim().length > 0) {
            $('#fs-flash').show();
@@ -183,7 +180,7 @@
     <nav class="fs-menu2-nav clearfix">
       <%= render_navigation(:level => 2..3, :expand_all => true) %>
     </nav>
-    <div id="fs-flash-dialog" style="display:none;">
+    <div id="fs-flash" style="display:none;">
       <% flash.each do |key, msg| %>
           <p><span class='<%= key.to_s %>'> </span>  <%= msg %> </p>
           <div> <% @f = key.to_s  %></div>

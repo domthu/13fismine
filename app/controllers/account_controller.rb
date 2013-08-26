@@ -190,13 +190,12 @@ class AccountController < ApplicationController
 
     @stat =''
     @errors = ''
-    #NoMethodError (undefined method `image_file_size' for #<User:0xb6c653ac>):
     if !@user.valid?
       if !@user.errors.empty?
         #@errors += @user.errors.join(', ') undefined method join
-        @errors += "<br />Errore completa: " + @user.errors.full_messages.join('<br />')
+        @errors += "Errore incontrate: " + @user.errors.full_messages.join('<br />')
       end
-      puts "********************Prova user not valid (" + @errors + ")********************"
+      #puts "********************Prova user not valid (" + @errors + ")********************"
       #format.html { return redirect_to :controller => 'editorial', :action => 'prova', :user => @user }
       #format.js {
       return render :json => {

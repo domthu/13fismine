@@ -1013,7 +1013,7 @@ class User < Principal
                   'num_reg_coni',
                   'se_condition',
                   'use_gravatar',
-                  'photo',  #user paperclip image undefined method `image_file_size' for #<User:0xb684d634>
+                  'photo',
                   'se_privacy'
 
 

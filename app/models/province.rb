@@ -10,6 +10,7 @@ class Province < ActiveRecord::Base
     name + '(' + sigla + ')'
   end
 
+  alias :name_full :to_s
   #alias :name :to_s
 
 end

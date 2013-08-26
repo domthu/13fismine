@@ -10,8 +10,15 @@ class Comune < ActiveRecord::Base
     letter= chr || 'A'
       find(:all, :conditions => ['comunes.name LIKE ?', "#{letter}%"], :include => [[ :province => :region ]] , :order => ord )
     end
+
   def to_s
-    name #+ '(' + ?codice fiscale? + ')'
+    str = self.name
+    str << (self.province.nil? ? "" : " " + self.province.name_full)
+    str << ((self.province.nil? && self.province.region.nil?) ? "" : "::" + self.province.region.name.capitalize) # .upcase)
+    return str
   end
+
+  alias :name_full :to_s
+  #alias :name :to_s
 
 end
