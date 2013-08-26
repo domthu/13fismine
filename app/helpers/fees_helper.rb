@@ -58,7 +58,7 @@ end
 
 module FeesHelper
   include ActionView::Helpers::DateHelper
-  #include ApplicationHelper   NO utc? in format_time
+  include ApplicationHelper   #NO utc? in format_time
   #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
   #per traduzione l(:role_author) --> undefined method `l'
 
@@ -409,7 +409,7 @@ module FeesHelper
         if (data_scadenza.nil?)
           str << " NULL["
         else
-          str << " DATA?" << data_scadenza << "["
+          str << " DATA?" << format_date(data_scadenza) << "["
         end
         str << "asso.id: " << (_usr.convention_id.nil? ? "" : ("(" << _usr.convention_id.to_s << ")--> " << ((_usr.convention.nil? || _usr.convention.scadenza.nil?) ? "/user.scadenza" : _usr.convention.scadenza.to_s)))
         str << "/user.data: " << (_usr.data.nil? ? "" : _usr.data.to_s)
