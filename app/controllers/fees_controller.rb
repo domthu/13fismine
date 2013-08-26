@@ -26,23 +26,6 @@ class FeesController < ApplicationController
 
   # menu_item :menu_payment_fs, :only => [:pagamento, :invia_fatture, :email_fee, :invoice, :contract, :contract_per_user]
 
-
-  def set_menu
-    a = self.action_name
-
-    case a
-      when 'index', 'liste_utenti', 'liste_utenti', 'associatii', 'paganti'
-        @menu_fs = :menu_fee_fs
-
-
-      when 'pagamento', 'fatture', 'email_fee', 'invia_fatture'
-        @menu_fs = :menu_payment_fs
-      else
-        @menu_fs = :application_menu
-    end
-   return a
-   end
-  puts '_self action__________________>'  + set_menu
   def index
     #@msg[] << ""
     #__User_all = User.all()
@@ -412,6 +395,19 @@ class FeesController < ApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  def set_menu
+    a = self.action_name
+    case a
+      when 'index', 'liste_utenti', 'liste_utenti', 'associatii', 'paganti'
+        @menu_fs = :menu_fee_fs
+      when 'pagamento', 'fatture', 'email_fee', 'invia_fatture'
+        @menu_fs = :menu_payment_fs
+      else
+        @menu_fs = :application_menu
+    end
+    return a
   end
 
 end
