@@ -204,6 +204,9 @@ class User < Principal
     #Control user status
     if self.locked?
      str += "<br />Utente bloccato. Contattare l'amministratore o acquistare abbonamento"
+#     if self.last_login_on
+#        str += "<br />Inattivo da " + distance_of_date_in_words(Time.now, self.last_login_on)
+#     end
     end
     if !self.active?
      str += "<br />Utente non attivo"
@@ -244,7 +247,7 @@ class User < Principal
       if (today > renew_deadline)
         self.role_id = FeeConst::ROLE_RENEW
         if save
-          #TODO send email to invite renew
+          #send email to invite renew? Macristina
           flash[:notice] = "Il tuo abbonamento scade a breve: " + distance_of_date_in_words(Time.now, self.scadenza) + "<br />  <strong>Rinnovalo</strong>"
         end
       end
@@ -254,6 +257,8 @@ class User < Principal
         self.role_id = FeeConst::ROLE_EXPIRED
         if save
           #TODO send email to re-fee
+          Mailer.deliver_account_information(self, self.password)
+          Mailer.fee(self, 'renew', Setting.template_fee_renew)
           flash[:notice] = "Il tuo abbonamento è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati di nuovo</strong>"
         end
       end
@@ -343,12 +348,9 @@ class User < Principal
     end
 
     #Control content if public
-    if issueid #!issueid.nil?
-      @article = Issue.find(issueid)
-      #Show if it is public content
-      if @article.nil? || !@article.se_visible_web?
-        return false
-      end
+    if issue && !issue.se_visible_web?
+      flash[:notice] = "Articolo ancora non in linea. A breve verrà reso disponibile."
+      return false
     end
 
     #control fee state
@@ -463,7 +465,6 @@ class User < Principal
   def responsable_of
     self.references
   end
-
 
   #Return friendly String
   def scadenza_fra
