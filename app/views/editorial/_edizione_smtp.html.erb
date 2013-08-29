@@ -103,13 +103,14 @@
     </td>
   </tr>
 </table>
+<%= render :partial => 'editorial/edizione_smtp_convention', :locals => { :defurl => defurl } %>
 <!-- fine sezione con logo e nomeutente -->
-<!-- inizio visibile solo se associato o affiliato-->
+<!-- inizio visibile solo se associato o affiliato
 <table width="560" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td width="500" bgcolor="#ffffff" align="right" style="vertical-align: middle;">
       <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:15px; color:#1e1e1e; line-height:18px; font-weight: bold;">
-        <% if @user %>
+         <% if @user %>
           <%= user_myasso_text(@user) %>
         <% else %>
           @@user_convention
@@ -124,7 +125,7 @@
       <% end %>
     </td>
   </tr>
-</table>
+</table>-->
 
 <!-- fine riga visibile solo se associato o è affiliato'  / sotto un'immagine di spazio -->
 <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-size:0;">
@@ -262,7 +263,7 @@
               <!-- sotto: immagine sx -->
               <td width="120" align="left" valign="top" rowspan="2">
 
-                <%= link_to(image_tag( defurl + art_image(articolo, :m)), link_to_articolo(articolo, {:only_path => false}), :id => ancora) %>
+                <%= link_to(image_tag( defurl + art_image(articolo, :m, :newsletter=> true)), link_to_articolo(articolo, {:only_path => false}), :id => ancora) %>
 
               </td>
               <!-- titolo  -->

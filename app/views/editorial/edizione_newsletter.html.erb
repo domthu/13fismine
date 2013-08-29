@@ -2,10 +2,7 @@
 <div id="fs-edizione">
     <%= link_to(image_tag("/images/ico/articoli.png"), url_for(:controller => 'editorial', :action => "edizione", :escape => false)) %>
   <%= @project.description %>
-
 </div>
-
 <%= render :partial => 'edizione_smtp' %>
-
 </div>
 <%= render :partial => 'blocco_sidebar1' %>

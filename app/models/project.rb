@@ -1136,7 +1136,9 @@ class Project < ActiveRecord::Base
         </table>
         </td>
         </tr>
-        </table> '
+        </table>
+<h1 style="color:red;"> Utente id:[' + u.to_s + '] non trovato!</h1>
+'
 
       return s1+s2+s3+s4+s5
     else

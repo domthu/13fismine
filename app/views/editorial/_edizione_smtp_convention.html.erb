@@ -1,0 +1,83 @@
+<table width="560" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="500" bgcolor="#ffffff" align="right" style="vertical-align: middle;">
+      <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:15px; color:#1e1e1e; line-height:18px; font-weight: bold;">
+        <% if @user %>
+            <%= user_myasso_text(@user) %>
+        <% end %>
+      </font>
+    </td>
+    <td width="60" valign="bottom" align="right">
+      <% if @user %>
+          <%= image_tag(defurl + user_myasso_icon(@user, :s, :newsletter => true), :width => 48, :height => 48) %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+   <% unless @user.convention.nil? %>
+    <table width="560" border="0" cellpadding="0" cellspacing="0">
+      <% if  @user.convention.presidente? %>
+          <tr>
+            <td width="50%" bgcolor="#ffffff" align="left" style="vertical-align: middle;">
+              <font style="font-family:Arial, Helvetica, sans-serif; font-size:0.9em; color:#1e1e1e; line-height:14px; font-style:italic;">
+                <%= l(:label_presidente) %>    </font></td>
+            <td width="50%" align="left">
+              <%= h @user.convention.presidente %>    </td>
+          </tr>
+      <% end %>
+      <% if  @user.convention.indirizzo? %>
+          <tr>
+            <td width="50%" bgcolor="#ffffff" align="left" style="vertical-align: middle;">
+              <font style="font-family:Arial, Helvetica, sans-serif; font-size:0.9em; color:#1e1e1e; line-height:14px; font-style:italic;">
+                <%= l(:label_indirizzo) %>    </font></td>
+            <td width="50%" align="left">
+              <%= h @user.convention.indirizzo %>    </td>
+          </tr>
+      <% end %>
+      <% if  @user.convention.comune.name? %>
+          <tr>
+            <td width="50%" bgcolor="#ffffff" align="left" style="vertical-align: middle;">
+              <font style="font-family:Arial, Helvetica, sans-serif; font-size:0.9em; color:#1e1e1e; line-height:14px; font-style:italic;">
+                <%= l(:label_comune) %>    </font></td>
+            <td width="50%" align="left">
+              <%= h @user.convention.comune.name %>    </td>
+          </tr>
+      <% end %>
+      <% if  @user.convention.telefono? %>
+          <tr>
+            <td width="50%" bgcolor="#ffffff" align="left" style="vertical-align: middle;">
+              <font style="font-family:Arial, Helvetica, sans-serif; font-size:0.9em; color:#1e1e1e; line-height:14px; font-style:italic;">
+                <%= l(:label_telefono) %>    </font></td>
+            <td width="50%" align="left">
+              <%= h @user.convention.telefono %>    </td>
+          </tr>
+      <% end %>
+      <% if  @user.convention.telefono_alt? %>
+          <tr>
+            <td width="50%" bgcolor="#ffffff" align="left" style="vertical-align: middle;">
+              <font style="font-family:Arial, Helvetica, sans-serif; font-size:0.9em; color:#1e1e1e; line-height:14px; font-style:italic;">
+                <%= l(:label_telefono_alt) %>    </font></td>
+            <td width="50%" align="left">
+              <%= h @user.convention.telefono_alt %>    </td>
+          </tr>
+      <% end %>
+      <% if  @user.convention.fax? %>
+          <tr>
+            <td width="50%" bgcolor="#ffffff" align="left" style="vertical-align: middle;">
+              <font style="font-family:Arial, Helvetica, sans-serif; font-size:0.9em; color:#1e1e1e; line-height:14px; font-style:italic;">
+                <%= l(:label_fax) %>    </font></td>
+            <td width="50%" align="left">
+              <%= h @user.convention.fax %>    </td>
+          </tr>
+      <% end %>
+      <% if  @user.convention.email? %>
+          <tr>
+            <td width="50%" bgcolor="#ffffff" align="left" style="vertical-align: middle;">
+              <font style="font-family:Arial, Helvetica, sans-serif; font-size:0.9em; color:#1e1e1e; line-height:14px; font-style:italic;">
+                <%= l(:label_email) %>    </font></td>
+            <td width="50%" align="left">
+              <%= h @user.convention.email %>    </td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>

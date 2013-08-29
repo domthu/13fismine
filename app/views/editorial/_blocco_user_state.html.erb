@@ -1,4 +1,4 @@
-<% if User.current.logged? && (User.current.state.length > 0)  %>
+<% if User.current.logged?  %>
   <div class="fs-block clearfix">
     <div class="fs-blockheader">
       <h3 class="t"><%= link_to(User.current.hide_name, my_profile_show_url, :class => 'button-grey') %></h3>

@@ -1,8 +1,5 @@
 <h2><%= link_to l(:label_type_organization_plural_long), type_organizations_path %> &#187; <%= h(@type_organization) %></h2>
 <% labelled_form_for @type_organization do |f| %>
-<%= submit_tag l(:button_save) %>
 <%= render :partial => 'form', :locals => { :f => f } %>
-<%= submit_tag l(:button_save) %>
-<!-- <%= f.submit 'Update' %> -->
-
+    <div class="btn-footer"><%= submit_tag l(:button_save), :class=>"button-blu" %> </div>
 <% end %>
