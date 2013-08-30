@@ -97,6 +97,12 @@ module EditorialHelper
     flash[:error] = "Risultati di ricerca: errore nel reindirizzamento link "
     redirect_to :back
   end
+  def fburl(articolo)
+    s= 'https://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D=' + articolo.subject  + '&p%5Burl%5D=http%3A%2F' + link_to_articolo(articolo, :only_path => false) +
+    '&p%5Bsummary%5D=' + 'sommario' +
+        '&p%5Bimages%5D%5B0%5D=' + 'immagine'
+     return s
+  end
 
 
 end
