@@ -1,15 +1,12 @@
 class FeesController < ApplicationController
 
   layout 'admin'
-
   before_filter :require_admin, :require_fee
   #before_filter :find_user, :only => [:registrati, :associati, :privati, :archiviati, :scaduti]
   before_filter :get_statistics, :only => [:index, :liste_utenti, :associati, :privati, :archiviati, :scaduti]
-
   helper :sort
   include SortHelper
 
-  #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
   include FeesHelper #ROLE_XXX  gedate
   #FeeConst::ROLE_MANAGER        = 3  #Manager<br />
   #FeeConst::ROLE_AUTHOR         = 4  #Redattore  <br />
@@ -87,10 +84,6 @@ class FeesController < ApplicationController
     @num_archiviati = User.all(:conditions => {:role_id => FeeConst::ROLE_ARCHIVIED}).count
     @num_controlled_TOTAL = @num_abbonati + @num_rinnovamento + @num_registrati + @num_scaduti + @num_archiviati
 
-    #Who pay?
-    #BY PAYMENTS PRIVATE or CONVENTION
-    #@num_power_user = User.all(:conditions => {:power_user => 1}).count
-    #User member of organismo convenzionato
     @num_Associations = Convention.all.count
     @referee = User.find_by_sql("select * from users where id IN (select distinct user_id from conventions)")
     #questi utenti non pagano. Paga l'organismo convenzionato
