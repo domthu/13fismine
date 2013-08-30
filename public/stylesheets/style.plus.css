@@ -318,7 +318,10 @@
 #fs-form-login-btn {
     width: 105px;
 }
-
+.fs-pass{
+    text-align: right;
+    padding-right: 10%;
+}
 .fs-pass a:link {
     font-family: Arial, sans-serif;
     font-size: 11px;
@@ -378,13 +381,17 @@
 }
 
 .fs-logged2 span {
-    font-variant: small-caps;
+   /* font-variant: small-caps;   */
     overflow: hidden;
-    font-size: 1.2em;
+    font-size: 1em;
     vertical-align: middle;
     display: table-cell;
     padding-left: 5px;
     max-width: 188px;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+    color: #016284;
 }
 
 #fs-login2-asso {
@@ -2071,33 +2078,6 @@ h3.fs-postheader {
 
 }
 
-.notice {
-    background: url('/images/ico/flash_notice.png') center center no-repeat;
-    float: left;
-    width: 70px;
-    height: 75px;
-}
-
-.success {
-    background: url('/images/ico/flash_success.png') center right no-repeat;
-    float: left;
-    width: 70px;
-    height: 75px;
-}
-
-.alert {
-    background: url('/images/ico/flash_alert.png') center center no-repeat;
-    float: left;
-    width: 70px;
-    height: 75px;
-}
-
-.error {
-    background: url('/images/ico/flash_error.png') center center no-repeat;
-    float: left;
-    width: 70px;
-    height: 75px;
-}
 
 /* altri  allarmi note */
 .fs-flash-in {
@@ -3834,7 +3814,7 @@ padding-bottom: 3px;
 
 /*State Fee Roles*/
 .admin{background: url(../images/ico/users_sprite.png) no-repeat 0 0; padding-left: 50px; min-height:55px;}
-.power_user{background: background: url(../images/ico/users_sprite.png) no-repeat 0 -50px; padding-left: 45px; min-height:50px; }
+.power_user{background: url(../images/ico/users_sprite.png) no-repeat 0 -50px; padding-left: 45px; min-height:50px; }
 .redattore{background: url(../images/ico/users_sprite.png) no-repeat 0 -100px; padding-left: 48px; min-height:53px; }
 .invitato{background: url(../images/ico/users_sprite.png) no-repeat 0 -150px; padding-left: 48px; min-height:53px; }
 .abbonato{background: url(../images/ico/users_sprite.png) no-repeat 0 -200px; padding-left: 32px; min-height:37px;}
@@ -3948,3 +3928,39 @@ padding-bottom: 3px;
  .s-question { background: url(../images/ico/users_sprite.png) no-repeat -50px -460px; }
  .s-exclamation { background: url(../images/ico/users_sprite.png) no-repeat -50px -510px; }
  /*  fine del fee roles icons */
+.fs-helpme-content{
+    padding: 10px 30px!important;
+}
+#fs-helpme-header{
+    background: url(../images/ico/locked-y.png) no-repeat top left;
+    height: 128px;
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 128px;
+    font-size: 1.6em ;
+
+}
+.fs-lost_password{
+    width: 92%;
+
+}
+.fs-lost_password-btn{
+    display: inline-block;
+    float: right;
+    font-size: 1em;
+    line-height: 1em;
+
+
+}
+
+.fs-lost_password input {
+    width: 70%;
+
+    background-color: #FAFFBD;
+    border: dotted 1px #233C80;
+   font-weight:bold ;
+    font-size: 0.9em;
+    line-height: 1.5em;
+
+
+}

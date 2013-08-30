@@ -25,12 +25,13 @@ class IssueMovesController < ApplicationController
   before_filter :find_issues, :check_project_uniqueness
   before_filter :authorize   #add permission for fast_reply  and save role
 
-
   def new
     prepare_for_issue_move
-    @news = @copy.quesito_news
-    if !@news.nil? && @news.is_quesito?
-      flash[:notice] = "Procedura di risposta al quesito mediante articolo in edizione"
+    if @copy
+      @news = @copy.quesito_news
+      if !@news.nil? && @news.is_quesito?
+        flash[:notice] = "Procedura di risposta al quesito mediante articolo in edizione"
+      end
     end
     render :layout => false if request.xhr?
   end

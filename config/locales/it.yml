@@ -176,7 +176,7 @@ it:
   notice_account_password_updated: La password è stata aggiornata.
   notice_account_wrong_password: Password errata
   notice_account_register_done: "L'utente è stato creato."
-  notice_account_unknown_email: Utente sconosciuto.
+  notice_account_unknown_email: "Nessun utente registrato con la mail immessa."
   notice_can_t_change_password: Questo utente utilizza un metodo di autenticazione esterno. Impossibile cambiare la password.
   notice_account_lost_email_sent: Ti è stata spedita una email con le istruzioni per cambiare la password.
   notice_account_activated: "Il tuo account è stato attivato. Ora puoi effettuare l'accesso."
@@ -520,7 +520,7 @@ it:
   label_issue_status_updated: Stato aggiornato
   label_issue_priority_updated: Priorità aggiornata
   #Dom verifica
-  label_projects_view_all: Percori tutte le edizioni
+  label_projects_view_all: Sfoglia le le edizioni
   label_issues_view_all: Vedi tutti articoli
   label_issue_from_news: articolo generato da quesito
   label_issues_latest: Ultimi articoli
@@ -562,6 +562,7 @@ it:
   label_register: Registrati
   label_login_with_open_id_option: oppure autenticati usando OpenID
   label_password_lost: Password dimenticata
+  label_access_lost: Recupera i dati di accesso
   label_home: Pannello di controllo
   label_my_page: Pagina personale
   label_my_account: Il mio account

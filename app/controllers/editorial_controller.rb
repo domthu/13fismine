@@ -224,6 +224,7 @@ class EditorialController < ApplicationController
     @project = Project.all_public_fs.find_public(@id)
     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
     @prj= Project.all_public_fs.find_by_id params[:id].to_i
+    @user = User.current
   end
 
   # -----------------  EDIZIONI /NEWSLETTER  (fine)  ------------------
@@ -742,7 +743,8 @@ class EditorialController < ApplicationController
     else
       flash[:notice] = "Per accedere devi avere un abbonamento valido..."
     end
-    redirect_to(my_profile_edit_path)
+    #redirect_to(my_profile_edit_path)
+    redirect_to(my_profile_show_path)
   end
 
   #privato. Usato sia per articolo che preview (anche se non pubblico il project ed issue)

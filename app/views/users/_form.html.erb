@@ -33,7 +33,7 @@
 
 
     <p><%= f.text_field :indirizzo, :label => :field_indirizzo, :required => false, :size => 25  %></p>
-    <p><%= f.select :comune_id, (Comune.all.collect {|c| [c.name, c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_comune)  %></p>
+    <p><%= f.select :comune_id, (Comune.all( :include => [[ :province => :region ]], :order => 'name').collect {|c| [c.name_full, c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_comune)  %></p>
 
 
 </fieldset>

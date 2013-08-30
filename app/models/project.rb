@@ -936,7 +936,7 @@ class Project < ActiveRecord::Base
             <tr>
               <td width="505" valign="bottom" bgcolor="#ffffff" height="50">
                 <font style="font-family:Tahoma,Arial, Helvetica, sans-serif; font-size:12px; color:#333333; line-height:18px; font-weight: bold;">
-                Covenzione da: ' + usr.convention.ragione_sociale + '</font>
+                Convenzione da: ' + usr.convention.ragione_sociale + '</font>
 
               </td>
               <td width="55" valign="bottom" align="right">
@@ -1136,7 +1136,9 @@ class Project < ActiveRecord::Base
         </table>
         </td>
         </tr>
-        </table> '
+        </table>
+<h1 style="color:red;"> Utente id:[' + u.to_s + '] non trovato!</h1>
+'
 
       return s1+s2+s3+s4+s5
     else

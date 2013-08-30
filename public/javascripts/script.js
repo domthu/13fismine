@@ -227,7 +227,8 @@ jQuery(window).bind("resize", function () {
     if (typeof responsiveDesign !== "undefined" && responsiveDesign.isResponsive)
         return;
     var sheetLeft = jQuery(".fs-sheet").offset().left;
-    jQuery("header.fs-header #fs-flash-area").each(function () {
+    jQuery("header.fs-header #fs-flash").each(function () {
+    //jQuery("header.fs-header #fs-flash-area").each(function () {
         var object = jQuery(this);
         object.css("left", sheetLeft + "px");
     });

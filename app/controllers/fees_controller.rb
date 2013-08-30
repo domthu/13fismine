@@ -23,6 +23,7 @@ class FeesController < ApplicationController
   include ActionView::Helpers::DateHelper
   #undefined method `utc?' for Wed, 15 Oct 2008:Date  format_time --> format_date
   before_filter :set_menu
+<<<<<<< HEAD
   #selected  menu  fee
   menu_item :index, :only => [:index]
   menu_item :liste_utenti, :only => [:liste_utenti]
@@ -44,6 +45,10 @@ class FeesController < ApplicationController
         @menu_fs = :application_menu
     end
    end
+=======
+
+  # menu_item :menu_payment_fs, :only => [:pagamento, :invia_fatture, :email_fee, :invoice, :contract, :contract_per_user]
+>>>>>>> d3bbfc43057c7e171295756a5a42c91f0ae0583e
 
   def index
     #@msg[] << ""
@@ -414,6 +419,19 @@ class FeesController < ApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  def set_menu
+    a = self.action_name
+    case a
+      when 'index', 'liste_utenti', 'liste_utenti', 'associatii', 'paganti'
+        @menu_fs = :menu_fee_fs
+      when 'pagamento', 'fatture', 'email_fee', 'invia_fatture'
+        @menu_fs = :menu_payment_fs
+      else
+        @menu_fs = :application_menu
+    end
+    return a
   end
 
 end

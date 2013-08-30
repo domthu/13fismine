@@ -62,5 +62,5 @@ function js_flash(tipo, txt) {
   } else {
       s += '<p> <span class="' + tipo + '"></span>' + txt + '</p>'
   }
-  $("#fs-flash").html(s).focus();
+  $("#fs-flash").html(s).focus();  //la focus fa la show
 }

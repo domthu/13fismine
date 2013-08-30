@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en-EN" xmlns="http://www.w3.org/1999/html" xmlns:fb="https://www.facebook.com/2008/fbml">
 <head><!-- Created by DomThu & SPecchiaSoft -->
-   <meta charset="utf-8"/>
+  <meta charset="utf-8"/>
   <title>FiscoSport (v0.7.12 beta) <%= h html_title %></title>
   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 2.5, user-scalable = yes, width = device-width"/>
   <meta name="description" content="<%= Redmine::Info.app_name %>"/>
   <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="title" content="Professionisti esperti in materie fiscali sportive" />
-  <meta name="description" content="Visita il sito fiscosport per tenerti sempre aggiornato" />
+  <meta name="title" content="Professionisti esperti in materie fiscali sportive"/>
+  <meta name="description" content="Visita il sito fiscosport per tenerti sempre aggiornato"/>
   <link rel="image_src" type="image/jpeg" href="http://37.59.40.44:88/images/ico/fs.png"/>
   <%= csrf_meta_tag %>
   <%#<meta name="csrf-token" content="<%= form_authenticity_token % >" />
   <meta name="csrf-param" content="authenticity_token" />
   %>
   <%= favicon %>
-  <!--[if lt IE 9]>  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <!--[if lte IE 7]><%= stylesheet_link_tag 'style.ie7.css', :media => 'screen' %><![endif]-->
   <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
   <%# stylesheet_link_tag 'application_fs', :media => 'all' %>
-   <%= stylesheet_link_tag 'editorial', :media => 'print' %>
+  <%= stylesheet_link_tag 'editorial', :media => 'print' %>
   <!--   styles per il Front End  -->
   <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.css', :media => 'all' %>
   <%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
   <%#= javascript_heads %>
-  <%= javascript_include_tag "jquery.js"%>
+  <%= javascript_include_tag "jquery.js" %>
   <%= javascript_include_tag :ckeditor %>
   <%# javascript_include_tag "jquery/jquery-1.9.1.min.js" %>
   <%# javascript_include_tag "jquery/jquery-ui-1.8.23.custom.min.js" %>
@@ -45,93 +46,112 @@
 
   <script type="text/javascript">
       //$(function () {
-      $(document).ready(function() {
+      $(document).ready(function () {
           'use strict';
           $("#carousel_assos_js").carouFredSel({
-              items	 : 3,
-              scroll : {
-                  items			    : 3,
-                  easing			  : "elastic",
-                  duration		  : 2000,
-                  pauseOnHover	: true
+              items:3,
+              scroll:{
+                  items:3,
+                  easing:"elastic",
+                  duration:2000,
+                  pauseOnHover:true
               }
           });
           if ($("#carousel_tramenu_js").length > 0) {
-            $("#carousel_tramenu_js").carouFredSel({
-            	responsive	: true,
-            	scroll		: {
-            		fx			: "crossfade"
-            	},
-            	items		: {
-            		visible		: 1,
-            		width		: 290,
-            		height		: 94
-            	}
-            });
+              $("#carousel_tramenu_js").carouFredSel({
+                  responsive:true,
+                  scroll:{
+                      fx:"crossfade"
+                  },
+                  items:{
+                      visible:1,
+                      width:290,
+                      height:94
+                  }
+              });
           }
           if ($("#carousel_block_l_js").length > 0) {
-            $("#carousel_block_l_js").carouFredSel({
-            	height: 215,
-            	items: {
-            		visible: 1,
-            		start: "random",
-            		width: 256,
-            		height: 215
-            	},
-            	auto: {
-            		timeoutDuration: 3000,
-            		fx: "fade",
-            		duration: 2000
-            	},
-                pagination: "#block_l_js_pag",
-                keys: false
-            });
+              $("#carousel_block_l_js").carouFredSel({
+                  height:215,
+                  items:{
+                      visible:1,
+                      start:"random",
+                      width:256,
+                      height:215
+                  },
+                  auto:{
+                      timeoutDuration:3000,
+                      fx:"fade",
+                      duration:2000
+                  },
+                  pagination:"#block_l_js_pag",
+                  keys:false
+              });
           }
           //$("#assos_carousel").removeClass("hide");
           // $("input[type=submit]").button();
 
           //Focus
           //< %= javascript_tag "$('#username').focus();" %>
-         // if ($("#username").length > 0) {
-         //   $('#username').focus();
-         // }
+          // if ($("#username").length > 0) {
+          //   $('#username').focus();
+          // }
           //Scroll to top
-          $(window).scroll(function() {
-              if(jQuery(this).scrollTop() != 0) {
+          $(window).scroll(function () {
+              if (jQuery(this).scrollTop() != 0) {
                   jQuery('#toTop').fadeIn();
               } else {
                   jQuery('#toTop').fadeOut();
               }
           });
 
-          $('#toTop').click(function() {
-              jQuery('body,html').animate({scrollTop:0},800);
-          });
-          if ($('#fs-flash').html().trim().length > 0) {
-              $('#fs-flash').show();
-              setTimeout(function() {
-              $('#fs-flash').fadeOut(2400);
-          }, 6000);
-          };
-          $('#fs-flash').focus(function() {
-              $('#fs-flash').show();
-              setTimeout(function() {
-                  $('#fs-flash').fadeOut(2400);
-              }, 6000);
+          $('#toTop').click(function () {
+              jQuery('body,html').animate({scrollTop:0}, 800);
           });
 
-          $('.x-white').addGlow({ textColor: 'white', haloColor: '#aaa', radius: 100 });
-          $('.x-blue').addGlow({ textColor: '#00f', haloColor: '#00f', radius: 100, duration: 200 });
-          $('.x-yellow').addGlow({ textColor: '#F8DA00', haloColor: '#F8DA00', radius: 10, duration: 200 });
-          $('.x-red').addGlow({ textColor: '#f00', haloColor: '#f00', radius: 100 });
-          $('.x-granata').addGlow({ textColor: '#a03823', haloColor: '#a03823', radius: 100 });
-          $('.x-yellow2').addGlow({ textColor: '#000', haloColor: '#F8DA00', radius: 5, duration: 300 });
-          $('.x-yellow3').addGlow({ textColor: '#000', haloColor: '#F8DA00', radius: 10, duration: 300 });
+          if ($('#fs-flash').html().trim().length > 0) {
+            var fclass = $('#flashme').html()
+            $('#fs-flash').dialog({bgiframe: true, dialogClass: fclass, resizable: true, draggable: true, modal: true, height: 334, width: 450, autoOpen:true, show: 'fade'});
+            $('#fs-flash').dialog('open');
+            setTimeout(function() {
+              $('#fs-flash').fadeOut(4000, function () {
+                   $('#fs-flash').dialog("destroy")
+               });
+            }, 10000);
+          };
+          //focus via javascript during ajax response
+          $('#fs-flash').focus(function () {
+              $('#fs-flash').show();
+              setTimeout(function () {
+                  $('#fs-flash').fadeOut(2400);
+              }, 10000);
+          });
+          /*          if ($('#fs-flash').html().trim().length > 0) {
+           $('#fs-flash').show();
+           setTimeout(function() {
+           $('#fs-flash').fadeOut(2400);
+           }, 6000);
+           };
+           $('#fs-flash').focus(function() {
+           $('#fs-flash').show();
+           setTimeout(function() {
+           $('#fs-flash').fadeOut(2400);
+           }, 6000);
+           });
+           */
+
+          $('.x-white').addGlow({ textColor:'white', haloColor:'#aaa', radius:100 });
+          $('.x-blue').addGlow({ textColor:'#00f', haloColor:'#00f', radius:100, duration:200 });
+          $('.x-yellow').addGlow({ textColor:'#F8DA00', haloColor:'#F8DA00', radius:10, duration:200 });
+          $('.x-red').addGlow({ textColor:'#f00', haloColor:'#f00', radius:100 });
+          $('.x-granata').addGlow({ textColor:'#a03823', haloColor:'#a03823', radius:100 });
+          $('.x-yellow2').addGlow({ textColor:'#000', haloColor:'#F8DA00', radius:5, duration:300 });
+          $('.x-yellow3').addGlow({ textColor:'#000', haloColor:'#F8DA00', radius:10, duration:300 });
       });
   </script>
   <!-- page specific tags -->
   <%= yield :header_tags -%>
-    <!-- end page specific tags -->
+  <!-- end page specific tags -->
 </head>
 <body>
 <div id="fs-main">
@@ -160,13 +180,17 @@
     <nav class="fs-menu2-nav clearfix">
       <%= render_navigation(:level => 2..3, :expand_all => true) %>
     </nav>
-    <div id="fs-flash" style="display:none;"><% flash.each do |key,msg| %>
-       <p> <span class='<%= key.to_s %> '> </span>  <%= msg %> </p>
-    <% end %></div>
+    <div id="fs-flash" style="display:none;">
+      <% flash.each do |key, msg| %>
+          <p><span class='<%= key.to_s %>'> </span>  <%= msg %> </p>
+          <div> <% @f = key.to_s  %></div>
+      <% end %>
+    </div>
+    <div id="flashme" style="display:none;">  <%= @f  %>-dialog</div>
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">
-          <%= yield %>
+                    <%= yield %>
         </div>
       </div>
     </div>

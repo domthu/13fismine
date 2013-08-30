@@ -1,7 +1,5 @@
 <h2><%= link_to l(:label_top_section_plural), top_sections_path %> &#187; <%= h(@top_section) %></h2>
 <% labelled_form_for @top_section, :html => {:multipart => true} do |f| %>
     <%= render :partial => 'form', :locals => {:f => f} %>
-    <div id="buttons-inline">
-      <%= submit_tag l(:button_save) %> <%= button_to "Annulla",'/top_sections/' + @top_section.id.to_s %>
-    </div>
+    <div class="btn-footer">   <%= submit_tag l(:button_save),:class=>'button-blu' %>  </div>
 <% end %>

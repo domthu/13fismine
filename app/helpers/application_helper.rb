@@ -186,6 +186,7 @@ module ApplicationHelper
     #raw(truncate(text.to_s, :length => 120)).gsub(/[\r\n]+/, "<br />").html_safe
     h(truncate(text.to_s, :length => 120).gsub(%r{[\r\n]*<(pre|code)>.*$}m, '...')).gsub(/[\r\n]+/, "<br />")
   end
+
   def format_activity_description(text_html)
   end
 
@@ -1226,64 +1227,72 @@ module ApplicationHelper
     GroupBanner.banners_tramenu
   end
 
-  def art_image(articolo = nil, taglia = :l)
+  def art_image(articolo = nil, taglia = :l, options={})
+    nl= options[:newsletter].present?
     if  !articolo.image_file_name.nil?
       if !articolo.image.file?
         return "/images/articoli/" + taglia.to_s + "_art-no-image.jpg"
       else
-        return articolo.image.url(taglia)
+        return nl ? "/images/" + articolo.image.url(taglia) : articolo.image.url(taglia)
       end
-    elsif !articolo.section.image_file_name.nil?
+    end
+    if !articolo.section.image_file_name.nil?
       if !articolo.section.image.file?
         return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
       else
-        return articolo.section.image.url(taglia)
+        return nl ? '/images/' + articolo.section.image.url(taglia) : articolo.section.image.url(taglia)
       end
-    elsif !articolo.top_section.image_file_name.nil?
+    end
+    if !articolo.top_section.image_file_name.nil?
       if !articolo.top_section.image.file?
         return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
       else
-        return articolo.top_section.image.url(taglia)
+        return nl ? '/images/' + articolo.top_section.image.url(taglia) : articolo.top_section.image.url(taglia)
       end
-    else
-      return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
     end
+    "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
   end
 
 
   # per l'icona dell'organismo convenzionato
   def user_myasso_icon(user = nil, taglia = :l, options={})
+    nl=options[:newsletter].present?
     if user.canbackend? || user.admin?
-      return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
+     # return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
     end
-    if user.convention
-      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/assos/#{user.convention.image_file_name}") == false)
+    if user.convention && !user.convention.image_file_name.nil?
+      if !user.convention.image.file?
         return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
       else
-        return user.convention.image.url(taglia)
+        return nl ? "/images/" + user.convention.image.url(taglia) : user.convention.image.url(taglia)
       end
-    elsif user.cross_organization
-      if (FileTest.exists?("#{RAILS_ROOT}/public/images/commons/organizations/#{user.cross_organization.image_file_name}") == false)
+    end
+    if user.cross_organization && !user.cross_organization.image_file_name.nil?
+      if !user.cross_organization.image.file?
         return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
       else
-        return user.cross_organization.image.url(taglia)
+        return nl ? "/images/" + user.cross_organization.image.url(taglia) : user.cross_organization.image.url(taglia)
       end
-    else
-      return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
     end
-
+    "/images/commons/" + taglia.to_s + "_fs-no-image.png"
   end
 
+
   def user_myasso_text(user = nil)
-    if user.canbackend? || user.admin?
-      return "Staff di Fiscosport"
+    unless user.nil?
+      s= 'role_' + user.role_id.to_s
+      if user.canbackend? || user.admin?
+      #  return '&nbsp;' + l(s.to_sym)
+      end
+      if user.convention
+        return user.convention.ragione_sociale
+      end
+      if user.cross_organization
+        return user.cross_organization.name
+      end
+      return '&nbsp;' + l(s.to_sym)
     end
-    str = (user.cross_organization) ? "<br />Affiliato: " + user.cross_organization.name : ""
-    if user.convention
-      return user.convention.name + str
-    else
-      return "Abbonamento privato" + str
-    end
+    ""
   end
 
 
@@ -1294,34 +1303,6 @@ module ApplicationHelper
   #icon_for:  stampa solo l'icona ,  per il get icona usare @user.uicon() oppure settare da un parametro accettato come : admin + man  +auth + vip + abbo +reg +renew +exp  + arc
 
 
-  def user_role_iconized(usr = nil, params={})
-    t = params[:size].to_s
-    txt = params[:text].to_s
-    ico = params[:icon_for].to_s
-
-
-    if usr.nil? && ico.nil?
-      ico = 'question'
-    end
-    s = ""
-    unless usr.nil?
-      if  !txt.nil?
-        s = '<div class="user-role-icon-' + t + '"><span class="' + t + '-' + ico + '"></span><p>' + txt + '</p></div>'
-      else
-        s = '<div class="user-role-icon-only-' + t + '"><span class=' + t + '-' + ico +'></span></div >'
-      end
-      return s
-    end
-
-    unless ico.nil?
-      if !txt.nil?
-        s = '<div class="user-role-icon-' + t + '"><span class=' + t + '-' + ico +'></span><p>' + txt + '</p></div>'
-      else
-        s = '<div class="user-role-icon-' + t + '"><span class=' + t + '-' + ico +'></span></div >'
-      end
-      return s
-    end
-  end
   def user_role_iconized(usr = nil, params={})
     t = params[:size].to_s
     txt = params[:text].to_s
@@ -1363,16 +1344,8 @@ module ApplicationHelper
   def link_to_content_update(text, url_params = {}, html_options = {})
     link_to(text, url_params, html_options)
   end
-end
-#  def link_to_content_update(text, url_params = {}, html_options = {}, path_prefix=nil)
-#    if path_prefix.nil?
-#      link_to(text, url_params, html_options)
-#    else
-#      #'*' + path_prefix + '*' + link_to_articoli(text, path_prefix.merge(url_params), html_options)
-#      '*' + path_prefix + '*' + link_to(text, url_for, html_options)
-#    end
-#  end
 
+end
 
 def smart_truncate(text, char_limit)
   text = text.squish

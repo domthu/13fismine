@@ -47,6 +47,7 @@
                             //OnSuccess
                             if (data.response) {
                                 js_flash("success", data.response);
+                                setTimeout("fs_reload()", 5000);
                             }
                         } else {
                           //Onerror
@@ -61,7 +62,12 @@
         }
         return false;
     }
-
+    function fs_reload() {
+      //var btnid = $('#editoriale a').id;
+      //javascript:__doPostBack(btnid,'');
+      $('#editoriale a').click(); //non funziona?
+      javascript:__doPostBack('editoriale','');
+    }
 </script>
 
 <p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">Prova la newsletter gratis per <%= Setting.register_days %>

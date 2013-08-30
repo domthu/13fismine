@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_profiles
   map.resources :reservations
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "lost_password"
+#rake routes | grep -r "my_profile"
   map.resources :top_menus
   map.resources :contract_users
   map.resources :contracts

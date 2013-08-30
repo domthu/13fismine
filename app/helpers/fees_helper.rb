@@ -58,7 +58,7 @@ end
 
 module FeesHelper
   include ActionView::Helpers::DateHelper
-  #include ApplicationHelper   NO utc? in format_time
+  include ApplicationHelper   #NO utc? in format_time
   #include UsersHelper #def change_status_link(user)   #Kappao cyclic include detected
   #per traduzione l(:role_author) --> undefined method `l'
 
@@ -405,15 +405,15 @@ module FeesHelper
 
     if data_scadenza.nil? || !data_scadenza.is_a?(Date)
         #  FeeConst::ROLE_EXPIRED        = 6  #_usr.data_scadenza < today
-        str << ", <b style='color:red'>Scadenza "
+        str << ", <b style='color:black'> Scadenza "
         if (data_scadenza.nil?)
           str << " NULL["
         else
-          str << " DATA?" << data_scadenza << "["
+          str << " Data elaborata " << data_scadenza.strftime("%Y-%m-%d") << " ["
         end
-        str << "asso.id: " << (_usr.convention_id.nil? ? "" : ("(" << _usr.convention_id.to_s << ")--> " << ((_usr.convention.nil? || _usr.convention.scadenza.nil?) ? "/user.scadenza" : _usr.convention.scadenza.to_s)))
-        str << "/user.data: " << (_usr.data.nil? ? "" : _usr.data.to_s)
-        str << "/user.datascadenza" << (_usr.datascadenza.nil? ? " " : _usr.datascadenza.to_s)
+        str << "convention " << (_usr.convention_id.nil? ? " -no- " : ("(" << _usr.convention_id.to_s << ") " << ((_usr.convention.nil? || _usr.convention.scadenza.nil?) ? " scadenza " : _usr.convention.scadenza.strftime("%Y-%m-%d"))))
+        str << "/user datascadenza: " << (_usr.datascadenza.nil? ? " null " : _usr.datascadenza.to_s)
+        str << " (dal " << (_usr.data.nil? ? " null " : _usr.data.to_s)  << ")"
         str << "]</b>"
         str << ensure_role(_usr, FeeConst::ROLE_EXPIRED)
     else
@@ -444,8 +444,25 @@ module FeesHelper
     str = " [Ruolo da " + oldrole.to_s + " a " + nextroleid.to_s + "] "
     if _usr.role_id.nil? || ( oldrole != nextroleid )
       _usr.role_id = nextroleid
-      _usr.save  #Kappao _usr.save()
-      str << "<span class='" << get_role_css(User.find(_usr.id)) << "'> modificato ruolo!</span>"
+      #_usr.save  #Kappao _usr.save()
+      if !_usr.valid?
+        if !_usr.errors.empty? && _usr.errors.any?
+          #@errors += @user.errors.join(', ') undefined method join
+          if _usr.errors.full_messages
+            str << "Errore incontrate: " << _usr.errors.full_messages.join('<br />')
+          else
+            str << "Errore incontrate: " << _usr.errors.join('<br />')
+          end
+        else
+          str << "<span class='red " << get_role_css(User.find(_usr.id)) << "'> NON MODIFICATO!</span>"
+        end
+      else
+        if _usr.save  #Kappao _usr.save()
+          str << "<span class='" << get_role_css(User.find(_usr.id)) << "'> modificato ruolo!</span>"
+        else
+          str << "<span class='red " << get_role_css(User.find(_usr.id)) << "'> NON SALVATO!</span>"
+        end
+      end
     else
       str << " == Ruolo non cambiato"
     end
