@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class PreviewsController < ApplicationController
-  before_filter :find_project, :except =>   [:newsletter]
+  before_filter :find_project, :except =>   [:newsletter, :norole]
   before_filter :find_user_project, :only =>   [:newsletter]
 
   def issue
@@ -56,6 +56,11 @@ class PreviewsController < ApplicationController
   def news
     @text = (params[:news] ? params[:news][:description] : nil)
     render :partial => 'common/preview'
+  end
+
+  def norole
+    @users = User.all(:conditions => {:role_id => nil || 2})
+    render :layout => false, :partial => 'fees/users_unassigned'
   end
 
   private

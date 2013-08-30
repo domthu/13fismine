@@ -602,6 +602,7 @@ it:
   label_download: "%{count} Download"
   label_download_plural: "%{count} Download"
   label_no_data: Non ci sono informazioni disponibili
+  label_no_user: Non ci sono utenti
   label_change_status: Cambia stato
   label_history: Cronologia
   label_attachment: File
@@ -1389,6 +1390,7 @@ it:
   label_referee_list_conventions: Responsabile della convenzione
   label_have_referee: Ha responsabilità?
   field_codice: (old) Codice
+  field_codice_abbr: Code
   field_pwd: (old) Password
   field_login_fisco: (old) login FISCOSPORT
   field_mail_fisco: (old) email FISCOSPORT
@@ -1486,6 +1488,7 @@ it:
   thanks: Pagamento ricevuto, grazie
   asso: Conferma registrazione nuovo membro convenzionato
   renew: Rinnova abbonamento
+  label_list_user_no_role: lista utenti senza ruoli
 
 #Application menu FS
 #18, 'Comunicati stampa', 0

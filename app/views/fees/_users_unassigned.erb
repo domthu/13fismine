@@ -1,0 +1,36 @@
+<% if @users.any? %>
+    <%= l(:label_total) %>:<strong class="total center"><%= h @users.count %></strong>
+    <table class="list users">
+      <thead>
+      <th style="text-align:left;"><%= l(:field_id) %></th>
+      <th style="text-align:left;"><%= l(:label_user) %></th>
+      <th style="text-align:left;"><%= l(:field_codice_abbr) %></th>
+      <th style="text-align:left;"><%= l(:field_due_date) %></th>
+      <th style="text-align:left;"><%= l(:field_mail) %></th>
+      </thead>
+      <tbody>
+      <% @users.sort_by(&:lastname).sort_by(&:codice).each do |user| %>
+          <tr id="user-<%= user.id %>">
+            <td>
+              <%= user.id.to_s %>
+            </td>
+            <td>
+              <%= link_to_user(user, {:target => "_blank", :class => 'icon icon-preview'}) unless User.current.admin? %>
+              <%= link_to(h(user), edit_user_path(:id => user), {:target => "_blank", :class => 'icon icon-preview'}) unless !User.current.admin? %>
+            </td>
+            <td>
+              <%= user.codice.to_s unless user.codice.nil? %>
+            </td>
+            <td>
+              <%= format_date(user.scadenza) unless user.scadenza.nil? %>
+            </td>
+            <td class="email">
+              <%= mail_to(h(user.mail)) %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <p class="nodata"><%= l(:label_no_user) %></p>
+<% end %>

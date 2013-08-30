@@ -172,11 +172,13 @@
     </blockquote>
   </fieldset>
   <br/>
+
   <fieldset class="box tabular">
     <legend>Utenti senza ruolo: <b><%= @num_no_role %></b></legend>
     <% form_tag({:action => 'index', :verify => 1}, :class => "tabular") do %>
-        <br/> &nbsp;<br/>
+        <br/> &nbsp;
         <%= submit_tag l(:button_verify) %>
+        <br/>
     <% end %>
     <% if !@msg.nil? && @msg.any? %>
         <%= l(:results) %>
@@ -190,5 +192,20 @@
         </div>
         <br/>
     <% end %>
+
+    <%if @num_no_role > 0 %>
+    <br/>
+    <%= link_to_remote l(:label_list_user_no_role),
+                       {:url => unassigned_users_path,
+                        :method => 'get',
+                        :update => 'unassigned_preview',
+                        :complete => "Element.scrollTo('unassigned_preview')"
+                       }, :accesskey => accesskey(:preview)
+    %>
+    <div id="unassigned_preview" class="">
+      Cliccare su '<%= l(:label_list_user_no_role) %>' per vedere la lista degli utenti senza assegnazione.
+    </div>
+    <% end %>
+
   </fieldset>
 </div>
