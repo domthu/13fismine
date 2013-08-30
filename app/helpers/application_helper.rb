@@ -1,11 +1,11 @@
 require 'forwardable'
 require 'cgi'
-
+require "erb"
 module ApplicationHelper
   include Redmine::WikiFormatting::Macros::Definitions
   include Redmine::I18n
   include GravatarHelper::PublicMethods
-
+  include ERB::Util
   extend Forwardable
   def_delegators :wiki_helper, :wikitoolbar_for, :heads_for_wiki_formatter
 
@@ -44,6 +44,14 @@ module ApplicationHelper
     end
   end
 
+  def fburl(articolo)
+    "http://www.facebook.com/sharer.php?s=100&p[title]=#{ERB::Util.url_encode(articolo.subject)
+    }&p[summary]=#{ERB::Util.url_encode(smart_truncate(articolo.summary, 30))
+    }&p[url]=#{ERB::Util.url_encode(link_to_articolo(articolo, :only_path => false))
+    }&p[images][0]=#{ERB::Util.url_encode(art_image(articolo, :s))}"
+
+  end
+
   def link_to_articolo(articolo, options={})
     title = options[:title] || " "
     classe = options[:class] || " "
@@ -53,7 +61,7 @@ module ApplicationHelper
       if articolo.is_convegno?
         return url_for(:controller => 'editorial', :action => 'evento', :id => articolo.id.to_s, :only_path => false, :slug => h(truncate(articolo.subject, :length => 125).to_slug))
       else
-        return url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug))
+        return url_for(:controller => 'editorial', :action => "articolo", :only_path => false, :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug))
       end
     else
       if articolo.is_convegno?
@@ -1228,61 +1236,60 @@ module ApplicationHelper
   end
 
   def art_image(articolo = nil, taglia = :l, options={})
-    nl= options[:newsletter].present?
+    op = options[:only_path].present?
+    pre = "http://#{Setting.host_name}/images/"
+    no_img = (op ? "#{pre}articoli/#{taglia.to_s}_art-no-image.jpg" : "/images/articoli/#{taglia.to_s}_art-no-image.jpg")
     if  !articolo.image_file_name.nil?
       if !articolo.image.file?
-        return "/images/articoli/" + taglia.to_s + "_art-no-image.jpg"
+        return no_img
       else
-        return nl ? "/images/" + articolo.image.url(taglia) : articolo.image.url(taglia)
+        return op ? pre + articolo.image.url(taglia) : articolo.image.url(taglia)
       end
     end
     if !articolo.section.image_file_name.nil?
       if !articolo.section.image.file?
-        return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
+        return no_img
       else
-        return nl ? '/images/' + articolo.section.image.url(taglia) : articolo.section.image.url(taglia)
+        return op ? pre + articolo.section.image.url(taglia) : articolo.section.image.url(taglia)
       end
     end
     if !articolo.top_section.image_file_name.nil?
       if !articolo.top_section.image.file?
-        return "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
+        return no_img
       else
-        return nl ? '/images/' + articolo.top_section.image.url(taglia) : articolo.top_section.image.url(taglia)
+        return op ? pre + articolo.top_section.image.url(taglia) : articolo.top_section.image.url(taglia)
       end
     end
-    "/images/commons/" + taglia.to_s + "_art-no-image.jpg"
+    no_img
   end
-
 
   # per l'icona dell'organismo convenzionato
   def user_myasso_icon(user = nil, taglia = :l, options={})
-    nl=options[:newsletter].present?
-    if user.canbackend? || user.admin?
-     # return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
-    end
+    op = options[:only_path].present?
+    pre = "http://#{Setting.host_name}/images/"
+    no_img = (op ? "#{pre}commons/#{taglia.to_s}_fs-no-image.png" : "/images/commons/#{taglia.to_s}_fs-no-image.png")
     if user.convention && !user.convention.image_file_name.nil?
       if !user.convention.image.file?
-        return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
+        return no_img
       else
-        return nl ? "/images/" + user.convention.image.url(taglia) : user.convention.image.url(taglia)
+        return op ? pre + user.convention.image.url(taglia) : user.convention.image.url(taglia)
       end
     end
     if user.cross_organization && !user.cross_organization.image_file_name.nil?
       if !user.cross_organization.image.file?
-        return "/images/commons/" + taglia.to_s + "_fs-no-image.png"
+        return no_img
       else
-        return nl ? "/images/" + user.cross_organization.image.url(taglia) : user.cross_organization.image.url(taglia)
+        return op ? pre + user.cross_organization.image.url(taglia) : user.cross_organization.image.url(taglia)
       end
     end
-    "/images/commons/" + taglia.to_s + "_fs-no-image.png"
+    no_img
   end
-
 
   def user_myasso_text(user = nil)
     unless user.nil?
       s= 'role_' + user.role_id.to_s
       if user.canbackend? || user.admin?
-      #  return '&nbsp;' + l(s.to_sym)
+        #  return '&nbsp;' + l(s.to_sym)
       end
       if user.convention
         return user.convention.ragione_sociale
@@ -1295,14 +1302,11 @@ module ApplicationHelper
     ""
   end
 
-
   #nel be mette l'icona ecco i parametri :
   #usr utente , parametro obbligatorio occorre sempre per primo
   #size: l per large 50px  :s per small 25px
   #text = la didascalia se omesso prende iol nome dell'utente
   #icon_for:  stampa solo l'icona ,  per il get icona usare @user.uicon() oppure settare da un parametro accettato come : admin + man  +auth + vip + abbo +reg +renew +exp  + arc
-
-
   def user_role_iconized(usr = nil, params={})
     t = params[:size].to_s
     txt = params[:text].to_s

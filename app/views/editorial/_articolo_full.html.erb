@@ -27,7 +27,17 @@
                    </div>
                    <div class='fs-social'>
                      <div class='fs-social-fb '>
-                       <a href="<%=	 fburl(articolo) %>" target="_blank" >
+                       <%
+
+
+                          @fb =     "http://www.facebook.com/sharer.php?s=100&p[title]=#{ERB::Util.url_encode(smart_truncate(articolo.subject,10))
+                           }&p[summary]=#{ERB::Util.url_encode(smart_truncate(articolo.summary,10))
+                           }&p[url]=#{link_to_articolo(articolo,:only_path => false ).to_s
+                           }&p[images][0]=#{ERB::Util.url_encode(art_image(articolo,:s))}"
+                        %>
+
+                       <a href="<%=	@fb  %>">
+                      <!-- <a href="<%=	 fburl(articolo) %>" target="_blank" >  -->
                          <%= image_tag "ico/fb-share.jpg" %>    </a>
                      </div>
                      <div class='fs-social-tw '>
@@ -62,6 +72,9 @@
     <div class="clearfix">&nbsp; <br/></div>
     <div class="fs-layout-cell layout-item-1">
       <div id="fs-articolo-full ">
+        <p><%=	@fb  %></p>
+            <p style="color: red; background-color: #b22222;"><%= link_to_articolo(articolo, :only_path => false , :protocol => 'http').to_s %></p>
+        <p style="color: red; background-color: #b22222;"><%= ERB::Util.url_encode(art_image(articolo,:s)).to_s %></p>
         <%= raw(articolo.description) %>
         <br/>
       </div>

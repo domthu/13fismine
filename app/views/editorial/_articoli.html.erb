@@ -12,7 +12,6 @@
                <% else	  %>
                     <span class="fs-art-sezione fs-art-sez-ok fs-art-ok">&nbsp;<%= articolo.section.full_name %></span>
                   <span class="fs-postdateicon fs-art-ok" style="float:right;"><%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
-
                     <%end%>
                 <h5 class="fs-postheader">
                   <%=   link_to_articolo(articolo, :title=> articolo.subject ) %>
