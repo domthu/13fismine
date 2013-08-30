@@ -248,7 +248,7 @@ class User < Principal
         self.role_id = FeeConst::ROLE_RENEW
         if save
           #send email to invite renew? Macristina
-          flash[:notice] = "Il tuo abbonamento scade a breve: " + distance_of_date_in_words(Time.now, self.scadenza) + "<br />  <strong>Rinnovalo</strong>"
+          # --> kappao flash[:notice] = "Il tuo abbonamento scade a breve: " + distance_of_date_in_words(Time.now, self.scadenza) + "<br />  <strong>Rinnovalo</strong>"
         end
       end
     end
@@ -259,7 +259,7 @@ class User < Principal
           #TODO send email to re-fee
           Mailer.deliver_account_information(self, self.password)
           Mailer.fee(self, 'renew', Setting.template_fee_renew)
-          flash[:notice] = "Il tuo abbonamento è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati di nuovo</strong>"
+          # --> kappao flash[:notice] = "Il tuo abbonamento è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati di nuovo</strong>"
         end
       end
     end
@@ -268,7 +268,7 @@ class User < Principal
         self.role_id = FeeConst::ROLE_EXPIRED
         if save
           #TODO send email to re-fee
-          flash[:notice] = "Il tuo periodo di prova è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati</strong>"
+          # --> kappao flash[:notice] = "Il tuo periodo di prova è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati</strong>"
         end
       end
     end
@@ -349,7 +349,7 @@ class User < Principal
 
     #Control content if public
     if issue && !issue.se_visible_web?
-      flash[:notice] = "Articolo ancora non in linea. A breve verrà reso disponibile."
+      # --> kappao flash[:notice] = "Articolo ancora non in linea. A breve verrà reso disponibile."
       return false
     end
 
@@ -622,18 +622,20 @@ class User < Principal
 
   # Returns the user that matches provided login and password, or nil
   def self.try_to_login(login, password)
+    # --> kappao flash[:error] = l(:notice_account_unactive)
     # Make sure no one can sign in with an empty password
     return nil if password.to_s.empty?
     user = find_by_login(login)
     if user
       # user is already in local database
-      return nil if !user.active?
+      if !user.active?
+        # --> kappao flash[:error] = l(:notice_account_unactive)
+        return nil
+      end
       if user.auth_source
-        #puts '**********************try_to_login by auth_source(' + login + ', ' + password + ')********************'
         # user has an external authentication method
         return nil unless user.auth_source.authenticate(login, password)
       else
-        #puts '**********************try_to_login by check_password(' + login + ', ' + password + ')********************'
         # authentication with local password
         return nil unless user.check_password?(password)
       end

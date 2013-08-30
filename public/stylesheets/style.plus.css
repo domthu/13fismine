@@ -2049,21 +2049,23 @@ h3.fs-postheader {
 /* ===================  zona riservata    SOTTO MENU E BOTTONI E COMMONS ================= */
 /* ======================================================================================= */
 #fs-flash {
-    background: url('/images/commons/flash-bg.jpg') repeat-x;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    -webkit-box-shadow: 0 0 3px 2px rgb(255, 206, 11);
-    -moz-box-shadow: 0 0 3px 2px rgb(255, 206, 11);
-    box-shadow: 0 0 3px 2px rgb(255, 206, 11);
-    text-shadow: 0 0 6px rgb(255, 70, 0);
-    width: 70%;
-    min-height: 75px;
-    margin: 4px 2px;
-    position: absolute;
-    z-index: 10;
-    vertical-align: middle;
-
+  /*background: url('/images/commons/flash-bg.jpg') repeat-x;*/
+  background-color: #3E3D3B; /* Sandro: meglio blu? #006184; notice*/
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 3px 2px rgb(255, 206, 11);
+  -moz-box-shadow: 0 0 3px 2px rgb(255, 206, 11);
+  box-shadow: 0 0 3px 2px rgb(255, 206, 11);
+  text-shadow: 0 0 6px rgb(255, 70, 0);
+  width: auto;
+  min-height: 75px;
+  margin: 0;
+  padding: 20px;
+  position: absolute;
+  z-index: 101;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 #fs-flash p {
@@ -2077,8 +2079,11 @@ h3.fs-postheader {
     vertical-align: middle;
 
 }
-
-
+#fs-flash p span.notice {
+  border: 1px solid red;
+  height: 50px;
+  width: 60px;
+}
 /* altri  allarmi note */
 .fs-flash-in {
     font-weight: bold;
@@ -2092,7 +2097,7 @@ h3.fs-postheader {
     border-bottom: solid 1px #e0ffff;
 }
 .notice-in {
-     background: url('/images/ico/flash_notice_s.png') center left no-repeat;
+  background: url('/images/ico/flash_notice_s.png') center left no-repeat;*/
  }
 .error-in {
     background: url('/images/ico/flash_error_s.png') center left no-repeat;

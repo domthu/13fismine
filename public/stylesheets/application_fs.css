@@ -224,8 +224,6 @@ a img{ border: 0; }
 
 a.issue.closed, a.issue.closed:link, a.issue.closed:visited { color: #999; text-decoration: line-through; }
 
-
-
 /***** Flash & error messages ****/
 #errorExplanation, div.flash, .nodata, .warning {
     padding: 4px 4px 4px 30px;

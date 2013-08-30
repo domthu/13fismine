@@ -109,8 +109,21 @@
               jQuery('body,html').animate({scrollTop:0}, 800);
           });
 
+          //auto hide when clicking
+          $('#fs-flash').click(function () {
+            $('#fs-flash').fadeOut(2400);
+          });
+          //focus via javascript during ajax response
+          $('#fs-flash').focus(function () {
+              $('#fs-flash').center_me().show();
+              setTimeout(function () {
+                  $('#fs-flash').fadeOut(2400);
+              }, 10000);
+          });
+
           if ($('#fs-flash').html().trim().length > 0) {
-            var fclass = $('#flashme').html()
+          /*  var fclass = $('#flashme').html()
+
             $('#fs-flash').dialog({bgiframe: true, dialogClass: fclass, resizable: true, draggable: true, modal: true, height: 334, width: 450, autoOpen:true, show: 'fade'});
             $('#fs-flash').dialog('open');
             setTimeout(function() {
@@ -118,14 +131,10 @@
                    $('#fs-flash').dialog("destroy")
                });
             }, 10000);
+          */
+            $('#fs-flash').focus();
           };
-          //focus via javascript during ajax response
-          $('#fs-flash').focus(function () {
-              $('#fs-flash').show();
-              setTimeout(function () {
-                  $('#fs-flash').fadeOut(2400);
-              }, 10000);
-          });
+
           /*          if ($('#fs-flash').html().trim().length > 0) {
            $('#fs-flash').show();
            setTimeout(function() {
@@ -212,4 +221,3 @@
 </div>
 
 </body>
-</html>

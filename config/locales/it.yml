@@ -971,7 +971,7 @@ it:
   status_active: attivo
   status_registered: registrato
   status_locked: bloccato
-
+  notice_account_unactive: "Utente presente ma non attivo. Contattare l'amministratore"
 
   version_status_open: aperta
   version_status_locked: bloccata

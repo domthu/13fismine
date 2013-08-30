@@ -464,7 +464,11 @@ class AccountController < ApplicationController
 
   def invalid_credentials
     logger.warn "Failed login for '#{params[:username]}' from #{request.remote_ip} at #{Time.now.utc}"
-    flash.now[:error] = l(:notice_account_invalid_creditentials)
+    if flash[:error].nil?
+      flash.now[:error] = l(:notice_account_invalid_creditentials)
+    else
+      flash[:error] += '<br />aaaaaaaaaaaa' + l(:notice_account_invalid_creditentials)
+    end
   end
 
   # Register a user for email activation.

@@ -62,5 +62,11 @@ function js_flash(tipo, txt) {
   } else {
       s += '<p> <span class="' + tipo + '"></span>' + txt + '</p>'
   }
-  $("#fs-flash").html(s).focus();  //la focus fa la show
+  $("#fs-flash").html(s).focus();  //la focus fa la show e il center_me
+}
+jQuery.fn.center_me = function () {
+    this.css("position","absolute");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+    return this;
 }
