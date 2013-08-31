@@ -2080,7 +2080,7 @@ h3.fs-postheader {
 
 }
 #fs-flash p span.notice {
-  border: 1px solid red;
+  /*border: 1px solid red;*/
   height: 50px;
   width: 60px;
 }
@@ -2097,7 +2097,7 @@ h3.fs-postheader {
     border-bottom: solid 1px #e0ffff;
 }
 .notice-in {
-  background: url('/images/ico/flash_notice_s.png') center left no-repeat;*/
+  background: url('/images/ico/flash_notice_s.png') center left no-repeat;
  }
 .error-in {
     background: url('/images/ico/flash_error_s.png') center left no-repeat;

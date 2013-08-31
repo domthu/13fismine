@@ -667,7 +667,7 @@ class EditorialController < ApplicationController
   end
 
   def correct_user_profile
-    return reroute_log() unless (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user)
+    return reroute_log('correct_user_profile') unless (User.current.admin? || User.current.ismanager? || User.current == @user_profile.user)
   end
 
   def find_quesito_fs
@@ -684,7 +684,7 @@ class EditorialController < ApplicationController
   end
 
   def correct_user_quesito
-    return reroute_log() unless (User.current.admin? || User.current.ismanager? || User.current == @quesito_news.author)
+    return reroute_log('correct_user_quesito') unless (User.current.admin? || User.current.ismanager? || User.current == @quesito_news.author)
   end
 
   def find_optional_project
@@ -696,7 +696,7 @@ class EditorialController < ApplicationController
   end
 
   def find_articolo
-    return reroute_log() unless !params[:article_id].nil?
+    return reroute_log('find_articolo') unless !params[:article_id].nil?
     @id = params[:article_id].to_i
     @articolo= Issue.all_public_fs_full.find(@id)
   rescue ActiveRecord::RecordNotFound
@@ -711,15 +711,19 @@ class EditorialController < ApplicationController
     #render_404
   end
 
-  def reroute_log()
-    flash[:notice] = "Per accedere al contenuto devi essere autenticato <br /> Fai il login per favore... Se non hai abbonamento, registrati ora!"
+  def reroute_log(who)
+    #"<b>" + who + "</b>
+    flash[:notice] =  "Per accedere al contenuto devi essere autenticato <br /> Fai il login per favore... Se non hai abbonamento, registrati ora!"
     #redirect_to(signin_path)
     redirect_to(page_abbonamento_path)
   end
 
-  #definisce se l'utente è loggato o no
+  #definisce se l'utente è loggato o no, se no verifica che l'articolo è pubblico
   def correct_user_article
-    reroute_log() unless (User.current.logged?)
+    if (!User.current.logged? && (@articolo.se_protetto || !@articolo.se_visible_web))
+      return reroute_log('correct_user_article')
+    end
+    #reroute_log('correct_user_article') unless User.current.logged?
   end
 
   #
