@@ -2048,54 +2048,57 @@ h3.fs-postheader {
 /* ===================                                                   ================= */
 /* ===================  zona riservata    SOTTO MENU E BOTTONI E COMMONS ================= */
 /* ======================================================================================= */
-#fs-flash {
+
+#fs-flash{
   /*background: url('/images/commons/flash-bg.jpg') repeat-x;*/
-  background-color: #3E3D3B; /* Sandro: meglio blu? #006184; notice*/
+ /* Sandro: meglio blu? #006184; notice*/
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
   -webkit-box-shadow: 0 0 3px 2px rgb(255, 206, 11);
   -moz-box-shadow: 0 0 3px 2px rgb(255, 206, 11);
   box-shadow: 0 0 3px 2px rgb(255, 206, 11);
-  text-shadow: 0 0 6px rgb(255, 70, 0);
-  width: auto;
-  min-height: 75px;
-  margin: 0;
-  padding: 20px;
-  position: absolute;
-  z-index: 101;
-  vertical-align: middle;
-  cursor: pointer;
+    position:fixed;
+      z-index: 9999;
+        top: 35%;
+        left: 50%;
+        width:30em;
+        height:18em;
+        margin-top: -5em; /*set to a negative number 1/2 of your height*/
+        margin-left: -15em; /*set to a negative number 1/2 of your width*/
 }
 
 #fs-flash p {
     text-align: center;
-    color: #ffce0b;
+    color: #1e1e1e;
     font-size: 18px;
     font-family: 'Trebuchet MS', Arial, Helvetica, Sans-Serif;
     line-height: 1.5em;
-    width: 100%;
+    width: 98%;
+    height: 97%;
     display: table-cell;
     vertical-align: middle;
+    position: absolute;
+    top: 0;
+    bottom:0;
+    padding: 1%;
+    cursor: pointer;
 
 }
+#fs-flash-close-me{
+    position: absolute;
+    bottom:3px;
+    left: 36%;
+ font-style: italic;
+}
+ /*
 #fs-flash p span.notice {
-  /*border: 1px solid red;*/
+
+
   height: 50px;
   width: 60px;
 }
-/* altri  allarmi note */
-.fs-flash-in {
-    font-weight: bold;
-    padding: 10px 5px 3px 32px;
-    display: table-cell;
-    vertical-align: middle;
-    font-style: italic;
-    color: #005b7c;
-    height: 24px;
-    min-height: 24px;
-    border-bottom: solid 1px #e0ffff;
-}
+
 .notice-in {
   background: url('/images/ico/flash_notice_s.png') center left no-repeat;
  }
@@ -2108,6 +2111,72 @@ h3.fs-postheader {
 .success-in {
     background: url('/images/ico/flash_success_s.png') center left no-repeat;
 }
+*/
+.f-error {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #ffa07a;
+
+}
+
+.f-success {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #faffc5;
+}
+
+.f-notice {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #faffc5;
+}
+
+.f-alert {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 1.5em !important;
+    background-color: #ffa07a;
+}
+
+.notice {
+    background: url('/images/ico/flash_notice.png') center center no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
+}
+
+.success {
+    background: url('/images/ico/flash_success.png') center right no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
+}
+
+.alert {
+    background: url('/images/ico/flash_alert.png') center center no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
+}
+
+.error {
+    background: url('/images/ico/flash_error.png') center center no-repeat;
+    float: left;
+    width: 70px;
+    height: 75px;
+}
+
+ /* altri  allarmi note */
+ .fs-flash-in {
+     font-weight: bold;
+     padding: 10px 5px 3px 32px;
+     display: table-cell;
+     vertical-align: middle;
+     font-style: italic;
+     color: #005b7c;
+     height: 24px;
+     min-height: 24px;
+     border-bottom: solid 1px #e0ffff;
+ }
 
 /*  navigazione  e menu   */
 .art-nav {
@@ -2212,7 +2281,6 @@ ul.fs-menu3-hmenu>li>a {
     height: 32px;
     cursor: pointer;
     text-decoration: none;
-
     line-height: 32px;
     text-align: center;
     -webkit-border-radius: 6px;
