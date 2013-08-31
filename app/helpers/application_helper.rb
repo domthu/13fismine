@@ -1235,8 +1235,11 @@ module ApplicationHelper
     GroupBanner.banners_tramenu
   end
 
+
+
   def art_image(articolo = nil, taglia = :l, options={})
     op = options[:only_path].present?
+    op =   options[:only_path] == false
     pre = "http://#{Setting.host_name}/images/"
     no_img = (op ? "#{pre}articoli/#{taglia.to_s}_art-no-image.jpg" : "/images/articoli/#{taglia.to_s}_art-no-image.jpg")
     if  !articolo.image_file_name.nil?
@@ -1266,6 +1269,7 @@ module ApplicationHelper
   # per l'icona dell'organismo convenzionato
   def user_myasso_icon(user = nil, taglia = :l, options={})
     op = options[:only_path].present?
+    op =   options[:only_path] == false
     pre = "http://#{Setting.host_name}/images/"
     no_img = (op ? "#{pre}commons/#{taglia.to_s}_fs-no-image.png" : "/images/commons/#{taglia.to_s}_fs-no-image.png")
     if user.convention && !user.convention.image_file_name.nil?
