@@ -6,7 +6,7 @@ class Newsletter < ActiveRecord::Base
   validates_uniqueness_of :project_id#, :scope => :project_id
 
   #boolean
-  #validates_presence_of :sended
+  validates_presence_of :sended
 
   #named scope
   #scope :per_project, ->(prj_id) { where("project_id < ?", prj_id) } Rails 3?

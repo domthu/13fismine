@@ -2,14 +2,16 @@ class NewslettersController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin
-  before_filter :find_project, :only => [ :invii ]
-  before_filter :find_newsletter, :only => [ :invii ]
+  before_filter :find_project, :only => [ :invii, :send_newsletter ]
+  before_filter :find_newsletter, :only => [ :invii, :send_newsletter ]
+  before_filter :control_params, :only => [ :send_newsletter ]
+
   #before_filter :newsletter_members, :only => [ :invii ]
 
   verify :method => :post, :only => [ :destroy ],
          :redirect_to => { :action => :index }
 
-  include FeesHelper  #Domthu  FeeConst
+  include FeesHelper  #Domthu  FeeConst get_role_css
   helper :sort
   include SortHelper
 
@@ -41,63 +43,86 @@ class NewslettersController < ApplicationController
     end
   end
 
+#Params: {"conv_ids"=>["6", "13", "21", "38"], "controller"=>"newsletters", "abbo_ids"=>["7", "9", "21", "13", "19", "23", "15", "17"], "project_id"=>"342", "commit"=>"Invia quindicinale", "action"=>"send_newsletter", "newsletter_id"=>"1", "authenticity_token"=>"gFBDBOipBDj/pDGe+I9OEq5o1uq8//mcFS/JFnSkfbY="}
+  def send_newsletter
+    #logger.warn("edizione(" + @project.id.to_s + ") send newsletter(" + @newsletter.id.to_s + ") params #{params.inspect}")
 
-    #Collect user
-#    @users_by_roles = User.all(
-#      :conditions => ['role_id IN (?)', FeeConst::NEWSLETTER_ROLES]
-#      )
+    send_notice "Params: #{params.inspect}"
+    send_it = params[:commit] == "go"
+    send_warning "commit: #{params[:commit]}"
+    #role
+    if params[:abbo_ids].present? && !params[:abbo_ids].empty?
+      (params[:abbo_ids] || []).each { |role_id|
+        #send_notice "Role: #{role_id}"
+        users = User.all(:conditions => {:role_id => role_id})
+        if users.any?
+          send_notice("Utenti(" + users.count.to_s + ") per ruolo(" + role_id + ")")
+          users.each { |user|
+            #crea email registration se non già presente
+            yet_reg = NewsletterUser.find(:first, :conditions => ["email_type = 'newsletter' AND newsletter_id=? AND user_id=?", @newsletter.id, user.id])
+            if yet_reg
+              if yet_reg.sended
+                send_warning("Cliente(" + user.name + ") già inviato. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
+              else
+                send_warning("Cliente(" + user.name + ") in attesa di ricevere. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
+              end
+            else
+              reg = NewsletterUser.new(:email_type => 'newsletter', :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => user.scadenza)
+              #reg.html =
+              reg.sended = false
+              if reg.save!  #--> save_without_transactions
+                #if send immediately
 
-    # if convention_id is not null allora sono NON pagante
-    #@users_emailed = @newsletter.newsletter_users
+                #Mailer.deliver_register(token)
+              else
+                send_error("invio email non registrato per utente " + user.name)
+              end
+            end
+          }
+        else
+          send_error("Nessun utente di ruolo " + role_id)
+        end
+      }
+    end
+    #Convention
+    if params[:conv_ids].present? && !params[:conv_ids].empty?
+      (params[:conv_ids] || []).each { |conv_id|
+        send_notice "=============="
+        send_notice "Convenzione: #{conv_id}"
+        #send_notice "Role: #{conv_id}"
+        conv = Convention.find_by_id(conv_id)
+        if conv && conv.users.any?
+          send_notice("federati(" + conv.users.count.to_s + ") per convenzione(" + conv_id + ")")
+          conv.users.each { |user|
+            #crea email registration se non già presente
+            yet_reg = NewsletterUser.find(:first, :conditions => ["email_type = 'newsletter' AND newsletter_id=? AND user_id=? AND convention_id=?", @newsletter.id, user.id, conv.id])
+            if yet_reg
+              if yet_reg.sended
+                send_warning("federato(" + user.name + ") già inviato. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
+              else
+                send_warning("federato(" + user.name + ") in attesa di ricevere. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
+              end
+            else
+              fed = NewsletterUser.new(:email_type => 'newsletter', :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => user.scadenza, :convention_id => conv.id)
+              #reg.html =
+              fed.sended = false
+              if fed.save!  #--> save_without_transactions
+                #if send immediately
+                #Mailer.deliver_register(token)
+              else
+                send_error("invio email non registrato per federato " + user.name)
+              end
+            end
+          }
+        else
+          send_error("Nessun federato per la convenzione " + conv_id)
+        end
+      }
+    end
 
-#    #sort and filters users
-#    sort_init 'login', 'asc'
-#    #sort_update %w(login firstname lastname mail admin created_on last_login_on)
-#    sort_update %w(lastname mail data convention_id role_id)
-
-#    #@limit = per_page_option
-
-#    scope = @users_by_roles
-
-#    c = ARCondition.new(["users.type = 'User'"])
-#    if request.post?
-#      @role = params[:role] ? params[:role].to_i : 0
-#      if (@role > 0)
-#        c << ["role_id = ?", @role]
-#      #else
-#      #  c << ["role_id IN (?) ", FeeConst::NEWSLETTER_ROLES]
-#      end
-#      #ricerca testuale
-#      unless params[:name].blank?
-#        @name = params[:name]
-#        name = "%#{params[:name].strip.downcase}%"
-#        c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
-#      end
-#      #Convention filter
-#      @convention_id = (params[:convention] && params[:convention][:convention_id]) ? params[:convention][:convention_id].to_i : 0
-#      if @convention_id > 0
-#        c << ["convention_id = ? ", @convention_id.to_s]
-#      end
-#    else
-#      @role = params[:role] ? params[:role].to_i : 0
-
-#    end
-
-#    #@user_count = scope.count(:conditions => c.conditions)
-#    #@user_count = User.all.count(:conditions => c.conditions)
-#    #@user_pages = Paginator.new self, @user_count, @limit, params['page']
-#    #@offset ||= @user_pages.current.offset
-#    #@users =  scope.find :all,
-#    #@users =  User.find :all,
-#    #            :order => sort_clause,
-#    #            :conditions => c.conditions,
-#    #            :limit  =>  @limit,
-#    #            :offset =>  @offset
-
-#    @users =  User.find :all,
-#                :order => sort_clause,
-#                :conditions => c.conditions
-
+    redirect_to :action => 'invii', :project_id => @project.id.to_s
+    #redirect_to :action => 'show', :id => @newsletter
+  end
 
   # GET /newsletters
   # GET /newsletters.xml
@@ -184,42 +209,6 @@ class NewslettersController < ApplicationController
 ################################
   private
 
-#    def newsletter_members
-
-#      #ruoli
-#      @num_no_role_count = User.all(:conditions => {:role_id => nil || 2}).count
-#      @name_admin_count = User.all(:conditions => {:admin => 1}).count
-#      @name_manager_count = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER}).count
-#      @name_author_count = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR}).count
-#      #@name_collaboratori_count = User.all(:conditions => {:role_id => ROLE_COLLABORATOR}).count
-#      @name_invitati_count = User.all(:conditions => {:role_id => FeeConst::ROLE_VIP}).count
-#      @num_uncontrolled_TOTAL = @name_manager_count + @name_author_count + @name_invitati_count
-
-
-#      #BY CLIENT ROLE
-#      #  FeeConst::ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
-#      #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
-#      #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
-#      #  FeeConst::ROLE_EXPIRED        = 6  #user.data_scadenza < today
-#      #  FeeConst::ROLE_ARCHIVIED      = 4  #bloccato: puo uscire da questo stato solo manualmente ("Ha pagato", "invito di prova"=REGISTERED)
-#      @num_abbonati = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_ABBONATO}).count
-#      @num_rinnovamento = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_RENEW}).count
-#      @num_registrati = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_REGISTERED}).count
-#      @num_scaduti = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_EXPIRED}).count
-#      @num_archiviati = User.all(:conditions => {:convention_id => nil, :role_id => FeeConst::ROLE_ARCHIVIED}).count
-#      @num_controlled_TOTAL = @num_abbonati + @num_rinnovamento + @num_registrati + @num_scaduti + @num_archiviati
-
-#      #Who pay? User member of organismo convenzionato
-#      @num_Associations =  Convention.all.count
-#      #questi utenti non pagano. Paga l'organismo convenzionato
-#      @num_Associated_COUNT =  User.all(:conditions => 'convention_id IS NOT NULL').count
-
-#      #@roles = []
-#      #@roles << FeeConst::ROLE_MANAGER << FeeConst::ROLE_AUTHOR << FeeConst::ROLE_VIP
-#      #@num_privati_COUNT = User.all(:conditions => ['convention_id is null AND role_id not IN (?)', @roles]).count
-
-#    end
-
     def require_fee
       if !Setting.fee
         flash[:notice] = l(:notice_setting_fee_not_allowed)
@@ -243,7 +232,12 @@ class NewslettersController < ApplicationController
     end
 
     def find_newsletter
-      @newsletter = Newsletter.find_by_project(@project.id)
+      if params[:newsletter_id]
+        @newsletter = Newsletter.find_by_id(params[:newsletter_id].to_i)
+      end
+      if @newsletter.nil? && @project
+        @newsletter = Newsletter.find_by_project(@project.id)
+      end
       if @newsletter.nil?
         #automatic create Newsletter
         @newsletter = Newsletter.new
@@ -269,6 +263,37 @@ class NewslettersController < ApplicationController
           flash[:error] = l(:error_can_not_create_newsletter, :newsletter => @project.name)
           return redirect_to :controller => 'projects', :action => 'show', :id => @project
         end
+      end
+    end
+
+    def control_params
+      reroute_invii() unless params[:conv_ids].present? || params[:abbo_ids].present?
+    end
+
+    def reroute_invii()
+      flash[:error] = "selezionare almeno un ruolo o una convenzione"
+      redirect_to :action => 'invii', :project_id => @project.id.to_s
+    end
+
+    def send_warning(msg)
+      if flash[:warning].nil?
+        flash[:warning] = msg
+      else
+        flash[:warning] += "<br />" + msg
+      end
+    end
+    def send_notice(msg)
+      if flash[:notice].nil?
+        flash[:notice] = msg
+      else
+        flash[:notice] += "<br />" + msg
+      end
+    end
+    def send_error(msg)
+      if flash[:error].nil?
+        flash[:error] = msg
+      else
+        flash[:error] += "<br />" + msg
       end
     end
 

@@ -464,13 +464,13 @@ function scrolling_fs() {
   var actualpos_fs = document.documentElement.scrollTop;
   if ((actualpos_fs > 10 ) && (statepos_fs == 'hidded')) {
     statepos_fs = 'showed';
-    //Element.show('toTop');
-    $('toTop').show('toTop');
+    Element.show('toTop');
+    //$('toTop').show('toTop');
   }
   if ((actualpos_fs < 10 ) && (statepos_fs == 'showed')) {
     statepos_fs = 'hidded';
-    //Element.hide('toTop');
-    $('toTop').hide();
+    Element.hide('toTop');
+    //$('toTop').hide();
   }
 }
 

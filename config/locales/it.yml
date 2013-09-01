@@ -1714,6 +1714,7 @@ it:
 #EMAIL NEWSLETTER
   label_send_newsletter: Invia quindicinale
   button_send_newsletter: Invia quindicinale
+  button_send_newsletter_immediately: Invialo subito
   label_user_list_newsletters: "Storico degli invii precedenti"
   label_newsletter: Quindicinale
   error_can_not_create_newsletter: "Creazione automatica della newsletter (%{newsletter}) non riuscità"
@@ -1726,6 +1727,12 @@ it:
   label_data: 'data invio'
   label_first_sent: 'data primo invio'
   label_newsletter_none: "Nessun invio fatto a questo giorno"
+  label_newsletter_none_sended: "Nessuno ha ricevuto questo quindicinale"
+  label_newsletter_none_pending: "Nessun email in attesa di invio"
+  label_newsletter_none_error: "Nessun errore rilevato"
+  label_newsletter_sended: "Lista clienti che hanno ricevuto"
+  label_newsletter_pending: "Lista di email in attesa di invio"
+  label_newsletter_error: "Lista errori nei invii"
   field_abbonamento: "Abbonamento"
   field_abbonamento_type: "Tipo abbonamento"
   field_user_fee: "Abbonato"

@@ -14,7 +14,7 @@
     </td>
   </tr>
 </table>
-   <% unless @user.convention.nil? %>
+   <% if @user && @user.convention %>
     <table width="560" border="0" cellpadding="0" cellspacing="0">
       <% if  @user.convention.presidente? %>
           <tr>

@@ -10,14 +10,16 @@
 
 <h2><%=l(:label_send_newsletter)%></h2>
 
+<% form_tag({:controller => "newsletters", :action => "send_newsletter", :project_id => @project.id.to_s, :newsletter_id => @newsletter}, :method => :post) do %>
+
 <div class="autoscroll">
-  <p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %></p>
+<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
 <table id="tblinvii" class="list">
   <thead><tr>
   <th style="text-align:left; width: 65%;"><%= l(:field_role) %></th>
   <th style="text-align:left; width: 10%;"><%= l(:field_users) %></th>
   <th style="text-align:left; width: 10%;">
-    <input id="checkbox_selector" type="checkbox" name="invia" class="selectall" checked="checked" />
+    <input id="checkbox_selector" type="checkbox" class="selectall" checked="checked" />
   </th>
   <th style="text-align:left; width: 5%;">
     <i class="icon icon-email" title="email già inviato?"></i>
@@ -34,21 +36,21 @@
     <td class="checkbox">
       <% if @abbo_users > 0 %>
         <% if FeeConst::AUTHORED_ROLES.include? abbo %>
-          <%= check_box_tag 'abbo_ids[]', abbo, true, {:name => "invia"} %></td>
+          <%= check_box_tag 'abbo_ids[]', abbo, true %></td>
         <% else %>
-          <%= check_box_tag 'abbo_ids[]', abbo, false, {:name => "invia"} %></td>
+          <%= check_box_tag 'abbo_ids[]', abbo, false %></td>
         <% end %>
       <% end %>
     </td>
     <td>
-        <%# user.scoped_by_newsletter_users(@).nil? %>
+        <%# attenzione abbo != abbo.id = posizione in arrays user.scoped_by_newsletter_users(@).nil? %>
     </td>
   </tr>
 <% end -%>
   </tbody>
 </table>
 
-<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %></p>
+<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
 
 <table id="tblinvii_convs" class="list">
   <thead><tr>
@@ -56,7 +58,7 @@
   <th style="text-align:left; width: 10%;"><%= l(:field_data_scadenza) %></th>
   <th style="text-align:left; width: 5%;"><%= l(:field_users) %></th>
   <th style="text-align:left; width: 5%;">
-    <input id="checkbox_selector_convs" type="checkbox" name="invia" class="selectall" checked="checked" />
+    <input id="checkbox_selector_convs" type="checkbox" class="selectall" checked="checked" />
   </th>
   <th style="text-align:left; width: 5%;">
     <i class="icon icon-email" title="email già inviato?"></i>
@@ -88,9 +90,9 @@
     <%# check_box_tag "permissins[#{role.id}][]", permission.name, (role.permissions.include? permission.name), :id => nil, :class => "role-#{role.id}" %>
       <% if conv.data_scadenza && @conv_users > 0 %>
         <% if DateTime.now < conv.data_scadenza %>
-          <%= check_box_tag 'conv_ids[]', conv.id, true, {:name => "invia"} %></td>
+          <%= check_box_tag 'conv_ids[]', conv.id, true %></td>
         <% else %>
-          <%= check_box_tag 'conv_ids[]', conv.id, false, {:name => "invia"} %></td>
+          <%= check_box_tag 'conv_ids[]', conv.id, false %></td>
         <% end %>
       <% end %>
     </td>
@@ -102,9 +104,9 @@
   </tbody>
 </table>
 
-<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %></p>
+<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
 </div>
-
+<% end %>
 <script type="text/javascript" charset="utf-8">
   var checkboxes = $$("#tblinvii input[type=checkbox]");
   var cbControl = $("checkbox_selector");
