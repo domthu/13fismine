@@ -27,11 +27,11 @@
           </fieldset>
           &nbsp; <br/>
           <fieldset>
-            <legend><%= l(:setting_emails_fee_register_asso) %></legend>
+            <legend><%= l(:setting_emails_fee_register__convention) %></legend>
             <%= setting_text_area :template_fee_register_asso, :label => false, :rows => 5 %>
             <%= l(:label_emails_fee_register_asso) %>
             <div style="float:right;">
-              <%= link_to l(:label_send_test_email_fee_asso), :controller => 'fees', :action => 'email_fee', :params => {:type => 'asso'} %>
+              <%= link_to l(:label_send_test_email_fee__convention), :controller => 'fees', :action => 'email_fee', :params => {:type => 'asso'} %>
             </div>
           </fieldset>
           &nbsp; <br/>
@@ -69,7 +69,38 @@
             </div>
           </fieldset>
           &nbsp; <br/>
-          <%= submit_tag l(:button_save) %>
+          <p style="color:#2C4056; width: 99%; text-align: center; font-size: 1.3em; font-style: italic;"> Sotto i messaggi all'utente sulla scadenza del suo abbonamento <br/>
+            <span style="font-size: 0.6em;">Il parametro @@distance_of_date_in_words@@ verrà sostituito con i giorni restanti. </span> </p>
+          <fieldset>
+            <legend><%= l(:role_archivied) %></legend>
+            <%= setting_text_area :webmsg_isarchivied, :label => false %>
+            <%# l(:label_isarchivied) %>
+            <div style="float:right;">
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><%= l(:role_expired) %></legend>
+            <%= setting_text_area :webmsg_isexpired, :label => false %>
+            <%# l(:label_isexpired) %>
+            <div style="float:right;">
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><%= l(:role_renew) %></legend>
+            <%= setting_text_area :webmsg_isrenewing, :label => false %>
+            <%# l(:label_isrenewing) %>
+            <div style="float:right;">
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><%= l(:role_registered) %></legend>
+            <%= setting_text_area :webmsg_isregistered, :label => false %>
+            <%# l(:label_condition) %>
+            <div style="float:right;">
+            </div>
+          </fieldset>
+          &nbsp; <br/>
+          <div class="btn-footer"><%= submit_tag l(:button_save), :class => 'button-grey' %></div>
         </div>
     <% end %>
 
@@ -85,4 +116,8 @@
     CKEDITOR.replace('settings_template_fee_thanks', { toolbar:'Basic'});
     CKEDITOR.replace('settings_template_privacy', { toolbar:'Light', height:'500' });
     CKEDITOR.replace('settings_template_condition', { toolbar:'Light', height:'500' });
+    CKEDITOR.replace('settings_webmsg_isarchivied', { toolbar:'Basic', height:'250'});
+    CKEDITOR.replace('settings_webmsg_isexpired', { toolbar:'Basic', height:'250'});
+    CKEDITOR.replace('settings_webmsg_isrenewing', { toolbar:'Basic', height:'250'});
+    CKEDITOR.replace('settings_webmsg_isregistered', { toolbar:'Basic', height:'250'});
 </script>

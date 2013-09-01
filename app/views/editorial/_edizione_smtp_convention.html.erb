@@ -9,7 +9,7 @@
     </td>
     <td width="60" valign="bottom" align="right">
       <% if @user %>
-          <%= image_tag(defurl + user_myasso_icon(@user, :s, :newsletter => true), :width => 48, :height => 48) %>
+          <%= image_tag(user_myasso_icon(@user, :s, :only_path => false), :width => 48, :height => 48) %>
       <% end %>
     </td>
   </tr>

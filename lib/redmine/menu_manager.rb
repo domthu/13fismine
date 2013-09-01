@@ -283,11 +283,10 @@ module Redmine
           item.url
         end
         caption = item.caption(project)
-       puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' + current_menu_item.to_s
-        puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' + item.name.to_s
         return [caption, url, (current_menu_item == item.name)]
       end
-
+     # puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' + current_menu_item.to_s
+      # puts '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' + item.name.to_s
       # Checks if a user is allowed to access the menu item by:
       #
       # * Checking the conditions of the item

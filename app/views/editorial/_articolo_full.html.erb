@@ -4,64 +4,68 @@
       <div class="fs-postheader-full">      <%= articolo.subject %>  </div>
     </div>
     <div style="width:100%;">
-           <div class="fs-image-caption-wrapper-full">
+      <div class="fs-image-caption-wrapper-full">
         <%= image_tag art_image(articolo, :l) %>
       </div>
       <div class="fs-riassunto-full">
         <p>
-          <% if articolo.hide_summary? == false%>
-            <%=  raw(articolo.summary).html_safe %>
-              <% end %>
+          <% if articolo.hide_summary? == false %>
+              <%= raw(articolo.summary).html_safe %>
+          <% end %>
         </p>
-                 <div class="fs-postmetadata-full">
-                   <div class="fs-author">
-                     <% if !articolo.author.nil? && !articolo.author.user_profile.nil? %>
-                         <span><%= link_to  articolo.author.my_avatar(:s), profile_show_path(articolo.author.user_profile) %> </span><span style="padding-left:10px;"> <%= h articolo.author %>
 
-                            <div class="fs-postmetadatafooter-author-qualifica"><%= articolo.author.user_profile.fs_qualifica unless articolo.author.user_profile.fs_qualifica.nil? %>  </div>
-
-                   </span>
-                     <% else %>
-                         <span style="width: 32px;">Di:</span><span>  <%= h articolo.author %> </span>
-                     <% end %>
-                   </div>
-                   <div class='fs-social'>
-                     <div class='fs-social-fb '>
-                       <a href="<%=	 fburl(articolo) %>" target="_blank" >
-                         <%= image_tag "ico/fb-share.jpg" %>    </a>
-                     </div>
-                     <div class='fs-social-tw '>
-                       <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
-                       <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-                     </div>
-                     <div class='fs-social-gp '>
-                       <!-- Place this tag where you want the +1 button to render. -->
-                       <div class="g-plusone" data-size="medium" data-recommendations="false">
-                         <!-- Place this tag after the last +1 button tag. -->
-                         <script type="text/javascript">
-                             window.___gcfg = {lang:'it'};
-                             (function () {
-                                 var po = document.createElement('script');
-                                 po.type = 'text/javascript';
-                                 po.async = true;
-                                 po.src = 'https://apis.google.com/js/plusone.js';
-                                 var s = document.getElementsByTagName('script')[0];
-                                 s.parentNode.insertBefore(po, s);
-                             })();
-                         </script>
-                       </div>
-                     </div>
-                     <div class="fs-resize-box">
-                       <%=  link_to_function( image_tag('ico/printer-icon.png'), "javascript:print()") %>
-                     </div>
-                   </div>
-                 </div>
+        <div class="fs-postmetadata-full">
+          <div class="fs-author">
+            <% if !articolo.author.nil? && !articolo.author.user_profile.nil? %>
+                <span><%= link_to articolo.author.my_avatar(:s), profile_show_path(articolo.author.user_profile) %> </span><span style="padding-left:10px;"> <%= h articolo.author %>
+            <div class="fs-postmetadatafooter-author-qualifica"><%= articolo.author.user_profile.fs_qualifica unless articolo.author.user_profile.fs_qualifica.nil? %>  </div>
+                    </span>
+            <% else %>
+                <span style="width: 32px;">Di:</span><span>  <%= h articolo.author %> </span>
+            <% end %>
+          </div>
+          <div class='fs-social'>
+            <div class='fs-social-fb '>
+              <% @fb = "http://www.facebook.com/sharer.php?s=100&amp;p[url]=#{link_to_articolo(articolo, :only_path => false).to_s
+              }&amp;p[images][0]=http://37.59.40.44:88/images/commons/fb_fs.png
+              }&amp;p[title]=#{ERB::Util.url_encode(articolo.subject)
+              }&amp;p[summary]=#{ERB::Util.url_encode(smart_truncate(articolo.summary, 200))}" %>
+              <a href="<%= @fb %>" target="_blank" title="Condividi in Facebook">
+                <%= image_tag "ico/fb-share.jpg" %>    </a>
+            </div>
+            <div class='fs-social-tw '>
+              <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
+              <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+            </div>
+            <div class='fs-social-gp '>
+              <!-- Place this tag where you want the +1 button to render. -->
+              <div class="g-plusone" data-size="medium" data-recommendations="false">
+                <!-- Place this tag after the last +1 button tag. -->
+                <script type="text/javascript">
+                    window.___gcfg = {lang:'it'};
+                    (function () {
+                        var po = document.createElement('script');
+                        po.type = 'text/javascript';
+                        po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0];
+                        s.parentNode.insertBefore(po, s);
+                    })();
+                </script>
+              </div>
+            </div>
+            <div class="fs-resize-box">
+              <%= link_to_function(image_tag('ico/printer-icon.png'), "javascript:print()") %>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
     <div class="clearfix">&nbsp; <br/></div>
     <div class="fs-layout-cell layout-item-1">
-      <div id="fs-articolo-full ">
+
+     <div id="fs-articolo-full ">
         <%= raw(articolo.description) %>
         <br/>
       </div>
@@ -73,7 +77,7 @@
     </div>
     <div class="fs-articolo-full-bottom">
 
-      <%= link_to "Ritorna...", :back, :class => "fs-vuoto-inline-button", :style => "float:none;" , :id =>"btn" %>
+      <%= link_to "Ritorna...", :back, :class => "fs-vuoto-inline-button", :style => "float:none;", :id => "btn" %>
 
     </div>
     <% if  !@quesito.nil? %>

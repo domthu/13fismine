@@ -178,7 +178,7 @@ table td {padding: 0; margin: 0; border: 0;}
 <table width="560" cellspacing="0"><tr><td width="560" class="a1" >
   <%# inizio tabella contenuti %>
   <table width="560" cellspacing="9">
-  <tr><%# sotto: immagine sx %><td width="120" align="left" valign="top" rowspan="2"><%= link_to(image_tag( defurl + art_image(articolo, :m, :newsletter=> true)), link_to_articolo(articolo, {:only_path => false}), :id => ancora) %></td>
+  <tr><%# sotto: immagine sx %><td width="120" align="left" valign="top" rowspan="2"><%# link_to(image_tag( defurl + art_image(articolo, :m, :newsletter=> true)), link_to_articolo(articolo, {:only_path => false}), :id => ancora) %><%= link_to(image_tag( art_image(articolo, :m, :only_path => false)), link_to_articolo(articolo, {:only_path => false}), :id => ancora) %></td>
   <%# titolo  %><td width="440" class="2"><strong><%= articolo.subject %></strong><br/></td></tr>
   <tr><%#  riga autore  %><td width="440" class="a3"><strong><img src="<%= defurl %>/images/ico/pen24.png"/> <%= articolo.author %></strong></td></tr>
   <tr><%# riga riassunto %><td width="560" colspan="2" class="a4"><%= articolo.summary %><br/></td></tr></table><%#fine tabella contenuti %>

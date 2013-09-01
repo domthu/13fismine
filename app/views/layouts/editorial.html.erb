@@ -2,7 +2,7 @@
 <html dir="ltr" lang="en-EN" xmlns="http://www.w3.org/1999/html" xmlns:fb="https://www.facebook.com/2008/fbml">
 <head><!-- Created by DomThu & SPecchiaSoft -->
   <meta charset="utf-8"/>
-  <title>FiscoSport (v0.7.12 beta) <%= h html_title %></title>
+  <title>FiscoSport<%#h html_title %></title>
   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 2.5, user-scalable = yes, width = device-width"/>
   <meta name="description" content="<%= Redmine::Info.app_name %>"/>
   <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
@@ -88,14 +88,6 @@
                   keys:false
               });
           }
-          //$("#assos_carousel").removeClass("hide");
-          // $("input[type=submit]").button();
-
-          //Focus
-          //< %= javascript_tag "$('#username').focus();" %>
-          // if ($("#username").length > 0) {
-          //   $('#username').focus();
-          // }
           //Scroll to top
           $(window).scroll(function () {
               if (jQuery(this).scrollTop() != 0) {
@@ -111,43 +103,19 @@
 
           //auto hide when clicking
           $('#fs-flash').click(function () {
-            $('#fs-flash').fadeOut(2400);
+              $('#fs-flash').fadeOut(2400);
           });
           //focus via javascript during ajax response
           $('#fs-flash').focus(function () {
-              $('#fs-flash').center_me().show();
+              $('#fs-flash').show();
               setTimeout(function () {
                   $('#fs-flash').fadeOut(2400);
-              }, 10000);
+              }, 64000);
           });
-
+          // $('#fs-flash').center_me().show();
           if ($('#fs-flash').html().trim().length > 0) {
-          /*  var fclass = $('#flashme').html()
-
-            $('#fs-flash').dialog({bgiframe: true, dialogClass: fclass, resizable: true, draggable: true, modal: true, height: 334, width: 450, autoOpen:true, show: 'fade'});
-            $('#fs-flash').dialog('open');
-            setTimeout(function() {
-              $('#fs-flash').fadeOut(4000, function () {
-                   $('#fs-flash').dialog("destroy")
-               });
-            }, 10000);
-          */
-            $('#fs-flash').focus();
+              $('#fs-flash').focus();
           };
-
-          /*          if ($('#fs-flash').html().trim().length > 0) {
-           $('#fs-flash').show();
-           setTimeout(function() {
-           $('#fs-flash').fadeOut(2400);
-           }, 6000);
-           };
-           $('#fs-flash').focus(function() {
-           $('#fs-flash').show();
-           setTimeout(function() {
-           $('#fs-flash').fadeOut(2400);
-           }, 6000);
-           });
-           */
 
           $('.x-white').addGlow({ textColor:'white', haloColor:'#aaa', radius:100 });
           $('.x-blue').addGlow({ textColor:'#00f', haloColor:'#00f', radius:100, duration:200 });
@@ -158,9 +126,7 @@
           $('.x-yellow3').addGlow({ textColor:'#000', haloColor:'#F8DA00', radius:10, duration:300 });
       });
   </script>
-  <!-- page specific tags -->
   <%= yield :header_tags -%>
-  <!-- end page specific tags -->
 </head>
 <body>
 <div id="fs-main">
@@ -191,15 +157,16 @@
     </nav>
     <div id="fs-flash" style="display:none;">
       <% flash.each do |key, msg| %>
-          <p><span class='<%= key.to_s %>'> </span>  <%= msg %> </p>
-          <div> <% @f = key.to_s  %></div>
+          <p class='f-<%= key.to_s %>'><span class='<%= key.to_s %>'> </span>  <%= msg %> </p>
+
+          <div id="fs-flash-close-me"> clicca per chiudere</div>
       <% end %>
+
     </div>
-    <div id="flashme" style="display:none;">  <%= @f  %>-dialog</div>
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">
-                    <%= yield %>
+          <%= yield %>
         </div>
       </div>
     </div>

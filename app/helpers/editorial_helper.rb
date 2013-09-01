@@ -2,7 +2,6 @@ module EditorialHelper
   include FeesHelper #getdate
   include AttachmentsHelper
 
-
   def highlight_tokens(text, tokens)
     return text unless text && tokens && !tokens.empty?
     re_tokens = tokens.collect { |t| Regexp.escape(t) }
@@ -73,7 +72,7 @@ module EditorialHelper
   end
 
   def url_for_result(e = nil, options = {})
-      evturl = e.event_url(options)
+    evturl = e.event_url(options)
     #puts evturl
     #puts "#####################"
     #printf("evturl    --->   %s", evturl[:controller])
@@ -83,7 +82,7 @@ module EditorialHelper
     end
     if (evturl[:controller] == "issues")
       if e.is_convegno?
-        return link_to highlight_tokens(truncate(e.subject, :length => 255), @tokens),  url_for(:controller => 'editorial', :action => 'evento', :id => e.id.to_s, :slug => h(truncate(e.subject, :length => 125).to_slug))
+        return link_to highlight_tokens(truncate(e.subject, :length => 255), @tokens), url_for(:controller => 'editorial', :action => 'evento', :id => e.id.to_s, :slug => h(truncate(e.subject, :length => 125).to_slug))
       else
         return link_to highlight_tokens(truncate(e.subject, :length => 255), @tokens), url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => e.section.top_section.top_menu.key, :topsection_key => e.section.top_section.key, :article_id => e.id.to_s, :article_slug => h(truncate(e.subject, :length => 125).to_slug))
       end
@@ -91,18 +90,10 @@ module EditorialHelper
     if (evturl[:controller] == "projects")
       #evturl[:controller] = "editoriale"
       #evturl[:action] = "newsletter"
-      return link_to highlight_tokens(truncate(e.name, :length => 255), @tokens) ,url_for(:controller => 'editorial', :action => 'edizione', :id => e.id.to_s, :slug => h(truncate(e.name, :length => 125).to_slug))
+      return link_to highlight_tokens(truncate(e.name, :length => 255), @tokens), url_for(:controller => 'editorial', :action => 'edizione', :id => e.id.to_s, :slug => h(truncate(e.name, :length => 125).to_slug))
     end
     #url = url.gsub(/\/news\//, '/editoriale/quesito_full/').gsub(/\/issues\//, '/editoriale/articolo/').gsub(/\/projects\//, '/editoriale/newsletter/')
     flash[:error] = "Risultati di ricerca: errore nel reindirizzamento link "
     redirect_to :back
   end
-  def fburl(articolo)
-    s= 'https://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D=' + articolo.subject  + '&p%5Burl%5D=http%3A%2F' + link_to_articolo(articolo, :only_path => false) +
-    '&p%5Bsummary%5D=' + 'sommario' +
-        '&p%5Bimages%5D%5B0%5D=' + 'immagine'
-     return s
-  end
-
-
 end

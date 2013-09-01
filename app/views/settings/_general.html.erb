@@ -44,7 +44,7 @@
         <em><%= l(:text_comma_separated) %></em></p>
       <%= call_hook(:view_settings_general_form) %>
     </div>
-    <%= submit_tag l(:button_save) %>
+    <div class="btn-footer"><%= submit_tag l(:button_save), :class => 'button-grey' %></div>
 <% end %>
 <script type="text/javascript">
     CKEDITOR.replace('settings_info_fs', { toolbar:'Light'});

@@ -1705,7 +1705,7 @@ a img
 .fs-article th, .fs-article td
 {
    padding: 2px;
-   border: dotted 1px #765400;
+  /* border: dotted 1px #765400; */
    vertical-align: top;
    text-align: left;
 }
