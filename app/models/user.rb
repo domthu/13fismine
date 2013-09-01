@@ -211,29 +211,29 @@ class User < Principal
     if !self.active?
      str += "<br />Utente non attivo"
     end
-
     #PUBLIC INSTALLATION con uso gestione abbonamento
     if Setting.fee?
-      #Control Always abilitated User RoleId
-      #if self.ismanager? || self.isauthor? || self.isvip?
-      #if self.isabbonato?
-
       #Control Always Undesired User RoleId
       if self.isarchivied?
-       str += "<br />Utente senza abbonamento valido da " + distance_of_date_in_words(Time.now, self.scadenza)
+        str += Setting.webmsg_isarchivied
+      # str += "<br />Abbonamento non valido da " + distance_of_date_in_words(Time.now, self.scadenza)
       end
       if self.isexpired?
-        str += "<br />Abbonamento scaduto: " + distance_of_date_in_words(Time.now, self.scadenza)
+        str += Setting.webmsg_isexpired
+       # str += "<br />Abbonamento scaduto da " + distance_of_date_in_words(Time.now, self.scadenza)
       end
       if self.isrenewing?
-        str += "<br />Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, self.scadenza)
-        str += "<br />Rinnovare l'abbonamento."
+        str += Setting.webmsg_isrenewing
+      #  str += "<br />Scadenza abbonamento prossima! tra " + distance_of_date_in_words(Time.now, self.scadenza)
+      #  str += "<br />Rinnovare l'abbonamento."
       end
       if self.isregistered?
-        str += "<br />Valido ancora per " + distance_of_date_in_words(self.scadenza, Time.now)
-        str += "<br />periodo di prova."
+        str += Setting.webmsg_isregistered
+       # str += "<br />Abbonamento valido ancora per " + distance_of_date_in_words(self.scadenza, Time.now)
+       # str += "<br />periodo di prova."
       end
     end
+    str = str.gsub('@@distance_of_date_in_words@@', distance_of_date_in_words(Time.now, self.scadenza))
     return str
   end
 

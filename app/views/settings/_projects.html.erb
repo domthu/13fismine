@@ -11,5 +11,5 @@
                             Role.find_all_givable.collect { |r| [r.name, r.id.to_s] },
                             :blank => "--- #{l(:actionview_instancetag_blank_option)} ---" %></p>
     </div>
-    <%= submit_tag l(:button_save) %>
+    <div class="btn-footer"><%= submit_tag l(:button_save), :class => 'button-grey' %></div>
 <% end %>

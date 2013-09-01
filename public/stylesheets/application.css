@@ -965,7 +965,7 @@ padding-bottom: 3px;
 .icon-padlock_open  { background-image: url(../images/ico/Padlock_green.png); }
 .icon-padlock_close  { background-image: url(../images/ico/Padlock_red.png); }
 .icon-email  { background-image: url(../images/ico/email.gif); }
-.icon-banner  { background-image: url(../images/ico/banner.gif); }
+.icon-banner  { background-image: url(../images/ico/banner.png); }
 .icon-banner3  { background-image: url(../images/ico/banner.png); }
 .icon-banner4  { background-image: url(../images/ico/banner2.png); }
 .icon-home  { background-image: url(../images/ico/home.gif); }
@@ -1378,9 +1378,9 @@ p.changeauthor img.gravatar{
 	border:1px solid #dcdcdc;
 	display:inline-block;
 	color: #2A5685;
-	font-size:1em;
+	font-size:1.2em;
 	font-weight:bold;
-	padding:4px 24px;
+	padding:6px 24px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #ffffff;
 }
