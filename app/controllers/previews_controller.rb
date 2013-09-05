@@ -16,8 +16,12 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class PreviewsController < ApplicationController
-  before_filter :find_project, :except =>   [:newsletter, :norole]
+  #before_filter :find_project, :except =>   [:newsletter, :norole, :nlemailed]
+  before_filter :find_project, :only =>   [:issue, :articolo, :news]
   before_filter :find_user_project, :only =>   [:newsletter]
+  before_filter :find_newsletter, :only =>   [:nlemailed]
+
+  #include FeesHelper #getdate get_role_css
 
   def issue
     @issue = @project.issues.find_by_id(params[:id]) unless params[:id].blank?
@@ -53,6 +57,34 @@ class PreviewsController < ApplicationController
     render :layout => false, :partial => 'editorial/edizione_smtp'
   end
 
+  #Newsletter invii fatti o da fare o in errore
+  def nlemailed
+    @type = (params[:type].present? ? params[:type] : 'notice')
+    case @type
+    when 'error'
+      @nl_users = @newsletter.newsletter_users.find(:all,
+        :conditions => ['sended = false AND errore is not null AND  LENGTH(errore) > 0'],
+        #:limit => 10,
+        #:include => [ :status, :project, :tracker ],
+        :order => "#{NewsletterUser.table_name}.updated_at DESC")
+    when 'warning'
+      @nl_users = @newsletter.newsletter_users.find(:all,
+        :conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)'],
+        #:limit => 10,
+        #:include => [ :status, :project, :tracker ],
+        :order => "#{NewsletterUser.table_name}.updated_at DESC")
+    else #'notice'
+      @nl_users = @newsletter.newsletter_users.find(:all,
+        :conditions => { :sended => true },
+        #:limit => 10,
+        #:include => [ :status, :project, :tracker ],
+        :order => "#{NewsletterUser.table_name}.updated_at DESC")
+    end
+    #render :layout => false, :partial => 'newsletter_users/users_newsletter_emailed' #undefined method `get_role_css' for #<ActionView::Base:0xb51cc0b8>
+    render :layout => false, :partial => 'newsletters/users_newsletter_emailed'
+    #, :locals => {:users_nl => @nl_users}
+  end
+
   def news
     @text = (params[:news] ? params[:news][:description] : nil)
     render :partial => 'common/preview'
@@ -65,21 +97,27 @@ class PreviewsController < ApplicationController
 
   private
 
-  def find_project
-    project_id = (params[:issue] && params[:issue][:project_id]) || params[:project_id]
-    @project = Project.find(project_id)
-  rescue ActiveRecord::RecordNotFound
-    render_404
-  end
+    def find_project
+      project_id = (params[:issue] && params[:issue][:project_id]) || params[:project_id]
+      @project = Project.find(project_id)
+    rescue ActiveRecord::RecordNotFound
+      render_404
+    end
 
-  def find_user_project
-    @id = ((params[:project] && params[:project][:id]) || params[:project_id]).to_i
-    @project= Project.all_public_fs.find_by_id(@id.to_i)
-    user_id = (params[:user] && params[:user][:id]) || params[:user_id]
-    @user = User.find(user_id) if (user_id && (user_id.to_i > 0))
-    @user = User.Current if @user.nil?
-  rescue ActiveRecord::RecordNotFound
-    render_404
-  end
+    def find_user_project
+      @id = ((params[:project] && params[:project][:id]) || params[:project_id]).to_i
+      @project= Project.all_public_fs.find_by_id(@id.to_i)
+      user_id = (params[:user] && params[:user][:id]) || params[:user_id]
+      @user = User.find(user_id) if (user_id && (user_id.to_i > 0))
+      @user = User.Current if @user.nil?
+    rescue ActiveRecord::RecordNotFound
+      render_404
+    end
+
+    def find_newsletter
+      @newsletter = Newsletter.find_by_id(params[:id].to_i)
+    rescue ActiveRecord::RecordNotFound
+      render_404
+    end
 
 end

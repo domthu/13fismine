@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_profiles
   map.resources :reservations
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "unassigned_users"
+#rake routes | grep -r "invii"
   map.resources :top_menus
   map.resources :contract_users
   map.resources :contracts
@@ -263,6 +263,7 @@ ActionController::Routing::Routes.draw do |map|
   map.preview_articolo '/issues/articolo/:id', :controller => 'previews', :action => 'articolo'
   map.preview_newsletter '/newsletter_preview/:user_id', :controller => 'previews', :action => 'newsletter'
   map.unassigned_users '/unassigned_users', :controller => 'previews', :action => 'norole'
+  map.newsletter_users_emailed '/newsletter_users_emailed/:id/:type', :controller => 'previews', :action => 'nlemailed'#, :conditions => { :method => :post }
 
   map.issues_context_menu '/issues/context_menu', :controller => 'context_menus', :action => 'issues'
   map.issue_changes '/issues/changes', :controller => 'journals', :action => 'index'

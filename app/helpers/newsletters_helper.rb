@@ -1,6 +1,5 @@
 module NewslettersHelper
-  include FeesHelper #getdate
-
+  include FeesHelper #getdate get_role_css
 #Obsolete usate FeesHelper fee_abbo_options_for_select
 #  def users_roles_options_for_select(selected)
 #    user_count_by_role = FeeConst::NEWSLETTER_ROLES

@@ -6,7 +6,7 @@ class NewsletterUsersController < ApplicationController
   verify :method => :post, :only => [ :destroy ],
          :redirect_to => { :action => :index }
 
-  include FeesHelper  #Domthu  FeeConst
+  include FeesHelper  #Domthu  FeeConst get_role_css
 
   # GET /newsletter_users
   # GET /newsletter_users.xml

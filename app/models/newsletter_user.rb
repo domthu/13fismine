@@ -1,13 +1,16 @@
 class NewsletterUser < ActiveRecord::Base
 
   belongs_to :user
-  belongs_to :project
+  belongs_to :convention
+  #belongs_to :project accross newsletter
+  belongs_to :newsletter
   validates_length_of :email_type, :maximum => 30
 
-  validates_uniqueness_of :user_id, :scope => :project_id
+  #se voglio re-inviare --> buttare sended a false
+  validates_uniqueness_of :user_id, :scope => :newsletter_id #&email_type='newsletter'
 
   #boolean
-  validates_presence_of :sended
+  #validates_presence_of :sended No di default 0 = false
 
   #named scope
   #scope :per_user, -> (usr_id) { where("user_id < ?", usr_id) } Rails 3?
@@ -17,13 +20,21 @@ class NewsletterUser < ActiveRecord::Base
   def to_s
     s = ''
     s += (user.nil? ? "?(user)" : user.name)
-    s += (project.nil? ? "?(news)" : project.name)
+    s += (newsletter.nil? ? "?(news)" : newsletter.name)
     return (s.nil? || s.blank?)  ? "-" : s
   end
 
   alias :name :to_s
 
+  def have_convention?
+    return !self.convention_id.nil?
+  end
+
+  def have_newsletter?
+    return !self.newsletter_id.nil?
+  end
+
   def have_project?
-    return !self.project_id.nil?
+    return self.have_newsletter? && !self.newsletter.project_id.nil?
   end
 end

@@ -467,7 +467,7 @@ class AccountController < ApplicationController
     if flash[:error].nil?
       flash.now[:error] = l(:notice_account_invalid_creditentials)
     else
-      flash[:error] += '<br />aaaaaaaaaaaa' + l(:notice_account_invalid_creditentials)
+      flash[:error] += '<br />' + l(:notice_account_invalid_creditentials)
     end
   end
 
