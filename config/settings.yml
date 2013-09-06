@@ -296,7 +296,7 @@ static_page_progettofs:
 static_page_contattaci:
   default: "Pagina contattaci"
 webmsg_isarchivied:
-  default: "Abbonamento non valido da @@distance_of_date_in_words@@. Per poter usufruire anche dei contenuti protetti del sito devi possedere un abbonamento valido. <br />Contattarci per conoscere la nostra offerta a te riservata per il rinnovo dell'abbonamento."
+  default: "Abbonamento non valido da @@distance_of_date_in_words@@"
 webmsg_isexpired:
   default: "Abbonamento scaduto da @@distance_of_date_in_words@@"
 webmsg_isrenewing:

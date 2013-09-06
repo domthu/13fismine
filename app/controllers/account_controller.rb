@@ -144,6 +144,10 @@ class AccountController < ApplicationController
         @user.activate
         @user.login = session[:auth_source_registration][:login]
         @user.auth_source_id = session[:auth_source_registration][:auth_source_id]
+        #impostazioni minimali di default
+        @user.datascadenza = Date.today + Setting.register_days.to_i
+        @user.role_id = FeeConst::ROLE_REGISTERED
+        # se dichiara di essere convenzionato
         if @user.save
           session[:auth_source_registration] = nil
           self.logged_user = @user

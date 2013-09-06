@@ -213,6 +213,7 @@ class User < Principal
     end
     #PUBLIC INSTALLATION con uso gestione abbonamento
     if Setting.fee?
+
       #Control Always Undesired User RoleId
       if self.isarchivied?
         str += Setting.webmsg_isarchivied
@@ -233,7 +234,9 @@ class User < Principal
        # str += "<br />periodo di prova."
       end
     end
-    str = str.gsub('@@distance_of_date_in_words@@', distance_of_date_in_words(Time.now, self.scadenza))
+    if str.include? '@@distance_of_date_in_words@@'
+      str = str.gsub('@@distance_of_date_in_words@@', distance_of_date_in_words(Time.now, self.scadenza))
+    end
     return str
   end
 
