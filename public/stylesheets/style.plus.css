@@ -2098,6 +2098,7 @@ h3.fs-postheader {
   height: 50px;
   width: 60px;
 }
+*/
 
 .notice-in {
   background: url('/images/ico/flash_notice_s.png') center left no-repeat;
@@ -2111,7 +2112,7 @@ h3.fs-postheader {
 .success-in {
     background: url('/images/ico/flash_success_s.png') center left no-repeat;
 }
-*/
+
 .f-error {
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 1.5em !important;
@@ -4036,4 +4037,8 @@ padding-bottom: 3px;
     line-height: 1.5em;
 
 
+}
+input.inputerror {
+    border: solid 1px red;
+    background-color: #fff3e1;
 }

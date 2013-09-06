@@ -27,7 +27,7 @@ ActionController::Routing::Routes.draw do |map|
   #AJAX get usando JQuery UI autocomplete
   map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle', :conditions => {:method => [:get]}
   #AJAX post usando JQuery
-  map.emailctrl 'emailctrl', :controller => 'services', :action => 'emailctrl', :conditions => {:method => [:post]}
+  map.emailctrl 'emailctrl', :controller => 'services', :action => 'emailctrl', :conditions => {:method => [:get]}
   map.privacy 'privacy', :controller => 'services', :action => 'privacy', :conditions => {:method => [:get]}
   map.condition 'condition', :controller => 'services', :action => 'condition', :conditions => {:method => [:get]}
   map.zone 'zone', :controller => 'services', :action => 'zone', :conditions => {:method => [:get]}
