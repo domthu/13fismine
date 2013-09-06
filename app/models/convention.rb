@@ -113,7 +113,7 @@ class Convention < ActiveRecord::Base
       if (today > renew_deadline)
         return FeeConst::ROLE_RENEW
       else
-        return FeeConst::ABBONATO
+        return FeeConst::ROLE_ABBONATO
       end
     end
     return FeeConst::ROLE_ARCHIVIED

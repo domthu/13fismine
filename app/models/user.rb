@@ -260,10 +260,10 @@ class User < Principal
           renew_deadline = self.scadenza - Setting.renew_days.to_i.days
           if (today > renew_deadline)
             #sta per scadere
-            role_atteso FeeConst::ROLE_RENEW
+            role_atteso = FeeConst::ROLE_RENEW
           else
             #tutto ok
-            role_atteso FeeConst::ABBONATO
+            role_atteso = FeeConst::ROLE_ABBONATO
           end
         end
 

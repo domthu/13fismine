@@ -7,16 +7,29 @@
         <% end %>
       </font>
     </td>
-    <td width="60" valign="bottom" align="right">
+    <td width="60" valign="bottom" align="right"><div style="margin-top: -20px;">
       <% if @user %>
           <%= image_tag(user_myasso_icon(@user, :s, :only_path => false), :width => 48, :height => 48) %>
-      <% end %>
+      <% end %></div>
     </td>
   </tr>
 </table>
    <% if @user.convention &&  !@user.convention.nil? %>
     <table width="560" border="0" cellpadding="0" cellspacing="0">
 
+      <% if !@user.convention.region_id.nil? && @user.convention.region_id > 0 %>
+          <tr>
+            <td width="40%" bgcolor="#ffffff" align="left" style="vertical-align: middle; padding: 2px 5px;">
+              <font style="font-family:Arial, Helvetica, sans-serif; font-size:0.9em; color:#1e1e1e; line-height:14px; font-style:italic;">
+                <%= l(:label_cross_organization) %>    </font></td>
+            <td width="60%" align="left" style="font-weight: bold;">
+              <% if !@user.convention.region_id.nil? && @user.convention.region_id > 0 %>
+                <%= h @user.cross_organization.name %>
+              <% end %>
+              <%= h @user.convention.get_zone %>
+            </td>
+          </tr>
+      <% end %>
       <% if  @user.convention.presidente? %>
           <tr>
             <td width="40%" bgcolor="#ffffff" align="left" style="vertical-align: middle; padding: 5px;">
@@ -35,7 +48,7 @@
               <%= h @user.convention.indirizzo %>    </td>
           </tr>
       <% end %>
-      <% if  @user.convention.comune.name? %>
+      <% if !@user.convention.comune_id.nil? && @user.convention.comune_id > 0 %>
           <tr>
             <td width="40%" bgcolor="#ffffff" align="left" style="vertical-align: middle; padding: 2px 5px;">
               <font style="font-family:Arial, Helvetica, sans-serif; font-size:0.9em; color:#1e1e1e; line-height:14px; font-style:italic;">
