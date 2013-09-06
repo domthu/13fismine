@@ -44,13 +44,17 @@ include ApplicationHelper
 
   def emailctrl
     #Rails.logger.info("json emailctrl")
+    user_id = params[:user_id] ? params[:user_id].to_i : 0
+    if user_id == 0
+      user_id = params[:id] ? params[:id].to_i : 0
+    end
     if params[:term] && params[:field]
       #Rails.logger.info("json emailctrl #{params[:term]} per field #{params[:field]}")
       case params[:field]
-        when 'user_mail'
-          @users = User.count(:conditions => ['mail = ?', "#{params[:term]}"])
-        when 'user_login'
-          @users = User.count(:conditions => ['login = ?', "#{params[:term]}"])
+        when 'user_mail', 'mail'
+          @users = User.count(:conditions => ['NOT id = ? AND mail = ?', user_id, "#{params[:term]}"])
+        when 'user_login', 'login'
+          @users = User.count(:conditions => ['NOT id = ? AND login = ?', user_id, "#{params[:term]}"])
         else
           @users = nil
       end

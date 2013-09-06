@@ -9,7 +9,7 @@
   <div>
     <h2><%= l(:label_abbo) %> <%= link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
     <blockquote>
-      In questa pagina puoi gestire i tuoi<strong> dati di abbonamento</strong>, puoi cambiare i dati di<strong>  login<strong>  e</strong>  password </strong> e anche personalizzare il tuo profilo con una foto come <a target="_blank" href="http://it.wikipedia.org/wiki/Avatar"><strong>Avatar</strong></a>  oppure se in Fiscosport usi una mail registrata su <a target="_blank" href="https://it.gravatar.com/" style="font-weight: bold;"> Gravatar </a> puoi scegliere questa opzione.
+      In questa pagina puoi gestire i tuoi<strong> dati di abbonamento</strong>, puoi cambiare i dati di<strong>  login<strong> e anche personalizzare il tuo profilo con una foto come <a target="_blank" href="http://it.wikipedia.org/wiki/Avatar"><strong>Avatar</strong></a>  oppure se in Fiscosport usi una mail registrata su <a target="_blank" href="https://it.gravatar.com/" style="font-weight: bold;"> Gravatar </a> puoi scegliere questa opzione.
       Ricorda che i campi contrassegnati da <span style="color: red;">*sono obbligatori</span>
     </blockquote>
     <br/>
@@ -65,16 +65,15 @@
             </div>
           </div>
           <div class="fs-abbo-dx1">
+            <%= f.hidden_field :user_id %>
             <% if @user.auth_source_id.nil? %>
+                <p title="la lunghezza massima della login è di 30 caratteri">
+                  login attuale: <%= @user.login %>
+                </p>
                 <p><%= f.text_field :login, :label => l(:field_login) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %>
                   <img id="si_user_login" src="/images/true.png" alt="login disponibile" title="login disponibile" style="display: none;"/><img id="no_user_login" src="/images/false.png" title="login non disponibile. Ci risulta già una registrazione con questo login!" style="display: none;"/>
                 </p>
 
-                <p><%= f.password_field :password, {:style => 'width:60%;', :label => l(:field_password) + " <span class='required'>*</span>", :maxlength => 255} %>
-                  <br/>
-                  <em><%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></em></p>
-
-                <p><%= f.password_field :password_confirmation, {:style => 'width:60%;', :label => l(:field_password_confirmation) + " <span class='required'>*</span>", :maxlength => 255} %></p>
             <% end %>
 
             <div style="width: 69%; margin: 7px 0 0 7px;">
@@ -254,275 +253,278 @@
 -->
 
 <script type="text/javascript">
-    var pageSize = 10;
-    $(document).ready(function () {
-        //HideAvaibility("user_mail");
-        //HideAvaibility("user_login");
+  var pageSize = 10;
+  var userid = 0;
+  $(document).ready(function () {
+      userid =  $("#user_id").val();
+      alert('userid: ' + userid);
+      //HideAvaibility("user_mail");
+      //HideAvaibility("user_login");
 
-        $('input:radio[name="rbt"]').change(function () {
-            var sel = $('input:radio[name="rbt"]:checked').val();
-            $("div.dvrbt").each(function () {
-                if ($(this).attr('id') == sel) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
+      $('input:radio[name="rbt"]').change(function () {
+          var sel = $('input:radio[name="rbt"]:checked').val();
+          $("div.dvrbt").each(function () {
+              if ($(this).attr('id') == sel) {
+                  $(this).show();
+              } else {
+                  $(this).hide();
+              }
+          });
 
-        });
-        //Initial set
-        //var $radios = $('input:radio[name=rbt]');
-        //if($radios.is(':checked') === false) {
-        //    $radios.filter('[value=dv_associato]').prop('checked', true);
-        //}
-        $("input[name=rbt][value=dv_associato]").prop('checked', true);
-        $("#dv_associato").show();
+      });
+      //Initial set
+      //var $radios = $('input:radio[name=rbt]');
+      //if($radios.is(':checked') === false) {
+      //    $radios.filter('[value=dv_associato]').prop('checked', true);
+      //}
+      $("input[name=rbt][value=dv_associato]").prop('checked', true);
+      $("#dv_associato").show();
 
-        $(document).tooltip();
+      $(document).tooltip();
 
-        //  $('#steps').stepy({
-        //      back:undefined, backLabel:'Indietro', block:false, description:false, errorImage:true, finish:undefined, finishButton:true, ignore:'', legend:true, nextLabel:'Avanti', next:undefined, titleClick:false, titleTarget:undefined, select:undefined, validate:false  //Kappao manca alcuni script? jquery validate TypeError: a is undefined
-        //  });
-        $('#user_language').select2({
-            width:'90%',
-            placeholder:"Seleziona il tuo linguagio",
-            allowClear:true
-        });
-        $('#user_titolo').select2({
-            width:'80%',
-            placeholder:"Come rappresenti l'associazione nel quale appartieni. Se ti muovi per conto tuo lasci cosi.",
-            allowClear:true
-        });
-        jQuery.ajaxSetup({
-            'beforeSend':function (xhr) {
-                xhr.setRequestHeader("Accept", "text/javascript")
-            }
-        });
-        $("#user_mail").keyup(function () {
-            if ($("#user_login").val().length <= 0) {
-                $("#user_login").val($(this).val());
-                HideAvaibility("user_login");
-            }
-        });
-        $("#user_mail").blur(function () {
-            if ((($(this).val() + "").length > 0) && ( isValidEmailAddress($(this).val()))) {
-                controlfield($("#user_mail").attr("id"), $(this).val());
-            }
-            else
-                HideAvaibility("user_mail");
-        });
-        //$("#user_login").keyup(function () {
-        $("#user_login").blur(function () {
-            if (($(this).val() + "").length > 1) {
-                controlfield($("#user_login").attr("id"), $(this).val());
-            }
-            else
-                HideAvaibility("user_login");
-        });
-        $('#user_cross_organization_id').select2({
-            width:'98%',
-            placeholder:"Seleziona ... ",
-            allowClear:true
-        });
-        $("#user_cross_organization_id").on('change', function (ev) {
-            //alert('changed usertiposigla --> TODO reload Associations?')
-        });
+      //  $('#steps').stepy({
+      //      back:undefined, backLabel:'Indietro', block:false, description:false, errorImage:true, finish:undefined, finishButton:true, ignore:'', legend:true, nextLabel:'Avanti', next:undefined, titleClick:false, titleTarget:undefined, select:undefined, validate:false  //Kappao manca alcuni script? jquery validate TypeError: a is undefined
+      //  });
+      $('#user_language').select2({
+          width:'90%',
+          placeholder:"Seleziona il tuo linguagio",
+          allowClear:true
+      });
+      $('#user_titolo').select2({
+          width:'80%',
+          placeholder:"Come rappresenti l'associazione nel quale appartieni. Se ti muovi per conto tuo lasci cosi.",
+          allowClear:true
+      });
+      jQuery.ajaxSetup({
+          'beforeSend':function (xhr) {
+              xhr.setRequestHeader("Accept", "text/javascript")
+          }
+      });
+      $("#user_mail").keyup(function () {
+          if ($("#user_mail").val().length <= 0) {
+              $("#user_mail").val($(this).val());
+              HideAvaibility("user_mail");
+          }
+      });
+      $("#user_mail").blur(function () {
+          if ((($(this).val() + "").length > 0) && ( isValidEmailAddress($(this).val()))) {
+              controlfield(userid, $("#user_mail").attr("id"), $(this).val());
+          }
+          else
+              HideAvaibility("user_mail");
+      });
+      //$("#user_login").keyup(function () {
+      $("#user_login").blur(function () {
+          if (($(this).val() + "").length > 1) {
+              controlfield(userid, $("#user_mail").attr("id"), $(this).val());
+          }
+          else
+              HideAvaibility("user_login");
+      });
+      $('#user_cross_organization_id').select2({
+          width:'98%',
+          placeholder:"Seleziona ... ",
+          allowClear:true
+      });
+      $("#user_cross_organization_id").on('change', function (ev) {
+          //alert('changed usertiposigla --> TODO reload Associations?')
+      });
 
-        $("#extra_organismo_select").select2({
-            width:'80%',
-            placeholder:"Ricerca la tua associazione e la sua relativa federazione ed organismo",
-            minimumInputLength:3,
-            ajax:{
-                url:'<%= organismi_path %>',
-                dataType:'json', //'jsonp',
-                quietMillis:500,
-                data:function (term, page) { // page is the one-based page number tracked by Select2
-                    return {
-                        term:term, //search term
-                        page_limit:pageSize, // page size
-                        page:page//, // page number
+      $("#extra_organismo_select").select2({
+          width:'80%',
+          placeholder:"Ricerca la tua associazione e la sua relativa federazione ed organismo",
+          minimumInputLength:3,
+          ajax:{
+              url:'<%= organismi_path %>',
+              dataType:'json', //'jsonp',
+              quietMillis:500,
+              data:function (term, page) { // page is the one-based page number tracked by Select2
+                  return {
+                      term:term, //search term
+                      page_limit:pageSize, // page size
+                      page:page//, // page number
 
-                    };
-                },
-                results:function (data, page) {
-                    //alert(data);
-                    var more = (page * pageSize) < data.total; // whether or not there are more results available
-                    //var data_jsonp = [];
-                    //$.each(data.organismi, function (index, value) {
-                    //    //alert(index + ': ' + value);
-                    //    var elmt = {
-                    //        id:value.id,
-                    //        text:value.text
-                    //    }
-                    //    data_jsonp.push(elmt);
-                    //});
-                    // notice we return the value of more so Select2 knows if more results can be loaded
-                    //data.organismi.replace('''text''', 'text').replace('''id''', 'id')
-                    return {results:data.organismi, more:more};
-                    //return {results: data_jsonp, more: more};
-                }
-            },
-            formatResult:FormatOrga, // omitted for brevity, see the source of this page
-            formatSelection:OrgaSelection, // omitted for brevity, see the source of this page
-            dropdownCssClass:"bigdrop", // apply css that makes the dropdown taller
-            escapeMarkup:function (m) {
-                return m;
-            } // we do not want to escape markup since we are displaying html in results
-        });
+                  };
+              },
+              results:function (data, page) {
+                  //alert(data);
+                  var more = (page * pageSize) < data.total; // whether or not there are more results available
+                  //var data_jsonp = [];
+                  //$.each(data.organismi, function (index, value) {
+                  //    //alert(index + ': ' + value);
+                  //    var elmt = {
+                  //        id:value.id,
+                  //        text:value.text
+                  //    }
+                  //    data_jsonp.push(elmt);
+                  //});
+                  // notice we return the value of more so Select2 knows if more results can be loaded
+                  //data.organismi.replace('''text''', 'text').replace('''id''', 'id')
+                  return {results:data.organismi, more:more};
+                  //return {results: data_jsonp, more: more};
+              }
+          },
+          formatResult:FormatOrga, // omitted for brevity, see the source of this page
+          formatSelection:OrgaSelection, // omitted for brevity, see the source of this page
+          dropdownCssClass:"bigdrop", // apply css that makes the dropdown taller
+          escapeMarkup:function (m) {
+              return m;
+          } // we do not want to escape markup since we are displaying html in results
+      });
 
-        var urlzoneextend = '<%= zone_extend_path %>';
-        $("#extra_town").select2({
-            width:'98%',
-            placeholder:"Cerca qui la città... ",
-            minimumInputLength:2, //multiple: true,
-            ajax:{
-                url:urlzoneextend,
-                quietMillis:400,
-                dataType:'json',
-                data:function (term, page) {
-                    return {
-                        term:term,
-                        page_limit:pageSize,
-                        page:page
-                    };
-                },
-                results:function (data, page) {
-                    var more = (page * pageSize) < data.total;
-                    return {results:data.citta, more:more};
-                }
-            },
-            formatResult:FormatCitta,
-            formatSelection:CittaSelection,
-            dropdownCssClass:"bigdrop",
-            escapeMarkup:function (m) {
-                return m;
-            }
-        });
+      var urlzoneextend = '<%= zone_extend_path %>';
+      $("#extra_town").select2({
+          width:'98%',
+          placeholder:"Cerca qui la città... ",
+          minimumInputLength:2, //multiple: true,
+          ajax:{
+              url:urlzoneextend,
+              quietMillis:400,
+              dataType:'json',
+              data:function (term, page) {
+                  return {
+                      term:term,
+                      page_limit:pageSize,
+                      page:page
+                  };
+              },
+              results:function (data, page) {
+                  var more = (page * pageSize) < data.total;
+                  return {results:data.citta, more:more};
+              }
+          },
+          formatResult:FormatCitta,
+          formatSelection:CittaSelection,
+          dropdownCssClass:"bigdrop",
+          escapeMarkup:function (m) {
+              return m;
+          }
+      });
 
-        //privacy
-        $("#ainformativa").click(function (e) {
-            Inform(e);
-            return false
-        });
-        $('#informativa').dialog({
-            autoOpen:false,
-            width:700,
-            show:"blind",
-            hide:"explode",
-            height:550,
-            resizable:true,
-            draggable:true,
-            title:'Informativa',
-            bgiframe:true,
-            modal:true,
-            open:function (event, ui) {
-                $(this).load(url_inf);
-            },
-            buttons:{
-                "Acconsento":function () {
-                    $('#user_se_privacy').prop('checked', true);
-                    $(this).dialog("close");
-                },
-                "Chiudi":function () {
-                    $(this).dialog("close");
-                }
-            }
-        });
-        //Condition
-        $("#acondizioni").click(function (e) {
-            Leggi(e);
-            return false
-        });
-        $('#condizioni').dialog({
-            autoOpen:false,
-            width:700,
-            height:550,
-            resizable:true,
-            draggable:true,
-            title:'Condizioni di utilizzo',
-            bgiframe:true,
-            modal:true,
-            open:function (event, ui) {
-                $(this).load(url_cond);
-                $('.ui-widget-overlay').bind('click', function () {
-                    $('#condizioni').dialog('close');
-                })
-            },
-            buttons:{
-                "Ho letto":function (ev, ui) {
-                    $('#user_se_condition').prop('checked', true);
-                    $(this).dialog("close");
-                },
-                "Chiudi":function () {
-                    $(this).dialog("close");
-                }
-            }
-        });
+      //privacy
+      $("#ainformativa").click(function (e) {
+          Inform(e);
+          return false
+      });
+      $('#informativa').dialog({
+          autoOpen:false,
+          width:700,
+          show:"blind",
+          hide:"explode",
+          height:550,
+          resizable:true,
+          draggable:true,
+          title:'Informativa',
+          bgiframe:true,
+          modal:true,
+          open:function (event, ui) {
+              $(this).load(url_inf);
+          },
+          buttons:{
+              "Acconsento":function () {
+                  $('#user_se_privacy').prop('checked', true);
+                  $(this).dialog("close");
+              },
+              "Chiudi":function () {
+                  $(this).dialog("close");
+              }
+          }
+      });
+      //Condition
+      $("#acondizioni").click(function (e) {
+          Leggi(e);
+          return false
+      });
+      $('#condizioni').dialog({
+          autoOpen:false,
+          width:700,
+          height:550,
+          resizable:true,
+          draggable:true,
+          title:'Condizioni di utilizzo',
+          bgiframe:true,
+          modal:true,
+          open:function (event, ui) {
+              $(this).load(url_cond);
+              $('.ui-widget-overlay').bind('click', function () {
+                  $('#condizioni').dialog('close');
+              })
+          },
+          buttons:{
+              "Ho letto":function (ev, ui) {
+                  $('#user_se_condition').prop('checked', true);
+                  $(this).dialog("close");
+              },
+              "Chiudi":function () {
+                  $(this).dialog("close");
+              }
+          }
+      });
 
-    }); //end hquery document ready
+  }); //end hquery document ready
 
-    function isValidEmailAddress(emailAddress) {
-        var pattern = new RegExp(/^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i);
-        return pattern.test(emailAddress);
-    }
-    function HideAvaibility(id) {
-        $("#no_" + id).hide();
-        $("#si_" + id).hide();
-    }
-    var urlctrl = '<%= emailctrl_path %>';
-    function controlfield(id, val) {
-        $.post(urlctrl, { field:id, term:val },
-                function (data) {
-                    data = data || {};
-                    if (data.success) {
-                        //OnSuccess
-                        if (data.available) {
-                            js_flash("notice", "Controllo del campo " + id + " per il valore (" + val + ") disponibile");
-                            $("#no_" + id).hide('explode', {}, 450);
-                            var obj = $("#si_" + id);
-                            setTimeout(function () {
-                                obj.show('fade', {}, 'slow');
-                            }, 500);
-                        }
-                        if (data.unavailable) {
-                            js_flash("alert", "Controllo del campo " + id + " per il valore (" + val + ") NON disponibile");
-                            $("#si_" + id).hide('puff', {}, 450);  //'fast'
-                            var obj = $("#no_" + id);
-                            setTimeout(function () {
-                                obj.show('fade', {}, 'slow');
-                            }, 500);
-                        }
-                    } else if (data.errors) {
-                        data.errors += "Controllo del campo " + id + " per il valore (" + val + ")";
-                        js_flash("error", data.errors);
-                    }
-                }
-        );
-    }
-    var url_cond = '<%= condition_path %>';
-    function Leggi(e) {
-        $("#condizioni").dialog('open');
-        return false;
-    }
-    var url_inf = '<%= privacy_path %>';
-    function Inform(e) {
-        $("#informativa").dialog("open");
-        return false;
-    }
-    function FormatOrga(organismi) {
-        return '<div>' + organismi.label + '</div>';
-    }
-    function OrgaSelection(data) {
-        $('#extra_cross_select').val(data.hiddenvalue_cross);
-        return data.value;
-    }
-    function FormatCitta(Citta) {
-        return '<div>' + Citta.label + '</div>';
-    }
-    function CittaSelection(Citta) {
-        $('#user_comune_id').val(Citta.id);
-        return Citta.value;
-    }
+  function isValidEmailAddress(emailAddress) {
+      var pattern = new RegExp(/^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i);
+      return pattern.test(emailAddress);
+  }
+  function HideAvaibility(id) {
+      $("#no_" + id).hide();
+      $("#si_" + id).hide();
+  }
+  var urlctrl = '<%= emailctrl_path %>';
+  function controlfield(id, name, val) {
+      $.post(urlctrl, { user_id: id, field:name, term:val },
+              function (data) {
+                  data = data || {};
+                  if (data.success) {
+                      //OnSuccess
+                      if (data.available) {
+                          js_flash("notice", "Controllo del campo " + id + " per il valore (" + val + ") disponibile");
+                          $("#no_" + id).hide('explode', {}, 450);
+                          var obj = $("#si_" + id);
+                          setTimeout(function () {
+                              obj.show('fade', {}, 'slow');
+                          }, 500);
+                      }
+                      if (data.unavailable) {
+                          js_flash("alert", "Controllo del campo " + id + " per il valore (" + val + ") NON disponibile");
+                          $("#si_" + id).hide('puff', {}, 450);  //'fast'
+                          var obj = $("#no_" + id);
+                          setTimeout(function () {
+                              obj.show('fade', {}, 'slow');
+                          }, 500);
+                      }
+                  } else if (data.errors) {
+                      data.errors += "Controllo del campo " + id + " per il valore (" + val + ")";
+                      js_flash("error", data.errors);
+                  }
+              }
+      );
+  }
+  var url_cond = '<%= condition_path %>';
+  function Leggi(e) {
+      $("#condizioni").dialog('open');
+      return false;
+  }
+  var url_inf = '<%= privacy_path %>';
+  function Inform(e) {
+      $("#informativa").dialog("open");
+      return false;
+  }
+  function FormatOrga(organismi) {
+      return '<div>' + organismi.label + '</div>';
+  }
+  function OrgaSelection(data) {
+      $('#extra_cross_select').val(data.hiddenvalue_cross);
+      return data.value;
+  }
+  function FormatCitta(Citta) {
+      return '<div>' + Citta.label + '</div>';
+  }
+  function CittaSelection(Citta) {
+      $('#user_comune_id').val(Citta.id);
+      return Citta.value;
+  }
 </script>
 
 <div class="clearfix"></div>
