@@ -14,7 +14,7 @@
     </blockquote>
     <br/>
   </div>
-  <p><%= link_to(l(:button_show_profile), my_profile_show_url, :class => 'button-grey') %></p>
+  <p><%= link_to(l(:button_show_profile), :action => 'page', :class => 'button-grey') %></p>
 
   <!------  inizio ------ -->
     <% labelled_form_for @user, :url => my_profile_edit_url, :html => {:method => :post, :class => "register tabular", :class => "step" , :multipart => true} do |f| %>

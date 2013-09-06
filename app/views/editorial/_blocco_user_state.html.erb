@@ -1,4 +1,4 @@
-<% if User.current.logged?  %>
+<% if User.current.logged? &&  !User.current.state.empty?  %>
   <div class="fs-block clearfix">
     <!--
     <div class="fs-blockheader">
