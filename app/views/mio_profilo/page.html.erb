@@ -1,314 +1,97 @@
 <style>
-    .thumb {height: 200px;}
+    .thumb {
+        height: 200px;
+    }
 </style>
 <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
-<article class="fs-post fs-article" style="width: 100%;">
-<div class="fs-postcontent clearfix">
-<div class="fs-content-layout">
-<div class="fs-content-layout-row">
-  <div>
-    <h2><%= l(:label_abbo) %> <%= link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
-    <blockquote>
-      <strong>Il tuo profilo personale</strong>, puoi cambiare i dati di<strong>  login<strong>  e</strong>  password </strong> e anche personalizzare il tuo profilo con una foto come <a target="_blank" href="http://it.wikipedia.org/wiki/Avatar"><strong>Avatar</strong></a>  oppure se in Fiscosport usi una mail registrata su <a target="_blank" href="https://it.gravatar.com/" style="font-weight: bold;"> Gravatar </a> puoi scegliere questa opzione.
-      Ricorda che i campi contrassegnati da <span style="color: red;">*sono obbligatori</span>
-    </blockquote>
-    <br/>
-  </div>
-  <% if User.current == @user || User.current.admin? %>
-    <p><%= link_to(l(:button_edit_profile), my_profile_edit_url, :class => 'button-grey') %></p>
-  <% end %>
-  <% if User.current == @user %>
-    <p><%= link_to(l(:button_change_password), url_for({:controller=>"account", :action=>"lost_password"}), :class => 'button-grey') %></p>
-  <% end %>
-  <!------  inizio ------ -->
-    <% labelled_form_for @user, :url => my_profile_show_url, :html => {:method => :post, :class => "register tabular", :class => "step" , :multipart => true} do |f| %>
-        <%= error_messages_for 'user' %>
-    <fieldset class="fs-abbo-fields">
-      <legend title="Il tuo Abbonamento"> Il tuo Abbonamento e la tua Immagine</legend>
-    <div style="float:left; margin: 10px; padding: 10px; height: 30px; font-weight: bold; line-height: 2em; font-size: 1.3em; width: 95%;"  >
-   Tipo di Abbonamento :   <%= get_status_role(User.current) %>   |  valido fino al:  <%= User.current.scadenza_fra  %>
-      <hr>
-    </div>
+  <article class="fs-post fs-article" style="width: 100%;">
+    <div class="fs-postcontent clearfix">
+      <div class="fs-content-layout">
+        <div class="fs-content-layout-row">
+          <div>
+            <h2><%= l(:label_abbo) %> <%= link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
+            <blockquote>
+              <strong>Il tuo profilo personale</strong> <br />
+               <%= get_status_role(User.current) %><br />Validità: <strong> <%= User.current.scadenza_fra  %></strong>
+            </blockquote>
+            <br/>
+          </div>
+          <p style="width: 100%;">
+            <% if User.current == @user || User.current.admin? %>
+                <%= link_to l(:button_edit_profile), my_profile_edit_url, :class => 'fs-rosso-button' %>
+            <% end %>
+            <% if User.current == @user %>
+                <span style="float: right;"><%= link_to(l(:button_change_password), url_for({:controller => "account", :action => "lost_password"}), :class => 'fs-blu-button') %> </span>
+            <% end %>
+          </p>
+          <!------  inizio ------ -->
+          <div class="fs-layout-cell fs-content clearfix">
+            <% if !@user.nil? %>
+                <div class="fs-content-layout post-layout-item-0" style="width: 99%">
+                  <div class="fs-content-layout-row">
+                    <div class="fs-layout-cell post-layout-item-3" style="width: 100%">
+                      <article class="fs-post-profile fs-article">
+                        <div class="fs-profiles-sx">
+                          <%= @user.my_avatar(:l) %>
+                        </div>
 
-      <div class="clearfix"></div>
-    <div class="fs-abbo-sx1 fs-profiles-esx-btn" style="margin-left: 10%;">
-       <label><%= f.radio_button :use_gravatar,true, {:checked => @user.use_gravatar == true,  :onchange => "funct_avatar('g','fs-photo-edit','user_use_gravatar_true');"} %> <%= 'Usa mail su Gravatar' %></label><br/>
-          <label><%= f.radio_button :use_gravatar,false, {:checked => @user.use_gravatar == false,  :onchange => "funct_avatar('a','fs-photo-edit','user_use_gravatar_false');"} %> <%= 'Usa tua immagine Avatar' %></label><br/>
-      <%= f.file_field :photo, :id=> "uphoto"   %>
-     </div>
-    <div id="fs-photo-edit" class="fs-abbo-dx1">
-            <% if @user.use_gravatar.nil? || @user.use_gravatar == 1 %>
-                <%= '<div id="fs-photo-edit-a" style="display:none;">' + image_tag(@user.photo.url(:l)) + '</div>
-                             <div id="fs-photo-edit-g" style="display:block;">' + gravatar_for(@user, :size => 120) + ' </div>' %>
+
+                        <h3><%= (@user.firstname unless !@user.firstname) + ' ' + (@user.lastname unless !@user.lastname) %></h3>
+
+                        <p><%= h @user.login %></p>
+
+                        <p><%= h @user.mail %></p>
+
+                        <p>&nbsp;</p>
+
+                        <div class="fs-profiles-cx">
+                          <% unless @user.telefono.blank? %>
+                              <p><span> telefono </span>&nbsp;
+                                <%= h @user.telefono %></p>
+                          <% end %>
+
+                          <% unless @user.mail.blank? %>
+                              <p><span> e-mail </span>&nbsp;
+                                <%= h @user.mail %></p>
+                          <% end %>
+
+                          <% unless @user.fax.blank? %>
+                              <p><span> fax </span>&nbsp;
+                                <%= h @user.fax %></p>
+                          <% end %>
+
+                          <% unless @user.comune.blank? %>
+                              <p><span> fax </span>&nbsp;
+                                <%= h @user.comune %></p>
+                          <% end %>
+
+                        </div>
+                        <div class="cleared"></div>
+                        <div class="fs-profiles-bt">
+
+                        </div>
+
+                      </article>
+                      <br/>&nbsp; <br/>
+
+                      <% if (User.current.admin? || User.current.ismanager?) && @profiles_hidden.count > 0 %>
+                          <article class="fs-post-profile fs-article">
+                            <div id="fs-profiles-all">
+
+                            </div>
+                          </article>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
             <% else %>
-                <%= '<div id="fs-photo-edit-a" style="display:block;">' + image_tag(@user.photo.url(:l)) + '</div>
-                             <div id="fs-photo-edit-g" style="display:none;">' + gravatar_for(@user, :size => 120) + ' </div>' %>
-            <% end %>
-          </div> </fieldset>
-    <br />
-      <div class="clearfix"></div>
-        <fieldset class="fs-abbo-fields">
-          <legend title="Anagrafica"> Dati personali e di accesso</legend>
-          <div class="fs-abbo-sx1">
-            <p style="margin-bottom: 7px;"><label><%= l(:field_nome) %></label></p>
-
-            <p><%= f.text_field :firstname, :label => l(:field_firstname) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %></p>
-
-            <p><%= f.text_field :lastname, :label => l(:field_lastname) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %></p>
-
-            <p><%= f.text_field :mail, :label => l(:field_mail) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %>
-              <img id="si_user_mail" src="/images/true.png" alt="Anagrafica disponibile" title="Anagrafica disponibile" style="display: none;"/>
-
-            <div id="no_user_mail" style="display: none;">
-              <img src="/images/false.png" alt="Anagrafica non disponibile. Ci risulta già una registrazione con questa Anagrafica!" title="Anagrafica non disponibile. Ci risuta già una registrazione con questa Anagrafica!"/><br/>
-
-              <p class="fe-alert-in"> Informazione già presente nel server: Sei già registrato? Usi
-                il <%= link_to l(:label_login), :signin %> per accedere di nuovo. Se hai
-                problemi <%= link_to 'Contattaci', contattaci_path %>. </p>
-
-            </div>
-          </div>
-          <div class="fs-abbo-dx1">
-            <% if @user.auth_source_id.nil? %>
-                <p><%= f.text_field :login, :label => l(:field_login) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %>
-                  <img id="si_user_login" src="/images/true.png" alt="login disponibile" title="login disponibile" style="display: none;"/><img id="no_user_login" src="/images/false.png" title="login non disponibile. Ci risulta già una registrazione con questo login!" style="display: none;"/>
-                </p>
-
-                <p><%= f.password_field :password, {:style => 'width:60%;', :label => l(:field_password) + " <span class='required'>*</span>", :maxlength => 255} %>
-                  <br/>
-                  <em><%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></em></p>
-
-                <p><%= f.password_field :password_confirmation, {:style => 'width:60%;', :label => l(:field_password_confirmation) + " <span class='required'>*</span>", :maxlength => 255} %></p>
-            <% end %>
-
-            <div style="width: 69%; margin: 7px 0 0 7px;">
-              <p><%= f.select :language, lang_options_for_select %></p>
-
-            </div>
-            <% if Setting.openid? %>
-                <p><label for="user_identity_url"><%= l(:field_identity_url) %></label>
-                  <%= f.text_field :identity_url %></p>
-            <% end %>
-
-            <% @user.custom_field_values.select { |v| v.editable? || v.required? }.each do |value| %>
-                <p><%= custom_field_tag_with_label :user, value %></p>
+                <!--  <div id="fs-flash-notice">Informazione del profilo non trovata</div> -->
             <% end %>
           </div>
-          <p class="notice-in fs-flash-in" style="width: 99%;"><%= l(:field_username_as_email) %></p>
-          &nbsp;<br/>
-        </fieldset>
-        <!--[eoform:user]-->
-        <div class="clearfix"></div>
-        <br/>
-        <!--INIZIO dv_societario -->
 
-        <fieldset class="fs-abbo-fields">
-          <legend title="Anagrafica Abbonamento"> Dati dell'abbonamento</legend>
-          <div class="fs-abbo-sx1">
-            <p><%= f.select :titolo, options_for_select(["Altro", "Presidente", "Tesoriere", "Professionista", "Consigliere", "Segretario", "Delegato", "Dirigente", "Amministratore", "Operatore", "Libero professionista", "Tecnico/Dirigente", "Consigliere", "Socio", "Associato", "Studente", "Vice-presidente", "Responsabile Amministrativo", "Vice Presidente Regionale", "Impiegata", "Avvocato", "Consulente", "Responsabile"], "Responsabile") %></p>
-          </div>
-
-          <!--<h4>Cerca se la tua sigla, organismo, associazione è già affiliata a Fiscosport.</h4>   -->
-          <div class="clearfix"></div>
-
-          <p><%= f.text_area :soc, :label => l(:field_soc) + " <span class='required'>*</span>", :placeholder => "Indicare la ragione sociale dell' associazione, dello studio o il titolare dell'abbonamento ...", :style => "width:98%; height: 40px", :maxlength => 255 %></p>
-
-          <div class="flash notice hide"><%= l(:field_soc) %></div>
-          <div class="fs-abbo-sx1">
-
-            <p><%= f.text_field :codicefiscale, {:style => 'width:60%;', :label => l(:field_codicefiscale) + " <span class='required'>*</span>", :maxlength => 30} %></p>
-          </div>
-          <div class="fs-abbo-dx1">
-            <p><%= f.text_field :partitaiva, {:style => 'width:60%;', :label => l(:field_partitaiva), :maxlength => 30} %></p>
-          </div>
-          <div class="fs-abbo-sx1">
-            <p><%= f.text_area :indirizzo, :label => l(:field_indirizzo) + " <span class='required'>*</span>", :placeholder => "Indicare solo la via e il numero civico ...", :style => "width:94%; height: 80px" %></p>
-          </div>
-          <div class="fs-abbo-dx1">
-
-            <div style="margin-left: 7px;">
-              <label for="user_comune_id"><%= l(:field_comune) %><span class="required">*</span></label>
-              <%= f.hidden_field :comune_id, {:style => 'width:99%;'} %>
-              <%= text_field_tag "extra_town" %>
-              <p class="notice-in fs-flash-in" style="text-align: left; padding: 18px 40px;">Digitare almeno 2
-                caratteri per iniziare la ricerca. Usa la rotella per caricare altre risposte possibili
-              </p>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-          <div class="fs-abbo-sx1">
-            <p><%= f.text_field :telefono, {:style => 'width:60%;', :label => l(:field_telefono), :maxlength => 30} %></p>
-          </div>
-          <div class="fs-abbo-dx1">
-            <p><%= f.text_field :fax, {:style => 'width:60%;', :label => l(:field_fax), :maxlength => 30} %></p>
-          </div>
-          <br/>
-        </fieldset>
-        <!--FINE dv_dati societari -->
-        <div class="clearfix"></div>
-        <br/>
-        <!--INIZIO dv_verifica convenzioni -->
-        <fieldset class="fs-abbo-fields">
-          <legend title="Anagrafica Abbonamento">Convenzioni</legend>
-          <div class="fs-abbo-sx1">
-            <h1>Convenzioni sportive </h1>
-
-            <div class="notice-in fs-flash-in"> Cerca la tua organizzazione sportiva qui sotto.</div>
-            <div style="width:98%; margin-left: 7px;">
-              <%= f.select :cross_organization_id, options_for_select(CrossOrganization.find(
-                                                                              :all,
-                                                                              :joins => [:type_organization],
-                                                                              :order => 'type_organizations.tipo, sigla').collect { |c| ["#{c.type_organization.tipo} :: #{c.sigla}", c.id] }),
-                           :include_blank => true,
-                           :required => false %>
-
-              <p style="padding: 1px 20px;">
-                <% TypeOrganization.all.each do |tipo| %>
-                    <small><%= tipo.descrizione %></small>
-                    &nbsp; &nbsp;&nbsp;&nbsp;
-                <% end %>
-              </p>
-            </div>
-
-
-          </div>
-
-
-          <div class="fs-abbo-dx1">
-            <h1>Altre convenzioni </h1>
-
-            <div class="notice-in fs-flash-in"> Se hai un codice di attivazione inseriscilo qui sotto.
-            </div>
-            <p><%= f.text_field :codice_attivazione, {:style => 'width:89%;', :label => l(:label_codice_attivazione), :maxlength => 255} %></p>
-          </div>
-          <br/>
-
-        </fieldset>
-        <!--FINE dv_convenzioni -->
-        &nbsp;<br/>
-
-        <div class="clearfix"></div>
-        <div class="fs-abbo-bottom">
-          <div class="fs-abbo-sx1">
-            <p>
-              <label><%= f.check_box :se_condition, :label => l(:field_language) + " <span class='required'>*</span>" %> <%= l(:field_se_condition_readed) %></label>
-            </p>
-
-            <p>Leggo le <a href='#' id='acondizioni' class='pri'><b>condizioni di utilizzo</b></a></p>
-
-            <div id="condizioni" title="Condizioni di utilizzo" class="hidden" style="overflow: hidden;"></div>
-          </div>
-          <div class="fs-abbo-dx1">
-            <p>
-              <label><%= f.check_box :se_privacy, :label => l(:field_se_privacy) + " <span class='required'>*</span>" %> <%= l(:field_se_privacy_accept) %></label>
-            </p>
-
-            <p>Acconsento al <a href='#' id='ainformativa' class='pri'><b>trattamento dei dati</b></a></p>
-          </div>
-          <div id="informativa" title="Informativa" class="hidden" style="overflow: hidden;">
-          </div>
         </div>
-        <div class="clearfix"></div>
-
-        <div id="pops" title="" class="hidden" style="overflow: hidden;"></div>
-    <% end %>
-
-  </div>
+      </div>
+    </div>
+    </article>
 </div>
-</div>
-<br/>
-</article>
-<div class="clearfix"></div>
-<br/>
-</div>
-<script type="text/javascript">
-    //preview  uploaded image
-    document.getElementById('uphoto').addEventListener('change', function (event) {
-                if (!event) // i.e. the argument is undefined or null
-                    event = window.event;
-                handleFileSelect_fs(event, 'fs-photo-edit', 'user_use_gravatar_false')
-            }, false
-
-    );
-
-</script>
-<script type="text/javascript">
-    var pageSize = 10;
-    $(document).ready(function () {
-        $("input[name=rbt][value=dv_associato]").prop('checked', true);
-        $("#dv_associato").show();
-        $(document).tooltip();
-
-        //privacy
-        $("#ainformativa").click(function (e) {
-            Inform(e);
-            return false
-        });
-        $('#informativa').dialog({
-            autoOpen:false,
-            width:700,
-            show:"blind",
-            hide:"explode",
-            height:550,
-            resizable:true,
-            draggable:true,
-            title:'Informativa',
-            bgiframe:true,
-            modal:true,
-            open:function (event, ui) {
-                $(this).load(url_inf);
-            },
-            buttons:{
-                "Acconsento":function () {
-                    $('#user_se_privacy').prop('checked', true);
-                    $(this).dialog("close");
-                },
-                "Chiudi":function () {
-                    $(this).dialog("close");
-                }
-            }
-        });
-        //Condition
-        $("#acondizioni").click(function (e) {
-            Leggi(e);
-            return false
-        });
-        $('#condizioni').dialog({
-            autoOpen:false,
-            width:700,
-            height:550,
-            resizable:true,
-            draggable:true,
-            title:'Condizioni di utilizzo',
-            bgiframe:true,
-            modal:true,
-            open:function (event, ui) {
-                $(this).load(url_cond);
-                $('.ui-widget-overlay').bind('click', function () {
-                    $('#condizioni').dialog('close');
-                })
-            },
-            buttons:{
-                "Ho letto":function (ev, ui) {
-                    $('#user_se_condition').prop('checked', true);
-                    $(this).dialog("close");
-                },
-                "Chiudi":function () {
-                    $(this).dialog("close");
-                }
-            }
-        });
-
-    }); //end hquery document ready
-    function Leggi(e) {
-        $("#condizioni").dialog('open');
-        return false;
-    }
-    var url_inf = '<%= privacy_path %>';
-    function Inform(e) {
-        $("#informativa").dialog("open");
-        return false;
-    }
-</script>
-
-<div class="clearfix"></div>

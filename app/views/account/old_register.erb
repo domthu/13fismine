@@ -490,7 +490,7 @@
     }
     var urlctrl = '<%= emailctrl_path %>';
     function controlfield(id, val) {
-        $.post(urlctrl, { field:id, term:val },
+        $.get(urlctrl, { field:id, term:val },
                 function (data) {
                     data = data || {};
                     if (data.success) {

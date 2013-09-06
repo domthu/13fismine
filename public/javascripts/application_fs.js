@@ -52,17 +52,18 @@ function handleFileSelect_fs(evt, grav_id, radio_button_id) {
       funct_avatar('a', grav_id, radio_button_id);
     }
 }
+
 function js_flash(tipo, txt) {
-  //fs-flash
-  s = "";
-  if ($.isArray(txt)) {
-      $.each(txt, function (index, value) {
-          s += '<p> <span class="' + tipo + '"></span>' + value + '</p>'
-      });
-  } else {
-      s += '<p> <span class="' + tipo + '"></span>' + txt + '</p>'
-  }
-  $("#fs-flash").html(s).focus();  //la focus fa la show e il center_me
+    //fs-flash
+    s = "";
+    if ($.isArray(txt)) {
+        $.each(txt, function (index, value) {
+            s += '<p class="f-' + tipo + '"><span class="i-' + tipo +'"> </span>' + txt + '</p><div id="fs-flash-close-me"> clicca per chiudere</div>'
+        });
+    } else {
+        s +=  '<p class="f-' + tipo + '"><span class="i-' + tipo  +'"> </span>' +  txt + '</p><div id="fs-flash-close-me"> clicca per chiudere</div>'
+    }
+    $("#fs-flash").html(s).focus();  //la focus fa la show e il center_me
 }
  /*
 jQuery.fn.center_me = function () {
