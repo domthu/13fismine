@@ -271,7 +271,7 @@ class AccountController < ApplicationController
               self.logged_user = @user
               @stat += l(:notice_account_activated)
             else
-              puts "********************Prova self_registration 3 KAPPAO (" + @errors + ")********************"
+              #puts "********************Prova self_registration 3 KAPPAO (" + @errors + ")********************"
               @stat += " Creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente</span>"
             end
 
@@ -284,7 +284,7 @@ class AccountController < ApplicationController
               Mailer.deliver_account_activation_request(user)
               account_pending
             else
-              puts "********************Prova self_registration other KAPPAO (" + @errors + ")********************"
+              #puts "********************Prova self_registration other KAPPAO (" + @errors + ")********************"
               @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
             end
 
@@ -456,7 +456,8 @@ class AccountController < ApplicationController
            flash[:notice] = "Periodo di prova valido ancora per " + distance_of_date_in_words(user.scadenza, Time.now)
         end
         if user.isrenewing?
-           flash[:notice] = "Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, self.scadenza) + "<br />Rinnovare l'abbonamento."
+           send_notice("Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, self.scadenza))
+           send_notice("Rinnovare l'abbonamento.")
         end
       end
       #Rails.logger.info("login ok membro")
@@ -486,11 +487,7 @@ class AccountController < ApplicationController
 
   def invalid_credentials
     logger.warn "Failed login for '#{params[:username]}' from #{request.remote_ip} at #{Time.now.utc}"
-    if flash[:error].nil?
-      flash.now[:error] = l(:notice_account_invalid_creditentials)
-    else
-      flash[:error] += '<br />' + l(:notice_account_invalid_creditentials)
-    end
+    send_error(l(:notice_account_invalid_creditentials)) #ApplicationController
   end
 
   # Register a user for email activation.

@@ -712,8 +712,8 @@ class EditorialController < ApplicationController
   end
 
   def reroute_log(who)
-    #"<b>" + who + "</b>
-    flash[:notice] =  "Per accedere al contenuto devi essere autenticato <br /> Fai il login per favore... Se non hai abbonamento, registrati ora!"
+    send_notice("Per accedere al contenuto devi essere autenticato")
+    send_notice("Fai il login per favore... Se non hai abbonamento, registrati ora!")
     #redirect_to(signin_path)
     redirect_to(page_abbonamento_path)
   end

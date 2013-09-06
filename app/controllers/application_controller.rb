@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -585,4 +585,29 @@ class ApplicationController < ActionController::Base
   def pick_layout(*args)
     api_request? ? nil : super
   end
+
+  #array of messages
+  def send_warning(msg)
+    if flash[:warning].nil?
+      flash[:warning] = msg
+    else
+      flash[:warning] += "<br />" + msg
+    end
+  end
+  def send_notice(msg)
+    if flash[:notice].nil?
+      flash[:notice] = msg
+    else
+      flash[:notice] += "<br />" + msg
+    end
+  end
+  def send_error(msg)
+    if flash[:error].nil?
+      flash[:error] = msg
+    else
+      flash[:error] += "<br />" + msg
+    end
+  end
+
+
 end

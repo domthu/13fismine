@@ -288,26 +288,4 @@ class NewslettersController < ApplicationController
       redirect_to :action => 'invii', :project_id => @project.id.to_s
     end
 
-    def send_warning(msg)
-      if flash[:warning].nil?
-        flash[:warning] = msg
-      else
-        flash[:warning] += "<br />" + msg
-      end
-    end
-    def send_notice(msg)
-      if flash[:notice].nil?
-        flash[:notice] = msg
-      else
-        flash[:notice] += "<br />" + msg
-      end
-    end
-    def send_error(msg)
-      if flash[:error].nil?
-        flash[:error] = msg
-      else
-        flash[:error] += "<br />" + msg
-      end
-    end
-
 end

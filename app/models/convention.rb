@@ -77,14 +77,14 @@ class Convention < ActiveRecord::Base
 
   def get_zone
     str = ""
-    if self.region.nil?
-      if self.province.nil?
+    if self.province.nil? #iniziare dalla provincia
+      if self.region.nil?
         str << " Nazionale"
       else
-        str << " Provinciale (" + self.province.name + ")"
+        str << "Regionale (" + self.region.name + ")"
       end
     else
-      str << "Regionale (" + self.region.name + ")"
+      str << " Provinciale (" + self.province.name + ")"
     end
     return str
   end

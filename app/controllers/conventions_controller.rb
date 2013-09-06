@@ -89,9 +89,58 @@ class ConventionsController < ApplicationController
   # POST /conventions.xml
   def create
     @conv = Convention.new(params[:convention])
-
+    if (!@conv.codice_attivazione.empty?)
+      @conv.codice_attivazione = @conv.codice_attivazione.downcase!
+    end
     respond_to do |format|
       if @conv.save
+
+        #STEP1/2 find susceptible federati by zone
+        if (!@conv.codice_attivazione.empty?)
+          @user = User.all(:conditions => ["LOWER(codice_attivazione)=?", @conv.codice_attivazione])
+          @user.each do |usr|
+            if ((@conv.scadenza.is_a(Date)) && (usr.scadenza.nil? || (usr.scadenza < @conv.scadenza)))
+              usr.convention_id = @conv.id
+              usr.save!  #--> save_without_transactions
+              usr.control_state
+            end
+          end
+        end
+        #STEP2/2 find susceptible federati by zone
+        #@user = User.all(:conditions => {:cross_organization_id => @conv.cross_organization_id})
+        @user = User.all(:conditions => ["comune_id is not null AND cross_organization_id=?", @conv.cross_organization_id])
+        @user.each do |usr|
+          #control if user.scadenza < conv.scadenza
+          if ((@conv.scadenza.is_a(Date)) && (usr.scadenza.nil? || (usr.scadenza < @conv.scadenza)))
+            #control if user is in geografical zone
+            isInZone = false
+            if self.province.nil? #iniziare dalla provincia
+              if self.region.nil?
+                #Nazionale
+                isInZone = true
+              else
+                #Regionale
+                isInZone = true
+                haveTownInRegion = Province.find(:all, :include => [:comune], :conditions => ["comune.id=? AND province.region_id=?", usr.comune_id, @conv.region_id]).count
+                if (haveTownInRegion > 0)
+                  isInZone = true
+                end
+              end
+            else
+              #Provinciale
+              haveTownInProvince = Comune.find(:all, :conditions => ["comune_id=? AND province_id=?", usr.comune_id, @conv.province_id]).count
+              if (haveTownInProvince > 0)
+                isInZone = true
+              end
+            end
+            if (isInZone == true)
+              usr.convention_id = @conv.id
+              usr.save!  #--> save_without_transactions
+              usr.control_state
+            end
+          end
+        end
+
         format.html { redirect_to(@conv, :notice => l(:notice_successful_create)) }
         format.xml  { render :xml => @conv, :status => :created, :location => @conv }
       else
@@ -108,6 +157,12 @@ class ConventionsController < ApplicationController
 
     respond_to do |format|
       if @conv.update_attributes(params[:convention])
+
+        #update all federati
+        @conv.users.each do |usr|
+          usr.control_state
+        end
+
         format.html { redirect_to(@conv, :notice => l(:notice_successful_update)) }
         format.xml  { head :ok }
       else
@@ -127,6 +182,7 @@ class ConventionsController < ApplicationController
     @user.each do |usr|
       usr.convention_id = nil
       usr.save!  #--> save_without_transactions
+      usr.control_state
     end
 
     respond_to do |format|

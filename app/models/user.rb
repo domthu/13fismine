@@ -546,7 +546,7 @@ class User < Principal
       #se l'utente non fa parte di un organismo convenzionato o quella ha una scadenza non valida
       if (self.convention.nil? || self.convention.scadenza.nil? || self.convention.scadenza.year == 0)
         # Lo consideriamo un Privato. Il privato paga lui
-        if self.datascadenza.is_a?(Date)
+        if !self.datascadenza.nil? && self.datascadenza.is_a?(Date)
           return self.datascadenza.to_date
         else
           return nil
@@ -556,16 +556,16 @@ class User < Principal
         #Utente non Pagante.
         #La data di scadenza è quella di convention.data_scadenza
         #Solo se ancora valida (cf modello convention.scadenza())
-        con_date = self.convention.scadenza.to_date
-        if self.datascadenza.is_a?(Date)
+        conv_date = self.convention.scadenza.to_date
+        if !self.datascadenza.nil? && self.datascadenza.is_a?(Date)
           #TODO verificare se è scaduta < TODAY. altrimenti riportare la data dell'utente
-          if con_date < self.datascadenza.to_date
+          if conv_date < self.datascadenza.to_date
             return self.datascadenza.to_date
           else
-            return con_date
+            return conv_date
           end
         else
-          return con_date
+          return conv_date
         end
       end
     else

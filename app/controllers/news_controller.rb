@@ -94,25 +94,25 @@ class NewsController < ApplicationController
   def update
     @news.safe_attributes = params[:news]
     if request.put? and @news.save
-      flash[:notice] = l(:notice_successful_update)
+      send_notice(l(:notice_successful_update))
 
       #quesito set
       if @news.project.identifier == FeeConst::QUESITO_KEY && @news.is_quesito? && @news.reply != '' && (User.current.admin? ||  User.current.ismanager? || User.current == @issue.author)
 
-        flash[:notice] = "Procedura risposta veloce al quesito mediante news"
+        send_notice("Procedura risposta veloce al quesito mediante news"
         #controllare che la news possa andare in risposta veloce
         # solo se non ci sono altri issue con campo descrizione già attive
         @news.issues.each { |issue|
           if issue.project.identifier != FeeConst::QUESITO_KEY
-            flash[:error] += "</br>Non eliminato l'articolo: " + l(:alert_another_responses, :link => issue.to_s, :author => issue.author)
+            send_error("Non eliminato l'articolo: " + l(:alert_another_responses, :link => issue.to_s, :author => issue.author))
           else
             #elimino anche se non è vuoto il campo descrizione
             #se non è vuoto vuole dire che un collaboratore assegnato
             #ha iniziato a scrivere una riposta
             if issue.description?
-              flash[:notice] += "</br>Articolo con riposta iniziata(" + issue.description.lenght + ")<b>" + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author)
+              send_notice("Articolo con riposta iniziata(" + issue.description.lenght + ")<b>" + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author))
             else
-              flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author)
+              send_notice("<b>" + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author))
             end
             issue.destroy
           end
@@ -120,119 +120,22 @@ class NewsController < ApplicationController
 
         @news.status_id = FeeConst::QUESITO_STATUS_FAST_REPLY
         @news.save
-        flash[:notice] += "</br>Quesito chiuso. Stato impostato a Risposta veloce"
+        send_notice("Quesito chiuso. Stato impostato a Risposta veloce")
       end
       redirect_to :action => 'show', :id => @news
     else
       render :action => 'edit'
     end
   end
-#  #Filter chain halted as [:authorize] rendered_or_redirected.
-#  #Non esiste questo caso
-#  def news_fast_reply
-#    @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category, :section, :quesito_news])
-#    #Domthu [:project, :tracker, :status, :author, :priority, :category])
-#    puts "###################################################################"
-#    flash[:notice] = "Procedura risposta veloce al quesito mediante news"
-#    if !@issue.nil? && @issue.is_quesito?
-#      #TODO undefined method `authorize_for' for #<IssueMovesController:0xb5e11738>
-#      #if User.current.admin? ||  User.current.ismanager? || authorize_for('issues', 'edit')
-#      if User.current.admin? ||  User.current.ismanager? || User.current == @issue.author
-#      #KAPPAO @issue.visible?
-#        if @issue.description?
-#          @news = @issue.quesito_news
-#          if !@news.nil?
-#            if @news.is_quesito?
-#              #controllare che la news possa andare in risposta veloce
-#              # solo se non ci sono altri issue con campo descrizione già attive
-#              can_delete = true
-#              @news.issues.each { |issue|
-#                if issue.description? && @issue.id != issue.id
-#                  can_delete = false
-#                  #flash[:notice] += "</br>" + l(:alert_another_responses, :link => link_to(issue), :author => issue.author)
-#                  flash[:notice] += "</br>" + l(:alert_another_responses, :link => issue.to_s, :author => issue.author)
-#                  if issue.project.identifier != FeeConst::QUESITO_KEY && issue.se_visibile_web && !@news.is_issue_reply?
-#                    #se ho già un articolo pubblicato su una
-#                    @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
-#                    @news.save
-#                    #redirect_to :action => 'show', :id => @issue.id
-#                    redirect_to :controller => 'issues', :action => 'show', :id => @issue.id
-#                    return
-#                  end
-#                end
-#              }
-
-#              if can_delete
-#                #chiedere sandro? se usiamo il campo reply o description
-#                #@news.description = @issue.description Il campo descrizione viene usato da l'utente che pone il quesito
-#                @news.reply = @issue.description
-#                #Aggiorno lo stato della news
-#                @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
-#                @news.save
-#                flash[:notice] += "</br></br>Quesito: " + l(:notice_successful_update) + "</br>"
-
-#                #elimina le issue di lavoro temporraneo
-#                @news.issues.each_with_index { |del_issue, i |
-#                  if @issue.id != del_issue.id
-#                    flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author)
-#                    del_issue.destroy
-#                  end
-#                }
-#                flash[:notice] += "</br>Risposta: " + l(:fast_reply_done)
-#                redirect_to :controller => 'news', :action => 'show', :id => @news.id
-#                return
-#              else
-#                flash[:errors] = l(:cannot_fast_reply_other_issues)
-#              end
-#            else
-#              flash[:errors] = l(:is_not_quesito)
-#            end
-#          else
-#            flash[:errors] = l(:none_found_news)
-#          end
-#        else
-#          flash[:errors] = l(:empty_description)
-#        end
-#      else
-#        flash[:errors] = l(:issue_fastreply_not_allowed)
-#        #deny_access
-#        #return
-#      end
-#      redirect_to :controller => 'issues', :action => 'show', :id => @issue.id
-#      return
-#    else
-#      flash[:errors] = l(:none_found_issue)
-#      redirect_to :controller => 'issues', :action => 'index'
-#    end
-#  end
-#_form_reply_fast.html
-#<% labelled_tabular_form_for :news, @news,
-#                             :url => {:action => 'fast_reply', :id => @news},
-#                             :html => {:id => 'new-form',
-#                                       :class => nil,
-#                                       :method => :put,
-#                                       :multipart => true} do |f| %>
-#    <%= error_messages_for 'news', 'reply' %>
-#    <fieldset>
-#      <legend><%= l(:field_fast_reply) %></legend>
-#      <%= text_area_tag 'news', @news, :id => "reply" %>
-#    </fieldset>
-#    <p style="width: 95%; text-align: right;">
-#      <%= submit_tag l(:button_submit), :class => 'button-blu' %>
-#    </p>
-#<% end %>
-#<script type="text/javascript" charset="utf-8">
-#    CKEDITOR.replace('news_reply', { toolbar:'Basic', height:200 });
-#</script>
 
   def assign
-    puts "******************ASSIGN************************+"
+    #puts "******************ASSIGN************************+"
     return redirect_to :action => 'index'
   end
 
   #via js
   def assegna_js
-    puts "******************ASSEGNA************************+"
+    #puts "******************ASSEGNA************************+"
     #find_project reccupera il progetto associato
     #if params[:watcher_user_ids].is_a?(Hash)
     if !@news.nil? && @news.project.identifier == FeeConst::QUESITO_KEY
@@ -265,11 +168,7 @@ class NewsController < ApplicationController
                 new_issue.summary = "Testo della domanda: " + @news.summary
                 #new_issue.save!  #--> save_without_transactions
                 new_issue.save
-                if flash[:notice].nil?
-                  flash[:notice] = "<b>" + (i + 1).to_s + "</b>: " + l(:notice_successful_assigned, :author =>  collaboratore.name) + @watcher_user_ids.count.to_s
-                else
-                  flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + l(:notice_successful_assigned, :author =>  collaboratore.name) + @watcher_user_ids.count.to_s
-                end
+                send_notice("<b>" + (i + 1).to_s + "</b>: " + l(:notice_successful_assigned, :author =>  collaboratore.name) + @watcher_user_ids.count.to_s)
                 #Aggiorno lo stato della news
                 @news.status_id = FeeConst::QUESITO_STATUS_ISSUES_REPLY
                 @news.save
@@ -305,11 +204,9 @@ class NewsController < ApplicationController
       @news.destroy
       redirect_to :action => 'index', :project_id => @project
     else
-      flash[:notice] = l(:cannot_delete_related_news, :num =>  @news.issues.count)
+      send_notice(l(:cannot_delete_related_news, :num =>  @news.issues.count))
       @news.issues.each_with_index { |issue, i |
-        #Kappao include ActionView::Helpers::UrlHelper #use link_to in controller
-        #flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + link_to_issue(issue)
-        flash[:notice] += "</br><b>" + (i + 1).to_s + "</b>: " + issue.to_s
+        send_notice("<b>" + (i + 1).to_s + "</b>: " + issue.to_s)
       }
       redirect_to :action => 'show', :id => @news
     end
