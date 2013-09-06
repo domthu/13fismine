@@ -123,16 +123,19 @@ class AccountController < ApplicationController
       end
 
       #STEP3 CONI FSN e convenzione
-      #if params[:extra] && params[:extra][:convention_select]) && params[:extra][:cross_select]
-      #  @user.convention_id = params[:extra][:convention_select].to_i
-      #  @user.cross_organization_id = params[:extra][:cross_select].to_i
-      #  #Region Province Comune --> inutile le abbiamo dentro la
-      #else
-        #if (params[:user][:convention_id])
-        #  @user.convention_id = params[:user][:convention_id].to_i
-        #end
+      if (params[:user][:convention_id])
+        @user.convention_id = params[:user][:convention_id].to_i
+      else
+        if (params[:extra] && params[:extra][:convention_select])
+          @user.convention_id = params[:extra][:convention_select].to_i
+        end
+      end
       if (params[:user][:cross_organization_id])
         @user.cross_organization_id = params[:user][:cross_organization_id].to_i
+      else
+        if (params[:extra] && params[:extra][:cross_select])
+          @user.cross_organization_id = params[:extra][:cross_select].to_i
+        end
       end
       #end
       if (params[:user][:mail])
@@ -144,17 +147,32 @@ class AccountController < ApplicationController
         @user.activate
         @user.login = session[:auth_source_registration][:login]
         @user.auth_source_id = session[:auth_source_registration][:auth_source_id]
-        #impostazioni minimali di default
-        @user.datascadenza = Date.today + Setting.register_days.to_i
-        @user.role_id = FeeConst::ROLE_REGISTERED
-        # se dichiara di essere convenzionato
-        if @user.save
-          session[:auth_source_registration] = nil
-          self.logged_user = @user
-          flash[:notice] = l(:notice_account_activated)
-          #redirect_to :controller => 'my', :action => 'account'
-          redirect_to my_profile_show_url
+
+        #Gestione ruoli
+        if Setting.fee?
+          @user.annotazioni = "" unless !@user.annotazioni.nil?
+          #impostazioni minimali di default
+          @user.datascadenza = Date.today + Setting.register_days.to_i
+          @user.role_id = FeeConst::ROLE_REGISTERED
+          # se dichiara di essere convenzionato
+          if @user.convention_id
+            conv = Convention.find_by_id(113)
+            if conv.nil?
+              @user.annotazioni = "<br />REGISTER(da sistema): l'utente ha dichiarato di far parte della convention(" + @user.convention_id.to_s + " che non esiste"
+              @user.convention_id = nil
+            else
+              @user.datascadenza = conv.scadenza
+              @user.role_id = conv.role_id  # ruolo elaborato in funzione dello stato della scadenza
+            end
+          end
         end
+#        if @user.save
+#          session[:auth_source_registration] = nil
+#          self.logged_user = @user
+#          flash[:notice] = l(:notice_account_activated)
+#          #redirect_to :controller => 'my', :action => 'account'
+#          redirect_to my_profile_show_url
+#        end
       else
         @user.login = params[:user][:login]
         @user.password, @user.password_confirmation = params[:user][:password], params[:user][:password_confirmation]

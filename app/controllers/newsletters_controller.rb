@@ -18,6 +18,8 @@ class NewslettersController < ApplicationController
   #gestione invii emails di una newsletter e imposti tutti utenti ad essa collegata
   # pass project_id
   #: {"role"=>{"role_id"=>"1"}, "convention"=>{"convention_id"=>""}, "project_id"=>"341", "controller"=>"newsletters", "name"=>"domthu", "action"=>"invii"}
+
+  #Click da edizione Parameters: {"action"=>"invii", "controller"=>"newsletters", "project_id"=>"341"}
   def invii
     puts "@project id " + @project.id.to_s +  ", @newsletter id " + @newsletter.id.to_s
 
@@ -45,6 +47,7 @@ class NewslettersController < ApplicationController
 
 #Params: {"conv_ids"=>["6", "13", "21", "38"], "controller"=>"newsletters", "abbo_ids"=>["7", "9", "21", "13", "19", "23", "15", "17"], "project_id"=>"342", "commit"=>"Invia quindicinale", "action"=>"send_newsletter", "newsletter_id"=>"1", "authenticity_token"=>"gFBDBOipBDj/pDGe+I9OEq5o1uq8//mcFS/JFnSkfbY="}
   def send_newsletter
+    today = Date.today
     #logger.warn("edizione(" + @project.id.to_s + ") send newsletter(" + @newsletter.id.to_s + ") params #{params.inspect}")
 
     send_notice "Params: #{params.inspect}"
@@ -67,7 +70,7 @@ class NewslettersController < ApplicationController
                 send_warning("Cliente(" + user.name + ") in attesa di ricevere. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
               end
             else
-              reg = NewsletterUser.new(:email_type => 'newsletter', :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => user.scadenza)
+              reg = NewsletterUser.new(:email_type => 'newsletter', :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => (user.scadenza.nil? ? Date.today : user.scadenza))
               #reg.html =
               reg.sended = false
               if reg.save!  #--> save_without_transactions
@@ -239,6 +242,7 @@ class NewslettersController < ApplicationController
         @newsletter = Newsletter.find_by_project(@project.id)
       end
       if @newsletter.nil?
+
         #automatic create Newsletter
         @newsletter = Newsletter.new
         #@newsletter.project_id = params[:project_id].to_i
@@ -255,13 +259,22 @@ class NewslettersController < ApplicationController
                 :partial => 'editorial/edizione_smtp',
                 :locals => { :id => @id, :project => @project, :art => @art, :user => nil }
               )
+        if ((!@newsletter.html.nil?) && (!@newsletter.html.include? "<!--checksum-->"))
+          send_error("Edizione molto lungha: " + @newsletter.html.length.to_s + " caratteri. ")
+        end
         #@@user_name
         #@@user_convention
         #@@user_convention_icon
         @newsletter.sended = false
+        if !@newsletter.valid?
+          if !@newsletter.errors.empty?
+            send_error ("Errore incontrate: " + @newsletter.errors.full_messages.join('<br />'))
+          end
+        end
         if !@newsletter.save
-          flash[:error] = l(:error_can_not_create_newsletter, :newsletter => @project.name)
-          return redirect_to :controller => 'projects', :action => 'show', :id => @project
+          send_error l(:error_can_not_create_newsletter, :newsletter => @project.name)
+          render_404
+          #return redirect_to :controller => 'projects', :action => 'show', :id => @project
         end
       end
     end

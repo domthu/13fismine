@@ -241,41 +241,77 @@ class User < Principal
   end
 
   def control_state
+    #puts "=============ruolo " + self.role_id.to_s + " ==========control_state[" + self.scadenza.to_s + "]======================="
+    #puts "=============self.locked?(" + (self.locked? ? "1" : "2") + ")=====!self.active?(" + (!self.active? ? "1" : "2") + ")=====!Setting.fee?(" + (!Setting.fee? ? "1" : "2") + ")=====self.scadenza.nil?(" + (self.scadenza.nil? ? "1" : "2") + ")======================="
     if self.locked? || !self.active? || !Setting.fee? || self.scadenza.nil?
+      #puts "=============exit"
       return
     end
-    today = Date.today
-    if self.isabbonato?
-      renew_deadline = self.scadenza - Setting.renew_days.to_i.days
-      if (today > renew_deadline)
-        self.role_id = FeeConst::ROLE_RENEW
-        if save
-          #send email to invite renew? Macristina
-          # --> kappao flash[:notice] = "Il tuo abbonamento scade a breve: " + distance_of_date_in_words(Time.now, self.scadenza) + "<br />  <strong>Rinnovalo</strong>"
+      #controllo della scadenza
+      if self.isabbonato? || self.isrenewing? || self.isregistered?
+        role_atteso = nil
+        #puts "control_state " + today.to_s
+        today = Date.today
+        #puts "=============ruolo " + self.role_id.to_s + " ==========control_state[" + today.to_s + "/" + self.scadenza.to_s + "]==(" + (today > self.scadenza).to_s + ")====================="
+        if (today > self.scadenza)
+          #scaduto
+          role_atteso = FeeConst::ROLE_EXPIRED
+        else
+          renew_deadline = self.scadenza - Setting.renew_days.to_i.days
+          if (today > renew_deadline)
+            #sta per scadere
+            role_atteso = FeeConst::ROLE_RENEW
+          else
+            #tutto ok
+            role_atteso = FeeConst::ROLE_ABBONATO
+          end
         end
-      end
-    end
-    if self.isrenewing?
-      if (today > self.scadenza)
-        self.role_id = FeeConst::ROLE_EXPIRED
-        if save
-          #TODO send email to re-fee
-          Mailer.deliver_account_information(self, self.password)
-          Mailer.fee(self, 'renew', Setting.template_fee_renew)
-          # --> kappao flash[:notice] = "Il tuo abbonamento è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati di nuovo</strong>"
+
+        if !role_atteso.nil? && self.role_id != role_atteso
+          self.role_id = role_atteso
+          if self.save!
+            #puts "control_state CAMBIATO RUOLO ? ", role_atteso
+            #TODO send email to re-fee
+            # --> kappao flash[:notice] = "Il tuo periodo di prova è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati</strong>"
+          end
         end
-      end
+    else
+        #puts "=============Non è soggeto a controllo "
     end
-    if self.isregistered?
-      if (today > self.scadenza)
-        self.role_id = FeeConst::ROLE_EXPIRED
-        if save
-          #TODO send email to re-fee
-          # --> kappao flash[:notice] = "Il tuo periodo di prova è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati</strong>"
-        end
-      end
-    end
+#    if self.isabbonato?
+#      renew_deadline = self.scadenza - Setting.renew_days.to_i.days
+#      puts "isabbonato    "
+#      if (today > renew_deadline)
+#        self.role_id = FeeConst::ROLE_RENEW
+#        if self.save
+#          puts "isabbonato  SAVED  "
+#          #send email to invite renew? Macristina
+#          # --> kappao flash[:notice] = "Il tuo abbonamento scade a breve: " + distance_of_date_in_words(Time.now, self.scadenza) + "<br />  <strong>Rinnovalo</strong>"
+#        end
+#      end
+#    end
+#    if self.isrenewing?
+#      if (today > self.scadenza)
+#        self.role_id = FeeConst::ROLE_EXPIRED
+#        if self.save
+#          #TODO send email to re-fee
+#          Mailer.deliver_account_information(self, self.password)
+#          Mailer.fee(self, 'renew', Setting.template_fee_renew)
+#          # --> kappao flash[:notice] = "Il tuo abbonamento è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati di nuovo</strong>"
+#        end
+#      end
+#    end
+#    if self.isregistered?
+#      if (today > self.scadenza)
+#        self.role_id = FeeConst::ROLE_EXPIRED
+#        if self.save
+#          #TODO send email to re-fee
+#          # --> kappao flash[:notice] = "Il tuo periodo di prova è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati</strong>"
+#        end
+#      end
+#    end
   end
+#  # ruolo elaborato in funzione dello stato della scadenza
 
   def hide_name
     str = " utente Fiscosport n° " + self.id.to_s
@@ -311,7 +347,13 @@ class User < Principal
   end
 
   #CALL this procedure from Frontend only
-  def isfee?(issue = nil)
+  #questa funzione ritorna
+  #  FALSE se l'utente non ha diritto di accedere ai contenuti
+  #     basandosi sullo stato Redmine User
+  #     basandosi sulla gestione abbonanemto
+  #     basandosi sullo stato dell'articolo
+  #  TRUE se tutto ok
+  def canread?(issue = nil)
     #Control Always Undesired User RoleId
     if self.isarchivied?
       return false
