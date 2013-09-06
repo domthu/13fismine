@@ -100,6 +100,25 @@ class Convention < ActiveRecord::Base
     return self.data_scadenza
   end
 
+  # ruolo elaborato in funzione dello stato della scadenza
+  def role_id
+    if self.data_scadenza.nil?
+      return FeeConst::ROLE_ARCHIVIED
+    end
+    today = Date.today
+    if (today > self.scadenza)
+      return FeeConst::ROLE_EXPIRED
+    else
+      renew_deadline = self.scadenza - Setting.renew_days.to_i.days
+      if (today > renew_deadline)
+        return FeeConst::ROLE_RENEW
+      else
+        return FeeConst::ABBONATO
+      end
+    end
+    return FeeConst::ROLE_ARCHIVIED
+  end
+
   def user_icon()
     if self.user
       self.user.icon()
