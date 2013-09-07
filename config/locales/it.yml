@@ -238,7 +238,7 @@ it:
   mail_subject_lost_password: "La tua password %{value}"
   mail_body_lost_password: 'Per cambiare la password, usa il seguente collegamento:'
   mail_subject_register: "Attivazione utente %{value}"
-  mail_body_register: "Per attivare l'utente, usa il seguente collegamento:"
+  mail_body_register: "<b>Confermi la tua email.</b><p>Per attivare il tuo account, usa il seguente collegamento:<p>"
   mail_body_account_information_external: "Puoi utilizzare il tuo account %{value} per accedere al sistema."
   mail_body_account_information: Le informazioni riguardanti il tuo account
   mail_subject_account_activation_request: "%{value} richiesta attivazione account"

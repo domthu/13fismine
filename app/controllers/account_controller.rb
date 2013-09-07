@@ -84,7 +84,7 @@ class AccountController < ApplicationController
     end
   end
 
-#Parameters: {"action"=>"register", "authenticity_token"=>"P7eqAhfI5yeK+jAXK3NFvXLbBYyPT058LyJtDJva+Ks=", "commit"=>"Invia", "user"=>{"codicefiscale"=>"", "mail"=>"domthu@ks3000495.kimsufi.com", "sez"=>"", "language"=>"it", "se_condition"=>"1", "comune_id"=>"4035", "partitaiva"=>"", "soc"=>"", "indirizzo"=>"", "login"=>"dom1", "lastname"=>"thual1", "firstname"=>"dom1", "cross_organization_id"=>"", "titolo"=>"Responsabile", "password"=>"[FILTERED]", "se_privacy"=>"1", "fax"=>"", "telefono"=>"", "password_confirmation"=>"[FILTERED]"}, "controller"=>"account", "extra_town"=>"4035"}
+#Parameters: {"extra_town"=>"7289", "action"=>"register", "commit"=>"Invia", "authenticity_token"=>"oE/I9wEZXoXqA0iRUM+BS+fbprZFzqmGoCtdOhzN0hY=", "controller"=>"account", "user"=>{"codice_attivazione"=>"", "password"=>"[FILTERED]", "firstname"=>"dom7", "se_privacy"=>"1", "language"=>"it", "se_condition"=>"1", "fax"=>"", "indirizzo"=>"", "partitaiva"=>"", "soc"=>"", "password_confirmation"=>"[FILTERED]", "mail"=>"dom_thual@yahoo.it", "comune_id"=>"7289", "login"=>"dom7", "cross_organization_id"=>"1", "telefono"=>"", "codicefiscale"=>"thlddj", "titolo"=>"Tecnico/Dirigente", "lastname"=>"thual7"}}
   def register
     redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     if request.get?
@@ -116,7 +116,7 @@ class AccountController < ApplicationController
       if params[:user][:comune_id].present?
         @user.comune_id = params[:user][:comune_id].to_i
         if Comune.exists?(@user.comune_id)
-          @user.comune = Comune.find(:first, :include => [[ :province => :region ]], :conditions => ['comune.id =  ?', @user.comune_id.to_s])
+          @user.comune = Comune.find(:first, :include => [[ :province => :region ]], :conditions => ['id =  ?', @user.comune_id.to_s])
           if @user.comune #province_id region_id	cap
             @user.cap = @user.comune.cap
             @user.prov = @user.comune.province.name_full unless @user.comune.province.nil?
@@ -159,8 +159,8 @@ class AccountController < ApplicationController
                 @user.cross_organization.conventions.each do |conv|
                   neFaParte = false
                   #controllare su quale copertura
-                  if self.province.nil? #iniziare dalla provincia
-                    if self.region.nil?
+                  if conv.province.nil? #iniziare dalla provincia
+                    if conv.region.nil?
                       #Nazionale
                       neFaParte = true
                     else
@@ -174,7 +174,7 @@ class AccountController < ApplicationController
                   if neFaParte == true
                     #la prima volta assegno la convention_id
                     send_notice("Lei risulta essere coperto da una federazione: " + conv.name)
-                    send_notice("Copertura della convenzione: " + @user.convention.pact)
+                    send_notice("Copertura della convenzione: " + conv.pact)
                     if @user.convention_id.nil?
                       @user.convention_id = conv.id
                       @user.convention = conv
