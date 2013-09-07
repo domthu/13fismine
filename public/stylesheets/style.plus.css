@@ -3956,7 +3956,7 @@ padding-bottom: 3px;
      float:left;
      min-height:30px;
      vertical-align: middle;
-     width:98%;
+     min-width:96%;
      padding-left: 10px;
  }
 .user-role-icon-s span {
