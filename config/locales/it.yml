@@ -1263,6 +1263,8 @@ it:
   label_convention_organismo: Organismo sportivo associato
   label_convention_societa: Società non sportiva
   label_convention_type: Tipo organismo
+  fied_convention_type: Tipo organismo
+  zone_area: Copertura geografica
 
   label_ragione_sociale: Ragione sociale
   label_email: Email

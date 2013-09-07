@@ -29,7 +29,6 @@ class AccountController < ApplicationController
   def login
     #Rails.logger.info("login PARAMS: #{params.inspect}")
     #flash[:notice] = "==========login============="
-    #flash[:error] = "==========??????????============="
     if request.get?
       #flash[:notice] = "request.get --> logout_user"
       logout_user
@@ -112,60 +111,132 @@ class AccountController < ApplicationController
         return
       end
 
-      #Region Province Comune
+      #Region Province Comune from select2 onto extra_town
+      #set user_comune_id at run time in FormatCitta
       if params[:user][:comune_id].present?
         @user.comune_id = params[:user][:comune_id].to_i
-        @Citta = Comune.find(params[:user][:comune_id])
-        if @Citta #province_id region_id	cap
-          @user.cap = @Citta.cap
-          @user.prov = @Citta.province.name + "(" + @Citta.province_id.to_s + ")"
+        if Comune.exists?(@user.comune_id)
+          @user.comune = Comune.find(:first, :include => [[ :province => :region ]], :conditions => ['comune.id =  ?', @user.comune_id.to_s])
+          if @user.comune #province_id region_id	cap
+            @user.cap = @user.comune.cap
+            @user.prov = @user.comune.province.name_full unless @user.comune.province.nil?
+            @user.prov += @user.comune.province.region.name unless ( @user.comune.province.nil? && @user.comune.region.province.nil?)
+          else
+            @user.comune_id = nil
+          end
+        else
+          @user.comune_id = nil
         end
+      end
+      if @user.comune_id.nil?
+        send_warning("Città di attività sportiva non presente. E importante inserirla in quanto potrebbe appartenire ad una zona coperta da un accordo convenzionato.")
       end
 
       #STEP3 CONI FSN e convenzione
-      if (params[:user][:convention_id])
-        @user.convention_id = params[:user][:convention_id].to_i
-      else
-        if (params[:extra] && params[:extra][:convention_select])
-          @user.convention_id = params[:extra][:convention_select].to_i
+      @user.datascadenza = Date.today + Setting.register_days.to_i
+      if params[:user][:codice_attivazione].present?
+        @user.codice_attivazione = params[:user][:codice_attivazione].to_s.downcase
+        @user.convention = Convention.find(:first, :conditions => ['LOWER(codice_attivazione) =  ?', @user.codice_attivazione])
+        if @user.convention
+          send_notice("Il codice di attivazione corrisponde ad una convenzione esistente: " + @user.convention.name)
+          send_notice("Copertura della convenzione: " + @user.convention.pact)
+          @user.convention_id = @user.convention.id
+        else
+          send_warning("Il codice di attivazione non corrisponde ad nessuna convenzione.")
         end
       end
       if (params[:user][:cross_organization_id])
         @user.cross_organization_id = params[:user][:cross_organization_id].to_i
-      else
-        if (params[:extra] && params[:extra][:cross_select])
-          @user.cross_organization_id = params[:extra][:cross_select].to_i
+        if CrossOrganization.exists?(@user.cross_organization_id)
+          @user.cross_organization = CrossOrganization.find(:first, :conditions => ['id =  ?', @user.cross_organization_id.to_s])
+          if @user.cross_organization
+            if @user.comune
+              #ricerca copertura di una convention?
+              if @user.cross_organization.conventions.any?
+                send_notice("@user.cross_organization.conventions.count: " + @user.cross_organization.conventions.count.to_s)
+                #ciclo su ogni convention
+                migliorScadenza = @user.datascadenza
+                @user.cross_organization.conventions.each do |conv|
+                  neFaParte = false
+                  #controllare su quale copertura
+                  if self.province.nil? #iniziare dalla provincia
+                    if self.region.nil?
+                      #Nazionale
+                      neFaParte = true
+                    else
+                      #Regionale
+                      neFaParte = true
+                    end
+                  else
+                    #Provinciale
+                    neFaParte = true
+                  end
+                  if neFaParte == true
+                    #la prima volta assegno la convention_id
+                    send_notice("Lei risulta essere coperto da una federazione: " + conv.name)
+                    send_notice("Copertura della convenzione: " + @user.convention.pact)
+                    if @user.convention_id.nil?
+                      @user.convention_id = conv.id
+                      @user.convention = conv
+                    end
+                    #il non pagante prenderà la scadenza della convenzione
+                    if conv.scadenza && (conv.scadenza > migliorScadenza)
+                      migliorScadenza = conv.scadenza
+                      if @user.convention_id != conv.id
+                        #questa convenzione e migliore di quella dapprima
+                        @user.convention_id = conv.id
+                        @user.convention = conv
+                      end
+                    end
+                    #break per uscire --> No, continuo per vedere se c'è una convention migliore
+                  end
+                end  #ciclo sulle conventions
+                if !@user.convention_id.nil?
+                  @user.datascadenza = migliorScadenza
+                  @user.datascadenza = nil #Non pagante
+                end
+              end
+            end
+          else
+            @user.cross_organization_id = nil
+          end
+        else
+          @user.cross_organization_id = nil
         end
       end
+
       #end
       if (params[:user][:mail])
         @user.mail_fisco = params[:user][:mail]
       end
 
+      #Gestione ruoli
+      if Setting.fee?
+        @user.annotazioni = "" unless !@user.annotazioni.nil?
+        #impostazioni minimali di default
+        @user.datascadenza = Date.today + Setting.register_days.to_i
+        @user.role_id = FeeConst::ROLE_REGISTERED
+        # se dichiara di essere convenzionato
+        if @user.convention_id
+          conv = Convention.find_by_id(@user.convention_id)
+          if conv.nil?
+            @user.annotazioni = "<br />REGISTER(da sistema): l'utente risulta far parte della convention(" + @user.convention_id.to_s + " che non esiste"
+            @user.convention_id = nil
+          else
+            #@user.datascadenza = conv.scadenza
+            @user.datascadenza = nil
+            @user.role_id = conv.role_id  # ruolo elaborato in funzione dello stato della scadenza
+          end
+        end
+      end
+
       @user.register
+
       if session[:auth_source_registration]
         @user.activate
         @user.login = session[:auth_source_registration][:login]
         @user.auth_source_id = session[:auth_source_registration][:auth_source_id]
 
-        #Gestione ruoli
-        if Setting.fee?
-          @user.annotazioni = "" unless !@user.annotazioni.nil?
-          #impostazioni minimali di default
-          @user.datascadenza = Date.today + Setting.register_days.to_i
-          @user.role_id = FeeConst::ROLE_REGISTERED
-          # se dichiara di essere convenzionato
-          if @user.convention_id
-            conv = Convention.find_by_id(113)
-            if conv.nil?
-              @user.annotazioni = "<br />REGISTER(da sistema): l'utente ha dichiarato di far parte della convention(" + @user.convention_id.to_s + " che non esiste"
-              @user.convention_id = nil
-            else
-              @user.datascadenza = conv.scadenza
-              @user.role_id = conv.role_id  # ruolo elaborato in funzione dello stato della scadenza
-            end
-          end
-        end
 #        if @user.save
 #          session[:auth_source_registration] = nil
 #          self.logged_user = @user
@@ -229,12 +300,12 @@ class AccountController < ApplicationController
     end
 
     raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
-                          # Force ActionMailer to raise delivery errors so we can catch it
+    # Force ActionMailer to raise delivery errors so we can catch it
     ActionMailer::Base.raise_delivery_errors = true
     @stat = 'Invio email non riuscito '
     begin
       if @user.save
-        puts "++++++++++++++++++Prova saved (" + @errors + ")++++++++++++++++"
+        #puts "++++++++++++++++++Prova saved (" + @errors + ")++++++++++++++++"
         @user.register #update_attribute
         @stat = " Utente registrato"
         self.logged_user = @user
@@ -245,7 +316,7 @@ class AccountController < ApplicationController
           #@errors += @user.errors.join(', ') undefined method join
           @errors += "<br />errore completa: " + @user.errors.full_messages.join('<br />')
         end
-        puts "********************Prova user not saved! (" + @errors + ")********************"
+        #puts "********************Prova user not saved! (" + @errors + ")********************"
         @stat += "Tipo registrazione(" + Setting.self_registration + "). "
         case Setting.self_registration
           when '1'
@@ -257,7 +328,7 @@ class AccountController < ApplicationController
               Mailer.deliver_register(token)
               @stat += l(:notice_account_register_done)
             else
-              puts "********************Prova self_registration 1 KAPPAO (" + @errors + ")********************"
+              #puts "********************Prova self_registration 1 KAPPAO (" + @errors + ")********************"
               @stat += " Conferma email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span>"
             end
 

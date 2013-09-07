@@ -20,6 +20,9 @@ module FeeConst
 
   ROLES =[ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW, ROLE_EXPIRED, ROLE_ARCHIVIED]
 
+  #ruoli sottoposti alla gestione abboanmento
+  FEE_ROLES =[ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW, ROLE_EXPIRED, ROLE_ARCHIVIED]
+
   AUTHORED_ROLES =[ROLE_ADMIN, ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW]
   #ruoli che non possono essere cancelati dentro i ruoli di Redmine
   CAN_BACK_END_ROLES =[ROLE_ADMIN, ROLE_MANAGER, ROLE_AUTHOR]
@@ -350,7 +353,7 @@ module FeesHelper
         #IN_SCADENZA (controllo sulla data di scadenza del privato)
         when 6,7
           #TODO control expiration
-          str << ensure_fee_validity(_usr, nil)
+          str << ensure_fee_validity(_usr)
           #control
           if _usr.convention
             str << "<b style='color:red;'>codice(" << _usr.codice.to_s << ") PRIVATO pero coperto da orgasnismo convenzionato(" << _usr.convention.to_s << ")</b> "
@@ -359,7 +362,7 @@ module FeesHelper
         #SCADUTO  --> 2 e 4 e 5 + Tutti altri casi    (dopo la data di scadenza)  possono ancora ricevere newsletter. possono ancora vedere le cose
         when 2,4,5
           str << ensure_role(_usr, FeeConst::ROLE_EXPIRED)
-          #str << ensure_fee_validity(_usr, nil)
+          #str << ensure_fee_validity(_usr)
 
           #ARCHIVIATO --> 0 NON riceve nulla e non accede al sito Non si interragisce più. Non ricevono newsletter
         when 0
@@ -376,7 +379,7 @@ module FeesHelper
             str << ensure_role(_usr, FeeConst::ROLE_EXPIRED)
           else
             #esiste l'organismo associato pagante per questo utente
-            str << ensure_fee_validity(_usr, _usr.convention)
+            str << ensure_fee_validity(_usr)
           end
         end
       end
@@ -385,21 +388,18 @@ module FeesHelper
     return str
   end
 
-  def ensure_fee_validity(_usr, org_asso)
+  def ensure_fee_validity(_usr)
     str = "<div style='color: "
 
-    if org_asso.nil?
+    if _usr.privato?
       str += "green;'>"
       data_scadenza = _usr.datascadenza
       str << "<b>&euro; PAGANTE &euro;</b> "
     else
-      #Association
+      #Convenzionato
       str += "blue;'>"
       str << "<b>NON PAGANTE</b> Asso(" << _usr.convention_id.to_s << "): " << smart_truncate(_usr.convention.name, 50)
       data_scadenza = _usr.convention.scadenza
-#      if data_scadenza.nil?
-#        data_scadenza = _usr.datascadenza #esamina questa stringa
-#      end
     end
 
 

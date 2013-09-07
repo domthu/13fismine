@@ -342,7 +342,16 @@ class User < Principal
   end
 
   def privato?
-    #TODO controllare la data di scadenza
+    if self.convention_id && self.convention.nil?
+      #verificare che non è stato eliminato la convention
+      #if Convention.where(:user_id => current_user.id).blank?
+      if Convention.exists?(self.convention_id)
+        self.convention = Convention.find_by_id(self.convention_id)
+      else
+        self.convention_id = nil
+        self.save!
+      end
+    end
     return self.convention_id.nil?
   end
 

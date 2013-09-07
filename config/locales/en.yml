@@ -1243,7 +1243,9 @@ en:
   label_convention_ref: "Scadenza<br />responsabile"
   label_convention_organismo: Organismo sportivo associato
   label_convention_societa: Società non sportiva
-  label_convention_type: Tipo organismo
+  label_convention_type: "Organism's type"
+  field_convention_type: "Organism's type"
+  zone_area: Zone area
 
   label_ragione_sociale: Ragione sociale
   label_email: Email
