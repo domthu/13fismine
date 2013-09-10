@@ -234,6 +234,7 @@ class User < Principal
        # str += "<br />periodo di prova."
       end
     end
+    #str = clean_fs_html(str, self, nil)  #Loop
     if str.include? '@@distance_of_date_in_words@@'
       if !self.scadenza.nil?
         str = str.gsub('@@distance_of_date_in_words@@', distance_of_date_in_words(Time.now, self.scadenza))

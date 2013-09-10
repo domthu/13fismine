@@ -19,7 +19,7 @@ require 'ar_condition'
 
 class Mailer < ActionMailer::Base
   layout 'mailer'
-  layout nil, :only =>  [:newsletter, :proposal_meeting]
+  layout nil, :only =>  [:newsletter] #, :proposal_meeting]
   helper :application
   helper :issues
   helper :custom_fields
@@ -257,6 +257,7 @@ class Mailer < ActionMailer::Base
     recipients User.active.find(:all, :conditions => {:admin => true}).collect { |u| u.mail }.compact
     subject l(:mail_subject_account_activation_request, Setting.app_title)
     body :user => user,
+         :layout => 'mailer.html.erb',
          :url => url_for(:controller => 'users', :action => 'index',
                          :status => User::STATUS_REGISTERED,
                          :sort_key => 'created_on', :sort_order => 'desc')
@@ -292,6 +293,7 @@ class Mailer < ActionMailer::Base
     recipients token.user.mail
     subject l(:mail_subject_register, Setting.app_title)
     body :token => token,
+         :layout => 'mailer.html.erb',
          :url => url_for(:controller => 'account', :action => 'activate', :token => token.value)
     render_multipart('register', body)
   end
@@ -309,7 +311,7 @@ class Mailer < ActionMailer::Base
     recipients Setting.fee_email
     #recipients 'sandro@ks3000495.kimsufi.com'
     #recipients 'domthu@ks3000495.kimsufi.com'
-    subject 'Fiscosport > Proposta di convegno o di evento'
+    subject Setting.app_title + ' > Proposta di convegno o di evento'
     if user.logged?
       part :content_type => "text/html",
            :body => '<div style="font-weight:bold;"> User id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /> <hr> <p>'  + body_as_string + '</p>'
@@ -345,9 +347,10 @@ class Mailer < ActionMailer::Base
     #subject l(:mail_subject_newsletter, :compagny => Setting.app_title, :edizione => ed, :date => project.data_al)
     subject ed
     clean_html = clean_fs_html(body_as_string, user, project)
+    clean_html = clean_html
     #clean_html = body_as_string
-    ed = user.nil? ? '--' : user.mail
-    clean_html = "<h1>" + ed + "</h1>"+ clean_html
+    #ed = user.nil? ? '--' : user.mail
+    #clean_html = "<h1>" + ed + "</h1>"+ clean_html
     #subject "invia questa mail"
     #body :token => token,
     #     :url => url_for(:controller => 'account', :action => 'activate', :token => token.value)
@@ -375,13 +378,15 @@ class Mailer < ActionMailer::Base
     #    * Mailer.X-Redmine-Host
     #redmine_headers 'Project' => 'Abbonamento test'
     recipients user.mail
-    subject "Fiscosport abbonamenti: [#{type}]"
+    subject Setting.app_title + " > abbonamenti: [#{type}]"
     #body :document => document,
     #     :document_url => url_for(:controller => 'documents', :action => 'show', :id => document)
     #render_multipart('document_added', body)
     #body :fee_type => type, :fee_text => setting_text, :fee_url => url_for(:controller => 'fees')
     clean_html = clean_fs_html(setting_text, user, nil)
-    body :fee_type => type, :fee_text => clean_html, :fee_url => self.default_url_options
+    body  :fee_type => type,
+          :fee_text => clean_html,
+          :fee_url => self.default_url_options
     render_multipart('fee', body)
     #domthu TODO
     # => fee.text.erb
@@ -395,13 +400,24 @@ class Mailer < ActionMailer::Base
   end
 
   def prova_gratis (user, body_as_string)
-    recipients user.mail #TODO rimettere in produzione
+    #recipients user.mail #TODO rimettere in produzione
     #recipients Setting.fee_bcc_recipients
     #recipients Setting.fee_email
-    #recipients 'dom_thual@yahoo.fr'
-    subject 'Fiscosport > Prova Gratis ' + user.name.html_safe + '' + user.mail.html_safe
-    part :content_type => "text/html",
-         :body => '<div style="font-wheight:bold;padding: 50px; color: blue; background-color:#eee;"> SI è appena registrato un utente id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /><hr><br /><p><h1>Login: '  + user.login + '</h1></p><br /><hr><br /><p><h1>Mail: '  + user.mail + '</h1></p><br /><hr><br /><p><h1>Scadenza: '  + user.scadenza.to_s + ' (' + user.scadenza_fra + ')</h1></p><div>' + body_as_string + '</div>'
+    recipients 'dom_thual@yahoo.fr'
+    subject Setting.app_title + ' > Prova Gratis ' + user.name.html_safe + ' ' + user.mail.html_safe
+
+    html_body = '<div style="font-wheight:bold;padding: 50px; color: blue; background-color:#eee;"> SI è appena registrato un utente id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /><hr><br /><p><h1>Login: '  + user.login + '</h1></p><br /><hr><br /><p><h1>Mail: '  + user.mail + '</h1></p><br /><hr><br /><p><h1>Scadenza: '  + user.scadenza.to_s + ' (' + user.scadenza_fra + ')</h1></p><div>' + body_as_string + '</div>'
+
+    body :html_body => html_body
+    render_multipart('prova_gratis', body)
+
+#    content_type "multipart/alternative"
+#    part :content_type => "text/html",
+#         :body => render(
+#               :body => html_body,
+#               :layout => 'mailer.html.erb'
+#         )
+
   end
 
   # Overrides default deliver! method to prevent from sending an email
@@ -540,8 +556,11 @@ class Mailer < ActionMailer::Base
       part :content_type => "text/plain",
            :body => render(:file => "#{method_name}.text.erb",
                            :body => body, :layout => 'mailer.text.erb')
+      #part :content_type => "text/html",
+      #     :body => render_message("#{method_name}.html.erb", body)
       part :content_type => "text/html",
-           :body => render_message("#{method_name}.html.erb", body)
+           :body => render(:file => "#{method_name}.html.erb",
+                           :body => body, :layout => 'mailer.html.erb')
     end
   end
 
@@ -576,36 +595,6 @@ class Mailer < ActionMailer::Base
     Rails.logger
   end
 
-  def clean_fs_html(txt, user, prj)
-    txt = txt
-    if user
-      txt = txt.gsub('@@user_username@@', user.name)
-      txt = txt.gsub('@@logged_username@@', User.current.name)
-      if user.password.nil?
-        txt = txt.gsub('@@user_password@@', '?')
-      else
-        txt = txt.gsub('@@user_password@@', user.password)
-      end
-      if user.scadenza
-        #txt = txt.gsub('@@user_scadenza@@', user.scadenza) expected numeric
-        #txt = txt.gsub('@@user_scadenza@@', get_short_date(user.scadenza) #undefined method `get_short_date' for #)
-        txt = txt.gsub('@@user_scadenza@@', user.scadenza_fra)
-        txt = txt.gsub('@@distance_of_date_in_words@@', user.scadenza_fra)
-      else
-        txt = txt.gsub('@@user_scadenza@@', ' -non definita- ')
-        txt = txt.gsub('@@distance_of_date_in_words@@', ' -non definita- ')
-      end
-      txt = txt.gsub('@@user_codice@@', user.id.to_s)
-      if !user.privato? && user.convention
-        txt = txt.gsub('@@user_convention@@', "Sei conventionato a " + user.convention.name)
-        if user.convention.user
-          txt = txt.gsub('@@poweruser_username@@', user.convention.user.name)
-          txt = txt.gsub('@@poweruser_codice@@', user.convention.user.id.to_s)
-        end
-      end
-    end
-    return txt
-  end
 end
 
 # Patch TMail so that message_id is not overwritten

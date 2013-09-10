@@ -17,6 +17,40 @@
         </div>
         <br/>
         <div class="box" id="settings-fee">
+
+          <p>cui sotto componi email usando la lista delle parole chiave che verranno sostituite al momento dell'invio email:
+<% conv = Convention.find(:first, :conditions => "#{Convention.table_name}.user_id IS NOT NULL", :order => "#{Convention.table_name}.data_scadenza DESC", :include => [:user]) %>
+<% usr = (conv && conv.users.any?) ? conv.users.first : User.current %>
+<% referee = (conv && conv.user) ? conv.user : User.find(:first, :conditions => {:power_user => 1}) %>
+<ul>
+  <li> Utente loggato </li>
+  <li> <mark>@@logged_username@@</mark> ==> <%= h User.current.name %></li>
+  <li title="lo stato riporta un messaggio solo se l'utente è sottoposto alla gestione dell'abbonamento e si trova in stato di rinnovamento, scaduto,  "> <mark>@@logged_state@@</mark> ==> <%= h User.current.state %></li>
+  <li> Utente selezionato </li>
+  <li> <mark>@@user_username@@</mark> ==> <%= h usr.name %></li>
+  <li> <mark>@@user_password@@</mark> ==> <%= h usr.password %></li>
+  <li> <mark>@@user_scadenza@@</mark> ==> <%= h usr.scadenza %></li>
+  <li> <mark>@@distance_of_date_in_words@@</mark> ==> <%= h usr.scadenza_fra %></li>
+  <li> Convenzione </li>
+  <li> <mark>@@user_codice@@</mark> ==> <%= h usr.id.to_s %></li>
+  <li> <mark>@@user_convention@@</mark> ==> <%= h conv.name %></li>
+  <li> <mark>@@poweruser_username@@</mark> ==> <%= h referee.name %></li>
+  <li> <mark>@@poweruser_codice@@</mark> ==> <%= h referee.id.to_s %></li>
+  <li> Setting </li>
+  <li> <mark>@@settings_host_name@@</mark> ==> <%= h 'http://' + Setting.host_name %></li>
+  <li> <mark>@@settings_register_days@@</mark> ==> <%= h Setting.register_days.to_s %></li>
+  <li> <mark>@@settings_renew_days@@</mark> ==> <%= h Setting.renew_days.to_s %></li>
+  <li> <mark>@@settings_fee_bcc_recipients@@</mark> ==> <%= h Setting.fee_bcc_recipients %></li>
+  <li> <mark>@@settings_fee_email@@</mark> ==> <%= h Setting.fee_email %></li>
+  <li> <mark>@@settings_app_title@@</mark> ==> <%= h Setting.app_title %></li>
+  <li> <mark>@@settings_welcome_text_fs@@</mark> ==> <%= h Setting.welcome_text_fs %></li>
+  <li> <mark>@@settings_welcome_text@@</mark> ==> <%= h Setting.welcome_text %></li>
+
+</ul>
+
+          </p>
+
+          <hr />
           <fieldset>
             <legend><%= l(:setting_emails_fee_proposal) %></legend>
             <%= setting_text_area :template_fee_proposal, :label => false, :rows => 5 %>
