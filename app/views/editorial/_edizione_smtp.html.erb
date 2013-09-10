@@ -67,7 +67,7 @@ table td {padding: 0; margin: 0; border: none;}
                       <% if @user %>
                         <%= @user.firstname %> &nbsp; <%= @user.lastname %>
                       <% else %>
-                        @@user_name
+                        @@user_name@@
                       <% end %>
                     </font>
                 </td>
@@ -95,7 +95,7 @@ table td {padding: 0; margin: 0; border: none;}
 <% if @user %>
   <%= render :partial => 'editorial/edizione_smtp_convention' %>
 <% else %>
-  @@user_convention
+  @@user_convention@@
 <% end %>
 <%# fine riga visibile solo se associato o è affiliato'  / sotto un'immagine di spazio %>
 <table width="560" cellpadding="0" cellspacing="0" style="font-size:0;">

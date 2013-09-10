@@ -17,6 +17,7 @@ table, ul.fs-hmenu, #fs-main { font-family: Segoe UI }
   var tot_ok = 0
   var tot_ko = 0
   var dvState = null;
+  var ready = true
 
   $(document).ready(function () {
     dv_ok = $("#sended");
@@ -86,6 +87,10 @@ table, ul.fs-hmenu, #fs-main { font-family: Segoe UI }
         if (data.errors) {
             data.errors += "Errore nell'invio del blocco di emails da  " + pageSize + " per la newsletter (" + newsletterid + ") " + newsletter_name;
             js_flash("error", data.errors);
+        }
+        if (ready) {
+          ready = false;
+          qta.val(100);
         }
         if (data.finish && data.finish == true) {
           dvState.html("<h3>Finito. </h3>" + dvState.html());
