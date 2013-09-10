@@ -330,10 +330,10 @@ class Mailer < ActionMailer::Base
 
   def newsletter(user, body_as_string, project)
     #set_language_if_valid user.language
-    #recipients user.mail #TODO rimettere in produzione
+    recipients user.mail #TODO rimettere in produzione
     #recipients Setting.fee_bcc_recipients
     #recipients Setting.fee_email
-    recipients 'dom.thual@gmail.com'
+    #recipients 'dom.thual@gmail.com'
 
     ed = ''
     #mail_subject_newsletter: "%{compagny}: %{edizione} del %{date}"
@@ -395,9 +395,9 @@ class Mailer < ActionMailer::Base
   end
 
   def prova_gratis (user, body_as_string)
-    #recipients user.mail #TODO rimettere in produzione
+    recipients user.mail #TODO rimettere in produzione
     #recipients Setting.fee_bcc_recipients
-    recipients Setting.fee_email
+    #recipients Setting.fee_email
     #recipients 'dom_thual@yahoo.fr'
     subject 'Fiscosport > Prova Gratis ' + user.name.html_safe + '' + user.mail.html_safe
     part :content_type => "text/html",
