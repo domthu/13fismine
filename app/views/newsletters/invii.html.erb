@@ -13,7 +13,7 @@
 <% form_tag({:controller => "newsletters", :action => "send_newsletter", :project_id => @project.id.to_s, :newsletter_id => @newsletter}, :method => :post) do %>
 
 <div class="autoscroll">
-<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
+<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%# submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
 <table id="tblinvii" class="list">
   <thead><tr>
   <th style="text-align:left; width: 65%;"><%= l(:field_role) %></th>
@@ -50,7 +50,7 @@
   </tbody>
 </table>
 
-<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
+<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%# submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
 
 <table id="tblinvii_convs" class="list">
   <thead><tr>

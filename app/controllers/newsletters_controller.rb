@@ -204,7 +204,7 @@ class NewslettersController < ApplicationController
     end
 
     if @newsletter.have_emails_to_send?
-      redirect_to :action => 'mailergo', :newsletter_id => @newsletter.id
+      redirect_to :action => 'massmailer', :newsletter_id => @newsletter.id
     else
       redirect_to :action => 'invii', :project_id => @project.id.to_s
       #redirect_to :action => 'show', :id => @newsletter
