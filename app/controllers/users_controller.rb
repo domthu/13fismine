@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -307,17 +307,10 @@ class UsersController < ApplicationController
       ActionMailer::Base.raise_delivery_errors = true
       @msg = 'Invio newsletter. '
       begin
-        #@test =  Mailer.test(@user)
-        #@test =  Mailer.deliver_account_activated(@user)
-        @test =  Mailer.deliver_newsletter(@user, @htmlpartial, @project)
-        #notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
-        #flash[:notice] = l(:notice_user_newsletter_email_sent)
+        @tmail =  Mailer.deliver_newsletter(@user, @htmlpartial, @project)
         @msg += l(:notice_user_newsletter_email_sent, :edizione => @project.name, :date => @project.data_al,  :user => user.to_s)
-        @msg += " Risultato => " + @test
+        #@msg += " Risultato => " + @tmail (can't convert TMail::Mail into String)
       rescue Exception => e
-        #@test =  Mailer.test(@user) private method `test' called for Mailer:Class
-        #@test =  Mailer.deliver_newsletter(@user, @htmlpartial, @project) uninitialized constant Mailer::Settings
-        #Mailer.deliver_account_activated(@user) undefined local variable or method `user' for #<UsersController:0xb63d3374>
         @msg += l(:notice_email_error, e.message)
       end
       ActionMailer::Base.raise_delivery_errors = raise_delivery_errors

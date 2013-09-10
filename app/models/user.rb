@@ -235,7 +235,11 @@ class User < Principal
       end
     end
     if str.include? '@@distance_of_date_in_words@@'
-      str = str.gsub('@@distance_of_date_in_words@@', distance_of_date_in_words(Time.now, self.scadenza))
+      if !self.scadenza.nil?
+        str = str.gsub('@@distance_of_date_in_words@@', distance_of_date_in_words(Time.now, self.scadenza))
+      else
+        str = str.gsub('@@distance_of_date_in_words@@', '')
+      end
     end
     return str
   end
@@ -250,66 +254,49 @@ class User < Principal
       #controllo della scadenza
       if self.isabbonato? || self.isrenewing? || self.isregistered?
         role_atteso = nil
+        tipo = "renew"
         #puts "control_state " + today.to_s
         today = Date.today
         #puts "=============ruolo " + self.role_id.to_s + " ==========control_state[" + today.to_s + "/" + self.scadenza.to_s + "]==(" + (today > self.scadenza).to_s + ")====================="
         if (today > self.scadenza)
           #scaduto
           role_atteso = FeeConst::ROLE_EXPIRED
+          #tipo = "proposal"
+          tipo = "renew"
         else
           renew_deadline = self.scadenza - Setting.renew_days.to_i.days
           if (today > renew_deadline)
             #sta per scadere
             role_atteso = FeeConst::ROLE_RENEW
+            tipo = "renew"
           else
             #tutto ok
             role_atteso = FeeConst::ROLE_ABBONATO
+            tipo = "asso"
           end
         end
 
         if !role_atteso.nil? && self.role_id != role_atteso
           self.role_id = role_atteso
           if self.save!
-            #puts "control_state CAMBIATO RUOLO ? ", role_atteso
-            #TODO send email to re-fee
-            # --> kappao flash[:notice] = "Il tuo periodo di prova è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati</strong>"
+            begin
+              if tipo == "renew"
+                tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
+              elsif tipo == "asso"
+                tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_register_asso)
+              elsif tipo == "proposal"
+                tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_proposal)
+              else
+                #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
+              end
+            rescue Exception => e
+              #" <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+            end
           end
         end
     else
         #puts "=============Non è soggeto a controllo "
     end
-#    if self.isabbonato?
-#      renew_deadline = self.scadenza - Setting.renew_days.to_i.days
-#      puts "isabbonato    "
-#      if (today > renew_deadline)
-#        self.role_id = FeeConst::ROLE_RENEW
-#        if self.save
-#          puts "isabbonato  SAVED  "
-#          #send email to invite renew? Macristina
-#          # --> kappao flash[:notice] = "Il tuo abbonamento scade a breve: " + distance_of_date_in_words(Time.now, self.scadenza) + "<br />  <strong>Rinnovalo</strong>"
-#        end
-#      end
-#    end
-#    if self.isrenewing?
-#      if (today > self.scadenza)
-#        self.role_id = FeeConst::ROLE_EXPIRED
-#        if self.save
-#          #TODO send email to re-fee
-#          Mailer.deliver_account_information(self, self.password)
-#          Mailer.fee(self, 'renew', Setting.template_fee_renew)
-#          # --> kappao flash[:notice] = "Il tuo abbonamento è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati di nuovo</strong>"
-#        end
-#      end
-#    end
-#    if self.isregistered?
-#      if (today > self.scadenza)
-#        self.role_id = FeeConst::ROLE_EXPIRED
-#        if self.save
-#          #TODO send email to re-fee
-#          # --> kappao flash[:notice] = "Il tuo periodo di prova è scaduto: " + format_date(self.scadenza) + "<br />  <strong>Abbonati</strong>"
-#        end
-#      end
-#    end
   end
 #  # ruolo elaborato in funzione dello stato della scadenza
 

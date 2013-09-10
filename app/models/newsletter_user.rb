@@ -2,7 +2,6 @@ class NewsletterUser < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :convention
-  #belongs_to :project accross newsletter
   belongs_to :newsletter
   validates_length_of :email_type, :maximum => 30
 

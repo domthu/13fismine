@@ -5,7 +5,15 @@
   <em class="hide">role id <%= @role %></em>
   <em class="hide">name <%= @name %></em>
   <%= link_to(l(:button_send_emails, :jobs => @newsletter.emails_pending), newsletter_massmailer_path(@newsletter.id), :class => 'icon  icon-mails-to-send') if (User.current.admin? && @newsletter.have_emails_to_send?) %>
+  <%= link_to(l(:button_send_emails, :jobs => @newsletter.emails_pending), url_for(:controller => 'newsletters', :action => "mailergo", :only_path => false, :newsletter_id => @newsletter.id), :class => 'icon icon-mails-to-send' ) if (User.current.admin? && @newsletter.have_emails_to_send?) %>
 </div>
+<%# to generate from {:controller=>"newsletters", :action=>"massmailer", :newsletter_id=>3}, expected: {:controller=>"newsletters", :action=>"massmailer"}, diff: {:newsletter_id=>3}
+
+newsletter_massmailer_url failed to generate from
+{:controller=>"newsletters", :action=>"massmailer"} - you may have ambiguous routes, or you may need to supply additional parameters for this route.  content_url has the following required parameters:
+["pippo", :newsletter_id] - are they all satisfied?
+
+%>
 <h2><%=l(:label_send_newsletter)%></h2>
 
 <%= render :partial => 'show', :newsletter => @newsletter %>

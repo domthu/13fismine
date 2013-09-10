@@ -229,7 +229,7 @@
         <p>La sua data di scadenza risulta:</p>
         <ul>
           <li><%= format_date @user.scadenza %></li>
-          <li><%= distance_of_date_in_words(@user.scadenza, Time.now) %></li>
+          <li><%= distance_of_date_in_words(@user.scadenza, Time.now) unless @user.scadenza.nil? %></li>
           <li><%= @user.scadenza_fra %></li>
         </ul>
       </fieldset>

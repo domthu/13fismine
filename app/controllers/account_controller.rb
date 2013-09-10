@@ -570,7 +570,7 @@ class AccountController < ApplicationController
       Mailer.deliver_register(token)
       if user.isregistered?
         Mailer.deliver_account_information(user, user.password)
-        Mailer.fee(self, 'thanks', Setting.template_fee_thanks)
+        tmail = Mailer.deliver_fee(self, 'thanks', Setting.template_fee_thanks)
       end
       flash[:notice] = l(:notice_account_register_done)
       #redirect_to :action => 'login'

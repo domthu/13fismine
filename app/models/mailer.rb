@@ -145,7 +145,6 @@ class Mailer < ActionMailer::Base
   def news_added(news)
     redmine_headers 'Project' => news.project.identifier
     message_id news
-    puts '*************** news_added recipients ' + news.recipients + '*************** '
     recipients news.recipients
     #Errore in gmail. (Net::SMTPFatalError) 555 5.5.2 Syntax error
     #mettere recipients in questo formato "nome utente <noreply@monaqasat.com>"
@@ -331,20 +330,36 @@ class Mailer < ActionMailer::Base
 
   def newsletter(user, body_as_string, project)
     #set_language_if_valid user.language
-    recipients user.mail
+    #recipients user.mail #TODO rimettere in produzione
+    #recipients Setting.fee_bcc_recipients
+    #recipients Setting.fee_email
+    recipients 'dom.thual@gmail.com'
+
+    ed = ''
     #mail_subject_newsletter: "%{compagny}: %{edizione} del %{date}"
-    subject l(:mail_subject_newsletter, :compagny => Setting.app_title, :edizione => project.name, :date => project.data_al)
+    #ed = user.nil? ? '--' : user.id.to_s
+    ed = user.nil? ? '' : ('[' + user.name.html_safe + ']')
+    ed += ' '
+    ed += project.nil? ? '..' : project.name.html_safe
+    ed += ' '
+    #subject l(:mail_subject_newsletter, :compagny => Setting.app_title, :edizione => ed, :date => project.data_al)
+    subject ed
+    clean_html = clean_fs_html(body_as_string, user, project)
+    #clean_html = body_as_string
+    ed = user.nil? ? '--' : user.mail
+    clean_html = "<h1>" + ed + "</h1>"+ clean_html
     #subject "invia questa mail"
     #body :token => token,
     #     :url => url_for(:controller => 'account', :action => 'activate', :token => token.value)
     #render_multipart('register', body)
 
     #content_type "multipart/alternative"
+    #Method1 Non usare view
     part :content_type => "text/html",
-         :body => body_as_string #render_message("#{method_name}.html.erb", body)
+         :body => clean_html #render_message("#{method_name}.html.erb", body)
 
-    #usa views
-    #body :news => body_as_string, :fee_url => url_for(:controller => 'fees'), :app_title => Setting.app_title
+    #Method2 usa views
+    #body :news => clean_html, :fee_url => url_for(:controller => 'fees'), :app_title => Setting.app_title
     #render_multipart('newsletter', body)
   end
 
@@ -365,25 +380,8 @@ class Mailer < ActionMailer::Base
     #     :document_url => url_for(:controller => 'documents', :action => 'show', :id => document)
     #render_multipart('document_added', body)
     #body :fee_type => type, :fee_text => setting_text, :fee_url => url_for(:controller => 'fees')
-    if user
-      setting_text = setting_text.replace('@@user_username@@', user.name)
-      setting_text = setting_text.replace('@@logged_username@@', User.current.name)
-      setting_text = setting_text.replace('@@user_password@@', user.password)
-      if user.scadenza
-        setting_text = setting_text.replace('@@user_scadenza@@', user.scadenza + ", " + user.scadenza_fra)
-      else
-        setting_text = setting_text.replace('@@user_scadenza@@'," -non definita- ")
-      end
-      setting_text = setting_text.replace('@@user_codice@@', user.id.to_s)
-      if user.convention
-        setting_text = setting_text.replace('@@user_convention@@', "Sei conventionato a " + user.convention.name)
-        if user.convention.user
-          setting_text = setting_text.replace('@@poweruser_username@@', user.convention.user.name)
-          setting_text = setting_text.replace('@@poweruser_codice@@', user.convention.user.id.to_s)
-        end
-      end
-    end
-    body :fee_type => type, :fee_text => setting_text, :fee_url => self.default_url_options
+    clean_html = clean_fs_html(setting_text, user, nil)
+    body :fee_type => type, :fee_text => clean_html, :fee_url => self.default_url_options
     render_multipart('fee', body)
     #domthu TODO
     # => fee.text.erb
@@ -397,6 +395,7 @@ class Mailer < ActionMailer::Base
   end
 
   def prova_gratis (user, body_as_string)
+    #recipients user.mail #TODO rimettere in produzione
     #recipients Setting.fee_bcc_recipients
     recipients Setting.fee_email
     #recipients 'dom_thual@yahoo.fr'
@@ -512,7 +511,6 @@ class Mailer < ActionMailer::Base
     end
 
     notified_users = [recipients, cc].flatten.compact.uniq
-    # Rails would log recipients only, not cc and bcc
     mylogger.info "Sending email notification to: #{notified_users.join(', ')}" if mylogger
 
     # Blind carbon copy recipients
@@ -576,6 +574,37 @@ class Mailer < ActionMailer::Base
 
   def mylogger
     Rails.logger
+  end
+
+  def clean_fs_html(txt, user, prj)
+    txt = txt
+    if user
+      txt = txt.gsub('@@user_username@@', user.name)
+      txt = txt.gsub('@@logged_username@@', User.current.name)
+      if user.password.nil?
+        txt = txt.gsub('@@user_password@@', '?')
+      else
+        txt = txt.gsub('@@user_password@@', user.password)
+      end
+      if user.scadenza
+        #txt = txt.gsub('@@user_scadenza@@', user.scadenza) expected numeric
+        #txt = txt.gsub('@@user_scadenza@@', get_short_date(user.scadenza) #undefined method `get_short_date' for #)
+        txt = txt.gsub('@@user_scadenza@@', user.scadenza_fra)
+        txt = txt.gsub('@@distance_of_date_in_words@@', user.scadenza_fra)
+      else
+        txt = txt.gsub('@@user_scadenza@@', ' -non definita- ')
+        txt = txt.gsub('@@distance_of_date_in_words@@', ' -non definita- ')
+      end
+      txt = txt.gsub('@@user_codice@@', user.id.to_s)
+      if !user.privato? && user.convention
+        txt = txt.gsub('@@user_convention@@', "Sei conventionato a " + user.convention.name)
+        if user.convention.user
+          txt = txt.gsub('@@poweruser_username@@', user.convention.user.name)
+          txt = txt.gsub('@@poweruser_codice@@', user.convention.user.id.to_s)
+        end
+      end
+    end
+    return txt
   end
 end
 

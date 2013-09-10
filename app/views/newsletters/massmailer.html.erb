@@ -1,126 +1,176 @@
-<div class="contextual">
-  <em class="hide">Limit <%# @limit %></em>
-  <em class="hide">offset <%# @offset %></em>
-  <em class="hide">convention id <%= @convention_id %></em>
-  <em class="hide">role id <%= @role %></em>
-  <em class="hide">name <%= @name %></em>
-</div>
+<style type="text/css" xmlns="http://www.w3.org/1999/html">
+table, ul.fs-hmenu, #fs-main { font-family: Segoe UI }
+.notice, .error { height: auto; margin-top: 0px; padding-top: 0px;}
+</style>
+<script type="text/javascript" charset="utf-8">
+  var dv_ok = null;
+  var dv_ko = null;
+  var btn_send = null;
+  var qta = null;
+  var qtaVal = 0;
+  var pageSize = 1;
+  var newsletterid = <%= @newsletter.id %>;
+  var newsletter_name = '<%= @newsletter.name %>'
+  var loading = 0;
+  var next = 10
+  var chkstop = null;
+  var tot_ok = 0
+  var tot_ko = 0
+  var dvState = null;
 
-<%= render :partial => 'show', :newsletter => @newsletter %>
+  $(document).ready(function () {
+    dv_ok = $("#sended");
+    dv_ko = $("#error");
+    btn_send = $("#btn_send");
+    chkstop = $("#chkstop");
+    dvState = $("#status");
+    qta = $("#qta");
+    qtaVal = pageSize;
+    qta.val(qtaVal);
 
-<h2><%=l(:label_send_newsletter)%></h2>
+    btn_send.click(function (event) {
+        send_next(event);
+        //event.preventDefault();
+    });
+    btn_send.attr("disabled", false);
+    btn_send.click();
 
-<% form_tag({:controller => "newsletters", :action => "send_newsletter", :project_id => @project.id.to_s, :newsletter_id => @newsletter}, :method => :post) do %>
+  }); //end query document ready
+  var url_send = '<%= newsletter_send_emails_path() %>';
+  function send_next(event) {
+    if (loading == 1) {
+      event.preventDefault(); <%# avoid PostBack %>
+      return
+    }
+    loading = 1
+    btn_send.attr("disabled", true);
+    qtaVal = qta.val()
+    if( Math.floor(qtaVal) == qtaVal && $.isNumeric(qtaVal)) {
+      if (qtaVal != pageSize) {
+        pageSize = qtaVal;
+      }
+    }
+    else {
+      qta.val(pageSize);
+    }
+    $.get(url_send, { newsletter_id:newsletterid, pageSize: pageSize },
+      function (data) {
+        data = data || {};
+        <%# tutto Ok %>
+        _d = new Date();
+        if (data.success) {
+            //OnSuccess
+            if (data.sended) {
+                jQuery.each(data.sended, function(index, item) {
+                  tot_ok += 1;
+                  dv_ok.prepend('<li>[' + tot_ok + ']' + item + '</li>');
+                  updateState();
+                });
+                //dv_ok.html(data.sended + dv_ok.html());
+            }
+            if (data.failed) {
+                jQuery.each(data.failed, function(index, item) {
+                  tot_ko += 1;
+                  dv_ko.prepend('<li>[' + tot_ko + ']' + item + '</li>');
+                  //dv_ko.html('[' + index + ']' + item + '<br / >' + dv_ko.html());
+                  updateState();
+                });
+                //dv_ko.html(data.failed + dv_ko.html());
+            }
+            if (data.msg && data.msg.length > 0) {
+                js_flash("notice", data.msg);
+            }
+
+        }
+        <%# ci sono degli errori %>
+        if (data.errors) {
+            data.errors += "Errore nell'invio del blocco di emails da  " + pageSize + " per la newsletter (" + newsletterid + ") " + newsletter_name;
+            js_flash("error", data.errors);
+        }
+        if (data.finish && data.finish == true) {
+          dvState.html("<h3>Finito. </h3>" + dvState.html());
+        } else {
+          reset_page(false);
+        }
+      }
+    );
+    if (event) { event.preventDefault(); } <%# avoid PostBack %>
+  }
+  var _d = null;
+  var hour = null;
+  var minute = null;
+  var second = null;
+  function updateState() {
+    hour = _d.getHours();
+    minute = _d.getMinutes();
+    second = _d.getSeconds();
+    dvState.html(((''+hour).length<2 ? '0' :'') + hour + ':' +
+    ((''+minute).length<2 ? '0' :'') + minute + ':' +
+    ((''+second).length<2 ? '0' :'') + second + ' Emails inviati: <mark>' + (tot_ok + tot_ko) + '</mark>, senza problemi: <mark>' + tot_ok + '</mark>, con errore: <mark style="color: red;">' + tot_ko + '</mark>')
+  }
+  function reset_page(error){
+    //alert('reset_page');
+    if (error == true) { chkstop.prop('checked', true); }
+    if (chkstop.is(':checked')) {
+      dvState.html("<h3>Manuale. Cliccare per continuare.</h3>" + dvState.html());
+    } else {
+      //next call
+      //setTimeout(function () {
+      //
+      //}, 1000);
+      dvState.html("<h3 title='Fra qualche secondi la procedura riparte da sola. Clicare su stop per passare in modalità manuale'>Automatico. </h3>" + dvState.html());
+      setTimeout(function (event) {
+         send_next(event);
+      }, next*1000);
+    }
+    btn_send.attr("disabled", false);
+    loading = 0;
+  }
+</script>
+
+<table id="tblinvii" class="list segoe" style="width: 100%">
+  <tbody>
+  <tr class='user'>
+    <td style="width:70%">
+      <div id="status" class="segoe" style="display: inline"></div>
+    </td>
+    <td style="width:15%">
+      <button id="btn_send" class="button-blu" style="display: inline" >Invia emails</button>
+    </td>
+    <td style="width:10%">
+      <label class="checkbox">
+        <input id="qta" class="segoe" type="input" alt="numero di emails da inviare alla volta"/>Numero di emails
+      </label>
+    </td>
+    <td style="width:5%">
+      <label class="checkbox">
+        <input id="chkstop" class="segoe" type="checkbox" alt="Ferma il motore d'invio"/>Stop
+      </label>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<h2><%=l(:mass_mailer)%></h2>
 
 <div class="autoscroll">
-<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
-<table id="tblinvii" class="list">
+<table id="tblinvii" class="list segoe" style="width: 100%">
   <thead><tr>
-  <th style="text-align:left; width: 65%;"><%= l(:field_role) %></th>
-  <th style="text-align:left; width: 10%;"><%= l(:field_users) %></th>
-  <th style="text-align:left; width: 10%;">
-    <input id="checkbox_selector" type="checkbox" class="selectall" checked="checked" />
-  </th>
-  <th style="text-align:left; width: 5%;">
-    <i class="icon icon-email" title="email già inviato?"></i>
-  </th>
+  <th style="text-align:left; width: 33%;"><div class="flash notice" style="width: 90%; height: 25px;" ><%=l(:label_newsletter_sended)%></div></th>
+  <th style="text-align:left; width: 33%;"><div class="flash error" style="width: 90%; height: 25px;" ><%=l(:label_newsletter_error)%></div></th>
   </tr></thead>
   <tbody>
-<% for abbo in FeeConst::ROLES -%>
-  <% @abbo_users = User.all(:conditions => ["convention_id is null AND role_id=?", abbo]).count %>
   <tr class='user'>
-    <td class="ico" align="left">
-        <%= user_role_iconized(nil, :size => 'l', :icon_for => get_role_css(abbo), :text =>  get_abbonamento_name(abbo)) %>
-    </td>
-    <td class="cnt" align="left"><%= @abbo_users %></td>
-    <td class="checkbox">
-      <% if @abbo_users > 0 %>
-        <% if FeeConst::AUTHORED_ROLES.include? abbo %>
-          <%= check_box_tag 'abbo_ids[]', abbo, true %></td>
-        <% else %>
-          <%= check_box_tag 'abbo_ids[]', abbo, false %></td>
-        <% end %>
-      <% end %>
+    <td>
+      <ul id="sended"class="segoe" ></ul>
     </td>
     <td>
-        <%# attenzione abbo != abbo.id = posizione in arrays user.scoped_by_newsletter_users(@).nil? %>
+      <div id="error"class="segoe" ></div>
     </td>
   </tr>
-<% end -%>
   </tbody>
 </table>
 
-<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
+<hr />
 
-<table id="tblinvii_convs" class="list">
-  <thead><tr>
-  <th style="text-align:left; width: 75%;"><%= l(:field_convention) %></th>
-  <th style="text-align:left; width: 10%;"><%= l(:field_data_scadenza) %></th>
-  <th style="text-align:left; width: 5%;"><%= l(:field_users) %></th>
-  <th style="text-align:left; width: 5%;">
-    <input id="checkbox_selector_convs" type="checkbox" class="selectall" checked="checked" />
-  </th>
-  <th style="text-align:left; width: 5%;">
-    <i class="icon icon-email" title="email già inviato?"></i>
-  </th>
-  </tr></thead>
-  <tbody>
-<% for conv in Convention.all -%>
-  <% @conv_users = conv.users.count %>
-  <tr class='convention <%= cycle("odd", "even") %>'>
-    <td class="convention" align="left"><%= h truncate(conv.name, :length => 300)%></td>
-    <td class="datascadenza" align="left">
-      <strong>
-      <% if conv.data_scadenza %>
-        <% if DateTime.now > conv.data_scadenza %>
-          <span class="scadenza-ko"> <%= format_date(conv.data_scadenza) %>
-        <% elsif conv.data_scadenza < (DateTime.now + Setting.renew_days.to_i.days) %>
-          <span class="scadenza-renewing"><%= format_date(conv.data_scadenza) %>
-        <% else  %>
-          <span class="scadenza-ok"><%= format_date(conv.data_scadenza) %>
-        <% end  %>
-      <% else  %>
-        <span class="scadenza-none">Senza data di scadenza
-      <%	end  %>
-      </span></strong>
-
-    </td>
-    <td class="cnt" align="left"><%= @conv_users %></td>
-    <td class="checkbox">
-    <%# check_box_tag "permissins[#{role.id}][]", permission.name, (role.permissions.include? permission.name), :id => nil, :class => "role-#{role.id}" %>
-      <% if conv.data_scadenza && @conv_users > 0 %>
-        <% if DateTime.now < conv.data_scadenza %>
-          <%= check_box_tag 'conv_ids[]', conv.id, true %></td>
-        <% else %>
-          <%= check_box_tag 'conv_ids[]', conv.id, false %></td>
-        <% end %>
-      <% end %>
-    </td>
-    <td>
-        <%# user.scoped_by_newsletter_users(@).nil? %>
-    </td>
-  </tr>
-<% end -%>
-  </tbody>
-</table>
-
-<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
-</div>
-<% end %>
-<script type="text/javascript" charset="utf-8">
-  var checkboxes = $$("#tblinvii input[type=checkbox]");
-  var cbControl = $("checkbox_selector");
-  cbControl.observe("click", function(){
-    checkboxes.each(function(box){
-      box.checked = cbControl.checked;
-    });
-  });
-
-  var checkboxes_convs = $$("#tblinvii_convs input[type=checkbox]");
-  var cbControl_convs = $("checkbox_selector_convs");
-  cbControl_convs.observe("click", function(){
-    checkboxes_convs.each(function(box){
-      box.checked = cbControl_convs.checked;
-    });
-  });
-</script>
+<%# render :partial => 'show', :newsletter => @newsletter %>

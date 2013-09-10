@@ -213,6 +213,14 @@ module ApplicationHelper
   end
 
   #domthu generate a string in FeesHelper
+  def getdatetime(data)
+    if data.nil?
+      return "?"
+    else
+      return data.strftime("%d %b %H:%M:%S")
+    end
+  end
+
   def getdate(data)
     if data.nil?
       return "?"

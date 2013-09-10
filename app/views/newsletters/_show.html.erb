@@ -19,7 +19,6 @@
   </div>
 
   <div id='div_newsletter' style="margin-top:30px;"><p style="display: none;">TODO Dom Verificare il checksum</p><%= @newsletter.html %></div>
-
 </fieldset>
 
 <% @nl_users = @newsletter.newsletter_users.all(:conditions => { :sended => true }) %>
@@ -37,7 +36,7 @@
     </div>
     <div id="div_emails_sended" style="margin-top:30px;">
     <% if @nl_users.count < 100 %>
-      <%= render :partial => 'newsletters/users_newsletter_emailed' %>
+      <%= render :partial => 'newsletters/users_newsletter_emailed', :locals => { :nl_users => @nl_users }  %>
     <% else %>
       <br/>
       Cliccare cui '<%= link_to_remote l(:label_newsletter_sended),
@@ -54,7 +53,7 @@
   <% end %>
 </fieldset>
 
-<%# LISTA EMAIL PENDING in attessa di invio%>
+<%# LISTA EMAIL PENDING in attessa di invio %>
 <% @nl_users = @newsletter.newsletter_users.all(:conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)']) %>
 <fieldset class="box tabular">
   <legend><%=l(:label_newsletter_pending)%></legend>
@@ -70,7 +69,7 @@
     </div>
     <div id="div_emails_pending" style="margin-top:30px;">
     <% if @nl_users.count < 100 %>
-      <%= render :partial => 'newsletters/users_newsletter_emailed' %>
+      <%= render :partial => 'newsletters/users_newsletter_emailed', :locals => { :nl_users => @nl_users } %>
     <% else %>
       <br/>
       Cliccare cui '<%= link_to_remote l(:label_newsletter_pending),
@@ -103,7 +102,7 @@
     </div>
     <div id="div_emails_error" style="margin-top:30px;">
     <% if @nl_users.count < 100 %>
-      <%= render :partial => 'newsletters/users_newsletter_emailed' %>
+      <%= render :partial => 'newsletters/users_newsletter_emailed', :locals => { :nl_users => @nl_users }  %>
     <% else %>
       <br/>
       Cliccare cui '<%= link_to_remote l(:label_newsletter_error),

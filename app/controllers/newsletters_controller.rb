@@ -3,7 +3,7 @@ class NewslettersController < ApplicationController
 
   before_filter :require_admin
   before_filter :find_project, :only => [ :invii, :send_newsletter ]
-  before_filter :find_newsletter, :only => [ :invii, :send_newsletter ]
+  before_filter :find_newsletter, :only => [ :invii, :send_newsletter, :massmailer, :send_emails ]
   before_filter :control_params, :only => [ :send_newsletter ]
 
   #before_filter :newsletter_members, :only => [ :invii ]
@@ -45,7 +45,87 @@ class NewslettersController < ApplicationController
     end
   end
 
+  #pagina di vissualizzazione degli invi fatti per blocchi di emails
+  #Questa pagina usa il layout svcmailer che include Jquery
+  #Chiama via js il metodo end_emails
+  def massmailer
+
+    respond_to do |format|
+      format.html {
+        render :layout => 'svcmailer'
+      }
+    end
+  end
+  #via js newsletter_id:newsletterid, pageSize: pageSize
+  #questa routine invia una certa quantità di emails
+  def send_emails
+    if @newsletter.nil?
+      id = params[:newsletter_id].present? ? params[:newsletter_id].to_s : "0"
+      render :json => { :errors => "Newsletter(" + id + ") da inviare non trovata", :available => true }
+      return
+    end
+    pageSize = params[:pageSize].present? ? params[:pageSize].to_i : 100
+
+    finish = true
+    stat = ""
+    @sended = []
+    @failed = []
+    if @newsletter.have_emails_to_send?
+      if (!@newsletter.project_id.nil? && @newsletter.project)
+        @art = @newsletter.project.issues.all(:order => "#{Section.table_name}.top_section_id     DESC", :include => [:section => :top_section])
+        @project = @newsletter.project
+        _html = render_to_string(
+                  :layout => false,
+                  :partial => 'editorial/edizione_smtp',
+                  :locals => { :id => @project.id, :project => @project, :art => @art, :user => nil }
+                )
+      end
+
+      @nl_users = @newsletter.newsletter_users.all(:limit => pageSize, :conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)'])
+      if @nl_users && @nl_users.any?
+        finish = false
+        raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
+        ActionMailer::Base.raise_delivery_errors = true
+        @nl_users.each do |nl_usr|
+          begin
+            stat = "<a href='#{user_path(nl_usr.user)}' target='_blank'>##{nl_usr.user.name}</a> "
+            @tmail =  Mailer.deliver_newsletter(nl_usr.user, _html, @newsletter.project)
+            @sended << "Email inviato " + stat
+            #@sended << ". Risultato => " + @tmail (can't convert TMail::Mail into String)
+            nl_usr.sended = true
+          rescue Exception => e
+            @failed << stat + " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+            nl_usr.errore = " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+          end
+          nl_usr.save
+        end
+        ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
+      end
+    end
+    #for i in 1..10
+    #  @sended << getdatetime(Time.now) + " Sended numero <mark>#{i}</mark> "
+    #  @failed << getdatetime(Time.now) + " Failed numero <mark>#{i}</mark> "
+    #end
+
+    if (@sended.any? or @failed.any?)
+      return render :json => {
+        :success => true,
+        :sended => @sended,
+        :failed => @failed,
+        :msg => stat,
+        :finish => finish
+      }
+    end
+    render :json => {
+        :success => true,
+        :msg => stat,
+        :finish => finish
+    }
+  end
+
 #Params: {"conv_ids"=>["6", "13", "21", "38"], "controller"=>"newsletters", "abbo_ids"=>["7", "9", "21", "13", "19", "23", "15", "17"], "project_id"=>"342", "commit"=>"Invia quindicinale", "action"=>"send_newsletter", "newsletter_id"=>"1", "authenticity_token"=>"gFBDBOipBDj/pDGe+I9OEq5o1uq8//mcFS/JFnSkfbY="}
+  #questa routine crea il job relativo ad una newsletter e crea tutti emails da mandare in funzione degli
+  # ruoli o delle convenzione scelte
   def send_newsletter
     today = Date.today
     #logger.warn("edizione(" + @project.id.to_s + ") send newsletter(" + @newsletter.id.to_s + ") params #{params.inspect}")
@@ -123,8 +203,12 @@ class NewslettersController < ApplicationController
       }
     end
 
-    redirect_to :action => 'invii', :project_id => @project.id.to_s
-    #redirect_to :action => 'show', :id => @newsletter
+    if @newsletter.have_emails_to_send?
+      redirect_to :action => 'mailergo', :newsletter_id => @newsletter.id
+    else
+      redirect_to :action => 'invii', :project_id => @project.id.to_s
+      #redirect_to :action => 'show', :id => @newsletter
+    end
   end
 
   # GET /newsletters
@@ -245,14 +329,8 @@ class NewslettersController < ApplicationController
 
         #automatic create Newsletter
         @newsletter = Newsletter.new
-        #@newsletter.project_id = params[:project_id].to_i
         @newsletter.project_id = @project.id
         @newsletter.data = DateTime.now
-        #TODO fare una newsletter vuota
-        #@newsletter.html = @project.newsletter_smtp(nil)
-        #@newsletter.html = @project.newsletter_smtp(User.current)
-        #@newsletter.html = "project.rb:934:in newsletter_smtp undefined method > for nil:NilClass"
-        #undefined method `image_tag' for #<Project:0xb5934b0c>
         @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
         @newsletter.html = render_to_string(
                 :layout => false,
@@ -275,6 +353,10 @@ class NewslettersController < ApplicationController
           send_error l(:error_can_not_create_newsletter, :newsletter => @project.name)
           render_404
           #return redirect_to :controller => 'projects', :action => 'show', :id => @project
+        else
+          #@project.promoted_to_front_page = true
+          #@project.status = STATUS_FS #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in
+          #@project.save
         end
       end
     end

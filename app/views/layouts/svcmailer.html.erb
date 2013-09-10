@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-EN" xmlns="http://www.w3.org/1999/html" xmlns:fb="https://www.facebook.com/2008/fbml">
+<head><!-- Created by DomThu & SPecchiaSoft -->
+  <meta charset="utf-8"/>
+  <title>FiscoSport<%#h html_title %></title>
+  <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 2.5, user-scalable = yes, width = device-width"/>
+  <meta name="description" content="<%= Redmine::Info.app_name %>"/>
+  <meta name="keywords" content="editoriale, notizie sport, fiscale, info, fiscosport"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="title" content="Professionisti esperti in materie fiscali sportive"/>
+  <meta name="description" content="Visita il sito fiscosport per tenerti sempre aggiornato"/>
+  <link rel="image_src" type="image/jpeg" href="http://37.59.40.44:88/images/ico/fs.png"/>
+  <%= csrf_meta_tag %>
+  <%= favicon %>
+  <%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
+  <%= stylesheet_link_tag 'editorial', :media => 'print' %>
+  <!--   styles per il Front End  -->
+  <%= stylesheet_link_tag 'style.responsive.css', :media => 'all' %>
+  <%= stylesheet_link_tag 'style.css', :media => 'all' %>
+  <%= stylesheet_link_tag 'style.plus.css', :media => 'all' %>
+  <%#= javascript_heads %>
+  <%# javascript_include_tag "jquery.js" %>
+  <%= javascript_include_tag "jquery/jquery-1.9.1.min.js" %>
+  <%= javascript_include_tag "src/jquery.color.js" %>
+  <%= javascript_include_tag "src/jquery-glowing.js" %>
+  <%= javascript_include_tag "src/text_ticker.js" %>
+  <%= javascript_include_tag "application_fs.js" %>
+  <%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
+  <%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
+  <%= stylesheet_link_tag 'jquery-ui-rewrite.css', :media => 'all' %>
+  <%= javascript_include_tag "application_fs.js" %>
+
+  <script type="text/javascript">
+      //$(function () {
+      $(document).ready(function () {
+
+          //Scroll to top
+          $(window).scroll(function () {
+              if (jQuery(this).scrollTop() != 0) {
+                  jQuery('#toTop').fadeIn();
+              } else {
+                  jQuery('#toTop').fadeOut();
+              }
+          });
+
+          $('#toTop').click(function () {
+              jQuery('body,html').animate({scrollTop:0}, 800);
+          });
+
+          //auto hide when clicking
+          $('#fs-flash').click(function () {
+              $('#fs-flash').fadeOut(2400);
+          });
+          //focus via javascript during ajax response
+          $('#fs-flash').focus(function () {
+              $('#fs-flash').show();
+              setTimeout(function () {
+                  $('#fs-flash').fadeOut(2400);
+              }, 64000);
+          });
+          // $('#fs-flash').center_me().show();
+          if ($('#fs-flash').html().trim().length > 0) {
+              $('#fs-flash').focus();
+          };
+
+          $('.x-white').addGlow({ textColor:'white', haloColor:'#aaa', radius:100 });
+          $('.x-blue').addGlow({ textColor:'#00f', haloColor:'#00f', radius:100, duration:200 });
+          $('.x-yellow').addGlow({ textColor:'#F8DA00', haloColor:'#F8DA00', radius:10, duration:200 });
+          $('.x-red').addGlow({ textColor:'#f00', haloColor:'#f00', radius:100 });
+          $('.x-granata').addGlow({ textColor:'#a03823', haloColor:'#a03823', radius:100 });
+          $('.x-yellow2').addGlow({ textColor:'#000', haloColor:'#F8DA00', radius:5, duration:300 });
+          $('.x-yellow3').addGlow({ textColor:'#000', haloColor:'#F8DA00', radius:10, duration:300 });
+      });
+
+  $(function() {
+    $.ajaxSetup({
+        error: function(jqXHR, exception) {
+            if (jqXHR.status === 0) {
+                js_flash("error", 'Not connect.\n Verify Network.');
+            } else if (jqXHR.status == 404) {
+                js_flash("error", 'Requested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                js_flash("error", 'Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                js_flash("error", 'Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                js_flash("error", 'Time out error.');
+            } else if (exception === 'abort') {
+                js_flash("error", 'Ajax request aborted.');
+            } else {
+                js_flash("error", 'Uncaught Error.\n' + jqXHR.responseText);
+            }
+            //if $.isFunction(window.reset_page) {
+            if (typeof(reset_page) == "function") {
+              reset_page(true);
+            }
+        }
+    });
+  });
+
+  </script>
+  <%= yield :header_tags -%>
+</head>
+<body>
+<div id="fs-main">
+  <div id="fs-header-bg" class="clearfix">
+  </div>
+  <div class="fs-sheet clearfix">
+    <header class="fs-header clearfix">
+      <div class="fs-shapes">
+        <h1 class="fs-headline" data-left="58%">
+          <%= Setting.welcome_text_fs %>
+        </h1>
+      </div>
+      <div class="fs-textblock fs-object375974515" data-left="80%">
+          <%# Alto a destra%>
+      </div>
+    </header>
+
+    <div id="fs-flash" style="display:none;">
+      <% flash.each do |key, msg| %>
+          <p class='f-<%= key.to_s %>'><span class='<%= key.to_s %>'> </span>  <%= msg %> </p>
+
+          <div id="fs-flash-close-me"> clicca per chiudere</div>
+      <% end %>
+
+    </div>
+    <div class="fs-layout-wrapper clearfix">
+      <div class="fs-content-layout">
+        <div class="fs-content-layout-row">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    <div id="toTop" style="display: none;"></div>
+    <div id="ajax-indicator" style="display: none;"><span><%= l(:label_loading) %></span></div>
+    <footer class="fs-footer clearfix">
+
+      <p><a href="#">Link1</a> | <a href="#">Link2</a> | <a href="#">Link3</a></p>
+
+      <p>Copyright © 2012. All Rights Reserved.</p>
+
+    </footer>
+
+  </div>
+  <div class="fs-page-footer">
+    <div class="clearfix"></div>
+    <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank">Privacy </a> | site created by collaborations.</span>
+  </div>
+</div>
+
+</body>

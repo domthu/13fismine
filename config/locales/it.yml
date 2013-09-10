@@ -1716,6 +1716,7 @@ it:
 #EMAIL NEWSLETTER
   label_send_newsletter: Invia quindicinale
   button_send_newsletter: Invia quindicinale
+  button_send_emails: "Mails(%{jobs}) da inviare"
   button_send_newsletter_immediately: Invialo subito
   label_user_list_newsletters: "Storico degli invii precedenti"
   label_newsletter: Quindicinale
@@ -1739,3 +1740,5 @@ it:
   field_abbonamento_type: "Tipo abbonamento"
   field_user_fee: "Abbonato"
   label_all_users: "Tutti utenti"
+  mass_mailer: "Motore d'invio emails"
+  label_nl_usr: "Utente"

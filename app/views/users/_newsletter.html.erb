@@ -12,7 +12,7 @@
 
     <!--[form:user]-->
     <div class="splitcontentleft">
-      <fieldset class="box tabular">
+      <fieldset class="box">
         <legend><%= l(:label_newsletter) %></legend>
 
         <p>
@@ -29,7 +29,33 @@
 
       <fieldset class="box">
         <legend><%= l(:label_user_list_newsletters) %></legend>
-        Storico: Lista delle newsletter inviate precedentemente (fare Tabella)
+          <%# nl_user = NewsletterUser.scoped_by_user_id(@user.id) %>
+          <% nl_user = @user.newsletter_users %>
+          <% if nl_user.any? && (nl_user.count > 1)%>
+            <%= l(:label_total) %>:<strong class="total center"><%= h(nl_user.count) %></strong>
+            <table class="subtable list invii" width="100%">
+              <tr>
+                <th style="width:40%; text-align:left;"><%= l(:label_data) %></th>
+                <th style="width:40%; text-align:left;"><%= l(:label_project) %></th>
+                <th style="width:20%; text-align:left;"></th>
+              </tr>
+              <% nl_user.each do |invio| %>
+                <tr>
+                  <td><%= format_date(invio.updated_at) %></td>
+                  <td>
+                      <%= link_to(h(invio.newsletter.project.name), project_path(invio.newsletter.project), :class => 'icon icon-globe icon-adjust-min') if invio.have_project? %>
+                  </td>
+                  <td title="<%= invio.errore %>">
+                    <%= check_box_tag '', 1, invio.sended, :disabled => 'disabled'  %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          <% else %>
+            <p class="nodata"><%= l(:label_newsletter_none) %></p>
+          <% end %>
+
+
       </fieldset>
 
     </div>
