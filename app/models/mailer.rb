@@ -330,6 +330,7 @@ class Mailer < ActionMailer::Base
 =end
   end
 
+  #Via js non vede Application Helper
   def newsletter(user, body_as_string, project)
     #set_language_if_valid user.language
     recipients user.mail #TODO rimettere in produzione
@@ -347,7 +348,6 @@ class Mailer < ActionMailer::Base
     #subject l(:mail_subject_newsletter, :compagny => Setting.app_title, :edizione => ed, :date => project.data_al)
     subject ed
     clean_html = clean_fs_html(body_as_string, user, project)
-    clean_html = clean_html
     #clean_html = body_as_string
     #ed = user.nil? ? '--' : user.mail
     #clean_html = "<h1>" + ed + "</h1>"+ clean_html
@@ -580,7 +580,61 @@ class Mailer < ActionMailer::Base
     "<#{hash}@#{host}>"
   end
 
-  private
+  #se lo metto dentro application helper
+  #allora la chiamata def newslletter fatta via js non vede application helper
+  def clean_fs_html(txt, user, prj)
+    #if txt.include? '@@distance_of_date_in_words@@'
+    if user
+      txt = txt.gsub('@@user_username@@', user.name)
+      if user.password.nil?
+        txt = txt.gsub('@@user_password@@', '?')
+      else
+        txt = txt.gsub('@@user_password@@', user.password)
+      end
+      if user.scadenza
+        #txt = txt.gsub('@@user_scadenza@@', user.scadenza) expected numeric
+        #txt = txt.gsub('@@user_scadenza@@', get_short_date(user.scadenza) #undefined method `get_short_date' for #)
+        txt = txt.gsub('@@user_scadenza@@', user.scadenza)
+        txt = txt.gsub('@@distance_of_date_in_words@@', user.scadenza_fra)
+      else
+        txt = txt.gsub('@@user_scadenza@@', ' -non definita- ')
+        txt = txt.gsub('@@distance_of_date_in_words@@', ' -non definita- ')
+      end
+      txt = txt.gsub('@@user_codice@@', user.id.to_s)
+      if !user.privato? && user.convention
+        txt = txt.gsub('@@user_convention@@', "Sei conventionato a " + user.convention.name)
+        if user.convention.user
+          txt = txt.gsub('@@poweruser_username@@', user.convention.user.name)
+          txt = txt.gsub('@@poweruser_codice@@', user.convention.user.id.to_s)
+        end
+      end
+    else
+      txt = txt.gsub('@@user_username@@', '')
+      txt = txt.gsub('@@user_password@@', '')
+      txt = txt.gsub('@@user_scadenza@@', '')
+      txt = txt.gsub('@@distance_of_date_in_words@@', '')
+      txt = txt.gsub('@@user_codice@@', '')
+      txt = txt.gsub('@@user_convention@@', '')
+      txt = txt.gsub('@@poweruser_username@@', '')
+      txt = txt.gsub('@@poweruser_codice@@', '')
+    end
+    if User.current
+      txt = txt.gsub('@@logged_username@@',  User.current.name)
+      txt = txt.gsub('@@logged_state@@',  User.current.state)
+    else
+      txt = txt.gsub('@@logged_username@@', '')
+      txt = txt.gsub('@@logged_state@@', '')
+    end
+    txt = txt.gsub('@@settings_host_name@@',  Setting.host_name )
+    txt = txt.gsub('@@settings_register_days@@',  Setting.register_days.to_s )
+    txt = txt.gsub('@@settings_renew_days@@',  Setting.renew_days.to_s )
+    txt = txt.gsub('@@settings_fee_bcc_recipients@@',  Setting.fee_bcc_recipients )
+    txt = txt.gsub('@@settings_fee_email@@',  Setting.fee_email )
+    txt = txt.gsub('@@settings_app_title@@',  Setting.app_title )
+    txt = txt.gsub('@@settings_welcome_text_fs@@',  Setting.welcome_text_fs )
+    txt = txt.gsub('@@settings_welcome_text@@',  Setting.welcome_text )
+    return txt
+  end
 
   def message_id(object)
     @message_id_object = object
