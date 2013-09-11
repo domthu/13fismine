@@ -1089,7 +1089,7 @@
         var i = this.$.nodeName.toLowerCase();
         if (c) {
             var j = this.$.scopeName;
-            if (j != 'HTML')i = j.toLowerCase() + ':' + i;
+            if (j != 'HTML' && j !== undefined)i = j.toLowerCase() + ':' + i;
         }
         return(this.getName = function () {
             return i;
