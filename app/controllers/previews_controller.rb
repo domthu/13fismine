@@ -53,7 +53,7 @@ class PreviewsController < ApplicationController
 
   #Newsletter  grafica della newsletter
   def newsletter
-    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    @art = @project.issues.all_mail_fs
     render :layout => false, :partial => 'editorial/edizione_smtp'
   end
 
@@ -106,7 +106,12 @@ class PreviewsController < ApplicationController
 
     def find_user_project
       @id = ((params[:project] && params[:project][:id]) || params[:project_id]).to_i
-      @project= Project.all_public_fs.find_by_id(@id.to_i)
+
+      #HOME
+      #@project= Project.all_public_fs.find_by_id(@id.to_i)
+      #MAIL
+      @project= Project.all_mail_fs.find_by_id(@id.to_i)
+
       user_id = (params[:user] && params[:user][:id]) || params[:user_id]
       @user = User.find(user_id) if (user_id && (user_id.to_i > 0))
       @user = User.Current if @user.nil?

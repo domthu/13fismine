@@ -91,8 +91,10 @@ class Project < ActiveRecord::Base
   named_scope :has_module, lambda { |mod| {:conditions => ["#{Project.table_name}.id IN (SELECT em.project_id FROM #{EnabledModule.table_name} em WHERE em.name=?)", mod.to_s]} }
   named_scope :active, {:conditions => "#{Project.table_name}.status = #{STATUS_ACTIVE}"}
   named_scope :all_public, {:conditions => {:is_public => true}}
-  #domthu
+  #domthu edizione visibile web: si vede in home e ovviamente nel sito
   named_scope :all_public_fs, {:conditions => ['is_public = true AND identifier LIKE ?', "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{table_name}.created_on DESC"}
+  #domthu edizione per la spedizione controllare solo se è Public
+  named_scope :all_mail_fs, {:conditions => ['is_public = true'], :order => "#{table_name}.created_on DESC"}
   named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift || User.current, *args)} }
 
 #  def to_s

@@ -305,8 +305,9 @@ class UsersController < ApplicationController
   #Parameters: {"id"=>"17542", "action"=>"send_newsletter", "project"=>{"id"=>"308"}, "authenticity_token"=>"d0qcDDrxPu4tRQaWV0EQC9VO5f152OhGqfiIIb/K/d8=", "controller"=>"users", "_method"=>"put"}
   def send_newsletter
     @id = ((params[:project] && params[:project][:id]) || params[:project_id]).to_i
-    @project= Project.all_public_fs.find_by_id(@id.to_i)
-    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
+    #@project= Project.all_public_fs.find_by_id(@id.to_i)
+    @project= Project.all_mail_fs.find_by_id(@id.to_i)
+    @art = @project.issues.all_mail_fs
     #@htmlpartial = @user.newsletter_smtp(@edizione)
     @htmlpartial = render_to_string(
         :layout => false,
