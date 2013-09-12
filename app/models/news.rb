@@ -40,22 +40,15 @@ class News < ActiveRecord::Base
       :conditions => Project.allowed_to_condition(args.shift || User.current, :view_news, *args)
   } }
 
-=begin
-<<<<<<< HEAD
-  named_scope :issues_visible_fs,
-              :include => [{:issue => :project}],
-              :conditions => ["#{Project.table_name}.status=#{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public => true AND #{Issue.table_name}.se_visible_web => true"]
-=======
-=end
   named_scope :all_public_fs, {
       :include => [{:issues, :project}],
       :conditions => "#{Project.table_name}.status = #{Project::STATUS_ACTIVE} AND #{Project.table_name}.is_public = true AND #{Issue.table_name}.se_visible_web = true AND #{Project.table_name}.identifier <> '#{FeeConst::QUESITO_KEY}'",
-      :order => "#{table_name}.created_on DESC"}
+      :order => "#{Project.table_name}.id DESC , #{table_name}.created_on DESC"}
 
   named_scope :all_quesiti_fs, {
       :include => [{:project, :issues}],
       :conditions => "#{Project.table_name}.identifier = '#{FeeConst::QUESITO_KEY}'",
-      :order => "#{table_name}.created_on DESC"}
+      :order => "#{Project.table_name}.id DESC , #{table_name}.created_on DESC"}
 
   #------------------------
   safe_attributes 'title',
@@ -203,9 +196,11 @@ class News < ActiveRecord::Base
   def is_wait_reply?
     self.status_id == FeeConst::QUESITO_STATUS_WAIT
   end
+
   def is_fast_reply?
     self.status_id == FeeConst::QUESITO_STATUS_FAST_REPLY #&& self.reply != ''
   end
+
   def is_issue_reply?
     self.status_id == FeeConst::QUESITO_STATUS_ISSUES_REPLY
   end
