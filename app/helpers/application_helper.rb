@@ -213,11 +213,23 @@ module ApplicationHelper
   end
 
   #domthu generate a string in FeesHelper
+  def getdatetime(data)
+    if data.nil?
+      return "?"
+    else
+      return data.strftime("%d %b %H:%M:%S")
+    end
+  end
+
   def getdate(data)
     if data.nil?
       return "?"
     elsif !data.is_a?(Date)
-      return "?.." << data.to_s
+      begin
+        return data.to_date.strftime("%Y %b(%m) %d")
+      rescue => e
+        return "?.." << data.to_s
+      end
     else
       #return data.to_date.strftime("%y%m%d%H%M ")
       return data.to_date.strftime("%Y %b(%m) %d")
@@ -228,7 +240,11 @@ module ApplicationHelper
     if data.nil?
       return "?"
     elsif !data.is_a?(Date)
-      return "?.." << data.to_s
+      begin
+        return data.to_date.strftime("%Y %b ")
+      rescue => e
+        return "?.." << data.to_s
+      end
     else
       return data.to_date.strftime("%Y %b ")
     end

@@ -4,16 +4,16 @@
   <em class="hide">convention id <%= @convention_id %></em>
   <em class="hide">role id <%= @role %></em>
   <em class="hide">name <%= @name %></em>
+  <%= link_to(l(:button_send_emails, :jobs => @newsletter.emails_pending), newsletter_massmailer_path(@newsletter.id), :class => 'icon  icon-mails-to-send') if (User.current.admin? && @newsletter.have_emails_to_send?) %>
 </div>
+<h2><%=l(:label_send_newsletter)%></h2>
 
 <%= render :partial => 'show', :newsletter => @newsletter %>
-
-<h2><%=l(:label_send_newsletter)%></h2>
 
 <% form_tag({:controller => "newsletters", :action => "send_newsletter", :project_id => @project.id.to_s, :newsletter_id => @newsletter}, :method => :post) do %>
 
 <div class="autoscroll">
-<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
+<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%# submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
 <table id="tblinvii" class="list">
   <thead><tr>
   <th style="text-align:left; width: 65%;"><%= l(:field_role) %></th>
@@ -50,7 +50,7 @@
   </tbody>
 </table>
 
-<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
+<p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin? ) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%# submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
 
 <table id="tblinvii_convs" class="list">
   <thead><tr>

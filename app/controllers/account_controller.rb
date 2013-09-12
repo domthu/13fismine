@@ -29,7 +29,6 @@ class AccountController < ApplicationController
   def login
     #Rails.logger.info("login PARAMS: #{params.inspect}")
     #flash[:notice] = "==========login============="
-    #flash[:error] = "==========??????????============="
     if request.get?
       #flash[:notice] = "request.get --> logout_user"
       logout_user
@@ -85,7 +84,7 @@ class AccountController < ApplicationController
     end
   end
 
-#Parameters: {"action"=>"register", "authenticity_token"=>"P7eqAhfI5yeK+jAXK3NFvXLbBYyPT058LyJtDJva+Ks=", "commit"=>"Invia", "user"=>{"codicefiscale"=>"", "mail"=>"domthu@ks3000495.kimsufi.com", "sez"=>"", "language"=>"it", "se_condition"=>"1", "comune_id"=>"4035", "partitaiva"=>"", "soc"=>"", "indirizzo"=>"", "login"=>"dom1", "lastname"=>"thual1", "firstname"=>"dom1", "cross_organization_id"=>"", "titolo"=>"Responsabile", "password"=>"[FILTERED]", "se_privacy"=>"1", "fax"=>"", "telefono"=>"", "password_confirmation"=>"[FILTERED]"}, "controller"=>"account", "extra_town"=>"4035"}
+#Parameters: {"extra_town"=>"7289", "action"=>"register", "commit"=>"Invia", "authenticity_token"=>"oE/I9wEZXoXqA0iRUM+BS+fbprZFzqmGoCtdOhzN0hY=", "controller"=>"account", "user"=>{"codice_attivazione"=>"", "password"=>"[FILTERED]", "firstname"=>"dom7", "se_privacy"=>"1", "language"=>"it", "se_condition"=>"1", "fax"=>"", "indirizzo"=>"", "partitaiva"=>"", "soc"=>"", "password_confirmation"=>"[FILTERED]", "mail"=>"dom_thual@yahoo.it", "comune_id"=>"7289", "login"=>"dom7", "cross_organization_id"=>"1", "telefono"=>"", "codicefiscale"=>"thlddj", "titolo"=>"Tecnico/Dirigente", "lastname"=>"thual7"}}
   def register
     redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     if request.get?
@@ -112,60 +111,134 @@ class AccountController < ApplicationController
         return
       end
 
-      #Region Province Comune
+      #Region Province Comune from select2 onto extra_town
+      #set user_comune_id at run time in FormatCitta
       if params[:user][:comune_id].present?
         @user.comune_id = params[:user][:comune_id].to_i
-        @Citta = Comune.find(params[:user][:comune_id])
-        if @Citta #province_id region_id	cap
-          @user.cap = @Citta.cap
-          @user.prov = @Citta.province.name + "(" + @Citta.province_id.to_s + ")"
+        if Comune.exists?(@user.comune_id)
+          @user.comune = Comune.find(:first, :include => [[ :province => :region ]], :conditions => ['id =  ?', @user.comune_id.to_s])
+          if @user.comune #province_id region_id	cap
+            @user.cap = @user.comune.cap
+            @user.prov = @user.comune.province.name_full unless @user.comune.province.nil?
+            @user.prov += @user.comune.province.region.name unless ( @user.comune.province.nil? && @user.comune.region.province.nil?)
+          else
+            @user.comune_id = nil
+          end
+        else
+          @user.comune_id = nil
+        end
+      end
+      if @user.comune_id.nil?
+        #send_warning("Città di attività sportiva non presente. E importante inserirla in quanto potrebbe appartenire ad una zona coperta da un accordo convenzionato.")
+      end
+      if (params[:user][:cross_organization_id])
+        @user.cross_organization_id = params[:user][:cross_organization_id].to_i
+        if CrossOrganization.exists?(@user.cross_organization_id)
+          @user.cross_organization = CrossOrganization.find(:first, :conditions => ['id =  ?', @user.cross_organization_id.to_s])
+          if @user.cross_organization
+            @user.cross_organization_id = @user.cross_organization.id
+          else
+            @user.cross_organization_id = nil
+          end
+        else
+          @user.cross_organization_id = nil
         end
       end
 
       #STEP3 CONI FSN e convenzione
-      if (params[:user][:convention_id])
-        @user.convention_id = params[:user][:convention_id].to_i
-      else
-        if (params[:extra] && params[:extra][:convention_select])
-          @user.convention_id = params[:extra][:convention_select].to_i
+      @user.datascadenza = Date.today + Setting.register_days.to_i
+      if params[:user][:codice_attivazione].present?
+        @user.codice_attivazione = params[:user][:codice_attivazione].to_s.downcase
+        @user.convention = Convention.find(:first, :conditions => ['LOWER(codice_attivazione) =  ?', @user.codice_attivazione])
+        if @user.convention
+          send_notice("Codice di attivazione valido per " + @user.convention.name)
+          send_notice("Copertura della convenzione: " + @user.convention.pact)
+          @user.convention_id = @user.convention.id
+        else
+          send_warning("Il codice di attivazione non corrisponde ad nessuna convenzione.")
         end
       end
-      if (params[:user][:cross_organization_id])
-        @user.cross_organization_id = params[:user][:cross_organization_id].to_i
-      else
-        if (params[:extra] && params[:extra][:cross_select])
-          @user.cross_organization_id = params[:extra][:cross_select].to_i
+
+      if @user.comune && @user.cross_organization && @user.convention_id.nil?
+        #ricerca copertura di una convention?
+        if @user.cross_organization.conventions.any?
+          #ciclo su ogni convention
+          migliorScadenza = @user.datascadenza
+          @user.cross_organization.conventions.find(:all, :order => ' province_id DESC , region_id DESC , data_scadenza DESC').each do |conv|
+            neFaParte = false
+            #controllare su quale copertura
+            if conv.province.nil? #|| conv.province_id == 0#iniziare dalla provincia
+              if conv.region.nil?
+                #Nazionale
+                neFaParte = true
+              else
+                #Regionale
+                neFaParte = (@user.comune.province.region == conv.region)
+              end
+            else
+              #Provinciale
+              neFaParte = (@user.comune.province == conv.province)
+            end
+            if neFaParte == true
+              #la prima volta assegno la convention_id
+              send_notice("Lei risulta essere coperto da: " + conv.name)
+              send_notice("Copertura della convenzione: " + conv.pact)
+              if @user.convention_id.nil?
+                @user.convention_id = conv.id
+                @user.convention = conv
+                break # esco alla prima che trovo
+              end
+              #il non pagante prenderà la scadenza della convenzione
+              if conv.scadenza && (conv.scadenza > migliorScadenza)
+                migliorScadenza = conv.scadenza
+                if @user.convention_id != conv.id
+                  #questa convenzione e migliore di quella dapprima
+                  @user.convention_id = conv.id
+                  @user.convention = conv
+                end
+              end
+              #break per uscire --> No, continuo per vedere se c'è una convention migliore
+            end
+          end  #ciclo sulle conventions
+          if !@user.convention_id.nil?
+            @user.datascadenza = migliorScadenza
+            @user.datascadenza = nil #Non pagante
+          end
         end
       end
+
       #end
       if (params[:user][:mail])
         @user.mail_fisco = params[:user][:mail]
       end
 
+      #Gestione ruoli
+      if Setting.fee?
+        @user.annotazioni = "" unless !@user.annotazioni.nil?
+        #impostazioni minimali di default
+        @user.datascadenza = Date.today + Setting.register_days.to_i
+        @user.role_id = FeeConst::ROLE_REGISTERED
+        # se dichiara di essere convenzionato
+        if @user.convention_id
+          conv = Convention.find_by_id(@user.convention_id)
+          if conv.nil?
+            @user.annotazioni = "<br />REGISTER(da sistema): l'utente risulta far parte della convention(" + @user.convention_id.to_s + " che non esiste"
+            @user.convention_id = nil
+          else
+            #@user.datascadenza = conv.scadenza
+            @user.datascadenza = nil
+            @user.role_id = conv.role_id  # ruolo elaborato in funzione dello stato della scadenza
+          end
+        end
+      end
+
       @user.register
+
       if session[:auth_source_registration]
         @user.activate
         @user.login = session[:auth_source_registration][:login]
         @user.auth_source_id = session[:auth_source_registration][:auth_source_id]
 
-        #Gestione ruoli
-        if Setting.fee?
-          @user.annotazioni = "" unless !@user.annotazioni.nil?
-          #impostazioni minimali di default
-          @user.datascadenza = Date.today + Setting.register_days.to_i
-          @user.role_id = FeeConst::ROLE_REGISTERED
-          # se dichiara di essere convenzionato
-          if @user.convention_id
-            conv = Convention.find_by_id(113)
-            if conv.nil?
-              @user.annotazioni = "<br />REGISTER(da sistema): l'utente ha dichiarato di far parte della convention(" + @user.convention_id.to_s + " che non esiste"
-              @user.convention_id = nil
-            else
-              @user.datascadenza = conv.scadenza
-              @user.role_id = conv.role_id  # ruolo elaborato in funzione dello stato della scadenza
-            end
-          end
-        end
 #        if @user.save
 #          session[:auth_source_registration] = nil
 #          self.logged_user = @user
@@ -228,78 +301,58 @@ class AccountController < ApplicationController
       #}
     end
 
+    @user.register
+
     raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
-                          # Force ActionMailer to raise delivery errors so we can catch it
+    # Force ActionMailer to raise delivery errors so we can catch it
     ActionMailer::Base.raise_delivery_errors = true
-    @stat = 'Invio email non riuscito '
+    @stat = "Tipo registrazione(" + Setting.self_registration + "). "
     begin
-      if @user.save
-        puts "++++++++++++++++++Prova saved (" + @errors + ")++++++++++++++++"
-        @user.register #update_attribute
-        @stat = " Utente registrato"
-        self.logged_user = @user
-                       # Sends an email to the administrators
-        Mailer.deliver_account_activation_request(@user)
-      else
+      case Setting.self_registration
+        when '1'
+          @stat += " Utente registrato, in attesa della conferma email"
+          #register_by_email_activation(@user)
+          token = Token.new(:user => @user, :action => "register")
+          if @user.save and token.save
+            Mailer.deliver_register(token)
+            @stat = "Email inviata correttamente: <br /><strong>Verifichi la sua casella postale e confermi la sua email</strong>"
+            @stat += l(:notice_account_register_done)
+          else
+            @stat += " Errore nella procedura di conferam email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span>"
+          end
+
+        when '3' # Automatic activation
+          @stat += " Utente registrato automaticamente"
+          #register_automatically(@user)
+          @user.activate
+          @user.last_login_on = Time.now
+          if @user.save
+            self.logged_user = @user
+            @stat = l(:notice_account_activated)
+            Mailer.deliver_account_information(user, user.pwd)
+            tmail = Mailer.deliver_fee(user, 'thanks', Setting.template_fee_thanks)
+          else
+            @stat += " Errore nella creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente. Riprovare</span>"
+          end
+
+        else
+          @stat += " Utente NON registrato: richiede registrazione manuale da parte dell'amministratore"
+          #register_manually_by_administrator(@user)
+          if @user.save
+            # Sends an email to the administrators
+            Mailer.deliver_account_activation_request(user)
+            account_pending
+            @stat += "Registrazione effettuata: <br /><strong>In attesa di abilitazione utente</strong>"
+          else
+            @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
+          end
+
         if !@user.errors.empty?
-          #@errors += @user.errors.join(', ') undefined method join
           @errors += "<br />errore completa: " + @user.errors.full_messages.join('<br />')
         end
-        puts "********************Prova user not saved! (" + @errors + ")********************"
-        @stat += "Tipo registrazione(" + Setting.self_registration + "). "
-        case Setting.self_registration
-          when '1'
-            @stat += " Utente registrato, in attesa della conferma email"
-            #register_by_email_activation(@user)
-            token = Token.new(:user => @user, :action => "register")
-            if @user.save and token.save
-              @user.register #verificare se farlo? update_attribute
-              Mailer.deliver_register(token)
-              @stat += l(:notice_account_register_done)
-            else
-              puts "********************Prova self_registration 1 KAPPAO (" + @errors + ")********************"
-              @stat += " Conferma email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span>"
-            end
-
-          when '3' # Automatic activation
-            @stat += " Utente registrato automaticamente"
-            #register_automatically(@user)
-            @user.activate
-            @user.last_login_on = Time.now
-            if @user.save
-              @user.register #verificare se farlo? update_attribute
-              self.logged_user = @user
-              @stat += l(:notice_account_activated)
-            else
-              #puts "********************Prova self_registration 3 KAPPAO (" + @errors + ")********************"
-              @stat += " Creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente</span>"
-            end
-
-          else
-            @stat += " Utente NON registrato: richiede registrazione manuale da parte dell'amministratore"
-            #register_manually_by_administrator(@user)
-            if @user.save
-              @user.register #verificare se farlo? update_attribute
-                             # Sends an email to the administrators
-              Mailer.deliver_account_activation_request(user)
-              account_pending
-            else
-              #puts "********************Prova self_registration other KAPPAO (" + @errors + ")********************"
-              @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
-            end
-
-        end
       end
-      #htmlpartial = render_to_string(
-      #  :layout => false,
-      #  :partial => 'user/show',
-      #  :locals => { :user => @user }
-      #)
-      #htmlpartial = 'pippo'
-      #htmlpartial = getuserhtml(@user)
       htmlpartial = ''
       @tmail = Mailer.deliver_prova_gratis(@user, @stat + "<br />" + htmlpartial)
-      @stat += "Email inviata correttamente: <br /><strong>Verifichi la sua casella postale e confermi la sua email</strong>"
     rescue Exception => e
       @errors += "<span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
     end
@@ -340,20 +393,28 @@ class AccountController < ApplicationController
     #  :partial => 'user/show',
   end
 
+  #email confermazione Inviare la password
   # Token based account activation
   def activate
     #domthu redirect_to(home_url) && return unless Setting.self_registration? && params[:token]
     redirect_to(editorial_url) && return unless Setting.self_registration? && params[:token]
     token = Token.find_by_action_and_value('register', params[:token])
-    #domthu redirect_to(home_url) && return unless Setting.self_registration? && params[:token]
-    redirect_to(editorial_url) && return unless Setting.self_registration? && params[:token]
-    user = token.user
-    #domthu redirect_to(home_url) && return unless user.registered?
-    redirect_to(editorial_url) && return unless user.registered?
-    user.activate
-    if user.save
-      token.destroy
-      flash[:notice] = l(:notice_account_activated)
+    if token && token.user
+      user = token.user
+      #domthu redirect_to(home_url) && return unless user.registered?
+      redirect_to(editorial_url) && return unless user.registered?
+      user.activate
+      if user.save
+        token.destroy
+        flash[:notice] = l(:notice_account_activated)
+        #in caso di prova gratis inviare dati di accesso
+        if (user.pwd && !user.pwd.blank?) || user.isregistered?
+          Mailer.deliver_account_information(user, user.pwd)
+          tmail = Mailer.deliver_fee(user, 'thanks', Setting.template_fee_thanks)
+        end
+      end
+    else
+      send_notice("La conferma è gia avvenuta. Se non riccordi le tue credentiali usi la gestione reccupero password.")
     end
     #redirect_to :action => 'login'
     redirect_to editorial_url
@@ -497,10 +558,6 @@ class AccountController < ApplicationController
     token = Token.new(:user => user, :action => "register")
     if user.save and token.save
       Mailer.deliver_register(token)
-      if user.isregistered?
-        Mailer.deliver_account_information(user, user.password)
-        Mailer.fee(self, 'thanks', Setting.template_fee_thanks)
-      end
       flash[:notice] = l(:notice_account_register_done)
       #redirect_to :action => 'login'
       redirect_to editorial_url

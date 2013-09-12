@@ -1089,7 +1089,7 @@
         var i = this.$.nodeName.toLowerCase();
         if (c) {
             var j = this.$.scopeName;
-            if (j != 'HTML')i = j.toLowerCase() + ':' + i;
+            if (j !== undefined && j != 'HTML')i = j.toLowerCase() + ':' + i;
         }
         return(this.getName = function () {
             return i;
@@ -2531,7 +2531,7 @@
                 if (s.type == 1) {
                     if (!u.lastElement)u.lastElement = s;
                     var t = s.getName();
-                    if (c && s.$.scopeName != 'HTML')t = s.$.scopeName.toLowerCase() + ':' + t;
+                    if (c && s.$.scopeName !== undefined && s.$.scopeName != 'HTML')t = s.$.scopeName.toLowerCase() + ':' + t;
                     if (!q) {
                         if (!p && l[t])p = s;
                         if (m[t])if (!p && t == 'div' && !n(s))p = s; else q = s;

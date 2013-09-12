@@ -38,9 +38,9 @@
         var mail = $('#mail').val();
         var lastname = $('#lastname').val();
         var firstname = $('#firstname').val();
-        var team_artist = $('#modlgn_remember').is(':checked');
+        var merce_dolci = $('#modlgn_remember').is(':checked');
         if (lastname.length > 0 && firstname.length > 0 && mail.length > 0) {
-            $.post(urlprova, { mail:mail, lastname:lastname, firstname:firstname, team_artist:team_artist, authenticity_token:$("input[name='authenticity_token']").val(), back_url:$('#back_url').val()  },
+            $.post(urlprova, { mail:mail, lastname:lastname, firstname:firstname, merce_dolci:merce_dolci, authenticity_token:$("input[name='authenticity_token']").val(), back_url:$('#back_url').val()  },
                     function (data) {
                         data = data || {};
                         if (data.success) {
@@ -82,13 +82,13 @@
   <div id="fs-prova-gratis-info">
     <div class="fs-prova-gratis-info">
       <label class="fs-checkbox">
-        <input type="checkbox" id="modlgn_remember" name="team_artist" value="yes" alt="Team Artist" checked="true"/>
+        <input type="checkbox" id="modlgn_remember" name="merce_dolci" value="yes" alt="Merce dolci" checked="true"/>
       </label>
       <ul id="tickGratis" class="fs-prova-gratis-righe">
-        <li>Prova anche la demo di <a href="http://teamartist.com" target="_blank">Team Artist</a></li>
+        <li>Prova anche la demo di <a href="http://www.mercidolci.it/" target="_blank">Merce dolci</a></li>
         <li> il software per le nostre associazioni.</li>
         <li>Promo: se ti iscrivi a FiscoSport...</li>
-        <li>-10% sul listino approfittane ora! <a href="http://teamartist.com" target="_blank">Scopri...</a></li>
+        <li>-10% sul listino approfittane ora! <a href="http://www.mercidolci.it/" target="_blank">Scopri...</a></li>
       </ul>
       <div class="clearfix"></div>
        <span title="Cliccando su '<%= l(:button_prova) %>' acconsenti esplicitamente al trattamento dei dati personali ai sensi del D.Lgs. 196/2003">Cliccando su "<%= l(:button_prova) %>

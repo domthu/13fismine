@@ -981,6 +981,7 @@ padding-bottom: 3px;
 .icon-news_reply_todo  { background-image: url(../images/ticket_edit.png); }
 .icon-adjust-min { padding-left: 40px; min-height:21px; }
 .icon-newsletter { background-image: url(../images/news.png); }
+.icon-mails-to-send { background-image: url(../images/changeset.png); }
 
 img.gravatar {
     padding: 2px;

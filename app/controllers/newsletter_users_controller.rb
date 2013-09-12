@@ -3,7 +3,7 @@ class NewsletterUsersController < ApplicationController
 
   before_filter :require_admin
 
-  verify :method => :post, :only => [ :destroy ],
+  verify :method => [:post, :delete], :only => [ :destroy ],
          :redirect_to => { :action => :index }
 
   include FeesHelper  #Domthu  FeeConst get_role_css
@@ -84,9 +84,13 @@ class NewsletterUsersController < ApplicationController
     @newsletter_user = NewsletterUser.find(params[:id])
     @newsletter_user.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(newsletter_users_url) }
-      format.xml  { head :ok }
+    if request.xhr?
+      render :json => { :success => true }
+    else
+      respond_to do |format|
+        format.html { redirect_to(newsletter_users_url) }
+        format.xml  { head :ok }
+      end
     end
   end
 end

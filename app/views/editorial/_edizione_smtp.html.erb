@@ -1,5 +1,4 @@
 <%# @project= Project.all_public_fs.find_by_id params[:id].to_i project @art.count  %>
-<%# @prj.newsletter_smtp(1) %>
 <% defurl = "http://" + Setting.host_name %>
 <style type="text/css" xmlns="http://www.w3.org/1999/html">
 table, img {border: none;}
@@ -68,7 +67,7 @@ table td {padding: 0; margin: 0; border: none;}
                       <% if @user %>
                         <%= @user.firstname %> &nbsp; <%= @user.lastname %>
                       <% else %>
-                        @@user_name
+                        @@user_username@@
                       <% end %>
                     </font>
                 </td>
@@ -96,7 +95,7 @@ table td {padding: 0; margin: 0; border: none;}
 <% if @user %>
   <%= render :partial => 'editorial/edizione_smtp_convention' %>
 <% else %>
-  @@user_convention
+  @@user_convention@@
 <% end %>
 <%# fine riga visibile solo se associato o è affiliato'  / sotto un'immagine di spazio %>
 <table width="560" cellpadding="0" cellspacing="0" style="font-size:0;">

@@ -23,7 +23,9 @@
               <font style="font-family:Arial, Helvetica, sans-serif; font-size:0.9em; color:#1e1e1e; line-height:14px; font-style:italic;">
                 <%= l(:label_cross_organization) %>    </font></td>
             <td width="60%" align="left" style="font-weight: bold;">
-              <% if !@user.convention.region_id.nil? && @user.convention.region_id > 0 %>
+              <% if !@user.convention.cross_organization.nil? %>
+                <%= h @user.convention.cross_organization.name %>
+              <% elsif !@user.cross_organization.nil? %>
                 <%= h @user.cross_organization.name %>
               <% end %>
               <%= h @user.convention.get_zone %>

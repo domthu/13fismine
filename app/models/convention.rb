@@ -97,7 +97,7 @@ class Convention < ActiveRecord::Base
   end
 
   def scadenza
-    return self.data_scadenza
+    return (self.data_scadenza.nil? || self.data_scadenza.blank?) ? nil : self.data_scadenza.to_date
   end
 
   # ruolo elaborato in funzione dello stato della scadenza

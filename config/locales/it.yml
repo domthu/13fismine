@@ -238,7 +238,7 @@ it:
   mail_subject_lost_password: "La tua password %{value}"
   mail_body_lost_password: 'Per cambiare la password, usa il seguente collegamento:'
   mail_subject_register: "Attivazione utente %{value}"
-  mail_body_register: "Per attivare l'utente, usa il seguente collegamento:"
+  mail_body_register: "<b>Confermi la tua email.</b><p>Per attivare il tuo account, usa il seguente collegamento:<p>"
   mail_body_account_information_external: "Puoi utilizzare il tuo account %{value} per accedere al sistema."
   mail_body_account_information: Le informazioni riguardanti il tuo account
   mail_subject_account_activation_request: "%{value} richiesta attivazione account"
@@ -1263,6 +1263,8 @@ it:
   label_convention_organismo: Organismo sportivo associato
   label_convention_societa: Società non sportiva
   label_convention_type: Tipo organismo
+  fied_convention_type: Tipo organismo
+  zone_area: Copertura geografica
 
   label_ragione_sociale: Ragione sociale
   label_email: Email
@@ -1714,6 +1716,7 @@ it:
 #EMAIL NEWSLETTER
   label_send_newsletter: Invia quindicinale
   button_send_newsletter: Invia quindicinale
+  button_send_emails: "Mails(%{jobs}) da inviare"
   button_send_newsletter_immediately: Invialo subito
   label_user_list_newsletters: "Storico degli invii precedenti"
   label_newsletter: Quindicinale
@@ -1737,3 +1740,5 @@ it:
   field_abbonamento_type: "Tipo abbonamento"
   field_user_fee: "Abbonato"
   label_all_users: "Tutti utenti"
+  mass_mailer: "Motore d'invio emails"
+  label_nl_usr: "Utente"

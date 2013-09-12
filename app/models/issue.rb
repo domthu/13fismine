@@ -76,7 +76,7 @@ class Issue < ActiveRecord::Base
     }
   }
   named_scope :all_public_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
-                                :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile =1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"],
+                                :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile = 1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"],
                                 :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , due_date DESC",}
   named_scope :all_public_fs_full, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
                                :conditions => ["#{Project.table_name}.is_public = 1"],

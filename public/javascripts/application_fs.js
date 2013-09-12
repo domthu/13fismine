@@ -63,7 +63,7 @@ function js_flash(tipo, txt) {
     } else {
         s +=  '<p class="f-' + tipo + '"><span class="i-' + tipo  +'"> </span>' +  txt + '</p><div id="fs-flash-close-me"> clicca per chiudere</div>'
     }
-    $("#fs-flash").html(s).focus();  //la focus fa la show e il center_me
+    $('#fs-flash').html(s).focus();  //la focus fa la show e il center_me
 }
  /*
 jQuery.fn.center_me = function () {
@@ -72,3 +72,14 @@ jQuery.fn.center_me = function () {
     this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
     return this;
 }  */
+
+function setVisible(id, visible) {
+    var el = $(id);
+    if (el) {
+        if (visible) {
+            el.show();
+        } else {
+            el.hide();
+        }
+    }
+}

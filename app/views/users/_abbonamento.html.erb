@@ -26,12 +26,15 @@
             </span>
           </p>
 
+          <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => 'cambia federazione' %></p>
+
       </fieldset>
+
 
       <fieldset class="box tabular">
         <legend><%=l(:label_is_referente)%></legend>
 
-          <p><%= f.check_box :power_user, :label => :field_power_user, :title => 'power user' %> </p>
+          <p><%= f.check_box :power_user, :label => '', :title => 'power user' %>&nbsp;<%=l(:field_power_user)%> </p>
 
           <p class="">
             <label for="refe"><%= l(:label_have_referee) %></label>
@@ -59,18 +62,15 @@
       </fieldset>
 
       <fieldset class="box tabular">
-        <legend><%=l(:label_gest_organismo)%></legend>
+        <legend title="<%=l(:label_gest_organismo)%>"><%= l(:field_convention) %></legend>
 
-          <div class="convention-select"></div>
-
-          <%= f.select :convention_id, (Convention.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => 'cambia asso' %>
+          <%= f.select :convention_id, (Convention.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :label => '', :title => 'cambia convenzione' %>
 
           <p class="">
             <label><%= l(:label_have_convention) %></label>
             <span>
               <% if @user.convention %>
                   <%= link_to h(@user.convention), convention_path(@user.convention) %>
-                  <br />Copertura geografica:
                   <br /><%= h(@user.convention.pact) %>
               <% else %>
                 <%= l(:label_no_convention) %>
@@ -78,10 +78,10 @@
             </span>
           </p>
 
-<% if @user.convention %>
+<% if @user.convention %>  <%#========================%>
 
           <p class="">
-            <label><%= l(:label_convention_type) %></label>
+            <label><%= l(:field_convention_type) %></label>
             <span>
               <% if @user.convention.cross_organization %>
                 <%= l(:label_convention_organismo) %>
@@ -92,11 +92,19 @@
           </p>
 
           <p class="">
-            <label><%= l(:stato_scadenza) %></label>
+            <label><%= l(:zone_area) %></label>
             <span>
-              <%= format_date(@user.convention.data_scadenza) %>
+              <%= @user.convention.get_zone() %>
+            </span>
+          </p>
+
+          <p class="">
+            <label title="<%= l(:stato_scadenza) %>"><%= l(:label_data_scadenza) %></label>
+            <span title="<%= format_date(@user.convention.data_scadenza) %>">
+              <%= getdate(@user.convention.data_scadenza) %>
+              <%# if @user.convention.data_scadenza.is_a?(Date) %>
+              <% if @user.convention.data_scadenza %>
               -->
-              <% if @user.convention.data_scadenza.is_a?(Date) %>
                 <% if @user.convention.data_scadenza < Date.today %>
                   <%= l(:state_expired) %>
                 <% else %>
@@ -107,7 +115,6 @@
                 <% end %>
                 <% end %>
               <% else %>
-                TODO
               <% end %>
             </span>
           </p>
@@ -158,36 +165,73 @@
         <% else %>
           <p class="nodata"><%= l(:label_no_soci) %></p>
         <% end %>
-<% end %>
+<% end %>  <%#========================%>
       </fieldset>
 
     </div>
     <div class="splitcontentright">
 
-      <fieldset class="box tabular">
+      <fieldset class="box">
         <legend><%=l(:label_scadenza_ruolo)%></legend>
 
-        <p><%= f.text_field :tariffa_precedente, :label => :field_tariffa_precedente, :required => false, :size => 5  %></p>
-        <p><%=l(:field_data)%> <%= format_date @user.data %></p>
+        <p>
+          <%=l(:field_tariffa_precedente)%>
+        <p>
+        <p><%= f.text_field :tariffa_precedente, :label => '', :required => false, :size => 5  %></p>
+        <p>
+          <%=l(:field_data)%> <%= format_date @user.data %></p>
         <p>
           <%# f.date_select :data, :label => :field_data %>
-          <%= f.text_field :data, :label => l(:field_data), :size => 10 %><%= calendar_for('user_data') %>
+          <%= f.text_field :data, :label => '', :size => 10 %><%= calendar_for('user_data') %>
         </p>
-        <p><%=l(:field_datascadenza)%> <%= format_date @user.datascadenza %></p>
+        <p>
+          <%=l(:field_datascadenza)%> <%= format_date @user.datascadenza %></p>
         <p>
           <%# f.date_select :datascadenza, :label => :field_datascadenza %>
-          <%= f.text_field :datascadenza, :label => l(:field_datascadenza), :size => 10 %><%= calendar_for('user_datascadenza') %>
+          <%= f.text_field :datascadenza, :label => '', :size => 10 %><%= calendar_for('user_datascadenza') %>
         </p>
 
-<p></p>
-        <p><label><%= l(:label_role) %></label><strong>
 
-        <% roles_fs.each do |role| %>
-          <%= radio_button_tag 'user[role_id]', role.id, (role.id == @user.role_id) %> <%=h role %>
-          <br />
-        <% end %>
-        </strong></p>
         <p><%=l(:field_role)%>: <%= @user.role_id.to_s %></p>
+        <p>
+          <strong>
+          <% roles_fs.each do |role| %>
+            <%= radio_button_tag 'user[role_id]', role.id, (role.id == @user.role_id) %> <%=h role %>
+            <br />
+          <% end %>
+          </strong>
+        </p>
+
+        <p>In questo momento l'utente risulta:</p>
+          <ul>
+            <% if FeeConst::FEE_ROLES.include? @user.role_id %>
+              <li><div class="flash notice">Soggetto alla gestione abbonamento</div></li>
+            <% else %>
+              <li><div class="flash warning">Non soggetto alla gestione abbonamento</div></li>
+            <% end %>
+              <li title="ha un ruolo che lui permette di accedere all'area privata di gestione <%= Setting.app_title %>">Accede al backend? <div style="width:1px;" class="flash <%= (FeeConst::CAN_BACK_END_ROLES.include? @user.role_id) ? "notice" : "warning" %>">&nbsp;</div></li>
+          </ul>
+
+        <p>Il suo nome appare cosi:</p>
+        <ul>
+          <li>In chiaro: <%= @user.name %></li>
+          <li>Protetto: <%= @user.hide_name %></li>
+        </ul>
+        <% if @user.privato? %>
+          <p>E un <mark>privato</mark></p>
+        <% else %>
+          <p>E un <mark>convenzionato:</mark></p>
+          <ul>
+            <li><%= @user.convention.to_s%></li>
+            <li><%= @user.convention.pact%></li>
+          </ul>
+        <% end %>
+        <p>La sua data di scadenza risulta:</p>
+        <ul>
+          <li><%= format_date @user.scadenza %></li>
+          <li><%= distance_of_date_in_words(@user.scadenza, Time.now) unless @user.scadenza.nil? %></li>
+          <li><%= @user.scadenza_fra %></li>
+        </ul>
       </fieldset>
 
     </div>

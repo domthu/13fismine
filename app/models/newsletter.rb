@@ -1,7 +1,7 @@
 class Newsletter < ActiveRecord::Base
 
   belongs_to :project
-  has_many :newsletter_users, :dependent => :delete_all
+  has_many :newsletter_users, :dependent => :delete_all #destroy
 
   validates_uniqueness_of :project_id#, :scope => :project_id
 
@@ -21,6 +21,14 @@ class Newsletter < ActiveRecord::Base
 
   def self.find_by_project(project_id)
     find(:first, :conditions => ["project_id = ?", project_id])
+  end
+
+  def have_emails_to_send?
+    return (self && self.newsletter_users.any? && self.newsletter_users.count(:conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)']) > 0)
+  end
+
+  def emails_pending
+    return (self.have_emails_to_send?) ? (self.newsletter_users.count(:conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)'])) : 0;
   end
 
 end

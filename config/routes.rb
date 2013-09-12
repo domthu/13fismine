@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_profiles
   map.resources :reservations
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "invii"
+#rake routes | grep -r "newsletter_user"
   map.resources :top_menus
   map.resources :contract_users
   map.resources :contracts
@@ -105,13 +105,20 @@ ActionController::Routing::Routes.draw do |map|
 
 #Map menu
 
+  map.nlmailer '/nlmailer/:newsletter_id', :controller => 'services', :action => 'nlmailer'
+  map.newsletter_massmailer '/massmailer/:newsletter_id', :controller => 'newsletters', :action => 'massmailer'
+  #via js
+  #map.newsletter_send_emails '/send_emails/:newsletter_id/:pageSize', :controller => 'newsletters', :action => 'send_emails'
+  map.newsletter_send_emails '/send_emails', :controller => 'newsletters', :action => 'send_emails'
+  map.newsletter_removeemails '/removeemails/:newsletter_id/:type', :controller => 'newsletters', :action => 'removeemails'
+
+
   map.newsletter_invii '/invii/:project_id',
                       :controller => 'newsletters',
                       :action => 'invii',
                       :project_id => /\d.+/,
                       #:project_id => /[^\/]+/,
                       :conditions => {:method => [:get, :post]}
-
 
   map.editorial '/editoriale/home',
                 :controller => 'editorial',
@@ -126,7 +133,6 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.topsection_page '/editoriale/:topmenu_key/:topsection_key',
-
                       :controller => 'editorial',
                       :action => 'top_sezione',
                       :topmenu_key => /[^\/]+/,
@@ -263,7 +269,6 @@ ActionController::Routing::Routes.draw do |map|
   map.preview_articolo '/issues/articolo/:id', :controller => 'previews', :action => 'articolo'
   map.preview_newsletter '/newsletter_preview/:user_id', :controller => 'previews', :action => 'newsletter'
   map.unassigned_users '/unassigned_users', :controller => 'previews', :action => 'norole'
-  map.newsletter_users_emailed '/newsletter_users_emailed/:id/:type', :controller => 'previews', :action => 'nlemailed'#, :conditions => { :method => :post }
 
   map.issues_context_menu '/issues/context_menu', :controller => 'context_menus', :action => 'issues'
   map.issue_changes '/issues/changes', :controller => 'journals', :action => 'index'

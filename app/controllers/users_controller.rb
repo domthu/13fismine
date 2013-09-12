@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -110,6 +110,10 @@ class UsersController < ApplicationController
       @user.pref.save
       @user.notified_project_ids = (@user.mail_notification == 'selected' ? params[:notified_project_ids] : [])
 
+      if Setting.fee?
+        @user.control_state
+      end
+
       Mailer.deliver_account_information(@user, params[:user][:password]) if params[:send_information]
 
       respond_to do |format|
@@ -156,6 +160,10 @@ class UsersController < ApplicationController
     if @user.save
       @user.pref.save
       @user.notified_project_ids = (@user.mail_notification == 'selected' ? params[:notified_project_ids] : [])
+
+      if Setting.fee?
+        @user.control_state
+      end
 
       if was_activated
         Mailer.deliver_account_activated(@user)
@@ -219,7 +227,10 @@ class UsersController < ApplicationController
   #via js
   def edit_abbonamento
     @user.safe_attributes = params[:user]
-    @user.save if request.post?
+    if request.post?
+      @user.save
+      @user.control_state
+    end
     respond_to do |format|
       if @user.valid?
         format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'abbonamento' }
@@ -241,7 +252,11 @@ class UsersController < ApplicationController
   #via js
   def edit_dati
     @user.safe_attributes = params[:user]
-    @user.save if request.post?
+    #@user.save if request.post?
+    if request.post?
+      @user.save
+      @user.control_state
+    end
     respond_to do |format|
       if @user.valid?
         format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'dati' }
@@ -307,17 +322,10 @@ class UsersController < ApplicationController
       ActionMailer::Base.raise_delivery_errors = true
       @msg = 'Invio newsletter. '
       begin
-        #@test =  Mailer.test(@user)
-        #@test =  Mailer.deliver_account_activated(@user)
-        @test =  Mailer.deliver_newsletter(@user, @htmlpartial, @project)
-        #notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
-        #flash[:notice] = l(:notice_user_newsletter_email_sent)
+        @tmail =  Mailer.deliver_newsletter(@user, @htmlpartial, @project)
         @msg += l(:notice_user_newsletter_email_sent, :edizione => @project.name, :date => @project.data_al,  :user => user.to_s)
-        @msg += " Risultato => " + @test
+        #@msg += " Risultato => " + @tmail (can't convert TMail::Mail into String)
       rescue Exception => e
-        #@test =  Mailer.test(@user) private method `test' called for Mailer:Class
-        #@test =  Mailer.deliver_newsletter(@user, @htmlpartial, @project) uninitialized constant Mailer::Settings
-        #Mailer.deliver_account_activated(@user) undefined local variable or method `user' for #<UsersController:0xb63d3374>
         @msg += l(:notice_email_error, e.message)
       end
       ActionMailer::Base.raise_delivery_errors = raise_delivery_errors

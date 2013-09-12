@@ -1243,7 +1243,9 @@ en:
   label_convention_ref: "Scadenza<br />responsabile"
   label_convention_organismo: Organismo sportivo associato
   label_convention_societa: Società non sportiva
-  label_convention_type: Tipo organismo
+  label_convention_type: "Organism's type"
+  field_convention_type: "Organism's type"
+  zone_area: Zone area
 
   label_ragione_sociale: Ragione sociale
   label_email: Email
@@ -1694,6 +1696,7 @@ en:
 #EMAIL NEWSLETTER
   label_send_newsletter: Invia quindicinale
   button_send_newsletter: Invia quindicinale
+  button_send_emails: "Mails(%{jobs}) to send"
   button_send_newsletter_immediately: Send it immediately
   label_user_list_newsletters: "Storico degli invii precedenti"
   label_newsletter: Quindicinale
@@ -1717,3 +1720,5 @@ en:
   field_abbonamento_type: "Tipo abbonamento"
   field_user_fee: "Abbonato"
   label_all_users: "Tutti utenti"
+  mass_mailer: "Mass mailer sender"
+  label_nl_usr: "Utente"
