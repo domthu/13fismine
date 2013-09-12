@@ -93,7 +93,7 @@
     color: #016284;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 3px;
+    margin-bottom: 7px;
 }
 
 /*  inizio  -  -  -  -  -  -   tramenu   primo blocco a sx -  -  -  -  -  -  */
@@ -173,7 +173,6 @@
 .fs-prova-gratis-righe {
     display: block;
     float: left;
-    margin-left: 5px;
 
 }
 

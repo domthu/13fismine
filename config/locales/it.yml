@@ -363,10 +363,12 @@ it:
   field_cvsroot: CVSROOT
   field_cvs_module: Modulo
   field_active: Attivo
-
   setting_app_title: Titolo applicazione
   setting_app_subtitle: Sottotitolo applicazione
   setting_welcome_text: "Testo di benvenuto sulla HOME della redazione: Area Riservata"
+  setting_home_banner_sx_gratis_msg: 'Testo sotto la zona "prova gratis"'
+  setting_home_banner_sx_logged_txt: 'Testo sopra espositore banner sx (utente loggato)'
+  setting_home_banner_sx_gratis_txt: 'Testo sopra zona "prova gratis"'
   setting_default_language: Lingua predefinita
   setting_login_required: Autenticazione richiesta
   setting_self_registration: Auto-registrazione abilitata

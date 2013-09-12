@@ -27,6 +27,12 @@ welcome_text:
   default: Panello di controllo dei redattori e collaboratori
 welcome_text_fs:
   default: "Prima pagina dell'editoriale"
+home_banner_sx_gratis_msg:
+  default:  "Promozione!"
+home_banner_sx_logged_txt:
+  default: "Fiscosport s.r.l."
+home_banner_sx_gratis_txt:
+  default: "Prova gratis!"
 login_required:
   default: 0
 self_registration:
