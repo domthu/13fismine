@@ -27,6 +27,18 @@ class NewslettersController < ApplicationController
     if request.post?
 
     else
+      #update html preview
+      @art = @project.issues.all_mail_fs
+      if @art && @art.any?
+        @newsletter.html = render_to_string(
+                :layout => false,
+                :partial => 'editorial/edizione_smtp',
+                :locals => { :project => @project, :art => @art, :user => nil }
+              )
+        if ((!@newsletter.html.nil?) && (!@newsletter.html.include? "<!--checksum-->"))
+          send_error("Edizione molto lungha: " + @newsletter.html.length.to_s + " caratteri. ")
+        end
+      end
       if @newsletter.newsletter_users.count > 0
         @last_date = @newsletter.newsletter_users.sort_by(&:updated_at).reverse.first.updated_at
         if @last_date && @newsletter.data < @last_date
@@ -402,7 +414,7 @@ class NewslettersController < ApplicationController
             #@project.save
           end
         else
-          send_warning l(:error_newsletter_mail_no_article, :newsletter => @project.name)
+          send_warning l(:error_newsletter_mail_no_article, :project => @project.name)
           return redirect_to :controller => 'projects', :action => 'show', :id => @project
         end
       end
