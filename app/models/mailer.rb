@@ -416,15 +416,14 @@ class Mailer < ActionMailer::Base
   def prova_gratis (user, body_as_string)
     #recipients user.mail #TODO rimettere in produzione
     #recipients Setting.fee_bcc_recipients
-    #recipients Setting.fee_email
-    recipients 'dom_thual@yahoo.fr'
+    recipients Setting.fee_email
+    #recipients 'dom_thual@yahoo.fr'
     subject Setting.app_title + ' > Prova Gratis ' + user.name.html_safe + ' ' + user.mail.html_safe
 
-    html_body = '<div style="font-wheight:bold;padding: 50px; color: blue; background-color:#eee;"> SI è appena registrato un utente id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /><hr><br /><p><h1>Login: '  + user.login + '</h1></p><br /><hr><br /><p><h1>Mail: '  + user.mail + '</h1></p><br /><hr><br /><p><h1>Scadenza: '  + user.scadenza.to_s + ' (' + user.scadenza_fra + ')</h1></p><div>' + body_as_string + '</div>'
+    html_body = '<div style="font-wheight:bold;padding: 20px 40px; color: #FFF7FF; background-color:#2C4056;"> Info per la segretaria: un utente si è appena registrato id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /><hr><br /><p><h3>Login: '  + user.login + '</h3></p><br /><hr><br /><p><h3>Mail: '  + user.mail + '</h3></p><br /><hr><br /><p><h3>Scadenza: '  + user.scadenza.to_s + ' (' + user.scadenza_fra + ')</h3></p><div>' + body_as_string + '</div>'
 
     body :html_body => html_body
     render_multipart('prova_gratis', body)
-
 #    content_type "multipart/alternative"
 #    part :content_type => "text/html",
 #         :body => render(

@@ -151,7 +151,7 @@ class AccountController < ApplicationController
         @user.codice_attivazione = params[:user][:codice_attivazione].to_s.downcase
         @user.convention = Convention.find(:first, :conditions => ['LOWER(codice_attivazione) =  ?', @user.codice_attivazione])
         if @user.convention
-          send_notice("Il codice di attivazione corrisponde ad una convenzione esistente: " + @user.convention.name)
+          send_notice("Codice di attivazione valido per " + @user.convention.name)
           send_notice("Copertura della convenzione: " + @user.convention.pact)
           @user.convention_id = @user.convention.id
         else
@@ -162,7 +162,6 @@ class AccountController < ApplicationController
       if @user.comune && @user.cross_organization && @user.convention_id.nil?
         #ricerca copertura di una convention?
         if @user.cross_organization.conventions.any?
-          send_notice("@user.cross_organization.conventions.count: " + @user.cross_organization.conventions.count.to_s)
           #ciclo su ogni convention
           migliorScadenza = @user.datascadenza
           @user.cross_organization.conventions.find(:all, :order => ' province_id DESC , region_id DESC , data_scadenza DESC').each do |conv|
@@ -182,7 +181,7 @@ class AccountController < ApplicationController
             end
             if neFaParte == true
               #la prima volta assegno la convention_id
-              send_notice("Lei risulta essere coperto da una federazione: " + conv.name)
+              send_notice("Lei risulta essere coperto da: " + conv.name)
               send_notice("Copertura della convenzione: " + conv.pact)
               if @user.convention_id.nil?
                 @user.convention_id = conv.id
