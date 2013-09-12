@@ -1720,7 +1720,8 @@ it:
   button_send_newsletter_immediately: Invialo subito
   label_user_list_newsletters: "Storico degli invii precedenti"
   label_newsletter: Quindicinale
-  error_can_not_create_newsletter: "Creazione automatica della newsletter (%{newsletter}) non riuscità"
+  error_can_not_create_newsletter: "Creazione automatica della newsletter MAIL (%{project}) non riuscità"
+  error_newsletter_mail_no_article: "Nessun articolo: non è stata creata la newsletter MAIL (%{project}) perchè non ho trovato articoli impostati come 'Visibile Mail?'"
   label_newsletter_plural_long: "gestione invii della newsletter"
   field_sended: "email inviata"
   field_html: "testo del messaggio"

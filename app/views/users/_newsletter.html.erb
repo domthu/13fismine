@@ -16,7 +16,7 @@
         <legend><%= l(:label_newsletter) %></legend>
 
         <p>
-          <%= select_tag('project[id]', options_for_select(Project.all_public_fs(
+          <%= select_tag('project[id]', options_for_select(Project.all_mail_fs(
                                                                    :order => 'created_on DESC'
                                                            ).collect { |ed| [ed.name, ed.id.to_s] }), :include_blank => "Selezionare una newsletter", :class => "some_class") %>
         </p>

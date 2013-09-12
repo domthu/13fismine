@@ -72,7 +72,7 @@ class NewslettersController < ApplicationController
     @failed = []
     if @newsletter.have_emails_to_send?
       if (!@newsletter.project_id.nil? && @newsletter.project)
-        @art = @newsletter.project.issues.all(:order => "#{Section.table_name}.top_section_id     DESC", :include => [:section => :top_section])
+        @art = @project.issues.all_mail_fs
         @project = @newsletter.project
         _html = render_to_string(
                   :layout => false,
@@ -341,13 +341,15 @@ class NewslettersController < ApplicationController
 
     def find_project
       if params[:project_id].empty?
-        flash[:notice] = l(:error_can_not_create_newsletter, :newsletter => "manca id del progetto")
+        flash[:notice] = l(:error_can_not_create_newsletter, :project => "manca id del progetto")
         return redirect_to :controller => 'projects', :action => 'index'
       end
       #@project = Project.find(params[:project_id])
-      @project = Project.all_public_fs.find_by_id params[:project_id].to_i
+      #Questo è per il front end: la newsletter
+      #@project = Project.all_public_fs.find_by_id params[:project_id].to_i
+      @project = Project.all_mail_fs.find_by_id params[:project_id].to_i
       if @project.nil?
-        flash[:error] = l(:error_can_not_create_newsletter, :newsletter => "edizione non trovata")
+        flash[:error] = l(:error_can_not_create_newsletter, :project => "edizione non trovata")
         return redirect_to :controller => 'projects', :action => 'index'
       end
     rescue ActiveRecord::RecordNotFound
@@ -361,38 +363,47 @@ class NewslettersController < ApplicationController
       if @newsletter.nil? && @project
         @newsletter = Newsletter.find_by_project(@project.id)
       end
+      if @project.nil? && @newsletter && @newsletter.project
+        @project = @newsletter.project
+      end
       if @newsletter.nil?
 
         #automatic create Newsletter
         @newsletter = Newsletter.new
         @newsletter.project_id = @project.id
         @newsletter.data = DateTime.now
-        @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-        @newsletter.html = render_to_string(
-                :layout => false,
-                :partial => 'editorial/edizione_smtp',
-                :locals => { :id => @id, :project => @project, :art => @art, :user => nil }
-              )
-        if ((!@newsletter.html.nil?) && (!@newsletter.html.include? "<!--checksum-->"))
-          send_error("Edizione molto lungha: " + @newsletter.html.length.to_s + " caratteri. ")
-        end
-        #@@user_name
-        #@@user_convention
-        #@@user_convention_icon
-        @newsletter.sended = false
-        if !@newsletter.valid?
-          if !@newsletter.errors.empty?
-            send_error ("Errore incontrate: " + @newsletter.errors.full_messages.join('<br />'))
+        #Solo gli articoli visibile MAIL e privato: se_visible_newsletter = true AND is_private = true
+        @art = @project.issues.all_mail_fs
+        if @art && @art.any?
+          @newsletter.html = render_to_string(
+                  :layout => false,
+                  :partial => 'editorial/edizione_smtp',
+                  :locals => { :id => @id, :project => @project, :art => @art, :user => nil }
+                )
+          if ((!@newsletter.html.nil?) && (!@newsletter.html.include? "<!--checksum-->"))
+            send_error("Edizione molto lungha: " + @newsletter.html.length.to_s + " caratteri. ")
           end
-        end
-        if !@newsletter.save
-          send_error l(:error_can_not_create_newsletter, :newsletter => @project.name)
-          render_404
-          #return redirect_to :controller => 'projects', :action => 'show', :id => @project
+          #@@user_name
+          #@@user_convention
+          #@@user_convention_icon
+          @newsletter.sended = false
+          if !@newsletter.valid?
+            if !@newsletter.errors.empty?
+              send_error ("Errore incontrate: " + @newsletter.errors.full_messages.join('<br />'))
+            end
+          end
+          if !@newsletter.save
+            send_error l(:error_can_not_create_newsletter, :project => @project.name)
+            render_404
+            #return redirect_to :controller => 'projects', :action => 'show', :id => @project
+          else
+            #@project.promoted_to_front_page = true
+            #@project.status = STATUS_FS #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in
+            #@project.save
+          end
         else
-          #@project.promoted_to_front_page = true
-          #@project.status = STATUS_FS #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in
-          #@project.save
+          send_warning l(:error_newsletter_mail_no_article, :newsletter => @project.name)
+          return redirect_to :controller => 'projects', :action => 'show', :id => @project
         end
       end
     end
