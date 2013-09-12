@@ -1,8 +1,6 @@
 <div id="fs-tramenu-blocco1">
   <% if User.current && User.current.logged? %>
-      <%= render :partial => 'account/tramenu_prova' %>
-
-      <%# render :partial => 'editorial/tramenu_logged' %>
+      <%= render :partial => 'editorial/tramenu_logged' %>
   <% else %>
       <%= render :partial => 'account/tramenu_prova' %>
   <% end %>
