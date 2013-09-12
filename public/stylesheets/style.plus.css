@@ -76,7 +76,7 @@
     position: relative;
     width: 100%;
     min-height: 125px;
-    padding-top: 8px;
+    padding-top: 6px;
     background: #fff5d9; /* Old browsers */
     background: -moz-linear-gradient(top, #ffe375 0%, #f2e6d0 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffe375), color-stop(100%, #f1e6d0)); /* Chrome,Safari4+ */
@@ -93,7 +93,7 @@
     color: #016284;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 7px;
+    margin-bottom: 4px;
 }
 
 /*  inizio  -  -  -  -  -  -   tramenu   primo blocco a sx -  -  -  -  -  -  */
@@ -210,7 +210,7 @@
 /*  carousel per assos */
 
 .list_assos_carousel {
-    padding: 0 15px;
+    padding: 2px 15px 0;
     height: 125px;
     width: 320px;
     margin-top: -7px;
@@ -349,7 +349,7 @@
     float: left;
     display: table;
     width: 246px;
-    height: 59px;
+    height: 57px;
     overflow: hidden;
     position: relative;
 
@@ -411,9 +411,12 @@
 
 #fs-login-txt {
     width: 146px;
-    margin: 0 9px;
+    margin: 0 7px;
 }
 
+.fs-login .fs-my-avatar-xs{
+    margin: 2px 0 0 5px !important;
+}
 #fs-login-exit {
     line-height: 28px;
     float: left;
