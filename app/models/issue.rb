@@ -84,9 +84,10 @@ class Issue < ActiveRecord::Base
                                :conditions => ["#{Project.table_name}.is_public = 1"],
                                :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , due_date DESC"}
 
-  #Solo gli articoli visibile MAIL e privato: se_visible_newsletter = true AND is_private = true
+  #Solo gli articoli visibile MAIL e privato: se_visible_newsletter = true
+  #AND #{Issue.table_name}.is_private = 1 --> NON usare questo campo 20130912
   named_scope :all_mail_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
-                               :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_newsletter = 1 AND #{Issue.table_name}.is_private = 1"],
+                               :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_newsletter = 1 "],
                                :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , due_date DESC"}
 
 

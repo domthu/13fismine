@@ -384,7 +384,7 @@ class NewslettersController < ApplicationController
         @newsletter = Newsletter.new
         @newsletter.project_id = @project.id
         @newsletter.data = DateTime.now
-        #Solo gli articoli visibile MAIL e privato: se_visible_newsletter = true AND is_private = true
+        #Solo gli articoli visibile MAIL e privato: se_visible_newsletter = true
         @art = @project.issues.all_mail_fs
         if @art && @art.any?
           @newsletter.html = render_to_string(
