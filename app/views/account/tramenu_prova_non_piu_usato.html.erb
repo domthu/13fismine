@@ -1,7 +1,7 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         // effetto sul testo di fade o slide
-        $('#tickGratis').list_ticker({speed:4000, effect:'fade'})
+        $('#tickGratis').list_ticker({speed:3000, effect:'fade'})
         $("#user_firstname").prop('maxLength', 255);
         $("#user_lastname").prop('maxLength', 255);
         $("#user_mail").prop('maxLength', 255);
@@ -50,10 +50,10 @@
                                 setTimeout("fs_reload()", 5000);
                             }
                         } else {
-                            //Onerror
-                            if (data.errors) {
-                                js_flash("error", data.errors);
-                            }
+                          //Onerror
+                          if (data.errors) {
+                            js_flash("error", data.errors);
+                          }
                         }
                     });
         }
@@ -63,15 +63,15 @@
         return false;
     }
     function fs_reload() {
-        //var btnid = $('#editoriale a').id;
-        //javascript:__doPostBack(btnid,'');
-        $('#editoriale a').click(); //non funziona?
-        javascript:__doPostBack('editoriale', '');
+      //var btnid = $('#editoriale a').id;
+      //javascript:__doPostBack(btnid,'');
+      $('#editoriale a').click(); //non funziona?
+      javascript:__doPostBack('editoriale','');
     }
 </script>
 
-<p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">   <%= Setting.home_banner_sx_gratis_txt %> <%# Setting.register_days %>
-</p>
+<p class="fs-tramenu-blockheader x-red fs-tramenu-bh1">Prova la newsletter gratis per <%= Setting.register_days %>
+  giorni!</p>
 <div id="fs-prova-gratis-fields">
   <span class="fs-prova-gratis-txt"><%= text_field_tag 'firstname', nil, :style => 'width:95%;', :placeholder => l(:field_firstname) + "..." %></span>
   <span class="fs-prova-gratis-txt"><%= text_field_tag 'lastname', nil, :style => 'width:95%;', :placeholder => l(:field_lastname) + "..." %></span>
@@ -81,11 +81,15 @@
 
   <div id="fs-prova-gratis-info">
     <div class="fs-prova-gratis-info">
-      <% if Setting.home_banner_sx_gratis_msg && Setting.home_banner_sx_gratis_msg.length > 3 %>
-          <div id="tickGratis" class="fs-prova-gratis-righe">
-            <%= Setting.home_banner_sx_gratis_msg %>
-          </div>
-      <% end %>
+      <label class="fs-checkbox">
+        <input type="checkbox" id="modlgn_remember" name="merce_dolci" value="yes" alt="Merce dolci" checked="true"/>
+      </label>
+      <ul id="tickGratis" class="fs-prova-gratis-righe">
+        <li>Prova anche la demo di <a href="http://www.mercidolci.it/" target="_blank">Merce dolci</a></li>
+        <li> il software per le nostre associazioni.</li>
+        <li>Promo: se ti iscrivi a FiscoSport...</li>
+        <li>-10% sul listino approfittane ora! <a href="http://www.mercidolci.it/" target="_blank">Scopri...</a></li>
+      </ul>
       <div class="clearfix"></div>
        <span title="Cliccando su '<%= l(:button_prova) %>' acconsenti esplicitamente al trattamento dei dati personali ai sensi del D.Lgs. 196/2003">Cliccando su "<%= l(:button_prova) %>
          " acconsenti al <a href='#' id='ainformativa_prova' class='pri'><b>trattamento dati</b></a>

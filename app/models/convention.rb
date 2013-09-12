@@ -22,8 +22,7 @@ class Convention < ActiveRecord::Base
   belongs_to :region, :class_name => 'Region', :foreign_key => 'region_id' #, :default => null
   belongs_to :province, :class_name => 'Province', :foreign_key => 'province_id' #, :default => null
   has_one :group_banner, :dependent => :destroy, :class_name => 'GroupBanner'
-  named_scope :conventions_all_logos
-  #              :conditions => "#{Convention.table_name}.se_visibile = #{true} AND #{CrossOrganization.table_name}.image_file_name IS NOT NULL"
+  named_scope :conventions_all_logos ,  :conditions => "#{Convention.table_name}.logo_in_fe = #{true} AND #{Convention.table_name}.image_file_name IS NOT NULL"
   #string
   validates_presence_of :ragione_sociale
   validates_uniqueness_of :ragione_sociale, :case_sensitive => false

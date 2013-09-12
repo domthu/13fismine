@@ -1,4 +1,5 @@
 class Ckeditor::AttachmentFile < Ckeditor::Asset
+  unloadable
 =begin
   has_attached_file :data,
                     :url => "/ckeditor_assets/attachments/:id/:filename",
