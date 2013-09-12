@@ -1,5 +1,6 @@
 <h2><%= link_to l(:label_convention), conventions_path %> &#187; <%= h(@conv.ragione_sociale) %></h2>
 <% labelled_form_for (@conv), :html => {:multipart => true} do |f| %>
+    <div class="btn-footer"><%= submit_tag l(:button_save), :class => "button-blu" %></div>
     <%= render :partial => 'form', :locals => {:f => f} %>
     <div class="btn-footer"><%= submit_tag l(:button_save), :class => "button-blu" %></div>
 <% end %>

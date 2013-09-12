@@ -30,14 +30,15 @@
       <fieldset class="box">
         <legend><%= l(:label_user_list_newsletters) %></legend>
           <%# nl_user = NewsletterUser.scoped_by_user_id(@user.id) %>
-          <% nl_user = @user.newsletter_users %>
+          <%# nl_user = @user.newsletter_users %>
+          <% nl_user = @user.newsletter_users.find(:all, :limit => 100, :order => "updated_at DESC") %>
           <% if nl_user.any? && (nl_user.count > 1)%>
             <%= l(:label_total) %>:<strong class="total center"><%= h(nl_user.count) %></strong>
             <table class="subtable list invii" width="100%">
               <tr>
-                <th style="width:40%; text-align:left;"><%= l(:label_data) %></th>
-                <th style="width:40%; text-align:left;"><%= l(:label_project) %></th>
-                <th style="width:20%; text-align:left;"></th>
+                <th style="width:15%; text-align:left;"><%= l(:label_data) %></th>
+                <th style="width:80%; text-align:left;"><%= l(:label_project) %></th>
+                <th style="width:5%; text-align:left;"></th>
               </tr>
               <% nl_user.each do |invio| %>
                 <tr>

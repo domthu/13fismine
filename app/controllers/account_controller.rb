@@ -129,7 +129,20 @@ class AccountController < ApplicationController
         end
       end
       if @user.comune_id.nil?
-        send_warning("Città di attività sportiva non presente. E importante inserirla in quanto potrebbe appartenire ad una zona coperta da un accordo convenzionato.")
+        #send_warning("Città di attività sportiva non presente. E importante inserirla in quanto potrebbe appartenire ad una zona coperta da un accordo convenzionato.")
+      end
+      if (params[:user][:cross_organization_id])
+        @user.cross_organization_id = params[:user][:cross_organization_id].to_i
+        if CrossOrganization.exists?(@user.cross_organization_id)
+          @user.cross_organization = CrossOrganization.find(:first, :conditions => ['id =  ?', @user.cross_organization_id.to_s])
+          if @user.cross_organization
+            @user.cross_organization_id = @user.cross_organization.id
+          else
+            @user.cross_organization_id = nil
+          end
+        else
+          @user.cross_organization_id = nil
+        end
       end
 
       #STEP3 CONI FSN e convenzione
@@ -145,63 +158,53 @@ class AccountController < ApplicationController
           send_warning("Il codice di attivazione non corrisponde ad nessuna convenzione.")
         end
       end
-      if (params[:user][:cross_organization_id])
-        @user.cross_organization_id = params[:user][:cross_organization_id].to_i
-        if CrossOrganization.exists?(@user.cross_organization_id)
-          @user.cross_organization = CrossOrganization.find(:first, :conditions => ['id =  ?', @user.cross_organization_id.to_s])
-          if @user.cross_organization
-            if @user.comune
-              #ricerca copertura di una convention?
-              if @user.cross_organization.conventions.any?
-                send_notice("@user.cross_organization.conventions.count: " + @user.cross_organization.conventions.count.to_s)
-                #ciclo su ogni convention
-                migliorScadenza = @user.datascadenza
-                @user.cross_organization.conventions.each do |conv|
-                  neFaParte = false
-                  #controllare su quale copertura
-                  if conv.province.nil? #iniziare dalla provincia
-                    if conv.region.nil?
-                      #Nazionale
-                      neFaParte = true
-                    else
-                      #Regionale
-                      neFaParte = true
-                    end
-                  else
-                    #Provinciale
-                    neFaParte = true
-                  end
-                  if neFaParte == true
-                    #la prima volta assegno la convention_id
-                    send_notice("Lei risulta essere coperto da una federazione: " + conv.name)
-                    send_notice("Copertura della convenzione: " + conv.pact)
-                    if @user.convention_id.nil?
-                      @user.convention_id = conv.id
-                      @user.convention = conv
-                    end
-                    #il non pagante prenderà la scadenza della convenzione
-                    if conv.scadenza && (conv.scadenza > migliorScadenza)
-                      migliorScadenza = conv.scadenza
-                      if @user.convention_id != conv.id
-                        #questa convenzione e migliore di quella dapprima
-                        @user.convention_id = conv.id
-                        @user.convention = conv
-                      end
-                    end
-                    #break per uscire --> No, continuo per vedere se c'è una convention migliore
-                  end
-                end  #ciclo sulle conventions
-                if !@user.convention_id.nil?
-                  @user.datascadenza = migliorScadenza
-                  @user.datascadenza = nil #Non pagante
+
+      if @user.comune && @user.cross_organization && @user.convention_id.nil?
+        #ricerca copertura di una convention?
+        if @user.cross_organization.conventions.any?
+          send_notice("@user.cross_organization.conventions.count: " + @user.cross_organization.conventions.count.to_s)
+          #ciclo su ogni convention
+          migliorScadenza = @user.datascadenza
+          @user.cross_organization.conventions.find(:all, :order => ' province_id DESC , region_id DESC , data_scadenza DESC').each do |conv|
+            neFaParte = false
+            #controllare su quale copertura
+            if conv.province.nil? #|| conv.province_id == 0#iniziare dalla provincia
+              if conv.region.nil?
+                #Nazionale
+                neFaParte = true
+              else
+                #Regionale
+                neFaParte = (@user.comune.province.region == conv.region)
+              end
+            else
+              #Provinciale
+              neFaParte = (@user.comune.province == conv.province)
+            end
+            if neFaParte == true
+              #la prima volta assegno la convention_id
+              send_notice("Lei risulta essere coperto da una federazione: " + conv.name)
+              send_notice("Copertura della convenzione: " + conv.pact)
+              if @user.convention_id.nil?
+                @user.convention_id = conv.id
+                @user.convention = conv
+                break # esco alla prima che trovo
+              end
+              #il non pagante prenderà la scadenza della convenzione
+              if conv.scadenza && (conv.scadenza > migliorScadenza)
+                migliorScadenza = conv.scadenza
+                if @user.convention_id != conv.id
+                  #questa convenzione e migliore di quella dapprima
+                  @user.convention_id = conv.id
+                  @user.convention = conv
                 end
               end
+              #break per uscire --> No, continuo per vedere se c'è una convention migliore
             end
-          else
-            @user.cross_organization_id = nil
+          end  #ciclo sulle conventions
+          if !@user.convention_id.nil?
+            @user.datascadenza = migliorScadenza
+            @user.datascadenza = nil #Non pagante
           end
-        else
-          @user.cross_organization_id = nil
         end
       end
 
@@ -299,78 +302,58 @@ class AccountController < ApplicationController
       #}
     end
 
+    @user.register
+
     raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
     # Force ActionMailer to raise delivery errors so we can catch it
     ActionMailer::Base.raise_delivery_errors = true
-    @stat = 'Invio email non riuscito '
+    @stat = "Tipo registrazione(" + Setting.self_registration + "). "
     begin
-      if @user.save
-        #puts "++++++++++++++++++Prova saved (" + @errors + ")++++++++++++++++"
-        @user.register #update_attribute
-        @stat = " Utente registrato"
-        self.logged_user = @user
-                       # Sends an email to the administrators
-        Mailer.deliver_account_activation_request(@user)
-      else
+      case Setting.self_registration
+        when '1'
+          @stat += " Utente registrato, in attesa della conferma email"
+          #register_by_email_activation(@user)
+          token = Token.new(:user => @user, :action => "register")
+          if @user.save and token.save
+            Mailer.deliver_register(token)
+            @stat = "Email inviata correttamente: <br /><strong>Verifichi la sua casella postale e confermi la sua email</strong>"
+            @stat += l(:notice_account_register_done)
+          else
+            @stat += " Errore nella procedura di conferam email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span>"
+          end
+
+        when '3' # Automatic activation
+          @stat += " Utente registrato automaticamente"
+          #register_automatically(@user)
+          @user.activate
+          @user.last_login_on = Time.now
+          if @user.save
+            self.logged_user = @user
+            @stat = l(:notice_account_activated)
+            Mailer.deliver_account_information(user, user.pwd)
+            tmail = Mailer.deliver_fee(user, 'thanks', Setting.template_fee_thanks)
+          else
+            @stat += " Errore nella creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente. Riprovare</span>"
+          end
+
+        else
+          @stat += " Utente NON registrato: richiede registrazione manuale da parte dell'amministratore"
+          #register_manually_by_administrator(@user)
+          if @user.save
+            # Sends an email to the administrators
+            Mailer.deliver_account_activation_request(user)
+            account_pending
+            @stat += "Registrazione effettuata: <br /><strong>In attesa di abilitazione utente</strong>"
+          else
+            @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
+          end
+
         if !@user.errors.empty?
-          #@errors += @user.errors.join(', ') undefined method join
           @errors += "<br />errore completa: " + @user.errors.full_messages.join('<br />')
         end
-        #puts "********************Prova user not saved! (" + @errors + ")********************"
-        @stat += "Tipo registrazione(" + Setting.self_registration + "). "
-        case Setting.self_registration
-          when '1'
-            @stat += " Utente registrato, in attesa della conferma email"
-            #register_by_email_activation(@user)
-            token = Token.new(:user => @user, :action => "register")
-            if @user.save and token.save
-              @user.register #verificare se farlo? update_attribute
-              Mailer.deliver_register(token)
-              @stat += l(:notice_account_register_done)
-            else
-              #puts "********************Prova self_registration 1 KAPPAO (" + @errors + ")********************"
-              @stat += " Conferma email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span>"
-            end
-
-          when '3' # Automatic activation
-            @stat += " Utente registrato automaticamente"
-            #register_automatically(@user)
-            @user.activate
-            @user.last_login_on = Time.now
-            if @user.save
-              @user.register #verificare se farlo? update_attribute
-              self.logged_user = @user
-              @stat += l(:notice_account_activated)
-            else
-              #puts "********************Prova self_registration 3 KAPPAO (" + @errors + ")********************"
-              @stat += " Creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente</span>"
-            end
-
-          else
-            @stat += " Utente NON registrato: richiede registrazione manuale da parte dell'amministratore"
-            #register_manually_by_administrator(@user)
-            if @user.save
-              @user.register #verificare se farlo? update_attribute
-                             # Sends an email to the administrators
-              Mailer.deliver_account_activation_request(user)
-              account_pending
-            else
-              #puts "********************Prova self_registration other KAPPAO (" + @errors + ")********************"
-              @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
-            end
-
-        end
       end
-      #htmlpartial = render_to_string(
-      #  :layout => false,
-      #  :partial => 'user/show',
-      #  :locals => { :user => @user }
-      #)
-      #htmlpartial = 'pippo'
-      #htmlpartial = getuserhtml(@user)
       htmlpartial = ''
       @tmail = Mailer.deliver_prova_gratis(@user, @stat + "<br />" + htmlpartial)
-      @stat += "Email inviata correttamente: <br /><strong>Verifichi la sua casella postale e confermi la sua email</strong>"
     rescue Exception => e
       @errors += "<span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
     end
@@ -411,20 +394,28 @@ class AccountController < ApplicationController
     #  :partial => 'user/show',
   end
 
+  #email confermazione Inviare la password
   # Token based account activation
   def activate
     #domthu redirect_to(home_url) && return unless Setting.self_registration? && params[:token]
     redirect_to(editorial_url) && return unless Setting.self_registration? && params[:token]
     token = Token.find_by_action_and_value('register', params[:token])
-    #domthu redirect_to(home_url) && return unless Setting.self_registration? && params[:token]
-    redirect_to(editorial_url) && return unless Setting.self_registration? && params[:token]
-    user = token.user
-    #domthu redirect_to(home_url) && return unless user.registered?
-    redirect_to(editorial_url) && return unless user.registered?
-    user.activate
-    if user.save
-      token.destroy
-      flash[:notice] = l(:notice_account_activated)
+    if token && token.user
+      user = token.user
+      #domthu redirect_to(home_url) && return unless user.registered?
+      redirect_to(editorial_url) && return unless user.registered?
+      user.activate
+      if user.save
+        token.destroy
+        flash[:notice] = l(:notice_account_activated)
+        #in caso di prova gratis inviare dati di accesso
+        if (user.pwd && !user.pwd.blank?) || user.isregistered?
+          Mailer.deliver_account_information(user, user.pwd)
+          tmail = Mailer.deliver_fee(user, 'thanks', Setting.template_fee_thanks)
+        end
+      end
+    else
+      send_notice("La conferma è gia avvenuta. Se non riccordi le tue credentiali usi la gestione reccupero password.")
     end
     #redirect_to :action => 'login'
     redirect_to editorial_url
@@ -568,10 +559,6 @@ class AccountController < ApplicationController
     token = Token.new(:user => user, :action => "register")
     if user.save and token.save
       Mailer.deliver_register(token)
-      if user.isregistered?
-        Mailer.deliver_account_information(user, user.password)
-        tmail = Mailer.deliver_fee(self, 'thanks', Setting.template_fee_thanks)
-      end
       flash[:notice] = l(:notice_account_register_done)
       #redirect_to :action => 'login'
       redirect_to editorial_url

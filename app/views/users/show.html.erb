@@ -32,16 +32,17 @@
 <%= call_hook :view_account_left_bottom, :user => @user %>
 
 
-<h3><%=l(:newsletter_user)%></h3>
+<h3><%= l(:label_user_list_newsletters) %></h3>
   <%# nl_user = NewsletterUser.per_user(@user.id) %>
-  <% nl_user = NewsletterUser.scoped_by_user_id(@user.id) %>
-  <% if nl_user.any? && (nl_user.count > 1)%>
+  <%# nl_user = NewsletterUser.scoped_by_user_id(@user.id) %>
+  <% nl_user = @user.newsletter_users.find(:all, :limit => 10, :order => "updated_at DESC") %>
+  <% if nl_user.any? && (nl_user.count > 0)%>
     <%= l(:label_total) %>:<strong class="total center"><%= h(nl_user.count) %></strong>
     <table class="subtable list invii" width="100%">
       <tr>
-        <th style="width:40%; text-align:left;"><%= l(:label_data) %></th>
-        <th style="width:40%; text-align:left;"><%= l(:label_project) %></th>
-        <th style="width:20%; text-align:left;"></th>
+        <th style="width:15%; text-align:left;"><%= l(:label_data) %></th>
+        <th style="width:80%; text-align:left;"><%= l(:label_project) %></th>
+        <th style="width:5%; text-align:left;"></th>
       </tr>
       <% nl_user.each do |invio| %>
         <tr>

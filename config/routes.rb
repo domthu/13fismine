@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_profiles
   map.resources :reservations
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "massmailer"
+#rake routes | grep -r "newsletter_user"
   map.resources :top_menus
   map.resources :contract_users
   map.resources :contracts
@@ -110,6 +110,8 @@ ActionController::Routing::Routes.draw do |map|
   #via js
   #map.newsletter_send_emails '/send_emails/:newsletter_id/:pageSize', :controller => 'newsletters', :action => 'send_emails'
   map.newsletter_send_emails '/send_emails', :controller => 'newsletters', :action => 'send_emails'
+  map.newsletter_removeemails '/removeemails/:newsletter_id/:type', :controller => 'newsletters', :action => 'removeemails'
+
 
   map.newsletter_invii '/invii/:project_id',
                       :controller => 'newsletters',

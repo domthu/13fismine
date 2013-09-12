@@ -244,6 +244,7 @@ class User < Principal
     return str
   end
 
+  #Chiamare quando
   def control_state
     #puts "=============ruolo " + self.role_id.to_s + " ==========control_state[" + self.scadenza.to_s + "]======================="
     #puts "=============self.locked?(" + (self.locked? ? "1" : "2") + ")=====!self.active?(" + (!self.active? ? "1" : "2") + ")=====!Setting.fee?(" + (!Setting.fee? ? "1" : "2") + ")=====self.scadenza.nil?(" + (self.scadenza.nil? ? "1" : "2") + ")======================="
@@ -252,8 +253,23 @@ class User < Principal
       return
     end
       #controllo della scadenza
-      if self.isabbonato? || self.isrenewing? || self.isregistered?
-        role_atteso = nil
+      role_atteso = nil
+      if self.admin? || self.ismanager?
+        role_atteso = FeeConst::ROLE_MANAGER
+        #self.datascadenza = nil # Volendo
+
+      elsif self.isauthor?
+        role_atteso = FeeConst::ROLE_AUTHOR
+        #self.datascadenza = nil # Volendo
+
+      elsif self.isvip?
+        role_atteso = FeeConst::ROLE_VIP
+        #self.datascadenza = nil # Volendo
+
+      elsif self.isarchivied?
+        #non fare niente. Lui esce solo attraverso cambio ruolo dalla pagina utente
+
+      elsif self.isabbonato? || self.isrenewing? || self.isregistered? || self.isexpired?
         tipo = "renew"
         #puts "control_state " + today.to_s
         today = Date.today
@@ -275,27 +291,26 @@ class User < Principal
             tipo = "asso"
           end
         end
-
-        if !role_atteso.nil? && self.role_id != role_atteso
-          self.role_id = role_atteso
-          if self.save!
-            begin
-              if tipo == "renew"
-                tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
-              elsif tipo == "asso"
-                tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_register_asso)
-              elsif tipo == "proposal"
-                tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_proposal)
-              else
-                #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
-              end
-            rescue Exception => e
-              #" <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
-            end
-          end
-        end
     else
         #puts "=============Non è soggeto a controllo "
+    end
+    if !role_atteso.nil? && self.role_id != role_atteso
+      self.role_id = role_atteso
+      if self.save!
+        begin
+          if tipo == "renew"
+            tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
+          elsif tipo == "asso"
+            tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_register_asso)
+          elsif tipo == "proposal"
+            tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_proposal)
+          else
+            #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
+          end
+        rescue Exception => e
+          #" <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+        end
+      end
     end
   end
 #  # ruolo elaborato in funzione dello stato della scadenza
@@ -802,9 +817,11 @@ class User < Principal
   def random_password
     chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
     password = ''
-    40.times { |i| password << chars[rand(chars.size-1)] }
+    #40.times { |i| password << chars[rand(chars.size-1)] }
+    15.times { |i| password << chars[rand(chars.size-1)] }
     self.password = password
     self.password_confirmation = password
+    self.pwd = password
     self
   end
 

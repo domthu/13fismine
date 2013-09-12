@@ -27,7 +27,8 @@
             <%= link_to(h(nl_usr.convention), convention_path(:id => nl_usr.convention), {:target => "_blank", :class => 'icon icon-preview'}) unless nl_usr.have_convention? %>
           </td>
           <td>
-            <%= format_date(nl_usr.updated_at) %>
+            <%= format_date(nl_usr.updated_at) %>&nbsp;<%= link_to_remote l(:button_delete), { :url => {:controller=>"newsletter_users", :action=>"destroy", :id => nl_usr}, :method => :delete }, :class => 'icon icon-del', :complete => "$('nl_usr-" + nl_usr.id.to_s + "').remove()" %>
+
           </td>
         </tr>
         <% if !nl_usr.errore.nil? && !nl_usr.errore.empty? %>

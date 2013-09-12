@@ -3,12 +3,12 @@ class NewslettersController < ApplicationController
 
   before_filter :require_admin
   before_filter :find_project, :only => [ :invii, :send_newsletter ]
-  before_filter :find_newsletter, :only => [ :invii, :send_newsletter, :massmailer, :send_emails ]
+  before_filter :find_newsletter, :only => [ :invii, :send_newsletter, :massmailer, :send_emails, :removeemails ]
   before_filter :control_params, :only => [ :send_newsletter ]
 
   #before_filter :newsletter_members, :only => [ :invii ]
 
-  verify :method => :post, :only => [ :destroy ],
+  verify :method => [:post, :delete], :only => [ :destroy ],
          :redirect_to => { :action => :index }
 
   include FeesHelper  #Domthu  FeeConst get_role_css
@@ -87,17 +87,34 @@ class NewslettersController < ApplicationController
         raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
         ActionMailer::Base.raise_delivery_errors = true
         @nl_users.each do |nl_usr|
-          begin
-            stat = "<a href='#{user_path(nl_usr.user)}' target='_blank'>##{nl_usr.user.name}</a> "
-            @tmail =  Mailer.deliver_newsletter(nl_usr.user, _html, @newsletter.project)
-            @sended << "Email inviato " + stat
-            #@sended << ". Risultato => " + @tmail (can't convert TMail::Mail into String)
-            nl_usr.sended = true
-          rescue Exception => e
-            @failed << stat + " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
-            nl_usr.errore = " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+          if nl_usr.user
+            begin
+              #clean clean_fs_html
+               if !nl_usr.user.privato?
+                @user = nl_usr.user
+                conv_html = render_to_string(
+                      :layout => false,
+                      :partial => 'editorial/edizione_smtp_convention',
+                      :locals => { :user => @user }
+                    )
+                _html = _html.gsub('@@user_convention@@', conv_html)
+              else
+                _html = _html.gsub('@@user_convention@@', '')
+              end
+
+              stat = "<a href='#{user_path(nl_usr.user)}' target='_blank'>##{nl_usr.user.name}</a> "
+              @tmail =  Mailer.deliver_newsletter(nl_usr.user, _html, @newsletter.project)
+              @sended << "Email inviato " + stat
+              #@sended << ". Risultato => " + @tmail (can't convert TMail::Mail into String)
+              nl_usr.sended = true
+            rescue Exception => e
+              @failed << stat + " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+              nl_usr.errore = " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+            end
+            nl_usr.save
+          else
+
           end
-          nl_usr.save
         end
         ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
       end
@@ -285,14 +302,33 @@ class NewslettersController < ApplicationController
   # DELETE /newsletters/1.xml
   def destroy
     @newsletter = Newsletter.find(params[:id])
+    @project_id = @newsletter.project_id
     @newsletter.destroy
-
     respond_to do |format|
-      format.html { redirect_to(newsletters_url) }
+      format.html {
+        #redirect_to(newsletters_url)
+        redirect_to :controller => 'projects', :action => 'show', :id => @project_id
+      }
       format.xml  { head :ok }
     end
   end
 
+  #via js delete part of NewsletterUser for resend
+  def removeemails
+    if params[:type].present? && !params[:type].empty?
+      type = params[:type]
+      if type == 'sended'
+        NewsletterUser.delete_all(["email_type = 'newsletter' AND newsletter_id=? AND sended = 1", @newsletter.id])
+      elsif type == 'pending'
+        NewsletterUser.delete_all(["email_type = 'newsletter' AND newsletter_id=? AND sended = false AND (errore is null OR LENGTH(errore) = 0)", @newsletter.id])
+      elsif type == 'errore'
+        NewsletterUser.delete_all(["email_type = 'newsletter' AND newsletter_id=? AND sended = false AND errore is not null AND  LENGTH(errore) > 0", @newsletter.id])
+      else
+
+      end
+    end
+    render :json => { :success => true }
+  end
 ################################
   private
 

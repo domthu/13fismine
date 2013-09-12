@@ -288,6 +288,7 @@ class Mailer < ActionMailer::Base
     render_multipart('lost_password', body)
   end
 
+  #Invio email di confermazione prima di attivare
   def register(token)
     set_language_if_valid(token.user.language)
     recipients token.user.mail
@@ -347,6 +348,19 @@ class Mailer < ActionMailer::Base
     ed += ' '
     #subject l(:mail_subject_newsletter, :compagny => Setting.app_title, :edizione => ed, :date => project.data_al)
     subject ed
+
+    ##Kappao (protected method `render_to_string' called for #)
+    #if !user.privato?
+    #  _html = render_to_string( #undefined method `render_to_string' for #
+    #  ac = ActionController::Base.new()
+    #  _html = ac.render_to_string(
+    #        :layout => false,
+    #        :partial => 'editorial/edizione_smtp_convention',
+    #        :locals => { :user => user }
+    #      )
+    #  body_as_string = body_as_string.gsub('@@user_convention@@', _html)
+    #end
+
     clean_html = clean_fs_html(body_as_string, user, project)
     #clean_html = body_as_string
     #ed = user.nil? ? '--' : user.mail
@@ -377,7 +391,7 @@ class Mailer < ActionMailer::Base
     #    * Mailer.default_url_options
     #    * Mailer.X-Redmine-Host
     #redmine_headers 'Project' => 'Abbonamento test'
-    recipients user.mail
+    recipients user.mail #undefined method `mail' for #<AccountController:0xb42f920c>
     subject Setting.app_title + " > abbonamenti: [#{type}]"
     #body :document => document,
     #     :document_url => url_for(:controller => 'documents', :action => 'show', :id => document)
@@ -594,7 +608,7 @@ class Mailer < ActionMailer::Base
       if user.scadenza
         #txt = txt.gsub('@@user_scadenza@@', user.scadenza) expected numeric
         #txt = txt.gsub('@@user_scadenza@@', get_short_date(user.scadenza) #undefined method `get_short_date' for #)
-        txt = txt.gsub('@@user_scadenza@@', user.scadenza)
+        txt = txt.gsub('@@user_scadenza@@', format_date(user.scadenza))
         txt = txt.gsub('@@distance_of_date_in_words@@', user.scadenza_fra)
       else
         txt = txt.gsub('@@user_scadenza@@', ' -non definita- ')
@@ -607,6 +621,10 @@ class Mailer < ActionMailer::Base
           txt = txt.gsub('@@poweruser_username@@', user.convention.user.name)
           txt = txt.gsub('@@poweruser_codice@@', user.convention.user.id.to_s)
         end
+      else
+        txt = txt.gsub('@@user_convention@@', '')
+        txt = txt.gsub('@@poweruser_username@@', '')
+        txt = txt.gsub('@@poweruser_codice@@', '')
       end
     else
       txt = txt.gsub('@@user_username@@', '')

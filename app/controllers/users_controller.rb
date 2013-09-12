@@ -110,6 +110,10 @@ class UsersController < ApplicationController
       @user.pref.save
       @user.notified_project_ids = (@user.mail_notification == 'selected' ? params[:notified_project_ids] : [])
 
+      if Setting.fee?
+        @user.control_state
+      end
+
       Mailer.deliver_account_information(@user, params[:user][:password]) if params[:send_information]
 
       respond_to do |format|
@@ -156,6 +160,10 @@ class UsersController < ApplicationController
     if @user.save
       @user.pref.save
       @user.notified_project_ids = (@user.mail_notification == 'selected' ? params[:notified_project_ids] : [])
+
+      if Setting.fee?
+        @user.control_state
+      end
 
       if was_activated
         Mailer.deliver_account_activated(@user)
@@ -219,7 +227,10 @@ class UsersController < ApplicationController
   #via js
   def edit_abbonamento
     @user.safe_attributes = params[:user]
-    @user.save if request.post?
+    if request.post?
+      @user.save
+      @user.control_state
+    end
     respond_to do |format|
       if @user.valid?
         format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'abbonamento' }
@@ -241,7 +252,11 @@ class UsersController < ApplicationController
   #via js
   def edit_dati
     @user.safe_attributes = params[:user]
-    @user.save if request.post?
+    #@user.save if request.post?
+    if request.post?
+      @user.save
+      @user.control_state
+    end
     respond_to do |format|
       if @user.valid?
         format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'dati' }

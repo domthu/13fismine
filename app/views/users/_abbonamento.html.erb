@@ -205,9 +205,9 @@
         <p>In questo momento l'utente risulta:</p>
           <ul>
             <% if FeeConst::FEE_ROLES.include? @user.role_id %>
-              <li><div class="flash warning">Non soggetto alla gestione abbonamento</div></li>
-            <% else %>
               <li><div class="flash notice">Soggetto alla gestione abbonamento</div></li>
+            <% else %>
+              <li><div class="flash warning">Non soggetto alla gestione abbonamento</div></li>
             <% end %>
               <li title="ha un ruolo che lui permette di accedere all'area privata di gestione <%= Setting.app_title %>">Accede al backend? <div style="width:1px;" class="flash <%= (FeeConst::CAN_BACK_END_ROLES.include? @user.role_id) ? "notice" : "warning" %>">&nbsp;</div></li>
           </ul>

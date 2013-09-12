@@ -8,7 +8,7 @@ table, ul.fs-hmenu, #fs-main { font-family: Segoe UI }
   var btn_send = null;
   var qta = null;
   var qtaVal = 0;
-  var pageSize = 1;
+  var pageSize = 10;
   var newsletterid = <%= @newsletter.id %>;
   var newsletter_name = '<%= @newsletter.name %>'
   var loading = 0;
@@ -144,7 +144,7 @@ table, ul.fs-hmenu, #fs-main { font-family: Segoe UI }
     </td>
     <td style="width:10%">
       <label class="checkbox">
-        <input id="qta" class="segoe" type="input" alt="numero di emails da inviare alla volta"/>Numero di emails
+        <input id="qta" class="segoe" style="width: 50px" type="input" alt="numero di emails da inviare alla volta"/>Numero di emails
       </label>
     </td>
     <td style="width:5%">
@@ -156,21 +156,24 @@ table, ul.fs-hmenu, #fs-main { font-family: Segoe UI }
   </tbody>
 </table>
 
+<div class="contextual"><p><span><%= link_to h(@newsletter.project), project_path(@newsletter.project, :id => @newsletter.project_id), { :class => 'icon icon-projects'} %>
+  </span>&nbsp;<span><%= link_to(l(:button_send_newsletter), newsletter_invii_path(:project_id => @newsletter.project.id), :class => 'icon icon-newsletter') if User.current.admin? && @newsletter.project && @newsletter.project.is_public_fs? %></span></p>
+</div>
 <h2><%=l(:mass_mailer)%></h2>
 
 <div class="autoscroll">
-<table id="tblinvii" class="list segoe" style="width: 100%">
+<table id="tblinvii" class="segoe" style="width: 100%">
   <thead><tr>
   <th style="text-align:left; width: 33%;"><div class="flash notice" style="width: 90%; height: 25px;" ><%=l(:label_newsletter_sended)%></div></th>
   <th style="text-align:left; width: 33%;"><div class="flash error" style="width: 90%; height: 25px;" ><%=l(:label_newsletter_error)%></div></th>
   </tr></thead>
   <tbody>
-  <tr class='user'>
+  <tr class=''>
     <td>
-      <ul id="sended"class="segoe" ></ul>
+      <ul id="sended" class="segoe" ></ul>
     </td>
     <td>
-      <div id="error"class="segoe" ></div>
+      <div id="error" class="segoe" ></div>
     </td>
   </tr>
   </tbody>
