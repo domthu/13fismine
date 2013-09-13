@@ -414,9 +414,9 @@ class Mailer < ActionMailer::Base
   end
 
   def prova_gratis (user, body_as_string)
-    #recipients user.mail #TODO rimettere in produzione
+    recipients user.mail #TODO rimettere in produzione
     #recipients Setting.fee_bcc_recipients
-    recipients Setting.fee_email
+    #recipients Setting.fee_email
     #recipients 'dom_thual@yahoo.fr'
     subject Setting.app_title + ' > Prova Gratis ' + user.name.html_safe + ' ' + user.mail.html_safe
 
