@@ -1,10 +1,6 @@
 <% if User.current.logged? &&  !User.current.state.empty?  %>
   <div class="fs-block clearfix">
-    <!--
-    <div class="fs-blockheader">
-      <h3 class="t"><%= link_to(User.current.hide_name, my_profile_show_url, :class => 'button-grey') %></h3>
-    </div>   -->
-    <div class="fs-blockcontent">
+       <div class="fs-blockcontent">
       <div id="fs_informa">
         <p><%= User.current.state %></p>
       </div>

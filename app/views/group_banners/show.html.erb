@@ -24,11 +24,9 @@
 
     <p> <%= l(:label_priorita) %>: <%= h @group_banner.priorita %></p>
 
-    <p><%= l(:label_visibile_web) %>:<%= check_box_tag '', :visibile_web, :disabled => true %></p>
+    <p><%= l(:label_visibile_web) %>:<%= check_box_tag 'web' ,1 ,@group_banner.visibile_web %></p>
 
-    <p><%= l(:label_visibile_mail) %>:<%= check_box_tag '', :visibile_mail, :disabled => true %></p>
-
-    <p><%= l(:label_priorita) %>: <%= h @group_banner.priorita %></p>
+    <p><%= l(:label_visibile_mail) %>:<%= check_box_tag 'mail', 2, @group_banner.visibile_mail  %></p>
 
   </fieldset>
 </div>

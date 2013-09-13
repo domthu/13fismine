@@ -99,7 +99,7 @@ class NewsController < ApplicationController
       #quesito set
       if @news.project.identifier == FeeConst::QUESITO_KEY && @news.is_quesito? && @news.reply != '' && (User.current.admin? ||  User.current.ismanager? || User.current == @issue.author)
 
-        send_notice("Procedura risposta veloce al quesito mediante news"
+        send_notice("Procedura risposta veloce al quesito mediante news")
         #controllare che la news possa andare in risposta veloce
         # solo se non ci sono altri issue con campo descrizione già attive
         @news.issues.each { |issue|
