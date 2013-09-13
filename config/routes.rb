@@ -269,6 +269,7 @@ ActionController::Routing::Routes.draw do |map|
   map.preview_articolo '/issues/articolo/:id', :controller => 'previews', :action => 'articolo'
   map.preview_newsletter '/newsletter_preview/:user_id', :controller => 'previews', :action => 'newsletter'
   map.unassigned_users '/unassigned_users', :controller => 'previews', :action => 'norole'
+  map.emailed_users '/emailed_users/:type/:id', :controller => 'previews', :action => 'nlemailed'
 
   map.issues_context_menu '/issues/context_menu', :controller => 'context_menus', :action => 'issues'
   map.issue_changes '/issues/changes', :controller => 'journals', :action => 'index'

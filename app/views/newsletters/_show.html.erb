@@ -52,7 +52,7 @@
     <% else %>
       <br/>
       Cliccare cui '<%= link_to_remote l(:label_newsletter_sended),
- {:url => newsletter_users_emailed_path({:type => 'notice', :id => @newsletter.id}),
+ {:url => emailed_users_path({:type => 'notice', :id => @newsletter.id}),
   :method => 'put',
   :update => 'div_emails_sended',
   :complete => "Element.scrollTo('div_emails_sended')"
@@ -91,7 +91,7 @@
     <% else %>
       <br/>
       Cliccare cui '<%= link_to_remote l(:label_newsletter_pending),
- {:url => newsletter_users_emailed_path({:type => 'warning', :id => @newsletter.id}),
+ {:url => emailed_users_path({:type => 'warning', :id => @newsletter.id}),
   :method => 'put',
   :update => 'div_emails_pending',
   :complete => "Element.scrollTo('div_emails_pending')"
@@ -130,7 +130,7 @@
     <% else %>
       <br/>
       Cliccare cui '<%= link_to_remote l(:label_newsletter_error),
- {:url => newsletter_users_emailed_path({:type => 'error', :id => @newsletter.id}),
+ {:url => emailed_users_path({:type => 'error', :id => @newsletter.id}),
   :method => 'put',
   :update => 'div_emails_errore',
   :complete => "Element.scrollTo('div_emails_errore')"

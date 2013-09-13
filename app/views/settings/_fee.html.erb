@@ -61,11 +61,11 @@
           </fieldset>
           &nbsp; <br/>
           <fieldset>
-            <legend><%= l(:setting_emails_fee_register__convention) %></legend>
+            <legend><%= l(:setting_emails_fee_register_convention) %></legend>
             <%= setting_text_area :template_fee_register_asso, :label => false, :rows => 5 %>
-            <%= l(:label_emails_fee_register_asso) %>
+            <%= l(:label_emails_fee_register_convention) %>
             <div style="float:right;">
-              <%= link_to l(:label_send_test_email_fee__convention), :controller => 'fees', :action => 'email_fee', :params => {:type => 'asso'} %>
+              <%= link_to l(:label_send_test_email_fee_convention), :controller => 'fees', :action => 'email_fee', :params => {:type => 'asso'} %>
             </div>
           </fieldset>
           &nbsp; <br/>
