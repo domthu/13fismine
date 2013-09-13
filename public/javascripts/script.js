@@ -1117,7 +1117,7 @@ jQuery(function ($) {
         path = src.substr(0, src.indexOf("script.js"));
     }
     var header = $(".fs-header");
-    var bgimages = "url('images/object1688855322.png'), ".split(",");
+    var bgimages = "url('images/template/object1688855322.png'), ".split(",");
     var bgpositions = "12px 0px, ".split(",");
     for (var i = 0; i < bgimages.length; i++) {
         var bgimage = $.trim(bgimages[i]);
@@ -1128,7 +1128,7 @@ jQuery(function ($) {
         }
         header.find(".fs-shapes").prepend("<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:" + bgimage + " " + bgpositions[i] + " no-repeat\">");
     }
-    header.css('background-image', "url('images/header.jpg')".replace(/(url\(['"]?)/i, "$1" + path));
+    header.css('background-image', "url('images/template/header.jpg')".replace(/(url\(['"]?)/i, "$1" + path));
     header.css('background-position', "center top");
 });
 

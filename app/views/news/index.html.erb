@@ -21,24 +21,27 @@
   <% end if @project %>
   <div id="preview" class="wiki"></div>
 </div>
-
 <h2><%=l(:label_news_plural)%></h2>
 
 <% if @newss.empty? %>
   <p class="nodata"><%= l(:label_no_data) %></p>
 <% else %>
   <% @newss.each do |news| %>
-      <h3><%= avatar(news.author, { :size => "24", :class => "no-div" }) %><%= link_to_project(news.project) + ': ' unless news.project == @project %>
+      <h3 style="border-bottom: none;"><%= avatar(news.author, { :size => "24", :class => "no-div" }) %><%= link_to_project(news.project) + ': ' unless news.project == @project %>
       <%= link_to h(news.title), news_path(news) %>
       <%= "(#{l(:label_x_comments, :count => news.comments_count)})" if news.comments_count > 0 %></h3>
       <% if news.is_quesito? %>
+
         <%= news.get_state_icons_fe %>
       <% end %>
       <p class="author"><%= authoring news.created_on, news.author %></p>
       <div class="wiki">
-        <%= textilizable(news.description) %>
+        <%= news.description %>
       </div>
+        <br />
+        <hr class="quesiti">
   <% end %>
+
 <% end %>
 <p class="pagination"><%= pagination_links_full @news_pages %></p>
 

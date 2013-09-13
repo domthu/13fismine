@@ -74,11 +74,14 @@ module EditorialHelper
   def url_for_result(e = nil, options = {})
     evturl = e.event_url(options)
     #puts evturl
-    #puts "#####################"
-    #printf("evturl    --->   %s", evturl[:controller])
+   # puts "#####################>>>>>>>>>>>"
+   # printf("evturl    --->   %s", evturl[:controller])
+   # printf("evturl id    --->   %s", e.id.to_s )
+   # puts "#######<<<<<<<<<<<<<<<<<<<<<<<<"
     if (evturl[:controller] == "news")
-
       return link_to highlight_tokens(truncate(e.title, :length => 255), @tokens), url_for(:controller => 'editorial', :action => 'quesito_show', :id => e.id.to_s, :slug => h(truncate(e.title, :length => 125).to_slug))
+
+      printf("enews id    --->   %s", e.summary +   e.id.to_s  )
     end
     if (evturl[:controller] == "issues")
       if e.is_convegno?

@@ -1498,3 +1498,10 @@ a.count:visited{
 .scadenza-ok{font-weight: bold; color: #498204;}
 .scadenza-ko{color: #b22222;}
 .scadenza-renewing{color: #F6691D;}
+hr.quesiti {
+    height: 20px;
+    background: #fff url(../images/ico/bullet-3.png) no-repeat scroll center;
+}
+hr.quesiti hr {
+    display: none;
+}
