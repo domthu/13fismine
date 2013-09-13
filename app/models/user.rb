@@ -301,7 +301,7 @@ class User < Principal
           if tipo == "renew"
             tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
           elsif tipo == "asso"
-            tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_register_asso)
+            #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_register_asso) Attenzione questo è il messaggio destinato al power_user per convalidare o no una persona
           elsif tipo == "proposal"
             tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_proposal)
           else
