@@ -1671,6 +1671,7 @@ it:
   content_articolo: "Contenuto dell'articolo"
   preview_fs_issue_abrv: "Vista abbonato"
   preview_fs_issue: "Vedi articolo lato pubblico"
+  project_not_found: "L'edizione ricercata(%{id}) non esiste"
 
 #notice_email_sent: "Una email è stata spedita a %{value}"
   unauthorized: Non autorizzato ad accedere al contenuto

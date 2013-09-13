@@ -216,6 +216,8 @@ class EditorialController < ApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     #reroute_404()
+    flash[:error] = l(:project_not_found, :id => @id)
+    return redirect_to({:action => 'home'})
   end
 
   def edizione_newsletter
@@ -225,6 +227,10 @@ class EditorialController < ApplicationController
     @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
     @prj= Project.all_public_fs.find_by_id params[:id].to_i
     @user = User.current
+  rescue ActiveRecord::RecordNotFound
+    #reroute_404()
+    flash[:error] = l(:project_not_found, :id => @id)
+    return redirect_to({:action => 'home'})
   end
 
   # -----------------  EDIZIONI /NEWSLETTER  (fine)  ------------------
