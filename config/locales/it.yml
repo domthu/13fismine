@@ -237,6 +237,7 @@ it:
 
   mail_subject_lost_password: "La tua password %{value}"
   mail_body_lost_password: 'Per cambiare la password, usa il seguente collegamento:'
+  lost_password_unvalid_token: "L'email vale per un tentativo. Per riprovare dovete iniziare da capo il recupero password per generare un nuovo email"
   mail_subject_register: "Attivazione utente %{value}"
   mail_body_register: "<b>Confermi la tua email.</b><p>Per attivare il tuo account, usa il seguente collegamento:<p>"
   mail_body_account_information_external: "Puoi utilizzare il tuo account %{value} per accedere al sistema."

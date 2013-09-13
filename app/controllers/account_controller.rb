@@ -46,12 +46,17 @@ class AccountController < ApplicationController
 
   # Enable user to choose a new password
   def lost_password
-    #domthu redirect_to(home_url) && return unless Setting.lost_password?
+     #domthu redirect_to(home_url) && return unless Setting.lost_password?
     redirect_to(editorial_url) && return unless Setting.lost_password?
     if params[:token]
       @token = Token.find_by_action_and_value("recovery", params[:token])
-      #redirect_to(home_url) && return unless @token and !@token.expired?
-      redirect_to(editorial_url) && return unless @token and !@token.expired?
+      if @token.nil? or @token.expired?
+        flash[:error] = l(:lost_password_unvalid_token)
+        #redirect_to(home_url) && return unless @token and !@token.expired?
+        #redirect_to(editorial_url) && return unless @token and !@token.expired?
+        redirect_to(editorial_url)
+        return
+      end
       @user = @token.user
       if request.post?
         @user.password, @user.password_confirmation = params[:new_password], params[:new_password_confirmation]
@@ -74,11 +79,18 @@ class AccountController < ApplicationController
         (flash.now[:error] = l(:notice_can_t_change_password); return) if user.auth_source_id
         # create a new token for password recovery
         token = Token.new(:user => user, :action => "recovery")
+        redirect_to(editorial_url) && return unless token
         if token.save
-          Mailer.deliver_lost_password(token)
-          flash[:notice] = l(:notice_account_lost_email_sent)
-          redirect_to  :back
-          return
+          if token.nil?
+            flash[:error] = l(:lost_password_unvalid_token)
+            redirect_to  :controller => 'editorial', :action => 'home'
+            return
+          else
+            Mailer.deliver_lost_password(token)
+            flash[:notice] = l(:notice_account_lost_email_sent)
+            redirect_to  :back
+            return
+          end
         end
       end
     end
