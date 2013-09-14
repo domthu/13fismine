@@ -1451,9 +1451,13 @@ it:
 #Fee
   label_fee: Abbonamento
   label_fee_plural: Abbonamenti
+  label_settings_fee_gratis: 'Sito: personalizzazione zona prova gratis'
+  label_settings_fee_set: 'Impostazioni mail e abbonamento'
+  label_settings_fee_info_msg: 'Email. Personalizzazione dei messaggi da inviare, legenda: '
+  label_settings_fee_info_mail: 'Per poter avere messaggi personalizzati occorre mettere nel messaggio alcune variabili specifiche, quelle disponibili sono marcate in giallo qui sotto , iniziano e terminano con @@. Queste parole chiave verranno sostituite dinamicamente al momento di invio email.'
   fee_not_abilitated: Gestione abbonamento non abilitata
-  setting_register_days: Giorni abilitazione
-  label_register_days: "Numero di giorni di abilitazione per un utente che si è appena registrato ed ha dichiarato di far parte di un Organismo Associato. passato questi finestra di tempo l'utente verà disabilitato dal motore se non è stato confermato dal power-user, se non è stato abilitato dall'amministratore p se non ha contrattao abbonamenti durante il periodo di prova."
+  setting_register_days: Giorni di abilitazione effettivi prova gratis
+  label_register_days: "Numero di giorni di abilitazione per un utente che si è appena registrato ed ha diritto a questi giorni di prova gratuita."
   setting_renew_days: Giorni prima del rilancio
   label_renew_days: "Numero di giorni prima dello scadere dell'abbonamento. Passato questo momento il motore inviera un email all'abbonato per invitarlo a rinnovare il suo abbonamento in scadenza."
   setting_fee_email: Email(s) di ricezione
