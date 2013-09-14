@@ -165,6 +165,7 @@ Redmine::MenuManager.map :top_menu do |menu|
   menu.push :activity, {:controller => 'activities', :action => 'index'}, :caption => :label_activity_plural, :if => Proc.new { User.current.logged? }
   #menu.push :forum, Setting.host_name + "/projects/sys-quesiti", :if => Proc.new { !Project.find_by_identifier('sys-quesiti').nil? }
   menu.push :administration, {:controller => 'admin', :action => 'index'}, :if => Proc.new { User.current.admin? }, :last => true
+  menu.push :calendar, {:controller => 'calendars', :action => 'show'}, :param => :project_id, :caption => :label_calendar
   #menu.push :help, Redmine::Info.help_url, :last => true
   menu.push :help, Redmine::Info.help_url, :if => Proc.new { User.current.admin? }, :html => {:target => '_blank'}
   menu.push :help_user, Redmine::Info.help_user_url, :if => Proc.new { User.current.admin? }, :html => {:target => '_blank'}
@@ -242,8 +243,8 @@ Redmine::MenuManager.map :admin_menu do |menu|
   #menu abbonamento
   menu.push :abbo, {:controller => 'fees', :action => 'index'}, :caption => :label_abbo_plural, :if => Proc.new { Setting.fee? }
   #menu.push :abbo, {:controller => 'fees', :action => 'registrati'}, :caption => :label_abbo_plural, :if => Proc.new { Setting.fee? }
-  #menu pagamenti
-  menu.push :payment, :pagamento_path, :if => Proc.new { Setting.fee? }
+  #menu pagamenti (TODO Temporaneamente rimosso)
+  #menu.push :payment, :pagamento_path, :if => Proc.new { Setting.fee? }
   #menu.push :projects, {:controller => 'admin', :action => 'projects'}, :caption => :label_project_plural
   menu.push :users, {:controller => 'users'}, :caption => :label_user_plural
   menu.push :comunes, :comunes_path, :caption => :label_comune_plural, :if => Proc.new { User.current.admin? }
@@ -317,6 +318,7 @@ Redmine::MenuManager.map :menu_fiscosport do |menu|
   menu.push :top_menus, :top_menus_path, :caption => :label_top_menu, :if => Proc.new { User.current.admin? }
   menu.push :top_sections, :top_sections_path, :caption => :label_top_section_plural, :if => Proc.new { User.current.admin? }
   menu.push :sections, :sections_path, :caption => :label_section_plural, :if => Proc.new { User.current.admin? }
+  menu.push :type_organizations, :type_organizations_path, :caption => :label_type_organization_plural, :if => Proc.new { User.current.admin? }
   menu.push :cross_organizations, :cross_organizations_path, :caption => :label_cross_organization_plural, :if => Proc.new { User.current.admin? }
   menu.push :conventions, :conventions_path, :caption => :label_convention_plural, :if => Proc.new { User.current.admin? }
   menu.push :group_banners, :group_banners_path, :caption => :label_group_banner_plural, :if => Proc.new { User.current.admin? }

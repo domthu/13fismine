@@ -1,8 +1,13 @@
-<h2><%=l(:label_administration)%></h2>
-
-<div id="admin-index">
+<h2><%= l(:label_administration) %></h2>
+<div id="admin-index" style="width: 75%;">
+  <div class="handle">
+    <%= render :partial => "my/blocks/calendar", :locals => {:user => @user} %>
+    <%= render :partial => "my/blocks/issuesassignedtome", :locals => {:user => @user} %>
+    <%= render :partial => "my/blocks/issuesreportedbyme", :locals => {:user => @user} %>
+    <%= render :partial => "my/blocks/issueswatched", :locals => {:user => @user} %>
+    <%= render :partial => "my/blocks/news", :locals => {:user => @user} %>
+  </div>
   <%= render :partial => 'no_data' if @no_configuration_data %>
-  <%= render :partial => 'menu' %>
 </div>
-
 <% html_title(l(:label_administration)) -%>
+

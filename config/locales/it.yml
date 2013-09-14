@@ -1139,10 +1139,9 @@ it:
   label_group_banner_new: Nuovo banner
   label_group_banner_convention: Categorie utenti associate
   label_group_banner_convention_none: Nessuna categoria utente associata
-
 #Organismo convenzionato collegato a type_organization e sigla
-  label_type_organization: Org. Tipo
-  label_type_organization_plural: Org. Tipi
+  label_type_organization: Organismo
+  label_type_organization_plural: Organismi
   label_type_organization_new: Nuovo tipo di organismo
   label_type_organization_plural_long: Tipi di organismo
   label_visibilita: Visibilità

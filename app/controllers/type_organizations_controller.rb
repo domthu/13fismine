@@ -2,26 +2,20 @@ class TypeOrganizationsController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin
-
+  before_filter :set_menu
   helper :sort
   include SortHelper
-
-  # GET /type_organizations
-  # GET /type_organizations.xml
+  menu_item :type_organizations
+  def set_menu
+    @menu_fs = :menu_fiscosport
+  end
   def index
-    #@type_organizations = TypeOrganization.all
-    #respond_to do |format|
-    #  format.html # index.html.erb
-    #  format.xml  { render :xml => @type_organizations }
-    #end
-
     #Sorting
     sort_init 'priorita'
     sort_update 'tipo' => 'tipo',
                 'priorita' => 'priorita'
 
     respond_to do |format|
-      #ovverride for paging format.html # index.html.erb
       format.html {
         # Paginate results
         @type_organization_count = TypeOrganization.all.count
@@ -36,8 +30,6 @@ class TypeOrganizationsController < ApplicationController
     end
   end
 
-  # GET /type_organizations/1
-  # GET /type_organizations/1.xml
   def show
     @type_organization = TypeOrganization.find(params[:id])
 
@@ -47,8 +39,6 @@ class TypeOrganizationsController < ApplicationController
     end
   end
 
-  # GET /type_organizations/new
-  # GET /type_organizations/new.xml
   def new
     @type_organization = TypeOrganization.new
 
@@ -58,13 +48,11 @@ class TypeOrganizationsController < ApplicationController
     end
   end
 
-  # GET /type_organizations/1/edit
   def edit
     @type_organization = TypeOrganization.find(params[:id])
   end
 
-  # POST /type_organizations
-  # POST /type_organizations.xml
+
   def create
     @type_organization = TypeOrganization.new(params[:type_organization])
 
@@ -79,8 +67,6 @@ class TypeOrganizationsController < ApplicationController
     end
   end
 
-  # PUT /type_organizations/1
-  # PUT /type_organizations/1.xml
   def update
     @type_organization = TypeOrganization.find(params[:id])
 
@@ -94,8 +80,7 @@ class TypeOrganizationsController < ApplicationController
       end
     end
   end
-  # DELETE /type_organizations/1
-  # DELETE /type_organizations/1.xml
+
   def destroy
     @type_organization = TypeOrganization.find(params[:id])
     @type_organization.destroy

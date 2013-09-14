@@ -14,6 +14,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+=begin
+  def index
+    page
+    render :action => 'page'
+  end
+
+  # Show user's page
+  def page
+    @user = User.current
+    @blocks = @user.pref[:my_page_layout] || DEFAULT_LAYOUT
+  end
+=end
 
 class AdminController < ApplicationController
   layout 'admin'
@@ -23,6 +35,7 @@ class AdminController < ApplicationController
 
   def index
     @no_configuration_data = Redmine::DefaultData::Loader::no_data?
+    @user = User.current
   end
 
   def projects
