@@ -165,7 +165,7 @@ Redmine::MenuManager.map :top_menu do |menu|
   menu.push :activity, {:controller => 'activities', :action => 'index'}, :caption => :label_activity_plural, :if => Proc.new { User.current.logged? }
   #menu.push :forum, Setting.host_name + "/projects/sys-quesiti", :if => Proc.new { !Project.find_by_identifier('sys-quesiti').nil? }
   menu.push :administration, {:controller => 'admin', :action => 'index'}, :if => Proc.new { User.current.admin? }, :last => true
-  menu.push :calendar, {:controller => 'calendars', :action => 'show'}, :param => :project_id, :caption => :label_calendar
+ # menu.push :calendar, {:controller => 'calendars', :action => 'show'}, :param => :project_id, :caption => :label_calendar
   #menu.push :help, Redmine::Info.help_url, :last => true
   menu.push :help, Redmine::Info.help_url, :if => Proc.new { User.current.admin? }, :html => {:target => '_blank'}
   menu.push :help_user, Redmine::Info.help_user_url, :if => Proc.new { User.current.admin? }, :html => {:target => '_blank'}
