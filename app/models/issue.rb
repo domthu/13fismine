@@ -122,7 +122,7 @@ class Issue < ActiveRecord::Base
   end
 
   def show_reservation?()
-    if self.due_date.nil?
+    if self.due_date.nil? || self.se_prenotazione.nil? || self.se_prenotazione == false
       false
     else
       self.due_date >= DateTime.now

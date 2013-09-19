@@ -29,12 +29,8 @@
 
       <p><%= f.check_box :se_protetto %></p>
 
-      <p>
-        <% if !@issue.new_record? && @issue.se_prenotazione %>
-            <%= f.check_box :se_prenotazione, :disabled => true %>
-        <% else %>
-            <%= f.check_box :se_prenotazione %>
-        <% end %>
+      <p>            <%= f.check_box :se_prenotazione %>
+
       </p>
 
       <p><%= f.select :priority_id, (@priorities.collect { |p| [p.name, p.id] }), {:required => true}, :disabled => !@issue.leaf? %></p>
@@ -95,5 +91,6 @@
       </div>
       <div style="clear:both;"></div>
       <%= render :partial => 'issues/form_custom_fields' %>
+
 
 <% end %>
