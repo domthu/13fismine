@@ -35,6 +35,7 @@
 
 db/*.sqlite3
 log/*.log
+/log/*
 tmp/
 doc/
 *.swp
@@ -59,4 +60,3 @@ public/images/commons/sections/*
 public/images/commons/organizations/*
 public/images/commons/banners/*
 public/images/ckeditor_assets/*
-
