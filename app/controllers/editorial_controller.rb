@@ -224,7 +224,11 @@ class EditorialController < ApplicationController
     #Newsletter  grafica della newsletter
     @id = params[:id].to_i
     @project = Project.all_public_fs.find_public(@id)
-    @art =@project.issues.all_public_fs_nl_preview
+    #domthu 20130919 problema di ordinamento
+    #NON ok http://37.59.40.44:88/edizione_newsletter/361
+    #ex --> @art =@project.issues.all_public_fs_nl_preview
+    #coretto http://37.59.40.44:88/edizione/361
+    @art =@project.issues.all(:order => "#{TopSection.table_name}.ordinamento ASC , #{Issue.table_name}.due_date DESC", :include => [:section => :top_section])
     @prj= @id.to_i
     @user = User.current
   rescue ActiveRecord::RecordNotFound
