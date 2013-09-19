@@ -1,7 +1,7 @@
 <div class="fs-art-attachments">
   <h2>Allegati</h2>
   <% for attachment in attachments %>
-      <p><%= link_to_attachment attachment , :text => attachment.filename + (" - #{attachment.description}" unless attachment.description.blank?)  ,:deletable => false , :class => 'icon-attachment' %>
+      <p><%= link_to_attachment attachment , :text => attachment.filename + ( attachment.description.nil? ? "" : " - #{attachment.description}")    ,:deletable => false , :class => 'icon-attachment' %>
            <%#  h(" - #{attachment.description}") unless attachment.description.blank? %>
         <span class="size">(<%= number_to_human_size attachment.filesize %>)</span>
         <% if options[:author] %>
