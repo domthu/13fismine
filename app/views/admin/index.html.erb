@@ -1,8 +1,10 @@
-<h2><%=l(:label_administration)%></h2>
-
-<div id="admin-index">
+<h2><%= l(:label_administration) %></h2>
+<div id="admin-index" style="width: 75%; margin: 0 auto;">
+  <div>
+    <%= render :partial => "my/blocks/cal" %>
+    <%= render :partial => "my/blocks/news", :locals => {:user => @user} %>
+  </div>
   <%= render :partial => 'no_data' if @no_configuration_data %>
-  <%= render :partial => 'menu' %>
 </div>
-
 <% html_title(l(:label_administration)) -%>
+

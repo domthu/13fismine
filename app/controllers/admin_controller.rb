@@ -14,15 +14,59 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+=begin
+  def index
+    page
+    render :action => 'page'
+  end
+
+  # Show user's page
+  def page
+    @user = User.current
+    @blocks = @user.pref[:my_page_layout] || DEFAULT_LAYOUT
+  end
+=end
 
 class AdminController < ApplicationController
   layout 'admin'
   before_filter :require_admin
   helper :sort
   include SortHelper
+  helper :calendars
+  include CalendarsHelper
+  helper :issues
+  helper :queries
+  include QueriesHelper
+
 
   def index
     @no_configuration_data = Redmine::DefaultData::Loader::no_data?
+    @user = User.current
+    # da qui copiata per il calendario
+    if params[:year] and params[:year].to_i > 1900
+      @year = params[:year].to_i
+      if params[:month] and params[:month].to_i > 0 and params[:month].to_i < 13
+        @month = params[:month].to_i
+      end
+    end
+    @year ||= Date.today.year
+    @month ||= Date.today.month
+
+    @calendar = Redmine::Helpers::Calendar.new(Date.civil(@year, @month, 1), current_language, :month)
+    retrieve_query_my
+    @query.group_by = nil
+    if @query.valid?
+      events = []
+      events += @query.issues(:include => [:tracker, :assigned_to, :priority],
+                              :conditions => ["((start_date BETWEEN ? AND ?) OR (due_date BETWEEN ? AND ?))", @calendar.startdt, @calendar.enddt, @calendar.startdt, @calendar.enddt]
+                              )
+      events += @query.versions(:conditions => ["effective_date BETWEEN ? AND ?", @calendar.startdt, @calendar.enddt])
+
+      @calendar.events = events
+    end
+
+    render :action => 'index', :layout => false if request.xhr?
+
   end
 
   def projects

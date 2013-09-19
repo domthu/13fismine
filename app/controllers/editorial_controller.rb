@@ -18,7 +18,7 @@ class EditorialController < ApplicationController
   helper :messages
   include MessagesHelper
   caches_action :robots
-  #HOME > TOP_MENU > TOP_SECTION > SECTION > ARTICOLO
+                     #HOME > TOP_MENU > TOP_SECTION > SECTION > ARTICOLO
   def home
     @xbanner = GroupBanner.find(:all, :order => 'priorita DESC', :conditions => ["visibile_web = 1"])
     @base_url = params[:pages]
@@ -56,53 +56,53 @@ class EditorialController < ApplicationController
   end
 
   def top_menu
-      @base_url = params[:pages]
-      @key_url = params[:topmenu_key]
-      if @key_url.nil?
-        flash[:notice] = l(:notice_missing_parameters) + " --> 1"
-        redirect_to :action => 'home'
-        return
-      elsif @key_url == "home"
-        redirect_to :action => 'home'
-        return
-      end
-      @top_menu = TopMenu.find(:first, :conditions => ["`key` = ?", @key_url])
-      if @top_menu.nil?
-        flash[:notice] = l(:notice_missing_parameters) + " --> 2 @key_url="+ @key_url
-        # redirect_to :action => 'home'
-        return
-      end
-      #@top_sections = TopSection.find(:all,
-      @topsection_ids = TopSection.find(:all,
-                                        :select => 'distinct id',
-                                        :conditions => ["se_visibile = 1 AND hidden_menu = 0 AND top_menu_id =  ?", @top_menu.id]
-      )
-      #@topsection_ids = @top_sections.select(:id).uniq
-      # Paginate results
-      case params[:format]
-        when 'xml', 'json'
-          @offset, @limit = api_offset_and_limit
-        else
-          #@limit = 5
-          #@offset= 25
-          @limit = per_page_option_fs
-      end
-
-      @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).count()
-
-      @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-      @offset ||= @issues_pages.current.offset
-      @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).all(
-          :limit => @limit,
-          :offset => @offset)
-
-      respond_to do |format|
-        format.html {
-          render :layout => !request.xhr?
-        }
-        format.api
-      end
+    @base_url = params[:pages]
+    @key_url = params[:topmenu_key]
+    if @key_url.nil?
+      flash[:notice] = l(:notice_missing_parameters) + " --> 1"
+      redirect_to :action => 'home'
+      return
+    elsif @key_url == "home"
+      redirect_to :action => 'home'
+      return
     end
+    @top_menu = TopMenu.find(:first, :conditions => ["`key` = ?", @key_url])
+    if @top_menu.nil?
+      flash[:notice] = l(:notice_missing_parameters) + " --> 2 @key_url="+ @key_url
+      # redirect_to :action => 'home'
+      return
+    end
+    #@top_sections = TopSection.find(:all,
+    @topsection_ids = TopSection.find(:all,
+                                      :select => 'distinct id',
+                                      :conditions => ["se_visibile = 1 AND hidden_menu = 0 AND top_menu_id =  ?", @top_menu.id]
+    )
+    #@topsection_ids = @top_sections.select(:id).uniq
+    # Paginate results
+    case params[:format]
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        #@limit = 5
+        #@offset= 25
+        @limit = per_page_option_fs
+    end
+
+    @issues_count =Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).count()
+
+    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+    @offset ||= @issues_pages.current.offset
+    @issues = Issue.all_public_fs.with_filter("#{TopSection.table_name}.hidden_menu = 0 AND #{TopSection.table_name}.top_menu_id = " + @top_menu.id.to_s).all(
+        :limit => @limit,
+        :offset => @offset)
+
+    respond_to do |format|
+      format.html {
+        render :layout => !request.xhr?
+      }
+      format.api
+    end
+  end
 
   def top_sezione
     #inizio box convegni
@@ -209,8 +209,8 @@ class EditorialController < ApplicationController
       flash[:alert] = l(:notice_not_authorized)
       return redirect_to({:action => 'home'})
     else
-     # @issues = @project.issues.all(:include => [:section => :top_section],
-     #                     :order => "#{TopSection.table_name}.ordinamento ASC , due_date DESC")
+      # @issues = @project.issues.all(:include => [:section => :top_section],
+      #                     :order => "#{TopSection.table_name}.ordinamento ASC , due_date DESC")
       @issues = @project.issues.all(:order => "#{TopSection.table_name}.ordinamento ASC , #{Issue.table_name}.due_date DESC", :include => [:section => :top_section])
       @block_projects = Project.latest_fs
     end
@@ -224,8 +224,8 @@ class EditorialController < ApplicationController
     #Newsletter  grafica della newsletter
     @id = params[:id].to_i
     @project = Project.all_public_fs.find_public(@id)
-    @art = @project.issues.all(:order => "#{Section.table_name}.top_section_id DESC", :include => [:section => :top_section])
-    @prj= Project.all_public_fs.find_by_id params[:id].to_i
+    @art =@project.issues.all_public_fs_nl_preview
+    @prj= @id.to_i
     @user = User.current
   rescue ActiveRecord::RecordNotFound
     #reroute_404()
@@ -608,7 +608,7 @@ class EditorialController < ApplicationController
       #@object_types = @object_types.select {|o| User.current.allowed_to?("view_#{o}".to_sym, projects_to_search)}
     end
 
-    @scope = @object_types.select{ |t| params[t] }
+    @scope = @object_types.select { |t| params[t] }
     @scope = @object_types if @scope.empty?
 
     # extract tokens from the question
@@ -704,9 +704,10 @@ class EditorialController < ApplicationController
   def find_articolo
     return reroute_log('find_articolo') unless !params[:article_id].nil?
     @id = params[:article_id].to_i
-    @articolo= Issue.all_public_fs_full.find(@id)
+    @articolo= Issue.all_public_fs_nl_preview.find(@id)
   rescue ActiveRecord::RecordNotFound
-    reroute_404("il contenuto cercato è stato rimosso...")
+    flash[:error] = "Il contenuto cercato è stato rimosso..."
+    redirect_to(:back)
   end
 
   def reroute_404(_message = nil)

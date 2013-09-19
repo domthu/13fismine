@@ -144,6 +144,9 @@ module ApplicationHelper
         html_options
     )
   end
+  def user_mail_notification_options(user)
+    user.valid_notification_options.collect {|o| [l(o.last), o.first]}
+  end
 
   # Generates a link to a project if active
   # Examples:
@@ -1257,7 +1260,7 @@ module ApplicationHelper
     op = options[:only_path].present?
     op =   options[:only_path] == false
     pre = "http://#{Setting.host_name}/images/"
-    no_img = (op ? "#{pre}articoli/#{taglia.to_s}_art-no-image.jpg" : "/images/articoli/#{taglia.to_s}_art-no-image.jpg")
+    no_img = (op ? "#{pre}commons/#{taglia.to_s}_art-no-image.jpg" : "/images/commons/#{taglia.to_s}_art-no-image.jpg")
     if  !articolo.image_file_name.nil?
       if !articolo.image.file?
         return no_img

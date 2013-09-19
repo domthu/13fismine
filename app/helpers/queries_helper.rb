@@ -89,6 +89,28 @@ module QueriesHelper
       @query.project = @project
     end
   end
+    # Retrieve query from session or build a new query
+  def retrieve_query_my
+    if !params[:query_id].blank?
+
+      @query = Query.find(params[:query_id])
+      raise ::Unauthorized unless @query.visible?
+      #@query.project = @project
+      session[:query] = {:id => @query.id}
+      sort_clear
+    elsif api_request? || params[:set_filter] || session[:query].nil?
+      # Give it a name, required to be valid
+      @query = Query.new(:name => "_")
+     # @query.project = @project
+      build_query_from_params
+      session[:query] = { :filters => @query.filters, :group_by => @query.group_by, :column_names => @query.column_names}
+    else
+      # retrieve from session
+      @query = Query.find_by_id(session[:query][:id]) if session[:query][:id]
+      @query ||= Query.new(:name => "_", :filters => session[:query][:filters], :group_by => session[:query][:group_by], :column_names => session[:query][:column_names])
+     # @query.project = @project
+    end
+  end
 
   def build_query_from_params
     if params[:fields] || params[:f]

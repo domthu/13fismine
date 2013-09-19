@@ -10,14 +10,8 @@ class CrossOrganizationsController < ApplicationController
   def set_menu
     @menu_fs = :menu_fiscosport
   end
-  # GET /cross_organizations
-  # GET /cross_organizations.xml
+
   def index
-    #@cross_organizations = CrossOrganization.all
-    #respond_to do |format|
-    #  format.html # index.html.erb
-    #  format.xml  { render :xml => @cross_organizations }
-    #end
     @type_organizations = TypeOrganization.find(:all)
     #Sorting
     sort_init 'type_organization'
