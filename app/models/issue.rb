@@ -7,7 +7,7 @@ class Issue < ActiveRecord::Base
                     :url => "articoli/:id:style.:extension",
                     :path => "#{RAILS_ROOT}/public/images/articoli/:id:style.:extension",
                     :default_url => "commons/:style_art-no-image.jpg"
-  validates_attachment_size :image, :less_than => 200.kilobytes
+  validates_attachment_size :image, :less_than => 300.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
 
   belongs_to :project
@@ -78,13 +78,11 @@ class Issue < ActiveRecord::Base
   #domthu edizione visibile web: si vede in home e ovviamente nel sito
   named_scope :all_public_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
                                 :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile = 1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"],
-                                :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , due_date DESC",}
-  #domthu edizione visibile web: si vede in home e ovviamente nel sito
-  named_scope :all_public_fs_full, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
-                               :conditions => ["#{Project.table_name}.is_public = 1"],
+                                :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , due_date DESC"}
+  #sandro : utilizzato nella preview edizione nel sito /ome/edizioni visualizza sia visibile_web che visibile_mail
+  named_scope :all_public_fs_nl_preview, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
+                               :conditions => ["#{Project.table_name}.is_public = 1 AND ((#{Issue.table_name}.se_visible_newsletter = 1) OR (#{Issue.table_name}.se_visible_web = 1)) "],
                                :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , due_date DESC"}
-
-  #Solo gli articoli visibile MAIL e privato: se_visible_newsletter = true
   #AND #{Issue.table_name}.is_private = 1 --> NON usare questo campo 20130912
   named_scope :all_mail_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
                                :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_newsletter = 1 "],

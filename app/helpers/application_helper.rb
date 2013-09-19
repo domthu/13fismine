@@ -144,6 +144,9 @@ module ApplicationHelper
         html_options
     )
   end
+  def user_mail_notification_options(user)
+    user.valid_notification_options.collect {|o| [l(o.last), o.first]}
+  end
 
   # Generates a link to a project if active
   # Examples:

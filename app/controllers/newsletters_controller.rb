@@ -15,19 +15,10 @@ class NewslettersController < ApplicationController
   helper :sort
   include SortHelper
 
-  #gestione invii emails di una newsletter e imposti tutti utenti ad essa collegata
-  # pass project_id
-  #: {"role"=>{"role_id"=>"1"}, "convention"=>{"convention_id"=>""}, "project_id"=>"341", "controller"=>"newsletters", "name"=>"domthu", "action"=>"invii"}
-  #Click da edizione Parameters: {"action"=>"invii", "controller"=>"newsletters", "project_id"=>"341"}
-  def invii
-    #send_error("invii user " + User.current.privato? ? "privato" : "convention")
-    #send_notice("@project id " + @project.id.to_s +  ", @newsletter id " + @newsletter.id.to_s)
-    #send_warning("linvii")
-    #if params[:member] && request.post?
-    if request.post?
 
+  def invii
+    if request.post?
     else
-      #update html preview
       @art = @project.issues.all_mail_fs
       if @art && @art.any?
         @newsletter.html = render_to_string(
