@@ -282,8 +282,10 @@ class User < Principal
         else
           renew_deadline = self.scadenza - Setting.renew_days.to_i.days
           if (today > renew_deadline)
-            #sta per scadere
-            role_atteso = FeeConst::ROLE_RENEW
+            #sta per scadere solo per abbonato
+            if (!self.isregistered?)
+              role_atteso = FeeConst::ROLE_RENEW
+            end
             tipo = "renew"
           else
             #tutto ok
@@ -681,7 +683,12 @@ class User < Principal
     # --> kappao flash[:error] = l(:notice_account_unactive)
     # Make sure no one can sign in with an empty password
     return nil if password.to_s.empty?
-    user = find_by_login(login)
+    #domthu20130919
+    if login.length > 30
+      user = find_by_login(login[0,30])
+    else
+      user = find_by_login(login)
+    end
     if user
       # user is already in local database
       if !user.active?

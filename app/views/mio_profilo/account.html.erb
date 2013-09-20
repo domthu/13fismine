@@ -58,11 +58,11 @@
       <div class="fs-abbo-sx1">
         <p style="margin-bottom: 7px;"><label><%= l(:field_nome) %></label></p>
 
-        <p><%= f.text_field :firstname, :label => l(:field_firstname) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %></p>
+        <p><%= f.text_field :firstname, :label => l(:field_firstname) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 30 %></p>
 
-        <p><%= f.text_field :lastname, :label => l(:field_lastname) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %></p>
+        <p><%= f.text_field :lastname, :label => l(:field_lastname) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 30 %></p>
 
-        <p><%= f.text_field :mail, :label => l(:field_mail) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %>
+        <p><%= f.text_field :mail, :label => l(:field_mail) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 60 %>
           <img id="si_user_mail" src="/images/true.png" alt="Anagrafica disponibile" title="Anagrafica disponibile" style="display: none;"/>
 
         <div id="no_user_mail" style="display: none;">
@@ -81,7 +81,7 @@
               login attuale: <%= @user.login %>
             </p>
 
-            <p><%= f.text_field :login, :label => l(:field_login) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 255 %>
+            <p><%= f.text_field :login, :label => l(:field_login) + " <span class='required'>*</span>", :style => 'width:60%;', :maxlength => 30 %>
               <img id="si_user_login" src="/images/true.png" alt="login disponibile" title="login disponibile" style="display: none;"/><img id="no_user_login" src="/images/false.png" title="login non disponibile. Ci risulta già una registrazione con questo login!" style="display: none;"/>
             </p>
 
@@ -122,10 +122,10 @@
       <div class="flash notice hide"><%= l(:field_soc) %></div>
       <div class="fs-abbo-sx1">
 
-        <p><%= f.text_field :codicefiscale, {:style => 'width:60%;', :label => l(:field_codicefiscale) + " <span class='required'>*</span>", :maxlength => 30} %></p>
+        <p><%= f.text_field :codicefiscale, {:style => 'width:60%;', :label => l(:field_codicefiscale) + " <span class='required'>*</span>", :maxlength => 16} %></p>
       </div>
       <div class="fs-abbo-dx1">
-        <p><%= f.text_field :partitaiva, {:style => 'width:60%;', :label => l(:field_partitaiva), :maxlength => 30} %></p>
+        <p><%= f.text_field :partitaiva, {:style => 'width:60%;', :label => l(:field_partitaiva), :maxlength => 11} %></p>
       </div>
       <div class="fs-abbo-sx1">
         <p><%= f.text_area :indirizzo, :label => l(:field_indirizzo) + " <span class='required'>*</span>", :placeholder => "Indicare solo la via e il numero civico ...", :style => "width:94%; height: 80px" %></p>
@@ -251,7 +251,10 @@
         userid = $("#user_id").val();
         //HideAvaibility("user_mail");
         //HideAvaibility("user_login");
-
+        SetLimitText('#login', 30); //fatto in html
+        $('#login').on('keyup', function() {
+            limitText(this, 30)
+        });
         $('input:radio[name="rbt"]').change(function () {
             var sel = $('input:radio[name="rbt"]:checked').val();
             $("div.dvrbt").each(function () {
@@ -453,7 +456,19 @@
         });
 
     }); //end query document ready
-
+    function SetLimitText(field, maxChar){
+        $(field).attr('maxlength',maxChar);
+    }
+    function limitText(field, maxChar){
+        var ref = $(field),
+            val = ref.val();
+        if ( val.length >= maxChar ){
+            ref.val(function() {
+                //console.log(val.substr(0, maxChar))
+                return val.substr(0, maxChar);
+            });
+        }
+    }
     function isValidEmailAddress(emailAddress) {
         var pattern = new RegExp(/^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i);
         return pattern.test(emailAddress);

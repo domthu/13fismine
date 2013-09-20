@@ -154,6 +154,7 @@ include ApplicationHelper
 
       totale = Issue.all_public_fs.with_filter("top_sections.hidden_menu = 0 AND top_sections.id = " + top_section_id.to_s + " AND (issues.subject LIKE ? OR issues.description LIKE ?)", "%#{s}%", "%#{s}%").count()
 
+      #Solo visibile WEB
       @art = Issue.all_public_fs.find(
         :all,
         :conditions => ['top_sections.hidden_menu = 0 AND top_sections.id = ? AND (issues.subject LIKE ? OR issues.description LIKE ?)', "#{top_section_id}", "%#{s}%", "%#{s}%"],
@@ -170,6 +171,7 @@ include ApplicationHelper
 
         totale = Issue.all_public_fs.with_filter("top_sections.hidden_menu = 0 AND top_sections.top_menu_id = " + top_menu_id.to_s + " AND (issues.subject LIKE ? OR issues.description LIKE ?)", "%#{s}%", "%#{s}%").count()
 
+        #Solo visibile WEB
         @art = Issue.all_public_fs.find(
           :all,
           :conditions => ['top_sections.hidden_menu = 0 AND top_sections.top_menu_id = ? AND (issues.subject LIKE ? OR issues.description LIKE ?)', "#{top_menu_id}", "%#{s}%", "%#{s}%"],

@@ -28,19 +28,28 @@ class MioProfiloController < ApplicationController
   end
 
   # Edit user's page account
+#  Parameters: {"user"=>{"comune_id"=>"628", "titolo"=>"Impiegata", "mail"=>"loredana@studiomurizzascodompe.fr", "se_condition"=>"1", "soc"=>"MURIZZASCO LOREDANA", "login"=>"loredana", "id"=>"159", "se_privacy"=>"1", "partitaiva"=>"00754900041", "telefono"=>"0174330887-", "codicefiscale"=>"MRZLDN51T63F351R", "lastname"=>"LOREDANA2", "firstname"=>"MURIZZASCO2", "codice_attivazione"=>"", "language"=>"en", "cross_organization_id"=>"", "fax"=>"32616771", "indirizzo"=>"Via xx settembre 30"}, "authenticity_token"=>"Lm7zBhhiwUqXRxoiiXm94Y5wrWbxC6QwzyAE263VRWk=", "controller"=>"mio_profilo", "commit"=>"Invia", "action"=>"account", "extra_town"=>""}
   def account
     @user = User.current
     #@pref = @user.pref
     if request.post?
+      old_login = @user.login
       @user.safe_attributes = params[:user]
       @user.pref.attributes = params[:pref]
       @user.pref[:no_self_notified] = (params[:no_self_notified] == '1')
+      if params[:user][:login].present? && !params[:user][:login].blank? && params[:user][:login] != old_login
+        @user.login = params[:user][:login][0,30]
+        old_login = "cambiato"
+      end
       if @user.save
         @user.pref.save
         @user.notified_project_ids = (@user.mail_notification == 'selected' ? params[:notified_project_ids] : [])
         set_language_if_valid @user.language
         flash[:notice] = l(:notice_account_updated)
-        redirect_to :action => 'account'
+        if (old_login == "cambiato")
+          Mailer.deliver_account_information(@user, @user.pwd)
+        end
+        redirect_to :action => 'page'
         return
       end
     end
