@@ -28,9 +28,9 @@ class AccountController < ApplicationController
   # Login request and validation
   def login
     #Rails.logger.info("login PARAMS: #{params.inspect}")
-    #flash[:notice] = "==========login============="
+    #send_notice "==========login============="
     if request.get?
-      #flash[:notice] = "request.get --> logout_user"
+      #send_notice "request.get --> logout_user"
       logout_user
     else
       authenticate_user
@@ -51,7 +51,7 @@ class AccountController < ApplicationController
     if params[:token]
       @token = Token.find_by_action_and_value("recovery", params[:token])
       if @token.nil? or @token.expired?
-        flash[:error] = l(:lost_password_unvalid_token)
+        send_error l(:lost_password_unvalid_token)
         #redirect_to(home_url) && return unless @token and !@token.expired?
         #redirect_to(editorial_url) && return unless @token and !@token.expired?
         redirect_to(editorial_url)
@@ -62,7 +62,7 @@ class AccountController < ApplicationController
         @user.password, @user.password_confirmation = params[:new_password], params[:new_password_confirmation]
         if @user.save
           @token.destroy
-          flash[:notice] = l(:notice_account_password_updated)
+          send_notice l(:notice_account_password_updated)
           redirect_to editorial_url
           return
         end
@@ -82,12 +82,12 @@ class AccountController < ApplicationController
         redirect_to(editorial_url) && return unless token
         if token.save
           if token.nil?
-            flash[:error] = l(:lost_password_unvalid_token)
+            send_error l(:lost_password_unvalid_token)
             redirect_to  :controller => 'editorial', :action => 'home'
             return
           else
             Mailer.deliver_lost_password(token)
-            flash[:notice] = l(:notice_account_lost_email_sent)
+            send_notice l(:notice_account_lost_email_sent)
             redirect_to  :back
             return
           end
@@ -254,7 +254,7 @@ class AccountController < ApplicationController
 #        if @user.save
 #          session[:auth_source_registration] = nil
 #          self.logged_user = @user
-#          flash[:notice] = l(:notice_account_activated)
+#          send_notice l(:notice_account_activated)
 #          #redirect_to :controller => 'my', :action => 'account'
 #          redirect_to my_profile_show_url
 #        end
@@ -418,7 +418,7 @@ class AccountController < ApplicationController
       user.activate
       if user.save
         token.destroy
-        flash[:notice] = l(:notice_account_activated)
+        send_notice l(:notice_account_activated)
         #in caso di prova gratis inviare dati di accesso
         if (user.pwd && !user.pwd.blank?) || user.isregistered?
           Mailer.deliver_account_information(user, user.pwd)
@@ -508,6 +508,9 @@ class AccountController < ApplicationController
   def successful_authentication(user)
     # Valid user
     self.logged_user = user
+    if params[:username].present? && !params[:username].blank? && params[:username].length > 30
+       send_notice "La tua username (" + params[:username] + ") è lunga " + params[:username].length.to_s +  " caratteri: ti invitiamo a scegliere un login più corto, inferiore a 30 caratteri per favore. Puoi cambiarlo nel tuo profilo."
+    end
     # generate a key and set cookie if autologin
     if params[:autologin] && Setting.autologin?
       set_autologin_cookie(user)
@@ -526,7 +529,7 @@ class AccountController < ApplicationController
       if (Setting.fee?)
         user.control_state
         if user.isregistered?
-           flash[:notice] = "Periodo di prova valido ancora per " + distance_of_date_in_words(user.scadenza, Time.now)
+           send_notice "Periodo di prova valido ancora per " + distance_of_date_in_words(user.scadenza, Time.now)
         end
         if user.isrenewing?
            send_notice("Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, self.scadenza))
@@ -570,7 +573,7 @@ class AccountController < ApplicationController
     token = Token.new(:user => user, :action => "register")
     if user.save and token.save
       Mailer.deliver_register(token)
-      flash[:notice] = l(:notice_account_register_done)
+      send_notice l(:notice_account_register_done)
       #redirect_to :action => 'login'
       redirect_to editorial_url
     else
@@ -587,7 +590,7 @@ class AccountController < ApplicationController
     user.last_login_on = Time.now
     if user.save
       self.logged_user = user
-      flash[:notice] = l(:notice_account_activated)
+      send_notice l(:notice_account_activated)
       #redirect_to :controller => 'my', :action => 'account'
       redirect_to editorial_url
     else
@@ -609,7 +612,7 @@ class AccountController < ApplicationController
   end
 
   def account_pending
-    flash[:notice] = l(:notice_account_pending)
+    send_notice l(:notice_account_pending)
     #redirect_to :action => 'login'
     redirect_to editorial_url
   end
