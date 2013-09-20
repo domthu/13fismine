@@ -702,7 +702,7 @@ class EditorialController < ApplicationController
   def find_articolo
     return reroute_log('find_articolo') unless !params[:article_id].nil?
     @id = params[:article_id].to_i
-    @articolo= Issue.all_public_fs_nl_preview.find(@id)
+    @articolo= Issue.all_public_fs.find(@id)
   rescue ActiveRecord::RecordNotFound
     flash[:error] = "Il contenuto cercato è stato rimosso..."
     redirect_to(:back)

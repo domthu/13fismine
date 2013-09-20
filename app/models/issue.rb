@@ -3,7 +3,7 @@ class Issue < ActiveRecord::Base
   include FeesHelper
   #after_update :reprocess
   #has_image  #vedi config/initializers/paperclip.rb
-  has_attached_file :image, :styles => {:xs => "32x32#", :s => "75x50#" , :m => "200x134#", :l => "300x200#"},
+  has_attached_file :image, :styles => {:xs => "32x32#", :s => "75x50#", :m => "200x134#", :l => "300x200#"},
                     :url => "articoli/:id:style.:extension",
                     :path => "#{RAILS_ROOT}/public/images/articoli/:id:style.:extension",
                     :default_url => "commons/:style_art-no-image.jpg"
@@ -77,12 +77,12 @@ class Issue < ActiveRecord::Base
   }
   #domthu edizione visibile web: si vede in home e ovviamente nel sito
   named_scope :all_public_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
-      :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile = 1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"],
-      :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC, due_date DESC"}
+                               :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_web = 1 AND #{TopSection.table_name}.se_visibile = 1 AND #{Project.table_name}.identifier LIKE ?", "#{FeeConst::EDIZIONE_KEY}%"],
+                               :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC, due_date DESC"}
 
   named_scope :all_mail_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
-      :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_newsletter = 1 "],
-      :order => "#{TopSection.table_name}.ordinamento ASC, due_date DESC"}
+                             :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_newsletter = 1 "],
+                             :order => "#{TopSection.table_name}.ordinamento ASC, due_date DESC"}
 
   named_scope :with_filter, lambda { |filter| {:conditions => merge_conditions(filter)} }
   named_scope :solo_convegni, :conditions => merge_conditions("#{TopSection.table_name}.top_menu_id = " + FeeConst::TMENU_CONVEGNI.to_s)
@@ -96,8 +96,9 @@ class Issue < ActiveRecord::Base
   after_destroy :update_parent_attributes
 
   def year
-     self.due_date.strftime('%Y')
-   end
+    self.due_date.strftime('%Y')
+  end
+
   # return rue if summary is equal to description for full article
   def hide_summary?
     if self.nil? || self.testo_no_format.nil? || self.summary.nil?
