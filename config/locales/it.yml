@@ -1611,13 +1611,13 @@ it:
   notice_setting_fee_not_allowed: La gestione degli abbonamenti non è abilitata
   label_person: Persona
   field_registration_date: Registrazione
-  role_manager: Responsabile
-  role_3: Responsabile
+  role_manager: manager
+  role_3: MANAGER
   role_author: Redattore, collaboratore
   role_author_abrv: Redattore
-  role_4: Redattore
-  role_vip: Invitato
-  role_10: Invitato
+  role_4: REDATTORE
+  role_vip: Invitato (VIP)
+  role_10: VIP
   role_abbonato: Abbonato
   role_6: Abbonato
   role_registered: Registrato

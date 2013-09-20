@@ -196,7 +196,7 @@
         <p>
           <strong>
           <% roles_fs.each do |role| %>
-            <%= radio_button_tag 'user[role_id]', role.id, (role.id == @user.role_id) %> <%=h role %>
+            <%= radio_button_tag 'user[role_id]', role.id, (role.id == @user.role_id) %> <%=h get_abbonamento_name(role.id) %>
             <br />
           <% end %>
           </strong>

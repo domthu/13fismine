@@ -239,45 +239,6 @@ module FeesHelper
     end
   end
 
-  #ROLES_NAMES =[l(:role_manager), l(:role_author), l(:role_vip), l(:role_abbonato), l(:role_registered), l(:role_renew), l(:role_expired), l(:role_archivied)]
-  def get_abbonamento_name(user)
-    if user.is_a?(User)
-      abbo = user.role_id
-    else
-      abbo = user
-    end
-    case abbo
-      #FeeConst::ROLE_MANAGER
-      when 3
-       return l(:role_manager)
-
-      #FeeConst::ROLE_AUTHOR
-      when 4
-        return l(:role_author_abrv)
-      #FeeConst::ROLE_VIP
-      when 10
-        return l(:role_vip)
-      #FeeConst::ROLE_ABBONATO
-      when 6
-        return l(:role_abbonato)
-      #FeeConst::ROLE_REGISTERED
-      when 9
-        return l(:role_registered)
-      #FeeConst::ROLE_RENEW
-      when 11
-        return l(:role_renew)
-      #FeeConst::ROLE_EXPIRED
-      when 7
-        return l(:role_expired)
-      #FeeConst::ROLE_ARCHIVIED
-      when 8
-        return l(:role_archivied)
-      else
-        return ""
-    end
-  end
-
-
   #per ogni utente
   # prendere codice utente e data scadenza
   # --> definire il ruolo

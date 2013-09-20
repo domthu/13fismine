@@ -235,9 +235,7 @@ class Issue < ActiveRecord::Base
   end
 
   def quesito_control
-    puts "******************ISSUE QUESITO CONTROL************************+"
     if self.is_quesito? && self.quesito_news.is_issue_reply? && self.quesito_news.issues.count <= 1
-      puts "******************ISSUE RESET STATUS to 1************************+"
       #sto eliminando l'ultimo quindi dovrei considerarlo come in attesa
       self.quesito_news.set_satus(1)
       #TODO controlare se abbiamo una risposta veloce
