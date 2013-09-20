@@ -209,7 +209,7 @@ class EditorialController < ApplicationController
       flash[:alert] = l(:notice_not_authorized)
       return redirect_to({:action => 'home'})
     else
-      @issues = @project.issues.all_public_fs
+      @issues = @project.issues.all_public_fs  #Solo visibile WEB
       @block_projects = Project.latest_fs
     end
   rescue ActiveRecord::RecordNotFound
@@ -218,12 +218,12 @@ class EditorialController < ApplicationController
     return redirect_to({:action => 'home'})
   end
 
+  #pagina per vedere l'edizione con la grafica degli invii mail
   def edizione_newsletter
     #Newsletter  grafica della newsletter
     @id = params[:id].to_i
     @project = Project.all_public_fs.find_public(@id)
-    @art =@project.issues.all_public_fs_nl_preview
-      @prj= @id.to_i
+    @art =@project.issues.all_public_fs  #Solo visibile WEB
     @user = User.current
   rescue ActiveRecord::RecordNotFound
     #reroute_404()

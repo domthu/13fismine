@@ -53,7 +53,7 @@ class PreviewsController < ApplicationController
 
   #Newsletter  grafica della newsletter
   def newsletter
-    @art = @project.issues.all_mail_fs
+    @art = @project.issues.all_mail_fs  #Solo visibile MAIL
     render :layout => false, :partial => 'editorial/edizione_smtp'
   end
 

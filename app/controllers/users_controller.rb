@@ -307,7 +307,7 @@ class UsersController < ApplicationController
     @id = ((params[:project] && params[:project][:id]) || params[:project_id]).to_i
     #@project= Project.all_public_fs.find_by_id(@id.to_i)
     @project= Project.all_mail_fs.find_by_id(@id.to_i)
-    @art = @project.issues.all_mail_fs
+    @art = @project.issues.all_mail_fs  #Solo visibile MAIL
     #@htmlpartial = @user.newsletter_smtp(@edizione)
     @htmlpartial = render_to_string(
         :layout => false,

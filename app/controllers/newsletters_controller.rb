@@ -19,7 +19,7 @@ class NewslettersController < ApplicationController
   def invii
     if request.post?
     else
-      @art = @project.issues.all_mail_fs
+      @art = @project.issues.all_mail_fs #Solo visibile WEB
       if @art && @art.any?
         @newsletter.html = render_to_string(
                 :layout => false,
@@ -75,7 +75,7 @@ class NewslettersController < ApplicationController
     @failed = []
     if @newsletter.have_emails_to_send?
       if (!@newsletter.project_id.nil? && @newsletter.project)
-        @art = @project.issues.all_mail_fs
+        @art = @project.issues.all_mail_fs #Solo visibile WEB
         @project = @newsletter.project
         _html = render_to_string(
                   :layout => false,
@@ -376,7 +376,7 @@ class NewslettersController < ApplicationController
         @newsletter.project_id = @project.id
         @newsletter.data = DateTime.now
         #Solo gli articoli visibile MAIL e privato: se_visible_newsletter = true
-        @art = @project.issues.all_mail_fs
+        @art = @project.issues.all_mail_fs #Solo visibile WEB
         if @art && @art.any?
           @newsletter.html = render_to_string(
                   :layout => false,
