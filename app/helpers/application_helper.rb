@@ -119,6 +119,14 @@ module ApplicationHelper
              :id => attachment, :filename => attachment.filename},
             options)
   end
+  def link_to_fs_attachment(attachment, options={})
+    text = options.delete(:text) || attachment.filename
+    action = options.delete(:download) ? 'download' : 'show_fs'
+    link_to(h(text),
+            {:controller => 'attachments', :action => action,
+             :id => attachment, :filename => attachment.filename},
+            options)
+  end
 
   # Generates a link to a SCM revision
   # Options:

@@ -380,7 +380,8 @@ class ApplicationController < ActionController::Base
   #
   # @return [boolean, string] name of the layout to use or false for no layout
   def use_layout
-    request.xhr? ? false : 'base'
+    #request.xhr? ? false : 'base'
+    request.xhr? ? false : 'editorial'
   end
 
   def invalid_authenticity_token
