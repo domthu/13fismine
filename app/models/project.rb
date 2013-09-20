@@ -92,9 +92,9 @@ class Project < ActiveRecord::Base
   named_scope :active, {:conditions => "#{Project.table_name}.status = #{STATUS_ACTIVE}"}
   named_scope :all_public, {:conditions => {:is_public => true}}
   #domthu edizione visibile web: si vede in home e ovviamente nel sito
-  named_scope :all_public_fs, {:conditions => ['is_public = true AND identifier LIKE ?', "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{table_name}.created_on DESC"}
+  named_scope :all_public_fs, {:conditions => ['is_public = true AND identifier LIKE ?', "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{table_name}.data_al DESC"}
   #domthu edizione per la spedizione controllare solo se è Public
-  named_scope :all_mail_fs, {:conditions => ['is_public = true'], :order => "#{table_name}.created_on DESC"}
+  named_scope :all_mail_fs, {:conditions => ['is_public = true'], :order => "#{table_name}.data_al DESC"}
   named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift || User.current, *args)} }
 
 #  def to_s
@@ -142,7 +142,7 @@ class Project < ActiveRecord::Base
   # returns latest created projects
   # non public projects will be returned only if user is a member of those
   def self.latest(user=nil, count=5)
-    visible(user).find(:all, :limit => count, :order => "created_on DESC")
+    visible(user).find(:all, :limit => count, :order => "data_al DESC")
   end
 
   # returns all projects for public area
@@ -157,19 +157,10 @@ class Project < ActiveRecord::Base
   def self.latest_fs(user = User.current, count = 5)
     #:conditions => [... AND #{table_name}.status = #{STATUS_FS}"]
     all_public_fs.all(:limit => count)
-    #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in home page
-    #Il STATUS_FS dovrebbe essere presso quando la newsletter viene inviata
   end
 
   def self.find_public(id = 0, user = User.current)
-    #@edizione = Project.find(params[:id])
-    #Project.find(:first, :conditions
-    #Project.find_by_id(id)
-    #search(id,:conditions => "#{table_name}.is_public = 1 AND #{table_name}.status IN ( #{STATUS_ARCHIVED}, #{STATUS_FS} )", :include => :role)
-    #control user => Non fare. il controllo avviene per gli articoli in modo da incentivare l'abbonamento
-    #if user.nil? || !user.isauthored
-    #  return nil
-    #else
+
     prj = find(id)
     if prj && !prj.is_public
       return nil
@@ -180,19 +171,6 @@ class Project < ActiveRecord::Base
   end
 
   def self.exists_row_quesiti
-
-    # p=  Project.find_or_initialize_by_id(1).first_or_create(:id => 1 , :name => 'QUESITI', :identifier => 'quesiti', :status => 1, :is_public => 0, :description => 'Contenitore di sistema per quesiti')
-#    prj = Project.find_or_initialize_by_id(FeeConst::QUESITO_ID) do |p|
-#      p.id = FeeConst::QUESITO_ID,
-#      p.name = 'QUESITI',
-#      p.identifier = FeeConst::QUESITO_KEY,
-#      p.status = 1,
-#      p.is_public = 0,
-#      p.description = 'Contenitore di sistema per quesiti',
-#      p.data_dal = Date.today
-#      p.data_al = Date.today + (365 * 100)
-#      p.save!
-#    end
     p = Project.find_or_initialize_by_id(FeeConst::QUESITO_ID)
     if p.new_record?
       p.members

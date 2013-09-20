@@ -82,11 +82,11 @@ class Issue < ActiveRecord::Base
   #sandro : utilizzato nella preview edizione nel sito /ome/edizioni visualizza sia visibile_web che visibile_mail
   named_scope :all_public_fs_nl_preview, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
                                :conditions => ["#{Project.table_name}.is_public = 1 AND ((#{Issue.table_name}.se_visible_newsletter = 1) OR (#{Issue.table_name}.se_visible_web = 1)) "],
-                               :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , due_date DESC"}
+                               :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , issues.due_date DESC"}
   #AND #{Issue.table_name}.is_private = 1 --> NON usare questo campo 20130912
   named_scope :all_mail_fs, {:include => [:project, :quesito_news, {:author => :user_profile}, {:section => :top_section}],
                                :conditions => ["#{Project.table_name}.is_public = 1 AND #{Issue.table_name}.se_visible_newsletter = 1 "],
-                               :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , due_date DESC"}
+                               :order => "#{Project.table_name}.id DESC ,#{TopSection.table_name}.ordinamento ASC , issues.due_date DESC"}
 
 
   named_scope :with_filter, lambda { |filter| {:conditions => merge_conditions(filter)} }

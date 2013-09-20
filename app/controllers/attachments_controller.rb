@@ -17,7 +17,8 @@
 
 class AttachmentsController < ApplicationController
   before_filter :find_project
-  before_filter :file_readable, :read_authorize, :except => :destroy
+  before_filter :file_readable, :except => [:destroy]
+  before_filter :read_authorize, :except => [:destroy, :show_fs, :download_fs]
   before_filter :delete_authorize, :only => :destroy
 
   accept_api_auth :show, :download
@@ -45,6 +46,46 @@ class AttachmentsController < ApplicationController
       format.api
     end
   end
+#inizio   attachments per il front end sandro
+  def show_fs
+    if User.current.isauthored? && is_section_not_restricted?
+      respond_to do |format|
+        format.html {
+          if @attachment.is_diff?
+            @diff = File.new(@attachment.diskfile, "rb").read
+            @diff_type = params[:type] || User.current.pref[:diff_type] || 'inline'
+            @diff_type = 'inline' unless %w(inline sbs).include?(@diff_type)
+            # Save diff type as user preference
+            if User.current.logged? && @diff_type != User.current.pref[:diff_type]
+              User.current.pref[:diff_type] = @diff_type
+              User.current.preference.save
+            end
+            render :action => 'diff'
+          elsif @attachment.is_text? && @attachment.filesize <= Setting.file_max_size_displayed.to_i.kilobyte
+            @content = File.new(@attachment.diskfile, "rb").read
+            render :action => 'file'
+          else
+            download
+          end
+        }
+        format.api
+      end
+    else
+      flash[:alert] = "Gentile utente per scaricare questo contenuto è necessario un abbonamento valido in corso."
+      redirect_to :back
+    end
+  end
+
+  def is_section_not_restricted?
+    if  @attachment.container.is_a?(Issue)
+      if  User.current.registered? && @attachment.container.section.protetto
+        return false
+      end
+    end
+    true
+  end
+
+#fine   attachments sandro
 
   def download
     if @attachment.container.is_a?(Version) || @attachment.container.is_a?(Project)
@@ -53,12 +94,13 @@ class AttachmentsController < ApplicationController
 
     # images are sent inline
     send_file @attachment.diskfile, :filename => filename_for_content_disposition(@attachment.filename),
-                                    :type => detect_content_type(@attachment),
-                                    :disposition => (@attachment.image? ? 'inline' : 'attachment')
+              :type => detect_content_type(@attachment),
+              :disposition => (@attachment.image? ? 'inline' : 'attachment')
 
   end
 
   verify :method => :delete, :only => :destroy
+
   def destroy
     # Make sure association callbacks are called
     @attachment.container.attachments.delete(@attachment)
@@ -67,7 +109,7 @@ class AttachmentsController < ApplicationController
     redirect_to :controller => 'projects', :action => 'show', :id => @project
   end
 
-private
+  private
   def find_project
     @attachment = Attachment.find(params[:id])
     # Show 404 if the filename in the url is wrong
@@ -76,6 +118,7 @@ private
   rescue ActiveRecord::RecordNotFound
     render_404
   end
+
 
   # Checks that the file exists and is readable
   def file_readable
