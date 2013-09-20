@@ -209,9 +209,7 @@ class EditorialController < ApplicationController
       flash[:alert] = l(:notice_not_authorized)
       return redirect_to({:action => 'home'})
     else
-      # @issues = @project.issues.all(:include => [:section => :top_section],
-      #                     :order => "#{TopSection.table_name}.ordinamento ASC , due_date DESC")
-      @issues = @project.issues.all(:order => "#{TopSection.table_name}.ordinamento ASC , #{Issue.table_name}.due_date DESC", :include => [:section => :top_section])
+      @issues = @project.issues.all_public_fs
       @block_projects = Project.latest_fs
     end
   rescue ActiveRecord::RecordNotFound
@@ -224,12 +222,8 @@ class EditorialController < ApplicationController
     #Newsletter  grafica della newsletter
     @id = params[:id].to_i
     @project = Project.all_public_fs.find_public(@id)
-    #domthu 20130919 problema di ordinamento
-    #NON ok http://37.59.40.44:88/edizione_newsletter/361
-    #ex --> @art =@project.issues.all_public_fs_nl_preview
-    #coretto http://37.59.40.44:88/edizione/361
-    @art =@project.issues.all(:order => "#{TopSection.table_name}.ordinamento ASC , #{Issue.table_name}.due_date DESC", :include => [:section => :top_section])
-    @prj= @id.to_i
+    @art =@project.issues.all_public_fs_nl_preview
+      @prj= @id.to_i
     @user = User.current
   rescue ActiveRecord::RecordNotFound
     #reroute_404()
