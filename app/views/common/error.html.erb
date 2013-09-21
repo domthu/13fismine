@@ -1,8 +1,20 @@
-<h2><%=h @status %></h2>
+Errore : <h2 style="display:inline;"><%= h @status %></h2>
 
 <% if @message.present? %>
-  <p id="errorExplanation"><%=h @message %></p>
-<% end %>
-<p><a href="javascript:history.back()">Back</a></p>
+    <% if @status = 404 %>
+        <div style="display: table; margin: 1% auto;">
+          <div class="error-in fs-flash-in">
+            <%= @message %>
+          </div>
+          <br /> &nbsp;  <br /> &nbsp;<br /> &nbsp;
 
+          </div>
+          <div class="fs-articolo-full-bottom">
+            <%= link_to "Ritorna...", :back, :class => "fs-vuoto-inline-button", :style => "float:none;", :id => "btn" %>
+          </div>
+    <% else %>
+        <p id="errorExplanation"><%= h @message %></p>
+        <p><a href="javascript:history.back()">Back</a></p>
+    <% end %>
+<% end %>
 <% html_title @status %>

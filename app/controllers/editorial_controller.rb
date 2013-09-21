@@ -770,10 +770,10 @@ class EditorialController < ApplicationController
     @icount = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s).count()
     if @icount > 3
       @artsimilar = Issue.all_public_fs.with_filter("#{Section.table_name}.id = " + @section_id.to_s).all(
-          :limit => 10)
+          :limit => 7)
     else
       @artsimilar = Issue.all_public_fs.with_filter("#{TopSection.table_name}.id = " + @articolo.section.top_section.id.to_s).all(
-          :limit => 10)
+          :limit => 7)
     end
 
     if @articolo.news_id

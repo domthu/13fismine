@@ -115,7 +115,8 @@
           // $('#fs-flash').center_me().show();
           if ($('#fs-flash').html().trim().length > 0) {
               $('#fs-flash').focus();
-          };
+          }
+          ;
 
           $('.x-white').addGlow({ textColor:'white', haloColor:'#aaa', radius:100 });
           $('.x-blue').addGlow({ textColor:'#00f', haloColor:'#00f', radius:100, duration:200 });
@@ -161,7 +162,6 @@
 
           <div id="fs-flash-close-me"> clicca per chiudere</div>
       <% end %>
-
     </div>
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">
@@ -173,17 +173,14 @@
     <div id="toTop" style="display: none;"></div>
     <div id="ajax-indicator" style="display: none;"><span><%= l(:label_loading) %></span></div>
     <footer class="fs-footer clearfix">
-
-      <p><a href="#">Link1</a> | <a href="#">Link2</a> | <a href="#">Link3</a></p>
-
-      <p>Copyright © 2012. All Rights Reserved.</p>
-
+      <p>
+        <%= render :partial => 'editorial/footer' %>
+      </p>
     </footer>
-
   </div>
   <div class="fs-page-footer">
     <div class="clearfix"></div>
-    <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank">Privacy </a> | site created by collaborations.</span>
+    <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank"></span>
   </div>
 </div>
 

@@ -184,7 +184,8 @@ it:
   notice_successful_update: Modifica effettuata.
   notice_successful_delete: Eliminazione effettuata.
   notice_successful_connection: Connessione effettuata.
-  notice_file_not_found: La pagina desiderata non esiste o è stata rimossa.
+  notice_file_not_found: Il contenuto richiesto non esiste o è stato rimosso.
+  notice_not_valid_abbo: "Gentile utente questo contenuto è necessario un abbonamento completo e valido in corso."
   notice_locking_conflict: Le informazioni sono state modificate da un altro utente.
   notice_not_authorized: Non sei autorizzato ad accedere a questa pagina.
   notice_not_authorized_archived_project: "L'edizione a cui stai accedendo è stata archiviata."

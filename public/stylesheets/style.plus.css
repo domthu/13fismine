@@ -2065,7 +2065,7 @@ h3.fs-postheader {
         top: 35%;
         left: 50%;
         width:30em;
-        height:18em;
+        min-height:18em;
         margin-top: -5em; /*set to a negative number 1/2 of your height*/
         margin-left: -15em; /*set to a negative number 1/2 of your width*/
 }
@@ -2131,7 +2131,7 @@ h3.fs-postheader {
 .f-notice {
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 1.5em !important;
-    background-color: #faffc5;
+    background-color: #BDEBFF;
 }
 
 .f-alert {

@@ -18,7 +18,7 @@
 class AttachmentsController < ApplicationController
   before_filter :find_project
   before_filter :file_readable, :except => [:destroy]
-  before_filter :read_authorize, :except => [:destroy, :show_fs, :download_fs]
+  before_filter :read_authorize, :except => [:destroy, :show_fs]
   before_filter :delete_authorize, :only => :destroy
 
   accept_api_auth :show, :download
@@ -46,6 +46,7 @@ class AttachmentsController < ApplicationController
       format.api
     end
   end
+
 #inizio   attachments per il front end sandro
   def show_fs
     if User.current.isauthored? && is_section_not_restricted?
@@ -71,14 +72,15 @@ class AttachmentsController < ApplicationController
         format.api
       end
     else
-      flash[:alert] = "Gentile utente per scaricare questo contenuto è necessario un abbonamento valido in corso."
+      flash[:alert] = l(:notice_not_valid_abbo)
       redirect_to :back
     end
   end
 
   def is_section_not_restricted?
+    # puts "regist -----------> " + User.current.isregistered?.to_s + " ////protet. " + @attachment.container.section.protetto.to_s
     if  @attachment.container.is_a?(Issue)
-      if  User.current.registered? && @attachment.container.section.protetto
+      if  User.current.isregistered? && @attachment.container.section.protetto
         return false
       end
     end
@@ -119,10 +121,9 @@ class AttachmentsController < ApplicationController
     render_404
   end
 
-
   # Checks that the file exists and is readable
   def file_readable
-    @attachment.readable? ? true : render_404
+    @attachment.readable? ? true : (params[:action]=='show_fs') ? render_404_fs : render_404
   end
 
   def read_authorize
