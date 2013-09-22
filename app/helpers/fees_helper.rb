@@ -110,6 +110,7 @@ module FeesHelper
                         [l(:role_archivied), FeeConst::ROLE_ARCHIVIED.to_s]
                         ], selected.to_s)
   end
+
   #  def change_status_link(user)
   def change_role_status_link(user)
     str = ""

@@ -1451,8 +1451,8 @@ body a.button-blu:visited{
     border: 1px solid #d3d6f1;
     padding: 3px 11px 0;
 }
-.quesito, div.issue.quesito{background-color:#FDF5E6;  /*#FFE4B5 #FAFAD2*/}
-.convegno, div.issue.convegno{background-color:#E0FFFF; /*#98FB98 #90C140*/}
+.quesito, div.issue.quesito{background-color:#F7F9FA;  /*#FFE4B5 #FAFAD2*/}
+.convegno, div.issue.convegno{background-color:#F8F7DC; /*#98FB98 #90C140*/}
 .span3col {
    width: 33%;
    display: inline-block
@@ -1504,4 +1504,12 @@ hr.quesiti {
 }
 hr.quesiti hr {
     display: none;
+}
+
+.field_ordinamento:after {
+    content: "[campo di ordinamento]" ;
+    color: #5a88bf;
+    font-weight: normal;
+    font-size: 0.7em;
+    display: inherit;
 }

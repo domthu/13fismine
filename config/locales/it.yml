@@ -288,7 +288,7 @@ it:
   field_is_default: Stato predefinito
   field_tracker: Tracker
   field_subject: Titolo
-  field_due_date: 'Scadenza <br /> <span style="font-size: 0.7em;">[campo di ordinamento]</span>'
+  field_due_date: 'Scadenza'
   field_assigned_to: Assegnato a
   field_priority: Priorità
   field_fixed_version: Versione prevista
@@ -822,7 +822,7 @@ it:
   label_month: Mese
   label_week: Settimana
   label_date_from: Data da...
-  label_date_to: 'Fino a...&nbsp;&nbsp;&nbsp; <br /> <span style="font-size: 0.7em;">[campo di ordinamento]</span>'
+  label_date_to: 'Fino a...'
   label_language_based: Basato sul linguaggio
   label_sort_by: "Ordina per %{value}"
   label_send_test_email: Invia una email di prova
@@ -1148,7 +1148,7 @@ it:
   label_visibilita: Visibilità
   label_is_responsable: é responsabile?
   label_not_responsable: "L'utente non gestisce organismi convenzionati"
-  label_have_convention: Non paga?
+  label_have_convention: Convenzionato?
   label_no_convention: "Utente pagante. L'utente non fa parte di un'organismo convenzionato"
   label_list_responsable_for: "Lista organismi convenzionati dove é responsabile:"
   label_have_sigla_tipo: Federato?

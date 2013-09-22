@@ -18,7 +18,7 @@
   <%# text_field_tag 'project[data_dal]', format_date(@project.data_dal), :size => 10 %><%# calendar_for('project_data_dal') %>
     <p><%= f.text_field :data_dal, :label => l(:label_date_from), :size => 10 %><%= calendar_for('project_data_dal') %></p>
   </td><td>
-    <p><%= f.text_field :data_al, :label => l(:label_date_to), :size => 10 %><%= calendar_for('project_data_al') %></p>
+    <p class="field_ordinamento"><%= f.text_field :data_al, :label => l(:label_date_to), :size => 10 %><%= calendar_for('project_data_al') %></p>
   </td></tr></table>
   <p><%= f.check_box :is_public %></p>
   <p><%= f.text_field :search_key %></p>

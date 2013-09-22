@@ -1,3 +1,8 @@
+<style type="text/css">
+    .user-role-icon-s p{
+        background-color: transparent !important;
+    }
+</style>
 <h2><%=l(:list_registrati)%></h2>
 <% form_tag({}, :method => :get) do %>
 <fieldset><legend><%= l(:label_filter_plural) %></legend>
@@ -16,11 +21,11 @@
 <div class="autoscroll">
 <table class="list">
   <thead><tr>
-  <%= sort_header_tag('person', :caption => l(:label_person)) %>
-  <%= sort_header_tag('role', :caption => l(:label_role)) %>
-  <%= sort_header_tag('registration', :caption => l(:field_registration_date), :default_order => 'desc') %>
-  <%= sort_header_tag('asso', :caption => l(:label_have_convention), :default_order => 'desc') %>
-  <%= sort_header_tag('scadenza', :caption => l(:field_due_date), :default_order => 'desc') %>
+  <%= sort_header_tag('person', :caption => l(:label_person), :style => 'width: 35%;') %>
+  <%= sort_header_tag('role', :caption => l(:label_role), :style => 'width: 20%;') %>
+  <%= sort_header_tag('scadenza', :caption => l(:field_due_date), :default_order => 'desc', :style => 'width: 15%; text-align:left;') %>
+  <%= sort_header_tag('registration', :caption => l(:field_registration_date), :default_order => 'desc', :style => 'width: 15%;') %>
+  <%=sort_header_tag('conv', :caption => l(:label_have_convention), :default_order => 'desc', :style => 'width: 5%;') %>
     <th></th>
   </tr></thead>
   <tbody>
@@ -28,13 +33,25 @@
   <tr class="user <%= cycle("odd", "even") %> <%= %w(anon active registered locked)[user.status] %>">
   <td class="firstname"><%= avatar(user, { :size => "14", :class => "no-div" }) %><%= link_to h(user.name), edit_user_path(user) %></td>
   <td class="role" align="left"><%= get_status_role(user) %></td>
-
-  <td class="created_on" align="center"><%= format_time(user.created_on) %></td>
-  <td align="center"><%= checked_image user.privato? %></td>
-  <td class="scadenza" align="center"><%= format_date(user.scadenza) unless user.scadenza.nil? %></td>
+    <td>
+    <% if user.scadenza %>
+      <% if DateTime.now > user.scadenza %>
+        <span class="scadenza-ko"> <%= format_date(user.scadenza) %></span>
+      <% elsif user.scadenza < (DateTime.now + Setting.renew_days.to_i.days) %>
+        <span class="scadenza-renewing"><%= format_date(user.scadenza) %> </span>
+      <% else  %>
+        <span class="scadenza-ok"><%= format_date(user.scadenza) %> </span>
+      <% end  %>
+    <% else  %>
+      <span class="scadenza-none">Senza data di scadenza  </span>
+    <%	end  %>
+    </td>
+  <td class="created_on" align="center"><%= format_date(user.created_on) %></td>
+     <td align="center">
+    <%= checked_image user.privato? %></td>
     <td class="buttons">
-      <%= change_role_status_link(user) %>
-      <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-arc') unless User.current == user %>
+      <!-- temporanemaente rimosso per non creare confusione --><%# change_role_status_link(user) %>
+      <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
     </td>
   </tr>
 <% end -%>
@@ -42,5 +59,4 @@
 </table>
 </div>
 <p class="pagination"><%= pagination_links_full @user_pages, @user_count %></p>
-
 <% html_title(l(:list_registrati)) -%>

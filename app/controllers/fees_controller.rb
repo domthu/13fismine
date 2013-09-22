@@ -25,6 +25,7 @@ class FeesController < ApplicationController
   menu_item :liste_utenti, :only => [:liste_utenti]
   menu_item :associati, :only => [:associati]
   menu_item :paganti, :only => [:paganti]
+  menu_item :abbonamenti, :only => [:abbonamenti]
   #selected menu payments
   menu_item :pagamento, :only => [:pagamento]
   menu_item :invoices, :only => [:invoices]
@@ -122,8 +123,11 @@ class FeesController < ApplicationController
   def liste_utenti
     #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
     #@users = User.all(:conditions => {:role_id => FeeConst::ROLE_REGISTERED}, :include => :role)
-    sort_init 'person', 'asc'
-    sort_update %w(firstname lastname role_id created_on convention_id datascadenza)
+    sort_init 'person ASC'
+    sort_update 'person' => 'users.firstname, users.lastname',
+                'role' => 'users.role_id',
+                'scadenza' => 'users.datascadenza',
+                'registration' => 'users.created_on'
 
     case params[:format]
       when 'xml', 'json'
@@ -161,6 +165,7 @@ class FeesController < ApplicationController
     end
   end
 
+
   def scaduti
     #  FeeConst::ROLE_EXPIRED        = 6  #user.data_scadenza < today
     @users = User.all(:conditions => {:role_id => FeeConst::ROLE_EXPIRED}, :include => :role)
@@ -184,38 +189,62 @@ class FeesController < ApplicationController
   end
 
   def associati
-    #sort and filters users
-    sort_init 'login', 'asc'
-    #sort_update %w(login firstname lastname mail admin created_on last_login_on)
-    sort_update %w(lastname mail data convention_id role_id)
-
-    #@limit = per_page_option
+    sort_init 'person ASC'
+    sort_update 'person' => 'users.firstname, users.lastname',
+                'mail' => 'users.mail',
+                'datascadenza' => 'users.datascadenza',
+                'role_id' => 'users.role_id',
+                'convention_id' => 'users.convention_id'
 
     scope = @users_by_roles
 
+    case params[:format]
+       when 'xml', 'json'
+         @offset, @limit = api_offset_and_limit
+       else
+         @limit = per_page_option
+     end
+
     c = ARCondition.new(["users.type = 'User'"])
-    c << ["convention_id is not null"]
-    if request.post?
+    c << ["convention_id > 0"]
+    if request.get?
       #ricerca testuale
       unless params[:name].blank?
-        @name = params[:name]
         name = "%#{params[:name].strip.downcase}%"
         c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
       end
-      #Convention filter
-      @convention_id = (params[:convention] && params[:convention][:convention_id]) ? params[:convention][:convention_id].to_i : 0
+      puts "XXXXXXXXXXXXX" + params[:convention_id].to_s
+      @convention_id = (params[:convention_id]) ? params[:convention_id].to_i : 0
       if @convention_id > 0
         c << ["convention_id = ? ", @convention_id.to_s]
+
       end
     else
       @convention_id = Convention.find(:first).id
       c << ["convention_id = ?", @convention_id]
-
     end
+    @cs = @convention_id
 
+    @cselected  = params[:convention_id]
+    @user_count = User.count(:conditions => c.conditions)
+    @user_pages = Paginator.new self, @user_count, @limit, params['page']
+    @offset ||= @user_pages.current.offset
     @users = User.find :all,
                        :order => sort_clause,
-                       :conditions => c.conditions
+                       :conditions => c.conditions,
+                       :limit => @limit,
+                       :offset => @offset
+
+                           respond_to do |format|
+                             format.html {
+                               render :layout => !request.xhr?
+                             }
+                             format.api
+                           end
+
+
+
+
   end
 
   def paganti
@@ -400,7 +429,7 @@ class FeesController < ApplicationController
 
   def set_menu
     case self.action_name
-      when 'index', 'liste_utenti', 'associati', 'paganti'
+      when 'index', 'liste_utenti', 'associati', 'paganti','abbonamenti'
         @menu_fs = :menu_fee_fs
       when 'pagamento', 'fatture', 'email_fee', 'invia_fatture'
         @menu_fs = :menu_payment_fs

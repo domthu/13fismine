@@ -1,41 +1,28 @@
-<h2><%=l(:list_associati)%></h2>
-In questa pagina:
-<ul>
-  <li>List utenti membri si un organismo associato: username, organismo associato, Data ultimo pagamento Organismo, data scadenza utente/Org.Asso</li>
-  <li>Azione: correggi (verifica la congruenza dell'utente di fronte all'Org.Asso e corregge il ruolo data scadenza)</li>
-  <li>Azione: Org.Asso Ha pagato per conto di tutti</li>
-  <li>Naviga: vai al dettaglio di un utente</li>
-  <li>Naviga: vai al dettaglio di un org.Asso</li>
-</ul>
-
+<h2 style="display: inline;"><%=l(:list_associati)%></h2><span> selezionati n°: <%= @users.count.to_s %> </span>
+<br />&nbsp;
 <% form_tag({}, :method => :get) do %>
 <fieldset><legend><%= l(:label_filter_plural) %></legend>
 <p class="convention-select">
 <label for='convention_id'><%= l(:field_convention) %>:</label>
-<%= select(:convention,
-           :convention_id,
-           Convention.all.collect{ |s| [truncate(s.name, :length => 120), s.id] },
-           {:include_blank => 'Tutti', :class => "small", :selected => @convention_id, :onchange => "this.form.submit(); return false;" }) %>
+<%= select_tag 'convention_id' , options_for_select(Convention.all.collect { |c| [truncate(c.name, :length => 100), c.id ] }, @cs.to_i ) ,:onchange => "this.form.submit(); return false;" %>
+<!--    {:include_blank => 'Tutti', :class => "small", :selected => @convention_id, :onchange => "this.form.submit(); return false;" })  -->
 </p>
-
 <label for='name'><%= l(:label_user) %>:</label>
 <%= text_field_tag 'name', params[:name], :size => 30 %>
 <%= submit_tag l(:button_apply), :class => "small", :name => nil %>
 <%= link_to l(:button_clear), associati_path(), :class => 'icon icon-reload' %>
 </fieldset>
 <% end %>
-&nbsp;
+ <br />
 
 <div class="autoscroll">
 <table id="tblinvii" class="list">
   <thead><tr>
-  <%= sort_header_tag('lastname', :caption => l(:field_user_fee)) %>
-  <%# sort_header_tag('firstname', :caption => l(:field_firstname)) %>
-  <%# sort_header_tag('lastname', :caption => l(:field_lastname)) %>
-  <%= sort_header_tag('mail', :caption => l(:field_mail)) %>
-  <%= sort_header_tag('datascadenza', :caption => l(:field_data_scadenza), :default_order => 'desc') %>
-  <%= sort_header_tag('role_id', :caption => '', :default_order => 'desc') %>
-  <%= sort_header_tag('convention_id', :caption => l(:field_convention), :default_order => 'desc') %>
+  <%= sort_header_tag('person', :caption => l(:field_user_fee), :style => 'width: 35%; text-align:left') %>
+  <%= sort_header_tag('mail', :caption => l(:field_mail), :style => 'width: 15%; text-align:left;') %>
+  <%= sort_header_tag('datascadenza', :caption => l(:field_data_scadenza), :default_order => 'desc', :style => 'width: 15%; text-align:left;') %>
+  <%= sort_header_tag('role_id', :caption => 'Status', :default_order => 'desc', :style => 'width: 5%; text-align:left;') %>
+  <%= sort_header_tag('convention_id', :caption => 'Conv.', :default_order => 'desc', :style => 'width: 50px; text-align:left;') %>
     <th style="text-align:left; width: 40px;"><i class="icon icon-email" title="Imposti per l'invio email"></i><input id="checkbox_selector" type="checkbox" name="invia" class="selectall" checked="checked" /></th>
   </tr></thead>
   <tbody>
@@ -47,12 +34,16 @@ In questa pagina:
   <td class="datascadenza" align="left"><%= format_date(user.scadenza) %></td>
   <td class="role" align="left"> <%= user_role_iconized(user, :size => "s", :icon_for => user.uicon, :text => '') %>
 </td>
-  <td class="convention_id" align="left"><%= h truncate(user.convention.name, :length => 30) unless user.privato? %></td>
-  <td class="checkbox"><%# check_box_tag 'ids[]', user.id, {:name => "invia"} %></td>
-    </td>
-    <td>
-      <%# user.scoped_by_newsletter_users(@).nil? %>
-    </td>
+    <td  class="convention_id" style='width: 50px;'>
+       <%= link_to (image_tag user.convention.image.url(:xs)), convention_path(user.convention) %>
+
+
+      <%# link_to image_tag user.convention.image.url(:xs),convention_path(user.convention )  unless user.privato? %>
+ <!-- <td class="convention_id" align="left"><%= h truncate(user.convention.name, :length => 30) unless user.privato? %></td>  -->
+  <td class="checkbox"><%= check_box_tag 'ids[]', user.id, {:name => "invia"} %></td>
+    <!-- campo da errore ...    <td>
+      <%#user.scoped_by_newsletter_users().nil? %>
+    </td>  -->
   </tr>
 <% end -%>
   </tbody>
@@ -62,6 +53,6 @@ In questa pagina:
 
   </script>
 </div>
-<p class="pagination"><%# pagination_links_full @user_pages, @user_count %></p>
+<p class="pagination"><%= pagination_links_full @user_pages, @user_count %></p>
 
 <% html_title(l(:label_user_plural)) -%>

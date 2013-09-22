@@ -341,7 +341,7 @@ class User < Principal
     if self.privato?
       nil
     else
-      CrossGroup.find(:all, :include => :group_banner, :conditions => ["se_visibile = 1 AND convention_id = #{self.convention_id}"])
+      GroupBanner.find(:all,  :conditions => ["se_visibile = 1 AND convention_id = #{self.convention_id}"])
     end
   end
 
