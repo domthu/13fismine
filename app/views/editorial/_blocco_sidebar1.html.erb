@@ -4,7 +4,7 @@
   <% unless @topsection.nil? && @top_menu.nil? %>
       <%= render :partial => 'editorial/blocco_quick_search' %>
   <% end %>
-  <% unless request.url.match('/event').nil? %>
+  <% unless request.url.match('/event').nil? || request.url.match('/editoriale/home').nil? %>
       <%= render :partial => 'editorial/blocco_eventi_contact_me' %>
       <% unless @conv_prossimo.nil? %>
           <%= render :partial => 'editorial/blocco_eventi' %>

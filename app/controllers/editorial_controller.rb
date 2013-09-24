@@ -741,7 +741,7 @@ class EditorialController < ApplicationController
         if User.current.isarchivied?
           reroute_auth("Per accedere deve abbonarti di nuovo")
         elsif User.current.isexpired?
-          reroute_auth("Il tuo abbonamento è scaduto. Per vedere di nuovo gli articoli protetti devi fare il rinovo")
+          reroute_auth("Il tuo abbonamento è scaduto. Per vedere di nuovo gli articoli protetti devi fare il rinnovo")
         elsif User.current.isregistered?
           reroute_auth("Durante il periodo di prova solo gli abbonati regolari possono vedere i contenuti protetti. Abbonati anche tu!")
         else

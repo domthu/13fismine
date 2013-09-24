@@ -1408,7 +1408,7 @@ it:
   field_sez: (old) sezione
   field_codice_attivazione: Codice di Attivazione
   field_iva_: (old) IVA
-  field_codicefiscale: Cofice Fiscale
+  field_codicefiscale: Codice Fiscale
   field_partitaiva: Partita IVA
   field_registrato: (old) registrato?
   field_num_reg_coni: (old) N° regionale CONI
@@ -1466,7 +1466,7 @@ it:
   label_fee_bcc_recipients: Lista delle email da mettere in bcc per le persone in ascolto degli email inviati (ruolo amministratore ed segretaria). Serve principalmente per seguire quello che invia il motore in automatico.
   setting_emails_fee_proposal: Email di proposta abbonamenti
   label_emails_fee_proposal: "Template di composizione email per propore ad uno o più utenti i possibili abbonamenti in corso. Segue un link alla pagina degli abbonamenti."
-  setting_emails_fee_renew: Email di rinovo abbonamento
+  setting_emails_fee_renew: Email di rinnovo abbonamento
   label_emails_fee_renew: "Template di composizione email per invitare un utente ad rinnovare il proprio abbonamento di prossima scadenza. "
   setting_emails_fee_register_convention: Conferma nuovo membro come non pagante (convenzionato)
   label_emails_fee_register_convention: "Template inviato al power_user di un organismo convenzionato in seguito alla registrazione di un nuovo utente che si auto dichiara membro. Questo messaggio invita il power_user ad confermare o no questo utente usando un apposito link in basso alla pagina."
