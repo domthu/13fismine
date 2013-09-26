@@ -32,6 +32,10 @@ class EditorialController < ApplicationController
         #@offset= 25
         @limit = per_page_option_fs
     end
+    @conv_prossimo = Issue.all_public_fs.solo_convegni.first(
+        :order => 'due_date ASC',
+        :conditions => "#{Issue.table_name}.due_date >=' #{DateTime.now.to_date}'")
+
     @top_menu = TopMenu.find(:first, :conditions => 'id =1')
     @topsection_ids = TopSection.find(:all,
                                       :select => 'distinct id',

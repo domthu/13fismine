@@ -1,0 +1,10 @@
+<!-- usata in convegni -->
+
+<div class="fs-layout-cell fs-sidebar1 clearfix">
+  <%= render :partial => 'editorial/blocco_eventi_contact_me' unless request.url.match('/editoriale/home') %>
+  <%= render :partial => 'editorial/blocco_eventi' %>
+  <%= render :partial => 'editorial/blocco_banners_l' %>
+  <%= render :partial => 'editorial/blocco_quick_search' %>
+  <%= render :partial => 'editorial/blocco_art_evidenziati' unless @articolo.nil? %>
+  <%= render :partial => 'editorial/blocco_social' %>
+</div>

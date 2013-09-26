@@ -1,21 +1,14 @@
+<!--usata un po' dappertutto -->
 <div class="fs-layout-cell fs-sidebar1 clearfix">
   <%= render :partial => 'editorial/blocco_user_state' %>
   <%= render :partial => 'editorial/blocco_informa' %>
-  <% unless @topsection.nil? && @top_menu.nil? %>
+  <%= render :partial => 'editorial/blocco_edizioni' unless @block_projects.nil? %>
+  <% if (!@topsection.nil? || !@top_menu.nil?) %>
       <%= render :partial => 'editorial/blocco_quick_search' %>
   <% end %>
-  <% unless request.url.match('/event').nil? || request.url.match('/editoriale/home').nil? %>
-      <%= render :partial => 'editorial/blocco_eventi_contact_me' %>
-      <% unless @conv_prossimo.nil? %>
-          <%= render :partial => 'editorial/blocco_eventi' %>
-      <% end %>
-  <% end %>
+  <%= render :partial => 'editorial/blocco_eventi' unless request.url.match('/editoriale/home').nil? %>
   <%= render :partial => 'editorial/blocco_banners_l' %>
-  <% unless @block_projects.nil? %>
-      <%= render :partial => 'editorial/blocco_edizioni' %>
-  <% end %>
-  <% unless @articolo.nil? %>
-      <%= render :partial => 'editorial/blocco_art_evidenziati' %>
-  <% end %>
+
+  <%= render :partial => 'editorial/blocco_art_evidenziati' unless @articolo.nil? %>
   <%= render :partial => 'editorial/blocco_social' %>
 </div>
