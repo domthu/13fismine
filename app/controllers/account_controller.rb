@@ -141,7 +141,7 @@ class AccountController < ApplicationController
         end
       end
       if @user.comune_id.nil?
-        #send_warning("Città di attività sportiva non presente. E importante inserirla in quanto potrebbe appartenire ad una zona coperta da un accordo convenzionato.")
+        send_warning("Città di attività sportiva non presente. E importante inserirla in quanto potrebbe appartenire ad una zona coperta da un accordo convenzionato.") #&& return
       end
       if (params[:user][:cross_organization_id])
         @user.cross_organization_id = params[:user][:cross_organization_id].to_i
@@ -284,7 +284,7 @@ class AccountController < ApplicationController
     @user.firstname = params[:firstname] if params[:firstname].present?
     @user.lastname = params[:lastname] if params[:lastname].present?
     @user.login = @user.mail
-    @user.comune_id = 1
+    #@user.comune_id = 1 NO il controllo deve essere fatto al momento della registrazione solo
     @user.random_password #    self.password = password & self.password_confirmation = password
     @user.se_condition = true
     @user.se_privacy = true
