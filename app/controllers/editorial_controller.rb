@@ -709,7 +709,8 @@ class EditorialController < ApplicationController
     @articolo= Issue.all_public_fs.find(@id)
   rescue ActiveRecord::RecordNotFound
     flash[:error] = "Il contenuto cercato è stato rimosso..."
-    redirect_to(:back)
+    #redirect_to(:back)
+    redirect_to(editorial_url) && return
   end
 
   def reroute_404(_message = nil)
