@@ -158,7 +158,7 @@
     </nav>
     <div id="fs-flash" style="display:none;">
       <% flash.each do |key, msg| %>
-          <p class='f-<%= key.to_s %>'><span class='<%= key.to_s %>'> </span>  <%= msg %> </p>
+          <p class='f-<%= key.to_s %>'><span class='<%= key.to_s %>-fs'> </span>  <%= msg %> </p>
 
           <div id="fs-flash-close-me"> clicca per chiudere</div>
       <% end %>
@@ -180,7 +180,7 @@
   </div>
   <div class="fs-page-footer">
     <div class="clearfix"></div>
-    <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank"></span>
+    <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank"></a></span>
   </div>
 </div>
 
