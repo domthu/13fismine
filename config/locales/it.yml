@@ -327,6 +327,7 @@ it:
   field_url: URL
   field_start_page: Pagina principale
   field_subproject: Sottoedizione
+  field_system: Di Sistema?
   field_hours: Ore
   field_activity: Attività
   field_spent_on: Data
@@ -531,6 +532,7 @@ it:
   label_username_lost: Username dimenticata
   label_help_user: Manuale
   label_activity_plural: Attività
+  label_sysprojects: Contenitori di Sistema
 
   label_document: Documento
   label_document_new: Nuovo documento
@@ -1245,7 +1247,8 @@ it:
   field_section: Sezione
   label_section_plural: Sezioni
   label_section_new: Sezione
-  label_protetto: Privato
+  label_protected: Protetto
+  label_section_protected: 'Protetto con utente prova gratis'
   error_can_not_delete_section_unless_issues: "Non è possibile eliminare una sezione finchè è legata a degli articoli..."
   label_sections_from_top_section: "Sezioni legate alla categoria "
 

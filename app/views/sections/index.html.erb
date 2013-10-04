@@ -7,9 +7,10 @@
       <thead>
       <tr>
         <th style='width: 35px;'></th>
-        <%= sort_header_tag('categoria', :title => l(:label_section), :style => 'width: 40%;text-align:left;') %>
-        <%= sort_header_tag('sezione', :title => l(:label_top_section), :style => 'width: 40%;text-align:left;') %>
-        <%= sort_header_tag('ord.', :title => l(:label_ordinamento), :style => 'color:red; width: 10%;') %>
+        <%= sort_header_tag('categoria', :title => l(:label_section), :style => 'width: 40%; text-align:left;') %>
+        <%= sort_header_tag('sezione', :title => l(:label_top_section), :style => 'width: 40%; text-align:left;') %>
+        <%= sort_header_tag('protetto', :title => l(:label_protected), :style => 'width: 10%; text-align:left;') %>
+         <%= sort_header_tag('ord.', :title => l(:label_ordinamento), :style => 'width: 10%; text-align:left;') %>
         <%# sort_header_tag('protetto', :title => l(:label_protetto), :style => 'width: 10%;')%>
         <th style='width: 5%;'></th>
         <th style='width: 5%;'></th>
@@ -21,7 +22,8 @@
             <td><%= image_tag section.image.url(:xs) %></td>
             <td><%= link_to h(section), section_path(section) %></td>
             <td><%= link_to h(section.top_section), top_section_path(section.top_section, :id => section.top_section_id) %></td>
-            <td align="right"><%= h section.ordinamento %></td>
+            <td style="text-align: left;"><%= check_box_tag  'protetto', section.protetto, section.protetto , :disabled => 'true' %></td>
+            <td style="text-align: left;"><%= h section.ordinamento %></td>
             <!--  <td align="center"><%# check_box_tag '', 1, section.protetto, :disabled => 'disabled' %></td> -->
             <td class="buttons"><%= link_to('', edit_section_path(section), :class => 'icon icon-edit') if User.current.admin? %></td>
             <td class="buttons"><%= link_to ('', section, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>

@@ -23,6 +23,9 @@
         <%= l(:label_top_section) %>: <%= link_to h(@section.top_section), top_section_path(@section.top_section, :id => @section.top_section_id) %>
     </p>
     <p>
+      <%= l(:label_section_protected) %>: <%=h @section.protetto %>
+    </p>
+    <p>
         <%= l(:label_ordinamento) %>: <%=h @section.ordinamento %>
     </p>
     <p>
