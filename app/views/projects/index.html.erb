@@ -1,3 +1,4 @@
+
 <% content_for :header_tags do %>
     <%= auto_discovery_link_tag(:atom, {:action => 'index', :format => 'atom', :key => User.current.rss_key}) %>
 <% end %>
@@ -10,6 +11,7 @@
 </div>
 
 <h2 title='<%=l(:orderedby_updated_desc)%>'><%=l(:label_project_plural)%></h2>
+
 
 <%= render_project_hierarchy(@projects)%>
 
@@ -24,3 +26,8 @@
 <% end %>
 
 <% html_title(l(:label_project_plural)) -%>
+
+<% content_for :sidebar do %>
+    <h3><%=l(:label_sysprojects)%></h3>
+    <%= render_sysproject_hierarchy(@projects)%>
+<% end %>

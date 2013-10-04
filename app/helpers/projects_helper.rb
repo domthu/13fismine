@@ -60,6 +60,7 @@ module ProjectsHelper
       ancestors = []
       original_project = @project
       projects.each do |project|
+        unless project.system?
         # set the project environment to please macros.
         @project = project
         if (ancestors.empty? || project.is_descendant_of?(ancestors.last))
@@ -83,13 +84,31 @@ module ProjectsHelper
         s << "<div class='description'>#{smart_truncate(project.short_description,90)}</div>" unless project.description.blank?
         s << "</td></tr></table></div>\n"
         ancestors << project
+          end
       end
       s << ("</li></ul>\n" * ancestors.size)
       @project = original_project
     end
     s.html_safe
   end
-
+  # progetti di sistema
+  def render_sysproject_hierarchy(projects)
+    s = ''
+    if projects.any?
+      original_project = @project
+      projects.each do |project|
+        if project.system?
+          # set the project environment to please macros.
+          @project = project
+          s << "<div class='sys-projects'><table><tr><td>" +
+              link_to_project(project, {}, :class => "project #{User.current.member_of?(project) ? 'my-project' : nil}")
+          s << "</td></tr></table></div>\n"
+        end
+        @project = original_project
+      end
+    end
+    s.html_safe
+  end
   # Returns a set of options for a select field, grouped by project.
   def version_options_for_select(versions, selected=nil)
     grouped = Hash.new {|h,k| h[k] = []}

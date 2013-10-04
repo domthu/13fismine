@@ -93,7 +93,7 @@ class Project < ActiveRecord::Base
   named_scope :active, {:conditions => "#{Project.table_name}.status = #{STATUS_ACTIVE}"}
   named_scope :all_public, {:conditions => {:is_public => true}}
   #domthu edizione visibile web: si vede in home e ovviamente nel sito
-  named_scope :all_public_fs, {:conditions => ['is_public = true AND identifier LIKE ?', "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{table_name}.data_al DESC"}
+  named_scope :all_public_fs, {:conditions => ['is_public = true AND system = false AND identifier LIKE ?', "#{FeeConst::EDIZIONE_KEY}%"], :order => "#{table_name}.data_al DESC"}
   #domthu edizione per la spedizione controllare solo se è Public
   named_scope :all_mail_fs, {:conditions => ['is_public = true'], :order => "#{table_name}.data_al DESC"}
   named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift || User.current, *args)} }
@@ -684,6 +684,7 @@ class Project < ActiveRecord::Base
                   'data_dal',
                   'data_al',
                   'titolo',
+                  'system',
                   'search_key'
 
   safe_attributes 'enabled_module_names',

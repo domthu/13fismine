@@ -4,7 +4,7 @@
   <p><%= f.text_field :sezione, :label => :field_description, :required => true, :size => 60 %></p>
 
   <p><%= f.select :top_section_id, (TopSection.all.collect { |c| [c.name, c.id] }), :include_blank => true, :required => true, :size => 60, :title => l(:label_top_section) %></p>
-  <p><%= f.check_box :protetto, :label => :label_protected  %> <span style='margin-left: 1em; font-size: 0.6 em; font-style: italic; color: #aeaeae;'>*Protegge il contenuto per utente in prova gratuita </p>
+  <p><%= f.check_box :protetto, :label => :label_protected  %> <span style='margin-left: 1em; font-size: 0.6 em; font-style: italic; color: #aeaeae;'>*Protegge il contenuto per utente in prova gratuita</span> </p>
   <p class="field_ordinamento"><%= f.text_field :ordinamento, :label => :field_ordinamento, :size => 3 %></p>
   <!--  <p><%# f.check_box :protetto, :label => :label_protetto %></p> -->
   <p><%= f.file_field :image, :label => :field_immagine %> </p>

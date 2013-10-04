@@ -1513,3 +1513,10 @@ hr.quesiti hr {
     font-size: 0.7em;
     display: inherit;
 }
+#sys-projects a:link{
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+    font-size: 16px;
+    color: #2A5685;
+    font-weight: bold;
+
+}

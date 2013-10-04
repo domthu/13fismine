@@ -327,6 +327,7 @@ it:
   field_url: URL
   field_start_page: Pagina principale
   field_subproject: Sottoedizione
+  field_system: Di Sistema?
   field_hours: Ore
   field_activity: Attività
   field_spent_on: Data
@@ -531,6 +532,7 @@ it:
   label_username_lost: Username dimenticata
   label_help_user: Manuale
   label_activity_plural: Attività
+  label_sysprojects: Contenitori di Sistema
 
   label_document: Documento
   label_document_new: Nuovo documento
