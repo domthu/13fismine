@@ -1245,7 +1245,8 @@ it:
   field_section: Sezione
   label_section_plural: Sezioni
   label_section_new: Sezione
-  label_protetto: Privato
+  label_protected: Protetto
+  label_section_protected: 'Protetto con utente prova gratis'
   error_can_not_delete_section_unless_issues: "Non è possibile eliminare una sezione finchè è legata a degli articoli..."
   label_sections_from_top_section: "Sezioni legate alla categoria "
 
