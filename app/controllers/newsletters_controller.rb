@@ -150,75 +150,93 @@ class NewslettersController < ApplicationController
     today = Date.today
     #logger.warn("edizione(" + @project.id.to_s + ") send newsletter(" + @newsletter.id.to_s + ") params #{params.inspect}")
 
-    send_notice "Params: #{params.inspect}"
+    #send_notice "Params: #{params.inspect}"
     send_it = params[:commit] == "go"
-    send_warning "commit: #{params[:commit]}"
-    #role
-    if params[:abbo_ids].present? && !params[:abbo_ids].empty?
-      (params[:abbo_ids] || []).each { |role_id|
-        #send_notice "Role: #{role_id}"
-        users = User.all(:conditions => {:role_id => role_id})
-        if users.any?
-          send_notice("Utenti(" + users.count.to_s + ") per ruolo(" + role_id + ")")
-          users.each { |user|
-            #crea email registration se non già presente
-            yet_reg = NewsletterUser.find(:first, :conditions => ["email_type = 'newsletter' AND newsletter_id=? AND user_id=?", @newsletter.id, user.id])
-            if yet_reg
-              if yet_reg.sended
-                send_warning("Cliente(" + user.name + ") già inviato. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
-              else
-                send_warning("Cliente(" + user.name + ") in attesa di ricevere. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
-              end
-            else
-              reg = NewsletterUser.new(:email_type => 'newsletter', :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => (user.scadenza.nil? ? Date.today : user.scadenza))
-              #reg.html =
-              reg.sended = false
-              if reg.save!  #--> save_without_transactions
-                #if send immediately
+    #send_warning "commit: #{params[:commit]}"
 
-                #Mailer.deliver_register(token)
-              else
-                send_error("invio email non registrato per utente " + user.name)
-              end
-            end
-          }
-        else
-          send_error("Nessun utente di ruolo " + role_id)
-        end
-      }
-    end
     #Convention
     if params[:conv_ids].present? && !params[:conv_ids].empty?
       (params[:conv_ids] || []).each { |conv_id|
-        send_notice "=============="
-        send_notice "Convenzione: #{conv_id}"
+        #send_notice "=============="
+        #send_notice "Convenzione: #{conv_id}"
         #send_notice "Role: #{conv_id}"
         conv = Convention.find_by_id(conv_id)
         if conv && conv.users.any?
-          send_notice("federati(" + conv.users.count.to_s + ") per convenzione(" + conv_id + ")")
+          #send_notice("federati(" + conv.users.count.to_s + ") per convenzione(" + conv_id + ")")
           conv.users.each { |user|
-            #crea email registration se non già presente
-            yet_reg = NewsletterUser.find(:first, :conditions => ["email_type = 'newsletter' AND newsletter_id=? AND user_id=? AND convention_id=?", @newsletter.id, user.id, conv.id])
-            if yet_reg
-              if yet_reg.sended
-                send_warning("federato(" + user.name + ") già inviato. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
-              else
-                send_warning("federato(" + user.name + ") in attesa di ricevere. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
+            begin
+              #crea email registration se non già presente
+              #yet_reg = NewsletterUser.find(:first, :conditions => ["email_type = 'newsletter' AND newsletter_id=? AND user_id=? AND convention_id=?", @newsletter.id, user.id, conv.id])
+              yet_reg = NewsletterUser.find(:first, :conditions => ["email_type = 'newsletter' AND newsletter_id=? AND user_id=?", @newsletter.id, user.id])
+              if !yet_reg
+                fed = NewsletterUser.new(:email_type => 'newsletter', :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => user.scadenza, :convention_id => conv.id)
+                #reg.html =
+                fed.sended = false
+                if fed.save!  #--> save_without_transactions
+                  #if send immediately
+                  #Mailer.deliver_register(token)
+                else
+                  logger.error "invio email non registrato per federato #{user.name} (#{user.id}) per convention_id(#{conv.id}) #{conv.name}"
+                  send_error("invio email non registrato per federato " + user.name)
+                end
+#ActionController::Session::CookieStore::CookieOverflow
+#more than 4kb: Sessions typically contain at most a user_id and flash message; both fit within the 4K cookie size limit.
+              #else
+              #  if yet_reg.sended
+              #    send_warning("federato(" + user.name + ") già inviato. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
+              #  else
+              #    send_warning("federato(" + user.name + ") in attesa di ricevere. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
+              #  end
               end
-            else
-              fed = NewsletterUser.new(:email_type => 'newsletter', :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => user.scadenza, :convention_id => conv.id)
-              #reg.html =
-              fed.sended = false
-              if fed.save!  #--> save_without_transactions
-                #if send immediately
-                #Mailer.deliver_register(token)
-              else
-                send_error("invio email non registrato per federato " + user.name)
-              end
+            rescue Exception => e
+              logger.error "Errore: invio email non registrato per utente #{user.name} (#{user.id}) di ruolo(#{role_id}). Msg: #{e.message}"
+              send_error("Errore: invio email non registrato per utente #{user.name}. Msg: #{e.message}")
             end
           }
         else
           send_error("Nessun federato per la convenzione " + conv_id)
+        end
+      }
+    end
+
+    #role
+    if params[:abbo_ids].present? && !params[:abbo_ids].empty?
+      (params[:abbo_ids] || []).each { |role_id|
+        #send_notice "=============="
+        #send_notice "Role: #{role_id}"
+        users = User.all(:conditions => {:role_id => role_id})
+        if users.any?
+          #send_notice("Utenti(" + users.count.to_s + ") per ruolo(" + role_id + ")")
+          users.each { |user|
+            begin
+              #crea email registration se non già presente
+              yet_reg = NewsletterUser.find(:first, :conditions => ["email_type = 'newsletter' AND newsletter_id=? AND user_id=?", @newsletter.id, user.id])
+              if !yet_reg
+                reg = NewsletterUser.new(:email_type => 'newsletter', :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => (user.scadenza.nil? ? Date.today : user.scadenza))
+                #reg.html =
+                reg.sended = false
+                if reg.save!  #--> save_without_transactions
+                  #if send immediately
+
+                  #Mailer.deliver_register(token)
+                else
+                  logger.error "invio email non registrato per utente #{user.name} (#{user.id}) di ruolo(#{role_id})"
+                  send_error("invio email non registrato per utente " + user.name)
+                end
+              #else
+              #  if yet_reg.sended
+              #    send_warning("Cliente(" + user.name + ") già inviato. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
+              #  else
+              #    send_warning("Cliente(" + user.name + ") in attesa di ricevere. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
+              #  end
+              end
+            rescue Exception => e
+              logger.error "Errore: invio email non registrato per utente #{user.name} (#{user.id}) di ruolo(#{role_id}). Msg: #{e.message}"
+              send_error("Errore: invio email non registrato per utente #{user.name}. Msg: #{e.message}")
+            end
+          }
+        else
+          send_error("Nessun utente di ruolo " + role_id)
         end
       }
     end
