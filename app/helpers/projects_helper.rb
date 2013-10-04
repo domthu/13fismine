@@ -24,7 +24,7 @@ module ProjectsHelper
   end
 
   def project_settings_tabs
-    tabs = [{:name => 'info', :action => :edit_project, :partial => 'projects/edit', :label => :label_information_plural},
+    tabs = [{:name => 'info', :action => :edit_project, :partial => 'projects/edit', :label => :label_settings},
             {:name => 'modules', :action => :select_project_modules, :partial => 'projects/settings/modules', :label => :label_module_plural},
             {:name => 'members', :action => :manage_members, :partial => 'projects/settings/members', :label => :label_member_plural},
             {:name => 'versions', :action => :manage_versions, :partial => 'projects/settings/versions', :label => :label_version_plural},
@@ -91,7 +91,7 @@ module ProjectsHelper
     end
     s.html_safe
   end
-  # progetti di sistema
+  # sandro riquadro progetti di sistema
   def render_sysproject_hierarchy(projects)
     s = ''
     if projects.any?

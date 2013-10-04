@@ -408,6 +408,7 @@ class Project < ActiveRecord::Base
     unless p.nil? || p.is_a?(Project)
       if p.to_s.blank?
         p = nil
+        return false
       else
         p = Project.find_by_id(p)
         return false unless p

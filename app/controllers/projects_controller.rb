@@ -258,6 +258,7 @@ class ProjectsController < ApplicationController
   verify :method => [:post, :put], :only => :update, :render => {:nothing => true, :status => :method_not_allowed }
   def update
     @project.safe_attributes = params[:project]
+
     if validate_parent_id && @project.save
       @project.set_allowed_parent!(params[:project]['parent_id']) if params[:project].has_key?('parent_id')
       respond_to do |format|
