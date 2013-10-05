@@ -314,9 +314,6 @@ class EditorialController < ApplicationController
   end
 
   def send_proposal_meeting
-#    puts "------------------User(" + User.current + ")------------------"
-#    @user = (User.current && User.current.logged?) ? User.current : User.anonymous
-#    puts "++++++++++++++++++User(" + @user.name + ")++++++++++++++++++"
     @msg = params[:body] if params[:body].present?
     #@email = params[:user_mail] if params[:user_mail].present?
     if params[:user_mail].nil? || !params[:user_mail].present? || params[:user_mail].length < 5
@@ -627,8 +624,12 @@ class EditorialController < ApplicationController
       @results_by_type = Hash.new { |h, k| h[k] = 0 }
 
       limit = 10
+      #projects_to_search = Project.all_public_fs
+      #before = params[:previous].nil? ? false : true;
+      before = params[:previous].nil?
       @scope.each do |s|
-        r, c = s.singularize.camelcase.constantize.search(@tokens, projects_to_search, :all_words => @all_words, :titles_only => @titles_only, :limit => (limit+1), :offset => offset, :before => params[:previous].nil?)
+        #s tipo String
+        r, c = s.singularize.camelcase.constantize.search(@tokens, projects_to_search, :all_words => @all_words, :titles_only => @titles_only, :limit => (limit+1), :offset => offset, :before => before, :is_fs => true)
         @results += r
         @results_by_type[s] += c
       end
@@ -698,7 +699,7 @@ class EditorialController < ApplicationController
   def find_optional_project
     return true unless params[:id]
     @project = Project.all_public_fs.find(params[:id])
-    check_project_privacy
+    #check_project_privacy
   rescue ActiveRecord::RecordNotFound
     reroute_404()
   end
