@@ -5,14 +5,8 @@
     <%= @news.quesito_status_fs_text %>
     <% if @news.is_fast_reply? %>
       <div id="question" style="margin-bottom:16px;" class="box">
-        <b><label><%= l(:label_reply) %><label></b>
+        <b><label><%= l(:label_replyed) %></label></b>
         <br />
-        <p> <%= link_to(l(:button_edit),
-          edit_news_path(@news),
-          :class => 'icon icon-edit',
-          :accesskey => accesskey(:edit),
-          :onclick => 'Element.show("edit-news"); return false;') if User.current.allowed_to?(:manage_news, @project) %>
-          </p>
       </div>
     <% else %>
     <h2><%=l(:label_reply_with_issue)%></h2>

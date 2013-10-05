@@ -1659,10 +1659,10 @@ it:
   fast_reply_done: La risposta veloce è stata confermata
   cannot_fast_reply_other_issues: "Non è possibile eseguire la risposta veloce perchè ci sono altre risposte in corso di elaborazione. Vedi la lista degli altri autori qui sotto, mettetevi d'accordo e svuotate i campi descrizione per continuare"
   alert_another_responses: "CONFLITTO SUL TIPO DI RISPOSTA: Il quesito è associato ad un articolo già pubblicato ma hai impostato il quesito come <Risposta Rapida>. Dettagli: Autore[ %{author} ]  Articolo [ %{link} ]"
-  deleted_issue_pre: "Si è scelto di pubblicare una <Risposta veloce> se c'erano gli articoli associati sono stati %{author}. %{name}"
+  deleted_issue_pre: "Si è scelto di pubblicare una <Risposta veloce> per questo gli articoli associati creati ma non pubblicati sono stati rimossi"
   deleted_issue: "Eliminato la risposta di %{author}. %{name}"
   cannot_delete_related_news: "Non si puo cancella questo quesito perchè si sono <b>(%{num})</b> articoli legati."
-
+  label_replyed: "Il quesito è stato chiuso con una risposta rapida"
 #EDITORIAL
   list_edizioni: Lista edizioni
   details_edizione: Dettaglio di un edizione => NEWSLETTER

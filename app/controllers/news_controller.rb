@@ -99,9 +99,8 @@ class NewsController < ApplicationController
 
       #quesito set
       if @news.project.identifier == FeeConst::QUESITO_KEY && @news.is_quesito? && @news.reply != '' && (User.current.admin? || User.current.ismanager? || User.current == @issue.author)
-       # questo if che segue é solo per salvare le modifiche del quesito non della risposta
-        name = params[:name].present? ? params[:name] : ''
-        if name == ''
+       # questo unless che segue é solo per salvare le modifiche del quesito non della risposta
+        unless params[:change_only_quesito].present?
           send_notice("Procedura risposta veloce al quesito mediante news")
           #controllare che la news possa andare in risposta veloce
           # solo se non ci sono altri issue con campo descrizione già attive
@@ -113,7 +112,7 @@ class NewsController < ApplicationController
               #se non è vuoto vuole dire che un collaboratore assegnato
               #ha iniziato a scrivere una riposta
               if issue.description? && !issue.description.blank?
-                send_notice( + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author))
+                send_notice( l(:deleted_issue_pre) + (i + 1).to_s + "</b> " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author))
               else
                 send_notice("<b>" + (i + 1).to_s + "</b>: " + l(:deleted_issue, :name => del_issue.to_s, :author => del_issue.author))
               end

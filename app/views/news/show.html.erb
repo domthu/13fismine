@@ -16,10 +16,10 @@
 </div>
 
 <h2><%= avatar(@news.author, { :size => "24", :class => "no-div" }) %><%=h @news.title %></h2>
-
 <% if !@news.is_quesito? %>
   <% if authorize_for('news', 'edit') %>
     <div id="edit-news" style="display:none;">
+
     <% labelled_tabular_form_for :news, @news, :url => news_path(@news),
                                                :html => { :id => 'news-form', :method => :put } do |f| %>
     <%= render :partial => 'form', :locals => { :f => f } %>
@@ -39,6 +39,13 @@
 
 <div class="splitcontentleft">
 <%#           CONTENUTO NEWS          %>
+  <p> <%= link_to(l(:button_edit),
+           edit_news_path(@news),
+           :class => 'icon icon-edit',
+           :accesskey => accesskey(:edit),
+           :onclick => 'Element.show("edit-news"); return false;') if User.current.allowed_to?(:manage_news, @project) %>
+           </p>
+
   <p><% unless @news.summary.blank? %><em><%=h @news.summary %></em><br /><% end %>
   <span class="author"><%= authoring @news.created_on, @news.author %></span></p>
   <div class="wiki">
