@@ -1,19 +1,26 @@
 <%= f.error_messages %>
 <div class="box tabular">
-  <p><%= f.text_field :title, :required => true, :size => 60 %></p>
-  <p><%= f.text_area :summary, :cols => 60, :rows => 2 %></p>
-  <p><%= f.text_area :description, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+  <p><%= f.select :status_id, list_of_news_statuses(@news.status_id) unless  f.object.new_record? %> </p>
 
+  <p><%= f.text_field :title, :required => true, :size => 60 %></p>
+
+  <p><%= f.text_area :summary, :cols => 60, :rows => 2 %></p>
+
+  <p><%= f.text_area :description, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
   <% if f.object.is_quesito? %>
-    <%= f.object.quesito_status_fs_text %>
-    <p><%= f.text_area :reply, :cols => 80, :rows => 4 %></p>
-    <%# render :partial => 'form_reply_fast', :locals => { :news => f } %>
-    <script type="text/javascript" charset="utf-8">
-        CKEDITOR.replace('news_reply', { toolbar:'Basic', height:200 });
-    </script>
+      <p><%= submit_tag l(:button_news_update_txt), :name => 'change_quesito', :class => 'button-blu' unless f.object.new_record? %></p>
+      <%= f.object.quesito_status_fs_text %>
+      <p><%= f.text_area :reply %></p>
+      <%# render :partial => 'form_reply_fast', :locals => { :news => f } %>
+      <script type="text/javascript" charset="utf-8">
+          CKEDITOR.replace('news_reply', { toolbar:'Basic', height:200 });
+      </script>
+
+
+
   <% end %>
 
 </div>
 <script type="text/javascript" charset="utf-8">
-    CKEDITOR.replace('news_description', { toolbar:'Basic', height:200 });
+    CKEDITOR.replace('news_description', { toolbar:'Basic', height:300 });
 </script>

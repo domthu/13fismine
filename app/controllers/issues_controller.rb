@@ -353,7 +353,7 @@ private
     @issue = Issue.find(params[:id], :include => [:project, :tracker, :status, :author, :priority, :category, :section, :quesito_news])
     #Domthu [:project, :tracker, :status, :author, :priority, :category])
     unless @issue.visible?
-      flash[:errors] = l(:empty_description)
+      flash[:errors] = l(:issue_not_visible)
       #deny_access
       return
     end
