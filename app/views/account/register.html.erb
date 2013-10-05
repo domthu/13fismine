@@ -70,7 +70,6 @@
               <div class="clearfix"></div>
               <br/>
               <!--INIZIO dv_societario -->
-
               <fieldset class="fs-abbo-fields">
                 <legend title="Anagrafica Abbonamento"> Dati dell'abbonamento</legend>
                 <div class="fs-abbo-sx1">
@@ -193,25 +192,6 @@
 <%= javascript_include_tag "jquery/select2.min.js" %>
 <%= stylesheet_link_tag 'jquery/select2.css' %>
 
-
-<!--
-  $( "#radio-jquery-ui" ).buttonset();
-  $( "#radio-jquery-ui :input" ).each(function(){
-    $label = $(this).next();
-    $("table").append($("<tr/>").attr('id',$(this).attr('id'))
-      .append($("<td/>").addClass('1').html($label.html()))
-      .append($("<td align='center'/>").addClass('2').html( ($(this).attr('checked'))? 'checked' : 'no' ) )
-      .append($("<td/>").addClass('3').html( ($label.hasClass('ui-state-active'))? 'ui-state-active' : 'not active' )));
-  });
-  $( "#radio-jquery-ui label" ).click(function(){
-    $( "#radio-jquery-ui label" ).each(function(){
-      $input = $(this).prev();
-      $("tr [id='"+$(this).attr('for')+"'] td.2").html( ($input.attr('checked'))? 'checked' : 'no'  );
-      $("tr[id='"+$(this).attr('for')+"'] td.3").html( ($(this).hasClass('ui-state-active'))? 'ui-state-active' : 'not active' );
-    });
-  });
--->
-
 <script type="text/javascript">
     var pageSize = 10;
     $(document).ready(function () {
@@ -229,29 +209,16 @@
             });
 
         });
-        //Initial set
-        //var $radios = $('input:radio[name=rbt]');
-        //if($radios.is(':checked') === false) {
-        //    $radios.filter('[value=dv_associato]').prop('checked', true);
-        //}
         $("input[name=rbt][value=dv_associato]").prop('checked', true);
         $("#dv_associato").show();
 
         $(document).tooltip();
-
-        //  $('#steps').stepy({
-        //      back:undefined, backLabel:'Indietro', block:false, description:false, errorImage:true, finish:undefined, finishButton:true, ignore:'', legend:true, nextLabel:'Avanti', next:undefined, titleClick:false, titleTarget:undefined, select:undefined, validate:false  //Kappao manca alcuni script? jquery validate TypeError: a is undefined
-        //  });
         $('#user_language').select2({
             width:'90%',
             placeholder:"Seleziona il tuo linguagio",
             allowClear:true
         });
-        $('#user_titolo').select2({
-            width:'80%',
-            placeholder:"Come rappresenti l'associazione nel quale appartieni. Se ti muovi per conto tuo lasci cosi.",
-            allowClear:true
-        });
+
         jQuery.ajaxSetup({
             'beforeSend':function (xhr) {
                 xhr.setRequestHeader("Accept", "text/javascript")
@@ -410,7 +377,7 @@
                         }
                     } else if (data.errors) {
                         data.errors += "Controllo del campo " + id + " per il valore (" + val + ")";
-                        js_flash("error", data.errors);
+                       // js_flash("error", data.errors);
                     }
                 }
         );
