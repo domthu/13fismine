@@ -58,7 +58,7 @@ class Issue < ActiveRecord::Base
   validate :validate_issue
 
   named_scope :visible, lambda { |*args| {:include => :project,
-                                          :conditions => Issue.visible_condition(args.shift || User.current, *args)} }
+          :conditions => Issue.visible_condition(args.shift || User.current, *args)} }
   named_scope :open, :conditions => ["#{IssueStatus.table_name}.is_closed = ?", false], :include => :status
   named_scope :recently_updated, :order => "#{Issue.table_name}.updated_on DESC"
   named_scope :with_limit, lambda { |limit| {:limit => limit} }
@@ -138,6 +138,7 @@ class Issue < ActiveRecord::Base
 
   # Returns a SQL conditions string used to find all issues visible by the specified user
   def self.visible_condition(user, options={})
+    puts 'options: ' + (options.nil? ? 'nil' : options.inspect)
     Project.allowed_to_condition(user, :view_issues, options) do |role, user|
       case role.issues_visibility
         when 'all'
