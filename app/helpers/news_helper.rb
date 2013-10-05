@@ -27,4 +27,11 @@ module NewsHelper
     num_quesito = "QUESITO N. 195 del 14/11/2005 - utente servizi Fiscosport n."
     return s
   end
+
+  def list_of_news_statuses(selected)
+    options_for_select([[l(:label_news_status_1), FeeConst::QUESITO_STATUS_WAIT.to_s],
+                        [l(:label_news_status_2), FeeConst::QUESITO_STATUS_FAST_REPLY.to_s],
+                        [l(:label_news_status_3), FeeConst::QUESITO_STATUS_ISSUES_REPLY.to_s]
+                       ], selected.to_s)
+  end
 end

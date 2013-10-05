@@ -24,7 +24,7 @@ class News < ActiveRecord::Base
   has_many :issues, :order => "#{Issue.table_name}.created_on DESC", :include => [:status, :tracker, {:section => :top_section}] #, :dependent => :destroy
 
   validates_presence_of :title, :description
-  validates_length_of :title, :maximum => 60
+  validates_length_of :title, :maximum => 124
   validates_length_of :summary, :maximum => 255
 
   acts_as_searchable :columns => ['title', "#{table_name}.summary", "#{table_name}.description"], :include => :project
