@@ -51,7 +51,7 @@ SimpleNavigation::Configuration.run do |navigation|
     menu_generale.item :key_5, 'Lavora con Noi', lavoraconnoi_path
     menu_generale.item :key_6, 'Eventi e Convegni', eventi_path
    #menu_generale.item  @tmenu_ns.key, @tmenu_ns.description, '/editoriale/' + @tmenu_ns.key
-    menu_generale.item :key_8, 'Abbonamenti', page_abbonamento_path
+    menu_generale.item :key_8, 'Abbonamenti', page_abbonamento_path,  :highlights_on => %r(/account)
    # menu_generale.item :key_8, 'Tuo abbonamento', abbonamenti_path, :if => Proc.new { User.current.logged? }
     menu_generale.item :key_7, 'Progetto Fiscosport', progettofs_path
     menu_generale.item :key_9, 'Contattaci', contattaci_path

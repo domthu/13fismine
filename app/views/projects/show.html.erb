@@ -14,8 +14,7 @@
     <%= textilizable @project.description %>
   </div>
   <ul>
-   <li><%=l(:field_is_public)%>: <%= checked_image @project.is_public? %></li>
-   <li><%=l(:label_date_from)%> <%= format_date @project.data_dal %> <%=l(:label_date_to)%> <%= format_date @project.data_al %> </li>
+     <li><%=l(:label_date_from)%> <%= format_date @project.data_dal %> <%=l(:label_date_to)%> <%= format_date @project.data_al %> </li>
    <li style="display:none"><%=l(:label_titolo)%> <%= @project.titolo %></li>
    <li><%=l(:label_search_key)%> <%= @project.search_key %></li>
 

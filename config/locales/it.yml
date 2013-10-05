@@ -327,6 +327,7 @@ it:
   field_url: URL
   field_start_page: Pagina principale
   field_subproject: Sottoedizione
+  field_system: Di Sistema?
   field_hours: Ore
   field_activity: Attività
   field_spent_on: Data
@@ -531,6 +532,7 @@ it:
   label_username_lost: Username dimenticata
   label_help_user: Manuale
   label_activity_plural: Attività
+  label_sysprojects: Contenitori di Sistema
 
   label_document: Documento
   label_document_new: Nuovo documento
@@ -623,6 +625,9 @@ it:
   label_news_view_all: Tutti i quesiti
   label_news_added: Quesiti aggiunti
   label_news_comment_added: Commento aggiunto ad un quesito
+  label_news_status_1: In attesa di risposta
+  label_news_status_2: Risposta rapida nel quesito
+  label_news_status_3: Risposta con articolo/i
 
   #Dom verifica
   field_news: Da quesito?
@@ -967,10 +972,13 @@ it:
   button_save_abbonamento: Salva abbonamento
   button_save_dati: Salva dati
   button_save_fatture: Salva fatture
-  button_news_fast_reply: Risposta rapida
+  button_news_update_txt: Salva le modifiche al quesito
+  button_news_update_fast_reply: 'Salva e imposta: Risposta rapida'
+  button_news_fast_reply: 'Risposta rapida'
   button_news_fast_reply_create: Dai una risposta veloce
   button_news_fast_reply_update: Modifica la risposta veloce
   button_issue_reply_article: Pubblica spostando in quindicinale
+  label_fail_update: Non è possibile aggiornare questo contenuto
 
   status_active: attivo
   status_registered: registrato
@@ -1245,7 +1253,8 @@ it:
   field_section: Sezione
   label_section_plural: Sezioni
   label_section_new: Sezione
-  label_protetto: Privato
+  label_protected: Protetto
+  label_section_protected: 'Protetto con utente prova gratis'
   error_can_not_delete_section_unless_issues: "Non è possibile eliminare una sezione finchè è legata a degli articoli..."
   label_sections_from_top_section: "Sezioni legate alla categoria "
 
@@ -1644,11 +1653,13 @@ it:
   none_found_news: Non è stato trovato il quesito
   none_found_issue: Non è stato trovato la risposta
   empty_description: Inserire una risposta nel campo descrizione ed eseguire di nuovo
+  issue_not_visible: Questo articolo è impostato per non essere visibile.
   issue_fastreply_not_allowed: Non siete abilitato alla gestione della risposta rapida
   is_not_quesito: "L'articolo non è di tipo quesito-risposta"
   fast_reply_done: La risposta veloce è stata confermata
   cannot_fast_reply_other_issues: "Non è possibile eseguire la risposta veloce perchè ci sono altre risposte in corso di elaborazione. Vedi la lista degli altri autori qui sotto, mettetevi d'accordo e svuotate i campi descrizione per continuare"
-  alert_another_responses: "risposta in corso da parte di %{author}. Contattalo e vedi la sua risposta al link: %{link}"
+  alert_another_responses: ""CONFLITTO SUL TIPO DI RISPOSTA: Il quesito è associato ad un articolo già pubblicato ma hai impostato il quesito come <Risposta Rapida>. Dettagli: Autore[ %{author} ]  Articolo [ %{link} ]"
+  deleted_issue_pre: "Si è scelto di pubblicare una <Risposta veloce> se c'erano gli articoli associati sono stati %{author}. %{name}"
   deleted_issue: "Eliminato la risposta di %{author}. %{name}"
   cannot_delete_related_news: "Non si puo cancella questo quesito perchè si sono <b>(%{num})</b> articoli legati."
 

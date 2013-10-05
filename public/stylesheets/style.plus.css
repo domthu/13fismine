@@ -2140,28 +2140,28 @@ h3.fs-postheader {
     background-color: #ffa07a;
 }
 
-.notice {
+.notice-fs {
     background: url('/images/ico/flash_notice.png') center center no-repeat;
     float: left;
     width: 70px;
     height: 75px;
 }
 
-.success {
+.success-fs {
     background: url('/images/ico/flash_success.png') center right no-repeat;
     float: left;
     width: 70px;
     height: 75px;
 }
 
-.alert {
+.alert-fs {
     background: url('/images/ico/flash_alert.png') center center no-repeat;
     float: left;
     width: 70px;
     height: 75px;
 }
 
-.error {
+.error-fs {
     background: url('/images/ico/flash_error.png') center center no-repeat;
     float: left;
     width: 70px;
