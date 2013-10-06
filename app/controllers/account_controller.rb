@@ -88,7 +88,7 @@ class AccountController < ApplicationController
           else
             Mailer.deliver_lost_password(token)
             send_notice l(:notice_account_lost_email_sent)
-            redirect_to  :back
+            redirect_to :back
             return
           end
         end
@@ -532,7 +532,7 @@ class AccountController < ApplicationController
            send_notice "Periodo di prova valido ancora per " + distance_of_date_in_words(user.scadenza, Time.now)
         end
         if user.isrenewing?
-           send_notice("Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, self.scadenza))
+           send_notice("Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, user.scadenza))
            send_notice("Rinnovare l'abbonamento.")
         end
       end
