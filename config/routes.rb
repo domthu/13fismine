@@ -46,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome' #REDMINE HOME
   map.oldhome '/Index.aspx', :controller => 'welcome' #old url fiscosport.it/Index.asp
+  map.oldsendmail '/SendMail.aspx', :controller => 'welcome' #old url fiscosport.it/Index.asp
   #map.home '/editoriale/home', :controller => "editorial", :action => 'home' #FRONT END
   #map.home'',  :controller => "editorial", :action => 'top_menu',  :topmenu_key =>  "fiscale" #"approfondimenti -->non c'è questa voce in TopMenu?" #FRONT END
 
