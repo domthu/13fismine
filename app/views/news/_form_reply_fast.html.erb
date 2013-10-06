@@ -1,40 +1,27 @@
 <% if @news.is_quesito? %>
   <div id="div_fast_reply">
-
   <% if @news.is_wait_reply? || @news.is_fast_reply? %>
-
-    <h2><%=l(:label_fast_reply)%></h2>
+        <h3 class="noborder gradient-dx-blu"><%= l(:label_fast_reply_response) %></h3>
     <% form_for @news, :html => { :id => 'news-form', :method => :put } do |f| %>
 
       <p><%= f.text_area :reply, :cols => 80, :rows => 4 %></p>
-
-      <% if @news.is_wait_reply? %>
-          <p style="width: 95%; text-align: right;">
-            <%= submit_tag(l(:button_news_fast_reply_create), :class => 'button-blu') unless (!User.current.admin? ) %>
-          </p>
-      <% elsif @news.is_fast_reply? %>
-          <p style="width: 95%; text-align: right;">
-            <%= submit_tag(l(:button_news_fast_reply_update), :class => 'button-blu') unless (!User.current.admin? ||  !User.current.ismanager?) %>
-          </p>
-      <% elsif @news.is_issue_reply? %>
-
-      <% end %>
-    <% end %>     <!-- do -->
+    <% end %>
     <script type="text/javascript" charset="utf-8">
-      CKEDITOR.replace('news_reply', { toolbar:'Basic', height:200 });
+      CKEDITOR.replace('news_reply', { toolbar:'Basic', height:360 });
     </script>
   <% end %>
+<!--
 
-  <div class="box tabular">
-    <div style="margin-bottom:16px;">
-      <h3 class="responses"><%= l(:label_fast_reply_response) %></h3>
-        <% if @news.reply && (@news.reply.length > 0) %>
-          <p><%= ckeditorzable_fs(@news.reply) %></p>
-        <% else %>
-          <p class="nodata"><%= l(:label_no_data) %></p>
-        <% end %>
+    <div class="box tabular">
+      <div style="margin-bottom:16px;">
+        <h3 class="responses"><%= l(:label_fast_reply_response) %></h3>
+          <% if @news.reply && (@news.reply.length > 0) %>
+            <p><%= ckeditorzable_fs(@news.reply) %></p>
+          <% else %>
+            <p class="nodata"><%= l(:label_no_data) %></p>
+          <% end %>
+      </div>
     </div>
-  </div>
-
+ -->
   </div>
 <% end %>

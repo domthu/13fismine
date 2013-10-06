@@ -46,7 +46,7 @@ CKEDITOR.editorConfig = function (config) {
         ];
     config.toolbar_Light =
         [
-            [ 'Source', 'Maximize', 'Preview', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
+            [ 'Source',  'Maximize','Save', 'Preview', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
             [ 'SelectAll', '-', 'Scayt' ] ,
             [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] ,
             [ 'Link', 'Unlink', 'Anchor', '-'],
@@ -58,7 +58,7 @@ CKEDITOR.editorConfig = function (config) {
         ];
     config.toolbar_Basic =
         [
-            [  'Source', '-', 'Format', 'Font', 'FontSize', 'Bold', 'Italic', 'TextColor', 'BGColor', '-', 'RemoveFormat', '-', 'NumberedList', 'BulletedList', 'Table', '-', 'Link', 'Unlink']
+            [  'Source','Save', '-', 'Format', 'Font', 'FontSize', 'Bold', 'Italic', 'TextColor', 'BGColor', '-', 'RemoveFormat', '-', 'NumberedList', 'BulletedList', 'Table', '-', 'Link', 'Unlink']
         ];
 };
 

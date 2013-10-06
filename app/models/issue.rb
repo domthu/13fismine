@@ -604,7 +604,7 @@ class Issue < ActiveRecord::Base
   end
 
   def is_public_fs?
-    if !self.se_visibile_web.nil? && self.se_visibile_web == true && self.project.is_public == true
+    if !self.se_visible_web.nil? && self.se_visible_web == true && self.project.is_public == true
       true
     else
       false

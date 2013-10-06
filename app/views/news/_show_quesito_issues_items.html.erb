@@ -1,0 +1,58 @@
+<div class="informa" id="tab-content-dati"></div>
+<% unless @news.is_wait_reply? %>
+    <div class="box">
+      <div style="margin-bottom:16px;">
+        <% if @news.is_issue_reply? %>
+            <h3 class="noborder gradient-dx-blu"><%= l(:list_quesiti_response_again, :num => @news.issues.count) %></h3>
+        <% else %>
+            <h3 class="noborder gradient-dx-blu"><%= l(:list_quesiti_response, :num => @news.issues.count) %></h3>
+        <% end %>
+        <% if (@news.issues.count <= 0) %>
+            <p class="nodata"><%= l(:label_no_data) %></p>
+        <% end %>
+        <% @news.issues.each do |issue| %>
+            <div class="risposta">
+              <div class="contextual">
+                <%= link_to l(:preview_fs_issue_abrv), preview_fs_articolo_path(:article_id => issue.id.to_s), {:target => "_blank", :class => 'icon icon-preview', :title => l(:preview_fs_issue)} %>
+                <% if !issue.description? %>
+                    <%# risposta non elaborata: il redatore assegnato deve rispondere %>
+                    <%= link_to l(:button_reply), {:controller => 'issues', :action => 'edit', :id => issue}, {:class => 'icon icon-news_reply_todo', :title => 'nessuna risposta: da fare...'} %>
+                    &nbsp;&nbsp;
+                <% else %>
+                    <%= link_to_if_authorized(l(:button_update), {:controller => 'issues', :action => 'edit', :id => issue}, :class => 'icon icon-edit', :accesskey => accesskey(:edit)) %>
+                    &nbsp;&nbsp;
+                    <% if issue.project.identifier == FeeConst::QUESITO_KEY %>
+                        <%# risposta in corso: deve essere confermata spostando la risposta in una edizione di tipo newsletter. usando o non usando la procedura riposta veloce %>
+                        <% if @news.is_wait_reply? %>
+                            <%= link_to(l(:button_news_fast_reply), {:controller => 'issue_moves', :action => 'news_fast_reply', :id => issue}, {:class => 'icon icon-news_fast_reply', :title => 'risposta in corso: deve essere confermata spostando la risposta in una edizione di tipo newsletter usando la procedura di risposta veloce che dovrebbe eliminare altre risposte non elaborate!'}) %>
+                            &nbsp;&nbsp;
+                        <% end %> <%# issue.news %>
+                        <%= link_to_if_authorized l(:button_move), {:controller => 'issue_moves', :action => 'new', :id => issue}, {:class => 'icon icon-move', :title => 'risposta in corso: deve essere confermata spostando la risposta in una edizione di tipo newsletter'} %>
+                        &nbsp;&nbsp;
+                    <% else %>
+                        <%= link_to l(:button_show), {:controller => 'issues', :action => 'show', :id => issue}, {:class => 'icon icon-preview', :title => 'risposta in corso: deve essere confermata spostando la risposta in una edizione di tipo newsletter'} %>
+                        &nbsp;&nbsp;
+                        <%= link_to_project(issue.project, {}, :class => "icon icon-projects") %>
+                        &nbsp;&nbsp;
+                    <% end %> <%# if issue.project.identifier == FeeConst::QUESITO_KEY %>
+                <% end %>  <%# if !issue.description? %>
+                <%= link_to_if_authorized l(:button_delete), {:controller => 'issues', :action => 'destroy', :id => issue, :back_url => url_for(:controller => 'news', :action => 'show', :id => @news)}, :confirm => issues_destroy_confirmation_message(issue), :method => :post, :class => 'icon icon-del' %>
+              </div>
+              <hr>
+              <p>
+                <b><%= link_to_issue(issue, :project => true) %></b>
+                <br/><%= l(:field_assigned_to) %> => <%= link_to_user(issue.author) %>
+              </p>
+
+              <div class="rispostatxt">
+                <% if issue.description? %>
+                    <%= issue.description %>
+                <% else %>
+                    <%= l(:no_reply_actualy) %>
+                <% end %>
+              </div>
+            </div>
+        <% end if @news.issues.any? %>
+      </div>
+    </div>
+<% end %>

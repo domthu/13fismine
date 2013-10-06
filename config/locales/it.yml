@@ -528,6 +528,7 @@ it:
   label_projects_view_all: Sfoglia le le edizioni
   label_issues_view_all: Vedi tutti articoli
   label_issue_from_news: articolo generato da quesito
+  button_news_from_issue: Visualizza il quesito che ha generato l'articolo.
   label_issues_latest: Ultimi articoli
   label_username_lost: Username dimenticata
   label_help_user: Manuale
@@ -628,6 +629,7 @@ it:
   label_news_status_1: In attesa di risposta
   label_news_status_2: Risposta rapida nel quesito
   label_news_status_3: Risposta con articolo/i
+  button_edit_news: Modifica la domanda
 
   #Dom verifica
   field_news: Da quesito?
@@ -635,9 +637,12 @@ it:
   label_reply: Risposta rapida
   label_reply_members: Altri collaboratori che potrebbero rispondere oltre a te
   label_reply_article: Pubblica risposta come articolo
+  label_reply_publishedfalse : Questo articolo non è ancora pubblicato .
+  label_reply_publishedtrue : Articolo pubblicato in un'edizione visibile.
   label_fast_reply: Rispondi senza generare articolo
   label_fast_reply_response: Risposta veloce (senza articolo)
   label_reply_with_issue: Rispondi attraverso articolo(i)
+  label_reply_with_issue_again: Puoi ancora creare articoli per rispondere
   label_reply_with_issue_responses: Risposta(e) tramite articolo(i)
   no_reply_actualy: Nessuna risposta attualmente
   label_news_my: I miei quesiti
@@ -1670,6 +1675,7 @@ it:
   details_articolo: Dettaglio di un articolo
   list_quesiti: Lista quesiti
   list_quesiti_response: Lista risposte (%{num}) al quesito
+  list_quesiti_response_again: Lista risposte (%{num}) al quesito
   news_fast_reply_text: Risposta rapida al quesito N°(%{num})
   news_reply_text: Risposta al quesito N°(%{num})
   details_quesito: Dettaglio di un quesito

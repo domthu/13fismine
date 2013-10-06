@@ -1,26 +1,40 @@
 <%= f.error_messages %>
+<style type="text/css">
+    .fs-quesiti-status-icon {
+        margin: 0 !important;
+    }
+    #xstatus {
+        float: right;
+        border-top: solid 2px #bebebe;
+        border-right: solid 2px #666666;
+        border-bottom: solid 2px #676767;
+        border-left: solid 2px #979797;
+        width: 100px;
+        height: 75px;
+    }
+    #xnote {
+        font-style: italic;
+        font-size: 0.8em;
+        padding-left: 10px;
+        color: #b22222;
+    }
+</style>
 <div class="box tabular">
-  <p><%= f.select :status_id, list_of_news_statuses(@news.status_id) unless  f.object.new_record? %> </p>
+  <div id="xstatus">     <%= @news.get_state_icons_fe %></div>
+  <p><%= f.select :status_id, list_of_news_statuses(@news.status_id) unless  f.object.new_record? %>
+    <span id="xnote">*Attenzione alle modifiche, il campo [Stato] è importante e si aggiorna automaticamente alla pubblicazione di una risposta/articolo </span>
+  </p>
 
   <p><%= f.text_field :title, :required => true, :size => 60 %></p>
 
   <p><%= f.text_area :summary, :cols => 60, :rows => 2 %></p>
 
-  <p><%= f.text_area :description, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+  <p><%= f.text_area :description, :required => true  %></p>
   <% if f.object.is_quesito? %>
       <p><%= submit_tag l(:button_news_update_txt), :name => 'change_only_quesito', :class => 'button-blu' unless f.object.new_record? %></p>
-      <%= f.object.quesito_status_fs_text %>
-      <p><%= f.text_area :reply %></p>
-      <%# render :partial => 'form_reply_fast', :locals => { :news => f } %>
-      <script type="text/javascript" charset="utf-8">
-          CKEDITOR.replace('news_reply', { toolbar:'Basic', height:200 });
-      </script>
-
-
-
   <% end %>
-
 </div>
 <script type="text/javascript" charset="utf-8">
-    CKEDITOR.replace('news_description', { toolbar:'Basic', height:300 });
+    CKEDITOR.replace('news_description', { toolbar:'Basic', height:300 , width: 680 });
 </script>
+
