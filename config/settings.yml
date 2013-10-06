@@ -56,7 +56,9 @@ per_page_options:
 per_page_options_fs:
   default: '5,10,15'
 mail_from:
-  default: dom_thual@yahoo.fr
+  default: amministrazione@fiscosport.it
+newsletter_from:
+  default: noreply@fiscosport.it
 bcc_recipients:
   default: 1
 plain_text_mail:
@@ -309,4 +311,3 @@ webmsg_isrenewing:
   default: "Scadenza abbonamento prossima! tra @@distance_of_date_in_words@@"
 webmsg_isregistered:
   default: "Abbonamento valido ancora per  @@distance_of_date_in_words@@"
-

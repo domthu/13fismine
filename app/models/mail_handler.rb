@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -50,6 +50,11 @@ class MailHandler < ActionMailer::Base
       logger.info  "MailHandler: ignoring email from Redmine emission address [#{sender_email}]" if logger && logger.info
       return false
     end
+    if sender_email.downcase == Setting.newsletter_from.to_s.strip.downcase
+      logger.info  "MailHandler: ignoring email from Newsletter emission address [#{sender_email}]" if logger && logger.info
+      return false
+    end
+
     @user = User.find_by_mail(sender_email) if sender_email.present?
     if @user && !@user.active?
       logger.info  "MailHandler: ignoring email from non-active user [#{@user.login}]" if logger && logger.info
