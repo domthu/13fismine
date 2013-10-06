@@ -377,7 +377,8 @@ it:
   setting_self_registration: Auto-registrazione abilitata
   setting_attachment_max_size: Dimensione massima allegati
   setting_issues_export_limit: Limite esportazione articoli
-  setting_mail_from: Indirizzo sorgente email
+  setting_mail_from: Indirizzo from emails
+  setting_newsletter_from:  Indirizzo from newsletter
   setting_bcc_recipients: Destinatari in copia nascosta (bcc)
   setting_plain_text_mail: Solo testo (non HTML)
   setting_host_name: Nome host

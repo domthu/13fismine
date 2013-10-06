@@ -88,7 +88,7 @@ class AccountController < ApplicationController
           else
             Mailer.deliver_lost_password(token)
             send_notice l(:notice_account_lost_email_sent)
-            redirect_to  :back
+            redirect_to :back
             return
           end
         end
@@ -520,11 +520,8 @@ class AccountController < ApplicationController
     #if User.current.allowed_to?(:access_back_end, nil, :global => true)
     #if self.logged_user.allowed_to?(:access_back_end, nil, :global => true)
     if user.allowed_to?(:access_back_end, nil, :global => true)
-      #Rails.logger.info("login ok collaboratore  #{home_url}  <-Home  editorial-> #{editorial_url}")
-      #redirect_to(home_url)
-      #redirect_back_or_default :controller => 'my', :action => 'page'
-      redirect_to(editorial_url)
-      #redirect_back_or_default :controller => 'editorial', :action => 'home'
+      #domthu20131006 redirect_to(editorial_url) ticket per link da
+      redirect_back_or_default(editorial_url)
     else
       if (Setting.fee?)
         user.control_state
@@ -532,7 +529,7 @@ class AccountController < ApplicationController
            send_notice "Periodo di prova valido ancora per " + distance_of_date_in_words(user.scadenza, Time.now)
         end
         if user.isrenewing?
-           send_notice("Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, self.scadenza))
+           send_notice("Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, user.scadenza))
            send_notice("Rinnovare l'abbonamento.")
         end
       end

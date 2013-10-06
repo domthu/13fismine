@@ -27,7 +27,7 @@
           <div class='fs-social'>
             <div class='fs-social-fb '>
               <% @fb = "http://www.facebook.com/sharer.php?s=100&amp;p[url]=#{link_to_articolo(articolo, :only_path => false).to_s
-              }&amp;p[images][0]=http://37.59.40.44:88/images/commons/fb_fs.png
+              }&amp;p[images][0]=#{request.protocol}#{request.host_with_port}/images/commons/fb_fs.png
               }&amp;p[title]=#{ERB::Util.url_encode(articolo.subject)
               }&amp;p[summary]=#{ERB::Util.url_encode(smart_truncate(articolo.summary, 200))}" %>
               <a href="<%= @fb %>" target="_blank" title="Condividi in Facebook">
@@ -87,4 +87,3 @@
     <p class="nodata"><%= l(:label_no_data) %></p>
     <br/>
 <% end %>
-

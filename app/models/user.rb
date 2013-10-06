@@ -750,6 +750,17 @@ class User < Principal
     name_formatter[:order].map { |field| "#{table}.#{field}" }
   end
 
+  def acronimo
+    s = ""
+    if self.admin?
+      s = "Admin"
+    else
+      s = (!self.lastname.blank? && self.lastname.length > 3) ? self.lastname[0,3].upcase : ""
+      s += (!self.firstname.blank? && self.firstname.length > 3) ? self.firstname[0,3].downcase : ""
+    end
+    return s.html_safe
+  end
+
   # Return user's full name for display
   def name(formatter = nil)
     f = self.class.name_formatter(formatter)
@@ -1243,6 +1254,10 @@ class AnonymousUser < User
   # Overrides a few properties
   def logged?;
     false
+  end
+
+  def acronimo
+    "-"
   end
 
   def admin;

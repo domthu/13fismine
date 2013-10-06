@@ -46,7 +46,7 @@ class Mailer < ActionMailer::Base
     message_id issue
     recipients issue.recipients
     cc(issue.watcher_recipients - @recipients)
-    subject "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] (#{issue.status.name}) #{issue.subject}"
+    subject acronym(issue.author) << "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] (#{issue.status.name}) #{issue.subject}"
     body :issue => issue,
          :issue_url => url_for(:controller => 'issues', :action => 'show', :id => issue)
     render_multipart('issue_add', body)
@@ -72,7 +72,7 @@ class Mailer < ActionMailer::Base
     s = "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] "
     s << "(#{issue.status.name}) " if journal.new_value_for('status_id')
     s << issue.subject
-    subject s
+    subject acronym(nil) << s
     body :issue => issue,
          :journal => journal,
          :issue_url => url_for(:controller => 'issues', :action => 'show', :id => issue, :anchor => "change-#{journal.id}")
@@ -100,7 +100,7 @@ class Mailer < ActionMailer::Base
   def document_added(document)
     redmine_headers 'Project' => document.project.identifier
     recipients document.recipients
-    subject "[#{document.project.name}] #{l(:label_document_new)}: #{document.title}"
+    subject acronym(nil) << "[#{document.project.name}] #{l(:label_document_new)}: #{document.title}"
     body :document => document,
          :document_url => url_for(:controller => 'documents', :action => 'show', :id => document)
     render_multipart('document_added', body)
@@ -130,7 +130,7 @@ class Mailer < ActionMailer::Base
       recipients container.recipients
     end
     redmine_headers 'Project' => container.project.identifier
-    subject "[#{container.project.name}] #{l(:label_attachment_new)}"
+    subject acronym(nil) << "[#{container.project.name}] #{l(:label_attachment_new)}"
     body :attachments => attachments,
          :added_to => added_to,
          :added_to_url => added_to_url
@@ -148,7 +148,7 @@ class Mailer < ActionMailer::Base
     recipients news.recipients
     #Errore in gmail. (Net::SMTPFatalError) 555 5.5.2 Syntax error
     #mettere recipients in questo formato "nome utente <noreply@monaqasat.com>"
-    subject "[#{news.project.name}] #{l(:label_news)}: #{news.title}"
+    subject acronym(nil) << "[#{news.project.name}] #{l(:label_news)}: #{news.title}"
     body :news => news,
          :news_url => url_for(:controller => 'news', :action => 'show', :id => news)
     render_multipart('news_added', body)
@@ -165,7 +165,7 @@ class Mailer < ActionMailer::Base
     message_id comment
     recipients news.recipients
     cc news.watcher_recipients
-    subject "Re: [#{news.project.name}] #{l(:label_news)}: #{news.title}"
+    subject acronym(nil) << "Re: [#{news.project.name}] #{l(:label_news)}: #{news.title}"
     body :news => news,
          :comment => comment,
          :news_url => url_for(:controller => 'news', :action => 'show', :id => news)
@@ -184,7 +184,7 @@ class Mailer < ActionMailer::Base
     references message.parent unless message.parent.nil?
     recipients(message.recipients)
     cc((message.root.watcher_recipients + message.board.watcher_recipients).uniq - @recipients)
-    subject "[#{message.board.project.name} - #{message.board.name} - msg#{message.root.id}] #{message.subject}"
+    subject acronym(nil) << "[#{message.board.project.name} - #{message.board.name} - msg#{message.root.id}] #{message.subject}"
     body :message => message,
          :message_url => url_for(message.event_url)
     render_multipart('message_posted', body)
@@ -201,7 +201,7 @@ class Mailer < ActionMailer::Base
     message_id wiki_content
     recipients wiki_content.recipients
     cc(wiki_content.page.wiki.watcher_recipients - recipients)
-    subject "[#{wiki_content.project.name}] #{l(:mail_subject_wiki_content_added, :id => wiki_content.page.pretty_title)}"
+    subject acronym(nil) << "[#{wiki_content.project.name}] #{l(:mail_subject_wiki_content_added, :id => wiki_content.page.pretty_title)}"
     body :wiki_content => wiki_content,
          :wiki_content_url => url_for(:controller => 'wiki', :action => 'show',
                                       :project_id => wiki_content.project,
@@ -220,7 +220,7 @@ class Mailer < ActionMailer::Base
     message_id wiki_content
     recipients wiki_content.recipients
     cc(wiki_content.page.wiki.watcher_recipients + wiki_content.page.watcher_recipients - recipients)
-    subject "[#{wiki_content.project.name}] #{l(:mail_subject_wiki_content_updated, :id => wiki_content.page.pretty_title)}"
+    subject acronym(nil) << "[#{wiki_content.project.name}] #{l(:mail_subject_wiki_content_updated, :id => wiki_content.page.pretty_title)}"
     body :wiki_content => wiki_content,
          :wiki_content_url => url_for(:controller => 'wiki', :action => 'show',
                                       :project_id => wiki_content.project,
@@ -333,6 +333,7 @@ class Mailer < ActionMailer::Base
 
   #Via js non vede Application Helper
   def newsletter(user, body_as_string, project)
+    from Setting.newsletter_from
     #set_language_if_valid user.language
     recipients user.mail #TODO rimettere in produzione
     #recipients Setting.fee_bcc_recipients
@@ -591,6 +592,15 @@ class Mailer < ActionMailer::Base
     host = Setting.mail_from.to_s.gsub(%r{^.*@}, '')
     host = "#{::Socket.gethostname}.redmine" if host.empty?
     "<#{hash}@#{host}>"
+  end
+
+  def acronym(user)
+    if user && !user.nil?
+      return user.acronimo
+    elsif User.current && !User.current.nil?
+      return User.current.acronimo
+    end
+    return ""
   end
 
   #se lo metto dentro application helper
