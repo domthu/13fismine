@@ -716,7 +716,8 @@ class EditorialController < ApplicationController
       flash[:error] = "Il contenuto cercato è protetto..."
     end
     #redirect_to(:back)
-    redirect_to(editorial_url) && return
+    #redirect_to(editorial_url) && return
+    redirect_back_or_default(editorial_url) && return
   end
 
   def reroute_404(_message = nil)

@@ -1,5 +1,5 @@
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -73,7 +73,8 @@ class AttachmentsController < ApplicationController
       end
     else
       flash[:alert] = l(:notice_not_valid_abbo)
-      redirect_to :back
+      #redirect_to :back
+      redirect_back_or_default(editorial_url)
     end
   end
 
