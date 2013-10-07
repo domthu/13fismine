@@ -4,7 +4,7 @@
 
 <div class="<%= @issue.css_classes %> details <%= @issue.css_box() %>">
   <%= avatar(@issue.author, {:size => "50", :class => "no-div"}) %>
-  <div class="subject">
+  <div class="subject markblu">
     <%= render_issue_subject_with_tree(@issue) %>
   </div>
   <p class="author">
@@ -73,12 +73,14 @@
       <p><strong><%= l(:field_summary) %></strong></p>
       <fieldset class="htmldraft">
         <legend></legend>
+
         <% unless @issue.summary.nil? %>
-            <%= @issue.summary.html_safe %>
+        <p class="markblu">
+
+            <%= @issue.summary.html_safe %></p>
         <% end %>
       </fieldset>
   <% end %>
-
   <% if @issue.description? || @issue.attachments.any? -%>
       <p><strong>
         <% if @issue.is_quesito? %>

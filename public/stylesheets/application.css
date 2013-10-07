@@ -1539,3 +1539,11 @@ hr.quesiti hr {
 .noborder{
     border: 0!important;
 }
+.markblu {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #2A5685;
+}
+.markblu h3{
+    color: #2A5685;
+}
