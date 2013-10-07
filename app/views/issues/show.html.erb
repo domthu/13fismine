@@ -114,12 +114,13 @@
 
   <br/> <!-- bottone pubblica issue  o vedi news-->
 
+  <% if @issue.news_id && @issue.news_id > 0   %>
   <div style="text-align: center;">
     <hr>
     <% form_for @issue, :url => {:controller => 'issue_moves', :action => 'new', :id => @issue} do |f2| %>
         <p class="published-<%= @issue.is_public_fs?.to_s %>">
           <%= l("label_reply_published" + @issue.is_public_fs?.to_s).to_sym %> <br/>&nbsp;</p>
-        <% if @issue.quesito_news.is_quesito? %>
+
             <% if authorize_for('move_issues', 'news_fast_reply') || User.current.admin? || User.current.ismanager? %>
                 <%= f2.submit(l(:button_issue_reply_article), :class => "button-blu") unless @issue.is_public_fs? %>
             <% end %>

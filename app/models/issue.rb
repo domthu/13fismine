@@ -226,6 +226,7 @@ class Issue < ActiveRecord::Base
     end
   end
 
+
   def is_quesito?
     if self.quesito_news.nil?
       false
