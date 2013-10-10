@@ -840,9 +840,12 @@ h3.fs-postheader {
 }
 
 .fs-social-fb {
-    width: 100px;
+    width: 78px;
     display: block;
     float: left;
+}
+.fs-social-fb img:hover{
+    cursor: pointer;
 }
 
 .fs-social-tw {

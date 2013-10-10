@@ -44,13 +44,6 @@ module ApplicationHelper
     end
   end
 
-  def fburl(articolo)
-    "http://www.facebook.com/sharer.php?s=100&p[title]=#{ERB::Util.url_encode(articolo.subject)
-    }&p[summary]=#{ERB::Util.url_encode(smart_truncate(articolo.summary, 30))
-    }&p[url]=#{ERB::Util.url_encode(link_to_articolo(articolo, :only_path => false))
-    }&p[images][0]=#{ERB::Util.url_encode(art_image(articolo, :s))}"
-
-  end
 
   def link_to_articolo(articolo, options={})
     title = options[:title] || " "

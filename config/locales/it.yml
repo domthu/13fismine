@@ -398,6 +398,7 @@ it:
   setting_repositories_encodings: Codifica degli allegati e dei repository
   setting_emails_header: Intestazione email
   setting_emails_footer: Piè di pagina email
+  setting_footer_fs: Piè di pagina
   setting_protocol: Protocollo
   setting_per_page_options: Opzioni oggetti per pagina
   setting_per_page_options_fs: Gruppi di pagine
@@ -1345,7 +1346,7 @@ it:
   field_clicks: Clicks
   field_didascalia: Didascalia
   field_se_prima_pagina: In prima pagina?
-  field_se_prenotazione: Gestione convegno?
+  field_se_prenotazione: Gestione prenotazioone
   field_impressions_history: Storico impressione
 
 #ISSUE --> CONVEGNO
