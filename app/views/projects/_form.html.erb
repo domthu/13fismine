@@ -21,7 +21,7 @@
     <p class="field_ordinamento"><%= f.text_field :data_al, :label => l(:label_date_to), :size => 10 %><%= calendar_for('project_data_al') %></p>
   </td></tr></table>
   <p><%= f.check_box :is_public %></p>
-    <p><%= f.check_box :system %> <span style='margin-left: 1em; font-size: 0.6 em; font-style: italic; color: #aeaeae;'>*Sarà mostrato nel riquadro a sinistra e non di tipo newsletter<span></p>
+    <p><%= f.check_box :system %> <span style='margin-left: 1em; font-size: 0.6 em; font-style: italic; color: #aeaeae;'>*Sarà mostrato nel riquadro a sinistra e non di tipo newsletter</span></p>
   <p><%= f.text_field :search_key %></p>
   <p><%= f.text_area :description, :rows => 5, :class => 'wiki-edit' %></p>
   <%= wikitoolbar_for 'project_description' %>

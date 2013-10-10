@@ -2,7 +2,7 @@
     <script type="text/javascript">
         function fbshareme() {
             window.open(
-                    'http://www.facebook.com/sharer.php?s=100&p[title]=<%= ERB::Util.url_encode(articolo.subject)%>&p[summary]=<%= ERB::Util.url_encode(smart_truncate(articolo.summary, 220)) %>&p[url]=<%= link_to_articolo(articolo, :only_path => false).to_s %>&p[images][0]=<%= (art_image(articolo, :l, :only_path => false)) %>&p[images][1]=http://www.fiscosport.it/images/commons/l_fs-no-image.png&p[images][2]=http://www.fiscosport.it/images/commons/fs_fb.png' ,
+                    'http://www.facebook.com/sharer.php?s=100&p[title]=<%= ERB::Util.url_encode(articolo.subject)%>&p[summary]=<%= ERB::Util.url_encode(smart_truncate(articolo.summary, 220)) %>&p[url]=<%= link_to_articolo(articolo, :only_path => false).to_s %>&p[images][0]=<%= (art_image(articolo, :l, :only_path => false)) %>&p[images][1]=http://www.fiscosport.it/images/commons/fs_fb1.png&p[images][2]=http://www.fiscosport.it/images/commons/fs_fb2.png&p[images][3]=http://www.fiscosport.it/images/commons/fs_fb0.png',
                     'facebook-share-dialog',
                     'width=626,height=436'
                 );

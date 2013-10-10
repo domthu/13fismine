@@ -399,6 +399,7 @@ it:
   setting_emails_header: Intestazione email
   setting_emails_footer: Piè di pagina email
   setting_footer_fs: Piè di pagina
+  setting_info_staff: Note allo staff
   setting_protocol: Protocollo
   setting_per_page_options: Opzioni oggetti per pagina
   setting_per_page_options_fs: Gruppi di pagine
@@ -1494,8 +1495,8 @@ it:
   label_send_test_email_fee_renew: Invia email di prova Rilancio
   setting_info_fs: Fiscosport informa
   label_info_fs: "Fiscosport informa"
-  setting_info_promoted_fs: Promosso in front page
-  label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporranea "
+  setting_info_promoted_fs: Fiscosport informa visibile in home?
+  label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporanea "
   setting_privacy: "Termine della privacy"
   label_privacy: Documento che definisce il rilascio della privacy
   setting_condition: "Regolamento degli abbonamenti"

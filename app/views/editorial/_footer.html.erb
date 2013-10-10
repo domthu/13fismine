@@ -2,6 +2,8 @@
     var pageSize = 10;
     $(document).ready(function () {
         var url_inf = '<%= privacy_path %>';
+        var url_cond = '<%= condition_path %>';
+        var url_des = '<%= webdesigner_path %>';
         //privacy
         $("#ainformativa").click(function (e) {
             Inform(e);
@@ -61,9 +63,34 @@
                 }
             }
         });
+        // designer
+        $("#awebdesigner").click(function (e) {
+            Web(e);
+            return false
+        });
+        $('#webdesigner').dialog({
+            autoOpen:false,
+            width:700,
+            show:"blind",
+            hide:"explode",
+            height:550,
+            resizable:true,
+            draggable:true,
+            title:'Sviluppatori e  ringraziamenti',
+            bgiframe:true,
+            modal:true,
+            open:function (event, ui) {
+                $(this).load(url_des);
+            },
+            buttons:{
+                "Chiudi":function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
 
     }); //end hquery document ready
-    var url_cond = '<%= condition_path %>';
+
     function Leggi(e) {
         $("#condizioni").html("Recupero dati in corso attendere prego ...")
         $("#condizioni").dialog('open');
@@ -73,6 +100,12 @@
     function Inform(e) {
         $("#informativa").html("Recupero dati in corso attendere prego ...")
         $("#informativa").dialog("open");
+        return false;
+    }
+    var url_des = '<%= webdesigner_path %>';
+    function Web(e) {
+        $("#webdesigner").html("Recupero dati in corso attendere prego ...")
+        $("#webdesigner").dialog("open");
         return false;
     }
 
@@ -94,8 +127,14 @@
  -->
 <footer class="fs-footer clearfix">
 
+
+
   <div id="condizioni" title="Condizioni di utilizzo" class="hidden" style="overflow: hidden;"></div>
-  <div id="informativa" title="Informativa" class="hidden" style="overflow: hidden;"> </div>
-    <p><a href='#' id='acondizioni' class='pri'><b>Condizioni di utilizzo</b></a> | <a href='#' id='ainformativa' class='pri'><b>Trattamento dei dati</b></a> | <a href="#">WebDesign</a></p>
-    <p>Copyright © 2013. All Rights Reserved.</p>
+  <div id="informativa" title="Informativa" class="hidden" style="overflow: hidden;"></div>
+  <div id="webdesigner" title="Web Designer" class="hidden" style="overflow: hidden;"></div>
+  <p><a href='#' id='acondizioni' class='pri'><b>Condizioni di utilizzo</b></a> |
+    <a href='#' id='ainformativa' class='pri'><b>Trattamento dei dati</b></a> |
+    <a href='#' id='awebdesigner' class='pri'><b>WebDesign</b></a></p>
+  <br/>
+  <p><%= Setting.footer_fs %></p>
 </footer>

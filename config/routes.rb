@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.emailctrl 'emailctrl', :controller => 'services', :action => 'emailctrl', :conditions => {:method => [:get]}
   map.privacy 'privacy', :controller => 'services', :action => 'privacy', :conditions => {:method => [:get]}
   map.condition 'condition', :controller => 'services', :action => 'condition', :conditions => {:method => [:get]}
+  map.webdesigner 'webdesigner', :controller => 'services', :action => 'webdesigner', :conditions => {:method => [:get]}
   map.zone 'zone', :controller => 'services', :action => 'zone', :conditions => {:method => [:get]}
   map.zone_extend 'zone_extend', :controller => 'services', :action => 'zone_extend', :conditions => {:method => [:get]}
 

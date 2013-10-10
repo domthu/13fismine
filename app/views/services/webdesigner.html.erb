@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-EN">
+<head><!-- Created by DomThu & SPecchiaSoft -->
+  <meta charset="utf-8"/>
+  <title>Web Developers & Thanks </title>
+</head>
+<body>
+<div>
+  <table cellspacing="0" cellpadding="0" border="0" width="96%" style=" font-weight: bold ;">
+    <tr>
+      <td>
+        <div class="toggler ui-corner-all" style="width: 100%; border: solid 1px #5f9ea0; padding: 5% 2%;">
+
+          <h3 style="color:#016285;"> Il sito è relizzato in linguaggio Ruby on Rails su commissione di Fiscosport.it </h3>
+          <p> Sviluppatori :
+            <span style="font-size: 0.8em; font-style: italic;">(fai click sulle icone per contattarci)</span></p>
+          <br/>
+          <table style="width: 100%;">
+            <tr>
+              <td style="width: 50px;">
+                <%= mail_to @dom.mail, @dom.my_avatar(:m) %>
+              </td>
+              <td style="width: 300px; padding-right: 30px;  ">
+                <span style="font-size: 1.3em; font-weight: bold;">Dominique Thual</span> <br/>
+                Progettazione Applicazioni Web-based
+              </td>
+              <td style="width: 50px;">
+                <%= mail_to @san.mail, @san.my_avatar(:m) %>  </td>
+              <td style="width: 350px;">
+                <h3>Sandro Pecchia</h3>
+
+                <p> Webmaster & Webdesigner </p>
+              </td>
+            </tr>
+          </table>
+          <div style="text-align: center;">
+            <br/> &nbsp; <br/> &nbsp; <br/> &nbsp;
+            <h3 style="color:#016285;">Ringraziamenti</h3>
+          </div>
+          <br/>
+
+          <p> Un grazie a tutti i collaboratori / redattori / manager di Fiscosport che utilizzano questo sito per
+            creare le edizioni che saranno pubblicate ogni 15 giorni, grazie alle associazioni aderenti e tutti gli
+            utenti di Fiscosport</p>
+          <br/>
+
+          <p>Un ringraziamento particolare và
+            a <%= link_to 'Maria Cristina Dalbosco', profile_show_path(:id => 980190963) %>  "Amministratore unico e
+            Fiscosport Responsabile di Redazione" per aver voluto, organizzato e collaborato con tutti e con noi per
+            creare il sito
+            come è ora</p>
+
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

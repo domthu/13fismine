@@ -61,7 +61,10 @@
               $("#carousel_tramenu_js").carouFredSel({
                   responsive:true,
                   scroll:{
-                      fx:"crossfade"
+                      fx:"crossfade",
+                      easing : "swing",
+                       duration : 2000
+
                   },
                   items:{
                       visible:1,
@@ -172,16 +175,16 @@
     </div>
     <div id="toTop" style="display: none;"></div>
     <div id="ajax-indicator" style="display: none;"><span><%= l(:label_loading) %></span></div>
-    <footer class="fs-footer clearfix">
       <p>
         <%= render :partial => 'editorial/footer' %>
       </p>
-    </footer>
   </div>
+
   <div class="fs-page-footer">
-    <div class="clearfix"></div>
-    <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank"></a></span>
-  </div>
+      <div class="clearfix"></div>
+      <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank"></a></span>
+    </div>
+
 </div>
 
 </body>
