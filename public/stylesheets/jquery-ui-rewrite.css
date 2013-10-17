@@ -24,16 +24,9 @@
 
 }
 
+
 #accordion-events-contact .ui-accordion-icons {
     padding: 0 !important;
-
-}
-
-#accordion-events-contact .ui-accordion-header-active {
-
-}
-
-#accordion-events-contact .ui-state-active {
 
 }
 
@@ -68,6 +61,10 @@
     margin-top: 2px;
     padding-left: 25px;
     zoom: 1
+
+}
+#accordion .ui-accordion-header .fs-blockcontent h4  {
+ color: #fff;
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
@@ -84,6 +81,13 @@
 .ui-widget-header a {
     color: #eaf5f7
 }
+h4.ui-state-default span.accordion{
+    color: #eaf5f7
+}
+h4.ui-state-active span.accordion{
+    color: #5f0100;
+}
+
 
 /* inizio bootone inattivo */
 

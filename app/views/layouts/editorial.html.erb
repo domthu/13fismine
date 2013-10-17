@@ -150,15 +150,19 @@
         <% end %>
       </div>
     </header>
+
     <nav class="fs-nav clearfix">
       <%= render_navigation(:level => 1) %>
     </nav>
-    <div id="fs-tramenu-wrapper">
+
+    <aside class="fs-tramenu-wrapper">
       <%= render :partial => 'editorial/tramenu_block' %>
-    </div>
+    </aside>
+
     <nav class="fs-menu2-nav clearfix">
       <%= render_navigation(:level => 2..3, :expand_all => true) %>
     </nav>
+    <div class="clearfix"></div>
     <div id="fs-flash" style="display:none;">
       <% flash.each do |key, msg| %>
           <p class='f-<%= key.to_s %>'><span class='<%= key.to_s %>-fs'> </span>  <%= msg %> </p>
