@@ -862,7 +862,7 @@ it:
   label_user_mail_option_only_my_events: Solo se sono un osservatore o sono coinvolto
   label_user_mail_option_only_assigned: Solo quando mi assegnano attività
   label_user_mail_option_only_owner: Solo se io sono il proprietario
-  label_user_mail_no_self_notified: "Non voglio notifiche riguardanti modifiche da me apportate"
+  label_user_mail_no_self_notified: "Non voglio notifiche riguardanti le mie modifiche: "
   label_registration_activation_by_email: attivazione account via email
   label_registration_manual_activation: attivazione account manuale
   label_registration_automatic_activation: attivazione account automatica
@@ -1285,7 +1285,7 @@ it:
   label_convention_type: Tipo organismo
   fied_convention_type: Tipo organismo
   zone_area: Copertura geografica
-
+  label_nationale_pact: Copertura nazionale
   label_ragione_sociale: Ragione sociale
   label_email: Email
   label_indirizzo: Indirizzo
@@ -1394,6 +1394,7 @@ it:
   label_dati_plural: Dati FISCOSPORT
   label_abbonamento_plural: Abbonamento
   label_fatture_plural: Contabilità
+  label_fatturazione: Fatturazione
   label_storico_pagamento: Storico dei pagamenti
   label_dati_pagamento: Dati di pagamento
   label_emetti_fattura: Invia fattura
@@ -1416,19 +1417,19 @@ it:
   field_pwd: (old) Password
   field_login_fisco: (old) login FISCOSPORT
   field_mail_fisco: (old) email FISCOSPORT
-  field_soc: "Intestatario dell'abbonamento"
+  field_soc: "Intestatario o<br />  Ragione sociale"
   field_note: Note
   field_prov: (old) provincia
   field_sede: (old) sede
-  field_telefono2: (old) 2nd telefono
-  field_mail2: (old)  2nd email
+  field_telefono2: Telefono-2
+  field_mail2: Email-2
   field_sez: (old) sezione
   field_codice_attivazione: Codice di Attivazione
   field_iva_: (old) IVA
   field_codicefiscale: Codice Fiscale
   field_partitaiva: Partita IVA
   field_registrato: (old) registrato?
-  field_num_reg_coni: (old) N° regionale CONI
+  field_num_reg_coni: (?) N° registro CONI
   field_abbonato: (old) Abbonato
   field_conferma_registrazione: (old) Confermato registrazione?
   field_disabilitato: (old) disabilitato?
@@ -1454,7 +1455,8 @@ it:
   permission_access_back_end: Accedi al backEnd?
   permission_front_end_quesito: Poni quesito in FrontEnd?
   label_public_site_home: Prima pagina
-  label_contact: Contatti
+  label_contact_plural: Contatti
+  label_contact: Contatto
   label_aboutus: Chi siamo
   label_poniquesito: Richiedi
   label_home_fs: Prima pagina
@@ -1714,7 +1716,7 @@ it:
   field_username_as_email: "Di default la tua login è uguale alla tua email. Hai la possibilità di personalizzare il tuo nome utente che userai con la password per identificarti sul sito"
   field_codice_segnalatore: "Codice Segnalatore/Promozione:"
   field_com: "Comunicazioni/Segnalazioni:"
-  field_se_privacy: "Informativa sulla privacy"
+  field_se_privacy: "Informativa privacy"
   field_se_privacy_accept: "Accetto l'informativa sulla privacy"
   field_se_condition: "Condizioni di utilizzo"
   field_se_condition_readed: "Ho letto le condizioni per l'uso"

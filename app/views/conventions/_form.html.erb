@@ -2,7 +2,7 @@
 <div class="box tabular" xmlns="http://www.w3.org/1999/html">
   <h3><%= l(:label_abbo) %></h3>
 
-  <p><%= f.select :user_id, (User.all(:order => 'lastname').collect { |c| [c.lastname + ' ' + c.firstname + ' (' + c.login + ')', c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_manager) %></p>
+  <p><%= f.select :user_id, (User.all(:order => 'lastname').collect { |c| [c.lastname + ' ' + c.firstname + ' (' + c.login + ')', c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_convention_user) %></p>
 
   <p><%= f.check_box :richiedinumeroregistrazione, :label => :label_richiedinumeroregistrazione %></p>
 

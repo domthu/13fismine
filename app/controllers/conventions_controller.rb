@@ -96,7 +96,7 @@ class ConventionsController < ApplicationController
       if @conv.save
 
         #STEP1/2 find susceptible federati by zone
-        if (!@conv.codice_attivazione.empty?)
+        if (!@conv.codice_attivazione.nil? && !@conv.codice_attivazione.blank?)
           @user = User.all(:conditions => ["LOWER(codice_attivazione)=?", @conv.codice_attivazione])
           @user.each do |usr|
             if ((@conv.scadenza.is_a(Date)) && (usr.scadenza.nil? || (usr.scadenza < @conv.scadenza)))

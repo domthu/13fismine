@@ -175,6 +175,7 @@
           <th style="text-align:left;"><%= l(:label_user) %></th>
           <th style="text-align:left;"><%= l(:field_due_date) %></th>
           <th style="text-align:left;"><i class="icon user-key-s" title="Power user, responsabile"></i></th>
+          <th style="text-align:left; width:18px;"></th>
           </thead>
           <tbody>
           <% non_paganti.sort_by(&:lastname).each do |user| %>
@@ -193,7 +194,10 @@
                 <td>
                   <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled' %>
                 </td>
-              </tr>
+
+              <td>
+              <%= link_to('', edit_user_path(user.id ), :class => 'icon icon-edit') if User.current.admin? %>
+              </td></tr>
           <% end %>
           </tbody>
         </table>

@@ -5,10 +5,11 @@
 <div class="splitcontentleft">
   <fieldset class="box tabular">
     <legend><%=l(:label_authentication)%></legend>
+
     <% unless @auth_sources.empty? %>
-    <p><%= f.select :auth_source_id, ([[l(:label_internal), ""]] + @auth_sources.collect { |a| [a.name, a.id] }), {}, :onchange => "if (this.value=='') {Element.show('password_fields');} else {Element.hide('password_fields');}" %></p>
+    <p><%= f.select :auth_source_id, ([[l(:label_internal), ""]] + @auth_sources.collect { |a| [a.name, a.id] }), {},:disabled => 'true', :onchange => "if (this.value=='') {Element.show('password_fields');} else {Element.hide('password_fields');}" %></p>
     <% end %>
-    <p><%= f.text_field :login, :required => true  %></p>
+        <p><%= f.text_field :login, :required => true  %></p>
     <div id="password_fields" style="<%= 'display:none;' if @user.auth_source %>">
     <p><%= f.password_field :password, :required => true, :size => 25  %></p>
 
@@ -17,51 +18,59 @@
     </div>
   </fieldset>
 <fieldset class="box tabular">
-  <legend><%=l(:label_information_plural)%></legend>
+  <legend><%=l(:label_contact)%></legend>
 
   <p><%= f.text_field :firstname, :required => true %></p>
   <p><%= f.text_field :lastname, :required => true %></p>
   <p><%= f.text_field :mail, :required => true %></p>
-
+  <p><%= f.text_field :telefono, :label => :field_telefono, :required => false, :size => 25  %></p>
+  <p><%= f.text_field :mail2, :label => :field_mail2, :required => false, :size => 25  %></p>
+  <p><%= f.text_field :telefono2, :label => :field_telefono2, :required => false, :size => 25  %></p>
+  <p><%= f.text_field :fax, :label => :field_fax, :required => false, :size => 25  %></p>
   <% if Setting.openid? %>
   <p><%= f.text_field :identity_url  %></p>
   <% end %>
-
   <% @user.custom_field_values.each do |value| %>
     <p><%= custom_field_tag_with_label :user, value %></p>
   <% end %>
-
-
-    <p><%= f.text_field :indirizzo, :label => :field_indirizzo, :required => false, :size => 25  %></p>
-    <p><%= f.select :comune_id, (Comune.all( :include => [[ :province => :region ]], :order => 'name').collect {|c| [c.name_full, c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_comune)  %></p>
-
-
 </fieldset>
-
-
-</div>
+  <fieldset class="box tabular">
+    <legend><%=l(:label_fee)%></legend>
+  <p><%= f.text_field :titolo, :label => :field_titolo, :required => false %></p>
+  <p><%= f.text_area :soc, :label => :field_soc, :required => false , :style=>"width:88%" ,:rows => 3  %></p>
+    <p><%= f.text_area :indirizzo, :label => :field_indirizzo, :required => false , :style=>"width:88%" ,:rows => 3  %></p>
+    <p><%= f.select :comune_id, (Comune.all( :include => [[ :province => :region ]], :order => 'name').collect {|c| [c.name_full, c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_comune)  %></p>
+    <p><%= f.text_field :codicefiscale, :label => :field_codicefiscale, :required => false, :size => 25  %></p>
+    <p><%= f.text_field :partitaiva, :label => :field_partitaiva, :required => false, :size => 25  %></p>
+  </fieldset>
+ </div>
   <div class="splitcontentright">
   <fieldset  class="box tabular">
     <legend><%=l(:label_preferences)%></legend>
-    <p><%= f.select :language, lang_options_for_select %></p>
     <p><%= f.check_box :se_condition, :checked => true  %></p>
     <p><%= f.check_box :se_privacy , :checked => true   %></p>
-    <p><%= f.check_box :admin %></p>
-
-  </fieldset>
-   </div>
-
-<div class="splitcontentright">
-<fieldset class="box">
-  <legend><%=l(:field_mail_notification)%></legend>
-  <%= render :partial => 'users/mail_notifications' %>
-</fieldset>
-
-<fieldset class="box tabular">
-  <legend><%=l(:label_preferences)%></legend>
+    <p><%= f.select :language, lang_options_for_select %></p>
   <%= render :partial => 'users/preferences' %>
 </fieldset>
-</div>
+    <fieldset class="box">
+  <legend><%=l(:field_mail_notification)%></legend>
+  <%= render :partial => 'users/mail_notifications' %>
+  <% if @user.active? && email_delivery_enabled? -%>
+    <p><label><%= check_box_tag 'send_information', 1, true %> <%= l(:label_send_information) %></label></p>
+  <% end -%>
+</fieldset>
+
+   <fieldset  class="box tabular">
+     <legend><%=l(:label_more)%></legend>
+     <p><%= f.check_box :admin %><span class="mini-legend">*Fismine admin (super poteri!)  </span></p>
+     <hr>
+     <p><%= f.text_field :codice_attivazione, :label => :field_codice_attivazione, :required => false, :size => 25  %></p>
+     <p><%= f.text_field :num_reg_coni, :label => :field_num_reg_coni, :required => false, :size => 25  %></p>
+     <p><%= f.text_area :note, :label => :field_note, :required => false , :style=>"width:88%" ,:rows => 7  %></p>
+
+   </fieldset>
+    </div>
+
 </div>
 <div style="clear:left;"></div>
 <!--[eoform:user]-->
