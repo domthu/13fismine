@@ -11,13 +11,17 @@
           <div class="contextual">
             <%= gravatar_for(@user) unless !@user %>
           </div>
+        <p class="">
+          <label><%= l(:field_name) %></label>
+          <span><%= @user.name %></span>
+        </p>
           <p class="">
             <label><%= l(:label_localizazzione) %></label>
             <span><%= @user.getLocalization() %></span>
           </p>
 
           <p class="">
-            <label for="siglatipo"><%= l(:label_have_sigla_tipo) %></label>
+            <label for="siglatipo"><%= l(:field_cross_organization) %></label>
             <span><% if @user.cross_organization %>
                 <%= link_to h(@user.cross_organization), cross_organization_path (@user.cross_organization) %>
               <% else %>
@@ -25,10 +29,8 @@
               <% end %>
             </span>
           </p>
-
-          <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :title => 'cambia federazione' %></p>
-
-      </fieldset>
+<!--
+              </fieldset>
 
 
       <fieldset class="box tabular">
@@ -36,12 +38,13 @@
 
           <p><%= f.check_box :power_user, :label => '', :title => 'power user' %>&nbsp;<%=l(:field_power_user)%> </p>
 
+
           <p class="">
             <label for="refe"><%= l(:label_have_referee) %></label>
             <span class="<%= 'total' if @user.is_referente? %>">
             <%# check_box_tag 'refe', 1, @user.is_referente?, :disabled => 'disabled', :class => (@user.is_referente? ? 'total' : '') %></span>
           </p>
-
+        -->
           <p class="">
             <label><%= l(:label_referee_list_conventions) %></label>
 
@@ -63,9 +66,9 @@
 
       <fieldset class="box tabular">
         <legend title="<%=l(:label_gest_organismo)%>"><%= l(:field_convention) %></legend>
-
-          <%= f.select :convention_id, (Convention.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false, :size => 60, :label => '', :title => 'cambia convenzione' %>
-
+        <p>
+          <%= f.select :convention_id, (Convention.all.collect {|c| [truncate(c.name, 39), c.id]}), :include_blank => true, :required => false, :label => :label_convention_change, :size => 60 , :title => 'cambia convenzione' %>
+        </p>
           <p class="">
             <label><%= l(:label_have_convention) %></label>
             <span>
@@ -81,12 +84,12 @@
 <% if @user.convention %>  <%#========================%>
 
           <p class="">
-            <label><%= l(:field_convention_type) %></label>
+            <label><%= l(:label_convention_type) %></label>
             <span>
-              <% if @user.convention.cross_organization %>
-                <%= l(:label_convention_organismo) %>
+              <% if @user.convention.se_sport? %> %>
+                <%= l(:label_convention_sport) %>
               <% else %>
-                <%= l(:label_convention_societa) %>
+                <%= l(:label_convention_no_sport) %>
               <% end %>
             </span>
           </p>
@@ -130,6 +133,7 @@
           </span></p>
 
       </fieldset>
+
 
       <fieldset class="box tabular">
         <legend><%=l(:label_conventions_users)%></legend>

@@ -4064,3 +4064,12 @@ input.inputerror {
     border: solid 1px red;
     background-color: #fff3e1;
 }
+.fs-responsive-loginbg{
+    width: 100%;
+    background: url(../images/template/object_testa_responsive.png) no-repeat top left;
+    height: 128px;
+    min-width:300px;
+   /* margin-left:174px;      */
+    display: none;
+
+}

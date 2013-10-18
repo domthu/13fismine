@@ -177,20 +177,22 @@
     background-repeat: repeat !important;
 }
 .responsive .fs-header{
-    margin-bottom: 118px;
 }
 /* Search */
 .responsive .fs-shapes~.fs-textblock {
     position: absolute !important;
     display: block !important;
     margin: 0 auto !important;
-    width: 60%;
+    width: 200px!important;
     top: -11% !important;
-    left: 15%!important;
+    left: 36%!important;
     background-color: transparent!important;
 }
 
 /*login */
+.responsive .fs-responsive-loginbg {
+    display: block!important;
+}
 
 .responsive-tramenu #fs-tramenu-blocco1 {
     display: none;

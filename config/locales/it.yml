@@ -816,7 +816,6 @@ it:
   label_start_to_start: inizio a inizio
   label_start_to_end: inizio a fine
   label_stay_logged_in: Rimani collegato
-  label_disabled: disabilitato
   label_show_completed_versions: Mostra versioni completate
   label_me: me
   label_board: Forum
@@ -1164,11 +1163,10 @@ it:
   label_visibilita: Visibilità
   label_is_responsable: é responsabile?
   label_not_responsable: "L'utente non gestisce organismi convenzionati"
-  label_have_convention: Convenzionato?
+  label_have_convention: Convenzione attuale
   label_no_convention: "Utente pagante. L'utente non fa parte di un'organismo convenzionato"
   label_list_responsable_for: "Lista organismi convenzionati dove é responsabile:"
-  label_have_sigla_tipo: Federato?
-  label_no_sigla_tipo: "L'utente non fa parte di una federazione"
+  label_no_sigla_tipo: "L'utente non fa parte di una federazione o gruppo"
 
   #label_cross_organization: ex Sigla
   label_cross_organization: Federazione
@@ -1212,7 +1210,7 @@ it:
   label_edit_province: Modifica Provincia
   label_edit_region: Modifica Regione
 
-  field_cross_organization: Sigla
+  field_cross_organization: Gruppo/Federazione
   field_richiedinumeroregistrazione: Richiedi N° Reg.
   field_data_scadenza: Data scadenza
   field_nota: Note
@@ -1280,10 +1278,11 @@ it:
   label_convention_group_banner_none: Nessun banner per la convenzione (organismo associato)
   label_convention_pact: "Federazione<br />Zona"
   label_convention_ref: "Scadenza<br />responsabile"
-  label_convention_organismo: Organismo sportivo associato
-  label_convention_societa: Società non sportiva
+  label_convention_sport: Organismo sportivo
+  label_convention_no_sport: Gruppo non sportivo
   label_convention_type: Tipo organismo
   fied_convention_type: Tipo organismo
+  label_convention_change: Cambia convenzione
   zone_area: Copertura geografica
   label_nationale_pact: Copertura nazionale
   label_ragione_sociale: Ragione sociale
@@ -1388,7 +1387,7 @@ it:
   label_user_invoices: "Altre fatture legate all'utente"
   label_cross_organization_user_convention: "Sigla: lista utenti federati"
   label_cross_organization_user_convention_none: nessun utente registrato per questa federazione
-
+  field_no_newsletter: No newsletter
   field_power_user: Referente convenzione
   field_users: Utenti
   label_dati_plural: Dati FISCOSPORT
@@ -1405,7 +1404,7 @@ it:
   label_registration: Dati di registrazione
   label_scadenza_ruolo: Gestione Ruolo <--> Scadenza
   label_is_referente: è responsabile?
-  label_gest_privato: Privato == Pagante
+  label_gest_privato: "Abbonato"
   label_gest_organismo: Organismo associato o società non sportiva == Utente NON paga
   label_conventions_referee: Responsabili degli organismi convenzionati
   label_conventions_referee_help: Lista dei responsabili
@@ -1432,7 +1431,6 @@ it:
   field_num_reg_coni: (?) N° registro CONI
   field_abbonato: (old) Abbonato
   field_conferma_registrazione: (old) Confermato registrazione?
-  field_disabilitato: (old) disabilitato?
   field_forum_redattore: (old) Forum redattore?
   field_forum_notifica: (old) Forum notifica?
   field_data: (old) data

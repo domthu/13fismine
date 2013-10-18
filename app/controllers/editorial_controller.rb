@@ -366,7 +366,6 @@ class EditorialController < ApplicationController
 
   #domthu permission :front_end_quesito, :editorial => :quesito_nuovo, :require => :loggedin
   #add permission to control permission action
-  #Admin e power_user sono definiti da campi della tabella User
   #RUOLI
   #MANAGER --> ok
   #REDATTORE --> ok

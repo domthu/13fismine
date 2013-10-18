@@ -62,8 +62,10 @@
 
    <fieldset  class="box tabular">
      <legend><%=l(:label_more)%></legend>
-     <p><%= f.check_box :admin %><span class="mini-legend">*Fismine admin (super poteri!)  </span></p>
+     <p><%= f.check_box :admin %><span class="mini-legend">Fismine admin (super poteri!)  </span></p>
+     <p><%= f.check_box :no_newsletter %><span class="mini-legend">Non vuole la newsletter  </span></p>
      <hr>
+     <p><%= f.select :cross_organization_id, (CrossOrganization.all.collect {|c| [smart_truncate(c.name, 40), c.id]}), :include_blank => true, :required => false,  :style=>"width:88%" , :title => 'cambia federazione' %></p>
      <p><%= f.text_field :codice_attivazione, :label => :field_codice_attivazione, :required => false, :size => 25  %></p>
      <p><%= f.text_field :num_reg_coni, :label => :field_num_reg_coni, :required => false, :size => 25  %></p>
      <p><%= f.text_area :note, :label => :field_note, :required => false , :style=>"width:88%" ,:rows => 7  %></p>
