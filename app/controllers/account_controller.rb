@@ -97,6 +97,21 @@ class AccountController < ApplicationController
   end
 
 #Parameters: {"extra_town"=>"7289", "action"=>"register", "commit"=>"Invia", "authenticity_token"=>"oE/I9wEZXoXqA0iRUM+BS+fbprZFzqmGoCtdOhzN0hY=", "controller"=>"account", "user"=>{"codice_attivazione"=>"", "password"=>"[FILTERED]", "firstname"=>"dom7", "se_privacy"=>"1", "language"=>"it", "se_condition"=>"1", "fax"=>"", "indirizzo"=>"", "partitaiva"=>"", "soc"=>"", "password_confirmation"=>"[FILTERED]", "mail"=>"dom_thual@yahoo.it", "comune_id"=>"7289", "login"=>"dom7", "cross_organization_id"=>"1", "telefono"=>"", "codicefiscale"=>"thlddj", "titolo"=>"Tecnico/Dirigente", "lastname"=>"thual7"}}
+  def delete_from_newsletter
+    @user = User.new(params[:user])
+    @user.no_newsletter = 1
+
+    if request.post?
+      if  @user.save # false
+        flash.now[:success] = l(:notice_updated)
+        redirect_to editorial_url
+      else
+        flash.now[:error] = l(:notice_not_updated)
+      end
+    end
+
+
+  end
   def register
     redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     if request.get?

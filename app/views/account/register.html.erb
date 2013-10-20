@@ -121,9 +121,9 @@
                 <h1>Convenzioni sportive </h1>
                 <div class="notice-in fs-flash-in"> Cerca la tua organizzazione sportiva qui sotto.       </div>
                   <div style="width:98%; margin-left: 7px;" >
-                   <%= f.select :cross_organization_id, options_for_select(CrossOrganization.find(
-                                                                                      :all,
-                                                                                      :conditions => "se_visibile = 1",
+                   <%= f.select :cross_organization_id, options_for_select(CrossOrganization.find(:all,
+                                                                                      :include => :type_organization,
+                                                                                      :conditions => "se_visibile = 1 AND #{TypeOrganization.table_name}.type_sport = 1" ,
                                                                                       :joins => [:type_organization],
                                                                                       :order => 'type_organizations.tipo, sigla').collect { |c| ["#{c.type_organization.tipo} :: #{c.sigla}", c.id] }),
                                                                                       :include_blank => true,

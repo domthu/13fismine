@@ -152,7 +152,7 @@
     </header>
     <div class="fs-responsive-loginbg"></div>
     <nav class="fs-nav clearfix">
-      <%= render_navigation(:context=> 'giallo') %>
+      <%= @rendered_navigation1 ||= render_navigation(:context=> 'giallo') %>
     </nav>
 
     <aside class="fs-tramenu-wrapper">
@@ -160,7 +160,7 @@
     </aside>
 
     <nav class="fs-menu2-nav clearfix">
-      <%= render_navigation(:context=> 'rosso', :level => 1..2, :expand_all => true) %>
+       <%= @rendered_navigation2 ||= render_navigation(:context=> 'rosso', :level => 1..2, :expand_all => true) %>
     </nav>
     <div class="clearfix"></div>
     <div id="fs-flash" style="display:none;">

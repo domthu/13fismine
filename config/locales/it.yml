@@ -170,7 +170,8 @@ it:
   general_csv_encoding: ISO-8859-1
   general_pdf_encoding: UTF-8
   general_first_day_of_week: '1'
-
+  notice_updated: "Aggionamento riuscito."
+  notice_not_updated: "Aggionamento non riuscito."
   notice_account_updated: "Profillo utente aggiornato."
   notice_account_invalid_creditentials: Nome utente o password non validi.
   notice_account_password_updated: La password è stata aggiornata.
@@ -1167,7 +1168,6 @@ it:
   label_no_convention: "Utente pagante. L'utente non fa parte di un'organismo convenzionato"
   label_list_responsable_for: "Lista organismi convenzionati dove é responsabile:"
   label_no_sigla_tipo: "L'utente non fa parte di una federazione o gruppo"
-
   #label_cross_organization: ex Sigla
   label_cross_organization: Federazione
   label_cross_organization_plural: Federazioni
@@ -1175,7 +1175,6 @@ it:
   label_other_cross_organization_sametype: Altre federazioni correlate
   label_other_convention_sametype: Convenzioni per la federazione
   label_other_convention_none: Nessuna convenzione stabilita
-
   label_tipo: "Tipo dell'organismo"
   label_descrizione: Descrizione
   label_sigla: Sigla
@@ -1187,7 +1186,7 @@ it:
   field_descrizione: Descrizione
   field_sigla: Sigla
   field_type_organization: Organismo
-
+  field_type_organization_sport: Sportivo?
   label_richiedinumeroregistrazione: Richiedi N° di Registrazione
   label_data_scadenza: Data scadenza
   label_nota: Note
@@ -1271,18 +1270,19 @@ it:
   label_convention_full: Organismi aderenti (convenzionati)
   label_convention_plural: Convenzioni
   label_convention_new: Nuova convenzione
-  label_conventions_users: Utenti soci non paganti (sotto convenzione)
+  label_conventions_same: Utenti presenti nella stessa convenzione
+  label_conventions_users: Utenti soci non paganti (convenzionati)
   label_convention_user: Responsabile convenzione
   label_convention_none: Nessuna convenzione (organismo associato)
   label_convention_group_banner: Banner convenzione
   label_convention_group_banner_none: Nessun banner per la convenzione (organismo associato)
   label_convention_pact: "Federazione<br />Zona"
-  label_convention_ref: "Scadenza<br />responsabile"
+  label_convention_scad: "Scadenza convenz."
   label_convention_sport: Organismo sportivo
   label_convention_no_sport: Gruppo non sportivo
   label_convention_type: Tipo organismo
   fied_convention_type: Tipo organismo
-  label_convention_change: Cambia convenzione
+  label_convention_change: Aggiorna convenz.
   zone_area: Copertura geografica
   label_nationale_pact: Copertura nazionale
   label_ragione_sociale: Ragione sociale
@@ -1402,7 +1402,7 @@ it:
   label_localizazzione: Indirizzo
   label_account: Credenziali
   label_registration: Dati di registrazione
-  label_scadenza_ruolo: Gestione Ruolo <--> Scadenza
+  label_scadenza: "Scadenza"
   label_is_referente: è responsabile?
   label_gest_privato: "Abbonato"
   label_gest_organismo: Organismo associato o società non sportiva == Utente NON paga
@@ -1422,19 +1422,17 @@ it:
   field_sede: (old) sede
   field_telefono2: Telefono-2
   field_mail2: Email-2
-  field_sez: (old) sezione
+  label_user_created_on: Data di registrazione
   field_codice_attivazione: Codice di Attivazione
-  field_iva_: (old) IVA
   field_codicefiscale: Codice Fiscale
   field_partitaiva: Partita IVA
   field_registrato: (old) registrato?
   field_num_reg_coni: (?) N° registro CONI
   field_abbonato: (old) Abbonato
   field_conferma_registrazione: (old) Confermato registrazione?
-  field_forum_redattore: (old) Forum redattore?
-  field_forum_notifica: (old) Forum notifica?
-  field_data: (old) data
-  field_datascadenza: (old) data di scadenza
+  field_datainizio: Data inizio
+  field_datascadenza: Data scadenza
+  field_datascadenza_user: Scadenza privato
   field_tariffa_precedente: (old) tariffa precedente
   field_iva_precedente: (old) IVA precedente
   field_pagamento_precedente: (old) pagamento precedente
@@ -1629,18 +1627,18 @@ it:
   notice_setting_fee_not_allowed: La gestione degli abbonamenti non è abilitata
   label_person: Persona
   field_registration_date: Registrazione
-  role_manager: manager
+  role_manager: Manager
   role_3: MANAGER
   role_author: Redattore, collaboratore
   role_author_abrv: Redattore
   role_4: REDATTORE
-  role_vip: Invitato (VIP)
+  role_vip: Invitato
   role_10: VIP
   role_abbonato: Abbonato
   role_6: Abbonato
   role_registered: Registrato
   role_9: Registrato
-  role_renew: Rinnovo, In scadenza
+  role_renew: Rinnovo
   role_11: Rinnovo
   role_expired: Scaduto
   role_7: Scaduto
@@ -1738,8 +1736,8 @@ it:
 #SCADENZA STATO
   stato_scadenza: "Stato abbonamento alla scadenza"
   state_valid: "<span style='color: green; font-weight: bold;'>Abbonamento valido</span>"
-  state_expiring: "<span style='color: orange; font-weight: bold;'>L'abbonamento scadere</span>"
-  state_expired: "<span style='color: red; font-weight: bold;'>Abbonamento SCADUTO</span>"
+  state_expiring: "<span style='color: orange; font-weight: bold;'>Scadenza prossima</span>"
+  state_expired: "<span style='color: red; font-weight: bold;'>Abbonamento scaduto</span>"
 
 #EMAIL NEWSLETTER
   label_send_newsletter: Invia quindicinale

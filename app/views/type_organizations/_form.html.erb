@@ -3,6 +3,6 @@
 <div class="box tabular">
   <p><%= f.text_field :tipo, :label => :field_tipo, :size => 40  %></p>
   <p><%= f.text_area :descrizione, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
-  <p><%= f.text_field :priorita, :label => :field_priorita, :size => 3 %></p>
-</div>
+  <p><%= f.check_box :type_sport, :label => :field_type_organization_sport %></p>
+ </div>
 <%= wikitoolbar_for 'descrizione' %>

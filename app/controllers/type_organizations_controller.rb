@@ -11,9 +11,9 @@ class TypeOrganizationsController < ApplicationController
   end
   def index
     #Sorting
-    sort_init 'priorita'
+    sort_init  'se_sportivo'
     sort_update 'tipo' => 'tipo',
-                'priorita' => 'priorita'
+                'se_sportivo' => 'type_sport'
 
     respond_to do |format|
       format.html {
