@@ -52,7 +52,6 @@ ActionController::Routing::Routes.draw do |map|
   #map.home'',  :controller => "editorial", :action => 'top_menu',  :topmenu_key =>  "fiscale" #"approfondimenti -->non c'è questa voce in TopMenu?" #FRONT END
 
   # Named Routes for static pages.
-  map.chisiamo '/chi_siamo', :controller => 'editorial', :action => 'chisiamo'
   map.cosaoffriamo '/cosa-offriamo', :controller => 'editorial', :action => 'pages_cosa-offriamo'
   map.contattaci '/contattaci', :controller => 'editorial', :action => 'pages_contattaci'
   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
