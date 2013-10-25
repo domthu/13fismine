@@ -71,8 +71,8 @@ class TopMenusController < ApplicationController
   # POST /top_menus
   # POST /top_menus.xml
   def create
+    @rendered_navigation2 = nil
     @top_menu = TopMenu.new(params[:top_menu])
-
     respond_to do |format|
       if @top_menu.save
         format.html { redirect_to(@top_menu, :notice => 'TopMenu was successfully created.') }
@@ -87,6 +87,7 @@ class TopMenusController < ApplicationController
   # PUT /top_menus/1
   # PUT /top_menus/1.xml
   def update
+    @rendered_navigation2 = nil
     @top_menu = TopMenu.find(params[:id])
 
     respond_to do |format|

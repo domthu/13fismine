@@ -11,6 +11,7 @@ img { border: none; margin: 0; }
 </style>
 </head>
 <body>
+<% defurl = "http://" + Setting.host_name %>
 <div class="strat">
 <table bgcolor="#EBA800" align="center" width="600" cellpadding="2" cellspacing="2">
 <tr><td ><font face="Segoe UI, Arial, Helvetica, sans-serif" size="1" color="#016284"><a target="_blank" href="<%= editorial_url %>" >Vai al sito <%= Setting.app_title %></a></font></td>
@@ -20,7 +21,7 @@ img { border: none; margin: 0; }
     <td bgcolor="#efefef" style="border-bottom: #666666 1px solid;" ><br>
       <TABLE border="0" align="center">
         <TR>
-          <TD style="color:	#016284"><img src="<%= auto_link(@fee_img) %>"" alt="" border="0"><h2><%= Setting.welcome_text_fs %></h2>
+          <TD style="color:	#016284"><img src="'<%= auto_link(@fee_img) %>'" alt="" border="0"><h2><%= Setting.welcome_text_fs %></h2>
           </TD>
         </TR>
       </TABLE>
@@ -34,24 +35,24 @@ img { border: none; margin: 0; }
         </TR>
         <TR>
           <TD>
-            <p style="font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 25px;color: #016284;">&nbsp;<br><h3><%= @title %></h3></p><br>
-            <p style="font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 16px;color: ##016285;">&nbsp;</p>
-            <p style="font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 14px;color: #666666;">
+            <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 25px;color: #016284;'>&nbsp;<br><h3><%= @title %></h3></p><br>
+            <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 16px;color: #016285;'>&nbsp;</p>
+            <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 14px;color: #666666;'>
             <%= yield %>
             </p>
             <table width="200" align="right" border="0" cellspacing="5" cellpadding="5">
               <tr>
-                <td><a href="#"><img src="images/fwd.gif" border="0" /></a></td>
-                <td><a href="#"><img src="images/sub.gif" border="0" /></a></td>
+                <td><a href="#"><img src="<%= defurl %>/images/fwd.gif" border="0" /></a></td>
+                <td><a href="#"><img src="<%= defurl %>/images/sub.gif" border="0" /></a></td>
               </tr>
             </table>
             <br>
-            <p style="font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 15px;color: #666666;">&nbsp;<%# Subtitle 02%></p>
-            <p style="font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 12px;color: #666666;">&nbsp;<%# content 02%></p>
+            <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 15px;color: #666666;'>&nbsp;<%# Subtitle 02%></p>
+            <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 12px;color: #666666;'>&nbsp;<%# content 02%></p>
             <table width="100%" align="center" cellpadding="5" cellspacing="5" style="border: #666666 1px solid;">
               <tr>
-                <td width="2%"><img src="images/person.gif"></td>
-                <td width="98%"><p style="font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 12px;color: #666666;"><a target="_blank" href="<%= editorial_url %>" >Vai a <%= Setting.app_title %> </a><%# auto_link(editorial_url) %></p></td>
+                <td width="2%"><img src="<%= defurl %>/images/person.gif"></td>
+                <td width="98%"><p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 12px;color: #666666;'><a target="_blank" href="<%= editorial_url %>" >Vai a <%= Setting.app_title %> </a><%# auto_link(editorial_url) %></p></td>
               </tr>
             </table>
             <br>

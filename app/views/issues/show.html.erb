@@ -75,9 +75,9 @@
         <legend></legend>
 
         <% unless @issue.summary.nil? %>
-        <p class="markblu">
+            <p class="markblu">
 
-            <%= @issue.summary.html_safe %></p>
+              <%= @issue.summary.html_safe %></p>
         <% end %>
       </fieldset>
   <% end %>
@@ -104,8 +104,7 @@
       <%= link_to_attachments @issue %>
   <% end -%>
   <%= call_hook(:view_issues_show_description_bottom, :issue => @issue) %>
-
-  <% if @relations.present? || User.current.allowed_to?(:manage_issue_relations, @project) %>
+  <% if @relations.present? && User.current.allowed_to?(:manage_issue_relations, @project) %>
       <hr/>
       <div id="relations">
         <%= render :partial => 'relations' %>
@@ -114,12 +113,12 @@
 
   <br/> <!-- bottone pubblica issue  o vedi news-->
 
-  <% if @issue.news_id && @issue.news_id > 0   %>
-  <div style="text-align: center;">
-    <hr>
-    <% form_for @issue, :url => {:controller => 'issue_moves', :action => 'new', :id => @issue} do |f2| %>
-        <p class="published-<%= @issue.is_public_fs?.to_s %>">
-          <%= l("label_reply_published" + @issue.is_public_fs?.to_s).to_sym %> <br/>&nbsp;</p>
+  <% if @issue.news_id && @issue.news_id > 0 %>
+      <div style="text-align: center;">
+        <hr>
+        <% form_for @issue, :url => {:controller => 'issue_moves', :action => 'new', :id => @issue} do |f2| %>
+            <p class="published-<%= @issue.is_public_fs?.to_s %>">
+              <%= l("label_reply_published" + @issue.is_public_fs?.to_s).to_sym %> <br/>&nbsp;</p>
 
             <% if authorize_for('move_issues', 'news_fast_reply') || User.current.admin? || User.current.ismanager? %>
                 <%= f2.submit(l(:button_issue_reply_article), :class => "button-blu") unless @issue.is_public_fs? %>
@@ -129,8 +128,9 @@
                 <%= link_to l(:button_news_from_issue), news_path(@issue.news_id), :class => "button-grey" %>
             <% end %>
         <% end %>
-    <% end %>
-  </div>
+      </div>
+  <% end %>
+
 </div>
 <%# se l'edizione e di tipo QUESITO quindi non pubblicato  %>
 <% if @issue.is_quesito? %>
@@ -245,22 +245,26 @@
       <%= render :partial => 'changesets', :locals => {:changesets => @changesets} %>
     </div>
 <% end %>
-<% if @journals.present? %>
-    <div id="history">
-      <h1><%= l(:label_history) %></h1>
-      <%= render :partial => 'history', :locals => {:issue => @issue, :journals => @journals} %>
-    </div>
-<% end %>
-<!-- Issue fast reply -->
-<% if !@issue.leaf? || User.current.allowed_to?(:manage_subtasks, @project) %>
-    <br/>
-    <div id="issue_fast_reply">
-      <div style="clear: both;"></div>
-      <h3 class="gradient-dx-blu"><%= l(:label_comment) %></h3>
-      <%= render :partial => 'edit_fast' %>
+<div class="issue ">
+  <% if @journals.present? %>
+
+      <div id="history">
+        <h1><%= l(:label_history) %></h1>
+        <%= render :partial => 'history', :locals => {:issue => @issue, :journals => @journals} %>
+      </div>
+  <% end %>
+  <!-- Issue fast reply -->
+  <% if !@issue.leaf? || User.current.allowed_to?(:manage_subtasks, @project) %>
       <br/>
-    </div>
-<% end %>
+
+      <div id="issue_fast_reply">
+        <div style="clear: both;"></div>
+        <h3 class="gradient-dx-blu"><%= l(:label_comment) %></h3>
+        <%= render :partial => 'edit_fast' %>
+        <br/>
+      </div>
+  <% end %>
+</div>
 <div style="clear: both;"></div>
 <%= render :partial => 'action_menu' %>
 <div style="clear: both;"></div>

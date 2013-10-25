@@ -613,6 +613,7 @@ it:
   label_download: "%{count} Download"
   label_download_plural: "%{count} Download"
   label_no_data: Non ci sono informazioni disponibili
+  label_no_art: L'articolo o gli articoli cercati sono stati rimossi, oppure non possono essere visualizzati nel sito ma solo via mail quando ricevi la nostra newsletter.
   label_no_user: Non ci sono utenti
   label_change_status: Cambia stato
   label_history: Cronologia
