@@ -1,55 +1,54 @@
-<div class="clearfix">
-  <div class="fs-blockheader">
-    <h3 class="t">Convegni ed Eventi</h3>
-  </div>
-
-  <div class="fs-blockcontent" style="margin-top: 5px;">
-    <% if @conv_prossimo.nil? %>
-        <div> Nessun evento o convegno previsto.
-        </div>
-    <% else %>
-
-        <article class="fs-article">
-          <div class="fs-convegni-border">
-            <div class="fs-convegni-block-data"><span>
-                        <%= @conv_prossimo.section %> &nbsp;</span>
-              <span><%= I18n.localize(@conv_prossimo.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
-            </div>
-            <div class="fs-convegni-futuri">
-              <div class="fs-lateral-blocks-head">
-                <%= link_to(h(@conv_prossimo.subject), url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %> </div>
-              <div class="fs-conv-block">
-                <%= image_tag art_image(@conv_prossimo, :s) %>
-                <%= link_to(h(@conv_prossimo.summary), url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %>
-                <%# link_to(h(smart_truncate(@conv_prossimo.summary, 120)), :controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false) %>
-              </div><div class="clearfix"></div>
-              <%= link_to "Visualizza... ", url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button" %>
-              <br/>&nbsp;<br/>
-            </div>
-          </div>
-        </article>
-    <% end %>
-    <% if @conv_futuri %>
-        <article class="fs-article">
-          <% @conv_futuri.each do |con| %>
+<% unless @conv_prossimo.nil? %>
+    <div class="fs-block clearfix">
+      <div class="fs-blockheader">
+        <h3 class="t">Convegni ed Eventi</h3>
+      </div>
+      <div class="fs-blockcontent" style="margin-top: 5px;">
+        <% if @conv_prossimo %>
+            <article class="fs-article">
               <div class="fs-convegni-border">
-                <div class="fs-convegni-block2-data"><span>
-                  <%= con.section %> &nbsp;</span>
-                  <span><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+                <div class="fs-convegni-block-data"><span>
+                        <%= @conv_prossimo.section %> &nbsp;</span>
+                  <span><%= I18n.localize(@conv_prossimo.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
                 </div>
                 <div class="fs-convegni-futuri">
                   <div class="fs-lateral-blocks-head">
-                    <%= link_to(h(con.subject), url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %> </div>
+                    <%= link_to(h(@conv_prossimo.subject), url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %> </div>
                   <div class="fs-conv-block">
-                    <%= image_tag art_image(con, :s) %>
-                    <%= link_to(h(smart_truncate(con.summary, 175)), url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %>
-                  </div><div class="clearfix"></div>
-                  <%= link_to "Visualizza...", url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button" %>
+                    <%= image_tag art_image(@conv_prossimo, :s) %>
+                    <%= link_to(h(@conv_prossimo.summary), url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %>
+                    <%# link_to(h(smart_truncate(@conv_prossimo.summary, 120)), :controller => 'editorial', :action => "evento", :id => @conv_prossimo.id, :escape => false) %>
+                  </div>
+                  <div class="clearfix"></div>
+                  <%= link_to "Visualizza... ", url_for(:controller => 'editorial', :action => "evento", :id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button" %>
+                  <br/>&nbsp;<br/>
                 </div>
-                <br/>&nbsp;<br/>
               </div>
-          <% end %>
-        </article>
-    <% end %>
-  </div>
-</div>
+            </article>
+        <% end %>
+        <% if @conv_futuri %>
+            <article class="fs-article">
+              <% @conv_futuri.each do |con| %>
+                  <div class="fs-convegni-border">
+                    <div class="fs-convegni-block2-data"><span>
+                  <%= con.section %> &nbsp;</span>
+                      <span><%= I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
+                    </div>
+                    <div class="fs-convegni-futuri">
+                      <div class="fs-lateral-blocks-head">
+                        <%= link_to(h(con.subject), url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %> </div>
+                      <div class="fs-conv-block">
+                        <%= image_tag art_image(con, :s) %>
+                        <%= link_to(h(smart_truncate(con.summary, 175)), url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %>
+                      </div>
+                      <div class="clearfix"></div>
+                      <%= link_to "Visualizza...", url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button" %>
+                    </div>
+                    <br/>&nbsp;<br/>
+                  </div>
+              <% end %>
+            </article>
+        <% end %>
+      </div>
+    </div>
+<% end %>

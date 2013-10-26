@@ -1,4 +1,13 @@
 <% if articolo %>
+    <script type="text/javascript">
+        function fbshareme() {
+            window.open(
+                    'http://www.facebook.com/sharer.php?s=100&p[title]=<%= ERB::Util.url_encode(articolo.subject)%>&p[summary]=<%= ERB::Util.url_encode(smart_truncate(articolo.summary, 220)) %>&p[url]=<%= link_to_articolo(articolo, :only_path => false).to_s %>&p[images][0]=<%= (art_image(articolo, :l, :only_path => false)) %>&p[images][1]=http://www.fiscosport.it/images/commons/fs_fb1.png&p[images][2]=http://www.fiscosport.it/images/commons/fs_fb2.png&p[images][3]=http://www.fiscosport.it/images/commons/fs_fb0.png',
+                    'facebook-share-dialog',
+                    'width=626,height=436'
+                );
+        }
+    </script>
     <div class="fs-postmetadataheader">
       <div class="fs-art-sezione-full">&nbsp;<%= articolo.section.full_name %></div>
       <div class="fs-postheader-full">      <%= articolo.subject %>  </div>
@@ -26,19 +35,13 @@
           </div>
           <div class='fs-social'>
             <div class='fs-social-fb '>
-              <% @fb = "http://www.facebook.com/sharer.php?s=100&amp;p[url]=#{link_to_articolo(articolo, :only_path => false).to_s
-              }&amp;p[images][0]=#{request.protocol}#{request.host_with_port}/images/commons/fb_fs.png
-              }&amp;p[title]=#{ERB::Util.url_encode(articolo.subject)
-              }&amp;p[summary]=#{ERB::Util.url_encode(smart_truncate(articolo.summary, 200))}" %>
-              <a href="<%= @fb %>" target="_blank" title="Condividi in Facebook">
-                <%= image_tag "ico/fb-share.jpg" %>    </a>
+              <%= image_tag "ico/fb-share.jpg",:onclick=> 'fbshareme()' %>
             </div>
             <div class='fs-social-tw '>
               <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
               <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
             </div>
             <div class='fs-social-gp '>
-              <!-- Place this tag where you want the +1 button to render. -->
               <div class="g-plusone" data-size="medium" data-recommendations="false">
                 <!-- Place this tag after the last +1 button tag. -->
                 <script type="text/javascript">
@@ -63,7 +66,6 @@
     </div>
     <div class="clearfix">&nbsp; <br/></div>
     <div class="fs-layout-cell layout-item-1">
-
      <div id="fs-articolo-full ">
         <%= raw(articolo.description) %>
         <br/>

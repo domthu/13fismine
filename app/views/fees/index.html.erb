@@ -177,7 +177,7 @@
     <legend>Utenti senza ruolo: <b><%= @num_no_role %></b></legend>
     <% form_tag({:action => 'index', :verify => 1}, :class => "tabular") do %>
         <br/> &nbsp;
-        <%= submit_tag l(:button_verify) %>
+        <%# submit_tag l(:button_verify) %>
         <br/>
     <% end %>
     <% if !@msg.nil? && @msg.any? %>

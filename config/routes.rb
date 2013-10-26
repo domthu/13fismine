@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.emailctrl 'emailctrl', :controller => 'services', :action => 'emailctrl', :conditions => {:method => [:get]}
   map.privacy 'privacy', :controller => 'services', :action => 'privacy', :conditions => {:method => [:get]}
   map.condition 'condition', :controller => 'services', :action => 'condition', :conditions => {:method => [:get]}
+  map.webdesigner 'webdesigner', :controller => 'services', :action => 'webdesigner', :conditions => {:method => [:get]}
   map.zone 'zone', :controller => 'services', :action => 'zone', :conditions => {:method => [:get]}
   map.zone_extend 'zone_extend', :controller => 'services', :action => 'zone_extend', :conditions => {:method => [:get]}
 
@@ -51,7 +52,6 @@ ActionController::Routing::Routes.draw do |map|
   #map.home'',  :controller => "editorial", :action => 'top_menu',  :topmenu_key =>  "fiscale" #"approfondimenti -->non c'è questa voce in TopMenu?" #FRONT END
 
   # Named Routes for static pages.
-  map.chisiamo '/chi_siamo', :controller => 'editorial', :action => 'chisiamo'
   map.cosaoffriamo '/cosa-offriamo', :controller => 'editorial', :action => 'pages_cosa-offriamo'
   map.contattaci '/contattaci', :controller => 'editorial', :action => 'pages_contattaci'
   map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
@@ -80,15 +80,8 @@ ActionController::Routing::Routes.draw do |map|
   map.profile_edit '/chi-siamo/profilo/:id/edit', :controller => 'editorial', :action => 'profilo_edit'
   map.profile_destroy '/chi-siamo/profilo/:id/destroy', :controller => 'editorial', :action => 'profilo_destroy'
   map.profile_update '/chi-siamo/profilo/:id/update', :controller => 'editorial', :action => 'profilo_update'
-
-    #to match override act_as_event after search
-  #map.edizioneid '/editoriale/newsletter/:id', :controller => 'editorial', :action => 'edizione'
-  #map.articoli '/articoli', :controller => 'editorial', :action => 'articoli'
-  #to match override act_as_event after search
-  #map.articoloid '/editoriale/articolo/:id', :controller => 'editorial', :action => 'articolo'
-  #map.accedi        '/accedi', :controller => 'editorial', :action => 'login'
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
-  #map.register '/account/registrati', :controller => 'account', :action => 'register'
+  map.newsletter_del '/account/newsletter', :controller => 'account', :action => 'delete_from_newsletter'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
   map.prova_gratis 'prova_gratis', :controller => 'account', :action => 'prova', :conditions => {:method => [:post]}
   map.banners_position '/group_banners/position',:controller => 'group_banners', :action=> 'positions', :conditions => {:method => [:get]}

@@ -1,6 +1,5 @@
 <% remote_form_for(:user, :url => { :action => 'edit_dati', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
 <%# form_for @user, :url => { :action => 'edit_dati', :id => @user}, :builder => TabularFormBuilder do |f| %>
-
   <%= error_messages_for 'edit_dati' %>
 
   <div id="edit_dati_form">
@@ -32,11 +31,8 @@
         <legend><%=l(:label_contatti)%></legend>
 
         <p><%= f.text_field :sede, :label => :field_sede, :required => false, :size => 25  %></p>
-        <p><%= f.text_field :telefono, :label => :field_telefono, :required => false, :size => 25  %></p>
-        <p><%= f.text_field :fax, :label => :field_fax, :required => false, :size => 25  %></p>
-        <p><%= f.text_field :telefono2, :label => :field_telefono2, :required => false, :size => 25  %></p>
-        <p><%= f.text_field :mail2, :label => :field_mail2, :required => false, :size => 25  %></p>
-        <p><%= f.text_field :codice_attivazione, :label => :field_codice_attivazione, :required => false, :size => 25  %></p>
+
+
         <p><%= f.text_field :iva_, :label => :field_iva_, :required => false, :size => 25  %></p>
         <p><%= f.text_field :codicefiscale, :label => :field_codicefiscale, :required => false, :size => 25  %></p>
         <p><%= f.text_field :partitaiva, :label => :field_partitaiva, :required => false, :size => 25  %></p>
@@ -49,7 +45,6 @@
         <p><%= f.text_field :registrato, :label => :field_registrato, :required => false, :size => 25  %></p>
         <p><%= f.text_field :num_reg_coni, :label => :field_num_reg_coni, :required => false, :size => 25  %></p>
           <p><%= f.check_box :use_gravatar, :label => :field_abbonato  %> </p>
-          <p><%= f.check_box :disabilitato, :label => :field_disabilitato  %> </p>
           <p><%= f.check_box :se_condition, :label => :field_se_condition  %> </p>
           <p><%= f.check_box :se_privacy, :label => :field_se_privacy  %> </p>
 

@@ -87,7 +87,6 @@ jQuery(window).bind("responsive", function (event, responsiveDesign) {
     'use strict';
     responsiveCollages(responsiveDesign);
     responsiveImages(responsiveDesign);
-    responsiveVideos(responsiveDesign);
 });
 
 function responsiveImages(responsiveDesign) {
@@ -150,22 +149,7 @@ function responsiveCollages(responsiveDesign) {
     });
 }
 
-function responsiveVideos(responsiveDesign) {
-    "use strict";
-    jQuery("iframe,object,embed").each(function () {
-        var obj = jQuery(this);
-        var container = obj.parent(".fs-responsive-embed");
-        if (responsiveDesign.isResponsive) {
-            if (container.length !== 0)
-                return;
-            container = jQuery("<div class=\"fs-responsive-embed\">").insertBefore(obj);
-            obj.appendTo(container);
-        } else if (container.length > 0) {
-            obj.insertBefore(container);
-            container.remove();
-        }
-    });
-}
+
 
 jQuery(window).bind("responsiveResize", function (event, responsiveDesign) {
     "use strict";
@@ -241,6 +225,9 @@ jQuery(window).bind("responsiveResize", function (event, responsiveDesign) {
     "use strict";
     responsiveAbsBg(responsiveDesign, jQuery("nav.fs-nav"), jQuery("#fs-hmenu-bg"));
     responsiveNavFit(responsiveDesign);
+    responsiveNav2Fit(responsiveDesign);
+    responsiveLoginFit(responsiveDesign);
+
 });
 
 function responsiveNavFit(responsiveDesign) {
@@ -261,33 +248,56 @@ function responsiveNavFit(responsiveDesign) {
                 isResponsiveNav = true;
                 isDesktopNav = false;
             }
-        } else {
-            var desktopRestoreWidth = parseInt(nav.attr("data-restore-width"), 10) || 0;
-            if (desktopRestoreWidth !== 0 && responsiveDesign.windowWidth <= desktopRestoreWidth) {
+} else {
+    var desktopRestoreWidth = parseInt(nav.attr("data-restore-width"), 10) || 0;
+    if (desktopRestoreWidth !== 0 && responsiveDesign.windowWidth <= desktopRestoreWidth) {
+        isResponsiveNav = true;
+        isDesktopNav = false;
+    }
+}
+}
+
+if (isDesktopNav) {
+nav.removeClass("responsive-nav").addClass("desktop-nav").removeAttr("data-restore-width");
+}
+
+jQuery(window).trigger("responsiveNav", {isDesktopNav: isDesktopNav, isResponsiveNav: isResponsiveNav});
+}
+function responsiveNav2Fit(responsiveDesign) {
+    'use strict';
+    var nav = jQuery("nav.fs-menu2-nav");
+    var isDesktopNav = true;
+    var isResponsiveNav = false;
+    if (responsiveDesign.isResponsive) {
+        if (!nav.hasClass("responsive-nav2")) {
+            var itemsWidth = 0;
+            var menu = nav.find(".fs-menu2-hmenu");
+            menu.children("li").each(function() {
+                itemsWidth += jQuery(this).outerWidth(true);
+            });
+
+            if (menu.width() < itemsWidth || responsiveDesign.isPhone) {
+                nav.attr("data-restore-width", responsiveDesign.windowWidth).addClass("responsive-nav2").removeClass("desktop-nav");
                 isResponsiveNav = true;
                 isDesktopNav = false;
             }
-        }
-    } 
-
-    if (isDesktopNav) {
-        nav.removeClass("responsive-nav").addClass("desktop-nav").removeAttr("data-restore-width");
+} else {
+    var desktopRestoreWidth = parseInt(nav.attr("data-restore-width"), 10) || 0;
+    if (desktopRestoreWidth !== 0 && responsiveDesign.windowWidth <= desktopRestoreWidth) {
+        isResponsiveNav = true;
+        isDesktopNav = false;
     }
+}
+}
 
-    jQuery(window).trigger("responsiveNav", {isDesktopNav: isDesktopNav, isResponsiveNav: isResponsiveNav});
+if (isDesktopNav) {
+nav.removeClass("responsive-nav2").addClass("desktop-nav").removeAttr("data-restore-width");
+}
+
+jQuery(window).trigger("responsiveNav2", {isDesktopNav: isDesktopNav, isResponsiveNav: isResponsiveNav});
 }
 
 
-jQuery(function($) {
-    "use strict";
-    $(".fs-menu2-hmenu a").each(function() {
-        var link = $(this);
-        if (link.get(0).href === location.href) {
-            link.addClass("active").parents("li").addClass("active");
-            return false;
-        }
-    });
-});
 
 jQuery(window).bind("responsiveNav", function (event, options) {
     /*global menuExtendedCreate */
@@ -353,25 +363,35 @@ jQuery(window).bind("responsive", function (event, responsiveDesign) {
     responsiveLayoutCell(responsiveDesign);
 });
 
-function responsiveLayoutCell(responsiveDesign) {
-    "use strict";
-    jQuery(".fs-content .fs-content-layout-row,.fs-footer .fs-content-layout-row").each(function () {
-        var row = jQuery(this);
-        var rowChildren = row.children(".fs-layout-cell");
-        if (rowChildren.length > 1) {
-            if (responsiveDesign.isTablet) {
-                rowChildren.addClass("responsive-tablet-layout-cell").each(function (i) {
-                    if ((i + 1) % 2 === 0) {
-                        jQuery(this).after("<div class=\"cleared responsive-cleared\">");
-                    }
-                });
-            } else {
-                rowChildren.removeClass("responsive-tablet-layout-cell");
-                row.children(".responsive-cleared").remove();
+
+
+function responsiveLoginFit(responsiveDesign) {
+    'use strict';
+    var nav = jQuery("aside.fs-tramenu-wrapper");
+    var isDesktopNav = true;
+    var isResponsiveNav = false;
+    if (responsiveDesign.isResponsive) {
+        if (!nav.hasClass("responsive-tramenu")) {
+                nav.attr("data-restore-width", responsiveDesign.windowWidth).addClass("responsive-tramenu").removeClass("desktop-tramenu");
+                isResponsiveNav = true;
+                isDesktopNav = false;
+        } else {
+            var desktopRestoreWidth = parseInt(nav.attr("data-restore-width"), 10) || 0;
+            if (desktopRestoreWidth !== 0 && responsiveDesign.windowWidth <= desktopRestoreWidth) {
+                isResponsiveNav = true;
+                isDesktopNav = false;
             }
         }
-    });
+    }
+
+    if (isDesktopNav) {
+        nav.removeClass("responsive-tramenu").addClass("desktop-tramenu").removeAttr("data-restore-width");
+    }
+
+    jQuery(window).trigger("responsiveNav", {isDesktopNav: isDesktopNav, isResponsiveNav: isResponsiveNav});
 }
+
+
 
 
 

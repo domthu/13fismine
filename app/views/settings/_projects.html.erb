@@ -10,6 +10,14 @@
       <p><%= setting_select :new_project_user_role_id,
                             Role.find_all_givable.collect { |r| [r.name, r.id.to_s] },
                             :blank => "--- #{l(:actionview_instancetag_blank_option)} ---" %></p>
-    </div>
+
+    <br />
+
+    <p><span style="font-size: 0.8em; font-style: italic;">Scrivi per comunicare con i collaboratori, ogni tag di paragrafo &lt;p&gt;&lt;/p&gt; crea uno sticky nuovo</span>
+      <%= setting_text_area :info_staff %></p>
     <div class="btn-footer"><%= submit_tag l(:button_save), :class => 'button-grey' %></div>
+    </div>
 <% end %>
+<script type="text/javascript">
+    CKEDITOR.replace('settings_info_staff', { toolbar:'Light', height:'300' });
+</script>

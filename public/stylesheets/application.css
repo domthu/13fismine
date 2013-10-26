@@ -252,12 +252,14 @@ div.eventi h3  { background: url(../images/calendar.png) no-repeat 0% 50%; paddi
 .convegni  { background: url(../images/calendar.png) no-repeat 0% 50%; padding-left: 20px; }
 div.quesiti h3  { background: url(../images/wiki_edit.png) no-repeat 0% 50%; padding-left: 20px; }
 .responses { background: url(../images/wiki_edit.png) no-repeat 0% 50%; padding-left: 20px; }
-.domand_wait { background: url(../images/time.png) no-repeat 0% 50%; padding-left: 20px; }
-.domand_ko { background: url(../images/task_late.png) no-repeat 0% 50%; padding-left: 20px; }
-.domand_ok { background: url(../images/task_done.png) no-repeat 0% 50%; padding-left: 20px; }
-.domand_x { background: url(../images/help.png) no-repeat 0% 50%; padding-left: 20px; }
-
-
+.domand_wait { background: url(../images/time.png) no-repeat 0% 50%; }
+.domand_ko { background: url(../images/task_late.png) no-repeat 0% 50%;}
+.domand_ok { background: url(../images/task_done.png) no-repeat 0% 50%;  }
+.domand_x { background: url(../images/help.png) no-repeat 0% 50%; }
+h3.domand_ok , h3.domand_ko , h3.domand_wait ,h3.domand_x   {  padding-left: 20px; min-height: 66px; height: 66px; display: table-cell; vertical-align: middle;  }
+.published-false { background: url(../images/bullet_diamond.png) no-repeat 50% 120%; }
+.published-true { background: url(../images/true.png) no-repeat 50% 120%; }
+div.published-false , div.published-true{padding-left: 20px; min-height: 2em; height: 2em;}
 #watchers ul {margin: 0;  padding: 0;}
 #watchers li {list-style-type:none;margin: 0px 2px 0px 0px; padding: 0px 0px 0px 0px;}
 #watchers select {width: 95%; display: block;}
@@ -289,7 +291,8 @@ div.square {
 .contextual {float:right; white-space: nowrap; line-height:1.4em;margin-top:5px; padding-left: 10px; font-size:0.9em;}
 .contextual input, .contextual select {font-size:0.9em;}
 .message .contextual { margin-top: 0; }
-
+.splitcontentleft-l{float:left; width:59%; margin-top: 1%;}
+.splitcontentright-s{float:left; width:39%;padding-left: 2%; margin-top: 1%;}
 .splitcontentleft{float:left; width:49%;}
 .splitcontentright{float:right; width:49%;}
 form {display: inline;}
@@ -462,6 +465,17 @@ width: auto;
 float:none;
 margin-left: 5px !important;
 width: auto;
+}
+.floating-items3{
+font-weight: normal;
+margin-left: 0;
+text-align: left;
+width: 48%;
+border: solid 1px #d2e8ff;
+margin-bottom: 1px;
+margin-right: 1px;;
+float:left;
+display: table-cell;
 }
 
 label.no-css {
@@ -1095,7 +1109,9 @@ h2 img { vertical-align:middle; }
 .icon-no-role { background-image: url(../images/exclamation.png); padding-left: 16px;}
 .icon-no-user { background-image: url(../images/bullet_delete.png); padding-left: 16px;}
 .description{color:#2C4056; background-color:#FFFFFF; padding: 5px;} /*font-weight: bold; */
-.risposta{margin: 20px ;border: solid 1px blue; padding: 10px;}
+.risposta{margin: 1%; border: double 1px #d2e8ff; padding: 1%;}
+.rispostatxt{background-color: #FFF; padding: 1%; border: 1px solid #d3d3d3;}
+
 .fs-quesiti-status-icon {
     background-image: url('/images/commons/quesito-status.jpg');
     width: 100px;
@@ -1520,3 +1536,57 @@ hr.quesiti hr {
     font-weight: bold;
 
 }
+.noborder{
+    border: 0!important;
+}
+.markblu {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #2A5685;
+}
+.markblu h3{
+    color: #2A5685;
+}
+#notes ul {
+    margin:  0!important;
+    padding: 0!important;
+}
+#notes p {
+    position: relative;
+    width: 86%;
+    min-height: 100px;
+    margin: 30px 0;
+    padding: 24px 10px ;
+    border-radius:3px;
+    background: -webkit-linear-gradient(#F9EFAF, #F7E98D);
+    background: -moz-linear-gradient(#F9EFAF, #F7E98D);
+    background: -o-linear-gradient(#F9EFAF, #F7E98D);
+    background: -ms-linear-gradient(#F9EFAF, #F7E98D);
+    background: linear-gradient(#F9EFAF, #F7E98D);
+    box-shadow:0 4px 6px rgba(0,0,0,0.1);
+    transition:box-shadow 0.5s ease;
+    font-smoothing:subpixel-antialiased;
+    }
+#notes p:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
+#notes p:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
+#notes p:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 33%;
+    top: -15px;
+    width: 75px;
+    height: 25px;
+    z-index: 2;
+    background-color: rgba(255, 244, 172, 0.48);
+    border: 2px solid rgba(255,255,255,0.5);
+    -webkit-box-shadow: 0 0 5px #c5c5c5;
+    -moz-box-shadow: 0 0 5px #c5c5c5;
+    box-shadow: 2px 2px 2px #c5c5c5;
+    -webkit-transform: rotate(-6deg);
+    -moz-transform: rotate(-6deg);
+    -o-transform: rotate(-6deg);
+}
+
+
+

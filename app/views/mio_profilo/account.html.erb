@@ -137,7 +137,7 @@
           <%= f.hidden_field :comune_id, {:style => 'width:99%;'} %>
           <%= text_field_tag "extra_town" %>
           <p class="notice-in fs-flash-in" style="text-align: left; padding: 18px 40px;">Digitare almeno 2
-            caratteri per iniziare la ricerca. Usa la rotella per caricare altre risposte possibili
+            caratteri per iniziare la ricerca. Usa la rotellina del mouse per caricare altre risposte possibili
           </p>
         </div>
       </div>
@@ -161,15 +161,16 @@
 
         <div class="notice-in fs-flash-in"> Cerca la tua organizzazione sportiva qui sotto.</div>
         <div style="width:98%; margin-left: 7px;">
-          <%= f.select :cross_organization_id, options_for_select(CrossOrganization.find(
-                                                                          :all,
-                                                                          :joins => [:type_organization],
-                                                                          :order => 'type_organizations.tipo, sigla').collect { |c| ["#{c.type_organization.tipo} :: #{c.sigla}", c.id] }),
-                       :include_blank => true,
-                       :required => false %>
+          <%= f.select :cross_organization_id, options_for_select(CrossOrganization.find(:all,
+                                                                             :include => :type_organization,
+                                                                             :conditions => "se_visibile = 1 OR #{TypeOrganization.table_name}.type_sport = 1" ,
+                                                                             :joins => [:type_organization],
+                                                                             :order => 'type_organizations.tipo, sigla').collect { |c| ["#{c.type_organization.tipo} :: #{c.sigla}", c.id] }),
+                                                                             :include_blank => true,
+                                                                             :required => false %>
 
           <p style="padding: 1px 20px;">
-            <% TypeOrganization.all.each do |tipo| %>
+            <% TypeOrganization.find(:all, :conditions => 'type_sport = 1').each do |tipo| %>
                 <small><%= tipo.descrizione %></small>
                 &nbsp; &nbsp;&nbsp;&nbsp;
             <% end %>

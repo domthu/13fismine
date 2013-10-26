@@ -18,20 +18,6 @@
 class WelcomeController < ApplicationController
   caches_action :robots
 
-#before_filter: autorize
-
-#domthu permission :access_back_end, :welcome => :index, :require => :loggedin
-#add permission to control navigation role
-#Admin e power_user sono definiti da campi della tabella User
-#RUOLI
-#MANAGER --> ok
-#REDATTORE --> ok
-#ABBONATO --> KAPPAO
-#Anomimo --> KAPPAO
-#GUEST --> KAPPAO
-#SCADUTI --> KAPPAO
-#ARCHIVIATI --> KAPPAO
-
   def index
     #domthu redirect
     if (not User.current.logged?) || (not User.current.allowed_to?(:access_back_end, nil, :global => true))

@@ -1106,7 +1106,7 @@ class User < Principal
                   'tariffa_precedente',
                   'power_user',
                   'conferma_registrazione',
-                  'disabilitato',
+                  'no_newsletter',
                   'iva_precedente',
                   'pagamento_precedente',
                   'data_ultimo_pagamento',

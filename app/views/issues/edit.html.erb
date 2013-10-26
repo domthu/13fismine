@@ -3,7 +3,6 @@
 <% content_for :header_tags do %>
     <%= robot_exclusion_tag %>
 <% end %>
-
 <% if @issue.news_id && @issue.news_id > 0 && @issue.quesito_news && @news %>
   <div class="box <%= @issue.css_box()%>"> <%#splitcontentright%>
     <fieldset class="">

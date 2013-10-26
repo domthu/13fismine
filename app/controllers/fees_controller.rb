@@ -61,7 +61,6 @@ class FeesController < ApplicationController
     #  FeeConst::ROLE_VIP            = 9
     @name_admin = User.all(:conditions => {:admin => 1})
     @name_admin_count = @name_admin.count
-    #name_power_user = User.all(:conditions => {:power_user => 1})
     @name_manager = User.all(:conditions => {:role_id => FeeConst::ROLE_MANAGER})
     @name_manager_count = @name_manager.count
     @name_author = User.all(:conditions => {:role_id => FeeConst::ROLE_AUTHOR})

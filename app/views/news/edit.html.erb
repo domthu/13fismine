@@ -2,20 +2,21 @@
 
 <% labelled_tabular_form_for @news, :html => { :id => 'news-form', :method => :put } do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>
-
+<!--
 <% if @news.is_quesito? %>
   <% if @news.is_wait_reply? %>
       <p>
-        <%= submit_tag l(:button_news_fast_reply), :class => 'button-blu' %>
+        <%= submit_tag l(:button_news_fast_reply), :class => 'button-grey' %>
       </p>
   <% elsif @news.is_fast_reply? %>
       <p>
-        <%= submit_tag l(:button_news_fast_reply), :class => 'button-blu' %>
+        <%= submit_tag l(:button_news_fast_reply), :class => 'button-gery' %>
       </p>
   <% end %>
 <% else %>
   <%= submit_tag l(:button_save) %>
 <% end %>
+
 
 <%= link_to_remote l(:label_preview),
                    { :url => preview_news_path(:project_id => @project),
@@ -25,7 +26,7 @@
                    }, :accesskey => accesskey(:preview) %>
 <% end %>
 <div id="preview" class="wiki"></div>
-
+-->
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'scm' %>
 <% end %>

@@ -1,5 +1,5 @@
 <div class="fs-layout-cell fs-content clearfix">
-  <div class="fs-content-layout" style="width: 49%; float:left;">
+  <div class="fs-content-layout fs-chisiamo-boxminwidt">
     <div class="fs-content-layout-row">
       <div class="fs-layout-cell post-layout-item-3">
         <article class="fs-post-profile fs-article">
@@ -18,7 +18,7 @@
       </div>
     </div>
   </div>
-  <div class="fs-content-layout" style="width: 49%; float:left;">
+  <div class="fs-content-layout fs-chisiamo-boxminwidt">
     <div class="fs-content-layout-row">
       <div class="fs-layout-cell post-layout-item-3">
         <article class="fs-post-profile fs-article">
@@ -36,11 +36,12 @@
       </div>
     </div>
   </div>
-  <div class="fs-content-layout" style="width: 98%">
+  <div class="clearfix"></div>
+  <div class="fs-content-layout fs-chisiamo-boxminwidt2">
     <div class="fs-content-layout-row">
       <div class="fs-layout-cell post-layout-item-3">
-        <article class="fs-post-profile fs-article">
-          <h3 class="fs-postheader">COLLABORATORI DELLA REDAZIONE </h3>
+        <article class="fs-post-profile fs-article ">
+          <h3 class="fs-postheader">COLLABORATORI DI REDAZIONE </h3>
           <% @collaboratori.each do |item| %>
               <div class="fs-chisiamo-item2">
                 <%= link_to(item.user.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>

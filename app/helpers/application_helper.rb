@@ -44,13 +44,6 @@ module ApplicationHelper
     end
   end
 
-  def fburl(articolo)
-    "http://www.facebook.com/sharer.php?s=100&p[title]=#{ERB::Util.url_encode(articolo.subject)
-    }&p[summary]=#{ERB::Util.url_encode(smart_truncate(articolo.summary, 30))
-    }&p[url]=#{ERB::Util.url_encode(link_to_articolo(articolo, :only_path => false))
-    }&p[images][0]=#{ERB::Util.url_encode(art_image(articolo, :s))}"
-
-  end
 
   def link_to_articolo(articolo, options={})
     title = options[:title] || " "
@@ -1370,6 +1363,7 @@ module ApplicationHelper
         return ""
     end
   end
+
   #nel be mette l'icona ecco i parametri :
   #usr utente , parametro obbligatorio occorre sempre per primo
   #size: l per large 50px  :s per small 25px
@@ -1403,7 +1397,35 @@ module ApplicationHelper
       return s
     end
   end
-
+  def iconized_name_byid(user_or_roleid)
+      if user_or_roleid.is_a?(User)
+        abbo = user_or_roleid.role_id
+      else
+        abbo = user_or_roleid
+      end
+      case abbo
+        when 1
+        return 'admin'
+        when 3
+         return 'man'
+        when 4
+          return 'auth'
+        when 10
+          return 'vip'
+        when 6
+          return 'abbo'
+        when 9
+          return 'reg'
+        when 11
+          return 'renew'
+        when 7
+          return 'exp'
+        when 8
+          return 'arc'
+        else
+          return "question"
+      end
+    end
 #######################
   private
 

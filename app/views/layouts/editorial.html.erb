@@ -61,7 +61,10 @@
               $("#carousel_tramenu_js").carouFredSel({
                   responsive:true,
                   scroll:{
-                      fx:"crossfade"
+                      fx:"crossfade",
+                      easing : "swing",
+                       duration : 2000
+
                   },
                   items:{
                       visible:1,
@@ -147,15 +150,19 @@
         <% end %>
       </div>
     </header>
+    <div class="fs-responsive-loginbg"></div>
     <nav class="fs-nav clearfix">
-      <%= render_navigation(:level => 1) %>
+      <%= @rendered_navigation1 ||= render_navigation(:context=> 'giallo') %>
     </nav>
-    <div id="fs-tramenu-wrapper">
+
+    <aside class="fs-tramenu-wrapper">
       <%= render :partial => 'editorial/tramenu_block' %>
-    </div>
+    </aside>
+
     <nav class="fs-menu2-nav clearfix">
-      <%= render_navigation(:level => 2..3, :expand_all => true) %>
+       <%= @rendered_navigation2 ||= render_navigation(:context=> 'rosso', :level => 1..2, :expand_all => true) %>
     </nav>
+    <div class="clearfix"></div>
     <div id="fs-flash" style="display:none;">
       <% flash.each do |key, msg| %>
           <p class='f-<%= key.to_s %>'><span class='<%= key.to_s %>-fs'> </span>  <%= msg %> </p>
@@ -172,16 +179,16 @@
     </div>
     <div id="toTop" style="display: none;"></div>
     <div id="ajax-indicator" style="display: none;"><span><%= l(:label_loading) %></span></div>
-    <footer class="fs-footer clearfix">
       <p>
         <%= render :partial => 'editorial/footer' %>
       </p>
-    </footer>
   </div>
+
   <div class="fs-page-footer">
-    <div class="clearfix"></div>
-    <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank"></a></span>
-  </div>
+      <div class="clearfix"></div>
+      <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank"></a></span>
+    </div>
+
 </div>
 
 </body>

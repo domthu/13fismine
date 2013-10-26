@@ -1,24 +1,24 @@
 <% if @issue.quesito_news.issues.count > 1 %>
-  <hr>
-  <h4><%= l(:label_reply_members) %></h4>
-  <ul>
-    <% @issue.quesito_news.issues.each do |other_issue|
-      if other_issue.id != @issue.id %>
-        <li>
-        <% if !other_issue.description? %>
-          <%# risposta non elaborata: il redatore assegnato deve rispondere %>
-          <%= link_to other_issue %>, autore: <%= link_to other_issue.author, :class => 'icon icon-news_reply_todo' %>
-        <% else %>
-          <%# risposta elaborata: in corso se si trova dentro il progetto QUESITO_KEY o no %>
-          <% if other_issue.project.identifier == FeeConst::QUESITO_KEY %>
-            <%= link_to other_issue %>, autore: <%= link_to other_issue.author, :class => 'icon icon-edit' %>
-          <% else %>
-            <%= link_to other_issue %>, autore: <%= link_to other_issue.author, :class => 'icon icon-reply-done' %>
+    <h4>Altri articoli di risposta:</h4>
+    <ul>
+      <% @issue.quesito_news.issues.each do |other_issue|
+        if other_issue.id != @issue.id %>
+              <li>
+                <% if !other_issue.description? %>
+                    <%# risposta non elaborata: il redatore assegnato deve rispondere %>
+                    <%= link_to other_issue, issue_path(other_issue.id) %>,
+                    autore: <%= link_to other_issue.author,user_path(other_issue.author.id), :class => 'icon icon-news_reply_todo' %>
+                <% else %>
+                    <% if other_issue.project.identifier == FeeConst::QUESITO_KEY %>
+                        <%= link_to other_issue, issue_path(other_issue.id) %>,
+                        autore: <%= link_to other_issue.author,user_path(other_issue.author.id), :class => 'icon icon-edit' %>
+                    <% else %>
+                        <%= link_to other_issue, issue_path(other_issue.id) %>,
+                        autore: <%= link_to other_issue.author,user_path(other_issue.author.id),  :class => 'icon icon-reply-done' %>
+                    <% end %>
+                <% end %>
+              </li>
           <% end %>
-        <% end %>
-        </li>
       <% end %>
-    <% end %>
-  </ul>
-  </p>
+    </ul>
 <% end %>

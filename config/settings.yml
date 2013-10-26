@@ -266,7 +266,11 @@ template_fee_proposal:
     La squadra di Fiscosport
     @@logged_username@@
   "
+info_staff:
+  default: ""
 info_fs:
+  default: ""
+footer_fs:
   default: ""
 info_promoted_fs:
   default: 0

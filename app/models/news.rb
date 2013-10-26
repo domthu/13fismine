@@ -103,6 +103,39 @@ class News < ActiveRecord::Base
     end
   end
 
+  def quesito_status_fs_text_be
+
+    if self.status_id.nil?
+      "<h3>Quesito nuovo, non assegnato/risposto.</h3>"
+    else
+      case self.status_id
+        when FeeConst::QUESITO_STATUS_WAIT #=  1 #IN ATTESA - RICHIESTA
+          "<h3 class=" + self.get_state_css + ">Quesito nuovo, non assegnato/risposto.</h3>"
+        when FeeConst::QUESITO_STATUS_FAST_REPLY #= 2 #RISPOSTA VELOCE TRAMITE NEWS
+          "<h3 class=" + self.get_state_css + ">Risposta rapida al quesito.</h3>"
+        when FeeConst::QUESITO_STATUS_ISSUES_REPLY #=   3 #RISPOSTA TRAMITE ARTICOLO/I
+          pub = self.issues.all_public_fs.count
+          nop = self.issues.count
+          if nop == 0 #se non ha niente caso strano perchè si dovrebbe creare un articolo di risposta subito...
+            "<h3 class=" + self.get_state_css + ">Il quesito è stato accettato.</h3>"
+          else
+            if pub == 0 #se non è stato pubblicato ...
+              "<h3 class=" + self.get_state_css + "> " + (nop == 1 ? "Creato 1 articolo per la risposta, stato: non pubblicato" : "Creati " + nop.to_s + " per la risposta, stato: non pubblicati") + ".</h3>"
+            else
+              n = nop - pub
+              s = "<h3 class=" + self.get_state_css + ">Articoli di riposta al quesito:" + (pub == 1 ? " 1 pubblicato " : pub.to_s + " pubblicati ")
+              if n > 0
+                s += (n == 1 ? " 1 articolo non pubblicato" : n.to_s + " articoli non pubblicati") + "</h3> "
+              end
+              return s
+            end
+          end
+        else
+          "Status non conosciuto"
+      end
+    end
+  end
+
   def quesito_status_fs_number
     if self.status_id.nil?
       FeeConst::QUESITO_STATUS_WAIT
@@ -159,12 +192,20 @@ class News < ActiveRecord::Base
   end
 
   def quesito_new_default_title(user=User.current)
+=begin
+    @c = 0
+    @sa = News.all(:conditions => "created_on = #{Date.today}")
+    puts ">>>>>>>>>>>>>>> >>>>>>>>>>>>>>> " + @sa.count.to_s
+   @c = @sa.count.to_s
+     puts ">>>>>>>>>>>>>>> >>>>>>>>>>>>>>> " + @c.to_s
+
+=end
     if user.nil?
       'Utente non identificato '
     else
-      s = 'QUESITO_' + DateTime.now.strftime("%y%m%d") + '_UTENTE[n°'
+      s = 'QUESITO[n°' + DateTime.now.strftime("%y%m%d") + '] UTENTE[n°'
       s += user.id.to_s + '] '
-      s += user.firstname? ? user.firstname.to_s : ''
+      s += user.firstname? ? (user.firstname.to_s + " ") : ''
       s += user.lastname? ? user.lastname.to_s : ''
       return s
     end

@@ -170,7 +170,8 @@ it:
   general_csv_encoding: ISO-8859-1
   general_pdf_encoding: UTF-8
   general_first_day_of_week: '1'
-
+  notice_updated: "Aggionamento riuscito."
+  notice_not_updated: "Aggionamento non riuscito."
   notice_account_updated: "Profillo utente aggiornato."
   notice_account_invalid_creditentials: Nome utente o password non validi.
   notice_account_password_updated: La password è stata aggiornata.
@@ -398,6 +399,8 @@ it:
   setting_repositories_encodings: Codifica degli allegati e dei repository
   setting_emails_header: Intestazione email
   setting_emails_footer: Piè di pagina email
+  setting_footer_fs: Piè di pagina
+  setting_info_staff: Note allo staff
   setting_protocol: Protocollo
   setting_per_page_options: Opzioni oggetti per pagina
   setting_per_page_options_fs: Gruppi di pagine
@@ -529,6 +532,7 @@ it:
   label_projects_view_all: Sfoglia le le edizioni
   label_issues_view_all: Vedi tutti articoli
   label_issue_from_news: articolo generato da quesito
+  button_news_from_issue: Visualizza il quesito che ha generato l'articolo.
   label_issues_latest: Ultimi articoli
   label_username_lost: Username dimenticata
   label_help_user: Manuale
@@ -609,6 +613,7 @@ it:
   label_download: "%{count} Download"
   label_download_plural: "%{count} Download"
   label_no_data: Non ci sono informazioni disponibili
+  label_no_art: L'articolo o gli articoli cercati sono stati rimossi, oppure non possono essere visualizzati nel sito ma solo via mail quando ricevi la nostra newsletter.
   label_no_user: Non ci sono utenti
   label_change_status: Cambia stato
   label_history: Cronologia
@@ -629,6 +634,7 @@ it:
   label_news_status_1: In attesa di risposta
   label_news_status_2: Risposta rapida nel quesito
   label_news_status_3: Risposta con articolo/i
+  button_edit_news: Modifica la domanda
 
   #Dom verifica
   field_news: Da quesito?
@@ -636,9 +642,12 @@ it:
   label_reply: Risposta rapida
   label_reply_members: Altri collaboratori che potrebbero rispondere oltre a te
   label_reply_article: Pubblica risposta come articolo
+  label_reply_publishedfalse : Questo articolo non è ancora pubblicato .
+  label_reply_publishedtrue : Articolo pubblicato in un'edizione visibile.
   label_fast_reply: Rispondi senza generare articolo
   label_fast_reply_response: Risposta veloce (senza articolo)
   label_reply_with_issue: Rispondi attraverso articolo(i)
+  label_reply_with_issue_again: Puoi ancora creare articoli per rispondere
   label_reply_with_issue_responses: Risposta(e) tramite articolo(i)
   no_reply_actualy: Nessuna risposta attualmente
   label_news_my: I miei quesiti
@@ -809,7 +818,6 @@ it:
   label_start_to_start: inizio a inizio
   label_start_to_end: inizio a fine
   label_stay_logged_in: Rimani collegato
-  label_disabled: disabilitato
   label_show_completed_versions: Mostra versioni completate
   label_me: me
   label_board: Forum
@@ -855,7 +863,7 @@ it:
   label_user_mail_option_only_my_events: Solo se sono un osservatore o sono coinvolto
   label_user_mail_option_only_assigned: Solo quando mi assegnano attività
   label_user_mail_option_only_owner: Solo se io sono il proprietario
-  label_user_mail_no_self_notified: "Non voglio notifiche riguardanti modifiche da me apportate"
+  label_user_mail_no_self_notified: "Non voglio notifiche riguardanti le mie modifiche: "
   label_registration_activation_by_email: attivazione account via email
   label_registration_manual_activation: attivazione account manuale
   label_registration_automatic_activation: attivazione account automatica
@@ -1157,12 +1165,10 @@ it:
   label_visibilita: Visibilità
   label_is_responsable: é responsabile?
   label_not_responsable: "L'utente non gestisce organismi convenzionati"
-  label_have_convention: Convenzionato?
+  label_have_convention: Convenzione attuale
   label_no_convention: "Utente pagante. L'utente non fa parte di un'organismo convenzionato"
   label_list_responsable_for: "Lista organismi convenzionati dove é responsabile:"
-  label_have_sigla_tipo: Federato?
-  label_no_sigla_tipo: "L'utente non fa parte di una federazione"
-
+  label_no_sigla_tipo: "L'utente non fa parte di una federazione o gruppo"
   #label_cross_organization: ex Sigla
   label_cross_organization: Federazione
   label_cross_organization_plural: Federazioni
@@ -1170,7 +1176,6 @@ it:
   label_other_cross_organization_sametype: Altre federazioni correlate
   label_other_convention_sametype: Convenzioni per la federazione
   label_other_convention_none: Nessuna convenzione stabilita
-
   label_tipo: "Tipo dell'organismo"
   label_descrizione: Descrizione
   label_sigla: Sigla
@@ -1182,7 +1187,7 @@ it:
   field_descrizione: Descrizione
   field_sigla: Sigla
   field_type_organization: Organismo
-
+  field_type_organization_sport: Sportivo?
   label_richiedinumeroregistrazione: Richiedi N° di Registrazione
   label_data_scadenza: Data scadenza
   label_nota: Note
@@ -1205,7 +1210,7 @@ it:
   label_edit_province: Modifica Provincia
   label_edit_region: Modifica Regione
 
-  field_cross_organization: Sigla
+  field_cross_organization: Gruppo/Federazione
   field_richiedinumeroregistrazione: Richiedi N° Reg.
   field_data_scadenza: Data scadenza
   field_nota: Note
@@ -1266,19 +1271,21 @@ it:
   label_convention_full: Organismi aderenti (convenzionati)
   label_convention_plural: Convenzioni
   label_convention_new: Nuova convenzione
-  label_conventions_users: Utenti soci non paganti (sotto convenzione)
+  label_conventions_same: Utenti presenti nella stessa convenzione
+  label_conventions_users: Utenti soci non paganti (convenzionati)
   label_convention_user: Responsabile convenzione
   label_convention_none: Nessuna convenzione (organismo associato)
   label_convention_group_banner: Banner convenzione
   label_convention_group_banner_none: Nessun banner per la convenzione (organismo associato)
   label_convention_pact: "Federazione<br />Zona"
-  label_convention_ref: "Scadenza<br />responsabile"
-  label_convention_organismo: Organismo sportivo associato
-  label_convention_societa: Società non sportiva
+  label_convention_scad: "Scadenza convenz."
+  label_convention_sport: Organismo sportivo
+  label_convention_no_sport: Gruppo non sportivo
   label_convention_type: Tipo organismo
   fied_convention_type: Tipo organismo
+  label_convention_change: Aggiorna convenz.
   zone_area: Copertura geografica
-
+  label_nationale_pact: Copertura nazionale
   label_ragione_sociale: Ragione sociale
   label_email: Email
   label_indirizzo: Indirizzo
@@ -1340,7 +1347,7 @@ it:
   field_clicks: Clicks
   field_didascalia: Didascalia
   field_se_prima_pagina: In prima pagina?
-  field_se_prenotazione: Gestione convegno?
+  field_se_prenotazione: Gestione prenotazioone
   field_impressions_history: Storico impressione
 
 #ISSUE --> CONVEGNO
@@ -1381,12 +1388,13 @@ it:
   label_user_invoices: "Altre fatture legate all'utente"
   label_cross_organization_user_convention: "Sigla: lista utenti federati"
   label_cross_organization_user_convention_none: nessun utente registrato per questa federazione
-
+  field_no_newsletter: No newsletter
   field_power_user: Referente convenzione
   field_users: Utenti
   label_dati_plural: Dati FISCOSPORT
   label_abbonamento_plural: Abbonamento
   label_fatture_plural: Contabilità
+  label_fatturazione: Fatturazione
   label_storico_pagamento: Storico dei pagamenti
   label_dati_pagamento: Dati di pagamento
   label_emetti_fattura: Invia fattura
@@ -1395,9 +1403,9 @@ it:
   label_localizazzione: Indirizzo
   label_account: Credenziali
   label_registration: Dati di registrazione
-  label_scadenza_ruolo: Gestione Ruolo <--> Scadenza
+  label_scadenza: "Scadenza"
   label_is_referente: è responsabile?
-  label_gest_privato: Privato == Pagante
+  label_gest_privato: "Abbonato"
   label_gest_organismo: Organismo associato o società non sportiva == Utente NON paga
   label_conventions_referee: Responsabili degli organismi convenzionati
   label_conventions_referee_help: Lista dei responsabili
@@ -1409,26 +1417,23 @@ it:
   field_pwd: (old) Password
   field_login_fisco: (old) login FISCOSPORT
   field_mail_fisco: (old) email FISCOSPORT
-  field_soc: "Intestatario dell'abbonamento"
+  field_soc: "Intestatario o<br />  Ragione sociale"
   field_note: Note
   field_prov: (old) provincia
   field_sede: (old) sede
-  field_telefono2: (old) 2nd telefono
-  field_mail2: (old)  2nd email
-  field_sez: (old) sezione
+  field_telefono2: Telefono-2
+  field_mail2: Email-2
+  label_user_created_on: Data di registrazione
   field_codice_attivazione: Codice di Attivazione
-  field_iva_: (old) IVA
   field_codicefiscale: Codice Fiscale
   field_partitaiva: Partita IVA
   field_registrato: (old) registrato?
-  field_num_reg_coni: (old) N° regionale CONI
+  field_num_reg_coni: (?) N° registro CONI
   field_abbonato: (old) Abbonato
   field_conferma_registrazione: (old) Confermato registrazione?
-  field_disabilitato: (old) disabilitato?
-  field_forum_redattore: (old) Forum redattore?
-  field_forum_notifica: (old) Forum notifica?
-  field_data: (old) data
-  field_datascadenza: (old) data di scadenza
+  field_datainizio: Data inizio
+  field_datascadenza: Data scadenza
+  field_datascadenza_user: Scadenza privato
   field_tariffa_precedente: (old) tariffa precedente
   field_iva_precedente: (old) IVA precedente
   field_pagamento_precedente: (old) pagamento precedente
@@ -1447,7 +1452,8 @@ it:
   permission_access_back_end: Accedi al backEnd?
   permission_front_end_quesito: Poni quesito in FrontEnd?
   label_public_site_home: Prima pagina
-  label_contact: Contatti
+  label_contact_plural: Contatti
+  label_contact: Contatto
   label_aboutus: Chi siamo
   label_poniquesito: Richiedi
   label_home_fs: Prima pagina
@@ -1488,8 +1494,8 @@ it:
   label_send_test_email_fee_renew: Invia email di prova Rilancio
   setting_info_fs: Fiscosport informa
   label_info_fs: "Fiscosport informa"
-  setting_info_promoted_fs: Promosso in front page
-  label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporranea "
+  setting_info_promoted_fs: Fiscosport informa visibile in home?
+  label_info_promoted_fs: "Pubblicca il contenuto dell'informazione temporanea "
   setting_privacy: "Termine della privacy"
   label_privacy: Documento che definisce il rilascio della privacy
   setting_condition: "Regolamento degli abbonamenti"
@@ -1622,18 +1628,18 @@ it:
   notice_setting_fee_not_allowed: La gestione degli abbonamenti non è abilitata
   label_person: Persona
   field_registration_date: Registrazione
-  role_manager: manager
+  role_manager: Manager
   role_3: MANAGER
   role_author: Redattore, collaboratore
   role_author_abrv: Redattore
   role_4: REDATTORE
-  role_vip: Invitato (VIP)
+  role_vip: Invitato
   role_10: VIP
   role_abbonato: Abbonato
   role_6: Abbonato
   role_registered: Registrato
   role_9: Registrato
-  role_renew: Rinnovo, In scadenza
+  role_renew: Rinnovo
   role_11: Rinnovo
   role_expired: Scaduto
   role_7: Scaduto
@@ -1671,6 +1677,7 @@ it:
   details_articolo: Dettaglio di un articolo
   list_quesiti: Lista quesiti
   list_quesiti_response: Lista risposte (%{num}) al quesito
+  list_quesiti_response_again: Lista risposte (%{num}) al quesito
   news_fast_reply_text: Risposta rapida al quesito N°(%{num})
   news_reply_text: Risposta al quesito N°(%{num})
   details_quesito: Dettaglio di un quesito
@@ -1706,7 +1713,7 @@ it:
   field_username_as_email: "Di default la tua login è uguale alla tua email. Hai la possibilità di personalizzare il tuo nome utente che userai con la password per identificarti sul sito"
   field_codice_segnalatore: "Codice Segnalatore/Promozione:"
   field_com: "Comunicazioni/Segnalazioni:"
-  field_se_privacy: "Informativa sulla privacy"
+  field_se_privacy: "Informativa privacy"
   field_se_privacy_accept: "Accetto l'informativa sulla privacy"
   field_se_condition: "Condizioni di utilizzo"
   field_se_condition_readed: "Ho letto le condizioni per l'uso"
@@ -1730,8 +1737,8 @@ it:
 #SCADENZA STATO
   stato_scadenza: "Stato abbonamento alla scadenza"
   state_valid: "<span style='color: green; font-weight: bold;'>Abbonamento valido</span>"
-  state_expiring: "<span style='color: orange; font-weight: bold;'>L'abbonamento scadere</span>"
-  state_expired: "<span style='color: red; font-weight: bold;'>Abbonamento SCADUTO</span>"
+  state_expiring: "<span style='color: orange; font-weight: bold;'>Scadenza prossima</span>"
+  state_expired: "<span style='color: red; font-weight: bold;'>Abbonamento scaduto</span>"
 
 #EMAIL NEWSLETTER
   label_send_newsletter: Invia quindicinale

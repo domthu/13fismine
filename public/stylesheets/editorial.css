@@ -1,6 +1,6 @@
 /* Utilizzare solo per media  media PRINT  */
 /*a:after { content:' [' attr(href) '] '}  */
-#fs-tramenu-wrapper, #navbar-container {
+.fs-tramenu-wrapper, #navbar-container {
     display: none;
 }
 

@@ -1,0 +1,23 @@
+<div id="div_issues_responses">
+  <% if @news.is_quesito? %>
+
+    <%= @news.get_state_icons_fe %>
+    <p>  &nbsp;  </p>
+    <%= @news.quesito_status_fs_text_be %>
+      <div id="question" style="margin-bottom:16px;" class="box">
+        <b><label><%= l(:label_replyed) %></label></b>
+        <br /><br />
+        <div class="box">
+          <div style="margin-bottom:16px;">
+                       <% if @news.reply && (@news.reply.length > 0) %>
+                <p><%= ckeditorzable_fs(@news.reply) %></p>
+              <% else %>
+                <p class="nodata"><%= l(:label_no_data) %></p>
+              <% end %>
+          </div>
+        </div>
+        <br /> </div>   <br />
+        <%= render :partial => 'show_quesito_comments', :locals => {:news => @news} %>
+
+   <% end %>
+ </div >

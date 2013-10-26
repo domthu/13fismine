@@ -51,10 +51,10 @@ module UsersHelper
 
   def user_settings_tabs
     tabs = [{:name => 'general', :partial => 'users/general', :label => :label_general},
-            {:name => 'memberships', :partial => 'users/memberships', :label => :label_project_plural},
-            {:name => 'dati', :partial => 'users/dati', :label => :label_dati_plural},
+           # {:name => 'dati', :partial => 'users/dati', :label => :label_dati_plural},
             {:name => 'abbonamento', :partial => 'users/abbonamento', :label => :label_abbonamento_plural},
-            {:name => 'fatture', :partial => 'users/fatture', :label => :label_fatture_plural},
+            {:name => 'fatture', :partial => 'users/fatture', :label => :label_fatturazione},
+            {:name => 'memberships', :partial => 'users/memberships', :label => :label_project_plural},
             {:name => 'newsletter', :partial => 'users/newsletter', :label => :label_newsletters}
             ]
     if Group.all.any?

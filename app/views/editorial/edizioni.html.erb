@@ -7,7 +7,7 @@
 <% acur = 0 %>
 <% x= false %>
 
-<div class="fs-blockcontent" style="width:676px; float: left; padding-top:35px;">
+<div class="fs-blockcontent" style="width:98%; float: left; padding-top:35px;">
    <div id="accordion">
     <% @projects.each do |prj| %>
         <% acur = prj.data_dal.strftime("%Y").to_i %>
@@ -20,6 +20,7 @@
         <% end %>
         <div class="fs-edizioni-all">
                <div class="fs-layout-cell layout-item-0">
+                 <%#@prj.issues.count(:conditions => "issues.se_visible_web = 1") %>
                  <div class="fs-postheader fs-blockheader-ediz-all">Edizione <%= link_to(h(prj.description), url_for(:controller => 'editorial', :action => "edizione", :id => prj.id, :escape => false)) %>
                  </div>
                </div>
@@ -29,6 +30,6 @@
     <% end %>
     </div>
   </div>
-</div>  <!-- div in pi� ma ok: loop in uscita -->
+</div>  <!-- NON TOGLIERE! div in più ma ok: loop in uscita -->
 <%= render :partial => 'blocco_sidebar1' %>
 

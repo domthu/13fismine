@@ -2,19 +2,19 @@
 <%# form_for @user, :url => { :action => 'edit_fatture', :id => @user}, :builder => TabularFormBuilder do |f| %>
 
   <div id="edit_dati_form">
-
+       <h4 style="color:#c54d21">nb: al momento non implementato.</h4>
     <!--[form:user]-->
     <div class="splitcontentleft">
       <fieldset class="box tabular">
+
         <legend><%=l(:label_dati_pagamento)%></legend>
+        <p><%= f.text_field :tariffa_precedente, :label => l(:field_tariffa_precedente), :required => false, :size => 5 %><p>
 
-        <p><%= f.text_area :iva_precedente, :label => :field_iva_precedente, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+        <p><%= f.text_field :iva_precedente, :label => :field_iva_precedente, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
 
-        <p><%= f.text_area :pagamento_precedente, :label => :field_pagamento_precedente, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+        <p><%= f.text_field :pagamento_precedente, :label => :field_pagamento_precedente, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
 
-        <p>
-          <%# f.date_select :data_ultimo_pagamento, :label => :field_data_ultimo_pagamento %>
-          <%= f.text_field :data_ultimo_pagamento, :label => l(:field_data_ultimo_pagamento), :size => 10 %><%= calendar_for('user_data_ultimo_pagamento') %>
+        <p>   <%= f.text_field :data_ultimo_pagamento, :label => l(:field_data_ultimo_pagamento), :size => 10 %><%= calendar_for('user_data_ultimo_pagamento') %>
         </p>
         <p>
           <%# f.date_select :data_accredito, :label => :field_data_accredito %>

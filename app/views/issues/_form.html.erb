@@ -8,7 +8,7 @@
 
   <p>
     <% if !@issue.new_record? %>
-<%= f.select :author_id, principals_options_for_select(@issue.assignable_users, @issue.author), :include_blank => false %>&nbsp;&nbsp;<%= link_to @issue.author, user_path(@issue.author), :target => "_blank" %>
+        <%= f.select :author_id, principals_options_for_select(@issue.assignable_users, @issue.author), :include_blank => false %>&nbsp;&nbsp;<%= link_to @issue.author, user_path(@issue.author), :target => "_blank" %>
     <% end %>
   </p>
 
@@ -41,29 +41,37 @@
 
 
 
-<% if !@issue.new_record? %>
-  <b style="margin-left: 10px">
-    <% if @issue.is_quesito? && @issue.quesito_news %>
-      <%= l(:news_reply_text, :num => link_to(@issue.quesito_news.id.to_s, news_path(@issue.quesito_news), { :class => 'icon icon-news_fast_reply', :target => '_blank'})) %>
-    <% else %>
-      <%= l(:content_articolo) %>
-    <% end %>
-  </b>
-  <div id="ck-box-issues" ><%= f.cktext_area :description , :height => 800,  :swf_params => {:assetable_type => 'Test', :assetable_id => 1} %></div>
-<% end %>
+  <% if !@issue.new_record? %>
+      <br/>
+      <b style="margin-left: 10px">
+        <% if @issue.is_quesito? && @issue.quesito_news %>
+            <%= l(:news_reply_text, :num => link_to(@issue.quesito_news.id.to_s, news_path(@issue.quesito_news), {:class => 'icon icon-news_fast_reply', :target => '_blank'})) %>
+        <% else %>
+            <%= l(:content_articolo) %>
+        <% end %>
+      </b>
 
+      <div id="ck-box-issues"><%= f.cktext_area :description, :height => 800, :swf_params => {:assetable_type => 'Test', :assetable_id => 1} %></div>
+  <% end %>
+  <br/>
+  <% if @issue.new_record? %>
+      <p id="attachments_form"><%= label_tag('attachments[1][file]', l(:label_attachment_plural)) %><%= render :partial => 'attachments/form' %></p>
+  <% end %>
 </div>
+<br/>
+<hr> <br/>
 
-<% if @issue.new_record? %>
-    <p id="attachments_form"><%= label_tag('attachments[1][file]', l(:label_attachment_plural)) %><%= render :partial => 'attachments/form' %></p>
-<% end %>
+<div style="width:56%; display: inline-block; padding: 1% 3%; float:left;" >
+  <% if @issue.new_record? && User.current.allowed_to?(:add_issue_watchers, @project) -%>
+      <p id="watchers_form"><label><%= l(:label_issue_watchers) %></label> <br/><br/></p>
 
-<% if @issue.new_record? && User.current.allowed_to?(:add_issue_watchers, @project) -%>
-    <p id="watchers_form"><label><%= l(:label_issue_watchers) %></label>
-      <% @issue.project.users.sort.each do |user| -%>
-          <label class="floating"><%= check_box_tag 'issue[watcher_user_ids][]', user.id, @issue.watched_by?(user) %> <%= h user %></label>
-      <% end -%>
-    </p>
-<% end %>
+        <% @issue.project.users.sort.each do |user| -%>
+            <div class="floating-items3"><%= check_box_tag 'issue[watcher_user_ids][]', user.id, @issue.watched_by?(user) %>
+              <%= h user %> </div>
+        <% end -%>
 
-<%= call_hook(:view_issues_form_details_bottom, {:issue => @issue, :form => f}) %>
+  <% end %>
+  </div>
+  <div style="display: inline-block; float:left;">
+  <%= call_hook(:view_issues_form_details_bottom, {:issue => @issue, :form => f}) %>
+</div>

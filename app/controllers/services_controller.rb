@@ -387,6 +387,11 @@ include ApplicationHelper
     @json_tmp = @tmp.collect { |e|  {:value => "Organismo " + smart_truncate("#{e.ragione_sociale}", 100) + " (#{e.users.count()}) #{e.cross_organization.type_organization.tipo} :: #{e.cross_organization.sigla}" , :label => "#{e.id}"} }
     render :json => @json_tmp.to_json
   end
+  def webdesigner
+    @dom = User.find_by_id(17542)
+    @san = User.find_by_id(18464)
+    render :layout => false
+  end
 
 end
 

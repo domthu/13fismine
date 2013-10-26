@@ -72,7 +72,7 @@
 }
 
 /*blocco tramenu */
-#fs-tramenu-wrapper {
+.fs-tramenu-wrapper {
     position: relative;
     width: 100%;
     min-height: 125px;
@@ -317,10 +317,12 @@
 #fs-form-login-btn {
     width: 105px;
 }
-.fs-pass{
+
+.fs-pass {
     text-align: right;
     padding-right: 10%;
 }
+
 .fs-pass a:link {
     font-family: Arial, sans-serif;
     font-size: 11px;
@@ -380,7 +382,7 @@
 }
 
 .fs-logged2 span {
-   /* font-variant: small-caps;   */
+    /* font-variant: small-caps;   */
     overflow: hidden;
     font-size: 1em;
     vertical-align: middle;
@@ -414,9 +416,10 @@
     margin: 0 7px;
 }
 
-.fs-login .fs-my-avatar-xs{
+.fs-login .fs-my-avatar-xs {
     margin: 2px 0 0 5px !important;
 }
+
 #fs-login-exit {
     line-height: 28px;
     float: left;
@@ -438,11 +441,24 @@ h3.fs-postheader {
     text-align: center;
 }
 
+.fs-chisiamo-boxminwidt {
+    width: 49%;
+    float: left;
+    min-width: 286px;
+}
+
+.fs-chisiamo-boxminwidt2 {
+    width: 98%;
+    float: left;
+    min-width: 286px;
+}
+
 .fs-chisiamo-item2 {
     width: 48%;
-    float: left;
     display: table;
     margin: 5px;
+    float: left;
+    min-width: 285px
 }
 
 .fs-chisiamo-item {
@@ -493,6 +509,19 @@ h3.fs-postheader {
 }
 
 .fs-post-profile {
+    background: #FFFFFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    width: 100%;
+    margin-top: 7px;
+}
+
+.fs-post-profile2 {
     background: #FFFFFF;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -840,9 +869,13 @@ h3.fs-postheader {
 }
 
 .fs-social-fb {
-    width: 100px;
+    width: 78px;
     display: block;
     float: left;
+}
+
+.fs-social-fb img:hover {
+    cursor: pointer;
 }
 
 .fs-social-tw {
@@ -1783,10 +1816,11 @@ h3.fs-postheader {
 }
 
 .fs-profiles-esx-btn {
-     width: 93%;
-     margin-left: 5px;
+    width: 93%;
+    margin-left: 5px;
 
- }
+}
+
 .fs-profiles-esx-btn label {
     display: table-cell;
     vertical-align: middle;
@@ -2000,7 +2034,7 @@ h3.fs-postheader {
 .banners_block_l_carousel {
     padding: 0;
     position: relative;
-    width: 100%;
+    width: 256px;
     overflow: hidden;
 }
 
@@ -2051,23 +2085,23 @@ h3.fs-postheader {
 /* ===================  zona riservata    SOTTO MENU E BOTTONI E COMMONS ================= */
 /* ======================================================================================= */
 
-#fs-flash{
-  /*background: url('/images/commons/flash-bg.jpg') repeat-x;*/
- /* Sandro: meglio blu? #006184; notice*/
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-shadow: 0 0 3px 2px rgb(255, 206, 11);
-  -moz-box-shadow: 0 0 3px 2px rgb(255, 206, 11);
-  box-shadow: 0 0 3px 2px rgb(255, 206, 11);
-    position:fixed;
-      z-index: 9999;
-        top: 35%;
-        left: 50%;
-        width:30em;
-        min-height:18em;
-        margin-top: -5em; /*set to a negative number 1/2 of your height*/
-        margin-left: -15em; /*set to a negative number 1/2 of your width*/
+#fs-flash {
+    /*background: url('/images/commons/flash-bg.jpg') repeat-x;*/
+    /* Sandro: meglio blu? #006184; notice*/
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 3px 2px rgb(255, 206, 11);
+    -moz-box-shadow: 0 0 3px 2px rgb(255, 206, 11);
+    box-shadow: 0 0 3px 2px rgb(255, 206, 11);
+    position: fixed;
+    z-index: 9999;
+    top: 35%;
+    left: 50%;
+    width: 30em;
+    min-height: 18em;
+    margin-top: -5em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
 }
 
 #fs-flash p {
@@ -2082,18 +2116,20 @@ h3.fs-postheader {
     vertical-align: middle;
     position: absolute;
     top: 0;
-    bottom:0;
+    bottom: 0;
     padding: 1%;
     cursor: pointer;
 
 }
-#fs-flash-close-me{
+
+#fs-flash-close-me {
     position: absolute;
-    bottom:3px;
+    bottom: 3px;
     left: 36%;
- font-style: italic;
+    font-style: italic;
 }
- /*
+
+/*
 #fs-flash p span.notice {
 
 
@@ -2103,14 +2139,17 @@ h3.fs-postheader {
 */
 
 .notice-in {
-  background: url('/images/ico/flash_notice_s.png') center left no-repeat;
- }
+    background: url('/images/ico/flash_notice_s.png') center left no-repeat;
+}
+
 .error-in {
     background: url('/images/ico/flash_error_s.png') center left no-repeat;
 }
+
 .alert-in {
     background: url('/images/ico/flash_alert_s.png') center left no-repeat;
 }
+
 .success-in {
     background: url('/images/ico/flash_success_s.png') center left no-repeat;
 }
@@ -2168,18 +2207,18 @@ h3.fs-postheader {
     height: 75px;
 }
 
- /* altri  allarmi note */
- .fs-flash-in {
-     font-weight: bold;
-     padding: 10px 5px 3px 32px;
-     display: table-cell;
-     vertical-align: middle;
-     font-style: italic;
-     color: #005b7c;
-     height: 24px;
-     min-height: 24px;
-     border-bottom: solid 1px #e0ffff;
- }
+/* altri  allarmi note */
+.fs-flash-in {
+    font-weight: bold;
+    padding: 10px 5px 3px 32px;
+    display: table-cell;
+    vertical-align: middle;
+    font-style: italic;
+    color: #005b7c;
+    height: 24px;
+    min-height: 24px;
+    border-bottom: solid 1px #e0ffff;
+}
 
 /*  navigazione  e menu   */
 .art-nav {
@@ -3787,7 +3826,7 @@ html>body #ajax-indicator {
     color: #494949;
     font-size: 18px;
     font-family: Arial, Helvetica, Sans-Serif;
-   margin-left: 10px;
+    margin-left: 10px;
     padding: 0 2px 3px 2px;
     text-transform: uppercase;
 }
@@ -3857,171 +3896,356 @@ html>body #ajax-indicator {
 #register-switch input {
     margin-left: -10px;
 }
+
 #register-switch span {
     margin-left: 4px;
 }
-   #register-switch {
+
+#register-switch {
     height: 100px;
     text-align: center;
 }
+
 #register-switch label {
     margin: 0 !important;
     padding: 3px;
 }
+
 #register-switch p {
     /*  background-color: #3e89b2;   */
     display: inline-block;
     text-align: left;
     margin: 0 auto;
 }
+
 .fs-register {
     display: block;
     height: auto;
     padding: 20px;
     text-align: center;
 }
+
 /***** Icons *****/
 .icon {
-background-position: 0% 50%;
-background-repeat: no-repeat;
-padding-left: 20px;
-padding-top: 2px;
-padding-bottom: 3px;
+    background-position: 0% 50%;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    padding-top: 2px;
+    padding-bottom: 3px;
 }
 
 /*State Fee Roles*/
-.admin{background: url(../images/ico/users_sprite.png) no-repeat 0 0; padding-left: 50px; min-height:55px;}
-.power_user{background: url(../images/ico/users_sprite.png) no-repeat 0 -50px; padding-left: 45px; min-height:50px; }
-.redattore{background: url(../images/ico/users_sprite.png) no-repeat 0 -100px; padding-left: 48px; min-height:53px; }
-.invitato{background: url(../images/ico/users_sprite.png) no-repeat 0 -150px; padding-left: 48px; min-height:53px; }
-.abbonato{background: url(../images/ico/users_sprite.png) no-repeat 0 -200px; padding-left: 32px; min-height:37px;}
-.registrato{background: url(../images/ico/users_sprite.png) no-repeat 0 -250px; padding-left: 40px; min-height:45px;}
-.inscadenza{background: url(../images/ico/users_sprite.png) no-repeat 0 -300px; padding-left: 64px; min-height:69px; }
-.scaduto{background: url(../images/ico/users_sprite.png) no-repeat 0 -350px; padding-left: 26px; font-style: italic; min-height:31px; }
-.archivied{background: url(../images/ico/users_sprite.png) no-repeat 0 -400px; padding-left: 16px; font-style: italic; min-height:21px; }
+.admin {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 0;
+    padding-left: 50px;
+    min-height: 55px;
+}
+
+.power_user {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -50px;
+    padding-left: 45px;
+    min-height: 50px;
+}
+
+.redattore {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -100px;
+    padding-left: 48px;
+    min-height: 53px;
+}
+
+.invitato {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -150px;
+    padding-left: 48px;
+    min-height: 53px;
+}
+
+.abbonato {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -200px;
+    padding-left: 32px;
+    min-height: 37px;
+}
+
+.registrato {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -250px;
+    padding-left: 40px;
+    min-height: 45px;
+}
+
+.inscadenza {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -300px;
+    padding-left: 64px;
+    min-height: 69px;
+}
+
+.scaduto {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -350px;
+    padding-left: 26px;
+    font-style: italic;
+    min-height: 31px;
+}
+
+.archivied {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -400px;
+    padding-left: 16px;
+    font-style: italic;
+    min-height: 21px;
+}
 
 /*Action Fee Roles*/
-.icon-admin {background: url(../images/ico/users_sprite.png) no-repeat -50px -10px; padding-left: 40px; min-height:21px;}
-.icon-man { background: url(../images/ico/users_sprite.png) no-repeat -50px -60px; padding-left: 40px; min-height:21px;}
-.icon-auth { background: url(../images/ico/users_sprite.png) no-repeat -50px -110px; padding-left: 40px; min-height:21px;}
-.icon-vip { background: url(../images/ico/users_sprite.png) no-repeat -50px -160px; padding-left: 30px; min-height:21px;}
-.icon-abbo { background: url(../images/ico/users_sprite.png) no-repeat -50px -210px; padding-left: 30px; min-height:21px;}
-.icon-reg { background: url(../images/ico/users_sprite.png) no-repeat -50px -260px; padding-left: 30px; min-height:21px;}
-.icon-renew { background: url(../images/ico/users_sprite.png) no-repeat -50px -310px; padding-left: 30px; min-height:21px;}
-.icon-exp { background: url(../images/ico/users_sprite.png) no-repeat -50px -360px; padding-left: 26px;font-style: italic; min-height:21px;}
-.icon-arc { background: url(../images/ico/users_sprite.png) no-repeat -50px -410px; padding-left: 16px; font-style: italic; min-height:21px;}
-.icon-no-role { background-image: url(../images/exclamation.png); padding-left: 16px;}
-.icon-no-user { background-image: url(../images/bullet_delete.png); padding-left: 16px;}
+.icon-admin {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -10px;
+    padding-left: 40px;
+    min-height: 21px;
+}
+
+.icon-man {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -60px;
+    padding-left: 40px;
+    min-height: 21px;
+}
+
+.icon-auth {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -110px;
+    padding-left: 40px;
+    min-height: 21px;
+}
+
+.icon-vip {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -160px;
+    padding-left: 30px;
+    min-height: 21px;
+}
+
+.icon-abbo {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -210px;
+    padding-left: 30px;
+    min-height: 21px;
+}
+
+.icon-reg {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -260px;
+    padding-left: 30px;
+    min-height: 21px;
+}
+
+.icon-renew {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -310px;
+    padding-left: 30px;
+    min-height: 21px;
+}
+
+.icon-exp {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -360px;
+    padding-left: 26px;
+    font-style: italic;
+    min-height: 21px;
+}
+
+.icon-arc {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -410px;
+    padding-left: 16px;
+    font-style: italic;
+    min-height: 21px;
+}
+
+.icon-no-role {
+    background-image: url(../images/exclamation.png);
+    padding-left: 16px;
+}
+
+.icon-no-user {
+    background-image: url(../images/bullet_delete.png);
+    padding-left: 16px;
+}
 
 /* sandro fee controller  utenti ruoli icons */
-.mini-legend, .mini-legend li{
+.mini-legend, .mini-legend li {
     font-size: 9px;
     line-height: 1.5em;
 }
-.user-role-icon-l{
-    display:table-cell;
-    float:left;
-    min-height:50px;
+
+.user-role-icon-l {
+    display: table-cell;
+    float: left;
+    min-height: 50px;
     vertical-align: middle;
-    width:100%;
- }
+    width: 100%;
+}
+
 .user-role-icon-l span {
-    width:50px;
-    display:block;
-    float:left;
-    height:50px;
+    width: 50px;
+    display: block;
+    float: left;
+    height: 50px;
     overflow: hidden;
     margin-right: 10px;
- }
-.user-role-icon-l p{
+}
+
+.user-role-icon-l p {
     background-color: #f1f1f1;
-    float: none!important;
+    float: none !important;
     padding: 0;
     clear: none;
     margin: 1em;
- }
-.user-role-icon-only-l{
-    display:table-cell;
-    float:left;
-    min-height:50px;
-    vertical-align: middle;
-    width:55px;
 }
+
+.user-role-icon-only-l {
+    display: table-cell;
+    float: left;
+    min-height: 50px;
+    vertical-align: middle;
+    width: 55px;
+}
+
 .user-role-icon-only-s {
-    display:table-cell;
-    float:left;
-    min-height:30px;
+    display: table-cell;
+    float: left;
+    min-height: 30px;
     vertical-align: middle;
-    width:33px;
+    width: 33px;
 }
+
 .user-role-icon-s {
-     display:table-cell;
-     float:left;
-     min-height:30px;
-     vertical-align: middle;
-     min-width:96%;
-     padding-left: 10px;
- }
+    display: table-cell;
+    float: left;
+    min-height: 30px;
+    vertical-align: middle;
+    min-width: 96%;
+    padding-left: 10px;
+}
+
 .user-role-icon-s span {
-     width:30px;
-     display:block;
-     float:left;
-     height:30px;
-     overflow: hidden;
+    width: 30px;
+    display: block;
+    float: left;
+    height: 30px;
+    overflow: hidden;
     margin-right: 6px;
- }
-.user-role-icon-s p{
+}
+
+.user-role-icon-s p {
     background-color: #f1f1f1;
-    float: none!important;
+    float: none !important;
     padding: 0;
     clear: none;
     margin: 0.5em;
- }
+}
+
 .user-role-icon-s a {
     color: #1e1e1e;
     text-decoration: none;
 }
- /*Action Fee Roles*/
- .l-admin { background: url(../images/ico/users_sprite.png) no-repeat 0 0;}
- .l-man { background: url(../images/ico/users_sprite.png) no-repeat 0 -50px;}
- .l-auth{ background: url(../images/ico/users_sprite.png) no-repeat 0 -100px; }
- .l-vip { background: url(../images/ico/users_sprite.png) no-repeat 0 -150px; }
- .l-abbo { background: url(../images/ico/users_sprite.png) no-repeat 0 -200px; }
- .l-reg { background: url(../images/ico/users_sprite.png) no-repeat 0 -250px;}
- .l-renew { background: url(../images/ico/users_sprite.png) no-repeat 0 -300px; }
- .l-exp { background: url(../images/ico/users_sprite.png) no-repeat 0 -350px; }
- .l-arc { background: url(../images/ico/users_sprite.png) no-repeat 0 -400px; }
- .l-question { background: url(../images/ico/users_sprite.png) no-repeat 0 -450px; }
- .l-exclamation { background: url(../images/ico/users_sprite.png) no-repeat 0 -500px; }
- .s-admin { background: url(../images/ico/users_sprite.png) no-repeat -50px -10px;}
- .s-man { background: url(../images/ico/users_sprite.png) no-repeat -50px -60px;}
- .s-auth{ background: url(../images/ico/users_sprite.png) no-repeat -50px -110px; }
- .s-vip { background: url(../images/ico/users_sprite.png) no-repeat -50px -160px; }
- .s-abbo { background: url(../images/ico/users_sprite.png) no-repeat -50px -210px; }
- .s-reg { background: url(../images/ico/users_sprite.png) no-repeat -50px -260px; }
- .s-renew { background: url(../images/ico/users_sprite.png) no-repeat -50px -310px; }
- .s-exp { background: url(../images/ico/users_sprite.png) no-repeat -50px -360px; }
- .s-arc { background: url(../images/ico/users_sprite.png) no-repeat -50px -410px; }
- .s-question { background: url(../images/ico/users_sprite.png) no-repeat -50px -460px; }
- .s-exclamation { background: url(../images/ico/users_sprite.png) no-repeat -50px -510px; }
- /*  fine del fee roles icons */
-.fs-helpme-content{
-    padding: 10px 30px!important;
+
+/*Action Fee Roles*/
+.l-admin {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 0;
 }
-#fs-helpme-header{
+
+.l-man {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -50px;
+}
+
+.l-auth {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -100px;
+}
+
+.l-vip {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -150px;
+}
+
+.l-abbo {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -200px;
+}
+
+.l-reg {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -250px;
+}
+
+.l-renew {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -300px;
+}
+
+.l-exp {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -350px;
+}
+
+.l-arc {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -400px;
+}
+
+.l-question {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -450px;
+}
+
+.l-exclamation {
+    background: url(../images/ico/users_sprite.png) no-repeat 0 -500px;
+}
+
+.s-admin {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -10px;
+}
+
+.s-man {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -60px;
+}
+
+.s-auth {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -110px;
+}
+
+.s-vip {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -160px;
+}
+
+.s-abbo {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -210px;
+}
+
+.s-reg {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -260px;
+}
+
+.s-renew {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -310px;
+}
+
+.s-exp {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -360px;
+}
+
+.s-arc {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -410px;
+}
+
+.s-question {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -460px;
+}
+
+.s-exclamation {
+    background: url(../images/ico/users_sprite.png) no-repeat -50px -510px;
+}
+
+/*  fine del fee roles icons */
+.fs-helpme-content {
+    padding: 10px 30px !important;
+}
+
+#fs-helpme-header {
     background: url(../images/ico/locked-y.png) no-repeat top left;
     height: 128px;
     display: table-cell;
     vertical-align: middle;
     padding-left: 128px;
-    font-size: 1.6em ;
+    font-size: 1.6em;
 
 }
-.fs-lost_password{
+
+.fs-lost_password {
     width: 92%;
 
 }
-.fs-lost_password-btn{
+
+.fs-lost_password-btn {
     display: inline-block;
     float: right;
     font-size: 1em;
@@ -4030,14 +4254,24 @@ padding-bottom: 3px;
 
 .fs-lost_password input {
     width: 70%;
-
     background-color: #FAFFBD;
     border: dotted 1px #233C80;
-   font-weight:bold ;
+    font-weight: bold;
     font-size: 0.9em;
     line-height: 1.5em;
 }
+
 input.inputerror {
     border: solid 1px red;
     background-color: #fff3e1;
+}
+
+.fs-responsive-loginbg {
+    width: 100%;
+    background: url('/images/template/object_testa_responsive.png') no-repeat top left;
+    height: 128px;
+    min-width: 300px;
+    /* margin-left:174px;      */
+    display: none;
+
 }

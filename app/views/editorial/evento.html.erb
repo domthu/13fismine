@@ -1,4 +1,12 @@
-<%# render :partial => 'blocco_sidebar2' %>
+<script type="text/javascript">
+    function fbshareme() {
+        window.open(
+                'http://www.facebook.com/sharer.php?s=100&p[title]=<%= ERB::Util.url_encode(@convegno.subject)%>&p[summary]=<%= ERB::Util.url_encode(smart_truncate(@convegno.summary, 220)) %>&p[url]=<%= link_to_articolo(@convegno, :only_path => false).to_s %>&p[images][0]=<%= (art_image(@convegno, :l, :only_path => false)) %>&p[images][1]=http://www.fiscosport.it/images/commons/fs_fb1.png&p[images][2]=http://www.fiscosport.it/images/commons/fs_fb2.png&p[images][3]=http://www.fiscosport.it/images/commons/fs_fb0.png',
+                'facebook-share-dialog',
+                'width=626,height=436'
+            );
+    }
+</script>
 <div class="fs-layout-cell fs-content clearfix" style="width: 99%; position:relative;">
   <article class="fs-post-convegni fs-article">
     <div class="fs-postcontent fs-postcontent-convegni clearfix">
@@ -41,18 +49,19 @@
                   <br/>&nbsp;
                 </div>
               </div>
+              <div class="fs-attachments">
+                <%= link_to_fs_attachments(@convegno, :author => false) %>
+              </div>
               <div class="fs-postmetadata-full-convegni">
                 <div class='fs-social'>
                   <div class='fs-social-fb '>
-                    <script src="http://connect.facebook.net/it_IT/all.js#xfbml=1"></script>
-                    <fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like>
+                  <%= image_tag "ico/fb-share.jpg",:onclick=> 'fbshareme()' %>
                   </div>
                   <div class='fs-social-tw '>
                     <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
                     <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
                   </div>
                   <div class='fs-social-gp '>
-                    <!-- Place this tag where you want the +1 button to render. -->
                     <div class="g-plusone" data-size="medium" data-recommendations="false">
                       <!-- Place this tag after the last +1 button tag. -->
                       <script type="text/javascript">
@@ -72,7 +81,7 @@
                     <%= link_to_function(image_tag('ico/printer-icon.png'), "javascript:print()") %>
                   </div>
                 </div>
-                <%# link_to image_tag('/images/ico/facebook64.png'), 'http://www.facebook.com/sharer.php?u='+request.fullpath, :target => :blank %>
+
               </div>
               <% if  @convegno.show_reservation? %>
                   <div class="fs-convegni-prenota">
@@ -84,7 +93,6 @@
               <br/>
 
               <p class="nodata"><%= l(:label_no_data) %></p>
-
               <br/>
           <% end %>
         </div>

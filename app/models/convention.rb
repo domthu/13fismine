@@ -13,9 +13,6 @@ class Convention < ActiveRecord::Base
   #domthu20120516
   has_many :users, :dependent => :nullify #Non fare niente dobbiamo eliminare convention_id
   belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id' #, :default => null
-  #Il responsabile del patto - contratto
-  #2.7 Choosing Between belongs_to and has_one
-  #belongs_to :referente, :class_name => 'User', :foreign_key => 'user_id'#, :default => null
   belongs_to :user #, :class_name => 'User', :foreign_key => 'user_id'#, :default => null
   #Con questi 3 campi siamo in grado di definire quale organismo con quale copertura geografica
   belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
@@ -97,6 +94,10 @@ class Convention < ActiveRecord::Base
 
   def scadenza
     return (self.data_scadenza.nil? || self.data_scadenza.blank?) ? nil : self.data_scadenza.to_date
+  end
+
+  def se_sport?
+     self.cross_organization.type_organization.type_sport
   end
 
   # ruolo elaborato in funzione dello stato della scadenza
