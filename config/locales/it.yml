@@ -1750,7 +1750,7 @@ it:
   label_html: 'testo del messaggio'
   label_data: 'data invio'
   label_first_sent: 'data primo invio'
-  label_newsletter_none: "Nessun invio fatto a questo giorno"
+  label_newsletter_none: "Fino ad oggi nessuna newsletter"
   label_newsletter_none_sended: "Nessuno ha ricevuto questo quindicinale"
   label_newsletter_none_pending: "Nessun email in attesa di invio"
   label_newsletter_none_error: "Nessun errore rilevato"

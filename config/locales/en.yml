@@ -1713,7 +1713,7 @@ en:
   label_html: 'testo del messaggio'
   label_data: 'data invio'
   label_first_sent: 'First sent date'
-  label_newsletter_none: "Nessun invio fatto a questo giorno"
+  label_newsletter_none: "No newsletter sended until now"
   label_newsletter_none_sended: "no receiver actualy"
   label_newsletter_none_pending: "Non email pending"
   label_newsletter_none_error: "No error in sending emails"
