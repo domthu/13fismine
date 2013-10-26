@@ -289,7 +289,7 @@ it:
   field_is_default: Stato predefinito
   field_tracker: Tracker
   field_subject: Titolo
-  field_due_date: 'Scadenza'
+  field_due_date: 'Fine'
   field_assigned_to: Assegnato a
   field_priority: Priorità
   field_fixed_version: Versione prevista
@@ -1347,7 +1347,7 @@ it:
   field_clicks: Clicks
   field_didascalia: Didascalia
   field_se_prima_pagina: In prima pagina?
-  field_se_prenotazione: Gestione prenotazioone
+  field_se_prenotazione: Prenotazione evento?
   field_impressions_history: Storico impressione
 
 #ISSUE --> CONVEGNO

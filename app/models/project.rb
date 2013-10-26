@@ -97,13 +97,7 @@ class Project < ActiveRecord::Base
   #domthu edizione per la spedizione controllare solo se è Public
   named_scope :all_mail_fs, {:conditions => ['is_public = true'], :order => "#{table_name}.data_al DESC"}
   named_scope :visible, lambda { |*args| {:conditions => Project.visible_condition(args.shift || User.current, *args)} }
-
-#  def to_s
-#    str = "[" << self.id.to_s << "] "
-#    str << (self.ragione_sociale.blank?  ? "?" : self.ragione_sociale)
-#    str << (self.presidente.blank? ? "" : " (" + self.presidente + ")")
-#    return str
-#  end
+  named_scope :all_public_editions, {:include => :issues , :conditions => ['issues.se_visible_web = 1 AND projects.is_public = 1 AND projects.system = 0 AND projects.identifier LIKE ?', "#{FeeConst::EDIZIONE_KEY}%"], :order => "projects.data_dal DESC"}
 
   def is_public_fs?
     self.is_public == true #&& self.promoted_to_front_page == true
@@ -150,7 +144,7 @@ class Project < ActiveRecord::Base
   def self.all_fs(user = User.current)
     #:conditions => [ "catchment_areas_id = ?", params[:id]]
     #find(:all, :conditions => "#{table_name}.is_public = 1", :order => "#{table_name}.created_on DESC")
-    all_public_fs.all
+    all_public_editions.all
   end
 
   # returns limited latest projects for homepage in public area
