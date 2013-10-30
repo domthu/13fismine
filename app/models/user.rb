@@ -272,10 +272,11 @@ class User < Principal
         #non fare niente. Lui esce solo attraverso cambio ruolo dalla pagina utente
 
         #domthu 20131030 eccezione alla regola --> pesco dentro gli archiviati alla crea-modify di una convention?
-        tipo = "archiviato"
-        if (self.convention_id && self.convention && self.convention.scadenza && self.convention.scadenza > today )
-          role_atteso = FeeConst::ROLE_ABBONATO
-        end
+        #NON lo fare
+        #tipo = "archiviato"
+        #if (self.convention_id && self.convention && self.convention.scadenza && self.convention.scadenza > today )
+        #  role_atteso = FeeConst::ROLE_ABBONATO
+        #end
 
       elsif self.isabbonato? || self.isrenewing? || self.isregistered? || self.isexpired?
 

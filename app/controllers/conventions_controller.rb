@@ -163,44 +163,54 @@ class ConventionsController < ApplicationController
   private
 
     def control_conv(_conv)
-        #STEP1/2 find susceptible federati by zone
-        if (!_conv.codice_attivazione.nil? && !_conv.codice_attivazione.blank?)
-          @user = User.all(:conditions => ["LOWER(codice_attivazione)=?", _conv.codice_attivazione])
-          @user.each do |usr|
-            add_to_conv(usr, _conv, "Da code att. ")
-          end
-        end
-        #STEP2/2 find susceptible federati by zone
-        #@user = User.all(:conditions => {:cross_organization_id => _conv.cross_organization_id})
-        @user = User.all(:conditions => ["comune_id is not null AND cross_organization_id is not null AND cross_organization_id=?", _conv.cross_organization_id])
+      #STEP1/2 find susceptible federati by zone
+      if (!_conv.codice_attivazione.nil? && !_conv.codice_attivazione.blank?)
+        @user = User.all(:conditions => ["LOWER(codice_attivazione)=?", _conv.codice_attivazione])
         @user.each do |usr|
-          #control if user.scadenza < conv.scadenza
-          if ((_conv.scadenza.is_a?(Date)) && (usr.scadenza.nil? || (usr.scadenza < _conv.scadenza)))
-            #control if user is in geografical zone
-            isInZone = false
-            if _conv.province.nil? #iniziare dalla provincia
-              if _conv.region.nil?
-                #Nazionale
-                isInZone = true
-              else
+          add_to_conv(usr, _conv, "Da code att. ")
+        end
+      end
+      #STEP2/2 find susceptible federati by zone
+      #@user = User.all(:conditions => {:cross_organization_id => _conv.cross_organization_id})
+      @user = User.all(:conditions => ["comune_id is not null AND cross_organization_id is not null AND cross_organization_id=?", _conv.cross_organization_id])
+      if _conv.region_id && _conv.region
+        @Conv_Comuni_By_region = Province.find(:all, :include => [:comunes], :conditions => ["provinces.region_id=?", _conv.region_id]).collect {|u| [u.comunes.id]}
+      end
+      if _conv.province_id && _conv.province
+        @Conv_Comuni_By_province = Comune.find(:all, :conditions => ["province_id=?", _conv.province_id]).collect {|u| [u.id]}
+      end
+      @user.each do |usr|
+        #control if user.scadenza < conv.scadenza
+        if ((_conv.scadenza.is_a?(Date)) && (usr.scadenza.nil? || (usr.scadenza < _conv.scadenza)))
+          #control if user is in geografical zone
+          isInZone = false
+          if _conv.province.nil? #iniziare dalla provincia
+            if _conv.region.nil?
+              #Nazionale
+              isInZone = true
+            else
+              if @Conv_Comuni_By_region && (@Conv_Comuni_By_region.count > 0)
                 #Regionale
-               haveTownInRegion = Province.find(:all, :include => [:comune], :conditions => ["comune.id=? AND province.region_id=?", usr.comune_id, _conv.region_id]).count
-                if (haveTownInRegion > 0)
+               #haveTownInRegion = Province.find(:all, :include => [:comunes], :conditions => ["comunes.id=? AND provinces.region_id=?", usr.comune_id, _conv.region_id]).count
+                if @Conv_Comuni_By_region.count(:conditions => ["id=?", usr.comune_id]) > 0
                   isInZone = true
                 end
               end
-            else
+            end
+          else
+            if @Conv_Comuni_By_province && (@Conv_Comuni_By_province.count > 0)
               #Provinciale
-              haveTownInProvince = Comune.find(:all, :conditions => ["id=? AND province_id=?", usr.comune_id, _conv.province_id]).count
-              if (haveTownInProvince > 0)
+              #haveTownInProvince = Comune.find(:all, :conditions => ["id=? AND province_id=?", usr.comune_id, _conv.province_id]).count
+              if @Conv_Comuni_By_province.count( :conditions => ["id=?", usr.comune_id]) > 0
                 isInZone = true
               end
             end
-            if (isInZone == true)
-              add_to_conv(usr, _conv, "Da zona-fede. ")
-            end
           end
-        end
+          if (isInZone == true)
+            add_to_conv(usr, _conv, "Da zona-fede. ")
+          end
+        end #scadenza
+      end #each user
     end
 
     def add_to_conv(usr, _conv, msg)
@@ -208,6 +218,9 @@ class ConventionsController < ApplicationController
       if (usr.convention_id) && (usr.convention_id == _conv.id)
         return
       elsif (FeeConst::FEE_ROLES.include? usr.role_id)
+        if (usr.isarchivied?)
+          send_error(msg + "<b style='color: red;'>Utente archiviato che corrispondeva</b> "+ usr.name + "(" + usr.id.to_s + ")")
+        else
           if (usr.convention_id)
             send_warning(msg + "<b style='color: red;'>Sostituito conv per utente</b> "+ usr.name + "(" + usr.id.to_s + ") di ruolo (" + get_abbonamento_name(usr.role_id)  + ") con ex-convention: " + usr.convention.name + " --> " + usr.convention.pact )
           else
@@ -217,7 +230,7 @@ class ConventionsController < ApplicationController
           usr.convention_id = _conv.id
           usr.save!  #--> save_without_transactions
           usr.control_state
-
+        end
       end
     end
 
