@@ -255,6 +255,7 @@ class User < Principal
     end
       #controllo della scadenza
       role_atteso = nil
+      today = Date.today
       if self.admin? || self.ismanager?
         role_atteso = FeeConst::ROLE_MANAGER
         #self.datascadenza = nil # Volendo
@@ -270,10 +271,17 @@ class User < Principal
       elsif self.isarchivied?
         #non fare niente. Lui esce solo attraverso cambio ruolo dalla pagina utente
 
+        #domthu 20131030 eccezione alla regola --> pesco dentro gli archiviati alla crea-modify di una convention?
+        tipo = "archiviato"
+        if (self.convention_id && self.convention && self.convention.scadenza && self.convention.scadenza > today )
+          role_atteso = FeeConst::ROLE_ABBONATO
+        end
+
       elsif self.isabbonato? || self.isrenewing? || self.isregistered? || self.isexpired?
+
         tipo = "renew"
         #puts "control_state " + today.to_s
-        today = Date.today
+
         #puts "=============ruolo " + self.role_id.to_s + " ==========control_state[" + today.to_s + "/" + self.scadenza.to_s + "]==(" + (today > self.scadenza).to_s + ")====================="
         if (today > self.scadenza)
           #scaduto
