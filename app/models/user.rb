@@ -287,7 +287,6 @@ class User < Principal
         if (today > self.scadenza)
           #scaduto
           role_atteso = FeeConst::ROLE_EXPIRED
-          #tipo = "proposal"
           tipo = "renew"
         else
           renew_deadline = self.scadenza - Setting.renew_days.to_i.days
@@ -296,7 +295,7 @@ class User < Principal
             if (!self.isregistered?)
               role_atteso = FeeConst::ROLE_RENEW
             end
-            tipo = "renew"
+            tipo = "proposal"
           else
             #tutto ok
             role_atteso = FeeConst::ROLE_ABBONATO
@@ -315,7 +314,11 @@ class User < Principal
           elsif tipo == "asso"
             #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_register_asso) Attenzione questo è il messaggio destinato al power_user per convalidare o no una persona
           elsif tipo == "proposal"
-            tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_proposal)
+            #invia email solo ai paganti
+            if self.convention_id.nil?
+              tmail = Mailer.deliver_fee(self, "renew", Setting.template_fee_renew)
+            end
+            #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_proposal)
           else
             #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
           end
