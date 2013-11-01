@@ -83,7 +83,7 @@
                 </div>
 
               </div>
-              <% if  @convegno.show_reservation? %>
+              <% if  @convegno.show_reservation? && User.current.logged? %>
                   <div class="fs-convegni-prenota">
                     <%= render :partial => 'reservation' %>
                   </div>
