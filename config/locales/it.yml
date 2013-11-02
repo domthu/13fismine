@@ -1408,6 +1408,7 @@ it:
   label_gest_privato: "Abbonato"
   label_gest_organismo: Organismo associato o società non sportiva == Utente NON paga
   label_conventions_referee: Responsabili degli organismi convenzionati
+  label_conventions_uprole: "Stato degli utenti dopo aggiornamento convenzione:"
   label_conventions_referee_help: Lista dei responsabili
   label_no_referee: Nessun responsabile trovato
   label_referee_list_conventions: Responsabile della convenzione

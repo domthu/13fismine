@@ -67,10 +67,10 @@
 
     <p><%= f.text_field :priorita_logo_fe, :label => :field_priorita_logo_fe, :size => 5 %></p></div>
   <div class="splitcontentright" style="text-align: right;">
-    <% if @conv.new_record? ||  @conv.group_banner.nil? %>
-        <%= link_to ('Nuovo banner', {:controller => "group_banners", :action => "new", :convention_id => @conv.id}, :class => "button-grey") %>
+    <% if @conv.new_record? || @conv.group_banner.nil? %>
+        <%= link_to('Nuovo banner', {:controller => "group_banners", :action => "new", :convention_id => @conv.id}, :class => "button-grey") %>
     <% else %>
-        <%= link_to ('Visualizza Banner', {:controller => "group_banners", :action => "show", :id => @conv.group_banner}, :class => "button-grey") %>
+        <%= link_to('Visualizza Banner', {:controller => "group_banners", :action => "show", :id => @conv.group_banner}, :class => "button-grey") %>
     <% end %>
   </div>
 
