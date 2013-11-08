@@ -205,8 +205,10 @@ class NewsController < ApplicationController
       format.js {
         render(:update) { |page|
           page.replace_html "div_issues_responses", :partial => 'show_quesito_issues'
-          page.replace_html "div_fast_reply", :partial => 'form_reply_fast.html'
+          page.replace_html "div_fast_reply", :partial => 'form_reply_fast'
+          page.replace_html "quesito_issues_items", :partial => 'show_quesito_issues_items', :locals => {:news => @news} unless @news.is_wait_reply?
           page.visual_effect(:highlight, "assegnati")
+
         }
       }
     end

@@ -92,7 +92,9 @@
   <% content_for :header_tags do %>
       <%= stylesheet_link_tag 'scm' %>
   <% end %>
+  <div id="quesito_issues_items">
   <%= render :partial => 'show_quesito_issues_items', :locals => {:news => @news} unless @news.is_wait_reply?  %>
+    </div>
 </div>
 <div class="splitcontentright-s">
 <% if @news.is_fast_reply? %>
