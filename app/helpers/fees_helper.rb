@@ -20,7 +20,7 @@ module FeeConst
 
   ROLES =[ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW, ROLE_EXPIRED, ROLE_ARCHIVIED]
 
-  #ruoli sottoposti alla gestione abboanmento
+  #ruoli sottoposti alla gestione abbonamento
   FEE_ROLES =[ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW, ROLE_EXPIRED, ROLE_ARCHIVIED]
 
   AUTHORED_ROLES =[ROLE_ADMIN, ROLE_MANAGER, ROLE_AUTHOR, ROLE_VIP, ROLE_ABBONATO, ROLE_REGISTERED, ROLE_RENEW]
@@ -81,7 +81,7 @@ module FeesHelper
 #  map.permission :fee_control, :welcome => :index, :require => :loggedin, :public => true
 
 
-#Altre permissione per chi dipende della gestione del ruolo/abboanmento
+#Altre permissione per chi dipende della gestione del ruolo/abbonamento
 #  map.permission :access_back_end, :welcome => :index, :require => :loggedin
 #  map.permission :front_end_quesito, :editorial => :quesito_nuovo, :require => :loggedin
 

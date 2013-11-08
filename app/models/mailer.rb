@@ -46,7 +46,8 @@ class Mailer < ActionMailer::Base
     message_id issue
     recipients issue.recipients
     cc(issue.watcher_recipients - @recipients)
-    subject acronym(issue.author) << "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] (#{issue.status.name}) #{issue.subject}"
+    #subject acronym(issue.author) << "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] (#{issue.status.name}) #{issue.subject}"
+    subject  "Nuovo [#{issue.project.name}] #{issue.subject} [#{issue.status.name}/" << acronym(issue.author) << "]"
     body :issue => issue,
          :issue_url => url_for(:controller => 'issues', :action => 'show', :id => issue)
     render_multipart('issue_add', body)
@@ -69,10 +70,11 @@ class Mailer < ActionMailer::Base
     recipients issue.recipients
     # Watchers in cc
     cc(issue.watcher_recipients - @recipients)
-    s = "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] "
-    s << "(#{issue.status.name}) " if journal.new_value_for('status_id')
-    s << issue.subject
-    subject acronym(nil) << s
+    #s = "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] "
+    #s << "(#{issue.status.name}) " if journal.new_value_for('status_id')
+    #s << issue.subject
+    #subject acronym(nil) << s
+    subject  "Modif. [#{issue.project.name}] #{issue.subject} [#{issue.status.name}/" << acronym(nil) << "]"
     body :issue => issue,
          :journal => journal,
          :issue_url => url_for(:controller => 'issues', :action => 'show', :id => issue, :anchor => "change-#{journal.id}")
