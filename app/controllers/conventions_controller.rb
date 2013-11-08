@@ -209,7 +209,7 @@ class ConventionsController < ApplicationController
 
   def add_to_conv(usr, _conv, msg)
     return
-    #ruoli sottoposti alla gestione abboanmento
+    #ruoli sottoposti alla gestione abbonamento
     if (usr.convention_id) && (usr.convention_id == _conv.id)
       return
     elsif (FeeConst::FEE_ROLES.include? usr.role_id)
