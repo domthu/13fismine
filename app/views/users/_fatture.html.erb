@@ -44,7 +44,85 @@
       <fieldset class="box">
         <legend><%=l(:label_storico_pagamento)%></legend>
 
-        Lista delle fatture legate all'abbonato
+
+
+
+
+
+        <% if @issue.is_convegno? %>
+    <div class="box details convegno">
+      <div id="convegno" style="margin-bottom:16px;">
+        <div class="contextual">
+          <%= link_to l(:label_reservation_new), new_reservation_path, :class => 'icon icon-add' %>
+        </div>
+        <%= "Stato del convegno: " + @issue.convegno_status_fs_text %>
+      </div>
+      <hr/>
+      <div id="prenotazioni" style="margin-bottom:16px;">
+        <h3 class="prenotazioni"><%= l(:convegno_prenotazioni, :num => @issue.reservations.count.to_s) %></h3>
+
+        <% if !@issue.reservations.nil? && @issue.reservations.count > 0 %>
+            <div class="autoscroll">
+              <table class="list reservations">
+                <thead>
+                <tr>
+                  <th style='width: 20%;text-align:left;'><%= l(:label_reservation) %></th>
+                  <th style='width: 20%;text-align:left;'><%= l(:label_user) %></th>
+                  <th><%= l(:label_date) %></th>
+                  <th style='width: 10%;text-align:left;'><%= l(:label_num_persone) %></th>
+                  <th style='width: 10%;text-align:left;'><%= l(:label_prezzo) %></th>
+                  <th style='width: 30%;text-align:left;'><%= l(:label_msg) %></th>
+                  <th style='width: 5%;'></th>
+                  <th style='width: 5%;'></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @issue.reservations.each do |reservation| %>
+                    <tr class="<%= cycle 'odd', 'even' %>">
+                      <td class="buttons">
+                        <%= link_to(h(reservation.to_s), reservation_path(reservation), :class => 'icon icon-summary') if User.current.admin? %>
+                        <%= h(reservation.to_s) if !User.current.admin? %>
+                      </td>
+                      <td class="username"><%= avatar(reservation.user, {:size => "14", :class => "no-div"}) %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
+                      <td><%= format_date(reservation.created_at) %></td>
+                      <td align="center"><%= h reservation.num_persone %></td>
+                      <td align="center"><%= h reservation.prezzo %></td>
+                      <td><%= h smart_truncate(reservation.msg, 100) %></td>
+                      <td class="buttons"><%= link_to('', edit_reservation_path(reservation), :class => 'icon icon-edit') if User.current.admin? %>
+                        <%= link_to('', reservation_path(reservation), :class => 'icon icon-show') if !User.current.admin? %>
+                      </td>
+                      <td class="buttons"><%= link_to ('', reservation, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
+                    </tr>
+                <% end %>
+                <tr>
+                  <td></td>
+                  <td class="total center"><%= h @issue.reservations.count.to_s %></td>
+                  <td></td>
+                  <td class="total center"><%= h @issue.reservations.sum(:num_persone).to_s %></td>
+                  <td class="total center"><%= @issue.reservations.sum(:prezzo).to_f %></td>
+                  <td colspan="3">
+                    <% other_formats_links do |f| %>
+                        <%= f.link_to 'PDF' %>
+                    <% end %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+        <% else %>
+            <%= l(:label_prenotazioni_none) %>
+        <% end %>
+      </div>
+    </div>
+<% end %>
+
+
+
+
+
+
+
+
+
       </fieldset>
 
     </div>
