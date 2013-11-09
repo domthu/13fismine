@@ -6,6 +6,8 @@ class InvoicesController < ApplicationController
   helper :sort
   include SortHelper
 
+  include Redmine::Export::PDF
+
   # GET /invoices
   # GET /invoices.xml
   def index
@@ -23,7 +25,7 @@ class InvoicesController < ApplicationController
                 'anno' => 'anno',
                 'tariffa' => 'tariffa',
                 'pagamento' => 'pagamento'
-  
+
     respond_to do |format|
       #ovverride for paging format.html # index.html.erb
       format.html {
@@ -48,7 +50,9 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @invoice }
+      format.pdf  { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
     end
+
   end
 
   # GET /invoices/new
@@ -61,7 +65,7 @@ class InvoicesController < ApplicationController
     if @cnt.nil? or @cnt == 0
       @cnt = 1
     else
-       @cnt += 1 
+       @cnt += 1
     end
 
 #Person.minimum(:age, :conditions => ['last_name != ?', 'Drake']) # Selects the minimum age for everyone with a last name other than 'Drake'

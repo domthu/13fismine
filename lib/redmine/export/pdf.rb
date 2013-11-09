@@ -1,7 +1,7 @@
 # encoding: utf-8
 #
 # Redmine - project management software
-# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013) 
+# Copyright (C) 2006-2011  Created by  DomThual & SPecchiaSoft (2013)
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -290,6 +290,88 @@ module Redmine
         end
         pdf.Line(top_x, top_y, top_x, lower_y)    # left border
         pdf.Line(top_x, lower_y, col_x, lower_y)  # bottom border
+      end
+
+      # Returns a PDF string of a single invoice
+      def invoice_to_pdf(invoice)
+        pdf = ITCPDF.new(current_language)
+        pdf.SetTitle("FISCOSPORT. Fattura numero #{invoice.numero_fattura} del " + format_date(invoice.data_fattura))
+        pdf.alias_nb_pages
+        pdf.footer_date = format_date(Date.today)
+        pdf.AddPage
+        pdf.SetFontStyle('B',11)
+        buf = "#{invoice.subject}"
+        pdf.RDMMultiCell(190, 5, buf)
+        pdf.Ln
+
+        # nome azienda
+        pdf.SetFontStyle('B',9)
+        pdf.RDMCell(95,5, "FISCOSPORT","RT")
+        pdf.SetFontStyle('B',9)
+        pdf.RDMCell(35,5, l(:field_invoice) + ":","LT")
+        pdf.SetFontStyle('',9)
+        pdf.RDMCell(60,5, invoice.subject.to_s,"RT")
+        pdf.Ln
+
+        # destinatario
+        pdf.SetFontStyle('B',9)
+        pdf.RDMCell(35,5, l(:field_status) + ":","LT")
+        pdf.SetFontStyle('',9)
+        pdf.RDMCell(60,5, "","RT")
+        pdf.SetFontStyle('B',9)
+        pdf.RDMCell(35,5, l(:field_priority) + ":","LT")
+        pdf.SetFontStyle('',9)
+        pdf.RDMCell(60,5, invoice.destinatario,"RT")
+        pdf.Ln
+
+        # recipient
+        pdf.SetFontStyle('B',9)
+        pdf.RDMCell(35,5, l(:field_status) + ":","LT")
+        pdf.SetFontStyle('',9)
+        pdf.RDMCell(60,5, invoice.mittente,"RT")
+        pdf.SetFontStyle('B',9)
+        pdf.RDMCell(35,5, l(:field_priority) + ":","LT")
+        pdf.SetFontStyle('',9)
+        pdf.RDMCell(60,5, "","RT")
+        pdf.Ln
+
+        # corpo tabella + prezzo
+        pdf.SetFontStyle('B',9)
+        pdf.RDMCell(35,5, l(:field_status) + ":","LT")
+        pdf.SetFontStyle('',9)
+        pdf.RDMCell(60,5, invoice.anno.to_s,"RT")
+        pdf.SetFontStyle('B',9)
+        pdf.RDMCell(35,5, l(:field_priority) + ":","LT")
+        pdf.SetFontStyle('',9)
+        pdf.RDMCell(60,5, invoice.sezione.to_s,"RT")
+        pdf.Ln
+
+        pdf.SetFontStyle('B',9)
+        pdf.RDMCell(190,5, l(:label_invoice), "B")
+        pdf.Ln
+        pdf.SetFontStyle('B',8)
+        pdf.RDMCell(35,5, l(:label_numero_fattura))
+        pdf.RDMCell(20,5, l(:label_sconto), "R")
+        pdf.RDMCell(20,5, l(:label_iva), "R")
+        pdf.RDMCell(35,5, l(:label_tariffa), "R")
+        pdf.RDMCell(25,5, l(:label_data_fattura))
+        pdf.RDMCell(55,5, l(:label_pagamento))
+        pdf.Ln
+
+        pdf.SetFontStyle('',8)
+        pdf.RDMCell(35,5, invoice.numero_fiscale)
+        pdf.RDMCell(20,5, invoice.sconto.to_s,0,0,"R")
+        pdf.RDMCell(20,5, invoice.iva.to_s,0,0,"R")
+        pdf.RDMCell(35,5, invoice.tariffa.to_s,0,0,"R")
+        pdf.RDMCell(25,5, format_date(invoice.data_fattura))
+        pdf.RDMCell(55,5, smart_truncate(invoice.pagamento, 40))
+        pdf.Ln
+
+        pdf.SetFontStyle('B',9)
+        pdf.RDMCell(190,5, invoice.description, "B")
+        pdf.Ln
+
+        pdf.Output
       end
 
       # Returns a PDF string of a single issue

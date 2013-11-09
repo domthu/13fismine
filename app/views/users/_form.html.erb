@@ -14,30 +14,30 @@
     <p class="mini-legend">  <%= l(:text_caracters_minimum, :count => Setting.password_min_length) %></p>
     </div>
   </fieldset>
-<fieldset class="box tabular">
-  <legend><%=l(:label_contact)%></legend>
-  <p><%= f.text_field :firstname, :required => true %></p>
-  <p><%= f.text_field :lastname, :required => true %></p>
-  <p><%= f.text_field :mail, :required => true %></p>
-  <p><%= f.text_field :telefono, :label => :field_telefono, :required => false, :size => 25  %></p>
-  <p><%= f.text_field :mail2, :label => :field_mail2, :required => false, :size => 25  %></p>
-  <p><%= f.text_field :telefono2, :label => :field_telefono2, :required => false, :size => 25  %></p>
-  <p><%= f.text_field :fax, :label => :field_fax, :required => false, :size => 25  %></p>
-  <% if Setting.openid? %>
-  <p><%= f.text_field :identity_url  %></p>
-  <% end %>
-  <% @user.custom_field_values.each do |value| %>
-    <p><%= custom_field_tag_with_label :user, value %></p>
-  <% end %>
-</fieldset>
+  <fieldset class="box tabular">
+    <legend><%=l(:label_contact)%></legend>
+    <p><%= f.text_field :firstname, :required => true, :size => 25 %></p>
+    <p><%= f.text_field :lastname, :required => true, :size => 25 %></p>
+    <p><%= f.text_field :mail, :required => true, :size => 25 %></p>
+    <p><%= f.text_field :telefono, :label => :field_telefono, :required => false, :size => 25  %></p>
+    <p><%= f.text_field :mail2, :label => :field_mail2, :required => false, :size => 25  %></p>
+    <p><%= f.text_field :telefono2, :label => :field_telefono2, :required => false, :size => 25  %></p>
+    <p><%= f.text_field :fax, :label => :field_fax, :required => false, :size => 25  %></p>
+    <% if Setting.openid? %>
+    <p><%= f.text_field :identity_url  %></p>
+    <% end %>
+    <% @user.custom_field_values.each do |value| %>
+      <p><%= custom_field_tag_with_label :user, value %></p>
+    <% end %>
+  </fieldset>
   <fieldset class="box tabular">
     <legend><%=l(:label_fee)%></legend>
-  <p><%= f.text_field :titolo, :label => :field_titolo, :required => false %></p>
+  <p><%= f.text_field :titolo, :label => :field_titolo, :required => false, :style=>"width:88%"  %></p>
   <p><%= f.text_area :soc, :label => :field_soc, :required => false , :style=>"width:88%" ,:rows => 3  %></p>
     <p><%= f.text_area :indirizzo, :label => :field_indirizzo, :required => false , :style=>"width:88%" ,:rows => 3  %></p>
     <p><%= f.select :comune_id, (Comune.all( :include => [[ :province => :region ]], :order => 'name').collect {|c| [c.name_full, c.id]}), :include_blank => true, :required => false, :size => 60, :title => l(:label_comune)  %></p>
-    <p><%= f.text_field :codicefiscale, :label => :field_codicefiscale, :required => false, :size => 25  %></p>
-    <p><%= f.text_field :partitaiva, :label => :field_partitaiva, :required => false, :size => 25  %></p>
+    <p><%= f.text_field :codicefiscale, :label => :field_codicefiscale, :required => false, :size => 20  %></p>
+    <p><%= f.text_field :partitaiva, :label => :field_partitaiva, :required => false, :size => 20  %></p>
   </fieldset>
  </div>
   <div class="splitcontentright">

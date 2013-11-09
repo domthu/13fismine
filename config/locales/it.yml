@@ -532,7 +532,7 @@ it:
   label_projects_view_all: Sfoglia le le edizioni
   label_issues_view_all: Vedi tutti articoli
   label_issue_from_news: articolo generato da quesito
-  button_news_from_issue: Visualizza il quesito che ha generato l'articolo.
+  button_news_from_issue: "Visualizza il quesito che ha generato l'articolo."
   label_issues_latest: Ultimi articoli
   label_username_lost: Username dimenticata
   label_help_user: Manuale
@@ -613,7 +613,7 @@ it:
   label_download: "%{count} Download"
   label_download_plural: "%{count} Download"
   label_no_data: Non ci sono informazioni disponibili
-  label_no_art: L'articolo o gli articoli cercati sono stati rimossi, oppure non possono essere visualizzati nel sito ma solo via mail quando ricevi la nostra newsletter.
+  label_no_art: "L'articolo o gli articoli cercati sono stati rimossi, oppure non possono essere visualizzati nel sito ma solo via mail quando ricevi la nostra newsletter."
   label_no_user: Non ci sono utenti
   label_change_status: Cambia stato
   label_history: Cronologia
@@ -643,7 +643,7 @@ it:
   label_reply_members: Altri collaboratori che potrebbero rispondere oltre a te
   label_reply_article: Pubblica risposta come articolo
   label_reply_publishedfalse : Questo articolo non è ancora pubblicato .
-  label_reply_publishedtrue : Articolo da quesito pubblicato in un'edizione visibile.
+  label_reply_publishedtrue : "Articolo da quesito pubblicato in un'edizione visibile."
   label_fast_reply: Rispondi senza generare articolo
   label_fast_reply_response: Risposta veloce (senza articolo)
   label_reply_with_issue: Rispondi attraverso articolo(i)
@@ -1141,6 +1141,9 @@ it:
   label_sconto: Sconto
   label_iva: IVA
   label_pagamento: Pagamento
+  label_mittente: Mittente
+  label_destinatario: Destinatario
+  label_invoices_none: Non ci sono fatture
 
   field_numero_fattura: N° fattura
   field_data_fattura: Data fattura
@@ -1150,7 +1153,7 @@ it:
   field_sconto: Sconto
   field_iva: IVA
   field_pagamento: Pagamento
-
+  user_invoices: Lista delle fatture (%{num}) emesse
 
   field_group_banner: Banner
   label_group_banner: Banner
@@ -1278,8 +1281,8 @@ it:
   label_convention_none: Nessuna convenzione (organismo associato)
   label_convention_group_banner: Banner convenzione
   label_convention_group_banner_none: Nessun banner per la convenzione (organismo associato)
-  label_convention_pact: "Federazione<br />Zona"
-  label_convention_scad: "Scadenza convenz."
+  label_convention_pact: Federazione<br />Zona
+  label_convention_scad: Scadenza convenz.
   label_convention_sport: Organismo sportivo
   label_convention_no_sport: Gruppo non sportivo
   label_convention_type: Tipo organismo
@@ -1303,7 +1306,7 @@ it:
 
   field_ragione_sociale: Ragione sociale
   field_email: Email
-  field_indirizzo: "Sede o Domicilio"
+  field_indirizzo: Sede o Domicilio
   field_presidente: Presidente
   field_referente: Referente
   field_consulente: Consulente

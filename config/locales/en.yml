@@ -1110,6 +1110,9 @@ en:
   label_sconto: Sconto
   label_iva: IVA
   label_pagamento: Pagamento
+  label_mittente: Sender
+  label_destinatario: Recipient
+  label_invoices_none: No invoice done
 
   field_numero_fattura: N° fattura
   field_data_fattura: Data fattura
@@ -1119,7 +1122,7 @@ en:
   field_sconto: Sconto
   field_iva: IVA
   field_pagamento: Pagamento
-
+  user_invoices: Invoices list (%{num}) done
 
   field_group_banner: Banner
   label_group_banner: Banner

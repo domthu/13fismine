@@ -27,6 +27,18 @@
         <%= l(:label_data_fattura) %>: <%= format_date(@invoice.data_fattura) %>
     </p>
     <p>
+      <%= l(:label_mittente) %>:
+      <div class="wiki">
+        <%= @invoice.mittente %>
+      </div>
+    </p>
+    <p>
+      <%= l(:label_destinatario) %>:
+      <div class="wiki">
+        <%= @invoice.destinatario %>
+      </div>
+    </p>
+    <p>
         <%= l(:label_sezione) %>: <%=h @invoice.sezione %>
     </p>
     <p>
@@ -36,10 +48,7 @@
         <%= l(:label_tariffa) %>: <%=h @invoice.tariffa %>
     </p>
     <p>
-      <%= l(:label_sconto) %>:
-      <div class="wiki">
-        <%= textilizable(@invoice.sconto) %>
-      </div>
+      <%= l(:label_sconto) %>: <%= h(@invoice.sconto) %>
     </p>
     <p>
         <%= l(:label_iva) %>: <%=h @invoice.iva %>

@@ -14,6 +14,7 @@ class Convention < ActiveRecord::Base
   has_many :users, :dependent => :nullify #Non fare niente dobbiamo eliminare convention_id
   belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id' #, :default => null
   belongs_to :user #, :class_name => 'User', :foreign_key => 'user_id'#, :default => null
+  has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
   #Con questi 3 campi siamo in grado di definire quale organismo con quale copertura geografica
   belongs_to :cross_organization, :class_name => 'CrossOrganization', :foreign_key => 'cross_organization_id'
   belongs_to :region, :class_name => 'Region', :foreign_key => 'region_id' #, :default => null

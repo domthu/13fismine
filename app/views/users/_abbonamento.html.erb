@@ -1,6 +1,6 @@
 <% roles_fs = Role.all_fs %>
 <% remote_form_for(:user, :url => {:action => 'edit_abbonamento', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
-    <div id="edit_dati_form">
+  <div id="edit_dati_form">
     <!--[form:user]-->
     <div class="splitcontentleft">
       <fieldset class="box tabular">
@@ -50,11 +50,13 @@
             </span>
         </p>
       </fieldset>
+
       <fieldset class="box tabular">
 
         <legend title="<%= l(:label_gest_organismo) %>"><%= l(:field_convention) %><%= @user.convention.nil? ? '' : ' # ' + @user.convention.id.to_s  %></legend>
         <p>
-          <%= f.select :convention_id, (Convention.all.collect { |c| [truncate(c.name, 39), c.id] }), :include_blank => true, :required => false, :label => :label_convention_change, :size => 60, :title => 'cambia convenzione' %>
+          <!--  def select(object, method, choices, options = {}, html_options = {} -->
+          <%= f.select :convention_id, (Convention.all.collect { |c| [truncate(c.name, 39), c.id] }), { :include_blank => true, :required => false}, {:size => 1, :label => :label_convention_change, :style => 'width: 100%;', :title => 'cambia convenzione'} %>
         </p>
 
         <p class="">
@@ -70,68 +72,68 @@
         </p>
 
         <% if @user.convention %>
-            <p class="">
-              <label><%= l(:label_referente) %></label><span>
-              <% if @user.convention.user %>
-                <%= link_to h(@user.convention.user) unless User.current.admin? %>
-                  <%= link_to h(@user.convention.user), edit_user_path(:id => @user.convention.user) unless !User.current.admin? %>
-              <% else %>
-                <em class="nodata"><%= l(:label_no_referente) %></em>
-              <% end %>
-            </span></p>
+          <p class="">
+            <label><%= l(:label_referente) %></label><span>
+            <% if @user.convention.user %>
+              <%= link_to h(@user.convention.user) unless User.current.admin? %>
+                <%= link_to h(@user.convention.user), edit_user_path(:id => @user.convention.user) unless !User.current.admin? %>
+            <% else %>
+              <em class="nodata"><%= l(:label_no_referente) %></em>
+            <% end %>
+          </span></p>
 
-            <p class="">
-              <label><%= l(:label_convention_type) %></label>
-            <span>
-              <% if @user.convention.se_sport? %>
-                  <%= l(:label_convention_sport) %>
-              <% else %>
-                <%= l(:label_convention_no_sport) %>
-              <% end %>
-            </span>
-            </p>
-            <p class="">
-              <label><%= l(:zone_area) %></label>
-            <span>
-              <%= @user.convention.get_zone() %>
-            </span>
-            </p>
+          <p class="">
+            <label><%= l(:label_convention_type) %></label>
+          <span>
+            <% if @user.convention.se_sport? %>
+                <%= l(:label_convention_sport) %>
+            <% else %>
+              <%= l(:label_convention_no_sport) %>
+            <% end %>
+          </span>
+          </p>
+          <p class="">
+            <label><%= l(:zone_area) %></label>
+          <span>
+            <%= @user.convention.get_zone() %>
+          </span>
+          </p>
 
-            </fieldset>
-            <%#===========stesso gruppo/convenzione =============%>
-            <fieldset class="box tabular">
-              <legend><%= l(:label_conventions_same) %></legend>
-              <% convenzionati = @user.convention.users %>
-              <% if convenzionati.any? %>
-                  <%= l(:label_total) %>:<strong class="total center"><%= h convenzionati.count %></strong>
-                  <table class="list users">
-                    <thead>
-                    <th style="text-align:left;"><%= l(:label_user) %></th>
-                    <th style="text-align:left;"><%= l(:field_due_date) %></th>
-                    <th style="text-align:left;"><i class="icon icon-man" title="Power user, responsabile"></i></th>
-                    </thead>
-                    <tbody>
-                    <% convenzionati.sort_by(&:lastname).each do |user| %>
-                        <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
-                          <td>
-                            <%= user_role_iconized(user, :size => "s", :icon_for => user.uicon, :text => link_to(user, edit_user_path(user))) %>
-                          </td>
-                          <td>
-                            <%= format_date(user.scadenza) %>
-                          </td>
-                          <td>
-                            <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled' %>
-                          </td>
-                        </tr>
-                    <% end %>
-                    </tbody>
-                  </table>
-              <% else %>
-                  <p class="nodata"><%= l(:label_no_soci) %></p>
-              <% end %>
-        <% end %>
-        </fieldset>
-        </div>
+          </fieldset>
+          <%#===========stesso gruppo/convenzione =============%>
+          <fieldset class="box tabular">
+            <legend><%= l(:label_conventions_same) %></legend>
+            <% convenzionati = @user.convention.users %>
+            <% if convenzionati.any? %>
+                <%= l(:label_total) %>:<strong class="total center"><%= h convenzionati.count %></strong>
+                <table class="list users">
+                  <thead>
+                  <th style="text-align:left;"><%= l(:label_user) %></th>
+                  <th style="text-align:left;"><%= l(:field_due_date) %></th>
+                  <th style="text-align:left;"><i class="icon icon-man" title="Power user, responsabile"></i></th>
+                  </thead>
+                  <tbody>
+                  <% convenzionati.sort_by(&:lastname).each do |user| %>
+                      <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
+                        <td>
+                          <%= user_role_iconized(user, :size => "s", :icon_for => user.uicon, :text => link_to(user, edit_user_path(user))) %>
+                        </td>
+                        <td>
+                          <%= format_date(user.scadenza) %>
+                        </td>
+                        <td>
+                          <%= check_box_tag '', 0, user.power_user, :disabled => 'disabled' %>
+                        </td>
+                      </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+            <% else %>
+                <p class="nodata"><%= l(:label_no_soci) %></p>
+            <% end %>
+      <% end %>
+      </fieldset>
+    </div>
     <%#========zona a destra dati privati ================%>
     <div class="splitcontentright">
 
@@ -145,7 +147,7 @@
           <%= f.text_field :datascadenza, :label => '', :size => 10 %><%= calendar_for('user_datascadenza') %>
         </p>
         <hr>
-        <div class="box tabular">
+        <div class="tabular">
           <p style="background-color: #fef9f9 ;">
             <label title="<%= l(:stato_scadenza) %>"><%= l(:field_datascadenza_user) %></label>
             <% if @user.datascadenza %>
@@ -164,7 +166,7 @@
             <% end %>
           </p></div>
         <% if @user.convention %>
-        <div class="box tabular">
+        <div class="tabular">
           <p style="background-color: #fef9f9 ;">
             <label title="<%= l(:stato_scadenza) %>"><%= l(:label_convention_scad) %></label>
             <% if @user.convention.data_scadenza %>
@@ -186,11 +188,13 @@
             <% end %>
         <br/>
       </fieldset>
+
       <style type="text/css">
         .nocolor{background-color: transparent!important;border: 0!important;}
         .divrole .user-role-icon-s{width: 20%!important; }
         .divrole{float:left; width: 33%;}
       </style>
+
       <fieldset class="box">
         <legend><%= l(:field_role) %> # <%= @user.role_id.to_s %></legend>
            <br />
@@ -248,7 +252,7 @@
       </fieldset>
 
       <p class="btn-footer"><%= submit_tag l(:button_save_abbonamento), :class => 'button-grey' %></p>
-    </div>
-    </div>
-    <div style="clear:left;"></div>
+    </div> <!-- id="edit_dati_form">-->
+  </div> <!-- id="edit_dati_form">-->
+  <div style="clear:left;"></div>
 <% end %>

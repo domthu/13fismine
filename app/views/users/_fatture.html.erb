@@ -1,18 +1,76 @@
-<% remote_form_for(:user, :url => { :action => 'edit_fatture', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
-<%# form_for @user, :url => { :action => 'edit_fatture', :id => @user}, :builder => TabularFormBuilder do |f| %>
 
-  <div id="edit_dati_form">
-       <h4 style="color:#c54d21">nb: al momento non implementato.</h4>
-    <!--[form:user]-->
-    <div class="splitcontentleft">
+<div class="splitcontentleft">
+  <fieldset class="box tabular">
+    <legend><%= l(:user_invoices, :num => @user.invoices.count.to_s) %></legend>
+    <div class="contextual">
+      <%= link_to l(:label_invoice_new), new_invoice_path, :class => 'icon icon-add' if User.current.admin? %>
+    </div>
+
+    <% if !@user.invoices.nil? && @user.invoices.count > 0 %>
+        <div class="autoscroll">
+          <table class="list invoices">
+            <thead>
+            <tr>
+              <th style='width: 15%;text-align:left;'><%= l(:label_numero_fattura) %></th>
+              <th style='width: 20%;text-align:left;'><%= l(:label_data_fattura) %></th>
+              <th style='width: 15%;text-align:right;'><%= l(:label_sconto) %></th>
+              <th style='width: 15%;text-align:right;'><%= l(:label_iva) %></th>
+              <th style='width: 20%;text-align:right;'><%= l(:label_prezzo) %></th>
+              <th style='width: 10%;text-align:left;'><%= l(:button_download) %></th>
+              <th style='width: 5%;'></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @user.invoices.sort_by(&:data_fattura).reverse.each do |invoice| %>
+                <tr class="<%= cycle 'odd', 'even' %>">
+                  <td align="left">
+                    <%= link_to(h(invoice.to_s), invoice_path(invoice), :class => 'icon icon-summary') if User.current.admin? %>
+                    <%= h(invoice.to_s) if !User.current.admin? %>
+                  </td>
+                  <td><%= format_date(invoice.data_fattura) %></td>
+                  <td align="right"><%= h invoice.sconto %>
+                  <td align="right"><%= h invoice.iva %>
+                  <td align="right"><%= h invoice.tariffa %>
+                  <td align="left">
+                    <%= link_to('PDF', invoice_path(invoice, :format => :pdf), :class => 'icon icon-pdf') %>
+                  </td>
+                  <%# h smart_truncate(invoice.msg, 100) %></td>
+                  <td class="buttons"><%= link_to('', edit_invoice_path(invoice), :class => 'icon icon-edit') if User.current.admin? %>
+                    <%= link_to('', invoice_path(invoice), :class => 'icon icon-show') if !User.current.admin? %>
+                  </td>
+                  <!--td class="buttons"><%= link_to ('', invoice, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td -->
+                </tr>
+            <% end %>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="total buttons"><%= @user.invoices.sum(:tariffa).to_f %></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+    <% else %>
+      <p class="nodata"><%= l(:label_invoices_none) %></p>
+    <% end %>
+  </fieldset>
+</div>
+
+<div class="splitcontentright">
+  <% remote_form_for(:user, :url => { :action => 'edit_fatture', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
+  <%# form_for @user, :url => { :action => 'edit_fatture', :id => @user}, :builder => TabularFormBuilder do |f| %>
+
+    <div id="edit_dati_form">
       <fieldset class="box tabular">
 
         <legend><%=l(:label_dati_pagamento)%></legend>
         <p><%= f.text_field :tariffa_precedente, :label => l(:field_tariffa_precedente), :required => false, :size => 5 %><p>
 
-        <p><%= f.text_field :iva_precedente, :label => :field_iva_precedente, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+        <p><%= f.text_field :iva_precedente, :label => :field_iva_precedente, :required => false %></p>
 
-        <p><%= f.text_field :pagamento_precedente, :label => :field_pagamento_precedente, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
+        <p><%= f.text_field :pagamento_precedente, :label => :field_pagamento_precedente %></p>
 
         <p>   <%= f.text_field :data_ultimo_pagamento, :label => l(:field_data_ultimo_pagamento), :size => 10 %><%= calendar_for('user_data_ultimo_pagamento') %>
         </p>
@@ -28,111 +86,14 @@
         </p><%= @user.anno_competenza %>
         <p><%= f.text_field :crediti, :label => :field_crediti, :required => false, :size => 3  %></p>
 
-        <p><%= f.text_area :annotazioni, :label => :field_annotazioni, :required => false, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
-
-      </fieldset>
-
-      <fieldset class="box tabular">
-        <legend><%=l(:label_emetti_fattura)%></legend>
-
-        emetti fattura
-      </fieldset>
-
-    </div>
-    <div class="splitcontentright">
-
-      <fieldset class="box">
-        <legend><%=l(:label_storico_pagamento)%></legend>
-
-
-
-
-
-
-        <% if @issue.is_convegno? %>
-    <div class="box details convegno">
-      <div id="convegno" style="margin-bottom:16px;">
-        <div class="contextual">
-          <%= link_to l(:label_reservation_new), new_reservation_path, :class => 'icon icon-add' %>
-        </div>
-        <%= "Stato del convegno: " + @issue.convegno_status_fs_text %>
-      </div>
-      <hr/>
-      <div id="prenotazioni" style="margin-bottom:16px;">
-        <h3 class="prenotazioni"><%= l(:convegno_prenotazioni, :num => @issue.reservations.count.to_s) %></h3>
-
-        <% if !@issue.reservations.nil? && @issue.reservations.count > 0 %>
-            <div class="autoscroll">
-              <table class="list reservations">
-                <thead>
-                <tr>
-                  <th style='width: 20%;text-align:left;'><%= l(:label_reservation) %></th>
-                  <th style='width: 20%;text-align:left;'><%= l(:label_user) %></th>
-                  <th><%= l(:label_date) %></th>
-                  <th style='width: 10%;text-align:left;'><%= l(:label_num_persone) %></th>
-                  <th style='width: 10%;text-align:left;'><%= l(:label_prezzo) %></th>
-                  <th style='width: 30%;text-align:left;'><%= l(:label_msg) %></th>
-                  <th style='width: 5%;'></th>
-                  <th style='width: 5%;'></th>
-                </tr>
-                </thead>
-                <tbody>
-                <% @issue.reservations.each do |reservation| %>
-                    <tr class="<%= cycle 'odd', 'even' %>">
-                      <td class="buttons">
-                        <%= link_to(h(reservation.to_s), reservation_path(reservation), :class => 'icon icon-summary') if User.current.admin? %>
-                        <%= h(reservation.to_s) if !User.current.admin? %>
-                      </td>
-                      <td class="username"><%= avatar(reservation.user, {:size => "14", :class => "no-div"}) %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
-                      <td><%= format_date(reservation.created_at) %></td>
-                      <td align="center"><%= h reservation.num_persone %></td>
-                      <td align="center"><%= h reservation.prezzo %></td>
-                      <td><%= h smart_truncate(reservation.msg, 100) %></td>
-                      <td class="buttons"><%= link_to('', edit_reservation_path(reservation), :class => 'icon icon-edit') if User.current.admin? %>
-                        <%= link_to('', reservation_path(reservation), :class => 'icon icon-show') if !User.current.admin? %>
-                      </td>
-                      <td class="buttons"><%= link_to ('', reservation, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
-                    </tr>
-                <% end %>
-                <tr>
-                  <td></td>
-                  <td class="total center"><%= h @issue.reservations.count.to_s %></td>
-                  <td></td>
-                  <td class="total center"><%= h @issue.reservations.sum(:num_persone).to_s %></td>
-                  <td class="total center"><%= @issue.reservations.sum(:prezzo).to_f %></td>
-                  <td colspan="3">
-                    <% other_formats_links do |f| %>
-                        <%= f.link_to 'PDF' %>
-                    <% end %>
-                  </td>
-                </tr>
-              </table>
-            </div>
-        <% else %>
-            <%= l(:label_prenotazioni_none) %>
-        <% end %>
-      </div>
-    </div>
-<% end %>
-
-
-
-
-
-
-
-
+        <p><%= f.text_area :annotazioni, :label => :field_annotazioni, :required => false, :rows => 15 %></p>
 
       </fieldset>
 
     </div>
-  </div>
-  <div style="clear:left;"></div>
-  <!--[eoform:user]-->
+    <p><%= submit_tag l(:button_save_fatture) %></p>
+  <% end %>
+</div>
 
-  <p><%= submit_tag l(:button_save_fatture) %></p>
-<% end %>
-
+<div style="clear:left;"></div>
 <%# wikitoolbar_for 'annotazioni' %>
-<%# wikitoolbar_for 'sconto_precedente' %>
-<%# wikitoolbar_for 'pagamento_precedente' %>
