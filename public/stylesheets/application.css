@@ -257,9 +257,11 @@ div.quesiti h3  { background: url(../images/wiki_edit.png) no-repeat 0% 50%; pad
 .domand_ok { background: url(../images/task_done.png) no-repeat 0% 50%;  }
 .domand_x { background: url(../images/help.png) no-repeat 0% 50%; }
 h3.domand_ok , h3.domand_ko , h3.domand_wait ,h3.domand_x   {  padding-left: 20px; min-height: 66px; height: 66px; display: table-cell; vertical-align: middle;  }
+/*
 .published-false { background: url(../images/bullet_diamond.png) no-repeat 50% 120%; }
 .published-true { background: url(../images/true.png) no-repeat 50% 120%; }
 div.published-false , div.published-true{padding-left: 20px; min-height: 2em; height: 2em;}
+*/
 #watchers ul {margin: 0;  padding: 0;}
 #watchers li {list-style-type:none;margin: 0px 2px 0px 0px; padding: 0px 0px 0px 0px;}
 #watchers select {width: 95%; display: block;}
@@ -1587,6 +1589,15 @@ hr.quesiti hr {
     -moz-transform: rotate(-6deg);
     -o-transform: rotate(-6deg);
 }
-
+#issue_showinfo{
+    text-align: center;
+    width: 100%;
+    background-color: #fff;
+    padding: 7px 0;
+}
+#issue_showinfo p{
+    font-size: 1.5em;
+    color: #bc8f8f;
+}
 
 

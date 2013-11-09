@@ -643,7 +643,7 @@ it:
   label_reply_members: Altri collaboratori che potrebbero rispondere oltre a te
   label_reply_article: Pubblica risposta come articolo
   label_reply_publishedfalse : Questo articolo non è ancora pubblicato .
-  label_reply_publishedtrue : Articolo pubblicato in un'edizione visibile.
+  label_reply_publishedtrue : Articolo da quesito pubblicato in un'edizione visibile.
   label_fast_reply: Rispondi senza generare articolo
   label_fast_reply_response: Risposta veloce (senza articolo)
   label_reply_with_issue: Rispondi attraverso articolo(i)
@@ -934,7 +934,7 @@ it:
   button_expand_all: Espandi tutto
   button_delete: Elimina
   button_create: Crea
-  button_create_and_continue: Crea e continua
+  button_create_and_continue: Crea e nuovo
   button_test: Prova
   button_edit: Modifica
   button_edit_associated_wikipage: "Modifica la pagina wiki associata: %{page_title}"
@@ -987,6 +987,7 @@ it:
   button_news_fast_reply_create: Dai una risposta veloce
   button_news_fast_reply_update: Modifica la risposta veloce
   button_issue_reply_article: Pubblica spostando in quindicinale
+  button_issue_empty: Modifica
   label_fail_update: Non è possibile aggiornare questo contenuto
 
   status_active: attivo
@@ -1347,7 +1348,7 @@ it:
   field_clicks: Clicks
   field_didascalia: Didascalia
   field_se_prima_pagina: In prima pagina?
-  field_se_prenotazione: Prenotazione evento?
+  field_se_prenotazione: Prenota evento?
   field_impressions_history: Storico impressione
 
 #ISSUE --> CONVEGNO
