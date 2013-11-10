@@ -104,7 +104,7 @@ class UsersController < ApplicationController
 
     # TODO: Similar to My#account
     @user.pref.attributes = params[:pref]
-    @user.pref[:no_self_notified] = (params[:no_self_notified] == '1')
+    @user.pref[:no_self_feenotified] = (params[:no_self_notified] == '1')
 
     if @user.save
       @user.pref.save

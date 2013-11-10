@@ -4,7 +4,7 @@
     <legend><%= l(:user_invoices, :num => @user.invoices.count.to_s) %></legend>
     <div class="contextual">
       <%= link_to l(:label_invoice_new), new_invoice_path, :class => 'icon icon-add' if User.current.admin? %>
-    </div>
+    </div><h3>&nbsp;</h3>
 
     <% if !@user.invoices.nil? && @user.invoices.count > 0 %>
         <div class="autoscroll">
@@ -38,7 +38,6 @@
                   <td class="buttons"><%= link_to('', edit_invoice_path(invoice), :class => 'icon icon-edit') if User.current.admin? %>
                     <%= link_to('', invoice_path(invoice), :class => 'icon icon-show') if !User.current.admin? %>
                   </td>
-                  <!--td class="buttons"><%= link_to ('', invoice, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td -->
                 </tr>
             <% end %>
             <tr>
