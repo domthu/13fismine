@@ -234,7 +234,7 @@ Redmine::MenuManager.map :application_menu do |menu|
   menu.push :fee_manage, :fee_path, :if => Proc.new { User.current.admin? && Setting.fee? }
   #menu.push :fee_manage, :registrati_path, :if => Proc.new { User.current.admin? && Setting.fee? }
   #menu pagamenti
-  menu.push :payment, :pagamento_path, :if => Proc.new { User.current.admin? && Setting.fee? }
+  menu.push :payment, :invoices_path, :if => Proc.new { User.current.admin? && Setting.fee? }
 end
 
 Redmine::MenuManager.map :admin_menu do |menu|
@@ -243,8 +243,7 @@ Redmine::MenuManager.map :admin_menu do |menu|
   #menu abbonamento
   menu.push :abbo, {:controller => 'fees', :action => 'index'}, :caption => :label_abbo_plural, :if => Proc.new { Setting.fee? }
   #menu.push :abbo, {:controller => 'fees', :action => 'registrati'}, :caption => :label_abbo_plural, :if => Proc.new { Setting.fee? }
-  #menu pagamenti (TODO Temporaneamente rimosso)
-  #menu.push :payment, :pagamento_path, :if => Proc.new { Setting.fee? }
+  menu.push :payment, :invoices_path, :if => Proc.new { Setting.fee? }
   #menu.push :projects, {:controller => 'admin', :action => 'projects'}, :caption => :label_project_plural
   menu.push :users, {:controller => 'users'}, :caption => :label_user_plural
   menu.push :comunes, :comunes_path, :caption => :label_comune_plural, :if => Proc.new { User.current.admin? }
@@ -296,7 +295,7 @@ Redmine::MenuManager.map :menu_fee_fs do |menu|
   menu.push :paganti, :paganti_path
   menu.push :abbonamenti, :abbonamenti_path
 =begin
-  menu.push :pagamento, :pagamento_path
+  menu.push :pagamento, :invoices_path
   menu.push :invia_fatture, :invia_fatture_path
   menu.push :email_fee, :email_fee_path
   menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
@@ -306,7 +305,7 @@ Redmine::MenuManager.map :menu_fee_fs do |menu|
 end
 
 Redmine::MenuManager.map :menu_payment_fs do |menu|
-  menu.push :pagamento, :pagamento_path
+  menu.push :pagamento, :invoices_path
   menu.push :invia_fatture, :invia_fatture_path
   menu.push :email_fee, :email_fee_path
   menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }

@@ -27,7 +27,6 @@ class FeesController < ApplicationController
   menu_item :paganti, :only => [:paganti]
   menu_item :abbonamenti, :only => [:abbonamenti]
   #selected menu payments
-  menu_item :pagamento, :only => [:pagamento]
   menu_item :invoices, :only => [:invoices]
   menu_item :email_fee, :only => [:email_fee]
   menu_item :invia_fatture, :only => [:invia_fatture]
@@ -314,10 +313,6 @@ class FeesController < ApplicationController
   end
 
 ##########GESTIONE PAGAMENTI ABBONAMENTO
-  def pagamento
-    @payment = User.find :all
-  end
-
   def invia_fatture
   end
 
@@ -430,7 +425,7 @@ class FeesController < ApplicationController
     case self.action_name
       when 'index', 'liste_utenti', 'associati', 'paganti','abbonamenti'
         @menu_fs = :menu_fee_fs
-      when 'pagamento', 'fatture', 'email_fee', 'invia_fatture'
+      when 'fatture', 'email_fee', 'invia_fatture'
         @menu_fs = :menu_payment_fs
       else
         @menu_fs = :application_menu
