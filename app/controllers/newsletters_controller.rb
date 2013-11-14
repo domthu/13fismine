@@ -90,7 +90,7 @@ class NewslettersController < ApplicationController
         raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
         ActionMailer::Base.raise_delivery_errors = true
         @nl_users.each do |nl_usr|
-          if nl_usr.user && nl_usr.no_newsletter != 1
+          if nl_usr.user && nl_usr.user.no_newsletter != 1
             begin
               #clean clean_fs_html
                if !nl_usr.user.privato?
