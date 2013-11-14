@@ -59,4 +59,5 @@ config/database.yml
 /public/images/commons/sections/*
 /public/images/commons/organizations/*
 /public/images/commons/banners/*
+public/images/commons/banners/*
 /public/images/ckeditor_assets/*
