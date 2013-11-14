@@ -21,6 +21,7 @@ class AccountController < ApplicationController
   include CustomFieldsHelper
   include FeesHelper #ROLE_XXX  gedate
   before_filter :reroute_if_logged, :only => :register
+  before_filter :require_login, :find_user, :only => [:delete_from_newsletter]
 
   # prevents login action to be filtered by check_if_login_required application scope filter
   skip_before_filter :check_if_login_required
@@ -96,22 +97,6 @@ class AccountController < ApplicationController
     end
   end
 
-#Parameters: {"extra_town"=>"7289", "action"=>"register", "commit"=>"Invia", "authenticity_token"=>"oE/I9wEZXoXqA0iRUM+BS+fbprZFzqmGoCtdOhzN0hY=", "controller"=>"account", "user"=>{"codice_attivazione"=>"", "password"=>"[FILTERED]", "firstname"=>"dom7", "se_privacy"=>"1", "language"=>"it", "se_condition"=>"1", "fax"=>"", "indirizzo"=>"", "partitaiva"=>"", "soc"=>"", "password_confirmation"=>"[FILTERED]", "mail"=>"dom_thual@yahoo.it", "comune_id"=>"7289", "login"=>"dom7", "cross_organization_id"=>"1", "telefono"=>"", "codicefiscale"=>"thlddj", "titolo"=>"Tecnico/Dirigente", "lastname"=>"thual7"}}
-  def delete_from_newsletter
-    @user = User.new(params[:user])
-    @user.no_newsletter = 1
-
-    if request.post?
-      if  @user.save # false
-        flash.now[:success] = l(:notice_updated)
-        redirect_to editorial_url
-      else
-        flash.now[:error] = l(:notice_not_updated)
-      end
-    end
-
-
-  end
   def register
     redirect_to(editorial_url) && return unless Setting.self_registration? || session[:auth_source_registration]
     if request.get?
@@ -447,7 +432,27 @@ class AccountController < ApplicationController
     redirect_to editorial_url
   end
 
+  def delete_from_newsletter
+    @user.no_newsletter = 1
+    if request.post?
+      if @user.save # false
+        flash[:success] = l(:notice_updated)
+        redirect_to editorial_url
+      else
+        flash[:error] = l(:notice_not_updated)
+      end
+    end
+  end
+
   private
+
+  def find_user
+    @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = l(:notice_user_not_found, {:id => params[:id]})
+    redirect_to editorial_url
+    render_404
+  end
 
   def logout_user
     if User.current.logged?
@@ -635,4 +640,5 @@ class AccountController < ApplicationController
       redirect_to my_profile_show_url
     end
   end
+
 end

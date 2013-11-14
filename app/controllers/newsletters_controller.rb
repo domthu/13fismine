@@ -75,9 +75,10 @@ class NewslettersController < ApplicationController
     @failed = []
     if @newsletter.have_emails_to_send?
       if (!@newsletter.project_id.nil? && @newsletter.project)
-        @art = @project.issues.all_mail_fs #Solo visibile WEB
+        @art = @project.issues.all_mail_fs #Solo visibile MAIL
         @project = @newsletter.project
-        _html = render_to_string(
+
+        _html_empty = render_to_string(
                   :layout => false,
                   :partial => 'editorial/edizione_smtp',
                   :locals => { :id => @project.id, :project => @project, :art => @art, :user => nil }
@@ -90,7 +91,7 @@ class NewslettersController < ApplicationController
         raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
         ActionMailer::Base.raise_delivery_errors = true
         @nl_users.each do |nl_usr|
-          if nl_usr.user
+          if nl_usr.user && nl_usr.no_newsletter != 1
             begin
               #clean clean_fs_html
                if !nl_usr.user.privato?
@@ -100,13 +101,13 @@ class NewslettersController < ApplicationController
                       :partial => 'editorial/edizione_smtp_convention',
                       :locals => { :user => @user }
                     )
-                _html = _html.gsub('@@user_convention@@', conv_html)
+                _html_user = _html_empty.gsub('@@user_convention@@', conv_html)
               else
-                _html = _html.gsub('@@user_convention@@', '')
+                _html_user = _html_empty.gsub('@@user_convention@@', '')
               end
 
               stat = "<a href='#{user_path(nl_usr.user)}' target='_blank'>##{nl_usr.user.name}</a> "
-              @tmail =  Mailer.deliver_newsletter(nl_usr.user, _html, @newsletter.project)
+              @tmail =  Mailer.deliver_newsletter(nl_usr.user, _html_user, @newsletter.project)
               @sended << "Email inviato " + stat
               #@sended << ". Risultato => " + @tmail (can't convert TMail::Mail into String)
               nl_usr.sended = true

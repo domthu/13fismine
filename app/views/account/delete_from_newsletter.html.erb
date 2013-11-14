@@ -4,8 +4,15 @@
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">
           <div class="fs-layout-cell layout-item-0" style="width: 99%">
-            <h3> Newsletter </h3>
 
+          <% form_tag(newsletter_del_path(:id => @user.id.to_s)) do %>
+            <article class="fs-post fs-article" style="display: table-cell">
+              <h3> Per togliere la tua iscrizione dalla newsletter di <%= Setting.app_title %> clicca sul pulsante "<%= l(:button_cancel) %>"</h3>
+              <div style="float:right; margin: 25px;" >
+                <input type="submit" name="cancel" class="fs-rosso-button" value="<%= l(:button_cancel) %> &#187;" tabindex="5"/>
+              </div>
+            </article>
+          <% end %>
           </div>
         </div>
       </div>
@@ -15,4 +22,4 @@
   <br/>
   <div class="clearfix"></div>
 </div>
-<%= render :partial => 'blocco_sidebar1' %>
+<%= render :partial => 'editorial/blocco_sidebar1' %>

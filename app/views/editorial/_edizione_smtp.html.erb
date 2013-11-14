@@ -31,16 +31,15 @@ table td {padding: 0; margin: 0; border: none;}
       </font>
     </td>
   </tr>
-<%#
 <tr>
-  <td valign="bottom" height="40" align="center">
-    <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:10px; color:#bebebe;">
-      se non vuoi più ricevere la newsletter clicca qui
-      <%= link_to(@project.description, url_for(defurl+ edizione_path + @project.id.to_s), :class => "newwin", :style => 'color:#fff;', :target => '_blank') %>
-<%#       direttamente online.
+  <td valign="bottom" height="20" align="center">
+    <font style="font-family: Tahoma, Arial, Helvetica, sans-serif; font-size:8px; color:#bebebe;">
+      <small>Se non vuoi più ricevere la newsletter clicca qui
+        <%= link_to("clicca qui", newsletter_del_path( :id => (@user.nil? ?  '@@user_codice@@' : @user.id.to_s)), :class => "newwin", :style => 'color:#fff;', :target => '_blank') %>
+      </small>
     </font>
   </td>
-</tr> %>
+</tr>
 <tr>
   <td>
     <table cellpadding="0" cellspacing="0" width="640" style="font-size:0;">
