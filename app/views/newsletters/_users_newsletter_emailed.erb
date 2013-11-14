@@ -1,47 +1,48 @@
 <%# include FeesHelper  #Domthu  FeeConst get_role_css %>
 <%# quando chiamato via ajax undefined method `get_role_css' for #<ActionView::Base:0xb2eeb968>%>
 <% if @nl_users && @nl_users.any? %>
-  <table class="list users">
-    <thead>
-    <th style="text-align:left;"><%= l(:field_mail) %></th>
-    <th style="text-align:left;"><%= l(:label_nl_usr) %>&nbsp;(<%= l(:field_due_date) %>)</th>
-    <th style="text-align:left;" title="Attenzione questo è il ruolo attuale e non quello al momento dell'invio della mail"><%= l(:field_role) %></th>
-    <th style="text-align:left;"><%= l(:field_convention) %></th>
-    <th style="text-align:left;"><%= l(:field_updated_on) %></th>
-    </thead>
-    <tbody>
-    <%#.sort_by(&:sended) undefined method `<=>' for false:FalseClass %>
-    <% @nl_users.each do |nl_usr| %>
-        <tr id="nl_usr-<%= nl_usr.id %>" class="user">
-          <td>
-            <div style="width:1px;" class="flash <%= nl_usr.sended? ? 'notice' : (nl_usr.errore.nil? ? 'warning' : 'error') %>" title="<%= nl_usr.errore.nil? ? '' : nl_usr.errore %>">&nbsp;</div>
-          </td>
-          <td>
-            <%= link_to_user(nl_usr.user, {:target => "_blank", :class => 'icon icon-preview'}) unless User.current.admin? %>
-            <%= link_to(h(nl_usr.user.name), edit_user_path(:id => nl_usr.user), {:target => "_blank", :class => 'icon icon-preview'}) unless !User.current.admin? %><br /><%= ("(" + format_date(nl_usr.user.scadenza) + ")") unless nl_usr.user.scadenza.nil? %>
-          </td>
-          <td class="ico" align="left">
-            <%= user_role_iconized(nil, :size => 'l', :icon_for => get_role_css(nl_usr.user.role_id), :text => '') %>
-          </td>
-          <td>
-            <%= link_to(h(nl_usr.convention), convention_path(:id => nl_usr.convention), {:target => "_blank", :class => 'icon icon-preview'}) unless nl_usr.have_convention? %>
-          </td>
-          <td>
-            <%= format_date(nl_usr.updated_at) %>&nbsp;<%= link_to_remote l(:button_delete), { :url => {:controller=>"newsletter_users", :action=>"destroy", :id => nl_usr}, :method => :delete }, :class => 'icon icon-del', :complete => "$('nl_usr-" + nl_usr.id.to_s + "').remove()" %>
+    <table class="list users">
+      <thead>
+      <th style="text-align:left;"><%= l(:field_mail) %></th>
+      <th style="text-align:left;"><%= l(:label_nl_usr) %>&nbsp;(<%= l(:field_due_date) %>)</th>
+      <th style="text-align:left;" title="Attenzione questo è il ruolo attuale e non quello al momento dell'invio della mail"><%= l(:field_role) %></th>
+      <th style="text-align:left;"><%= l(:field_convention) %></th>
+      <th style="text-align:left;"><%= l(:field_updated_on) %></th>
+      </thead>
+      <tbody>
+      <%#.sort_by(&:sended) undefined method `<=>' for false:FalseClass %>
+      <% @nl_users.each do |nl_usr| %>
+          <tr id="nl_usr-<%= nl_usr.id %>" class="user">
+            <td>
+              <div style="width:1px;" class="flash <%= nl_usr.sended? ? 'notice' : (nl_usr.errore.nil? ? 'warning' : 'error') %>" title="<%= nl_usr.errore.nil? ? '' : nl_usr.errore %>">&nbsp;</div>
+            </td>
+            <td>
+              <%= link_to_user(nl_usr.user, {:target => "_blank", :class => 'icon icon-preview'}) unless User.current.admin? %>
+              <%= link_to(h(nl_usr.user.name), edit_user_path(:id => nl_usr.user), {:target => "_blank", :class => 'icon icon-preview'}) unless !User.current.admin? %>
+              <br/><%= ("(" + format_date(nl_usr.user.scadenza) + ")") unless nl_usr.user.scadenza.nil? %>
+            </td>
+            <td class="ico" align="left">
+              <%= user_role_iconized(nil, :size => 'l', :icon_for => get_role_css(nl_usr.user.role_id), :text => '') %>
+            </td>
+            <td>
+              <%= link_to(h(nl_usr.convention), convention_path(:id => nl_usr.convention), {:target => "_blank", :class => 'icon icon-preview'}) unless nl_usr.have_convention? %>
+            </td>
+            <td>
+              <%= format_date(nl_usr.updated_at) %>&nbsp;<%= link_to_remote l(:button_delete), {:url => {:controller => "newsletter_users", :action => "destroy", :id => nl_usr}, :method => :delete}, :class => 'icon icon-del', :complete => "$('nl_usr-" + nl_usr.id.to_s + "').remove()" %>
 
-          </td>
-        </tr>
-        <% if !nl_usr.errore.nil? && !nl_usr.errore.empty? %>
-        <tr>
-          <td></td>
-          <td colspan="4">
-            <div class="flash error">
-              <%= nl_usr.errore%>
-            </div>
-          </td>
-        </tr>
-        <% end %>
-    <% end %>
-    </tbody>
-  </table>
+            </td>
+          </tr>
+          <% if !nl_usr.errore.nil? && !nl_usr.errore.empty? %>
+              <tr>
+                <td></td>
+                <td colspan="4">
+                  <div class="flash error">
+                    <%= nl_usr.errore %>
+                  </div>
+                </td>
+              </tr>
+          <% end %>
+      <% end %>
+      </tbody>
+    </table>
 <% end %>

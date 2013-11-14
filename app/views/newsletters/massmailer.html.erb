@@ -1,136 +1,149 @@
 <style type="text/css" xmlns="http://www.w3.org/1999/html">
-table, ul.fs-hmenu, #fs-main { font-family: "Segoe UI" }
-.notice, .error { height: auto; margin-top: 0px; padding-top: 0px;}
+    table, ul.fs-hmenu, #fs-main {
+        font-family: "Segoe UI"
+    }
+
+    .notice, .error {
+        height: auto;
+        margin-top: 0px;
+        padding-top: 0px;
+    }
 </style>
 <script type="text/javascript" charset="utf-8">
-  var dv_ok = null;
-  var dv_ko = null;
-  var btn_send = null;
-  var qta = null;
-  var qtaVal = 0;
-  var pageSize = 10;
-  var newsletterid = <%= @newsletter.id %>;
-  var newsletter_name = '<%= @newsletter.name %>'
-  var loading = 0;
-  var next = 10
-  var chkstop = null;
-  var tot_ok = 0
-  var tot_ko = 0
-  var dvState = null;
-  var ready = true
+    var dv_ok = null;
+    var dv_ko = null;
+    var btn_send = null;
+    var qta = null;
+    var qtaVal = 0;
+    var pageSize = 10;
+    var newsletterid = <%= @newsletter.id %>;
+    var newsletter_name = '<%= @newsletter.name %>'
+    var loading = 0;
+    var next = 10
+    var chkstop = null;
+    var tot_ok = 0
+    var tot_ko = 0
+    var dvState = null;
+    var ready = true
 
-  $(document).ready(function () {
-    dv_ok = $("#sended");
-    dv_ko = $("#error");
-    btn_send = $("#btn_send");
-    chkstop = $("#chkstop");
-    dvState = $("#status");
-    qta = $("#qta");
-    qtaVal = pageSize;
-    qta.val(qtaVal);
+    $(document).ready(function () {
+        dv_ok = $("#sended");
+        dv_ko = $("#error");
+        btn_send = $("#btn_send");
+        chkstop = $("#chkstop");
+        dvState = $("#status");
+        qta = $("#qta");
+        qtaVal = pageSize;
+        qta.val(qtaVal);
 
-    btn_send.click(function (event) {
-        send_next(event);
-        //event.preventDefault();
-    });
-    btn_send.attr("disabled", false);
-    btn_send.click();
+        btn_send.click(function (event) {
+            send_next(event);
+            //event.preventDefault();
+        });
+        btn_send.attr("disabled", false);
+        btn_send.click();
 
-  }); //end query document ready
-  var url_send = '<%= newsletter_send_emails_path() %>';
-  function send_next(event) {
-    if (loading == 1) {
-      event.preventDefault(); <%# avoid PostBack %>
-      return
-    }
-    loading = 1
-    btn_send.attr("disabled", true);
-    qtaVal = qta.val()
-    if( Math.floor(qtaVal) == qtaVal && $.isNumeric(qtaVal)) {
-      if (qtaVal != pageSize) {
-        pageSize = qtaVal;
-      }
-    }
-    else {
-      qta.val(pageSize);
-    }
-    $.get(url_send, { newsletter_id:newsletterid, pageSize: pageSize },
-      function (data) {
-        data = data || {};
-        <%# tutto Ok %>
-        _d = new Date();
-        if (data.success) {
-            //OnSuccess
-            if (data.sended) {
-                jQuery.each(data.sended, function(index, item) {
-                  tot_ok += 1;
-                  dv_ok.prepend('<li>[' + tot_ok + ']' + item + '</li>');
-                  updateState();
-                });
-                //dv_ok.html(data.sended + dv_ok.html());
-            }
-            if (data.failed) {
-                jQuery.each(data.failed, function(index, item) {
-                  tot_ko += 1;
-                  dv_ko.prepend('<li>[' + tot_ko + ']' + item + '</li>');
-                  //dv_ko.html('[' + index + ']' + item + '<br / >' + dv_ko.html());
-                  updateState();
-                });
-                //dv_ko.html(data.failed + dv_ko.html());
-            }
-            if (data.msg && data.msg.length > 0) {
-                js_flash("notice", data.msg);
-            }
-
+    }); //end query document ready
+    var url_send = '<%= newsletter_send_emails_path() %>';
+    function send_next(event) {
+        if (loading == 1) {
+            event.preventDefault();
+            <%# avoid PostBack %>
+            return
         }
-        <%# ci sono degli errori %>
-        if (data.errors) {
-            data.errors += "Errore nell'invio del blocco di emails da  " + pageSize + " per la newsletter (" + newsletterid + ") " + newsletter_name;
-            js_flash("error", data.errors);
+        loading = 1
+        btn_send.attr("disabled", true);
+        qtaVal = qta.val();
+        if (Math.floor(qtaVal) == qtaVal && $.isNumeric(qtaVal)) {
+            if (qtaVal != pageSize) {
+                pageSize = qtaVal;
+            }
         }
-        if (ready) {
-          ready = false;
-          qta.val(100);
+        else {
+            qta.val(pageSize);
         }
-        if (data.finish && data.finish == true) {
-          dvState.html("<h3>Finito. </h3>" + dvState.html());
+        $.get(url_send, { newsletter_id: newsletterid, pageSize: pageSize },
+                function (data) {
+                    data = data || {};
+                    <%# tutto Ok %>
+                    _d = new Date();
+                    if (data.success) {
+                        //OnSuccess
+                        if (data.sended) {
+                            jQuery.each(data.sended, function (index, item) {
+                                tot_ok += 1;
+                                dv_ok.prepend('<li>[' + tot_ok + ']' + item + '</li>');
+                                updateState();
+                            });
+                            //dv_ok.html(data.sended + dv_ok.html());
+                        }
+                        if (data.failed) {
+                            jQuery.each(data.failed, function (index, item) {
+                                tot_ko += 1;
+                                dv_ko.prepend('<li>[' + tot_ko + ']' + item + '</li>');
+                                //dv_ko.html('[' + index + ']' + item + '<br / >' + dv_ko.html());
+                                updateState();
+                            });
+                            //dv_ko.html(data.failed + dv_ko.html());
+                        }
+                        if (data.msg && data.msg.length > 0) {
+                            js_flash("notice", data.msg);
+                        }
+
+                    }
+                    <%# ci sono degli errori %>
+                    if (data.errors) {
+                        data.errors += "Errore nell'invio del blocco di emails da  " + pageSize + " per la newsletter (" + newsletterid + ") " + newsletter_name;
+                        js_flash("error", data.errors);
+                    }
+                    if (ready) {
+                        ready = false;
+                        qta.val(100);
+                    }
+                    if (data.finish && data.finish == true) {
+                        dvState.html("<h3>Finito. </h3>" + dvState.html());
+                    } else {
+                        reset_page(false);
+                    }
+                }
+        );
+        if (event) {
+            event.preventDefault();
+        }
+        <%# avoid PostBack %>
+    }
+    var _d = null;
+    var hour = null;
+    var minute = null;
+    var second = null;
+    function updateState() {
+        hour = _d.getHours();
+        minute = _d.getMinutes();
+        second = _d.getSeconds();
+        dvState.html((('' + hour).length < 2 ? '0' : '') + hour + ':' +
+                (('' + minute).length < 2 ? '0' : '') + minute + ':' +
+                (('' + second).length < 2 ? '0' : '') + second + ' Emails inviati: <mark>' + (tot_ok + tot_ko) + '</mark>, senza problemi: <mark>' + tot_ok + '</mark>, con errore: <mark style="color: red;">' + tot_ko + '</mark>')
+    }
+    function reset_page(error) {
+        //alert('reset_page');
+        if (error == true) {
+            chkstop.prop('checked', true);
+        }
+        if (chkstop.is(':checked')) {
+            dvState.html("<h3>Manuale. Cliccare per continuare.</h3>" + dvState.html());
         } else {
-          reset_page(false);
+            //next call
+            //setTimeout(function () {
+            //
+            //}, 1000);
+            dvState.html("<h3 title='Fra qualche secondo la procedura riparte da sola. Clicare su stop per passare in modalità manuale'>Automatico. </h3>" + dvState.html());
+            setTimeout(function (event) {
+                send_next(event);
+            }, next * 1000);
         }
-      }
-    );
-    if (event) { event.preventDefault(); } <%# avoid PostBack %>
-  }
-  var _d = null;
-  var hour = null;
-  var minute = null;
-  var second = null;
-  function updateState() {
-    hour = _d.getHours();
-    minute = _d.getMinutes();
-    second = _d.getSeconds();
-    dvState.html(((''+hour).length<2 ? '0' :'') + hour + ':' +
-    ((''+minute).length<2 ? '0' :'') + minute + ':' +
-    ((''+second).length<2 ? '0' :'') + second + ' Emails inviati: <mark>' + (tot_ok + tot_ko) + '</mark>, senza problemi: <mark>' + tot_ok + '</mark>, con errore: <mark style="color: red;">' + tot_ko + '</mark>')
-  }
-  function reset_page(error){
-    //alert('reset_page');
-    if (error == true) { chkstop.prop('checked', true); }
-    if (chkstop.is(':checked')) {
-      dvState.html("<h3>Manuale. Cliccare per continuare.</h3>" + dvState.html());
-    } else {
-      //next call
-      //setTimeout(function () {
-      //
-      //}, 1000);
-      dvState.html("<h3 title='Fra qualche secondi la procedura riparte da sola. Clicare su stop per passare in modalità manuale'>Automatico. </h3>" + dvState.html());
-      setTimeout(function (event) {
-         send_next(event);
-      }, next*1000);
+        btn_send.attr("disabled", false);
+        loading = 0;
     }
-    btn_send.attr("disabled", false);
-    loading = 0;
-  }
 </script>
 
 <table id="tblinvii" class="list segoe" style="width: 100%">
@@ -140,11 +153,12 @@ table, ul.fs-hmenu, #fs-main { font-family: "Segoe UI" }
       <div id="status" class="segoe" style="display: inline"></div>
     </td>
     <td style="width:15%">
-      <button id="btn_send" class="button-blu" style="display: inline" >Invia emails</button>
+      <button id="btn_send" class="button-blu" style="display: inline">Invia emails</button>
     </td>
     <td style="width:10%">
       <label class="checkbox">
-        <input id="qta" class="segoe" style="width: 50px" type="input" alt="numero di emails da inviare alla volta"/>Numero di emails
+        <input id="qta" class="segoe" style="width: 50px" type="input" alt="numero di emails da inviare alla volta"/>Numero
+        di emails
       </label>
     </td>
     <td style="width:5%">
@@ -156,29 +170,37 @@ table, ul.fs-hmenu, #fs-main { font-family: "Segoe UI" }
   </tbody>
 </table>
 
-<div class="contextual"><p><span><%= link_to h(@newsletter.project), project_path(@newsletter.project, :id => @newsletter.project_id), { :class => 'icon icon-projects'} %>
-  </span>&nbsp;<span><%= link_to(l(:button_send_newsletter), newsletter_invii_path(:project_id => @newsletter.project.id), :class => 'icon icon-newsletter') if User.current.admin? && @newsletter.project && @newsletter.project.is_public_fs? %></span></p>
+<div class="contextual">
+  <p><span><%= link_to h(@newsletter.project), project_path(@newsletter.project, :id => @newsletter.project_id), {:class => 'icon icon-projects'} %>
+  </span>&nbsp;<span><%= link_to(l(:button_send_newsletter), newsletter_invii_path(:project_id => @newsletter.project.id), :class => 'icon icon-newsletter') if User.current.admin? && @newsletter.project && @newsletter.project.is_public_fs? %></span>
+  </p>
 </div>
-<h2><%=l(:mass_mailer)%></h2>
+<h2><%= l(:mass_mailer) %></h2>
 
 <div class="autoscroll">
-<table id="tblinvii" class="segoe" style="width: 100%">
-  <thead><tr>
-  <th style="text-align:left; width: 33%;"><div class="flash notice" style="width: 90%; height: 25px;" ><%=l(:label_newsletter_sended)%></div></th>
-  <th style="text-align:left; width: 33%;"><div class="flash error" style="width: 90%; height: 25px;" ><%=l(:label_newsletter_error)%></div></th>
-  </tr></thead>
-  <tbody>
-  <tr class=''>
-    <td>
-      <ul id="sended" class="segoe" ></ul>
-    </td>
-    <td>
-      <div id="error" class="segoe" ></div>
-    </td>
-  </tr>
-  </tbody>
-</table>
+  <table id="tblinvii" class="segoe" style="width: 100%">
+    <thead>
+    <tr>
+      <th style="text-align:left; width: 33%;">
+        <div class="flash notice" style="width: 90%; height: 25px;"><%= l(:label_newsletter_sended) %></div>
+      </th>
+      <th style="text-align:left; width: 33%;">
+        <div class="flash error" style="width: 90%; height: 25px;"><%= l(:label_newsletter_error) %></div>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class=''>
+      <td>
+        <ul id="sended" class="segoe"></ul>
+      </td>
+      <td>
+        <div id="error" class="segoe"></div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 
-<hr />
-
+  <hr/>
+</div>
 <%# render :partial => 'show', :newsletter => @newsletter %>

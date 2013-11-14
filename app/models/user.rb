@@ -1107,7 +1107,6 @@ class User < Principal
                   'photo',
                   'se_privacy'
 
-
   safe_attributes 'status',
                   'auth_source_id',
                   'data',

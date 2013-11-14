@@ -1,5 +1,6 @@
 <fieldset class="box tabular">
   <legend><%= l(:label_newsletter) %></legend>
+  <!--
   <div class="contextual">
     <%= link_to(l(:button_delete),
                 newsletter_path(@newsletter),
@@ -8,6 +9,7 @@
                 :class => 'icon icon-del') if User.current.admin? %>
 
   </div>
+  -->
   <p><label>
     <%= l(:label_project) %></label><span><%= link_to h(@newsletter.project), project_path(@newsletter.project, :id => @newsletter.project_id), {:class => 'icon icon-projects'} %>
   </span></p>
@@ -82,7 +84,7 @@
         <%= link_to_function(image_tag('eye.gif'), "setVisible('div_emails_pending', true)",
                              :title => "#{l(:button_hide)}") %>
         <span><%= link_to_remote l(:button_delete),
-                                 {:url => ({:controller => 'newsletters', :action => 'remove_emails', :type => 'pending', :newsletter_idid => @newsletter.id}), :method => 'put'},
+                                 {:url => ({:controller => 'newsletters', :action => 'removeemails', :type => 'pending', :newsletter_id => @newsletter.id}), :method => 'put'},
                                  :class => 'icon icon-del',
                                  :complete => "$('div_emails_pending').update(); $('tot-pending').update('0');" %>
         </span>
@@ -123,7 +125,7 @@
         <%= link_to_function(image_tag('eye.gif'), "setVisible('div_emails_errore', true)",
                              :title => "#{l(:button_hide)}") %>
         <span><%= link_to_remote l(:button_delete),
-                                 {:url => ({:controller => 'newsletters', :action => 'remove_emails', :type => 'errore', :newsletter_idid => @newsletter.id}), :method => 'put'},
+                                 {:url => ({:controller => 'newsletters', :action => 'removeemails', :type => 'errore', :newsletter_idid => @newsletter.id}), :method => 'put'},
                                  :class => 'icon icon-del',
                                  :complete => "$('div_emails_errore').update(); $('tot-errore').update('0');" %></span>
       </div>

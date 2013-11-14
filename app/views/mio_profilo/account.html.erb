@@ -96,6 +96,10 @@
               <%= f.text_field :identity_url %></p>
         <% end %>
 
+        <% if @user.no_newsletter %>
+            <p> <%= f.check_box :no_newsletter %> <span class='required' style="font-weight: normal">*se flaggato non riceve la newsletter</span></p>
+        <% end %>
+
         <% @user.custom_field_values.select { |v| v.editable? || v.required? }.each do |value| %>
             <p><%= custom_field_tag_with_label :user, value %></p>
         <% end %>
@@ -176,12 +180,8 @@
             <% end %>
           </p>
         </div>
-
-
       </div>
-
-
-      <div class="fs-abbo-dx1">
+                   <div class="fs-abbo-dx1">
         <h1>Altre convenzioni </h1>
 
         <div class="notice-in fs-flash-in"> Se hai un codice di attivazione inseriscilo qui sotto.
@@ -193,12 +193,11 @@
     </fieldset>
     <!--FINE dv_convenzioni -->
     &nbsp;<br/>
-
     <div class="clearfix"></div>
     <div class="fs-abbo-bottom">
       <div class="fs-abbo-sx1">
         <p>
-          <label><%= f.check_box :se_condition, :label => l(:field_language) + " <span class='required'>*</span>" %> <%= l(:field_se_condition_readed) %></label>
+          <label><%= f.check_box :se_condition, :label => l(:field_se_condition) + " <span class='required'>*</span>" %> <%= l(:field_se_condition_readed) %></label>
         </p>
 
         <p>Leggo le <a href='#' id='acondizioni' class='pri'><b>condizioni di utilizzo</b></a></p>

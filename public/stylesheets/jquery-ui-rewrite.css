@@ -108,7 +108,7 @@ h4.ui-state-active span.accordion{
     background-image: -ms-linear-gradient(top, #00698f 0%, #005472 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#005472', endColorstr = '#005472', GradientType = 0);
     background-image: linear-gradient(top, #00698f 0%, #005472 100%);
-    text-shadow: 0px 1px 1px #323232;
+  /*  text-shadow: 0px 1px 1px #323232;  */
     padding: 9px 32px !important;
     margin: 0 auto;
 
@@ -144,7 +144,7 @@ h4.ui-state-active span.accordion{
     box-shadow: 0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;
     padding: 9px 32px !important;
     margin: 0 auto;
-    text-shadow: 0px 1px 1px #5a88bf;
+    text-shadow: 0px 1px 1px #daddf7;
 
 }
 
@@ -222,6 +222,7 @@ h4.ui-state-active span.accordion{
     color: #2c4056;
     font-weight: bold;
     background: none;
+    text-align:left ;
 
 }
 
@@ -278,7 +279,7 @@ h4.ui-state-active span.accordion{
 }
 
 h6.accordion-basic {
-    line-height: 2.5em;
+    line-height: 1.5em;
 }
 
 .ui-widget {

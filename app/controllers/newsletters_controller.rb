@@ -84,7 +84,6 @@ class NewslettersController < ApplicationController
                   :locals => { :id => @project.id, :project => @project, :art => @art, :user => nil }
                 )
       end
-
       @nl_users = @newsletter.newsletter_users.all(:limit => pageSize, :conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)'])
       if @nl_users && @nl_users.any?
         finish = false
@@ -346,7 +345,6 @@ class NewslettersController < ApplicationController
       elsif type == 'errore'
         NewsletterUser.delete_all(["email_type = 'newsletter' AND newsletter_id=? AND sended = false AND errore is not null AND  LENGTH(errore) > 0", @newsletter.id])
       else
-
       end
     end
     render :json => { :success => true }

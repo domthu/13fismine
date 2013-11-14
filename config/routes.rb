@@ -81,7 +81,7 @@ ActionController::Routing::Routes.draw do |map|
   map.profile_destroy '/chi-siamo/profilo/:id/destroy', :controller => 'editorial', :action => 'profilo_destroy'
   map.profile_update '/chi-siamo/profilo/:id/update', :controller => 'editorial', :action => 'profilo_update'
   map.ricerca '/ricerca', :controller => 'editorial', :action => 'ricerca'
-  map.newsletter_del '/account/newsletter', :controller => 'account', :action => 'delete_from_newsletter'
+  map.unsubscribe '/account/unsubscribe', :controller => 'account', :action => 'unsubscribe'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
   map.prova_gratis 'prova_gratis', :controller => 'account', :action => 'prova', :conditions => {:method => [:post]}
   map.banners_position '/group_banners/position',:controller => 'group_banners', :action=> 'positions', :conditions => {:method => [:get]}

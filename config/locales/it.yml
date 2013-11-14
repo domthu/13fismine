@@ -951,6 +951,7 @@ it:
   button_move_and_follow: Sposta e segui
   button_back: Indietro
   button_cancel: Annulla
+  button_remove: Rimuovi
   button_activate: Attiva
   button_sort: Ordina
   button_log_time: Registra tempo
@@ -1385,7 +1386,6 @@ it:
   label_address_map: Geo posizione
   field_address_map: Geo posizione
   label_comment: Commenta
-
 #User
   label_power_user: Referente conv.
   label_users: Utenti

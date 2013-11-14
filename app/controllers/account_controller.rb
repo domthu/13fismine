@@ -21,7 +21,7 @@ class AccountController < ApplicationController
   include CustomFieldsHelper
   include FeesHelper #ROLE_XXX  gedate
   before_filter :reroute_if_logged, :only => :register
-  before_filter :require_login, :find_user, :only => [:delete_from_newsletter]
+  before_filter :require_login, :only => [:unsubscribe]
 
   # prevents login action to be filtered by check_if_login_required application scope filter
   skip_before_filter :check_if_login_required
@@ -47,7 +47,7 @@ class AccountController < ApplicationController
 
   # Enable user to choose a new password
   def lost_password
-     #domthu redirect_to(home_url) && return unless Setting.lost_password?
+    #domthu redirect_to(home_url) && return unless Setting.lost_password?
     redirect_to(editorial_url) && return unless Setting.lost_password?
     if params[:token]
       @token = Token.find_by_action_and_value("recovery", params[:token])
@@ -84,7 +84,7 @@ class AccountController < ApplicationController
         if token.save
           if token.nil?
             send_error l(:lost_password_unvalid_token)
-            redirect_to  :controller => 'editorial', :action => 'home'
+            redirect_to :controller => 'editorial', :action => 'home'
             return
           else
             Mailer.deliver_lost_password(token)
@@ -128,11 +128,11 @@ class AccountController < ApplicationController
       if params[:user][:comune_id].present?
         @user.comune_id = params[:user][:comune_id].to_i
         if Comune.exists?(@user.comune_id)
-          @user.comune = Comune.find(:first, :include => [[ :province => :region ]], :conditions => ['id =  ?', @user.comune_id.to_s])
+          @user.comune = Comune.find(:first, :include => [[:province => :region]], :conditions => ['id =  ?', @user.comune_id.to_s])
           if @user.comune #province_id region_id	cap
             @user.cap = @user.comune.cap
             @user.prov = @user.comune.province.name_full unless @user.comune.province.nil?
-            @user.prov += @user.comune.province.region.name unless ( @user.comune.province.nil? && @user.comune.region.province.nil?)
+            @user.prov += @user.comune.province.region.name unless (@user.comune.province.nil? && @user.comune.region.province.nil?)
           else
             @user.comune_id = nil
           end
@@ -211,7 +211,7 @@ class AccountController < ApplicationController
               end
               #break per uscire --> No, continuo per vedere se c'è una convention migliore
             end
-          end  #ciclo sulle conventions
+          end #ciclo sulle conventions
           if !@user.convention_id.nil?
             @user.datascadenza = migliorScadenza
             @user.datascadenza = nil #Non pagante
@@ -239,7 +239,7 @@ class AccountController < ApplicationController
           else
             #@user.datascadenza = conv.scadenza
             @user.datascadenza = nil
-            @user.role_id = conv.role_id  # ruolo elaborato in funzione dello stato della scadenza
+            @user.role_id = conv.role_id # ruolo elaborato in funzione dello stato della scadenza
           end
         end
       end
@@ -288,11 +288,11 @@ class AccountController < ApplicationController
     @user.random_password #    self.password = password & self.password_confirmation = password
     @user.se_condition = true
     @user.se_privacy = true
-                          #default role_id
+    #default role_id
     @user.role_id = FeeConst::ROLE_REGISTERED
     @user.datascadenza = Date.today + Setting.register_days.to_i
-                          #@user.mail_notification = 'selected'
-                          #@user.mail_notification = 'only_my_events'
+    #@user.mail_notification = 'selected'
+    #@user.mail_notification = 'only_my_events'
     @user.annotazioni = "Prova gratis per " + @user.name + ", con email " + @user.mail + ", fatta il " + Date.today.to_s + ", per " + Setting.register_days.to_s + " giorni. Scadenza: " + @user.scadenza.to_s
 
     @stat =''
@@ -359,9 +359,9 @@ class AccountController < ApplicationController
             @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
           end
 
-        if !@user.errors.empty?
-          @errors += "<br />errore completa: " + @user.errors.full_messages.join('<br />')
-        end
+          if !@user.errors.empty?
+            @errors += "<br />errore completa: " + @user.errors.full_messages.join('<br />')
+          end
       end
       htmlpartial = ''
       @tmail = Mailer.deliver_prova_gratis(@user, @stat + "<br />" + htmlpartial)
@@ -432,10 +432,15 @@ class AccountController < ApplicationController
     redirect_to editorial_url
   end
 
-  def delete_from_newsletter
+  def unsubscribe
+    @user = User.find(params[:id])
+    unless @user == User.current
+      flash[:error] = l(:notice_not_updated)
+      return
+    end
     @user.no_newsletter = 1
     if request.post?
-      if @user.save # false
+      if @user.save
         flash[:success] = l(:notice_updated)
         redirect_to editorial_url
       else
@@ -529,7 +534,7 @@ class AccountController < ApplicationController
     # Valid user
     self.logged_user = user
     if params[:username].present? && !params[:username].blank? && params[:username].length > 30
-       send_notice "La tua username (" + params[:username] + ") è lunga " + params[:username].length.to_s +  " caratteri: ti invitiamo a scegliere un login più corto, inferiore a 30 caratteri per favore. Puoi cambiarlo nel tuo profilo."
+      send_notice "La tua username (" + params[:username] + ") è lunga " + params[:username].length.to_s + " caratteri: ti invitiamo a scegliere un login più corto, inferiore a 30 caratteri per favore. Puoi cambiarlo nel tuo profilo."
     end
     # generate a key and set cookie if autologin
     if params[:autologin] && Setting.autologin?
@@ -546,11 +551,11 @@ class AccountController < ApplicationController
       if (Setting.fee?)
         user.control_state
         if user.isregistered?
-           send_notice "Periodo di prova valido ancora per " + distance_of_date_in_words(user.scadenza, Time.now)
+          send_notice "Periodo di prova valido ancora per " + distance_of_date_in_words(user.scadenza, Time.now)
         end
         if user.isrenewing?
-           send_notice("Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, user.scadenza))
-           send_notice("Rinnovare l'abbonamento.")
+          send_notice("Scadenza abbonamento prossima: " + distance_of_date_in_words(Time.now, user.scadenza))
+          send_notice("Rinnovare l'abbonamento.")
         end
       end
       #Rails.logger.info("login ok membro")
