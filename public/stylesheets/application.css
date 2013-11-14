@@ -430,7 +430,7 @@ p.pagination {margin-top:8px;}
 margin: 0;
 padding: 3px 0 3px 0;
     /*padding-left: 180px;  width of left column containing the label elements */
-padding-left: 145px; /* width of left column containing the label elements */
+padding-left: 150px; /* width of left column containing the label elements */
 height: 1%;
 clear:left;
 }
@@ -442,9 +442,9 @@ font-weight: bold;
 float: left;
 text-align: right;
 /* width of left column */
-margin-left: -180px;
+margin-left: -150px;
 /* width of labels. Should be smaller than left column to create some right margin */
-width: 175px;
+width: 145px;
 }
 
 .tabular label.floating{

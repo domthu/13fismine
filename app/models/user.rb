@@ -1099,7 +1099,7 @@ class User < Principal
                   'telefono2',
                   'mail2',
                   'codice_attivazione',
-                  'iva',
+                  'partitaiva',
                   'codicefiscale',
                   'num_reg_coni',
                   'se_condition',

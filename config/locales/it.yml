@@ -1277,7 +1277,7 @@ it:
   label_convention_new: Nuova convenzione
   label_conventions_same: Utenti presenti nella stessa convenzione
   label_conventions_users: Utenti soci non paganti (convenzionati)
-  label_convention_user: Responsabile convenzione
+  label_convention_user: Responsabile per FS
   label_convention_none: Nessuna convenzione (organismo associato)
   label_convention_group_banner: Banner convenzione
   label_convention_group_banner_none: Nessun banner per la convenzione (organismo associato)

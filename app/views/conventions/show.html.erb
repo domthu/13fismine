@@ -14,7 +14,7 @@
   <fieldset class="box tabular">
     <legend><%= l(:label_abbo) %></legend>
     <p class="<%# 'power_user' unless @conv.havePowerUser? %>"><label>
-      <%= l(:label_referente) %></label>
+      <%= l(:label_convention_user) %></label>
       <% if @conv.user %>
           <%= link_to h(@conv.user), user_path(@conv.user, :id => @conv.user_id) %>
       <% end %>
@@ -181,7 +181,7 @@
                     <td align="left">
                       <%= link_to('PDF', invoice_path(invoice, :format => :pdf), :class => 'icon icon-pdf') %>
                     </td>
-                    <%# h smart_truncate(invoice.msg, 100) %></td>
+                    <%# h smart_truncate(invoice.msg, 100) %>
                     <td class="buttons"><%= link_to('', edit_invoice_path(invoice), :class => 'icon icon-edit') if User.current.admin? %>
                       <%= link_to('', invoice_path(invoice), :class => 'icon icon-show') if !User.current.admin? %>
                     </td>
