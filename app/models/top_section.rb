@@ -1,7 +1,7 @@
 class TopSection < ActiveRecord::Base
   has_attached_file :image,  :styles => {:xs => "32x32#", :s => "75x50#" , :m => "200x134#", :l => "300x200#"},
-                    :url  => :url_image ,
-                    :path => :path_image ,
+                    :url  => :url_image_top ,
+                    :path => :path_image_top ,
                     :default_style => :l,
                     :default_url => "commons/:style_art-no-image.jpg"
   validates_attachment_size :image, :less_than => 200.kilobytes
@@ -39,13 +39,14 @@ class TopSection < ActiveRecord::Base
   end
 
   alias :name :to_s
-  private
 
-  def url_image
+  def url_image_top
     "commons/sections/:id:style_#{self.key}.:extension"
   end
-  def path_image
+
+  def path_image_top
     "#{RAILS_ROOT}/public/images/commons/sections/:id:style_#{self.key}.:extension"
   end
 
+  #private
 end
