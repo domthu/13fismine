@@ -21,16 +21,43 @@
   <p><label>
     <%= l(:label_first_sent) %></label><span><%= format_date(@newsletter.data) %>
   </span></p>
+
+  <p><label>
+    <%= l(:label_email_programmed) %></label><span><%= NewsletterUser.count(:conditions => ["newsletter_id = ?", @newsletter.id ]) %>
+  </span></p>
+
   <hr/>
   <div class="contextual">
-    <%= link_to_function(image_tag('eye-no.gif'), "setVisible('div_newsletter', false)",
-                         :title => "#{l(:button_show)}") %>
     <%= link_to_function(image_tag('eye.gif'), "setVisible('div_newsletter', true)",
+                         :title => "#{l(:button_show)}") %>
+    <%= link_to_function(image_tag('eye-no.gif'), "setVisible('div_newsletter', false)",
                          :title => "#{l(:button_hide)}") %>
   </div>
 
   <div id='div_newsletter' style="margin-top:30px;">
-    <p style="display: none;">TODO Dom Verificare il checksum</p><%= @newsletter.html %></div>
+
+    <div style="clear:left;"></div>
+    <p><%= link_to_remote l(:label_preview),
+       {:url => preview_newsletter_nl_path(:id => @newsletter),
+        :method => 'get',
+        :update => 'news_preview',
+        :complete => "Element.scrollTo('news_preview')"
+       }, :accesskey => accesskey(:preview)
+      %></p>
+    <div>
+      <fieldset class="htmldraft">
+        <legend><%= l(:label_preview) %>:</legend>
+        <div id="news_preview" class="">
+          <p>
+            Selezionare un Quindicinale ed cliccare su Anteprima
+
+          <p>
+          </p>
+        </div>
+      </fieldset>
+    </div>
+
+    <p style="display: none;">TODO Dom Verificare il checksum</p><%# @newsletter.html %></div>
 </fieldset>
 
 <%# LISTA EMAIL inviati %>

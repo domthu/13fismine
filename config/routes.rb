@@ -261,7 +261,8 @@ ActionController::Routing::Routes.draw do |map|
   map.preview_issue '/issues/preview/:id', :controller => 'previews', :action => 'issue' # TODO: would look nicer as /issues/:id/preview
   map.preview_fs_articolo '/editorial/articolo/:article_id', :controller => 'editorial', :action => 'preview_articolo'
   map.preview_articolo '/issues/articolo/:id', :controller => 'previews', :action => 'articolo'
-  map.preview_newsletter '/newsletter_preview/:user_id', :controller => 'previews', :action => 'newsletter'
+  map.preview_newsletter_user '/newsletter_preview/:user_id', :controller => 'previews', :action => 'newsletter'
+  map.preview_newsletter_nl '/newsletter_preview_nl/:id', :controller => 'previews', :action => 'newsletter_nl'
   map.unassigned_users '/unassigned_users', :controller => 'previews', :action => 'norole'
   map.emailed_users '/emailed_users/:type/:id', :controller => 'previews', :action => 'nlemailed'
 
