@@ -1,6 +1,6 @@
 /* Created by Artisteer v4.0.0.59100 */
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, curly:false, browser:true, jquery:false */
-/*global jQuery */
+/*global jQuery */                            header.jpg
 
 // css helper
 (function ($) {
@@ -1103,7 +1103,7 @@ jQuery(function () {
 
 })(jQuery);
 
-
+/*
 
 
 jQuery(function ($) {
@@ -1131,7 +1131,7 @@ jQuery(function ($) {
     header.css('background-image', "url('images/template/header.jpg')".replace(/(url\(['"]?)/i, "$1" + path));
     header.css('background-position', "center top");
 });
-
+   */
 $(document).ready(function() {
   $('#ajax-indicator')
       .hide()  // hide it initially
