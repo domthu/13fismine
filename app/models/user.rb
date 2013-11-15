@@ -310,7 +310,10 @@ class User < Principal
       if self.save!
         begin
           if tipo == "renew"
-            tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
+            #invia email solo ai paganti
+            if self.convention_id.nil?
+              tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
+            end
           elsif tipo == "asso"
             #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_register_asso) Attenzione questo è il messaggio destinato al power_user per convalidare o no una persona
           elsif tipo == "proposal"
@@ -318,9 +321,15 @@ class User < Principal
             if self.convention_id.nil?
               tmail = Mailer.deliver_fee(self, "renew", Setting.template_fee_renew)
             end
-            #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_proposal)
+            #invia email solo ai paganti
+            #if self.convention_id.nil?
+            #  tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_proposal)
+            #end
           else
-            #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
+            #invia email solo ai paganti
+            #if self.convention_id.nil?
+            #  tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
+            #end
           end
         rescue Exception => e
           #" <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
