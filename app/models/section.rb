@@ -2,8 +2,8 @@ class Section < ActiveRecord::Base
   include FeesHelper
   has_attached_file :image, :styles => {:xs => "32x32#", :s => "75x50#", :m => "200x134#", :l => "300x200#"},
                     :default_style => :l,
-                    :url => :url_image,
-                    :path => :path_image,
+                    :url => :url_image_sec,
+                    :path => :path_image_sec,
                     :default_url => "commons/:style_art-no-image.jpg"
   validates_attachment_size :image, :less_than => 200.kilobytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/bmp']
@@ -58,11 +58,11 @@ class Section < ActiveRecord::Base
     end
   end
 
-  def url_image
+  def url_image_sec
     "commons/sections/#{self.top_section_id}:style_:id.:extension"
   end
 
-  def path_image
+  def path_image_sec
     "#{RAILS_ROOT}/public/images/commons/sections/#{self.top_section_id}:style_:id.:extension"
   end
 
