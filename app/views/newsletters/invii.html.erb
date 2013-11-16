@@ -1,10 +1,6 @@
 <div class="contextual">
-  <em class="hide">Limit <%# @limit %></em>
-  <em class="hide">offset <%# @offset %></em>
-  <em class="hide">convention id <%= @convention_id %></em>
-  <em class="hide">role id <%= @role %></em>
-  <em class="hide">name <%= @name %></em>
-  <%= link_to(l(:button_send_emails, :jobs => @newsletter.emails_pending), newsletter_massmailer_path(@newsletter.id), :class => 'icon  icon-mails-to-send') if (User.current.admin? && @newsletter.have_emails_to_send?) %>
+  <%= link_to(l(:button_send_emails, :jobs => @newsletter.emails_pending), newsletter_massmailer_path(@newsletter.id), :class => 'icon  icon-mails-to-send') if (User.current.admin? ) %>
+  <%# && @newsletter.have_emails_to_send? %>
 </div>
 <h2><%= l(:label_send_newsletter) %></h2>
 
@@ -13,11 +9,11 @@
 <% form_tag({:controller => "newsletters", :action => "send_newsletter", :project_id => @project.id.to_s, :newsletter_id => @newsletter}, :method => :post) do %>
 
     <div class="autoscroll">
-      <p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin?) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%# submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
+
       <table id="tblinvii" class="list">
         <thead>
         <tr>
-          <th style="text-align:left; width: 65%;"><%= l(:field_role) %></th>
+          <th style="text-align:left; width: 65%;"><%= l(:field_program_by_role) %></th>
           <th style="text-align:left; width: 10%;"><%= l(:field_users) %></th>
           <th style="text-align:left; width: 10%;">
             <input id="checkbox_selector" type="checkbox" class="selectall" checked="checked"/>
@@ -61,13 +57,12 @@
         <% end -%>
         </tbody>
       </table>
-
-      <p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin?) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%# submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
-
+      <br />
       <table id="tblinvii_convs" class="list">
         <thead>
         <tr>
-          <th style="text-align:left; width: 75%;"><%= l(:field_convention) %></th>
+          <th style='width: 5%; color: #2A5685;'>Logo</th>
+          <th style="text-align:left; width: 70%;"><%= l(:field_program_by_convention) %></th>
           <th style="text-align:left; width: 10%;"><%= l(:field_data_scadenza) %></th>
           <th style="text-align:left; width: 5%;"><%= l(:field_users) %></th>
           <th style="text-align:left; width: 5%;">
@@ -87,7 +82,8 @@
             <% @conv_users = conv.users_count.to_i %>
 
             <tr class='convention <%= cycle("odd", "even") %>'>
-              <td class="convention" align="left"><%= truncate(conv.name, :length => 300) %></td>
+              <td  style='width: 50px;'> <%= image_tag conv.image.url(:xs)%> <div style='margin-left:6px;'> <%= conv.logo_in_fe? ?  (image_tag '/images/eye.gif'):(image_tag '/images/eye-no.gif')%></div></td>
+              <td class="convention" align="left"><%= link_to truncate(conv.name_with_users_count, :length => 300), convention_path(:id => conv.id),  {:target => "_blank", :class => ''} %></td>
               <td class="datascadenza" align="left">
                 <strong>
                   <% if conv.data_scadenza %>
@@ -124,9 +120,14 @@
         </tbody>
       </table>
 
-      <p><%= submit_tag(l(:button_send_newsletter), :class => 'button-blu') unless (!User.current.admin?) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin?) %></p>
+      <p><%= submit_tag(l(:button_send_newsletter_page), :class => 'button-blu') unless (!User.current.admin?) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%# submit_tag(l(:button_send_newsletter_immediately), {:class => 'button-grey', :commit => 'go'}) unless (!User.current.admin? ) %></p>
+
     </div>
+
 <% end %>
+
+<%= render :partial => 'show_results', :newsletter => @newsletter %>
+
 <script type="text/javascript" charset="utf-8">
     var checkboxes = $$("#tblinvii input[type=checkbox]");
     var cbControl = $("checkbox_selector");

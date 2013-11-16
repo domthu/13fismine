@@ -291,6 +291,8 @@ en:
   field_user: User
   field_principal: Principal
   field_role: Role
+  field_program_by_role: Prenote emails by <b>role</b>
+  field_program_by_convention: Prenote emails by <b>convention</b>
   field_homepage: Homepage
   field_is_public: Public
   field_parent: Subproject of
@@ -1705,6 +1707,7 @@ en:
   button_send_newsletter: Invia quindicinale
   button_send_emails: "Mails(%{jobs}) to send"
   button_send_newsletter_immediately: Send it immediately
+  button_send_newsletter_page: "Goto to manual send emails's page"
   label_user_list_newsletters: "Storico degli invii precedenti"
   label_newsletter: Quindicinale
   error_can_not_create_newsletter: "Creazione automatica della newsletter MAIL (%{project}) non riuscità"

@@ -46,11 +46,7 @@ class Convention < ActiveRecord::Base
   def to_s
     str = ""
     #str = "[" << self.id.to_s << "] "
-    if (self.users_count.present?)
-      str = "[" + users_count.to_s + "]  " #<i class='icon'></i>"
-    else
-      str = "[" + (self.users.any? ? self.users.count.to_s : "0") + "]  " #<i class='icon'></i>"
-    end
+    str = "[" + (self.users.any? ? self.users.count.to_s : "0") + "]  " #<i class='icon'></i>"
     str << (self.ragione_sociale.blank? ? "?" : self.ragione_sociale)
     str << (self.presidente.blank? ? "" : " (" + self.presidente + ")")
     return str
@@ -58,6 +54,14 @@ class Convention < ActiveRecord::Base
   end
 
   alias :name :to_s
+
+  def name_with_users_count
+    str = ""
+    str = "[" + self.users_count.to_s + "]  "
+    str << (self.cross_organization.nil? ? "" : self.cross_organization.name + " ")
+    str << (self.ragione_sociale.blank? ? "?" : self.ragione_sociale)
+    return str
+  end
 
   def index()
     str = ""
