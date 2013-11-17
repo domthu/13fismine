@@ -7,7 +7,7 @@
 
           <% form_tag(unsubscribe_path(:id => @user.id.to_s)) do %>
             <article class="fs-post fs-article" style="display: table-cell">
-              <h3>Con il pulsante "<%= l(:button_remove) %> verrà cancellata l'iscrizione alla newsletter quindicinale di <%= Setting.app_title %>, se desidera riattivarla puo' farlo accedendo al suo profilo personale sul sito. %></h3>
+              <h3>Con il pulsante "<%= l(:button_remove) %>" verrà cancellata l'iscrizione alla newsletter quindicinale di <%= Setting.app_title %>, se desidera riattivarla puo' farlo accedendo al suo profilo personale sul sito.</h3>
               <div style="float:right; margin: 25px;" >
                 <input type="submit" name="cancel" class="fs-rosso-button" value="<%= l(:button_remove) %>" tabindex="5"/>
               </div>
