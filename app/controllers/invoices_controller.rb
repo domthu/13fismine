@@ -2,11 +2,23 @@ class InvoicesController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin
-
   helper :sort
   include SortHelper
-
   include Redmine::Export::PDF
+  before_filter :set_menu
+  menu_item :invoices, :only => [:invoices]
+  menu_item :email_fee, :only => [:email_fee]
+  menu_item :invia_fatture, :only => [:invia_fatture]
+
+
+  def set_menu
+    case self.action_name
+      when 'index', 'show', 'edit'
+        @menu_fs = :menu_payment_fs
+      else
+        @menu_fs = :application_menu
+    end
+  end
 
   # GET /invoices
   # GET /invoices.xml
@@ -33,12 +45,12 @@ class InvoicesController < ApplicationController
         @invoice_count = Invoice.all.count
         @invoice_pages = Paginator.new self, @invoice_count, per_page_option, params['page']
         @invoices = Invoice.find(:all,
-                          :order => sort_clause,
-                          :limit  =>  @invoice_pages.items_per_page,
-                          :offset =>  @invoice_pages.current.offset)
+                                 :order => sort_clause,
+                                 :limit => @invoice_pages.items_per_page,
+                                 :offset => @invoice_pages.current.offset)
         render :layout => !request.xhr?
       }
-      format.xml  { render :xml => @invoices }
+      format.xml { render :xml => @invoices }
     end
   end
 
@@ -49,8 +61,8 @@ class InvoicesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @invoice }
-      format.pdf  { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
+      format.xml { render :xml => @invoice }
+     # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
     end
 
   end
@@ -61,17 +73,17 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new
     @anno = Date.today.year
     #@cnt = Invoice.count(:conditions => ['anno = ' + @anno.to_s ])
-    @cnt = Invoice.maximum(:numero_fattura, :conditions => ['anno = ' + @anno.to_s ])
+    @cnt = Invoice.maximum(:numero_fattura, :conditions => ['anno = ' + @anno.to_s])
     if @cnt.nil? or @cnt == 0
       @cnt = 1
     else
-       @cnt += 1
+      @cnt += 1
     end
 
 #Person.minimum(:age, :conditions => ['last_name != ?', 'Drake']) # Selects the minimum age for everyone with a last name other than 'Drake'
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @invoice }
+      format.xml { render :xml => @invoice }
     end
   end
 
@@ -88,10 +100,10 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       if @invoice.save
         format.html { redirect_to(@invoice, :notice => l(:notice_successful_create)) }
-        format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
+        format.xml { render :xml => @invoice, :status => :created, :location => @invoice }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @invoice.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @invoice.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -104,10 +116,10 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       if @invoice.update_attributes(params[:invoice])
         format.html { redirect_to(@invoice, :notice => l(:notice_successful_update)) }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @invoice.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @invoice.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -120,7 +132,7 @@ class InvoicesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(invoices_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 

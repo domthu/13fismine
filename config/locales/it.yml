@@ -438,6 +438,9 @@ it:
   setting_default_issue_start_date_to_creation_date: "Usa la data corrente come data d'inizio per i nuovi articoli"
   #domthu verify
   setting_welcome_text_fs: "Slogan principale sul sito lato front-end"
+  default_invoices_header: "Fattura: Testata"
+  default_invoices_description: "Fattura: Descrizione servizio"
+  default_invoices_footer: "Fattura: Piè di pagina"
 
   permission_add_project: Crea edizione
   permission_add_subprojects: Crea sottoedizioni
