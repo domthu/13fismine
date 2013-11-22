@@ -15,11 +15,11 @@
     var btn_send = null;
     var qta = null;
     var qtaVal = 0;
-    var pageSize = 10;
+    var pageSize = 1; //numero di email da mandare
     var newsletterid = <%= @newsletter.id %>;
     var newsletter_name = '<%= @newsletter.name %>'
     var loading = 0;
-    var next = 10
+    var next = 5; //numero di secondi prima del prossimo riinvio
     var chkstop = null;
     var tot_ok = 0
     var tot_ko = 0
@@ -41,7 +41,7 @@
             //event.preventDefault();
         });
         btn_send.attr("disabled", false);
-        btn_send.click();
+        //btn_send.click(); send initial set
 
     }); //end query document ready
     var url_send = '<%= newsletter_send_emails_path() %>';

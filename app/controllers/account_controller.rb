@@ -434,12 +434,12 @@ class AccountController < ApplicationController
 
   def unsubscribe
     @user = User.find(params[:id])
-    unless @user == User.current
-      flash[:error] = l(:notice_not_updated)
-      return
-    end
     @user.no_newsletter = 1
     if request.post?
+      unless @user == User.current
+        flash[:error] = l(:notice_not_updated) + '<br />utente non corrispondente: ora che sei loggato riprova ancora a fare click sul link cacellami dalla newsletter.'
+        return
+      end
       if @user.save
         flash[:success] = l(:notice_updated)
         redirect_to editorial_url

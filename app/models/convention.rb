@@ -10,8 +10,10 @@ class Convention < ActiveRecord::Base
   include ApplicationHelper #get_short_date
   include FeesHelper #ROLE_XXX  gedate
 
-  #domthu20120516
-  has_many :users, :dependent => :nullify #Non fare niente dobbiamo eliminare convention_id
+  #domthu20120516 #Non eliminare utenti ma solo togliere il riferimento alla convention_id
+  has_many :users, :dependent => :nullify
+  #counter_cahe include field users_count in convention, :counter_cache => true
+  #http://stackoverflow.com/questions/9400687/can-a-counter-cache-be-used-with-a-has-many
   belongs_to :comune, :class_name => 'Comune', :foreign_key => 'comune_id' #, :default => null
   belongs_to :user #, :class_name => 'User', :foreign_key => 'user_id'#, :default => null
   has_many :invoices, :class_name => 'Invoice', :dependent => :destroy
@@ -52,6 +54,14 @@ class Convention < ActiveRecord::Base
   end
 
   alias :name :to_s
+
+  def name_with_users_count
+    str = ""
+    str = "[" + self.users_count.to_s + "]  "
+    str << (self.cross_organization.nil? ? "" : self.cross_organization.name + " ")
+    str << (self.ragione_sociale.blank? ? "?" : self.ragione_sociale)
+    return str
+  end
 
   def index()
     str = ""

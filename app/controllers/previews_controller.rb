@@ -19,7 +19,7 @@ class PreviewsController < ApplicationController
   #before_filter :find_project, :except =>   [:newsletter, :norole, :nlemailed]
   before_filter :find_project, :only =>   [:issue, :articolo, :news]
   before_filter :find_user_project, :only =>   [:newsletter]
-  before_filter :find_newsletter, :only =>   [:nlemailed]
+  before_filter :find_newsletter, :only =>   [:nlemailed, :newsletter_nl]
 
   #include FeesHelper #getdate get_role_css
 
@@ -53,6 +53,13 @@ class PreviewsController < ApplicationController
 
   #Newsletter  grafica della newsletter
   def newsletter
+    @art = @project.issues.all_mail_fs  #Solo visibile MAIL
+    render :layout => false, :partial => 'editorial/edizione_smtp'
+  end
+
+  #Newsletter  grafica della newsletter
+  def newsletter_nl
+    @project = @newsletter.project
     @art = @project.issues.all_mail_fs  #Solo visibile MAIL
     render :layout => false, :partial => 'editorial/edizione_smtp'
   end

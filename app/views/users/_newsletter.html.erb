@@ -66,7 +66,7 @@
 
     <p><%= submit_tag l(:button_send_newsletter) %>
       <%= link_to_remote l(:label_preview),
-                         {:url => preview_newsletter_path(:user_id => @user),
+                         {:url => preview_newsletter_user_path(:user_id => @user),
                           :method => 'post',
                           :update => 'news_preview',
                           :with => 'Form.serialize("edit_newsletter_form")',

@@ -254,6 +254,7 @@ it:
   mail_body_wiki_content_updated: La pagina '%{id}' wiki è stata aggiornata da%{author}.
   mail_subject_newsletter: "%{compagny}: %{edizione} del %{date}"
   notice_user_newsletter_email_sent: "Quindicinale %{edizione} del %{date} inviato a %{user}"
+  label_email_programmed: "Totale emails"
 
   gui_validation_error: 1 errore
   gui_validation_error_plural: "%{count} errori"
@@ -296,6 +297,8 @@ it:
   field_user: Utente
   field_principal: Principale
   field_role: Ruolo
+  field_program_by_role: Programmi invii per <b>ruoli</b>
+  field_program_by_convention: Programmi invii per <b>convenzione</b>
   field_homepage: Homepage
   field_is_public: Pubblico
   field_parent: Sottoedizione di
@@ -1750,6 +1753,7 @@ it:
   button_send_newsletter: Invia quindicinale
   button_send_emails: "Mails(%{jobs}) da inviare"
   button_send_newsletter_immediately: Invialo subito
+  button_send_newsletter_page: Vai alla pagina di invio delle mails (manuale)
   label_user_list_newsletters: "Storico degli invii precedenti"
   label_newsletter: Quindicinale
   error_can_not_create_newsletter: "Creazione automatica della newsletter MAIL (%{project}) non riuscità"

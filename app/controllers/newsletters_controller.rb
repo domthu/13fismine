@@ -19,17 +19,18 @@ class NewslettersController < ApplicationController
   def invii
     if request.post?
     else
-      @art = @project.issues.all_mail_fs #Solo visibile WEB
-      if @art && @art.any?
-        @newsletter.html = render_to_string(
-                :layout => false,
-                :partial => 'editorial/edizione_smtp',
-                :locals => { :project => @project, :art => @art, :user => nil }
-              )
-        if ((!@newsletter.html.nil?) && (!@newsletter.html.include? "<!--checksum-->"))
-          send_error("Edizione molto lungha: " + @newsletter.html.length.to_s + " caratteri. ")
-        end
-      end
+#      @art = @project.issues.all_mail_fs #Solo visibile WEB
+#      if @art && @art.any?
+#        @newsletter.html = ''
+#        @newsletter.html = render_to_string(
+#                :layout => false,
+#                :partial => 'editorial/edizione_smtp',
+#                :locals => { :project => @project, :art => @art, :user => nil }
+#              )
+#        if ((!@newsletter.html.nil?) && (!@newsletter.html.include? "<!--checksum-->"))
+#          send_error("Edizione molto lungha: " + @newsletter.html.length.to_s + " caratteri. ")
+#        end
+#      end
       if @newsletter.newsletter_users.count > 0
         @last_date = @newsletter.newsletter_users.sort_by(&:updated_at).reverse.first.updated_at
         if @last_date && @newsletter.data < @last_date
@@ -395,14 +396,14 @@ class NewslettersController < ApplicationController
         #Solo gli articoli visibile MAIL e privato: se_visible_newsletter = true
         @art = @project.issues.all_mail_fs #Solo visibile WEB
         if @art && @art.any?
-          @newsletter.html = render_to_string(
-                  :layout => false,
-                  :partial => 'editorial/edizione_smtp',
-                  :locals => { :id => @id, :project => @project, :art => @art, :user => nil }
-                )
-          if ((!@newsletter.html.nil?) && (!@newsletter.html.include? "<!--checksum-->"))
-            send_error("Edizione molto lungha: " + @newsletter.html.length.to_s + " caratteri. ")
-          end
+#          @newsletter.html = render_to_string(
+#                  :layout => false,
+#                  :partial => 'editorial/edizione_smtp',
+#                  :locals => { :id => @id, :project => @project, :art => @art, :user => nil }
+#                )
+#          if ((!@newsletter.html.nil?) && (!@newsletter.html.include? "<!--checksum-->"))
+#            send_error("Edizione molto lungha: " + @newsletter.html.length.to_s + " caratteri. ")
+#          end
           #@@user_name
           #@@user_convention
           #@@user_convention_icon
