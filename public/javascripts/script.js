@@ -1103,35 +1103,6 @@ jQuery(function () {
 
 })(jQuery);
 
-
-
-
-jQuery(function ($) {
-    "use strict";
-    if (!$.browser.msie || parseInt($.browser.version, 10) > 8)
-        return;
-    var path = "";
-    var scripts = $("script[src*='script.js']");
-    if (scripts.length > 0) {
-        var src = scripts.get(0).src;
-        path = src.substr(0, src.indexOf("script.js"));
-    }
-    var header = $(".fs-header");
-    var bgimages = "url('images/template/object1688855322.png'), ".split(",");
-    var bgpositions = "12px 0px, ".split(",");
-    for (var i = 0; i < bgimages.length; i++) {
-        var bgimage = $.trim(bgimages[i]);
-        if (bgimage === "")
-            continue;
-        if (path !== "") {
-            bgimage = bgimage.replace(/(url\(['"]?)/i, "$1" + path);
-        }
-        header.find(".fs-shapes").prepend("<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:" + bgimage + " " + bgpositions[i] + " no-repeat\">");
-    }
-    header.css('background-image', "url('images/template/header.jpg')".replace(/(url\(['"]?)/i, "$1" + path));
-    header.css('background-position', "center top");
-});
-
 $(document).ready(function() {
   $('#ajax-indicator')
       .hide()  // hide it initially

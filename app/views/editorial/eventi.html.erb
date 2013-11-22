@@ -25,11 +25,11 @@
                       </div>
                       <div class="fs-convegni-futuri">
                         <%= image_tag art_image(con, :m) %>
-                        <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %></span>
+                        <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %></span>
 
                         <p>
-                          <%= link_to(h(smart_truncate(con.summary, 125)), :controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %>
-                          <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false), :class => "fs-giallo-inline-button" %></p>
+                          <%= link_to(h(smart_truncate(con.summary, 125)), :controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %>
+                          <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false), :class => "fs-giallo-inline-button" %></p>
                         <br/>
 
                       </div>
@@ -84,15 +84,13 @@
                       <div class="fs-postmetadata-full-convegni">
                         <div class='fs-social'>
                           <div class='fs-social-fb '>
-                            <script src="http://connect.facebook.net/it_IT/all.js#xfbml=1"></script>
-                            <fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like>
+                            <%= image_tag "ico/fb-share.jpg",:onclick=> 'fbshareme()' %>
                           </div>
                           <div class='fs-social-tw '>
                             <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
                             <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
                           </div>
                           <div class='fs-social-gp '>
-                            <!-- Place this tag where you want the +1 button to render. -->
                             <div class="g-plusone" data-size="medium" data-recommendations="false">
                               <!-- Place this tag after the last +1 button tag. -->
                               <script type="text/javascript">
@@ -112,13 +110,13 @@
                             <%= link_to_function(image_tag('ico/printer-icon.png'), "javascript:print()") %>
                           </div>
                         </div>
-
                       </div>
-                      <% if  @conv_prossimo.show_reservation? %>
+                      <% if @conv_prossimo.show_reservation? && User.current.logged? %>
                           <div class="fs-convegni-prenota">
                             <%= render :partial => 'reservation' %>
                           </div>
                       <% end %>
+
                     </div>
                   </div>
                 </div>
@@ -136,9 +134,9 @@
                       <div class="fs-content-layout-row">
 
                         <div class="fs-postheader fs-blockheader-edizioni fs-convegni-border" style="text-align: left;">
-                          <span><%= link_to(h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno)), :controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %> </span>
+                          <span><%= link_to(h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno)), :controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %> </span>
 
-                          <p class="event-tetx"><%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %>   </p>
+                          <p class="event-tetx"><%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %>   </p>
                         </div>
                       </div>
                     </div>

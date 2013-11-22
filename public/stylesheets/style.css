@@ -491,7 +491,6 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
     margin: 0 auto;
     height: 100px;
     background-image: url('/images/template/object_testa.png');
-    /*    background-image: url('/images/template/object1688855322.png'), url('/images/template/header.jpg');   */
     background-position: 0 0, center top;
     background-repeat: no-repeat;
     position: relative;
@@ -499,10 +498,6 @@ li p, .fs-postcontent li p, .fs-blockcontent li p {
 }
 
 .responsive .fs-header {
-    /*
-    background-image: url('/images/template/object1688855322.png');
-    background-position: center center;
-    */
 }
 
 .fs-header>.widget {
