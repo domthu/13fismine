@@ -1,6 +1,6 @@
 <p>
-  <b>email_type:</b>
-  <%=h @newsletter_user.email_type %>
+  <b>Tipo:</b>
+  <%=h @newsletter_user.email_type.description %>
 </p>
 
 <p>
@@ -11,16 +11,6 @@
 <p>
   <b>Associazione:</b>
   <%=h @newsletter_user.convention_id %>
-</p>
-
-<p>
-  <b>Data scadenza:</b>
-  <%=h @newsletter_user.data_scadenza %>
-</p>
-
-<p>
-  <b>html:</b>
-  <%=h @newsletter_user.html %>
 </p>
 
 <p>
@@ -38,6 +28,10 @@
   <%=h @newsletter_user.sended %>
 </p>
 
+<p>
+  <b>Data:</b>
+  <%=h @newsletter_user.created_at %>
+</p>
 
 <%= link_to 'Edit', edit_newsletter_user_path(@newsletter_user) %> |
 <%= link_to 'Back', newsletter_users_path %>

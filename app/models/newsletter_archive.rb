@@ -1,21 +1,10 @@
-class NewsletterUser < ActiveRecord::Base
+class NewsletterArchive < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :convention
   belongs_to :newsletter
   belongs_to :email_type
   belongs_to :information, :dependent => :destroy
-
-  #se voglio re-inviare --> buttare sended a false
-  validates_uniqueness_of :user_id, :scope => :newsletter_id #&email_type='newsletter'
-
-  #boolean
-  #validates_presence_of :sended No di default 0 = false
-
-  #named scope
-  #scope :per_user, -> (usr_id) { where("user_id < ?", usr_id) } Rails 3?
-  #dynamic scope\
-  #NewsletterUser.scoped_by_user_id(12)
 
   def to_s
     s = ''
@@ -25,22 +14,6 @@ class NewsletterUser < ActiveRecord::Base
   end
 
   alias :name :to_s
-
-  def errore_abbrv
-    if self.information.nil? || self.information.description.blank?
-      ""
-    else
-      self.information.description
-    end
-  end
-
-  def errore_abbrv
-    if self.information.nil? || self.information.description.blank?
-      ""
-    else
-      truncate(self.information.description, :length => 100, omission: '...')
-    end
-  end
 
   def have_convention?
     if self.convention_id && self.convention.nil?
@@ -63,4 +36,5 @@ class NewsletterUser < ActiveRecord::Base
   def have_project?
     return self.have_newsletter? && !self.newsletter.project_id.nil?
   end
+
 end

@@ -1,0 +1,13 @@
+<p>
+  <b>Subject:</b>
+  <%=h @information.subject %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @information.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_information_path(@information) %> |
+<%= link_to 'Back', information_path %>

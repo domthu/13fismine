@@ -1,6 +1,6 @@
-<h1>Editing newsletter_user</h1>
+<h1>Editing newsletter_archive</h1>
 
-<% form_for(@newsletter_user) do |f| %>
+<% form_for(@newsletter_archive) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -12,8 +12,8 @@
     <%= f.text_field :user_id %>
   </p>
   <p>
-    <%= f.label :convention_id %><br />
-    <%= f.text_field :convention_id %>
+    <%= f.label :asso_id %><br />
+    <%= f.text_field :asso_id %>
   </p>
   <p>
     <%= f.label :newsletter_id %><br />
@@ -21,7 +21,7 @@
   </p>
   <p>
     <%= f.label :information_id %><br />
-    <%= f.text_area :information_id %>
+    <%= f.text_field :information_id %>
   </p>
   <p>
     <%= f.label :sended %><br />
@@ -36,5 +36,5 @@
   </p>
 <% end %>
 
-<%= link_to 'Show', @newsletter_user %> |
-<%= link_to 'Back', newsletter_users_path %>
+<%= link_to 'Show', @newsletter_archive %> |
+<%= link_to 'Back', newsletter_archives_path %>

@@ -1,0 +1,32 @@
+<h1>Listing newsletter_archives</h1>
+
+<table>
+  <tr>
+    <th>email_type_id</th>
+    <th>User</th>
+    <th>asso_id</th>
+    <th>newsletter_id</th>
+    <th>information_id</th>
+    <th>email inviata</th>
+    <th>created_at</th>
+  </tr>
+
+<% @newsletter_archives.each do |newsletter_archive| %>
+  <tr>
+    <td><%=h newsletter_archive.email_type_id %></td>
+    <td><%=h newsletter_archive.user_id %></td>
+    <td><%=h newsletter_archive.asso_id %></td>
+    <td><%=h newsletter_archive.newsletter_id %></td>
+    <td><%=h newsletter_archive.information_id %></td>
+    <td><%=h newsletter_archive.sended %></td>
+    <td><%=h newsletter_archive.created_at %></td>
+    <td><%= link_to 'Show', newsletter_archive %></td>
+    <td><%= link_to 'Edit', edit_newsletter_archive_path(newsletter_archive) %></td>
+    <td><%= link_to 'Destroy', newsletter_archive, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New newsletter_archive', new_newsletter_archive_path %>
