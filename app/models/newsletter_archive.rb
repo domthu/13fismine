@@ -1,9 +1,9 @@
 class NewsletterArchive < ActiveRecord::Base
 
+  belongs_to :email_type
   belongs_to :user
   belongs_to :convention
   belongs_to :newsletter
-  belongs_to :email_type
   belongs_to :information, :dependent => :destroy
 
   def to_s
@@ -14,6 +14,22 @@ class NewsletterArchive < ActiveRecord::Base
   end
 
   alias :name :to_s
+
+  def errore
+    if self.information.nil? || self.information.description.blank?
+      ""
+    else
+      self.information.description
+    end
+  end
+
+  def errore_abbrv
+    if self.information.nil? || self.information.description.blank?
+      ""
+    else
+      truncate(self.information.description, :length => 100, omission: '...')
+    end
+  end
 
   def have_convention?
     if self.convention_id && self.convention.nil?

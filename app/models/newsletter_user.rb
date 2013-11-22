@@ -1,13 +1,13 @@
 class NewsletterUser < ActiveRecord::Base
 
+  belongs_to :email_type
   belongs_to :user
   belongs_to :convention
   belongs_to :newsletter
-  belongs_to :email_type
-  belongs_to :information, :dependent => :destroy
+  belongs_to :information
 
   #se voglio re-inviare --> buttare sended a false
-  validates_uniqueness_of :user_id, :scope => :newsletter_id #&email_type='newsletter'
+  #validates_uniqueness_of :user_id, :scope => :newsletter_id #&email_type='newsletter'
 
   #boolean
   #validates_presence_of :sended No di default 0 = false
@@ -26,19 +26,27 @@ class NewsletterUser < ActiveRecord::Base
 
   alias :name :to_s
 
-  def errore_abbrv
-    if self.information.nil? || self.information.description.blank?
-      ""
+  def have_error?
+    if self.information_id && self.information && !self.information.description.blank?
+      true
     else
+      false
+    end
+  end
+
+  def errore
+    if have_error?
       self.information.description
+    else
+      ""
     end
   end
 
   def errore_abbrv
-    if self.information.nil? || self.information.description.blank?
-      ""
-    else
+    if have_error?
       truncate(self.information.description, :length => 100, omission: '...')
+    else
+      ""
     end
   end
 

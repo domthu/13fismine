@@ -23,12 +23,13 @@ class Newsletter < ActiveRecord::Base
     find(:first, :conditions => ["project_id = ?", project_id])
   end
 
+  #se information_id is NOT null vuole dire che l'invio email è andato male
   def have_emails_to_send?
-    return (self && self.newsletter_users.any? && self.newsletter_users.count(:conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)']) > 0)
+    return (self && self.newsletter_users.any? && self.newsletter_users.count(:conditions => ['sended = false AND information_id is null']) > 0)
   end
 
   def emails_pending
-    return (self.have_emails_to_send?) ? (self.newsletter_users.count(:conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)'])) : 0;
+    return (self.have_emails_to_send?) ? (self.newsletter_users.count(:conditions => ['sended = false AND information_id is null'])) : 0;
   end
 
 end
