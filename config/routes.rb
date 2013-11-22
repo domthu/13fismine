@@ -1,4 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :newsletter_archives
+
+  map.resources :email_types
+
+  map.resources :information
+
   map.resources :newsletter_users
   map.resources :newsletters
   map.resources :pages
