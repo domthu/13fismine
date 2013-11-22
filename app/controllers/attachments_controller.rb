@@ -49,7 +49,19 @@ class AttachmentsController < ApplicationController
 
 #inizio   attachments per il front end sandro
   def show_fs
-    if User.current.isauthored? && is_section_not_restricted?
+    doaction = false
+    if  @attachment.container.is_a?(Issue)
+      if @attachment.container.se_protetto
+        unless  User.current.isregistered? && @attachment.container.section.protetto
+          doaction = true
+        end
+      else
+        doaction = true
+      end
+    else
+      doaction = true
+    end
+    if doaction
       respond_to do |format|
         format.html {
           if @attachment.is_diff?

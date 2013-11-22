@@ -1,7 +1,7 @@
 <script type="text/javascript">
     function fbshareme() {
         window.open(
-                'http://www.facebook.com/sharer.php?s=100&p[title]=<%= ERB::Util.url_encode(@convegno.subject)%>&p[summary]=<%= ERB::Util.url_encode(smart_truncate(@convegno.summary, 220)) %>&p[url]=<%= link_to_articolo(@convegno, :only_path => false).to_s %>&p[images][0]=<%= (art_image(@convegno, :l, :only_path => false)) %>&p[images][1]=http://www.fiscosport.it/images/commons/fs_fb1.png&p[images][2]=http://www.fiscosport.it/images/commons/fs_fb2.png&p[images][3]=http://www.fiscosport.it/images/commons/fs_fb0.png',
+                'http://www.facebook.com/sharer.php?s=100&p[title]=<%= ERB::Util.url_encode(@articolo.subject)%>&p[summary]=<%= ERB::Util.url_encode(smart_truncate(@articolo.summary, 220)) %>&p[url]=<%= link_to_articolo(@articolo, :only_path => false).to_s %>&p[images][0]=<%= (art_image(@articolo, :l, :only_path => false)) %>&p[images][1]=http://www.fiscosport.it/images/commons/fs_fb1.png&p[images][2]=http://www.fiscosport.it/images/commons/fs_fb2.png&p[images][3]=http://www.fiscosport.it/images/commons/fs_fb0.png',
                 'facebook-share-dialog',
                 'width=626,height=436'
             );
@@ -16,41 +16,41 @@
         <div class="fs-convegni-deco-tr"></div>
         <div class="fs-convegni-deco-br"></div>
         <div class="fs-convegni-wrapper">
-          <% if @convegno %>
+          <% if @articolo %>
               <div class="counter-bg-fade1"></div>
               <div class="counter-bg">
                 <div class="counter">
-                  <span><%= @convegno.section %> &nbsp;</span>
+                  <span><%= @articolo.section %> &nbsp;</span>
 
                   <div class="counter_item">
-                    <span><%= I18n.localize(@convegno.due_date.to_date, :format => :giorno_mese_anno) %></span>
+                    <span><%= I18n.localize(@articolo.due_date.to_date, :format => :giorno_mese_anno) %></span>
                   </div>
                 </div>
               </div>
               <div class="counter-bg-fade2"></div>
               <div class="fs-postmetadataheader">
                 <div class="fs-postheader-eventi-full">
-                  <%= @convegno.subject %>  </div>
+                  <%= @articolo.subject %>  </div>
               </div>
               <div style="width:100%;">
                 <div class="fs-image-caption-wrapper-convegni">
-                  <%= image_tag art_image(@convegno, :l) %>
+                  <%= image_tag art_image(@articolo, :l) %>
                 </div>
-                <% unless @convegno.hide_summary? %>
+                <% unless @articolo.hide_summary? %>
                     <div class="fs-riassunto-full"><p>
-                      <%= @convegno.summary %></p>
+                      <%= @articolo.summary %></p>
                     </div>
                 <% end %>
               </div>
               <div class="clearfix"></div>
               <div class="fs-layout-cell layout-item-1">
                 <div id="fs-articolo-full">
-                  <%= @convegno.description %>
+                  <%= @articolo.description %>
                   <br/>&nbsp;
                 </div>
               </div>
               <div class="fs-attachments">
-                <%= link_to_fs_attachments(@convegno, :author => false) %>
+                <%= link_to_fs_attachments(@articolo, :author => false) %>
               </div>
               <div class="fs-postmetadata-full-convegni">
                 <div class='fs-social'>
@@ -83,7 +83,7 @@
                 </div>
 
               </div>
-              <% if  @convegno.show_reservation? && User.current.logged? %>
+              <% if  @articolo.show_reservation? && User.current.logged? %>
                   <div class="fs-convegni-prenota">
                     <%= render :partial => 'reservation' %>
                   </div>

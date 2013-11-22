@@ -54,24 +54,27 @@ function handleFileSelect_fs(evt, grav_id, radio_button_id) {
 }
 
 function js_flash(tipo, txt) {
-    //fs-flash
+  //  <p class='f-<%= key.to_s %>'><span class='<%= key.to_s %>-fs'> </span>  <%= msg %> </p>
     s = "";
     if ($.isArray(txt)) {
         $.each(txt, function (index, value) {
-            s += '<p class="f-' + tipo + '"><span class="i-' + tipo +'"> </span>' + txt + '</p><div id="fs-flash-close-me"> clicca per chiudere</div>'
+            s += '<p class="f-' + tipo + '"><span class="' + tipo +'>-fs"</span>' + txt + '</p><div id="fs-flash-close-me"> clicca per chiudere</div>'
         });
     } else {
-        s +=  '<p class="f-' + tipo + '"><span class="i-' + tipo  +'"> </span>' +  txt + '</p><div id="fs-flash-close-me"> clicca per chiudere</div>'
-    }
+        s +=  '<p class="f-' + tipo + '"><span class="' + tipo  +'-fs"></span>' +  txt + '</p><div id="fs-flash-close-me"> clicca per chiudere</div>'
+        }
     $('#fs-flash').html(s).focus();  //la focus fa la show e il center_me
-}
- /*
-jQuery.fn.center_me = function () {
+    }
+
+
+
+
+    jQuery.fn.center_me = function () {
     this.css("position","absolute");
     this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");
     this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
     return this;
-}  */
+}
 
 function setVisible(id, visible) {
     var el = $(id);

@@ -11,22 +11,22 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contracts
   map.resources :templates
   map.resources :reservations
-  #  under are only for paperclip images refresh
+#  under are only for paperclip images refresh
   map.with_options :controller => 'settings' do |img|
     img.with_options :conditions => {:method => :post} do |img_model|
-      img_model.connect 'settings', :action => 'img_refresh_users' , :tab =>  'display'
-      img_model.connect 'settings', :action => 'img_refresh_assos' , :tab =>  'display'
-      img_model.connect 'settings', :action => 'img_refresh_org'  , :tab =>  'display'
-      img_model.connect 'settings', :action => 'img_refresh_tsection' , :tab =>  'display'
-      img_model.connect 'settings', :action => 'img_refresh_section' , :tab =>  'display'
-      img_model.connect 'settings', :action => 'img_refresh_issues'  , :tab =>  'display'
+      img_model.connect 'settings', :action => 'img_refresh_users', :tab => 'display'
+      img_model.connect 'settings', :action => 'img_refresh_assos', :tab => 'display'
+      img_model.connect 'settings', :action => 'img_refresh_org', :tab => 'display'
+      img_model.connect 'settings', :action => 'img_refresh_tsection', :tab => 'display'
+      img_model.connect 'settings', :action => 'img_refresh_section', :tab => 'display'
+      img_model.connect 'settings', :action => 'img_refresh_issues', :tab => 'display'
     end
-    end
-  #----------------------------------------------------------------------------------
-  #map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
-  #AJAX get usando JQuery UI autocomplete
+  end
+#----------------------------------------------------------------------------------
+#map.resources :autocomplete_searches, :only => [:index], :as => 'autocomplete'
+#AJAX get usando JQuery UI autocomplete
   map.usertitle 'usertitle', :controller => 'services', :action => 'Usertitle', :conditions => {:method => [:get]}
-  #AJAX post usando JQuery
+#AJAX post usando JQuery
   map.emailctrl 'emailctrl', :controller => 'services', :action => 'emailctrl', :conditions => {:method => [:get]}
   map.privacy 'privacy', :controller => 'services', :action => 'privacy', :conditions => {:method => [:get]}
   map.condition 'condition', :controller => 'services', :action => 'condition', :conditions => {:method => [:get]}
@@ -43,30 +43,21 @@ ActionController::Routing::Routes.draw do |map|
 
   map.my_profile_show 'my_profile_show', :controller => 'mio_profilo', :action => 'page'
   map.my_profile_edit 'my_profile_edit', :controller => 'mio_profilo', :action => 'account'
-
   # If not authorized home_url --> editorial_url
   map.home '', :controller => 'welcome' #REDMINE HOME
   map.oldhome '/Index.aspx', :controller => 'welcome' #old url fiscosport.it/Index.asp
   map.oldsendmail '/SendMail.aspx', :controller => 'welcome' #old url fiscosport.it/Index.asp
-  #map.home '/editoriale/home', :controller => "editorial", :action => 'home' #FRONT END
-  #map.home'',  :controller => "editorial", :action => 'top_menu',  :topmenu_key =>  "fiscale" #"approfondimenti -->non c'è questa voce in TopMenu?" #FRONT END
-
   # Named Routes for static pages.
   map.cosaoffriamo '/cosa-offriamo', :controller => 'editorial', :action => 'pages_cosa-offriamo'
   map.contattaci '/contattaci', :controller => 'editorial', :action => 'pages_contattaci'
-  map.newsport  '/news-sport', :controller => 'editorial', :action => 'newsport'
-  map.progettofs  '/progetto-fiscosport', :controller => 'editorial', :action => 'pages_progetto-fs'
+  map.newsport '/news-sport', :controller => 'editorial', :action => 'newsport'
+  map.progettofs '/progetto-fiscosport', :controller => 'editorial', :action => 'pages_progetto-fs'
   map.lavoraconnoi '/lavora-con-noi', :controller => 'editorial', :action => 'pages_lavora-con-noi'
   map.page_abbonamento '/account/abbonati-a-fiscosport', :controller => 'editorial', :action => 'pages_abbonamenti'
-   #-> Edizioni e Newletter (table: projects)-
+  #-> Edizioni e Newletter (table: projects)-
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'
   map.edizione '/edizione/:id', :controller => 'editorial', :action => 'edizione'
   map.edizione_newsletter '/edizione_newsletter/:id', :controller => 'editorial', :action => 'edizione_newsletter'
-  #-> Convegni ed Eventi ()topsection_id=9) -
-  map.evento '/evento/:id/:slug', :controller => 'editorial', :action => 'evento'
-  map.eventi '/eventi', :controller => 'editorial', :action => 'eventi'
-  map.propose_evt 'propose_evt', :controller => 'editorial', :action => 'send_proposal_meeting', :conditions => {:method => [:post]}
-
   #-> Quesiti (table: news)-
   map.quesiti_all '/quesiti', :controller => 'editorial', :action => 'quesiti_all'
   map.quesito_show '/quesito/:id', :controller => 'editorial', :action => 'quesito_show'
@@ -74,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
   map.quesito_create '/quesito_create', :controller => 'editorial', :action => 'quesito_create'
   map.quesiti_my '/quesiti_my', :controller => 'editorial', :action => 'quesiti_my'
   #-> Quesiti (table: user_profiles)-
-  map.profiles_all '/chi-siamo',:controller => 'editorial', :action => 'profili_all'
+  map.profiles_all '/chi-siamo', :controller => 'editorial', :action => 'profili_all'
   map.profile_new '/chi-siamo/profilo/new', :controller => 'editorial', :action => 'profilo_new'
   map.profile_show '/chi-siamo/profilo/:id', :controller => 'editorial', :action => 'profilo_show'
   map.profile_edit '/chi-siamo/profilo/:id/edit', :controller => 'editorial', :action => 'profilo_edit'
@@ -84,36 +75,28 @@ ActionController::Routing::Routes.draw do |map|
   map.unsubscribe '/account/unsubscribe', :controller => 'account', :action => 'unsubscribe'
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
   map.prova_gratis 'prova_gratis', :controller => 'account', :action => 'prova', :conditions => {:method => [:post]}
-  map.banners_position '/group_banners/position',:controller => 'group_banners', :action=> 'positions', :conditions => {:method => [:get]}
-=begin
-  map.with_options :controller => 'editorial' , :conditions => {:method => :get} do |user_profiles_views|
-      user_profiles_views.connect '/chi-siamo', :action => 'profili_all'
-      user_profiles_views.connect '/chi-siamo/profilo/new', :action => 'profilo_new'
-      user_profiles_views.connect '/chi-siamo/profilo/:id', :action => 'profilo_show'
-      user_profiles_views.connect '/chi-siamo/profilo/edit/:id', :action => 'profilo_edit'
-    end
-  map.with_options :controller => 'user_profiles' , :conditions => {:method => :post} do |user_profiles_actions|
-      user_profiles_actions.connect '/profilo', :action => 'create_profile'
-      user_profiles_actions.connect '/profilo', :action => 'update_profile'
-    end
-=end
+  map.banners_position '/group_banners/position', :controller => 'group_banners', :action => 'positions', :conditions => {:method => [:get]}
+  #-> Convegni ed Eventi ()topsection_id=9) -
+  map.eventi '/eventi', :controller => 'editorial', :action => 'eventi'
+  map.propose_evt 'propose_evt', :controller => 'editorial', :action => 'send_proposal_meeting', :conditions => {:method => [:post]}
+  map.evento '/evento/:article_id/:article_slug',
+             :article_id => /\d.+/,
+             :article_slug => /[^\/]+/,
+             :controller => 'editorial',
+             :action => 'evento',
+             :conditions => {:method => [:get, :post]}
 
-#Map menu
-
-  map.nlmailer '/nlmailer/:newsletter_id', :controller => 'services', :action => 'nlmailer'
+  #-> Newsletters
   map.newsletter_massmailer '/massmailer/:newsletter_id', :controller => 'newsletters', :action => 'massmailer'
-  #via js
-  #map.newsletter_send_emails '/send_emails/:newsletter_id/:pageSize', :controller => 'newsletters', :action => 'send_emails'
   map.newsletter_send_emails '/send_emails', :controller => 'newsletters', :action => 'send_emails'
   map.newsletter_removeemails '/removeemails/:newsletter_id/:type', :controller => 'newsletters', :action => 'removeemails'
 
-
   map.newsletter_invii '/invii/:project_id',
-                      :controller => 'newsletters',
-                      :action => 'invii',
-                      :project_id => /\d.+/,
-                      #:project_id => /[^\/]+/,
-                      :conditions => {:method => [:get, :post]}
+                       :controller => 'newsletters',
+                       :action => 'invii',
+                       :project_id => /\d.+/,
+                       #:project_id => /[^\/]+/,
+                       :conditions => {:method => [:get, :post]}
 
   map.editorial '/editoriale/home',
                 :controller => 'editorial',
@@ -134,8 +117,7 @@ ActionController::Routing::Routes.draw do |map|
                       :topsection_key => /[^\/]+/,
                       :conditions => {:method => [:get, :post]}
 
-
-#  map.articolo_page 'editorial/:top_menu_key/sezione/:top_section_id/articolo/:article_id',
+#  map.articolo_page 'editorial/:top_menu_key/sezione/:top_section_id/articolo/:article_id'
 
   map.articolo_page '/editoriale/:topmenu_key/:topsection_key/:article_id/:article_slug',
                     :controller => 'editorial',
@@ -146,11 +128,10 @@ ActionController::Routing::Routes.draw do |map|
                     :article_slug => /[^\/]+/,
                     :conditions => {:method => [:get, :post]}
 
-
   map.resources :regions
-  #map.resources :provinces
+#map.resources :provinces
   map.resources :provinces, :has_many => :regions
-  #map.resources :comunes
+#map.resources :comunes
   map.resources :comunes, :has_many => :provinces
   map.resources :group_banners
 
@@ -174,9 +155,9 @@ ActionController::Routing::Routes.draw do |map|
   map.email_fee_goto_settings 'email_fee_settings', :controller => 'settings', :action => 'edit', :tab => 'fee'
   map.static_pages_settings 'email_fee_settings', :controller => 'settings', :action => 'edit', :tab => 'static_pages'
   map.abbonamenti 'abbonamenti', :controller => 'fees', :action => 'abbonamenti'
-  #in POST not in Get for params[:username]...
-  #map.signin 'login', :controller => 'account', :action => 'login'
-  #map.signout 'logout', :controller => 'account', :action => 'logout'
+#in POST not in Get for params[:username]...
+#map.signin 'login', :controller => 'account', :action => 'login'
+#map.signout 'logout', :controller => 'account', :action => 'logout'
   map.signin 'login', :controller => 'account', :action => 'login',
              :conditions => {:method => [:get, :post]}
   map.signout 'logout', :controller => 'account', :action => 'logout',
@@ -191,7 +172,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'roles/workflow/:id/:role_id/:tracker_id', :controller => 'roles', :action => 'workflow'
   map.connect 'help/:ctrl/:page', :controller => 'help'
 
-  map.with_options :controller => 'time_entry_reports', :action => 'report',:conditions => {:method => :get} do |time_report|
+  map.with_options :controller => 'time_entry_reports', :action => 'report', :conditions => {:method => :get} do |time_report|
     time_report.connect 'projects/:project_id/issues/:issue_id/time_entries/report'
     time_report.connect 'projects/:project_id/issues/:issue_id/time_entries/report.:format'
     time_report.connect 'projects/:project_id/time_entries/report'
@@ -201,12 +182,12 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.bulk_edit_time_entry 'time_entries/bulk_edit',
-                   :controller => 'timelog', :action => 'bulk_edit', :conditions => { :method => :get }
+                           :controller => 'timelog', :action => 'bulk_edit', :conditions => {:method => :get}
   map.bulk_update_time_entry 'time_entries/bulk_edit',
-                   :controller => 'timelog', :action => 'bulk_update', :conditions => { :method => :post }
+                             :controller => 'timelog', :action => 'bulk_update', :conditions => {:method => :post}
   map.time_entries_context_menu '/time_entries/context_menu',
-                   :controller => 'context_menus', :action => 'time_entries'
-  # TODO: wasteful since this is also nested under issues, projects, and projects/issues
+                                :controller => 'context_menus', :action => 'time_entries'
+# TODO: wasteful since this is also nested under issues, projects, and projects/issues
   map.resources :time_entries, :controller => 'timelog'
 
   map.connect 'projects/:id/wiki', :controller => 'wikis', :action => 'edit', :conditions => {:method => :post}
@@ -257,7 +238,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :queries, :except => [:show]
 
   # Misc issue routes. TODO: move into resources
-  map.auto_complete_issues '/issues/auto_complete', :controller => 'auto_completes', :action => 'issues', :conditions => { :method => :get }
+  map.auto_complete_issues '/issues/auto_complete', :controller => 'auto_completes', :action => 'issues', :conditions => {:method => :get}
   map.preview_issue '/issues/preview/:id', :controller => 'previews', :action => 'issue' # TODO: would look nicer as /issues/:id/preview
   map.preview_fs_articolo '/editorial/articolo/:article_id', :controller => 'editorial', :action => 'preview_articolo'
   map.preview_articolo '/issues/articolo/:id', :controller => 'previews', :action => 'articolo'
@@ -268,10 +249,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.issues_context_menu '/issues/context_menu', :controller => 'context_menus', :action => 'issues'
   map.issue_changes '/issues/changes', :controller => 'journals', :action => 'index'
-  map.bulk_edit_issue 'issues/bulk_edit', :controller => 'issues', :action => 'bulk_edit', :conditions => { :method => :get }
-  map.bulk_update_issue 'issues/bulk_edit', :controller => 'issues', :action => 'bulk_update', :conditions => { :method => :post }
-  map.quoted_issue '/issues/:id/quoted', :controller => 'journals', :action => 'new', :id => /\d+/, :conditions => { :method => :post }
-  map.connect '/issues/:id/destroy', :controller => 'issues', :action => 'destroy', :conditions => { :method => :post } # legacy
+  map.bulk_edit_issue 'issues/bulk_edit', :controller => 'issues', :action => 'bulk_edit', :conditions => {:method => :get}
+  map.bulk_update_issue 'issues/bulk_edit', :controller => 'issues', :action => 'bulk_update', :conditions => {:method => :post}
+  map.quoted_issue '/issues/:id/quoted', :controller => 'journals', :action => 'new', :id => /\d+/, :conditions => {:method => :post}
+  map.connect '/issues/:id/destroy', :controller => 'issues', :action => 'destroy', :conditions => {:method => :post} # legacy
 
   map.with_options :controller => 'gantts', :action => 'show' do |gantts_routes|
     gantts_routes.connect '/projects/:project_id/issues/gantt'
@@ -290,15 +271,15 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   # Following two routes conflict with the resources because #index allows POST
-  map.connect '/issues', :controller => 'issues', :action => 'index', :conditions => { :method => :post }
-  map.connect '/issues/create', :controller => 'issues', :action => 'index', :conditions => { :method => :post }
+  map.connect '/issues', :controller => 'issues', :action => 'index', :conditions => {:method => :post}
+  map.connect '/issues/create', :controller => 'issues', :action => 'index', :conditions => {:method => :post}
 
-  map.resources :issues, :member => { :edit => :post }, :collection => {} do |issues|
+  map.resources :issues, :member => {:edit => :post}, :collection => {} do |issues|
     issues.resources :time_entries, :controller => 'timelog'
     issues.resources :relations, :shallow => true, :controller => 'issue_relations', :only => [:index, :show, :create, :destroy]
   end
 
-  map.resources :issues, :path_prefix => '/projects/:project_id', :collection => { :create => :post } do |issues|
+  map.resources :issues, :path_prefix => '/projects/:project_id', :collection => {:create => :post} do |issues|
     issues.resources :time_entries, :controller => 'timelog'
   end
 
@@ -315,8 +296,8 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :users, :member => {
-    :edit_membership => :post,
-    :destroy_membership => :post
+      :edit_membership => :post,
+      :destroy_membership => :post
   }
 
   # For nice "roadmap" in the url for the index action
@@ -334,11 +315,11 @@ ActionController::Routing::Routes.draw do |map|
   map.fast_reply 'quesito/fast_reply', :controller => 'news', :action => 'news_fast_reply'
 
   map.resources :projects, :member => {
-    :copy => [:get, :post],
-    :settings => :get,
-    :modules => :post,
-    :archive => :post,
-    :unarchive => :post
+      :copy => [:get, :post],
+      :settings => :get,
+      :modules => :post,
+      :archive => :post,
+      :unarchive => :post
   } do |project|
     project.resource :project_enumerations, :as => 'enumerations', :only => [:update, :destroy]
     project.resources :files, :only => [:index, :new, :create]
@@ -354,14 +335,14 @@ ActionController::Routing::Routes.draw do |map|
     project.wiki_diff 'wiki/:id/diff/:version/vs/:version_from', :controller => 'wiki', :action => 'diff'
     project.wiki_annotate 'wiki/:id/annotate/:version', :controller => 'wiki', :action => 'annotate'
     project.resources :wiki, :except => [:new, :create], :member => {
-      :rename => [:get, :post],
-      :history => :get,
-      :preview => :any,
-      :protect => :post,
-      :add_attachment => :post
+        :rename => [:get, :post],
+        :history => :get,
+        :preview => :any,
+        :protect => :post,
+        :add_attachment => :post
     }, :collection => {
-      :export => :get,
-      :date_index => :get
+        :export => :get,
+        :date_index => :get
     }
 
   end
@@ -394,8 +375,8 @@ ActionController::Routing::Routes.draw do |map|
       repository_views.connect 'projects/:id/repository/revisions/:rev', :action => 'revision'
       repository_views.connect 'projects/:id/repository/revisions/:rev/diff', :action => 'diff'
       repository_views.connect 'projects/:id/repository/revisions/:rev/diff.:format', :action => 'diff'
-      repository_views.connect 'projects/:id/repository/revisions/:rev/raw/*path', :action => 'entry', :format => 'raw', :requirements => { :rev => /[a-z0-9\.\-_]+/ }
-      repository_views.connect 'projects/:id/repository/revisions/:rev/:action/*path', :requirements => { :rev => /[a-z0-9\.\-_]+/ }
+      repository_views.connect 'projects/:id/repository/revisions/:rev/raw/*path', :action => 'entry', :format => 'raw', :requirements => {:rev => /[a-z0-9\.\-_]+/}
+      repository_views.connect 'projects/:id/repository/revisions/:rev/:action/*path', :requirements => {:rev => /[a-z0-9\.\-_]+/}
       repository_views.connect 'projects/:id/repository/raw/*path', :action => 'entry', :format => 'raw'
       # TODO: why the following route is required?
       repository_views.connect 'projects/:id/repository/entry/*path', :action => 'entry'
@@ -412,7 +393,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :groups, :member => {:autocomplete_for_user => :get}
   map.group_users 'groups/:id/users', :controller => 'groups', :action => 'add_users', :id => /\d+/, :conditions => {:method => :post}
-  map.group_user  'groups/:id/users/:user_id', :controller => 'groups', :action => 'remove_user', :id => /\d+/, :conditions => {:method => :delete}
+  map.group_user 'groups/:id/users/:user_id', :controller => 'groups', :action => 'remove_user', :id => /\d+/, :conditions => {:method => :delete}
 
   map.resources :trackers, :except => :show
   map.resources :issue_statuses, :except => :show, :collection => {:update_issue_done_ratio => :post}
