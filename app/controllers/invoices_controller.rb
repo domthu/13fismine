@@ -19,6 +19,79 @@ class InvoicesController < ApplicationController
         @menu_fs = :application_menu
     end
   end
+  def invoice_receiver
+
+    sort_init 'username','asc'
+    sort_update 'username' => 'login',
+                'firstname' => 'firstname',
+                'lastname' => 'lastname',
+                'email' => 'mail'
+
+    case params[:format]
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        @limit = per_page_option
+    end
+
+    scope = User
+    scope = scope.in_group(params[:group_id].to_i) if params[:group_id].present?
+
+    @status = params[:status] ? params[:status].to_i : 1
+    c = ARCondition.new(@status == 0 ? "status <> 0" : ["status = ?", @status])
+
+    unless params[:name].blank?
+      name = "%#{params[:name].strip.downcase}%"
+      c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+    end
+
+    @user_count = scope.count(:conditions => c.conditions)
+    @user_pages = Paginator.new self, @user_count, @limit, params['page']
+    @offset ||= @user_pages.current.offset
+    @limit = 10
+    @users =  scope.find :all,
+                         :order => sort_clause,
+                         :conditions => c.conditions,
+                         :limit  =>  @limit,
+                         :offset =>  @offset
+
+    @limit = 8
+    @conventions_count = Convention.all.count
+    @conventions_pages = Paginator.new self, @conventions_count, @limit, params['page']
+    @offset2 ||= @conventions_pages.current.offset
+    @conventions = Convention.find(:all,
+                             :include => [:province, :comune, :user, {:cross_organization => [:type_organization]}],
+                             :order => 'ragione_sociale',
+                             :limit  =>  @limit,
+                             :offset =>  @offset2
+    )
+    respond_to do |format|
+      format.html {
+
+        render :layout => !request.xhr?
+      }
+      format.api
+    end
+  end
+  def invoice_to_pdf
+    @invoice = Invoice.find(params[:id])
+    @tariffa =   @invoice.tariffa || 0
+    @scontoperc = @invoice.sconto || 0
+    @sconto = (@tariffa * @scontoperc) / 100
+    @imponibile =  @tariffa - @sconto
+    @impostaperc = @invoice.iva || 0
+    @imposta =  (@imponibile *  @impostaperc ) / 100
+    @totale  = @imponibile + @imposta
+  end
+  def download_pdf
+    unless params[:id].nil?
+    html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id],  :layout => false)
+    pdf = PDFKit.new(html)
+    send_data(pdf.to_pdf)
+    else
+   flash[:error] = 'Nessuna fattura passata come parametro. '
+      end
+  end
 
   # GET /invoices
   # GET /invoices.xml
@@ -70,9 +143,24 @@ class InvoicesController < ApplicationController
   # GET /invoices/new
   # GET /invoices/new.xml
   def new
+    @dest = ''
+    item = ''
+    @pu =  params[:user_id].present?
+    @pc = params[:convention_id].present?
+    if params[:user_id].present?
+      item = User.find_by_id(params[:user_id])
+      @dest += item.getDefault4invoice()
+      end
+    if params[:convention_id].present?
+      item = Convention.find_by_id(params[:convention_id])
+      @dest +=  item.getDefault4invoice()
+    end
     @invoice = Invoice.new
     @anno = Date.today.year
     #@cnt = Invoice.count(:conditions => ['anno = ' + @anno.to_s ])
+    @invoices = Invoice.find(:all,
+                             :order => 'id DESC',
+                             :limit => 5)
     @cnt = Invoice.maximum(:numero_fattura, :conditions => ['anno = ' + @anno.to_s])
     if @cnt.nil? or @cnt == 0
       @cnt = 1
@@ -90,6 +178,9 @@ class InvoicesController < ApplicationController
   # GET /invoices/1/edit
   def edit
     @invoice = Invoice.find(params[:id])
+    @invoices = Invoice.find(:all,
+                             :order => 'id DESC',
+                             :limit => 5)
   end
 
   # POST /invoices

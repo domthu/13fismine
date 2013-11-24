@@ -1,18 +1,54 @@
 <%= f.error_messages %>
 
 <div class="box tabular">
-  <p><%= f.select :user_id, (User.all.collect {|c| [c.lastname + ' ' + c.firstname +  ' (' + c.login + ')', c.id]}), :include_blank => false, :required => true, :size => 60, :title => l(:label_user) %></p>
-  <p><%= f.text_field :numero_fattura, :label => :field_numero_fattura, :size => 3 %>
+  <%= f.hidden_field :user_id, :value => @user_id %>
+  <%= f.hidden_field :convention_id, :value => @convention_id  %>
+  <%# f.hidden_field :mittente, :value =>  Setting.default_invoices_header  %>
+  <p><span style="font-weight: bold;"><%= link_to " < cambia", invoice_receiver_path %></span>
+    <%= raw f.text_area :destinatario,
+                        :label => (:label_destinatario),
+                        :value => @dest %>  </p>
+
+  <p><%= f.text_field :numero_fattura, :label => :field_numero_fattura, :size => 5, :required => true %>
     <% unless @cnt.blank? %>
-     prossima fattura: <%= @cnt %> [<%= @anno %>]
+        prossima fattura: <%= @cnt %> [<%= @anno %>]
     <% end %>
   </p>
-  <p><%= f.date_select :data_fattura, :label => :field_fattura %></p>
-  <p><%= f.text_field :sezione, :label => :field_sezione, :size => 3 %></p>
-  <p><%= f.text_field :anno, :label => :field_anno, :size => 3 %></p>
-  <p><%= f.text_field :tariffa, :label => :field_tariffa, :size => 3 %></p>
-  <p><%= f.text_area :sconto, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
-  <p><%= f.text_field :iva, :label => :field_iva, :size => 3 %></p>
-  <p><%= f.text_field :pagamento, :label => :field_pagamento, :size => 3 %></p>
+  <table style="float: right; margin: -30px 30px 0 0; border: dotted 1px #a9a9a9 ">
+    <thead>
+    <th>numero</th>
+    <th>data</th>
+    </thead>
+    <tbody>
+    <tr>
+      <td align="center" colspan="2" style="font-size: 0.8em;"> Ultime 5 fatture</td>
+    </tr>
+    <%# if @invoice5.nil? %>
+    <% @invoices.each do |i| %>
+        <tr>
+          <td> <%= link_to i.numero_fattura.to_s, edit_invoice_path(i) %></td>
+          <td> <%= I18n.localize(i.data_fattura.to_date, :format => :giorno_mese_anno) unless i.data_fattura.blank? %></td>
+        </tr>
+    <% end %>
+    <%# end %>
+    </tbody>
+  </table>
+  <p><%= f.date_select :data_fattura, :label => :field_data_fattura, :required => true %></p>
+
+  <p><%= f.text_field :tariffa, :label => :field_tariffa, :size => 5, :required => true %></p>
+
+  <p><%= f.text_field :sconto, :label => :field_sconto, :size => 5 %></p>
+
+  <p><%= f.text_field :iva, :value => @invoices[0].iva.to_s, :label => :field_iva, :size => 5, :required => true %></p>
+
+  <p><%= f.text_field :pagamento, :label => :field_pagamento, :size => 5 %></p>
+
+  <p><%= f.text_field :anno, :label => :field_anno, :value => @anno.to_s, :size => 5 %></p>
+
+  <p><%= f.text_field :sezione, :value => @invoices[0].sezione.to_s, :label => :field_sezione, :size => 5 %></p>
+
+
 </div>
-<%= wikitoolbar_for 'sconto' %>
+<script type="text/javascript">
+    CKEDITOR.replace('invoice_destinatario', { toolbar: 'Mini', height: 200, width: 450 });
+</script>

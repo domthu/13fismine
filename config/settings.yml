@@ -321,4 +321,3 @@ default_invoices_description:
   default: "Descrizione del servizio"
 default_invoices_footer:
   default: "Footer della fattura"
-

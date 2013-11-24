@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :payments
+
   map.resources :newsletter_users
   map.resources :newsletters
   map.resources :pages
@@ -85,20 +87,6 @@ ActionController::Routing::Routes.draw do |map|
   map.unauthorized '/unauthorized', :controller => 'editorial', :action => 'unauthorized'
   map.prova_gratis 'prova_gratis', :controller => 'account', :action => 'prova', :conditions => {:method => [:post]}
   map.banners_position '/group_banners/position',:controller => 'group_banners', :action=> 'positions', :conditions => {:method => [:get]}
-=begin
-  map.with_options :controller => 'editorial' , :conditions => {:method => :get} do |user_profiles_views|
-      user_profiles_views.connect '/chi-siamo', :action => 'profili_all'
-      user_profiles_views.connect '/chi-siamo/profilo/new', :action => 'profilo_new'
-      user_profiles_views.connect '/chi-siamo/profilo/:id', :action => 'profilo_show'
-      user_profiles_views.connect '/chi-siamo/profilo/edit/:id', :action => 'profilo_edit'
-    end
-  map.with_options :controller => 'user_profiles' , :conditions => {:method => :post} do |user_profiles_actions|
-      user_profiles_actions.connect '/profilo', :action => 'create_profile'
-      user_profiles_actions.connect '/profilo', :action => 'update_profile'
-    end
-=end
-
-#Map menu
 
   map.nlmailer '/nlmailer/:newsletter_id', :controller => 'services', :action => 'nlmailer'
   map.newsletter_massmailer '/massmailer/:newsletter_id', :controller => 'newsletters', :action => 'massmailer'
@@ -162,6 +150,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :top_sections
 
   map.resources :invoices
+  map.invoice_receiver '/invoice_receiver', :controller => 'invoices', :action => 'invoice_receiver' , :conditions => {:method => :get}
+  map.invoice_to_pdf '/invoice_to_pdf/:id', :controller => 'invoices', :action => 'invoice_to_pdf'
+  map.invoice_download_pdf '/invoice_to_pdf/:id.pdf', :controller => 'invoices', :action => 'download_pdf'
   map.fee 'fee', :controller => 'fees', :action => 'index'
   map.liste_utenti 'liste_utenti', :controller => 'fees', :action => 'liste_utenti'
   map.scaduti 'scaduti', :controller => 'fees', :action => 'scaduti'

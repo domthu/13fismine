@@ -210,25 +210,22 @@
           <fieldset>
             <legend><%= l(:default_invoices_header) %></legend>
             <%= setting_text_area :default_invoices_header, :label => false %>
-            <%# l(:label_isarchivied) %>
             <div style="float:right;">
             </div>
           </fieldset>
           <fieldset>
             <legend><%= l(:default_invoices_description) %></legend>
             <%= setting_text_area :default_invoices_description, :label => false %>
-            <%# l(:label_isexpired) %>
             <div style="float:right;">
             </div>
           </fieldset>
           <fieldset>
             <legend><%= l(:default_invoices_footer) %></legend>
             <%= setting_text_area :default_invoices_footer, :label => false %>
-            <%# l(:label_isrenewing) %>
             <div style="float:right;">
             </div>
           </fieldset>
-          &nbsp; <br/>
+              &nbsp; <br/>
           <div class="btn-footer"><%= submit_tag l(:button_save), :class => 'button-grey', :tab => 'fee'%></div>
         </div>
     <% end %>

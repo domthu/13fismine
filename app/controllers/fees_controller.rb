@@ -211,7 +211,7 @@ class FeesController < ApplicationController
         name = "%#{params[:name].strip.downcase}%"
         c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
       end
-      puts "XXXXXXXXXXXXX" + params[:convention_id].to_s
+     # puts "XXXXXXXXXXXXX" + params[:convention_id].to_s
       @convention_id = (params[:convention_id]) ? params[:convention_id].to_i : 0
       if @convention_id > 0
         c << ["convention_id = ? ", @convention_id.to_s]

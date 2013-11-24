@@ -1,67 +1,77 @@
 <div class="contextual">
-<%= link_to(l(:button_edit), edit_invoice_path(@invoice), :class => 'icon icon-edit') if User.current.admin? %>
-<%= link_to(l(:button_delete),
-      invoice_path(@invoice),
-      :confirm => l(:text_are_you_sure),
-      :method => :delete,
-      :class => 'icon icon-del') if User.current.admin? %>
+  <%= link_to(l(:button_edit), edit_invoice_path(@invoice), :class => 'icon icon-edit') if User.current.admin? %>
+  <%= link_to(l(:button_delete),
+              invoice_path(@invoice),
+              :confirm => l(:text_are_you_sure),
+              :method => :delete,
+              :class => 'icon icon-del') if User.current.admin? %>
 </div>
-<h2><%= link_to l(:label_invoice_plural), invoices_path %> &#187; <%=h @invoice %></h2>
+<h2><%= link_to l(:label_invoice_plural), invoices_path %> &#187; <%= h @invoice %></h2>
 <div id="footer-menu" class="box">
   <%= render_menu :menu_payment_fs %>
 </div>
 
 <div class="splitcontentleft">
   <fieldset class="box tabular">
-    <legend><%=l(:label_invoice)%></legend>
+    <legend><%= l(:label_invoice) %></legend>
     <p>
-    <% unless @invoice.numero_fattura.blank? %>
-        <em><%=h @invoice.numero_fattura %></em>
-        <br />
-    <% end %>
+      <% unless @invoice.numero_fattura.blank? %>
+          <em><%= h @invoice.numero_fattura %></em>
+          <br/>
+      <% end %>
     </p>
+
     <p>
-        <%= l(:label_user) %>: <%= link_to h(@invoice.user), user_path(@invoice.user, :id => @invoice.user_id) %>
+      <%= l(:label_user) %>: <%= link_to h(@invoice.user), user_path(@invoice.user, :id => @invoice.user_id) %>
     </p>
+
     <p>
-        <%= l(:label_data_fattura) %>: <%= format_date(@invoice.data_fattura) %>
+      <%= l(:label_data_fattura) %>: <%= format_date(@invoice.data_fattura) %>
     </p>
+
     <p>
       <%= l(:label_mittente) %>:
-      <div class="wiki">
-        <%= @invoice.mittente %>
-      </div>
+
+    <div class="wiki">
+      <%= @invoice.mittente %>
+    </div>
     </p>
     <p>
       <%= l(:label_destinatario) %>:
-      <div class="wiki">
-        <%= @invoice.destinatario %>
-      </div>
+
+    <div class="wiki">
+      <%= @invoice.destinatario %>
+    </div>
     </p>
     <p>
-        <%= l(:label_sezione) %>: <%=h @invoice.sezione %>
+      <%= l(:label_sezione) %>: <%= h @invoice.sezione %>
     </p>
+
     <p>
-        <%= l(:label_anno) %>: <%=h @invoice.anno %>
+      <%= l(:label_anno) %>: <%= h @invoice.anno %>
     </p>
+
     <p>
-        <%= l(:label_tariffa) %>: <%=h @invoice.tariffa %>
+      <%= l(:label_tariffa) %>: <%= h @invoice.tariffa %>
     </p>
+
     <p>
       <%= l(:label_sconto) %>: <%= h(@invoice.sconto) %>
     </p>
+
     <p>
-        <%= l(:label_iva) %>: <%=h @invoice.iva %>
+      <%= l(:label_iva) %>: <%= h @invoice.iva %>
     </p>
+
     <p>
-        <%= l(:label_pagamento) %>: <%=h @invoice.pagamento %>
+      <%= l(:label_pagamento) %>: <%= h @invoice.pagamento %>
     </p>
   </fieldset>
 </div>
 
 <div class="splitcontentright">
   <fieldset class="box tabular">
-    <legend><%=l(:label_user_invoices)%></legend>
+    <legend><%= l(:label_user_invoices) %></legend>
     <table>
       <tr>
         <th>num</th>
@@ -71,19 +81,19 @@
         <th>pagamento</th>
       </tr>
       <% @invoice.user.invoices.each do |user_invoice| %>
-        <tr>
-          <% if (user_invoice != @invoice) %>
-            <td class="buttons">
-              <%= link_to(h(user_invoice.numero_fattura), invoice_path(user_invoice, :id => user_invoice.id), :class => 'icon icon-summary') if User.current.admin?   %>
-          <% else %>
-          <td><b><%=h user_invoice.numero_fattura %></b></td>
-          <% end %>
-          </td>
-          <td><%= format_date(user_invoice.data_fattura) %></td>
-          <td><%=h user_invoice.anno %></td>
-          <td><%=h user_invoice.tariffa %></td>
-          <td><%=h user_invoice.pagamento %></td>
-        </tr>
+          <tr>
+            <% if (user_invoice != @invoice) %>
+                <td class="buttons">
+                  <%= link_to(h(user_invoice.numero_fattura), invoice_path(user_invoice, :id => user_invoice.id), :class => 'icon icon-summary') if User.current.admin? %>
+            <% else %>
+                <td><b><%= h user_invoice.numero_fattura %></b></td>
+            <% end %>
+            </td>
+            <td><%= format_date(user_invoice.data_fattura) %></td>
+            <td><%= h user_invoice.anno %></td>
+            <td><%= h user_invoice.tariffa %></td>
+            <td><%= h user_invoice.pagamento %></td>
+          </tr>
       <% end %>
     </table>
   </fieldset>
