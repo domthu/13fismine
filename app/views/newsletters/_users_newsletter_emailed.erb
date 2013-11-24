@@ -14,7 +14,7 @@
       <% @nl_users.each do |nl_usr| %>
           <tr id="nl_usr-<%= nl_usr.id %>" class="user">
             <td>
-              <div style="width:1px;" class="flash <%= nl_usr.sended? ? 'notice' : (nl_usr.errore.nil? ? 'warning' : 'error') %>" title="<%= nl_usr.errore.nil? ? '' : nl_usr.errore %>">&nbsp;</div>
+              <div style="width:1px;" class="flash <%= nl_usr.sended? ? 'notice' : (nl_usr.have_error? ? 'error' : 'warning') %>" title="<%= nl_usr.errore %>">&nbsp;</div>
             </td>
             <td>
               <%= link_to_user(nl_usr.user, {:target => "_blank", :class => 'icon icon-preview'}) unless User.current.admin? %>
@@ -32,7 +32,7 @@
 
             </td>
           </tr>
-          <% if !nl_usr.errore.nil? && !nl_usr.errore.empty? %>
+          <% if nl_usr.have_error? %>
               <tr>
                 <td></td>
                 <td colspan="4">

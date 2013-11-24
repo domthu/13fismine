@@ -1,12 +1,13 @@
 class NewsletterUser < ActiveRecord::Base
 
+  belongs_to :email_type
   belongs_to :user
   belongs_to :convention
   belongs_to :newsletter
-  validates_length_of :email_type, :maximum => 30
+  belongs_to :information
 
   #se voglio re-inviare --> buttare sended a false
-  validates_uniqueness_of :user_id, :scope => :newsletter_id #&email_type='newsletter'
+  #validates_uniqueness_of :user_id, :scope => :newsletter_id #&email_type='newsletter'
 
   #boolean
   #validates_presence_of :sended No di default 0 = false
@@ -24,6 +25,30 @@ class NewsletterUser < ActiveRecord::Base
   end
 
   alias :name :to_s
+
+  def have_error?
+    if self.information_id && self.information && !self.information.description.blank?
+      true
+    else
+      false
+    end
+  end
+
+  def errore
+    if have_error?
+      self.information.description
+    else
+      ""
+    end
+  end
+
+  def errore_abbrv
+    if have_error?
+      truncate(self.information.description, :length => 100, omission: '...')
+    else
+      ""
+    end
+  end
 
   def have_convention?
     if self.convention_id && self.convention.nil?

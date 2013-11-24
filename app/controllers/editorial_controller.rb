@@ -6,10 +6,13 @@ class EditorialController < ApplicationController
   include FeesHelper #ROLE_XXX  CONVEGNI_XXX QUESITO_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
-  before_filter :find_articolo, :only => [:articolo] #, :preview_articolo can be not visible]  #recupero articolo status
-                     #  #before_filter :get_news, :only => [:news, :articolo_full]  #recupero articolo status
-  before_filter :correct_user_article, :only => [:articolo] #LOGGATO O ARTICOLO LIBERO
-  before_filter :enabled_user_article, :only => [:articolo] #ABBONATO E ARTICOLO protetto o SECTION protetto
+
+ # before_filter :find_evento, :only => [:evento] #, :preview_articolo can be not visible]  #recupero articolo status
+ # before_filter :correct_user_evento, :only => [:evento] #LOGGATO O ARTICOLO LIBERO
+ # before_filter :enabled_user_evento, :only => [:evento] #ABBONATO E ARTICOLO protetto o SECTION protetto
+  before_filter :find_articolo, :only => [:articolo, :evento] #, :preview_articolo can be not visible]  #recupero articolo status
+  before_filter :correct_user_article, :only => [:articolo, :evento] #LOGGATO O ARTICOLO LIBERO
+  before_filter :enabled_user_article, :only => [:articolo, :evento] #ABBONATO E ARTICOLO protetto o SECTION protetto
   before_filter :find_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_show]
   before_filter :correct_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_create] #Admin o se stesso
   before_filter :find_quesito_fs, :only => [:quesito_destroy, :quesito_edit, :quesito_show]
@@ -238,30 +241,7 @@ class EditorialController < ApplicationController
   # -----------------  EDIZIONI /NEWSLETTER  (fine)  ------------------
 
   # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------
-  def convegni
-    # Paginate results
-    case params[:format]
-      when 'xml', 'json'
-        @offset, @limit = api_offset_and_limit
-      else
-        #@limit = 5
-        #@offset= 25
-        @limit = per_page_option_fs
-    end
-    @topsection = TopSection.find_convegno(:first)
-    @issues_count =Issue.all_public_fs.solo_convegni.count()
-    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
-    @convegni = Issue.all_public_fs.solo_convegni.all(
-        :limit => @issues_pages.items_per_page,
-        :offset => @issues_pages.current.offset)
-    respond_to do |format|
-      format.html {
-        render :layout => !request.xhr?
-      }
-      format.api
-    end
 
-  end
 
   def evento_prenotazione
     if request.post?
@@ -301,15 +281,16 @@ class EditorialController < ApplicationController
     if @conv_prossimo.nil?
       @conv_futuri
     else
-      @cid = @conv_prossimo.id #  = if @conv_prossimo.id.nil? ? 0 : @conv_prossimo.id ; end
+    #  @cid = @conv_prossimo.id #  = if @conv_prossimo.id.nil? ? 0 : @conv_prossimo.id ; end
       @conv_futuri = Issue.all_public_fs.solo_convegni.all(
           :order => 'due_date ASC',
-          :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid.to_i}")
+          :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@articolo.id}")
                                #reservations
                                # @reservation_new =Res.newervation
-      @rcount = Reservation.count(:conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
-      @reservation =Reservation.find(:first, :conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
-      @convegno= Issue.find(@cid)
+      @rcount = Reservation.count(:conditions => "issue_id = #{@articolo.id} AND user_id = #{User.current.id}")
+      @reservation = Reservation.find(:first, :conditions => "issue_id = #{@articolo.id} AND user_id = #{User.current.id}")
+     # @articolo = Issue.find(@cid)
+
     end
   end
 
@@ -754,7 +735,9 @@ class EditorialController < ApplicationController
         elsif User.current.isexpired?
           reroute_auth("Il tuo abbonamento è scaduto. Per vedere di nuovo gli articoli protetti devi fare il rinnovo")
         elsif User.current.isregistered?
-          reroute_auth("Durante il periodo di prova solo gli abbonati regolari possono vedere i contenuti protetti. Abbonati anche tu!")
+          flash[:notice] = "Durante il periodo di prova solo gli abbonati regolari possono vedere tutti i contenuti protetti. Abbonati anche tu!"
+          redirect_to(my_profile_edit_path)
+
         else
           reroute_auth("Gli articoli protetti sono riservati ed accessibile solo ai utenti abbonati")
         end
@@ -809,12 +792,14 @@ class EditorialController < ApplicationController
   def other_evento_datas()
     @backurl = request.url
 
-    @rcount = Reservation.count(:conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
+    @rcount = Reservation.count(:conditions => "issue_id = #{@articolo.id} AND user_id = #{User.current.id}")
+
     if @rcount <= 0
       #@reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id],:num_persone => params[:num_persone],:msg => params[:msg])
       @reservation_new = Reservation.new
     else
-      @reservation =Reservation.find(:first, :conditions => "issue_id = #{@id} AND user_id = #{User.current.id}")
+
+      @reservation =Reservation.find(:first, :conditions => "issue_id = #{@articolo.id} AND user_id = #{User.current.id}")
     end
     @conv_prossimo = Issue.all_public_fs.solo_convegni.first(
         :order => 'due_date ASC',

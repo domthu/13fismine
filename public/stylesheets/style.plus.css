@@ -1423,12 +1423,14 @@ h3.fs-postheader {
 
 #fs-reservation-msg, #fs-reservation-msg textarea {
     width: 100%;
+    padding 3px;
 }
 
 #fs-reservation-num input[type="text"] {
     line-height: 1.2em;
     text-align: center;
     font-size: 1.2em;
+    padding 3px;
 
 }
 
@@ -2014,15 +2016,16 @@ h3.fs-postheader {
     width: 100%;
 }
 
-/*
-.fs-abbo-tips {
-    font-weight: normal;
-    font-size: 10px;
+#fs-abbo-pay,
+#fs-abbo-pay a {
+    color: #913421;
     font-style: italic;
-    text-align: justify;
-
+    font-weight: bold;
 }
-*/
+
+#fs-abbo-pay a {
+    text-decoration: underline;
+}
 
 .step legend {
     color: #00465e;
@@ -2086,8 +2089,6 @@ h3.fs-postheader {
 /* ======================================================================================= */
 
 #fs-flash {
-    /*background: url('/images/commons/flash-bg.jpg') repeat-x;*/
-    /* Sandro: meglio blu? #006184; notice*/
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;

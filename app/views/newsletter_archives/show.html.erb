@@ -1,0 +1,38 @@
+<p>
+  <b>email_type_id:</b>
+  <%=h @newsletter_archive.email_type_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%=h @newsletter_archive.user_id %>
+</p>
+
+<p>
+  <b>asso_id:</b>
+  <%=h @newsletter_archive.asso_id %>
+</p>
+
+<p>
+  <b>newsletter_id:</b>
+  <%=h @newsletter_archive.newsletter_id %>
+</p>
+
+<p>
+  <b>information_id:</b>
+  <%=h @newsletter_archive.information_id %>
+</p>
+
+<p>
+  <b>email inviata:</b>
+  <%=h @newsletter_archive.sended %>
+</p>
+
+<p>
+  <b>created_at:</b>
+  <%=h @newsletter_archive.created_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_newsletter_archive_path(@newsletter_archive) %> |
+<%= link_to 'Back', newsletter_archives_path %>

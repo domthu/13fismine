@@ -4,12 +4,9 @@
   <legend><%= l(:label_newsletter_sended) %></legend>
   <% if @nl_users.count > 0 %>
       <div class="contextual">
-        <%= link_to_function(image_tag('eye-no.gif'), "setVisible('div_emails_sended', false)",
-                             :title => "#{l(:button_show)}") %>
-        <%= link_to_function(image_tag('eye.gif'), "setVisible('div_emails_sended', true)",
-                             :title => "#{l(:button_hide)}") %>
-        <%= link_to_remote l(:button_delete), {:url => newsletter_removeemails_url(:newsletter_id => @newsletter.id, :type => 'sended'), :method => 'get'}, :class => 'icon icon-del delclass',
-                           :complete => "$('div_emails_sended').update(); $('tot-sended').update('0');" %>
+        <%= link_to_function(image_tag('eye-no.gif'), "setVisible('div_emails_sended', false)", :title => "#{l(:button_show)}") %>
+        <%= link_to_function(image_tag('eye.gif'), "setVisible('div_emails_sended', true)", :title => "#{l(:button_hide)}") %>
+        <%= link_to_remote l(:button_delete), {:url => newsletter_removeemails_url(:newsletter_id => @newsletter.id, :type => 'sended'), :method => 'get'}, :class => 'icon icon-del delclass', :complete => "$('div_emails_sended').update(); $('tot-sended').update('0');" %>
       </div>
   <% end %>
   <div style="width:200px;" class="flash notice">&nbsp;<%= l(:label_total) %>
@@ -23,11 +20,11 @@
         <% else %>
             <br/>
             Cliccare cui '<%= link_to_remote l(:label_newsletter_sended),
-                                             {:url => emailed_users_path({:type => 'notice', :id => @newsletter.id}),
-                                              :method => 'put',
-                                              :update => 'div_emails_sended',
-                                              :complete => "Element.scrollTo('div_emails_sended')"
-                                             }, :accesskey => accesskey(:preview)
+         {:url => emailed_users_path({:type => 'notice', :id => @newsletter.id}),
+          :method => 'put',
+          :update => 'div_emails_sended',
+          :complete => "Element.scrollTo('div_emails_sended')"
+         }, :accesskey => accesskey(:preview)
       %>' per vedere la lista degli utenti.
         <% end %>
       </div>
@@ -37,21 +34,19 @@
 </fieldset>
 
 <%# LISTA EMAIL PENDING in attessa di invio %>
-<% @nl_users = @newsletter.newsletter_users.all(:conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)']) %>
+<% @nl_users = @newsletter.newsletter_users.all(:conditions => ['sended = false AND information_id is null']) %>
 <fieldset class="box tabular">
   <legend><%= l(:label_newsletter_pending) %></legend>
   <div style="width:200px;" class="flash warning">&nbsp;<%= l(:label_total) %>
     :<strong id="tot-pending" class="total center"><%= h @nl_users.count %></strong></div>
   <% if @nl_users.count > 0 %>
       <div class="contextual">
-        <%= link_to_function(image_tag('eye-no.gif'), "setVisible('div_emails_pending', false)",
-                             :title => "#{l(:button_show)}") %>
-        <%= link_to_function(image_tag('eye.gif'), "setVisible('div_emails_pending', true)",
-                             :title => "#{l(:button_hide)}") %>
+        <%= link_to_function(image_tag('eye-no.gif'), "setVisible('div_emails_pending', false)", :title => "#{l(:button_show)}") %>
+        <%= link_to_function(image_tag('eye.gif'), "setVisible('div_emails_pending', true)", :title => "#{l(:button_hide)}") %>
         <span><%= link_to_remote l(:button_delete),
-                                 {:url => ({:controller => 'newsletters', :action => 'removeemails', :type => 'pending', :newsletter_id => @newsletter.id}), :method => 'put'},
-                                 :class => 'icon icon-del delclass',
-                                 :complete => "$('div_emails_pending').update(); $('tot-pending').update('0');" %>
+     {:url => ({:controller => 'newsletters', :action => 'removeemails', :type => 'pending', :newsletter_id => @newsletter.id}), :method => 'put'},
+     :class => 'icon icon-del delclass',
+     :complete => "$('div_emails_pending').update(); $('tot-pending').update('0');" %>
         </span>
       </div>
   <% end %>
@@ -64,11 +59,11 @@
         <% else %>
             <br/>
             Cliccare cui '<%= link_to_remote l(:label_newsletter_pending),
-                                             {:url => emailed_users_path({:type => 'warning', :id => @newsletter.id}),
-                                              :method => 'put',
-                                              :update => 'div_emails_pending',
-                                              :complete => "Element.scrollTo('div_emails_pending')"
-                                             }, :accesskey => accesskey(:preview)
+         {:url => emailed_users_path({:type => 'warning', :id => @newsletter.id}),
+          :method => 'put',
+          :update => 'div_emails_pending',
+          :complete => "Element.scrollTo('div_emails_pending')"
+         }, :accesskey => accesskey(:preview)
       %>' per vedere la lista degli utenti.
         <% end %>
       </div>
@@ -78,21 +73,19 @@
 </fieldset>
 
 <%#   LISTA EMAIL IN ERRORE%>
-<% @nl_users = @newsletter.newsletter_users.all(:conditions => ['sended = false AND errore is not null AND  LENGTH(errore) > 0']) %>
+<% @nl_users = @newsletter.newsletter_users.all(:conditions => ['sended = false AND information_id is not null']) %>
 <fieldset class="box tabular">
   <legend><%= l(:label_newsletter_error) %></legend>
   <div style="width:200px;" class="flash error">&nbsp;<%= l(:label_total) %>
     :<strong id="tot-errore" class="total center"><%= h @nl_users.count %></strong></div>
   <% if @nl_users.count > 0 %>
       <div class="contextual">
-        <%= link_to_function(image_tag('eye-no.gif'), "setVisible('div_emails_errore', false)",
-                             :title => "#{l(:button_show)}") %>
-        <%= link_to_function(image_tag('eye.gif'), "setVisible('div_emails_errore', true)",
-                             :title => "#{l(:button_hide)}") %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= link_to_function(image_tag('eye-no.gif'), "setVisible('div_emails_errore', false)", :title => "#{l(:button_show)}") %>
+        <%= link_to_function(image_tag('eye.gif'), "setVisible('div_emails_errore', true)", :title => "#{l(:button_hide)}") %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span><%= link_to_remote l(:button_delete),
-                                 {:url => ({:controller => 'newsletters', :action => 'removeemails', :type => 'errore', :newsletter_idid => @newsletter.id}), :method => 'put'},
-                                 :class => 'icon icon-del delclass',
-                                 :complete => "$('div_emails_errore').update(); $('tot-errore').update('0');" %></span>
+     {:url => ({:controller => 'newsletters', :action => 'removeemails', :type => 'errore', :newsletter_idid => @newsletter.id}), :method => 'put'},
+     :class => 'icon icon-del delclass',
+     :complete => "$('div_emails_errore').update(); $('tot-errore').update('0');" %></span>
       </div>
   <% end %>
   <%# if @newsletter.newsletter_users.any? %>
@@ -104,11 +97,11 @@
         <% else %>
             <br/>
             Cliccare cui '<%= link_to_remote l(:label_newsletter_error),
-                                             {:url => emailed_users_path({:type => 'error', :id => @newsletter.id}),
-                                              :method => 'put',
-                                              :update => 'div_emails_errore',
-                                              :complete => "Element.scrollTo('div_emails_errore')"
-                                             }, :accesskey => accesskey(:preview)
+             {:url => emailed_users_path({:type => 'error', :id => @newsletter.id}),
+              :method => 'put',
+              :update => 'div_emails_errore',
+              :complete => "Element.scrollTo('div_emails_errore')"
+             }, :accesskey => accesskey(:preview)
       %>' per vedere la lista degli utenti.
         <% end %>
       </div>

@@ -1,3 +1,18 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+    });
+    function verifica_num(e) {
+        var n = $("#num_persone").val().trim();
+        if ((n.length > 0 && n.length < 3  && $.isNumeric(n) ) == false )
+        {
+            js_flash("notice", "impostare un numero valido da 1 a 99");
+            e.preventDefault();
+            e.stopPropagation();
+            return false
+        }
+       return true
+    }
+</script>
 <% if (@reservation.nil?) %>
     <% form_tag({:controller => "editorial", :action => "evento_prenotazione"}) do %>
         <%# back_url_hidden_field_tag %>
@@ -9,12 +24,13 @@
         <div id="fs-reservation">
         <%# f.error_messages %>
         <%= hidden_field_tag :user_id, User.current.id.to_s %>
-        <%= hidden_field_tag :issue_id, @convegno.id.to_s %>
+        <%= hidden_field_tag :issue_id, @articolo.id.to_s %>
 
-        <div id="fs-reservation-num"> &nbsp;&nbsp;&nbsp;&nbsp;Numero persone <%= text_field_tag :num_persone, 1 %>
+        <div id="fs-reservation-num"> &nbsp;&nbsp;&nbsp;&nbsp;Numero persone
+          <%= text_field_tag :num_persone, 1 %>
         </div>
           <div id="fs-reservation-btn">
-        <%= submit_tag 'Prenota!', :class => "fs-blu-button" %></div>
+        <%= submit_tag 'Prenota!', :class => "fs-blu-button" , :onclick => "return verifica_num(event);" %></div>
         <div id="fs-reservation-msg">  &nbsp;&nbsp;&nbsp;&nbsp; Messaggio (opzionale) <%= text_area_tag :msg %></div>
           <div class="cleared"></div>
         </div>
@@ -30,7 +46,7 @@
         <% form_tag({:controller => "editorial", :action => "evento_prenotazione_delete", :id => @reservation.id}) do %>
             <%# hidden_field_tag "back_url", @backurl %>
             <%= hidden_field_tag :back_url, @backurl %>
-            <%= submit_tag 'Cancella prenotazione!', :class => "fs-rosso-button", :confirm => 'Confermi?' %>
+            <%= submit_tag 'Cancella prenotazione!' , :class => "fs-rosso-button", :confirm => 'Confermi?' %>
             <%# link_to 'Cancella prenotazione!', '/reservations/'+ @reservation.id.to_s, :method => :delete, :class => "fs-rosso-button" %>
         <% end %>
       </div>

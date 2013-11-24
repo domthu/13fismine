@@ -6,7 +6,7 @@ SimpleNavigation::Configuration.run do |navigation|
   navigation.selected_class = 'active'
   # Define the primary navigation
   navigation.items do |primary|
-      primary.item :editoriale, 'Editoriale', editorial_path , :highlights_on => %r(/editorial)
+      primary.item :editoriale, 'Editoriale', editorial_path , :highlights_on => %r(/editoriale/home)
       @top_menus = TopMenu.find(:all, :conditions => ["se_visibile = 1"])
       @top_menus.each do |tmn|
         #map.top_menu_page 'editorial/:topmenu_key'

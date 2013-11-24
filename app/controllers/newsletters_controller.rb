@@ -85,7 +85,7 @@ class NewslettersController < ApplicationController
                   :locals => { :id => @project.id, :project => @project, :art => @art, :user => nil }
                 )
       end
-      @nl_users = @newsletter.newsletter_users.all(:limit => pageSize, :conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)'])
+      @nl_users = @newsletter.newsletter_users.all(:limit => pageSize, :conditions => ['sended = false AND information_id is null'])
       if @nl_users && @nl_users.any?
         finish = false
         raise_delivery_errors = ActionMailer::Base.raise_delivery_errors
@@ -93,6 +93,7 @@ class NewslettersController < ApplicationController
         @nl_users.each do |nl_usr|
           if nl_usr.user && nl_usr.user.no_newsletter != 1
             begin
+              errore = ""
               #clean clean_fs_html
                if !nl_usr.user.privato?
                 @user = nl_usr.user
@@ -113,7 +114,17 @@ class NewslettersController < ApplicationController
               nl_usr.sended = true
             rescue Exception => e
               @failed << stat + " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
-              nl_usr.errore = " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+              if e.message.length < 950
+                errore = " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+              else
+                errore = truncate(e.message, :length => 997, omission: '...')
+              end
+            end
+            if (!errore.blank?)
+              info = Information.new
+              info.name = errore
+              info.save!
+              nl_user.information = info
             end
             nl_usr.save
           else
@@ -144,33 +155,21 @@ class NewslettersController < ApplicationController
     }
   end
 
-#Params: {"conv_ids"=>["6", "13", "21", "38"], "controller"=>"newsletters", "abbo_ids"=>["7", "9", "21", "13", "19", "23", "15", "17"], "project_id"=>"342", "commit"=>"Invia quindicinale", "action"=>"send_newsletter", "newsletter_id"=>"1", "authenticity_token"=>"gFBDBOipBDj/pDGe+I9OEq5o1uq8//mcFS/JFnSkfbY="}
-  #questa routine crea il job relativo ad una newsletter e crea tutti emails da mandare in funzione degli
-  # ruoli o delle convenzione scelte
+  #questa routine crea il job relativo ad una newsletter e crea tutti emails da mandare in funzione degli ruoli o delle convenzione scelte
   def send_newsletter
     today = Date.today
-    #logger.warn("edizione(" + @project.id.to_s + ") send newsletter(" + @newsletter.id.to_s + ") params #{params.inspect}")
-
-    #send_notice "Params: #{params.inspect}"
     send_it = params[:commit] == "go"
-    #send_warning "commit: #{params[:commit]}"
-
     #Convention
     if params[:conv_ids].present? && !params[:conv_ids].empty?
       (params[:conv_ids] || []).each { |conv_id|
-        #send_notice "=============="
-        #send_notice "Convenzione: #{conv_id}"
-        #send_notice "Role: #{conv_id}"
         conv = Convention.find_by_id(conv_id)
         if conv && conv.users.any?
-          #send_notice("federati(" + conv.users.count.to_s + ") per convenzione(" + conv_id + ")")
           conv.users.each { |user|
             begin
               #crea email registration se non già presente
-              #yet_reg = NewsletterUser.find(:first, :conditions => ["email_type = 'newsletter' AND newsletter_id=? AND user_id=? AND convention_id=?", @newsletter.id, user.id, conv.id])
-              yet_reg = NewsletterUser.find(:first, :conditions => ["email_type = 'newsletter' AND newsletter_id=? AND user_id=?", @newsletter.id, user.id])
+              yet_reg = NewsletterUser.find(:first, :conditions => ["email_type_id=? AND newsletter_id=? AND user_id=?", FeeConst::EMAIL_NEWSLETTER, @newsletter.id, user.id])
               if !yet_reg
-                fed = NewsletterUser.new(:email_type => 'newsletter', :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => user.scadenza, :convention_id => conv.id)
+                fed = NewsletterUser.new(:email_type_id => FeeConst::EMAIL_NEWSLETTER, :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => user.scadenza, :convention_id => conv.id)
                 #reg.html =
                 fed.sended = false
                 if fed.save!  #--> save_without_transactions
@@ -180,14 +179,6 @@ class NewslettersController < ApplicationController
                   logger.error "invio email non registrato per federato #{user.name} (#{user.id}) per convention_id(#{conv.id}) #{conv.name}"
                   send_error("invio email non registrato per federato " + user.name)
                 end
-#ActionController::Session::CookieStore::CookieOverflow
-#more than 4kb: Sessions typically contain at most a user_id and flash message; both fit within the 4K cookie size limit.
-              #else
-              #  if yet_reg.sended
-              #    send_warning("federato(" + user.name + ") già inviato. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
-              #  else
-              #    send_warning("federato(" + user.name + ") in attesa di ricevere. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
-              #  end
               end
             rescue Exception => e
               logger.error "Errore: invio email non registrato per utente #{user.name} (#{user.id}) di ruolo(#{role_id}). Msg: #{e.message}"
@@ -203,33 +194,20 @@ class NewslettersController < ApplicationController
     #role
     if params[:abbo_ids].present? && !params[:abbo_ids].empty?
       (params[:abbo_ids] || []).each { |role_id|
-        #send_notice "=============="
-        #send_notice "Role: #{role_id}"
         users = User.all(:conditions => {:role_id => role_id})
         if users.any?
-          #send_notice("Utenti(" + users.count.to_s + ") per ruolo(" + role_id + ")")
           users.each { |user|
             begin
               #crea email registration se non già presente
-              yet_reg = NewsletterUser.find(:first, :conditions => ["email_type = 'newsletter' AND newsletter_id=? AND user_id=?", @newsletter.id, user.id])
+              yet_reg = NewsletterUser.find(:first, :conditions => ["email_type_id=? AND newsletter_id=? AND user_id=?", FeeConst::EMAIL_NEWSLETTER, @newsletter.id, user.id])
               if !yet_reg
-                reg = NewsletterUser.new(:email_type => 'newsletter', :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => (user.scadenza.nil? ? Date.today : user.scadenza))
-                #reg.html =
+                reg = NewsletterUser.new(:email_type => FeeConst::EMAIL_NEWSLETTER, :newsletter_id => @newsletter.id, :user_id => user.id)
                 reg.sended = false
                 if reg.save!  #--> save_without_transactions
-                  #if send immediately
-
-                  #Mailer.deliver_register(token)
                 else
                   logger.error "invio email non registrato per utente #{user.name} (#{user.id}) di ruolo(#{role_id})"
                   send_error("invio email non registrato per utente " + user.name)
                 end
-              #else
-              #  if yet_reg.sended
-              #    send_warning("Cliente(" + user.name + ") già inviato. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
-              #  else
-              #    send_warning("Cliente(" + user.name + ") in attesa di ricevere. " + (yet_reg.errore.nil? ? "" : "ERRORE"))
-              #  end
               end
             rescue Exception => e
               logger.error "Errore: invio email non registrato per utente #{user.name} (#{user.id}) di ruolo(#{role_id}). Msg: #{e.message}"
@@ -340,11 +318,11 @@ class NewslettersController < ApplicationController
     if params[:type].present? && !params[:type].empty?
       type = params[:type]
       if type == 'sended'
-        NewsletterUser.delete_all(["email_type = 'newsletter' AND newsletter_id=? AND sended = 1", @newsletter.id])
+        NewsletterUser.delete_all(["email_type_id=? AND newsletter_id=? AND sended = 1", FeeConst::EMAIL_NEWSLETTER, @newsletter.id])
       elsif type == 'pending'
-        NewsletterUser.delete_all(["email_type = 'newsletter' AND newsletter_id=? AND sended = false AND (errore is null OR LENGTH(errore) = 0)", @newsletter.id])
+        NewsletterUser.delete_all(["email_type_id=? AND newsletter_id=? AND sended = false AND information_id is null", FeeConst::EMAIL_NEWSLETTER, @newsletter.id])
       elsif type == 'errore'
-        NewsletterUser.delete_all(["email_type = 'newsletter' AND newsletter_id=? AND sended = false AND errore is not null AND  LENGTH(errore) > 0", @newsletter.id])
+        NewsletterUser.delete_all(["email_type_id=? AND newsletter_id=? AND sended = false AND information_id is not null ", FeeConst::EMAIL_NEWSLETTER, @newsletter.id])
       else
       end
     end
@@ -365,9 +343,6 @@ class NewslettersController < ApplicationController
         flash[:notice] = l(:error_can_not_create_newsletter, :project => "manca id del progetto")
         return redirect_to :controller => 'projects', :action => 'index'
       end
-      #@project = Project.find(params[:project_id])
-      #Questo è per il front end: la newsletter
-      #@project = Project.all_public_fs.find_by_id params[:project_id].to_i
       @project = Project.all_mail_fs.find_by_id params[:project_id].to_i
       if @project.nil?
         flash[:error] = l(:error_can_not_create_newsletter, :project => "edizione non trovata")
@@ -396,17 +371,6 @@ class NewslettersController < ApplicationController
         #Solo gli articoli visibile MAIL e privato: se_visible_newsletter = true
         @art = @project.issues.all_mail_fs #Solo visibile WEB
         if @art && @art.any?
-#          @newsletter.html = render_to_string(
-#                  :layout => false,
-#                  :partial => 'editorial/edizione_smtp',
-#                  :locals => { :id => @id, :project => @project, :art => @art, :user => nil }
-#                )
-#          if ((!@newsletter.html.nil?) && (!@newsletter.html.include? "<!--checksum-->"))
-#            send_error("Edizione molto lungha: " + @newsletter.html.length.to_s + " caratteri. ")
-#          end
-          #@@user_name
-          #@@user_convention
-          #@@user_convention_icon
           @newsletter.sended = false
           if !@newsletter.valid?
             if !@newsletter.errors.empty?
@@ -416,11 +380,6 @@ class NewslettersController < ApplicationController
           if !@newsletter.save
             send_error l(:error_can_not_create_newsletter, :project => @project.name)
             render_404
-            #return redirect_to :controller => 'projects', :action => 'show', :id => @project
-          else
-            #@project.promoted_to_front_page = true
-            #@project.status = STATUS_FS #raggionare su come fare: STATUS_ARCHIVED o allora creare un flag per publicazione in
-            #@project.save
           end
         else
           send_warning l(:error_newsletter_mail_no_article, :project => @project.name)

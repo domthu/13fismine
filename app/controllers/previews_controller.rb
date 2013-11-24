@@ -70,13 +70,13 @@ class PreviewsController < ApplicationController
     case @type
     when 'error'
       @nl_users = @newsletter.newsletter_users.find(:all,
-        :conditions => ['sended = false AND errore is not null AND  LENGTH(errore) > 0'],
+        :conditions => ['sended = false AND information_id is not null '],
         #:limit => 10,
         #:include => [ :status, :project, :tracker ],
         :order => "#{NewsletterUser.table_name}.updated_at DESC")
     when 'warning'
       @nl_users = @newsletter.newsletter_users.find(:all,
-        :conditions => ['sended = false AND (errore is null OR LENGTH(errore) = 0)'],
+        :conditions => ['sended = false AND information_id is null'],
         #:limit => 10,
         #:include => [ :status, :project, :tracker ],
         :order => "#{NewsletterUser.table_name}.updated_at DESC")

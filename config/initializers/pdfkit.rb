@@ -1,3 +1,4 @@
+
 # http://blog.joshsoftware.com/2012/07/25/converting-html-to-pdf/
 # https://www.google.it/url?sa=t&rct=j&q=&esrc=s&source=web&cd=12&cad=rja&ved=0CDYQtwIwATgK&url=http%3A%2F%2Fgetmadcat.com%2Fvideo%2F111829%2F220-PDFKit.html&ei=Y6OIUrzJNIvBtAabwIGQCw&usg=AFQjCNFzN6ReIMvQcRnxX2xP1K2a4Dg4mA
 PDFKit.configure do |config|

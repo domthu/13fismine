@@ -34,6 +34,14 @@ module FeeConst
 
   EDIZIONE_KEY = "e-" #Identificatore
 
+  #EMAIL_TYPE
+  EMAIL_NEWSLETTER = 1
+  EMAIL_RENEW = 2
+  EMAIL_REGISTER = 3
+  EMAIL_PASSWORD = 4
+  EMAIL_PROPOSAL = 5
+  EMAIL_EMAIL = 6
+
   #QUESITO_ID = 15
   #QUESITO_KEY = "e-quesiti"
   QUESITO_ID = 1

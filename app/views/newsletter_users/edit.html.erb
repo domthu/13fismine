@@ -4,8 +4,8 @@
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :email_type %><br />
-    <%= f.text_field :email_type %>
+    <%= f.label :email_type_id %><br />
+    <%= f.text_field :email_type_id %>
   </p>
   <p>
     <%= f.label :user_id %><br />
@@ -16,24 +16,20 @@
     <%= f.text_field :convention_id %>
   </p>
   <p>
-    <%= f.label :data_scadenza %><br />
-    <%= f.datetime_select :data_scadenza %>
-  </p>
-  <p>
-    <%= f.label :html %><br />
-    <%= f.text_area :html %>
-  </p>
-  <p>
     <%= f.label :newsletter_id %><br />
     <%= f.text_field :newsletter_id %>
   </p>
   <p>
-    <%= f.label :errore %><br />
-    <%= f.text_area :errore %>
+    <%= f.label :information_id %><br />
+    <%= f.text_area :information_id %>
   </p>
   <p>
     <%= f.label :sended %><br />
     <%= f.check_box :sended %>
+  </p>
+  <p>
+    <%= f.label :created_at %><br />
+    <%= f.datetime_select :created_at %>
   </p>
   <p>
     <%= f.submit 'Update' %>
