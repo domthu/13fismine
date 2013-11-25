@@ -19,27 +19,30 @@ namespace :migrate do
     end
 
 
-    existing_nl = NewsletterUser.all(:limit => 10)
+    #existing_nl = NewsletterUser.all(:limit => 100)
+    existing_nl = NewsletterUser.all
     for nl_usr in existing_nl do
       begin
         i += 1
-        case (nl_usr.email_type)
-          when 'email_type'
-            nl_usr.email_type_id = 1
-          when 'newsletter'
-            nl_usr.email_type_id = 1
+        if nl_usr.email_type_id == 0
+          case (nl_usr.email_type)
+            when 'email_type'
+              nl_usr.email_type_id = 1
+            when 'newsletter'
+              nl_usr.email_type_id = 1
+            else
+              nl_usr.email_type_id = 1
+            end
+          if !nl_usr.errore.nil? && !nl_usr.errore.empty?
+            info = Information.create!(:description => nl_usr.errore)
+            nl_usr.information_id = info.id
+            ye +=1
+            puts "[info created: " + i.to_s + "/" + ye.to_s + "/" + no.to_s + "] nl(" + nl_usr.id.to_s + ")<-->(" + info.id.to_s + ")info"
           else
-            nl_usr.email_type_id = 1
+            no += 1
           end
-        if !nl_usr.errore.nil? && !nl_usr.errore.empty?
-          info = Information.create!(:description => nl_usr.errore)
-          nl_usr.information_id = info.id
-          ye +=1
-          puts "[info created: " + i.to_s + "/" + ye.to_s + "/" + no.to_s + "] nl(" + nl_usr.id.to_s + ")<-->(" + info.id.to_s + ")info"
-        else
-          no += 1
+          nl_usr.save
         end
-        nl_usr.save
       end
     end
     puts "[rec: " + i.to_s + "/" + ye.to_s + "/" + no.to_s + "] "

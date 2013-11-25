@@ -15,19 +15,27 @@ class NewsletterArchive < ActiveRecord::Base
 
   alias :name :to_s
 
-  def errore
-    if self.information.nil? || self.information.description.blank?
-      ""
+  def have_error?
+    if self.information_id && self.information && !self.information.description.blank?
+      true
     else
+      false
+    end
+  end
+
+  def errore
+    if have_error?
       self.information.description
+    else
+      ""
     end
   end
 
   def errore_abbrv
-    if self.information.nil? || self.information.description.blank?
-      ""
+    if have_error?
+      truncate(self.information.description, :length => 100, :omission => '...')
     else
-      truncate(self.information.description, :length => 100, omission: '...')
+      ""
     end
   end
 
@@ -52,5 +60,4 @@ class NewsletterArchive < ActiveRecord::Base
   def have_project?
     return self.have_newsletter? && !self.newsletter.project_id.nil?
   end
-
 end
