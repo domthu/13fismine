@@ -9,7 +9,7 @@ class Information < ActiveRecord::Base
 
   def to_s
     if (subject.nil? || subject.blank?)
-      truncate(self.description, :length => 100, omission: '...')
+      truncate(self.description, :length => 100, :omission => '...')
     else
       self.subject
     end

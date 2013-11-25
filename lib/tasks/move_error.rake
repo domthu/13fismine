@@ -1,4 +1,3 @@
-
 namespace :migrate do
   desc "fare una volta solo dopo avere creato tabella "
   task :move_errors => :environment do
@@ -30,7 +29,7 @@ namespace :migrate do
             nl_usr.email_type_id = 1
           else
             nl_usr.email_type_id = 1
-          end
+        end
         if !nl_usr.errore.nil? && !nl_usr.errore.empty?
           info = Information.create!(:description => nl_usr.errore)
           nl_usr.information_id = info.id

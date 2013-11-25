@@ -117,7 +117,7 @@ class NewslettersController < ApplicationController
               if e.message.length < 950
                 errore = " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
               else
-                errore = truncate(e.message, :length => 997, omission: '...')
+                errore = truncate(e.message, :length => 997, :omission => '...')
               end
             end
             if (!errore.blank?)

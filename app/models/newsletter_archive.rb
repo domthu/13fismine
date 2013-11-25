@@ -27,7 +27,7 @@ class NewsletterArchive < ActiveRecord::Base
     if self.information.nil? || self.information.description.blank?
       ""
     else
-      truncate(self.information.description, :length => 100, omission: '...')
+      truncate(self.information.description, :length => 100, :omission=> '...')
     end
   end
 

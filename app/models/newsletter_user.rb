@@ -44,7 +44,7 @@ class NewsletterUser < ActiveRecord::Base
 
   def errore_abbrv
     if have_error?
-      truncate(self.information.description, :length => 100, omission: '...')
+      truncate(self.information.description, :length => 100, :omission => '...')
     else
       ""
     end
