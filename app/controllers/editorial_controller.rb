@@ -6,10 +6,9 @@ class EditorialController < ApplicationController
   include FeesHelper #ROLE_XXX  CONVEGNI_XXX QUESITO_XXX
 
   before_filter :find_optional_project, :only => [:ricerca]
-
- # before_filter :find_evento, :only => [:evento] #, :preview_articolo can be not visible]  #recupero articolo status
- # before_filter :correct_user_evento, :only => [:evento] #LOGGATO O ARTICOLO LIBERO
- # before_filter :enabled_user_evento, :only => [:evento] #ABBONATO E ARTICOLO protetto o SECTION protetto
+                     # before_filter :find_evento, :only => [:evento] #, :preview_articolo can be not visible]  #recupero articolo status
+                     # before_filter :correct_user_evento, :only => [:evento] #LOGGATO O ARTICOLO LIBERO
+                     # before_filter :enabled_user_evento, :only => [:evento] #ABBONATO E ARTICOLO protetto o SECTION protetto
   before_filter :find_articolo, :only => [:articolo, :evento] #, :preview_articolo can be not visible]  #recupero articolo status
   before_filter :correct_user_article, :only => [:articolo, :evento] #LOGGATO O ARTICOLO LIBERO
   before_filter :enabled_user_article, :only => [:articolo, :evento] #ABBONATO E ARTICOLO protetto o SECTION protetto
@@ -241,7 +240,32 @@ class EditorialController < ApplicationController
   # -----------------  EDIZIONI /NEWSLETTER  (fine)  ------------------
 
   # -----------------  CONVEGNI / EVENTI  (inizio)   ------------------
+=begin
+  def convegni
+    # Paginate results
+    case params[:format]
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        #@limit = 5
+        #@offset= 25
+        @limit = per_page_option_fs
+    end
+    @topsection = TopSection.find_convegno(:first)
+    @issues_count =Issue.all_public_fs.solo_convegni.count()
+    @issues_pages = Paginator.new self, @issues_count, @limit, params['page']
+    @convegni = Issue.all_public_fs.solo_convegni.all(
+        :limit => @issues_pages.items_per_page,
+        :offset => @issues_pages.current.offset)
+    respond_to do |format|
+      format.html {
+        render :layout => !request.xhr?
+      }
+      format.api
+    end
 
+  end
+=end
 
   def evento_prenotazione
     if request.post?
@@ -260,8 +284,8 @@ class EditorialController < ApplicationController
 
   def evento
     #singolo articolo
-    @id = params[:id].to_i
-    @convegno= Issue.find(@id)
+    #@id = params[:id].to_i
+    #@convegno = Issue.find(@id)
     other_evento_datas()
   rescue ActiveRecord::RecordNotFound
     reroute_404("L'evento cercato non è è stato trovato...")
@@ -281,16 +305,15 @@ class EditorialController < ApplicationController
     if @conv_prossimo.nil?
       @conv_futuri
     else
-    #  @cid = @conv_prossimo.id #  = if @conv_prossimo.id.nil? ? 0 : @conv_prossimo.id ; end
+       @cid = @conv_prossimo.id #  = if @conv_prossimo.id.nil? ? 0 : @conv_prossimo.id ; end
       @conv_futuri = Issue.all_public_fs.solo_convegni.all(
           :order => 'due_date ASC',
-          :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@articolo.id}")
-                               #reservations
-                               # @reservation_new =Res.newervation
-      @rcount = Reservation.count(:conditions => "issue_id = #{@articolo.id} AND user_id = #{User.current.id}")
-      @reservation = Reservation.find(:first, :conditions => "issue_id = #{@articolo.id} AND user_id = #{User.current.id}")
-     # @articolo = Issue.find(@cid)
-
+          :conditions => " issues.due_date >' #{DateTime.now.to_date}' AND  issues.id <> #{@cid}")
+      #reservations
+      # @reservation_new =Res.newervation
+      @rcount = Reservation.count(:conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
+      @reservation = Reservation.find(:first, :conditions => "issue_id = #{@cid} AND user_id = #{User.current.id}")
+      # @articolo = Issue.find(@cid)
     end
   end
 
@@ -679,7 +702,7 @@ class EditorialController < ApplicationController
   def find_optional_project
     return true unless params[:id]
     @project = Project.all_public_fs.find(params[:id])
-    #check_project_privacy
+      #check_project_privacy
   rescue ActiveRecord::RecordNotFound
     reroute_404()
   end
@@ -689,6 +712,21 @@ class EditorialController < ApplicationController
     @id = params[:article_id].to_i
     @articolo_wide= Issue.find_by_id(@id)
     @articolo= Issue.all_public_fs.find(@id)
+  rescue ActiveRecord::RecordNotFound
+    if @articolo_wide.nil?
+      flash[:error] = "Il contenuto cercato è stato rimosso..."
+    else
+      flash[:error] = "Il contenuto cercato è protetto..."
+    end
+    #redirect_to(:back)
+    #redirect_to(editorial_url) && return
+    redirect_back_or_default(editorial_url) && return
+  end
+
+  def find_evento
+    return reroute_log('find_articolo') unless !params[:article_id].nil?
+      # @id = params[:article_id].to_i
+      # @convegno= Issue.all_public_fs.find(@id)
   rescue ActiveRecord::RecordNotFound
     if @articolo_wide.nil?
       flash[:error] = "Il contenuto cercato è stato rimosso..."
@@ -737,7 +775,6 @@ class EditorialController < ApplicationController
         elsif User.current.isregistered?
           flash[:notice] = "Durante il periodo di prova solo gli abbonati regolari possono vedere tutti i contenuti protetti. Abbonati anche tu!"
           redirect_to(my_profile_edit_path)
-
         else
           reroute_auth("Gli articoli protetti sono riservati ed accessibile solo ai utenti abbonati")
         end
@@ -793,12 +830,10 @@ class EditorialController < ApplicationController
     @backurl = request.url
 
     @rcount = Reservation.count(:conditions => "issue_id = #{@articolo.id} AND user_id = #{User.current.id}")
-
     if @rcount <= 0
       #@reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id],:num_persone => params[:num_persone],:msg => params[:msg])
       @reservation_new = Reservation.new
     else
-
       @reservation =Reservation.find(:first, :conditions => "issue_id = #{@articolo.id} AND user_id = #{User.current.id}")
     end
     @conv_prossimo = Issue.all_public_fs.solo_convegni.first(

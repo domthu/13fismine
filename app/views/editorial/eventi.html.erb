@@ -111,6 +111,7 @@
                           </div>
                         </div>
                       </div>
+                      <h1>   <%  @conv_prossimo.show_reservation? && User.current.logged? %></h1>
                       <% if @conv_prossimo.show_reservation? && User.current.logged? %>
                           <div class="fs-convegni-prenota">
                             <%= render :partial => 'reservation' %>
