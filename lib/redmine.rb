@@ -236,7 +236,9 @@ Redmine::MenuManager.map :application_menu do |menu|
   #menu pagamenti
   menu.push :payment, :invoices_path, :if => Proc.new { User.current.admin? && Setting.fee? }
 end
-
+##----------------------------------
+# MENU LATERALE DX(admministrator)
+##----------------------------------
 Redmine::MenuManager.map :admin_menu do |menu|
   #menu fiscosport
   menu.push :table_fs, :conventions_path
@@ -284,7 +286,7 @@ Redmine::MenuManager.map :project_menu do |menu|
             :if => Proc.new { |p| p.repository && !p.repository.new_record? }
   menu.push :settings, {:controller => 'projects', :action => 'settings'}, :last => true
 end
-
+# MENU LATERALE DX-> ABBONAMENTI
 Redmine::MenuManager.map :menu_fee_fs do |menu|
   menu.push :panoramica, :fee_path
   menu.push :liste, :liste_utenti_path
@@ -294,6 +296,8 @@ Redmine::MenuManager.map :menu_fee_fs do |menu|
   #menu.push :archiviati, :archiviati_path
   menu.push :paganti, :paganti_path
   menu.push :abbonamenti, :abbonamenti_path
+  menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
+
 =begin
   menu.push :pagamento, :invoices_path
   menu.push :invia_fatture, :invia_fatture_path
@@ -303,16 +307,15 @@ Redmine::MenuManager.map :menu_fee_fs do |menu|
   menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
 =end
 end
-
+# MENU LATERALE DX -> FATTURE
 Redmine::MenuManager.map :menu_payment_fs do |menu|
-  menu.push :pagamento, :invoices_path
-  menu.push :invia_fatture, :invia_fatture_path
   menu.push :email_fee, :email_fee_path
+  menu.push :invia_fatture, :invia_fatture_path
   menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
   menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
   menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
 end
-
+# MENU LATERALE DX -> FISCOSPORT
 Redmine::MenuManager.map :menu_fiscosport do |menu|
   menu.push :top_menus, :top_menus_path, :caption => :label_top_menu, :if => Proc.new { User.current.admin? }
   menu.push :top_sections, :top_sections_path, :caption => :label_top_section_plural, :if => Proc.new { User.current.admin? }
@@ -322,7 +325,7 @@ Redmine::MenuManager.map :menu_fiscosport do |menu|
   menu.push :conventions, :conventions_path, :caption => :label_convention_plural, :if => Proc.new { User.current.admin? }
   menu.push :group_banners, :group_banners_path, :caption => :label_group_banner_plural, :if => Proc.new { User.current.admin? }
 end
-
+# MENU LATERALE DX -> COMUNI
 Redmine::MenuManager.map :menu_comuni do |menu|
   menu.push :comunes, :comunes_path, :caption => :label_comune_plural, :if => Proc.new { User.current.admin? }
   menu.push :provinces, :provinces_path, :caption => :label_province_plural, :if => Proc.new { User.current.admin? }

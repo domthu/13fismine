@@ -60,5 +60,9 @@ CKEDITOR.editorConfig = function (config) {
         [
             [  'Source','Save', '-', 'Format', 'Font', 'FontSize', 'Bold', 'Italic', 'TextColor', 'BGColor', '-', 'RemoveFormat', '-', 'NumberedList', 'BulletedList', 'Table', '-', 'Link', 'Unlink']
         ];
+    config.toolbar_Mini =
+        [
+            [  'Source','Save','RemoveFormat', '-', 'Font', 'FontSize', 'Bold', 'Italic']
+        ];
 };
 

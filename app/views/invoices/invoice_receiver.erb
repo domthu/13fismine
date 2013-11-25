@@ -1,0 +1,100 @@
+<h2><%= l(:label_invoices_receiver) %></h2>
+<h3 style="color: #ffffff; border: none;" class="gradient-dx-blu"><%= l(:label_users) %></h3>
+<% form_tag({}, :method => :get) do %>
+    <fieldset>
+      <legend><%= l(:label_filter_plural) %></legend>
+      <label for='status'><%= l(:field_status) %>:</label>
+      <%= select_tag 'status', users_status_options_for_select(@status), :class => "small", :onchange => "this.form.submit(); return false;" %>
+
+      <% if @groups.present? %>
+          <label for='group_id'><%= l(:label_group) %>:</label>
+          <%= select_tag 'group_id', '<option></option>' + options_from_collection_for_select(@groups, :id, :name, params[:group_id].to_i), :onchange => "this.form.submit(); return false;" %>
+      <% end %>
+
+      <label for='name'><%= l(:label_user) %>:</label>
+      <%= text_field_tag 'name', params[:name], :size => 30 %>
+      <%= submit_tag l(:button_apply), :class => "small", :name => nil %>
+      <%= link_to l(:button_clear), users_path, :class => 'icon icon-reload' %>
+    </fieldset>
+<% end %>
+&nbsp;
+
+<div class="autoscroll">
+  <table class="list">
+    <thead>
+    <tr>
+      <%= sort_header_tag('username', :caption => l(:label_user_edit)) %>
+      <%= sort_header_tag('firstname', :caption => l(:field_firstname)) %>
+      <%= sort_header_tag('lastname', :caption => l(:field_lastname)) %>
+      <%= sort_header_tag('email', :caption => l(:label_user_mail_to)) %>
+      <th style="width:10%;"><%= l(:label_choice) %></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for user in @users -%>
+        <tr class="user <%= cycle("odd", "even") %> <%= %w(anon active registered locked)[user.status] %>">
+          <td class="username"><%= avatar(user, {:size => "14", :class => "no-div"}) %><%= link_to h(user.login), edit_user_path(user) %></td>
+          <td class="firstname"><%= h(user.firstname) %></td>
+          <td class="lastname"><%= h(user.lastname) %></td>
+          <td class="email"><%= mail_to(h(user.mail)) %></td>
+          <td align="center"> <%= link_to ">>>", new_invoice_path(:user_id => user.id, :convention_id => nil), :class => "button-grey", :id => "btn-scegli" %></td>
+
+        </tr>
+    <% end -%>
+    </tbody>
+  </table>
+</div>
+<p class="pagination"><%= pagination_links_full @user_pages, @user_count %></p>
+<br/> &nbsp;
+
+<h3 style="color: #ffffff; border: none;" class="gradient-dx-blu"><%= l(:label_convention_plural) %></h3>
+
+
+<% if @conventions.any? %>
+    <div style="max-width: 960px; overflow: auto;">
+      <table class="list conventions">
+        <thead>
+        <tr>
+          <th style='width: 5%;'>Logo</th>
+          <th style='width: 35%;text-align:left;'> <%= l(:label_ragione_sociale) %></th>
+          <th style='width: 15%;text-align:left;'> <%= l(:label_scadenza) %></th>
+          <th style='width: 20%;text-align:left;'> <%= l(:label_contact_plural) %></th>
+          <th style='width: 20%;'><%= l(:label_choice) %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @conventions.each do |conv| %>
+            <tr class="<%= cycle 'odd', 'even' %>">
+              <td style='width: 50px;'> <%= image_tag conv.image.url(:xs) %></td>
+              <td><%= link_to(conv.ragione_sociale, convention_path(conv)) %></td>
+              <td align="left">
+                <strong>
+                  <% if conv.data_scadenza %>
+                      <% if DateTime.now > conv.data_scadenza %>
+                          <span class="scadenza-ko"> <%= format_date(conv.data_scadenza) %></span>
+                      <% elsif conv.data_scadenza < (DateTime.now + Setting.renew_days.to_i.days) %>
+                          <span class="scadenza-renewing"><%= format_date(conv.data_scadenza) %> </span>
+                      <% else %>
+                          <span class="scadenza-ok"><%= format_date(conv.data_scadenza) %> </span>
+                      <% end %>
+                  <% else %>
+                      <span class="scadenza-none">Senza data di scadenza  </span>
+                  <% end %>
+                </strong>
+                <br/>
+                <% if conv.user %>
+                    <%= link_to(h(conv.user), user_path(conv.user, :id => conv.user_id)) %>
+                <% end %>
+              </td>
+              <td>Mail: <%= h conv.email %>
+                <br/>Tel: <%= h conv.telefono %></td>
+              <td align="center"> <%= link_to ">>>", new_invoice_path(:user_id => nil, :convention_id => conv.id), :class => "button-grey", :id => "btn-scegli" %></td>
+            </tr>
+        <% end %>
+        </table>
+    </div>
+    <p class="pagination"><%= pagination_links_full @conventions_pages, @conventions_count %></p>
+<% else %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+<% html_title(l(:label_invoices_receiver)) -%>

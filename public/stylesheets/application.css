@@ -1386,7 +1386,14 @@ p.changeauthor img.gravatar{
     width: 26px;
     display: inline;
 }
-
+#btn-scegli {
+    font-size:1em;
+    padding: 2px 12px;
+    color: #C2B3B3;
+}
+#btn-scegli:hover {
+ color: lawngreen;
+}
 .button-grey {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;

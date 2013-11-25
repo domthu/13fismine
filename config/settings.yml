@@ -315,3 +315,9 @@ webmsg_isrenewing:
   default: "Scadenza abbonamento prossima! tra @@distance_of_date_in_words@@"
 webmsg_isregistered:
   default: "Abbonamento valido ancora per  @@distance_of_date_in_words@@"
+default_invoices_header:
+  default: "Testata della fattura"
+default_invoices_description:
+  default: "Descrizione del servizio"
+default_invoices_footer:
+  default: "Footer della fattura"

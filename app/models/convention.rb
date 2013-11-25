@@ -22,7 +22,7 @@ class Convention < ActiveRecord::Base
   belongs_to :region, :class_name => 'Region', :foreign_key => 'region_id' #, :default => null
   belongs_to :province, :class_name => 'Province', :foreign_key => 'province_id' #, :default => null
   has_one :group_banner, :dependent => :destroy, :class_name => 'GroupBanner'
-  named_scope :conventions_all_logos ,  :conditions => "#{Convention.table_name}.logo_in_fe = #{true} AND #{Convention.table_name}.image_file_name IS NOT NULL"
+  named_scope :conventions_all_logos, :conditions => "#{Convention.table_name}.logo_in_fe = #{true} AND #{Convention.table_name}.image_file_name IS NOT NULL"
   #string
   validates_presence_of :ragione_sociale
   validates_uniqueness_of :ragione_sociale, :case_sensitive => false
@@ -72,7 +72,8 @@ class Convention < ActiveRecord::Base
     return str
 
   end
-  #nome del patto: Federazione con copertura geografica
+
+#nome del patto: Federazione con copertura geografica
   def pact
     str = ""
     #str = "[" << self.id.to_s << "] "
@@ -108,7 +109,7 @@ class Convention < ActiveRecord::Base
   end
 
   def se_sport?
-     self.cross_organization.type_organization.type_sport
+    self.cross_organization.type_organization.type_sport
   end
 
   # ruolo elaborato in funzione dello stato della scadenza
@@ -143,4 +144,17 @@ class Convention < ActiveRecord::Base
     User.all(:conditions => {:convention_id => self.id})
   end
 
+  def getDefault4invoice()
+    str = ""
+    str += "<b>" + self.ragione_sociale + "</b><br />" unless self.ragione_sociale.blank?
+    str += self.indirizzo + "<br />" unless self.indirizzo.blank?
+    if self.comune_id && self.comune
+      str += self.comune.cap + " " unless !self.comune.cap
+      str += self.comune.name
+      str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
+    end
+   # str += "<br /> C.F. " + self.codicefiscale.to_s  unless self.codicefiscale.blank?
+   # str += "<br /> P.I. " +self.partitaiva.to_s  unless self.partitaiva.blank?
+    return (str.nil? || str.blank?) ? "-" : str
+  end
 end

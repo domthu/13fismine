@@ -1,10 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
+
+  map.resources :payments
   map.resources :newsletter_archives
-
   map.resources :email_types
-
   map.resources :information
-
   map.resources :newsletter_users
   map.resources :newsletters
   map.resources :pages
@@ -92,6 +91,7 @@ ActionController::Routing::Routes.draw do |map|
              :action => 'evento',
              :conditions => {:method => [:get, :post]}
 
+
   #-> Newsletters
   map.newsletter_massmailer '/massmailer/:newsletter_id', :controller => 'newsletters', :action => 'massmailer'
   map.newsletter_send_emails '/send_emails', :controller => 'newsletters', :action => 'send_emails'
@@ -149,6 +149,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :top_sections
 
   map.resources :invoices
+  map.invoice_receiver '/invoice_receiver', :controller => 'invoices', :action => 'invoice_receiver' , :conditions => {:method => :get}
+  map.invoice_to_pdf '/invoice_to_pdf/:id', :controller => 'invoices', :action => 'invoice_to_pdf'
+  map.invoice_download_pdf '/invoice_to_pdf/:id.pdf', :controller => 'invoices', :action => 'download_pdf'
   map.fee 'fee', :controller => 'fees', :action => 'index'
   map.liste_utenti 'liste_utenti', :controller => 'fees', :action => 'liste_utenti'
   map.scaduti 'scaduti', :controller => 'fees', :action => 'scaduti'

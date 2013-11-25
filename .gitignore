@@ -8,6 +8,7 @@
 /config/email.yml
 /config/old_email.yml
 /config/initializers/session_store.rb
+/config/initializers/pdfkit.rb
 /coverage
 /db/*.db
 /db/*.sqlite3
@@ -59,5 +60,6 @@ config/database.yml
 /public/images/commons/sections/*
 /public/images/commons/organizations/*
 /public/images/commons/banners/*
-public/images/commons/banners/*
+/public/images/commons/banners/*
 /public/images/ckeditor_assets/*
+

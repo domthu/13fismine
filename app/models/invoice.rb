@@ -24,4 +24,5 @@ class Invoice < ActiveRecord::Base
   def numero_fiscale
     numero_fattura.to_s + '/' + anno.to_s
   end
+
 end

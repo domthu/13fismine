@@ -20,16 +20,11 @@
           <br/>
       <% end %>
     </p>
-     <%	 unless @invoice.user.nil?  %>
+
     <p>
       <%= l(:label_user) %>: <%= link_to h(@invoice.user), user_path(@invoice.user, :id => @invoice.user_id) %>
     </p>
-    <%	end  %>
-    <%	 unless @invoice.convention.nil?  %>
-        <p>
-          <%= l(:label_convention) %>: <%= link_to h(@invoice.convention), convention_path(@invoice.convention, :id => @invoice.convention_id) %>
-        </p>
-    <%	end  %>
+
     <p>
       <%= l(:label_data_fattura) %>: <%= format_date(@invoice.data_fattura) %>
     </p>
@@ -75,7 +70,6 @@
 </div>
 
 <div class="splitcontentright">
-<% unless @invoice.user.nil?  %>
   <fieldset class="box tabular">
     <legend><%= l(:label_user_invoices) %></legend>
     <table>
@@ -103,39 +97,4 @@
       <% end %>
     </table>
   </fieldset>
-<%	end  %>
-  <% unless @invoice.convention.nil?  %>
-      <fieldset class="box tabular">
-        <legend><%= l(:label_convention_invoices) %></legend>
-        <table>
-          <tr>
-            <th>num</th>
-            <th>data</th>
-            <th>anno</th>
-            <th>tariffa</th>
-            <th>pagamento</th>
-          </tr>
-          <% @invoice.convention.invoices.each do |item| %>
-              <tr>
-                <% if (item != @invoice) %>
-                    <td class="buttons">
-                      <%= link_to(h(item.numero_fattura), invoice_path(item, :id => item.id), :class => 'icon icon-summary') if User.current.admin? %>
-                <% else %>
-                    <td><b><%= h item.numero_fattura %></b></td>
-                <% end %>
-                </td>
-                <td><%= format_date(item.data_fattura) %></td>
-                <td><%= h item.anno %></td>
-                <td><%= h item.tariffa %></td>
-                <td><%= h item.pagamento %></td>
-              </tr>
-          <% end %>
-        </table>
-      </fieldset>
-  <%	end  %>
-</div>
-<div class='btn-footer'>
-  <%= link_to l(:button_issue_empty), edit_invoice_path(@invoice), :class => 'button-grey' %>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <%= link_to l(:label_download_pdf), invoice_download_pdf_path(@invoice.id ), :class => 'button-blu' %>
 </div>

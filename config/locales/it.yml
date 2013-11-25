@@ -20,6 +20,7 @@ it:
       mese_anno: "%b %Y"
       giorno_mese_anno: "%d %b %Y"
       giorno_settimana: "%A"
+      giorno_mese_anno_barra: "%d/%m/%Y"
 
     day_names: [Domenica, Lunedì, Martedì, Mercoledì, Giovedì, Venerdì, Sabato]
     abbr_day_names: [Dom, Lun, Mar, Mer, Gio, Ven, Sab]
@@ -438,6 +439,9 @@ it:
   setting_default_issue_start_date_to_creation_date: "Usa la data corrente come data d'inizio per i nuovi articoli"
   #domthu verify
   setting_welcome_text_fs: "Slogan principale sul sito lato front-end"
+  default_invoices_header: "Fattura: Testata"
+  default_invoices_description: "Fattura: Descrizione servizio"
+  default_invoices_footer: "Fattura: Piè di pagina"
 
   permission_add_project: Crea edizione
   permission_add_subprojects: Crea sottoedizioni
@@ -507,7 +511,8 @@ it:
   project_module_boards: Forum
   project_module_calendar: Calendario
   project_module_gantt: Gantt
-
+  label_user_edit: Utente (edit)
+  label_user_mail_to: Mail to
   label_user: Utente
   label_user_plural: Utenti
   label_user_new: Nuovo utente
@@ -665,6 +670,7 @@ it:
   label_close_versions: Versioni completate chiuse
   label_confirmation: Conferma
   label_export_to: Esporta su
+  label_download_pdf: Download Pdf
   label_read: Leggi...
   label_public_projects: Edizioni pubbliche
   label_open_issues: aperta
@@ -784,6 +790,7 @@ it:
   label_index_by_date: Ordina per data
   label_current_version: Versione corrente
   label_preview: Anteprima
+  label_view: Visualizza
   label_feed_plural: Feed
   label_changes_details: Particolari di tutti i cambiamenti
   label_issue_tracking: Tracking degli articoli
@@ -1122,7 +1129,7 @@ it:
   description_date_range_interval: "Scegli l'intervallo selezionando la data di inizio e di fine"
   description_date_from: "Inserisci la data d'inizio"
   description_date_to: Inserisci la data di fine
-
+  label_choice: Scegli
 #Add to project
   field_search_key: Chiave di ricerca
   label_search_key: tags
@@ -1148,7 +1155,7 @@ it:
   label_mittente: Mittente
   label_destinatario: Destinatario
   label_invoices_none: Non ci sono fatture
-
+  label_invoices_receiver: Destinatario Fattura
   field_numero_fattura: N° fattura
   field_data_fattura: Data fattura
   field_sezione: Sezione
