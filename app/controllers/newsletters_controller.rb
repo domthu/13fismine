@@ -114,15 +114,12 @@ class NewslettersController < ApplicationController
               nl_usr.sended = true
             rescue Exception => e
               @failed << stat + " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
-              if e.message.length < 950
-                errore = " <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
-              else
-                errore = truncate(e.message, :length => 997, :omission => '...')
-              end
-            end
-            if (!errore.blank?)
               info = Information.new
-              info.name = errore
+              if e.message.length < 1000
+                info.description = e.message
+              else
+                info.description = truncate(e.message, :length => 997, :omission => '...')
+              end
               info.save!
               nl_user.information = info
             end

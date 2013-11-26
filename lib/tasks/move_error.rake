@@ -17,6 +17,17 @@ namespace :migrate do
       EmailType.create!(:id => 6, :description => "email")
     end
 
+    #Subject is too long (maximum is 100 characters)
+    #Information.create!(:description => "adkhasdklhasdklas")
+    #Subject is too long (maximum is 100 characters)
+    #Information.create!(:subject => nil, :description => "adkhasdklhasdklas")
+    #Subject is too long (maximum is 100 characters)
+    #Information.create!(:id => 1, :subject => nil, :description => "adkhasdklhasdklas")
+#    info = Information.new
+#    info.description = "adkhasdklhasdklas"
+#    puts "[info created( " + (info.description.nil? ? "nil" : info.description.length.to_s) + "/" + ( info.subject.nil? ? "nil" : info.subject.length.to_s.to_s)
+#    info.save
+#    #info.save!
 
     #existing_nl = NewsletterUser.all(:limit => 100)
     existing_nl = NewsletterUser.all
@@ -32,12 +43,26 @@ namespace :migrate do
             else
               nl_usr.email_type_id = 1
           end
-          if !nl_usr.errore.nil? && !nl_usr.errore.empty?
-            info = Information.create!(:description => nl_usr.errore)
-            nl_usr.information_id = info.id
+
+          #UPDATE `newsletter_users` SET email_type_id = 0 WHERE errore is not null or sended = 0
+          #---> Kappao: html content result empty?
+          if !nl_usr.errore.nil? && !nl_usr.errore.blank? # && !nl_usr.errore.empty?
+            #puts "[  intermediate: " + i.to_s + "/" + ye.to_s + "/" + no.to_s + "] "
+            #info = Information.create!(:subject => nil, :description => nl_usr.errore)
+            #nl_usr.information_id = info.id
+            info = Information.new
+            if nl_usr.errore.length < 1000
+              info.description = nl_usr.errore
+            else
+               info.description = truncate(nl_usr.errore, :length => 997, :omission => '...')
+            end
+            #puts "[info created(" + nl_usr.id.to_s + "): " + (info.description.nil? ? "nil" : info.description.length.to_s) + "/" + ( info.subject.nil? ? "nil" : info.subject.length.to_s.to_s)
+            info.save!
+            nl_usr.information = info
             ye +=1
-            puts "[info created: " + i.to_s + "/" + ye.to_s + "/" + no.to_s + "] nl(" + nl_usr.id.to_s + ")<-->(" + info.id.to_s + ")info"
+            #@puts "[info created: " + i.to_s + "/" + ye.to_s + "/" + no.to_s + "] nl(" + nl_usr.id.to_s + ")<-->(" + info.id.to_s + ")info"
           else
+            #puts "[info not created(" + nl_usr.id.to_s
             no += 1
           end
           nl_usr.save
