@@ -20,7 +20,7 @@
 <% @reservations.each do |reservation| %>
   <tr class="<%= cycle 'odd', 'even' %>">
     <td class="username"><%= avatar(reservation.user, { :size => "14", :class => "no-div" }) %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
-    <td><%=h link_to h(reservation.issue), preview_issue_path(:project_id => reservation.issue.project, :id => reservation.issue) %></td>
+    <td><%=h link_to h(reservation.issue), reservation.issue.nil? ? " no id " :  reservation.issue.id.to_s  %></td>
     <td align="center"><%=h reservation.num_persone %></td>
     <td align="center"><%=h reservation.prezzo %></td>
     <td><%=h reservation.msg %></td>

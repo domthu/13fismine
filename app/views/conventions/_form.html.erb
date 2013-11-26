@@ -1,36 +1,36 @@
 <%= f.error_messages %>
 <script type="text/javascript">
-  function resetu(){
-      document.getElementById("convention_user_id").selectedIndex = 0;
-  }
+    function resetu() {
+        document.getElementById("convention_user_id").selectedIndex = 0;
+    }
 </script>
 <style type="text/css">
-.icon{
-  height: 7px;
-  display: inline-block;
-  margin-left: 2em;
-  }
+    .icon {
+        height: 7px;
+        display: inline-block;
+        margin-left: 2em;
+    }
 </style>
 <div class="box tabular" xmlns="http://www.w3.org/1999/html">
   <h3><%= l(:label_abbo) %></h3>
 
-  <p><%= f.select :user_id, (User.all(:order => 'lastname').collect { |c| [c.lastname + ' ' + c.firstname + ' (' + c.login + ')', c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_convention_user),:label => l(:label_convention_user)  %>
-   <%= link_to("","#", :onclick => 'resetu()', :class => 'icon icon-del') if User.current.admin? %>
+  <p><%= f.select :user_id, (User.all(:order => 'lastname').collect { |c| [c.lastname + ' ' + c.firstname + ' (' + c.login + ')', c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_convention_user), :label => l(:label_convention_user) %>
+    <%= link_to("", "#", :onclick => 'resetu()', :class => 'icon icon-del') if User.current.admin? %>
   </p>
 
   <p><%= f.check_box :richiedinumeroregistrazione, :label => :label_richiedinumeroregistrazione %></p>
 
   <% if @conv.data_scadenza %>
-    <% if DateTime.now > @conv.data_scadenza %>
-      <p class="scadenza-ko">
-    <% elsif @conv.data_scadenza < (DateTime.now + Setting.renew_days.to_i.days) %>
-      <p class="scadenza-renewing">
-    <% else  %>
-      <p class="scadenza-ok">
-    <% end  %>
-  <% else  %>
-    <p class="scadenza-none">
-  <% end  %>
+      <% if DateTime.now > @conv.data_scadenza %>
+          <p class="scadenza-ko">
+      <% elsif @conv.data_scadenza < (DateTime.now + Setting.renew_days.to_i.days) %>
+          <p class="scadenza-renewing">
+      <% else %>
+          <p class="scadenza-ok">
+      <% end %>
+  <% else %>
+      <p class="scadenza-none">
+  <% end %>
   <%= f.date_select :data_scadenza, :label => :field_data_scadenza %>
   </p>
 
@@ -48,7 +48,7 @@
 
   <p><%= f.select :region_id, (Region.all(:order => 'name').collect { |c| [c.name, c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_region) %></p>
 
-  <p><%= f.select :province_id, (Province.all( :include => [:region], :order => 'name').collect { |c| [c.name + ' (' + c.sigla + ')', c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_province) %></p>
+  <p><%= f.select :province_id, (Province.all(:include => [:region], :order => 'name').collect { |c| [c.name + ' (' + c.sigla + ')', c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_province) %></p>
   <hr>
   <% if @conv.new_record? %>
       <h4><%= @conv.name %></h4>
@@ -57,7 +57,7 @@
 
   <p><%= f.text_field :indirizzo, :label => :field_indirizzo, :size => 50 %></p>
 
-  <p><%= f.select :comune_id, (Comune.all( :include => [[ :province => :region ]], :order => 'name').collect { |c| [c.name, c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_comune) %></p>
+  <p><%= f.select :comune_id, (Comune.all(:include => [[:province => :region]], :order => 'name').collect { |c| [c.name, c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_comune) %></p>
 
   <p><%= f.text_field :email, :label => :field_email, :required => true, :size => 20 %></p>
 
@@ -110,7 +110,7 @@
 </div>
 
 <script type="text/javascript">
-    CKEDITOR.replace('convention_comunicazioni', { toolbar:'Light', height:'500' });
+    CKEDITOR.replace('convention_comunicazioni', { toolbar: 'Light', height: '500' });
     (function () {
         document.getElementById('convention_image').addEventListener('change', function (event) {
             if (!event) // i.e. the argument is undefined or null

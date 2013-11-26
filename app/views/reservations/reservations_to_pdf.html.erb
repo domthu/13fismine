@@ -1,0 +1,80 @@
+<%= stylesheet_link_tag "pdf", :media => 'all' %>
+<% if @reservations.any? %>
+    <!--
+    <% unless (request.url.include? ".pdf") %>
+        <div class="btn-scegli-inmenu">
+          <%= link_to "chiudi anteprima", issue_path(@reservations[0].issue), :class => "button-grey", :id => "btn-scegli" %>
+          <%= link_to "download pdf",  reservations_download_path(:issue_id => @reservations[0].issue.id), :target => '_blank', :class => "button-grey", :id => "btn-scegli" %>
+        </div>
+    <% end %>
+    -->
+    <div id="res_page">
+      <div class="res_head">
+        <%= image_tag 'commons/logo-fs.jpg' %>
+        <p>
+          <%= @reservations[0].issue.subject %></p> <span>
+        <%= l(:label_reservation_list) %></span>
+      </div>
+      <div class="datagrid">
+        <table>
+          <thead>
+          <tr>
+            <%= sort_header_tag('N', :style => 'width: 8%;') %>
+            <%= sort_header_tag('Utente', :style => 'width: 24%;text-align:left;') %>
+            <%= sort_header_tag('Login', :style => 'width: 18%;text-align:left;') %>
+            <%= sort_header_tag('Provenienza', :style => 'width: 20%;text-align:left;') %>
+            <%= sort_header_tag('telefono', :style => 'width: 15%;text-align:left;') %>
+            <%= sort_header_tag('euro', :style => 'width: 7%;') %>
+            <%= sort_header_tag('Id', :style => 'width: 8%;text-align:left;') %>
+          </tr>
+          </thead>
+          <tfoot>
+          <tr>
+            <td colspan="7">
+              <div>
+                <ul>
+                  <li><a href="#"><span>Utenti che hanno riservato:</span></a></li>
+                  <li><a href="#"><span><%=  h @reservations.count.to_s %></span></a></li>
+                    <li><a href="#"><span></span></a></li>
+                  <li><a href="#"><span>Numero persone previste:</span></a></li>
+                  <li><a href="#"><span><%= @reservations_total %></span></a></li>
+                  <% unless  @payments_total == 0 %>
+                      <li><a href="#"><span></span></a></li>
+                      <li><a href="#"><span>Ammontare </span></a></li>
+                      <li><a href="#"><span> <%= @payments_total %> </span></a></li>
+                  <% end %>
+                  <li><a href="#"><span></span></a></li>
+                </ul>
+              </div>
+          </tr>
+          </tfoot>
+          <tbody>
+          <% @reservations.each do |reservation| %>
+              <tr class="<%= cycle '', 'alt' %>">
+                <td><%= avatar(reservation.user, {:size => "14", :class => "no-div"}) %>
+                  <span style="display:inline-table;font-weight: bold; font-size: 1.2em; "><%= h reservation.num_persone %></span>
+                </td>
+                <td><%= reservation.user.name %></td>
+                <td><%= reservation.user.login %></td>
+                <td><%= reservation.user.comune %></td>
+                <td><%= h reservation.user.telefono %></td>
+                <td><%= h reservation.prezzo %></td>
+                <td style="font-style: italic;"><%= reservation.user.id.to_s %></td>
+                <% unless reservation.msg.blank? %>
+                    </tr>
+                    <tr>
+                      <td colspan="7" class="res_msg"> messaggio:&nbsp;<%= h reservation.msg %></td>
+                    </tr>
+                <% end %>
+                </tr>
+          <% end %>
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+
+<% else %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

@@ -6,7 +6,10 @@
       :method => :delete,
       :class => 'icon icon-del') if User.current.admin? %>
 </div>
-<h2><%= link_to l(:label_reservation_plural), reservations_path %> &#187; <%=h @reservation %></h2>
+<div class="btn-scegli-inmenu">
+  <%= link_to "<< convegno/evento ", issue_path(@reservation.issue_id), :class => "button-grey", :id => "btn-scegli" %>
+</div>
+<h2><%= link_to l(:label_reservation), reservations_path %> &#187; <%=h @reservation %></h2>
 
 <div class="splitcontentleft">
   <fieldset class="box tabular">

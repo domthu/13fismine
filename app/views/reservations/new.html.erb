@@ -1,9 +1,9 @@
+<div class="btn-scegli-inmenu">
+  <%= link_to "<< ritorna", :back, :class => "button-grey", :id => "btn-scegli" %>
+</div>
 <h2><%= link_to l(:label_reservation_plural), reservations_path %> &#187; <%= l(:label_reservation_new) %></h2>
 
 <% labelled_form_for @reservation do |f| %>
 <%= render :partial => 'form', :locals => { :f => f } %>
-<p>
-  <%= f.submit l(:button_create) %>
-  <%= f.submit l(:button_create_and_continue), :name => 'continue' %>
-</p>
+<p class="brn-footer"> <%= f.submit l(:button_create) , :class => 'button-blu' %> </p>
 <% end %>

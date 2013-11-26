@@ -81,10 +81,12 @@
         <% end %>
       </fieldset>
   <% end %>
-     <% if  @issue.description.blank? || @issue.description.nil?  %>
-      <div id="issue_showinfo"> <p> Questo articolo non ha un contenuto ...</p> <br />
-      <%= link_to(l(:button_issue_empty), edit_issue_path(@issue), :class => "button-blu") unless @issue.is_public_fs? %> <br />
-      </div><% end %>
+  <% if  @issue.description.blank? || @issue.description.nil? %>
+      <div id="issue_showinfo"><p> Questo articolo non ha un contenuto ...</p> <br/>
+        <%= link_to(l(:button_issue_empty), edit_issue_path(@issue), :class => "button-blu") unless @issue.is_public_fs? %>
+        <br/>
+      </div>
+  <% end %>
   <% if @issue.description? || @issue.attachments.any? -%>
       <p><strong>
         <% if @issue.is_quesito? %>
@@ -103,7 +105,7 @@
             <legend></legend>
             <% if !@issue.description.blank? %>
                 <%= @issue.description.html_safe %>
-                <% else  %>
+            <% else %>
 
             <% end %>
           </fieldset>
@@ -125,17 +127,17 @@
         <hr>
         <% form_for @issue, :url => {:controller => 'issue_moves', :action => 'new', :id => @issue} do |f2| %>
             <div id="issue_showinfo">
-            <p class="published-<%= @issue.is_public_fs?.to_s %>">
-              <%= l("label_reply_published" + @issue.is_public_fs?.to_s).to_sym %> </p>
+              <p class="published-<%= @issue.is_public_fs?.to_s %>">
+                <%= l("label_reply_published" + @issue.is_public_fs?.to_s).to_sym %> </p>
 
-            <% if authorize_for('move_issues', 'news_fast_reply') || User.current.admin? || User.current.ismanager? %>
-                <%= f2.submit(l(:button_issue_reply_article), :class => "button-blu") unless @issue.is_public_fs? %>
-            <% end %>
-            <% if  @issue.is_public_fs? %>
+              <% if authorize_for('move_issues', 'news_fast_reply') || User.current.admin? || User.current.ismanager? %>
+                  <%= f2.submit(l(:button_issue_reply_article), :class => "button-blu") unless @issue.is_public_fs? %>
+              <% end %>
+              <% if  @issue.is_public_fs? %>
                   <div><%= link_to(@issue.project.name, project_path(@issue.project)) %> <br> &nbsp; </div>
-                  <%= link_to l(:button_news_from_issue) , news_path(@issue.news_id), :class => "button-grey" %>
-            <% end %>
-              <br />
+                  <%= link_to l(:button_news_from_issue), news_path(@issue.news_id), :class => "button-grey" %>
+              <% end %>
+              <br/>
             </div>
         <% end %>
       </div>
@@ -197,51 +199,52 @@
         <h3 class="prenotazioni"><%= l(:convegno_prenotazioni, :num => @issue.reservations.count.to_s) %></h3>
 
         <% if !@issue.reservations.nil? && @issue.reservations.count > 0 %>
-            <div class="autoscroll">
+            <div class="autoscroll" style="font-size: 0.8em">
               <table class="list reservations">
                 <thead>
                 <tr>
-                  <th style='width: 20%;text-align:left;'><%= l(:label_reservation) %></th>
-                  <th style='width: 20%;text-align:left;'><%= l(:label_user) %></th>
-                  <th><%= l(:label_date) %></th>
-                  <th style='width: 10%;text-align:left;'><%= l(:label_num_persone) %></th>
-                  <th style='width: 10%;text-align:left;'><%= l(:label_prezzo) %></th>
-                  <th style='width: 30%;text-align:left;'><%= l(:label_msg) %></th>
-                  <th style='width: 5%;'></th>
-                  <th style='width: 5%;'></th>
+                  <th style='width: 1%;text-align:left;'><%= "N°" %></th>
+                  <th style='width: 35%;text-align:left;'><%= l(:label_user) %></th>
+                  <th style='width: 10%;text-align:left;'><%= l(:label_user_registered) %></th>
+                  <th style='width: 10%;text-align:left;'><%= l(:label_user_reserved) %></th>
+                  <th style='width: 5%;text-align:left;'><%= l(:label_euro) %></th>
+                  <th style='width: 37%;text-align:left;'><%= l(:label_msg) %></th>
+                  <th style='width: 1%;'></th>
+                  <th style='width: 1%;'></th>
                 </tr>
                 </thead>
+                <tfoot>
+                <tr>
+                  <td class="resfooter resfooterfont" colspan="4">
+                    Hanno riservato <span><%= h @issue.reservations.count.to_s %> </span>utenti per un totale di <span>
+                    <%= h @issue.reservations.sum(:num_persone).to_s %> </span> persone
+                    <% unless @issue.reservations.sum(:prezzo).to_f == 0 %>
+                        &nbsp;, la somma complessiva è di <span> <%= @issue.reservations.sum(&:prezzo).to_f %></span>
+                        euro
+                    <% end %>
+                  </td>
+                  <td class="resfooter resfooterbtn" colspan="4">
+                    <%# link_to "anteprima pdf ", reservations_pdf_path(:issue_id => @issue.id), :target => '_self', :class => "button-grey"%>
+                    <%= link_to('download pdf', reservations_download_path(:issue_id => @issue.id), :target => '_blank', :class => 'button-grey') %>
+                  </td>
+                </tr>
+                </tfoot>
                 <tbody>
                 <% @issue.reservations.each do |reservation| %>
                     <tr class="<%= cycle 'odd', 'even' %>">
-                      <td class="buttons">
-                        <%= link_to(h(reservation.to_s), reservation_path(reservation), :class => 'icon icon-summary') if User.current.admin? %>
-                        <%= h(reservation.to_s) if !User.current.admin? %>
-                      </td>
-                      <td class="username"><%= avatar(reservation.user, {:size => "14", :class => "no-div"}) %><%= link_to h(reservation.user.login), edit_user_path(reservation.user) %></td>
+                      <td align="center" style="font-weight: bold"><%= h reservation.num_persone %></td>
+                      <td class="username"><%= avatar(reservation.user, {:size => "14", :class => "no-div"}) %><%= link_to h(reservation.user.name), edit_user_path(reservation.user) %></td>
                       <td><%= format_date(reservation.created_at) %></td>
-                      <td align="center"><%= h reservation.num_persone %></td>
-                      <td align="center"><%= h reservation.prezzo %></td>
-                      <td><%= h smart_truncate(reservation.msg, 100) %></td>
-                      <td class="buttons"><%= link_to('', edit_reservation_path(reservation), :class => 'icon icon-edit') if User.current.admin? %>
+                      <td> <%= link_to h(format_date(reservation.updated_at)), reservation_path(reservation) %></td>
+                      <td><%= h reservation.prezzo %></td>
+                      <td><%= link_to h(smart_truncate(reservation.msg, 42)), reservation_path(reservation) %></td>
+                      <td><%= link_to('', edit_reservation_path(reservation), :class => 'icon icon-edit') if User.current.admin? %>
                         <%= link_to('', reservation_path(reservation), :class => 'icon icon-show') if !User.current.admin? %>
                       </td>
-                      <td class="buttons"><%= link_to ('', reservation, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
+                      <td class="buttons"><%= link_to('', reservation, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
                     </tr>
-                <% end %>
-                <tr>
-                  <td></td>
-                  <td class="total center"><%= h @issue.reservations.count.to_s %></td>
-                  <td></td>
-                  <td class="total center"><%= h @issue.reservations.sum(:num_persone).to_s %></td>
-                  <td class="total center"><%= @issue.reservations.sum(:prezzo).to_f %></td>
-                  <td colspan="3">
-                    <% other_formats_links do |f| %>
-                        <%= f.link_to 'PDF' %>
-                    <% end %>
-                  </td>
-                </tr>
-              </table>
+                <% end %>  <!-- <tr><td></td><%# other_formats_links do |f| %><%# f.link_to 'PDF' %><%# end %></td></tr>   -->
+                </table>
             </div>
         <% else %>
             <%= l(:label_prenotazioni_none) %>

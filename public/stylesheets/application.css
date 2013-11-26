@@ -1143,6 +1143,10 @@ h2 img { vertical-align:middle; }
     background-position: 0 -300px;
 }
 .total{font-weight: bold;color: #2C4056; background-color:#FFFFDD; padding: 5px;}
+.resfooter{background-color:#E2E9F1; padding: 1.2em;}
+.resfooterfont{font-weight: bold; color: #2C4056; font-size: 1.4em }
+.resfooterfont span{font-weight: bold; color: #b22222; }
+.resfooterbtn {text-align: center;}
 .htmldraft{padding:15px; margin-top: 1em; overflow: auto; background: url(../images/draft.png)}
 .hide{display: none;}
 div.conv-select{float:right; right:10px;}
@@ -1388,11 +1392,17 @@ p.changeauthor img.gravatar{
 }
 #btn-scegli {
     font-size:1em;
-    padding: 2px 12px;
-    color: #C2B3B3;
+    padding: 3px 12px;
+    color: #6f7a7d;
 }
 #btn-scegli:hover {
- color: lawngreen;
+ color: #F6B911;
+}
+.btn-scegli-inmenu{
+    top:64px;
+    right:26%;
+    position: absolute;
+    z-index: 99;
 }
 .button-grey {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -1606,4 +1616,14 @@ hr.quesiti hr {
 #issue_showinfo p{
     font-size: 1.5em;
     color: #bc8f8f;
+}
+
+.workinprogress {
+    height: 145px;
+    min-width: 130px;
+    background: url(../images/commons/Work_in_progress.png) no-repeat scroll center;
+    content: "";
+    color: #b22222;
+    font-weight: bold;
+    margin: 1% 1%;
 }

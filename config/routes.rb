@@ -8,7 +8,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :newsletters
   map.resources :pages
   map.resources :user_profiles
-  map.resources :reservations
 #http://guides.rubyonrails.org/v2.3.11/routing.html
 #rake routes | grep -r "lost_password"
   map.resources :top_menus
@@ -16,6 +15,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contracts
   map.resources :templates
   map.resources :reservations
+  map.reservations_pdf '/reservations_pdf/:issue_id', :controller => 'reservations', :action => 'reservations_to_pdf'
+  map.reservations_download '/reservations_pdf/:issue_id.pdf', :controller => 'reservations', :action => 'download_pdf'
 #  under are only for paperclip images refresh
   map.with_options :controller => 'settings' do |img|
     img.with_options :conditions => {:method => :post} do |img_model|
@@ -151,7 +152,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :invoices
   map.invoice_receiver '/invoice_receiver', :controller => 'invoices', :action => 'invoice_receiver' , :conditions => {:method => :get}
   map.invoice_to_pdf '/invoice_to_pdf/:id', :controller => 'invoices', :action => 'invoice_to_pdf'
-  map.invoice_download_pdf '/invoice_to_pdf/:id.pdf', :controller => 'invoices', :action => 'download_pdf'
+  map.invoice_download_pdf '/invoice_to_pdf/:id.pdf', :controller => 'invoices', :action => 'reservations_to_pdf'
   map.fee 'fee', :controller => 'fees', :action => 'index'
   map.liste_utenti 'liste_utenti', :controller => 'fees', :action => 'liste_utenti'
   map.scaduti 'scaduti', :controller => 'fees', :action => 'scaduti'

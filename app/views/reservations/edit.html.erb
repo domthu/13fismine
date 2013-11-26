@@ -1,6 +1,8 @@
-<h2><%= link_to l(:label_reservation_plural), reservations_path %> &#187; <%= h(@reservation) %></h2>
+<div class="btn-scegli-inmenu">
+  <%= link_to "<< convegno/evento ", issue_path(@reservation.issue), :class => "button-grey", :id => "btn-scegli" %>
+</div>
+<h2><%= link_to l(:label_reservation_new), reservations_path %> &#187; <%= h(@reservation) %></h2>
 <% labelled_form_for (@reservation) do |f| %>
-  <%= submit_tag l(:button_save) %>
   <%= render :partial => 'form', :locals => { :f => f } %>
-  <%= submit_tag l(:button_update) %>
+    <p class="brn-footer"> <%= f.submit l(:button_save) , :class => 'button-blu' %> </p>
 <% end %>

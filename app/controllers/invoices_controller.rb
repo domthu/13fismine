@@ -19,9 +19,10 @@ class InvoicesController < ApplicationController
         @menu_fs = :application_menu
     end
   end
+
   def invoice_receiver
 
-    sort_init 'username','asc'
+    sort_init 'username', 'asc'
     sort_update 'username' => 'login',
                 'firstname' => 'firstname',
                 'lastname' => 'lastname',
@@ -49,21 +50,21 @@ class InvoicesController < ApplicationController
     @user_pages = Paginator.new self, @user_count, @limit, params['page']
     @offset ||= @user_pages.current.offset
     @limit = 10
-    @users =  scope.find :all,
-                         :order => sort_clause,
-                         :conditions => c.conditions,
-                         :limit  =>  @limit,
-                         :offset =>  @offset
+    @users = scope.find :all,
+                        :order => sort_clause,
+                        :conditions => c.conditions,
+                        :limit => @limit,
+                        :offset => @offset
 
     @limit = 8
     @conventions_count = Convention.all.count
     @conventions_pages = Paginator.new self, @conventions_count, @limit, params['page']
     @offset2 ||= @conventions_pages.current.offset
     @conventions = Convention.find(:all,
-                             :include => [:province, :comune, :user, {:cross_organization => [:type_organization]}],
-                             :order => 'ragione_sociale',
-                             :limit  =>  @limit,
-                             :offset =>  @offset2
+                                   :include => [:province, :comune, :user, {:cross_organization => [:type_organization]}],
+                                   :order => 'ragione_sociale',
+                                   :limit => @limit,
+                                   :offset => @offset2
     )
     respond_to do |format|
       format.html {
@@ -73,24 +74,26 @@ class InvoicesController < ApplicationController
       format.api
     end
   end
+
   def invoice_to_pdf
     @invoice = Invoice.find(params[:id])
-    @tariffa =   @invoice.tariffa || 0
+    @tariffa = @invoice.tariffa || 0
     @scontoperc = @invoice.sconto || 0
     @sconto = (@tariffa * @scontoperc) / 100
-    @imponibile =  @tariffa - @sconto
+    @imponibile = @tariffa - @sconto
     @impostaperc = @invoice.iva || 0
-    @imposta =  (@imponibile *  @impostaperc ) / 100
-    @totale  = @imponibile + @imposta
+    @imposta = (@imponibile * @impostaperc) / 100
+    @totale = @imponibile + @imposta
   end
+
   def download_pdf
     unless params[:id].nil?
-    html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id],  :layout => false)
-    pdf = PDFKit.new(html)
-    send_data(pdf.to_pdf)
+      html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
+      pdf = PDFKit.new(html)
+      send_data(pdf.to_pdf)
     else
-   flash[:error] = 'Nessuna fattura passata come parametro. '
-      end
+      flash[:error] = 'Nessuna fattura passata come parametro. '
+    end
   end
 
   # GET /invoices
@@ -135,7 +138,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml { render :xml => @invoice }
-     # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
+      # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
     end
 
   end
@@ -145,15 +148,15 @@ class InvoicesController < ApplicationController
   def new
     @dest = ''
     item = ''
-    @pu =  params[:user_id].present?
+    @pu = params[:user_id].present?
     @pc = params[:convention_id].present?
     if params[:user_id].present?
       item = User.find_by_id(params[:user_id])
       @dest += item.getDefault4invoice()
-      end
+    end
     if params[:convention_id].present?
       item = Convention.find_by_id(params[:convention_id])
-      @dest +=  item.getDefault4invoice()
+      @dest += item.getDefault4invoice()
     end
     @invoice = Invoice.new
     @anno = Date.today.year

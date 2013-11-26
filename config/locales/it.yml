@@ -1366,9 +1366,10 @@ it:
   field_impressions_history: Storico impressione
 
 #ISSUE --> CONVEGNO
+  label_euro: Euro
   label_reservation: Prenotazione
   label_convegno: Convegno
-  label_date: Data reg.
+  label_date: Data
   label_num_persone: N° persone
   label_num_persone_abrv: N°
   label_prezzo: Prezzo
@@ -1376,7 +1377,10 @@ it:
   convegno_prenotazioni: Lista delle prenotazioni (%{num}) registrate
   label_prenotazioni_none: Nessuna prenotazione registrata
   label_reservation_plural: Lista delle prenotazioni ai convegni
+  label_reservation_list: Lista dei prenotati
   label_reservation_new: Crea nuova prenotazione
+  label_user_reserved: Prenotato
+  label_user_registered: Registrato
   field_num_persone: Numero persone
   field_prezzo: Prezzo
   field_msg: Messaggio
