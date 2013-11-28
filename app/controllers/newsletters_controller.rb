@@ -179,7 +179,7 @@ class NewslettersController < ApplicationController
                 end
               end
             rescue Exception => e
-              logger.error "Errore: invio email non registrato per utente: #{user.name} (#{user.id}) di ruolo(#{role_id}). Msg: #{e.message}"
+              logger.error "Errore: invio email non registrato per utente: #{user.name} (#{user.id}). Msg: #{e.message}"
               send_error("Errore: invio email non registrato per utente-> " + user.name + ". Msg: " + e.message)
             end
           }
