@@ -181,7 +181,7 @@ it:
   notice_account_unknown_email: "Nessun utente registrato con la mail immessa."
   notice_can_t_change_password: Questo utente utilizza un metodo di autenticazione esterno. Impossibile cambiare la password.
   notice_account_lost_email_sent: Ti è stata spedita una email con le istruzioni per cambiare la password.
-  notice_account_activated: "Il tuo account è stato attivato. Ora puoi effettuare l'accesso."
+  notice_account_activated: "Il tuo account è stato attivato. La password per l'accesso è stata spedita nella tua casella di posta, puoi cambiarla in seguito nel tuo profilo personale. Ora puoi effettuare l'accesso."
   notice_successful_create: Creazione effettuata.
   notice_successful_update: Modifica effettuata.
   notice_successful_delete: Eliminazione effettuata.
