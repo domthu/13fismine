@@ -167,7 +167,7 @@ class NewslettersController < ApplicationController
               #crea email registration se non già presente
               yet_reg = NewsletterUser.find(:first, :conditions => ["email_type_id=? AND newsletter_id=? AND user_id=?", FeeConst::EMAIL_NEWSLETTER, @newsletter.id, user.id])
               if !yet_reg
-                fed = NewsletterUser.new(:email_type_id => FeeConst::EMAIL_NEWSLETTER, :newsletter_id => @newsletter.id, :user_id => user.id, :data_scadenza => user.scadenza, :convention_id => conv.id)
+                fed = NewsletterUser.new(:email_type_id => FeeConst::EMAIL_NEWSLETTER, :newsletter_id => @newsletter.id, :user_id => user.id, :convention_id => conv.id)
                 #reg.html =
                 fed.sended = false
                 if fed.save! #--> save_without_transactions
