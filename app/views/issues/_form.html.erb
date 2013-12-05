@@ -14,9 +14,9 @@
 
   <p>
     <% if !@issue.new_record? && @issue.se_prenotazione %>
-        <%= f.select :section_id, [[@issue.section.full_name, @issue.section_id]], :include_blank => false, :required => true, :size => 100, :title => l(:label_section) %>
+        <%= f.select :section_id, [[@issue.section.select_full_name, @issue.section_id]], :include_blank => false, :required => true, :size => 100, :title => l(:label_section) %>
     <% else %>
-        <%= f.select :section_id, (Section.all_with_topsection.collect { |c| [c.full_name, c.id] }), :include_blank => false, :required => true, :size => 100, :title => l(:label_section) %>
+        <%= f.select :section_id, (Section.all_with_topsection.collect { |c| [c.select_full_name, c.id] }), :include_blank => false, :required => true, :size => 100, :title => l(:label_section) %>
     <% end %>
   </p>
 

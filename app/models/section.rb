@@ -57,6 +57,25 @@ class Section < ActiveRecord::Base
       end
     end
   end
+  def select_full_name
+    if self.top_section.nil?
+      if self.sezione.nil?
+        ''
+      else
+        sezione
+      end
+    else
+      if  top_section.to_s == sezione
+        sezione
+      else
+        if self.protetto
+        top_section.to_s + ' :: ' + sezione  + ' *'
+        else
+          top_section.to_s + " :: " + sezione
+        end
+      end
+    end
+  end
 
   def url_image_sec
     "commons/sections/#{self.top_section_id}:style_:id.:extension"

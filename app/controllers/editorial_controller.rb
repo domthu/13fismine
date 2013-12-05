@@ -763,13 +763,13 @@ class EditorialController < ApplicationController
 
   #
   def enabled_user_article
-    if @articolo.se_protetto || @articolo.section.protetto
+    if @articolo.se_protetto
       #controllo della scadenza per aggiornare il ruolo
       User.current.control_state
       #controllo del ruolo
       if !User.current.canread?(@articolo)
         if User.current.isarchivied?
-          reroute_auth("Per accedere deve abbonarti di nuovo")
+          reroute_auth("Per accedere deve abbonarsi di nuovo")
         elsif User.current.isexpired?
           reroute_auth("Il tuo abbonamento è scaduto. Per vedere di nuovo gli articoli protetti devi fare il rinnovo")
         elsif User.current.isregistered?
