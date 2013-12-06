@@ -149,9 +149,9 @@
 
   <fieldset class="box tabular">
     <legend><%= l(:user_invoices, :num => @conv.invoices.count.to_s) %></legend>
-    <div class="contextual">
-      <%= link_to l(:label_invoice_new), new_invoice_path, :class => 'icon icon-add' if User.current.admin? %>
-    </div><h3>&nbsp;</h3>
+    <div class="contextual" style="margin-bottom: 20px;">
+      <%= link_to l(:label_invoice_new), new_invoice_path({:convention_id => @conv.id}), :class => 'icon icon-add' if User.current.admin? %>
+    </div>
     <div style="margin-bottom:16px;">
       <% if !@conv.invoices.nil? && @conv.invoices.count > 0 %>
           <div class="autoscroll">

@@ -6,6 +6,8 @@ class InvoicesController < ApplicationController
   include SortHelper
   include Redmine::Export::PDF
   before_filter :set_menu
+  before_filter :get_dest, :only => [:new]
+  before_filter :retreive_dest, :only => [:show]
   menu_item :invoices, :only => [:invoices]
   menu_item :email_fee, :only => [:email_fee]
   menu_item :invia_fatture, :only => [:invia_fatture]
@@ -133,8 +135,6 @@ class InvoicesController < ApplicationController
   # GET /invoices/1
   # GET /invoices/1.xml
   def show
-    @invoice = Invoice.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml { render :xml => @invoice }
@@ -146,18 +146,9 @@ class InvoicesController < ApplicationController
   # GET /invoices/new
   # GET /invoices/new.xml
   def new
-    @dest = ''
     item = ''
     @pu = params[:user_id].present?
     @pc = params[:convention_id].present?
-    if params[:user_id].present?
-      item = User.find_by_id(params[:user_id])
-      @dest += item.getDefault4invoice()
-    end
-    if params[:convention_id].present?
-      item = Convention.find_by_id(params[:convention_id])
-      @dest += item.getDefault4invoice()
-    end
     @invoice = Invoice.new
     @anno = Date.today.year
     #@cnt = Invoice.count(:conditions => ['anno = ' + @anno.to_s ])
@@ -228,6 +219,63 @@ class InvoicesController < ApplicationController
       format.html { redirect_to(invoices_url) }
       format.xml { head :ok }
     end
+  end
+
+
+private
+
+  def get_dest
+    @dest = ''
+    if params[:user_id].present?
+      item = User.find_by_id(params[:user_id])
+      @dest += item.getDefault4invoice()
+    end
+    if params[:convention_id].present?
+      item = Convention.find_by_id(params[:convention_id])
+      @dest += item.getDefault4invoice()
+    end
+    if @dest == ''
+      flash[:notice] = "Selezionare un utente o una convenzione prima di creare la fattura..."
+      redirect_to(invoice_receiver_path)
+    end
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
+
+  def retreive_dest
+    @invoice = Invoice.find(params[:id])
+    #destinatario
+    if @invoice.destinatario.nil? || @invoice.destinatario.blank?
+      @dest = ''
+      if !@invoice.user_id.nil?
+        item = User.find_by_id(params[:user_id])
+        @dest += item.getDefault4invoice()
+      end
+      if !@invoice.convention_id.nil?
+        item = Convention.find_by_id(params[:convention_id])
+        @dest += item.getDefault4invoice()
+      end
+      if @dest == ''
+        flash[:notice] = "Selezionare un utente o una convenzione prima di creare la fattura..."
+        redirect_to(invoice_receiver_path)
+      else
+        #mittente default_invoices_header:
+        if @invoice.mittente.nil? || @invoice.mittente.blank?
+          @invoice.mittente = Setting.default_invoices_header
+        end
+        #description default_invoices_description
+        if @invoice.description.nil? || @invoice.description.blank?
+          @invoice.description = Setting.default_invoices_description
+        end
+        #footer default_invoices_footer
+        #@invoice.footer = Setting.default_invoices_footer
+        @invoice.destinatario = @dest
+        @invoice.save
+      end
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    render_404
   end
 
 end

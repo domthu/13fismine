@@ -13,8 +13,7 @@
 
         <div id="accordion-events">
           <!-- convegni futuri -->
-          <% if @conv_futuri.nil? %>
-          <% else %>
+          <% unless @conv_futuri.nil? %>
               <h4>Convegni/Eventi Futuri </h4>
               <article class="fs-post-convegni fs-article">
                 <% @conv_futuri.each do |con| %>
@@ -25,11 +24,11 @@
                       </div>
                       <div class="fs-convegni-futuri">
                         <%= image_tag art_image(con, :m) %>
-                        <span> <%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %></span>
+                        <span> <%=link_to_articolo(con, :title => h(con.subject)) %></span>
 
                         <p>
-                          <%= link_to(h(smart_truncate(con.summary, 125)), :controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %>
-                          <%= link_to "Più info ", url_for(:controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false), :class => "fs-giallo-inline-button" %></p>
+                          <%= link_to_articolo(con, :title => smart_truncate(con.summary, 125) )%>
+                          <%= link_to_articolo(con, :title => 'Più info' , :class => 'fs-giallo-inline-button') %></p>
                         <br/>
 
                       </div>
@@ -134,10 +133,9 @@
                       <div class="fs-content-layout-row">
 
                         <div class="fs-postheader fs-blockheader-edizioni fs-convegni-border" style="text-align: left;">
-                          <span><%= link_to(h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno)), :controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %> </span>
-
-                          <p class="event-tetx"><%= link_to(h(con.subject), :controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false) %>   </p>
-                        </div>
+                          <span><%= link_to_articolo(con, :title=> h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno))) %> </span>
+                          <p class="event-tetx"><%= link_to_articolo(con, :title => con.subject) %></p>
+                           </div>
                       </div>
                     </div>
                     <p style="padding:2px"></p>

@@ -13,8 +13,8 @@ class Comune < ActiveRecord::Base
 
   def to_s
     str = self.name
-    str << (self.province.nil? ? "" : " " + self.province.name_full)
-    str << ((self.province.nil? && self.province.region.nil?) ? "" : "::" + self.province.region.name.capitalize) # .upcase)
+    str += (self.province.nil? ? "" : " " + self.province.name_full)
+    str += ((self.province.nil? || self.province.region.nil?) ? "" : "::" + self.province.region.name) # .upcase)
     return str
   end
 

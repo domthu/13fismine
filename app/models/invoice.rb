@@ -5,6 +5,9 @@ class Invoice < ActiveRecord::Base
   #domthu20131108
   belongs_to :convention, :class_name => 'Convention', :foreign_key => 'convention_id'
 
+  #integrare foglio
+  #nuovo campo per salvare footer
+  #tabella payment @invociepagamento.id
   def to_s
     numero_fattura.to_s
   end

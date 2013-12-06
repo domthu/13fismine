@@ -278,7 +278,14 @@ class User < Principal
         #  role_atteso = FeeConst::ROLE_ABBONATO
         #end
 
-      elsif self.isabbonato? || self.isrenewing? || self.isregistered? || self.isexpired?
+      elsif self.isregistered?
+        if (today > self.scadenza)
+          #scaduto
+          role_atteso = FeeConst::ROLE_EXPIRED
+          tipo = "renew"
+        end
+
+      elsif self.isabbonato? || self.isrenewing? || self.isexpired?
 
         tipo = "renew"
         #puts "control_state " + today.to_s
@@ -292,9 +299,7 @@ class User < Principal
           renew_deadline = self.scadenza - Setting.renew_days.to_i.days
           if (today > renew_deadline)
             #sta per scadere solo per abbonato
-            if (!self.isregistered?)
-              role_atteso = FeeConst::ROLE_RENEW
-            end
+            role_atteso = FeeConst::ROLE_RENEW
             tipo = "proposal"
           else
             #tutto ok

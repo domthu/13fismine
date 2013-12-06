@@ -28,7 +28,7 @@
 </style>
 
 <div class="ipage">
-  <%= Setting.default_invoices_header %>
+  <%=  @invoice.mittente %>
   <div class="ipad" style="border: dotted 1px #c55404 ">
     <table>
       <tr>
@@ -81,7 +81,7 @@
       <tbody>
       <tr>
         <td>
-          <%= Setting.default_invoices_description %>
+          <%= @invoice.description %>
           <span class="ipadtab">
 
          <b>Abbonamento per l'anno: <%= @invoice.anno.to_s unless @invoice.anno.blank? %>&nbsp; scadenza:

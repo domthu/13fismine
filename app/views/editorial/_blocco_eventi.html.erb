@@ -13,14 +13,14 @@
                 </div>
                 <div class="fs-convegni-futuri">
                   <div class="fs-lateral-blocks-head">
-                    <%= link_to(h(@conv_prossimo.subject), url_for(:controller => 'editorial', :action => "evento", :articolo_id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %> </div>
+                    <%= link_to_articolo(@conv_prossimo, :title => h(@conv_prossimo.subject)) %> </div>
                   <div class="fs-conv-block">
                     <%= image_tag art_image(@conv_prossimo, :s) %>
-                    <%= link_to(h(@conv_prossimo.summary), url_for(:controller => 'editorial', :action => "evento", :articolo_id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false)) %>
+                    <%= link_to_articolo(@conv_prossimo, :title => h(@conv_prossimo.summary)) %>
                     <%# link_to(h(smart_truncate(@conv_prossimo.summary, 120)), :controller => 'editorial', :action => "evento", :articolo_id => @conv_prossimo.id, :escape => false) %>
                   </div>
                   <div class="clearfix"></div>
-                  <%= link_to "Visualizza... ", url_for(:controller => 'editorial', :action => "evento", :articolo_id => @conv_prossimo.id.to_s, :slug => h(truncate(@conv_prossimo.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button" %>
+                  <%= link_to_articolo(@conv_prossimo, :title =>  "Visualizza... ", :class => "fs-vuoto-inline-button") %>
                   <br/>&nbsp;<br/>
                 </div>
               </div>
@@ -36,13 +36,13 @@
                     </div>
                     <div class="fs-convegni-futuri">
                       <div class="fs-lateral-blocks-head">
-                        <%= link_to(h(con.subject), url_for(:controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %> </div>
+                        <%= link_to_articolo(con, :title => h(con.subject)) %> </div>
                       <div class="fs-conv-block">
                         <%= image_tag art_image(con, :s) %>
-                        <%= link_to(h(smart_truncate(con.summary, 175)), url_for(:controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false)) %>
+                        <%=  link_to_articolo(con, :title => h(smart_truncate(con.summary, 175))) %>
                       </div>
                       <div class="clearfix"></div>
-                      <%= link_to "Visualizza...", url_for(:controller => 'editorial', :action => "evento", :articolo_id => con.id.to_s, :slug => h(truncate(con.subject, :length => 125).to_slug), :escape => false), :class => "fs-vuoto-inline-button" %>
+                      <%=  link_to_articolo(con, :title => "Visualizza...", :class => "fs-vuoto-inline-button") %>
                     </div>
                     <br/>&nbsp;<br/>
                   </div>

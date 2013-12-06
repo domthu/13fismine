@@ -24,7 +24,7 @@ class ReservationsController < ApplicationController
         if params[:issue_id].present? && !params[:issue_id].nil?
           @reservations = Reservation.find(:all,
                                            :order => sort_clause,
-                                           :include => [:issue, {:user => [:comune => :province]}],
+                                           :include => [:issue, :user],
                                            :conditions => "issues.id = #{params[:issue_id]}"
           )
 
