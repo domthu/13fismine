@@ -1,15 +1,12 @@
-<h1>New payment</h1>
-
+<h1> <%= l(:label_metodo_pagamento) %> </h1>
 <% form_for(@payment) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :pagamento %><br />
-    <%= f.text_area :pagamento %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
+    <%= f.error_messages %>
+    <p>
+      <%= f.text_field :pagamento ,  :size => 120 , :style => "border: solid #F5BC13 1px; padding: 1.2em!important;" %>
+    </p>
+    <p>
+      <%= f.submit l(:button_create), :class => "button-blu" %>
+    </p>
 <% end %>
-
-<%= link_to 'Back', payments_path %>
+<br/>
+<%= link_to l(:button_back), payments_path, :class => "button-grey" %>

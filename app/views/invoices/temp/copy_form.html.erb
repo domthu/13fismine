@@ -1,26 +1,140 @@
-<%= f.error_messages %>
-
-<div class="box tabular">
-  <p><%= f.select :user_id, (User.all.collect { |c| [c.lastname + ' ' + c.firstname + ' (' + c.login + ')', c.id] }), :include_blank => false, :required => true, :size => 60, :title => l(:label_user) %></p>
-
-  <p><%= f.text_field :numero_fattura, :label => :field_numero_fattura, :size => 3 %>
-    <% unless @cnt.blank? %>
-        prossima fattura: <%= @cnt %> [<%= @anno %>]
-    <% end %>
-  </p>
-
-  <p><%= f.date_select :data_fattura, :label => :field_fattura %></p>
-
-  <p><%= f.text_field :sezione, :label => :field_sezione, :size => 3 %></p>
-
-  <p><%= f.text_field :anno, :label => :field_anno, :size => 3 %></p>
-
-  <p><%= f.text_field :tariffa, :label => :field_tariffa, :size => 3 %></p>
-
-  <p><%= f.text_area :sconto, :required => true, :cols => 60, :rows => 15, :class => 'wiki-edit' %></p>
-
-  <p><%= f.text_field :iva, :label => :field_iva, :size => 3 %></p>
-
-  <p><%= f.text_field :pagamento, :label => :field_pagamento, :size => 3 %></p>
+<div class="contextual">
+  <%= link_to(l(:button_pdf), invoice_download_pdf_path(@invoice.id),:target => '_blank', :class => 'icon icon-file application-pdf') %>
+  <%= link_to(l(:button_edit), edit_invoice_path( :id=>@invoice.id ), :class => 'icon icon-edit') if User.current.admin? %>
+  <%= link_to(l(:button_delete),
+              invoice_path(@invoice),
+              :confirm => l(:text_are_you_sure),
+              :method => :delete,
+              :class => 'icon icon-del') if User.current.admin? %>
 </div>
-<%= wikitoolbar_for 'sconto' %>
+<h2><%= link_to l(:label_invoice), invoices_path %> &#187; <%= h @invoice %>  anno  <%= h @invoice.anno.to_s %></h2>
+
+<div class="splitcontentleft">
+  <fieldset class="box tabular">
+    <legend><%= l(:label_invoice) %></legend>
+    <p>
+      <% unless @invoice.numero_fattura.blank? %>
+          <em><%= h @invoice.numero_fattura %></em>
+          <br/>
+      <% end %>
+    </p>
+    <%	 unless @invoice.user.nil?  %>
+        <p>
+          <%= l(:label_user) %>: <%= link_to h(@invoice.user), user_path(@invoice.user, :id => @invoice.user_id) %>
+        </p>
+    <%	end  %>
+    <%	 unless @invoice.convention.nil?  %>
+        <p>
+          <%= l(:label_convention) %>: <%= link_to h(@invoice.convention), convention_path(@invoice.convention, :id => @invoice.convention_id) %>
+        </p>
+    <%	end  %>
+    <p>
+      <%= l(:label_data_fattura) %>: <%= format_date(@invoice.data_fattura) %>
+    </p>
+
+    <p>
+      <%= l(:label_mittente) %>:
+
+    <div class="wiki">
+      <%= @invoice.mittente %>
+    </div>
+    </p>
+    <p>
+      <%= l(:label_destinatario) %>:
+
+    <div class="wiki">
+      <%= @invoice.destinatario %>
+    </div>
+    </p>
+    <p>
+      <%= l(:label_sezione) %>: <%= h @invoice.sezione %>
+    </p>
+
+    <p>
+      <%= l(:label_anno) %>: <%= h @invoice.anno %>
+    </p>
+
+    <p>
+      <%= l(:label_tariffa) %>: <%= h @invoice.tariffa %>
+    </p>
+
+    <p>
+      <%= l(:label_sconto) %>: <%= h(@invoice.sconto) %>
+    </p>
+
+    <p>
+      <%= l(:label_iva) %>: <%= h @invoice.iva %>
+    </p>
+
+    <p>
+      <%= l(:label_pagamento) %>: <%= h @invoice.pagamento %>
+    </p>
+    <p style="font-style: italic;">
+      user_id : <%= h @invoice.user_id.to_s %> - convention_id : <%= h @invoice.convention_id.to_s %>
+    </p>
+  </fieldset>
+</div>
+
+<div class="splitcontentright">
+  <% unless @invoice.user.nil?  %>
+      <fieldset class="box tabular">
+        <legend><%= l(:label_user_invoices) %></legend>
+        <table>
+          <tr>
+            <th>num</th>
+            <th>data</th>
+            <th>anno</th>
+            <th>tariffa</th>
+            <th>pagamento</th>
+          </tr>
+          <% @invoice.user.invoices.each do |user_invoice| %>
+              <tr>
+                <% if (user_invoice != @invoice) %>
+                    <td class="buttons">
+                      <%= link_to(h(user_invoice.numero_fattura), invoice_path(user_invoice, :id => user_invoice.id), :class => 'icon icon-summary') if User.current.admin? %>
+                <% else %>
+                    <td><b><%= h user_invoice.numero_fattura %></b></td>
+                <% end %>
+                </td>
+                <td><%= format_date(user_invoice.data_fattura) %></td>
+                <td><%= h user_invoice.anno %></td>
+                <td><%= h user_invoice.tariffa %></td>
+                <td><%= h user_invoice.pagamento %></td>
+              </tr>
+          <% end %>
+        </table>
+      </fieldset>
+  <%	end  %>
+  <% unless @invoice.convention.nil?  %>
+      <fieldset class="box tabular">
+        <legend><%= l(:label_convention_invoices) %></legend>
+        <table>
+          <tr>
+            <th>num</th>
+            <th>data</th>
+            <th>anno</th>
+            <th>tariffa</th>
+            <th>pagamento</th>
+          </tr>
+          <% @invoice.convention.invoices.each do |item| %>
+              <tr>
+                <% if (item != @invoice) %>
+                    <td class="buttons">
+                      <%= link_to(h(item.numero_fattura), invoice_path(item, :id => item.id), :class => 'icon icon-summary') if User.current.admin? %>
+                <% else %>
+                    <td><b><%= h item.numero_fattura %></b></td>
+                <% end %>
+                </td>
+                <td><%= format_date(item.data_fattura) %></td>
+                <td><%= h item.anno %></td>
+                <td><%= h item.tariffa %></td>
+                <td><%= h item.pagamento %></td>
+              </tr>
+          <% end %>
+        </table>
+      </fieldset>
+  <%	end  %>
+</div>
+<div class='btn-footer'>
+  <%= link_to l(:button_back), invoice_path, :class => 'button-blu' %>
+</div>

@@ -12,8 +12,11 @@
       <% end %>
 
       <label for='name'><%= l(:label_user) %>:</label>
+      <% if @invid %>
+      <%= hidden_field_tag 'id', params[:id] %>
+          <% end %>
       <%= text_field_tag 'name', params[:name], :size => 30 %>
-      <%= submit_tag l(:button_apply), :class => "small", :name => nil %>
+      <%= submit_tag l(:button_apply),  :class => "small", :name => nil %>
       <%= link_to l(:button_clear), users_path, :class => 'icon icon-reload' %>
     </fieldset>
 <% end %>
@@ -37,8 +40,11 @@
           <td class="firstname"><%= h(user.firstname) %></td>
           <td class="lastname"><%= h(user.lastname) %></td>
           <td class="email"><%= mail_to(h(user.mail)) %></td>
-          <td align="center"> <%= link_to ">>>", new_invoice_path(:user_id => user.id, :convention_id => nil), :class => "button-grey", :id => "btn-scegli" %></td>
-
+          <% if @invid.nil? %>
+              <td align="center"> <%= link_to ">>>", new_invoice_path(:user_id => user.id, :convention_id => nil), :class => "button-grey", :id => "btn-scegli" %></td>
+          <% else %>
+              <td align="center"> <%= link_to ">>>", edit_invoice_path(:id => @invid, :user_id => user.id, :convention_id => nil), :class => "button-grey", :id => "btn-scegli" %></td>
+          <% end %>
         </tr>
     <% end -%>
     </tbody>
@@ -48,7 +54,6 @@
 <br/> &nbsp;
 
 <h3 style="color: #ffffff; border: none;" class="gradient-dx-blu"><%= l(:label_convention_plural) %></h3>
-
 
 <% if @conventions.any? %>
     <div style="max-width: 960px; overflow: auto;">
@@ -88,7 +93,11 @@
               </td>
               <td>Mail: <%= h conv.email %>
                 <br/>Tel: <%= h conv.telefono %></td>
-              <td align="center"> <%= link_to ">>>", new_invoice_path(:user_id => nil, :convention_id => conv.id), :class => "button-grey", :id => "btn-scegli" %></td>
+              <% if @invid.nil? %>
+                  <td align="center"> <%= link_to ">>>", new_invoice_path(:user_id => nil, :convention_id => conv.id), :class => "button-grey", :id => "btn-scegli" %></td>
+              <% else %>
+                  <td align="center"> <%= link_to ">>>", edit_invoice_path(:id => @invid, :user_id => nil, :convention_id => conv.id), :class => "button-grey", :id => "btn-scegli" %></td>
+              <% end %>
             </tr>
         <% end %>
         </table>

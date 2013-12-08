@@ -1,20 +1,31 @@
-<h1>Listing payments</h1>
-
-<table>
+<h1><%= l(:label_pagamento_metodo_plural) %></h1>
+<style type="text/css">
+    .ptable th, .ptable td {
+        text-align: left;
+        font-weight: bold;
+        padding: 1em!important;
+    }
+    .ptable th {
+        color: #006B92
+    }
+</style>
+<table class="list ptable">
   <tr>
-    <th>Pagamento</th>
+    <th style="width: 15%;">id</th>
+    <th style="width: 80%;">Pagamento</th>
+    <th></th>
+    <th>id</th>
   </tr>
 
-<% @payments.each do |payment| %>
-  <tr>
-    <td><%=h payment.pagamento %></td>
-    <td><%= link_to 'Show', payment %></td>
-    <td><%= link_to 'Edit', edit_payment_path(payment) %></td>
-    <td><%= link_to 'Destroy', payment, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <% @payments.each do |payment| %>
+      <tr>
+        <td style="width: 5%;"><%= h payment.id.to_s %></td>
+        <td style="width: 85%;"><%= h payment.pagamento %></td>
+        <td class="buttons"><%= link_to('', edit_payment_path(payment), :class => 'icon icon-edit') if User.current.admin? %></td>
+        <td class="buttons"><%= link_to ('', payment, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
+      </tr>
+  <% end %>
 </table>
+<br/>
 
-<br />
-
-<%= link_to 'New payment', new_payment_path %>
+<%= link_to 'Nuovo', new_payment_path, :class => "button-blu" %>

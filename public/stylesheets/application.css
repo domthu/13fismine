@@ -1627,3 +1627,11 @@ hr.quesiti hr {
     font-weight: bold;
     margin: 1% 1%;
 }
+.table-fix{
+    table-layout: fixed;
+    width: 99%;
+    }
+.table-fix th , .table-fix td{
+   overflow: hidden;
+   word-wrap:break-word;
+}

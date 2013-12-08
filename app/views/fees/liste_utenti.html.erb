@@ -19,13 +19,13 @@
 &nbsp;
 
 <div class="autoscroll">
-<table class="list">
+<table class="table-fix list">
   <thead><tr>
   <%= sort_header_tag('person', :caption => l(:label_person), :style => 'width: 35%;') %>
   <%= sort_header_tag('role', :caption => l(:label_role), :style => 'width: 20%;') %>
   <%= sort_header_tag('scadenza', :caption => l(:field_due_date), :default_order => 'desc', :style => 'width: 15%; text-align:left;') %>
   <%= sort_header_tag('registration', :caption => l(:field_registration_date), :default_order => 'desc', :style => 'width: 15%;') %>
-  <%=sort_header_tag('conv', :caption => l(:label_have_convention), :default_order => 'desc', :style => 'width: 5%;') %>
+  <%=sort_header_tag('conv', :caption => 'Conv.', :default_order => 'desc', :style => 'width: 5%;') %>
     <th></th>
   </tr></thead>
   <tbody>

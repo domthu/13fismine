@@ -2,9 +2,18 @@
 
 <div class="box tabular">
   <%= f.hidden_field :user_id, :value => @user_id %>
-  <%= f.hidden_field :convention_id, :value => @convention_id  %>
+  <%= f.hidden_field :convention_id, :value => @convention_id %>
   <%# f.hidden_field :mittente, :value =>  Setting.default_invoices_header  %>
-  <p><span style="font-weight: bold;"><%= link_to " < cambia", invoice_receiver_path %></span>
+
+  <p><span style="font-weight: bold;">
+
+    <% if @invoice.new_record? %>
+           <%= link_to " < cambia", invoice_receiver_path %>
+        <% else %>
+        <%= link_to " < cambia", invoice_receiver_path(:id => @invoice.id) %>  <span class="mini-legend" style="color:firebrick;"> *Attenzione alle modifiche questa fattura è già stata compilata! </span>
+        <% end %>
+
+    </span>
     <%= raw f.text_area :destinatario,
                         :label => (:label_destinatario),
                         :value => @dest %>  </p>

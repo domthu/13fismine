@@ -7,7 +7,8 @@ class InvoicesController < ApplicationController
   include Redmine::Export::PDF
   before_filter :set_menu
   before_filter :get_dest, :only => [:new]
-  before_filter :retreive_dest, :only => [:show]
+  before_filter :retreive_dest, :only => [:show , :edit]
+  menu_item :invoice, :only => [:index]
   menu_item :invoices, :only => [:invoices]
   menu_item :email_fee, :only => [:email_fee]
   menu_item :invia_fatture, :only => [:invia_fatture]
@@ -15,7 +16,7 @@ class InvoicesController < ApplicationController
 
   def set_menu
     case self.action_name
-      when 'index', 'show', 'edit'
+      when 'index', 'show', 'edit', 'invoice_receiver','invoice_to_pdf' ,'download_pdf'
         @menu_fs = :menu_payment_fs
       else
         @menu_fs = :application_menu
@@ -23,6 +24,8 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_receiver
+    #serve eventualemte per assegnare un utente alla fattura che non ne ha
+    @invid = params[:id] || nil
 
     sort_init 'username', 'asc'
     sort_update 'username' => 'login',
@@ -88,7 +91,7 @@ class InvoicesController < ApplicationController
     @totale = @imponibile + @imposta
   end
 
-  def download_pdf
+  def invoice_download_pdf
     unless params[:id].nil?
       html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
       pdf = PDFKit.new(html)
@@ -108,13 +111,13 @@ class InvoicesController < ApplicationController
     #end
 
     #Sorting
-    sort_init 'numero_fattura', 'desc'
+    sort_init 'data_fattura', 'desc'
     sort_update 'numero_fattura' => 'numero_fattura',
-                'user' => 'user',
+                'user' => 'users.lastname',
+                'convention' => 'conventions.ragione_sociale',
                 'data_fattura' => 'data_fattura',
-                'anno' => 'anno',
-                'tariffa' => 'tariffa',
-                'pagamento' => 'pagamento'
+                'anno' => 'anno'
+
 
     respond_to do |format|
       #ovverride for paging format.html # index.html.erb
@@ -123,6 +126,7 @@ class InvoicesController < ApplicationController
         @invoice_count = Invoice.all.count
         @invoice_pages = Paginator.new self, @invoice_count, per_page_option, params['page']
         @invoices = Invoice.find(:all,
+                                 :include => [:user , :convention],
                                  :order => sort_clause,
                                  :limit => @invoice_pages.items_per_page,
                                  :offset => @invoice_pages.current.offset)
@@ -135,6 +139,15 @@ class InvoicesController < ApplicationController
   # GET /invoices/1
   # GET /invoices/1.xml
   def show
+    @invoice = Invoice.find(params[:id])
+    @tariffa =  @invoice.tariffa || 0.00
+    @scontoperc = @invoice.sconto || 0.00
+    @sconto = (@tariffa * @scontoperc) / 100
+    @imponibile = @tariffa - @sconto
+    @impostapercent = @invoice.iva * 100 || 0.00
+    @impostaperc = @invoice.iva  || 0.00
+    @imposta = (@imponibile * @impostaperc) / 100
+    @totale = @imponibile + @imposta
     respond_to do |format|
       format.html # show.html.erb
       format.xml { render :xml => @invoice }
@@ -172,9 +185,45 @@ class InvoicesController < ApplicationController
   # GET /invoices/1/edit
   def edit
     @invoice = Invoice.find(params[:id])
+    #destinatario
+   # if @invoice.destinatario.nil? || @invoice.destinatario.blank?
+   if !params[:convention_id].nil? ||  !params[:user_id].nil?
+      @dest = ''
+      unless params[:user_id].nil?
+        item = User.find_by_id(params[:user_id])
+        @dest += item.getDefault4invoice()
+        @invoice.convention_id = nil
+      end
+      unless params[:convention_id].nil?
+        item = Convention.find_by_id(params[:convention_id])
+        @dest += item.getDefault4invoice()
+        @invoice.user_id = nil
+      end
+
+      @invoice.destinatario = @dest
+   #end
+     end
+=begin
+      if (@dest == '') && (@invoice.convention_id.nil? && @invoice.user_id.nil?)
+        flash[:notice] = "Selezionare un utente o una convenzione prima di creare la fattura..."
+        redirect_to(invoice_receiver_path)
+      else
+        #mittente default_invoices_header:
+        if @invoice.mittente.nil? || @invoice.mittente.blank?
+          @invoice.mittente = Setting.default_invoices_header
+        end
+        #description default_invoices_description
+        if @invoice.description.nil? || @invoice.description.blank?
+          @invoice.description = Setting.default_invoices_description
+        end
+        #footer default_invoices_footer
+        @invoice.footer = Setting.default_invoices_footer
+        @invoice.destinatario = @dest
+      end
+=end
     @invoices = Invoice.find(:all,
                              :order => 'id DESC',
-                             :limit => 5)
+                             :limit => 7)
   end
 
   # POST /invoices
@@ -222,7 +271,7 @@ class InvoicesController < ApplicationController
   end
 
 
-private
+  private
 
   def get_dest
     @dest = ''
@@ -242,23 +291,36 @@ private
     render_404
   end
 
+
   def retreive_dest
     @invoice = Invoice.find(params[:id])
     #destinatario
-    if @invoice.destinatario.nil? || @invoice.destinatario.blank?
+    if (@invoice.destinatario.nil? || @invoice.destinatario.blank?) || (!@invoice.user_id.nil? && !@invoice.convention_id.nil?) || (@invoice.user_id.nil? && @invoice.convention_id.nil?)
+#    if @invoice.destinatario.nil? || @invoice.destinatario.blank? || }"
       @dest = ''
-      if !@invoice.user_id.nil?
+      unless @invoice.user_id.nil? || @invoice.user_id.blank?
         item = User.find_by_id(params[:user_id])
+        if item
         @dest += item.getDefault4invoice()
-      end
-      if !@invoice.convention_id.nil?
+        @invoice.convention_id = nil
+        else
+          @invoice.user_id = nil
+          end
+        end
+      unless @invoice.convention_id.nil? || @invoice.convention_id.blank?
         item = Convention.find_by_id(params[:convention_id])
+        if item
         @dest += item.getDefault4invoice()
+        @invoice.user_id = nil
+        else
+          @invoice.convention_id = nil
+        end
+
       end
       if @dest == ''
         flash[:notice] = "Selezionare un utente o una convenzione prima di creare la fattura..."
         redirect_to(invoice_receiver_path)
-      else
+      end
         #mittente default_invoices_header:
         if @invoice.mittente.nil? || @invoice.mittente.blank?
           @invoice.mittente = Setting.default_invoices_header
@@ -268,12 +330,14 @@ private
           @invoice.description = Setting.default_invoices_description
         end
         #footer default_invoices_footer
-        #@invoice.footer = Setting.default_invoices_footer
-        @invoice.destinatario = @dest
+      if @invoice.footer.nil? || @invoice.footer.blank?
+        @invoice.footer = Setting.default_invoices_footer
+        end
+        @invoice.destinatario =  @dest
         @invoice.save
       end
-    end
-
+  #  @invoice.destinatario = '>>>>>>' +  (!@invoice.user_id.nil? && !@invoice.convention_id.nil?).to_s
+     #  @invoice.update_attributes(params[:user_id,:convention_id,:mittente,:destinatario,:description,:footer ])
   rescue ActiveRecord::RecordNotFound
     render_404
   end

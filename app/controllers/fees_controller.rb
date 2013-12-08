@@ -31,6 +31,16 @@ class FeesController < ApplicationController
   menu_item :email_fee, :only => [:email_fee]
   menu_item :invia_fatture, :only => [:invia_fatture]
 
+  def set_menu
+    case self.action_name
+      when 'index', 'liste_utenti', 'associati', 'paganti','abbonamenti'
+        @menu_fs = :menu_fee_fs
+      when 'fatture', 'email_fee', 'invia_fatture'
+        @menu_fs = :menu_payment_fs
+      else
+        @menu_fs = :application_menu
+    end
+  end
   def index
     #@msg[] << ""
     #__User_all = User.all()
@@ -421,14 +431,5 @@ class FeesController < ApplicationController
     render_404
   end
 
-  def set_menu
-    case self.action_name
-      when 'index', 'liste_utenti', 'associati', 'paganti','abbonamenti'
-        @menu_fs = :menu_fee_fs
-      when 'fatture', 'email_fee', 'invia_fatture'
-        @menu_fs = :menu_payment_fs
-      else
-        @menu_fs = :application_menu
-    end
-  end
+
 end

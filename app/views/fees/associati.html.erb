@@ -16,11 +16,11 @@
  <br />
 
 <div class="autoscroll">
-<table id="tblinvii" class="list">
+<table class="table-fix list">
   <thead><tr>
-  <%= sort_header_tag('person', :caption => l(:field_user_fee), :style => 'width: 35%; text-align:left') %>
-  <%= sort_header_tag('mail', :caption => l(:field_mail), :style => 'width: 15%; text-align:left;') %>
-  <%= sort_header_tag('datascadenza', :caption => l(:field_data_scadenza), :default_order => 'desc', :style => 'width: 15%; text-align:left;') %>
+  <%= sort_header_tag('person', :caption => l(:field_user_fee), :style => 'width: 35%;') %>
+  <%= sort_header_tag('mail', :caption => l(:field_mail), :style => 'width: 20%;') %>
+  <%= sort_header_tag('datascadenza', :caption => l(:field_data_scadenza), :default_order => 'desc', :style => 'width: 15%;') %>
   <%= sort_header_tag('role_id', :caption => 'Status', :default_order => 'desc', :style => 'width: 5%; text-align:left;') %>
   <%= sort_header_tag('convention_id', :caption => 'Conv.', :default_order => 'desc', :style => 'width: 50px; text-align:left;') %>
     <th style="text-align:left; width: 40px;"><i class="icon icon-email" title="Imposti per l'invio email"></i><input id="checkbox_selector" type="checkbox" name="invia" class="selectall" checked="checked" /></th>
@@ -31,7 +31,7 @@
     <%# user.login user.firstname user.lastname %>
   <td class="username"><%= avatar(user, { :size => "14", :class => "no-div" }) %><%= link_to h(user.name), edit_user_path(user) %></td>
   <td class="email"><%= mail_to(h(user.mail)) %></td>
-  <td class="datascadenza" align="left"><%= format_date(user.scadenza) %></td>
+  <td class="datascadenza" align="center"><%= format_date(user.scadenza) %></td>
   <td class="role" align="left"> <%= user_role_iconized(user, :size => "s", :icon_for => user.uicon, :text => '') %>
 </td>
     <td  class="convention_id" style='width: 50px;'>

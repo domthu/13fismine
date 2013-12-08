@@ -4,6 +4,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :user, :class_name => 'User', :foreign_key => 'user_id'
   #domthu20131108
   belongs_to :convention, :class_name => 'Convention', :foreign_key => 'convention_id'
+  belongs_to :payment, :class_name => 'Payment', :foreign_key => 'payment_id'
 
   #integrare foglio
   #nuovo campo per salvare footer

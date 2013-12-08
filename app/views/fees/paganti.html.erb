@@ -15,16 +15,15 @@
 &nbsp;
 
 <div class="autoscroll">
-<table id="tblinvii" class="list">
+<table class="table-fix list">
   <thead><tr>
-  <%= sort_header_tag('lastname', :caption => l(:field_user_fee)) %>
+  <%= sort_header_tag('lastname', :caption => l(:field_user_fee),:style => 'width:35%;'  ) %>
   <%# sort_header_tag('firstname', :caption => l(:field_firstname)) %>
   <%# sort_header_tag('lastname', :caption => l(:field_lastname)) %>
-  <%= sort_header_tag('mail', :caption => l(:field_mail)) %>
-  <%= sort_header_tag('datascadenza', :caption => l(:field_data_scadenza), :default_order => 'desc') %>
-  <%= sort_header_tag('role_id', :caption => '', :default_order => 'desc') %>
-  <%= sort_header_tag('convention_id', :caption => l(:field_convention), :default_order => 'desc') %>
-    <th style="text-align:left; width: 40px;"><i class="icon icon-email" title="Imposti per l'invio email"></i><input id="checkbox_selector" type="checkbox" name="invia" class="selectall" checked="checked" /></th>
+  <%= sort_header_tag('mail', :caption => l(:field_mail), :style => 'width:30%')  %>
+  <%= sort_header_tag('datascadenza', :caption => l(:field_data_scadenza), :default_order => 'desc', :style => 'width:20%') %>
+  <%= sort_header_tag('role_id', :caption => '', :default_order => 'desc' , :style => 'width:15%') %>
+    <th style="text-align:left; width: 40px;"><i class="icon icon-email" title="Imposta per l'invio email"></i><input id="checkbox_selector" type="checkbox" name="invia" class="selectall" checked="checked" /></th>
   </tr></thead>
   <tbody>
 <% for user in @users -%>
@@ -32,11 +31,10 @@
     <%# user.login user.firstname user.lastname %>
   <td class="username"><%= avatar(user, { :size => "14", :class => "no-div" }) %><%= link_to h(user.name), edit_user_path(user) %></td>
   <td class="email"><%= mail_to(h(user.mail)) %></td>
-  <td class="datascadenza" align="left"><%= format_date(user.scadenza) %></td>
-  <td class="role" align="left"><%= get_status_role(user) %></td>
-  <td class="convention_id" align="left"><%= h truncate(user.convention.name, :length => 30) unless user.privato? %></td>
-  <td class=""><%# check_box_tag 'ids[]', user.id, {:name => "invia"} %></td>
-    </td>
+  <td style="text-align: center;"><%= format_date(user.scadenza) %></td>
+  <td><%= get_status_role(user) %></td>
+  <td><%= check_box_tag 'ids[]', user.id, {:name => "invia"} %></td>
+
     <td>
       <%# user.scoped_by_newsletter_users(@).nil? %>
     </td>

@@ -1,4 +1,12 @@
 class PaymentsController < ApplicationController
+  layout 'admin'
+  before_filter :set_menu
+
+
+
+  def set_menu
+           @menu_fs = :menu_payment_fs
+  end
   # GET /payments
   # GET /payments.xml
   def index

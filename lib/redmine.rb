@@ -288,33 +288,23 @@ Redmine::MenuManager.map :project_menu do |menu|
 end
 # MENU LATERALE DX-> ABBONAMENTI
 Redmine::MenuManager.map :menu_fee_fs do |menu|
-  menu.push :panoramica, :fee_path
-  menu.push :liste, :liste_utenti_path
-  #menu.push :privati, :privati_path
-  menu.push :associati, :associati_path
-  #menu.push :scaduti, :scaduti_path
-  #menu.push :archiviati, :archiviati_path
-  menu.push :paganti, :paganti_path
-  menu.push :abbonamenti, :abbonamenti_path
-  menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
-
-=begin
-  menu.push :pagamento, :invoices_path
-  menu.push :invia_fatture, :invia_fatture_path
-  menu.push :email_fee, :email_fee_path
-  menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
-  menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
-  menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
-=end
+  menu.push :fee, :fee_path, :caption => :label_overview
+  menu.push :liste_utenti, :liste_utenti_path , :caption => :list_registrati
+  menu.push :associati, :associati_path  , :caption => :who_not_pay
+  menu.push :paganti, :paganti_path   , :caption => :who_pay
+ # menu.push :abbonamenti, :abbonamenti_path
+ # #menu.push :scaduti, :scaduti_path
+ #menu.push :archiviati, :archiviati_path
 end
 # MENU LATERALE DX -> FATTURE
 Redmine::MenuManager.map :menu_payment_fs do |menu|
-  menu.push :email_fee, :email_fee_path
-  menu.push :invia_fatture, :invia_fatture_path
-  menu.push :invoice, :invoices_path, :if => Proc.new { User.current.admin? }
-  menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
-  menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
-end
+  menu.push :invoice, :invoices_path, :caption =>  :label_invoice_list , :if => Proc.new { User.current.admin? }
+  menu.push :invia_fatture, :invia_fatture_path , :label =>  :label_emetti_fattura , :if => Proc.new { User.current.admin? }
+  #menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
+  #menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
+  menu.push :payment, :payments_path , :caption => :label_pagamento_metodo_plural
+  menu.push :email_fee, :email_fee_path, :caption => :label_fee_templates
+  end
 # MENU LATERALE DX -> FISCOSPORT
 Redmine::MenuManager.map :menu_fiscosport do |menu|
   menu.push :top_menus, :top_menus_path, :caption => :label_top_menu, :if => Proc.new { User.current.admin? }

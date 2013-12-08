@@ -6,12 +6,11 @@
     <table class="list invoices">
       <thead>
       <tr>
-        <%= sort_header_tag('numero_fattura', :title => l(:label_numero_fattura), :style => 'width: 20%;text-align:left;') %>
-        <%= sort_header_tag('user', :title => l(:label_user), :style => 'width: 20%;text-align:left;') %>
-        <%= sort_header_tag('data_fattura', :title => l(:label_data_fattura), :style => 'width: 15%;') %>
-        <%= sort_header_tag('anno', :title => l(:label_anno), :style => 'width: 10%;') %>
-        <%= sort_header_tag('tariffa', :title => l(:label_tariffa), :style => 'width: 10%;') %>
-        <%= sort_header_tag('pagamento', :title => l(:label_pagamento), :style => 'width: 25%;') %>
+        <%= sort_header_tag('numero_fattura', :caption => l(:label_numero_fattura_abbr), :style => 'width: 15%; text-align:center;') %>
+        <%= sort_header_tag('user', :caption => l(:label_destinatario), :style => 'width: 25%; text-align:center;') %>
+        <%= sort_header_tag('convention', :caption => l(:field_convention), :style => 'width: 25%;text-align:center;') %>
+        <%= sort_header_tag('data_fattura', :caption => l(:label_data_fattura), :style => 'width: 15%; text-align:center') %>
+        <%= sort_header_tag('anno', :caption => l(:label_anno), :style => 'width: 15%;  text-align:center') %>
         <th style='width: 5%;'></th>
         <th style='width: 5%;'></th>
         <th style='width: 5%;'></th>
@@ -20,13 +19,18 @@
       <tbody>
       <% @invoices.each do |invoice| %>
           <tr class="<%= cycle 'odd', 'even' %>">
-            <td><%= link_to h(invoice.numero_fattura), invoice_path(invoice) %></td>
-            <td><%= link_to h(invoice.user), user_path(invoice.user, :id => invoice.user_id) %></td>
-            <td align="left"><%= format_date(invoice.data_fattura) %></td>
-            <td align="right"><%= h invoice.anno %></td>
-            <td align="right"><%= h invoice.tariffa %></td>
-            <td align="left"><%= h invoice.pagamento %></td>
-            <td class="buttons"><%= link_to('', invoice_download_pdf_path(invoice.id),:target => '_blank', :class => 'icon icon-file application-pdf') if User.current.admin? %></td>
+
+            <td align="center"><%= link_to h(invoice.numero_fattura), invoice_path(invoice, :user_id => invoice.user_id, :convention_id => invoice.convention_id) %></td>
+            <% if  invoice.user.nil? && invoice.convention.nil? %>
+                <td align="left"><%= link_to "Utente mancante ?", invoice_receiver_path(:id => invoice.id) %></td>
+                <td align="left"><%= link_to "Convenzione mancante ?", invoice_receiver_path(:id => invoice.id) %></td>
+            <% else %>
+                <td align="left"><%= link_to h(invoice.user), user_path(invoice.user, :id => invoice.user_id) %></td>
+                <td align="left"><%= link_to h(invoice.convention), conventions_path(invoice.convention, :id => invoice.convention_id) %></td>
+             <% end %>
+            <td align="center"><%= format_date(invoice.data_fattura) %></td>
+            <td align="center"><%= h invoice.anno %></td>
+            <td class="buttons"><%= link_to('', invoice_download_pdf_path(invoice.id), :target => '_blank', :class => 'icon icon-file application-pdf') %></td>
             <td class="buttons"><%= link_to('', edit_invoice_path(invoice), :class => 'icon icon-edit') if User.current.admin? %></td>
             <td class="buttons"><%= link_to('', invoice, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
 

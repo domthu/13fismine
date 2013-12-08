@@ -671,6 +671,7 @@ it:
   label_confirmation: Conferma
   label_export_to: Esporta su
   label_download_pdf: Download Pdf
+  button_pdf: "Pdf  "
   label_read: Leggi...
   label_public_projects: Edizioni pubbliche
   label_open_issues: aperta
@@ -1139,12 +1140,13 @@ it:
   field_Invoice: Fattura
   field_Date_from: Valido dal
   field_Date_to: fino al
-
+  label_fee_templates: Personalizza fattura e messaggi
   label_invoice: Fattura
   label_invoice_plural: Fatture
   label_invoice_new: Nuova fattura
-
+  label_invoice_list: Lista delle fatture
   label_numero_fattura: Numero fattura
+  label_numero_fattura_abbr: Num.Fatt.
   label_data_fattura: Data fattura
   label_sezione: Sezione
   label_anno: Anno
@@ -1152,6 +1154,9 @@ it:
   label_sconto: Sconto
   label_iva: IVA
   label_pagamento: Pagamento
+  label_pagamento_plural: Pagamenti
+  label_pagamento_metodo: Metodo di Pagamento
+  label_pagamento_metodo_plural: Metodi di Pagamento
   label_mittente: Mittente
   label_destinatario: Destinatario
   label_invoices_none: Non ci sono fatture
@@ -1165,7 +1170,6 @@ it:
   field_iva: IVA
   field_pagamento: Pagamento
   user_invoices: Lista delle fatture (%{num}) emesse
-
   field_group_banner: Banner
   label_group_banner: Banner
   label_group_banner_plural: Banners
@@ -1283,6 +1287,7 @@ it:
 # convention (Organismo convenzionato) ha tanti utenti non paganti
   field_convention: Convenzione
   label_convention: Convenzione
+  label_conventionated: Convenzionato
   label_convention_full: Organismi aderenti (convenzionati)
   label_convention_plural: Convenzioni
   label_convention_new: Nuova convenzione
@@ -1481,7 +1486,7 @@ it:
 #Menu
   label_table_fs: Fiscosport
   label_fee_manage: Abbonamenti
-  label_payment: Pagamenti
+  label_payment: Fatture
 
 #Fee
   label_fee: Abbonamento
@@ -1640,9 +1645,9 @@ it:
   control_fee: Gestione abbonamenti --> Pannello di controllo
   stato_utenze: Stato delle utenze FISCOSPORT
   button_verify: Verifica
-  who_pay: Privati (paganti)
+  who_pay: Privati
   associations: Associazioni
-  affiliati: Affiliati (Non paganti)
+  who_not_pay: Convenzionati
   siglatipo: Sigla e Tipi organismi
   notice_setting_fee_not_allowed: La gestione degli abbonamenti non è abilitata
   label_person: Persona
