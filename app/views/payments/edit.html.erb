@@ -4,8 +4,14 @@
   <%= f.error_messages %>
 
   <p>
+    <%= f.label :abbrev %><br />
+    <%= f.text_field :abbrev, :label => :field_abbrev, :size => 3 %>
+
+  </p>
+  <p>
     <%= f.label :pagamento %><br />
-    <%= f.text_area :pagamento %>
+    <%= f.text_field :pagamento, :label => :field_pagamento, :size => 100 %>
+
   </p>
   <p>
     <%= f.submit 'Update' %>

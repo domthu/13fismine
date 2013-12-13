@@ -25,7 +25,7 @@
             <td align="left"><%= format_date(invoice.data_fattura) %></td>
             <td align="right"><%= h invoice.anno %></td>
             <td align="right"><%= h invoice.tariffa %></td>
-            <td align="left"><%= h invoice.pagamento %></td>
+            <td align="left"><%= h invoice.payment.abbrev %></td>
             <td class="buttons"><%= link_to('', invoice_download_pdf_path(invoice.id),:target => '_blank', :class => 'icon icon-file application-pdf') if User.current.admin? %></td>
             <td class="buttons"><%= link_to('', edit_invoice_path(invoice), :class => 'icon icon-edit') if User.current.admin? %></td>
             <td class="buttons"><%= link_to('', invoice, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>

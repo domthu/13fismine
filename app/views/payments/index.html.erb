@@ -2,11 +2,16 @@
 
 <table>
   <tr>
+    <th>l(:abbrev)</th>
     <th>Pagamento</th>
+    <th></th>
+    <th></th>
+    <th></th>
   </tr>
 
 <% @payments.each do |payment| %>
   <tr>
+    <td><%=h payment.abbrev %></td>
     <td><%=h payment.pagamento %></td>
     <td><%= link_to 'Show', payment %></td>
     <td><%= link_to 'Edit', edit_payment_path(payment) %></td>

@@ -69,7 +69,7 @@
     </p>
 
     <p>
-      <%= l(:label_pagamento) %>: <%= h @invoice.pagamento %>
+      <%= l(:label_pagamento) %>: <%= h @invoice.payment %>
     </p>
   </fieldset>
 </div>
@@ -98,7 +98,7 @@
             <td><%= format_date(user_invoice.data_fattura) %></td>
             <td><%= h user_invoice.anno %></td>
             <td><%= h user_invoice.tariffa %></td>
-            <td><%= h user_invoice.pagamento %></td>
+            <td><%= h user_invoice.payment.abbrev %></td>
           </tr>
       <% end %>
     </table>
@@ -127,7 +127,7 @@
                 <td><%= format_date(item.data_fattura) %></td>
                 <td><%= h item.anno %></td>
                 <td><%= h item.tariffa %></td>
-                <td><%= h item.pagamento %></td>
+                <td><%= h item.payment.abbrev %></td>
               </tr>
           <% end %>
         </table>
@@ -138,4 +138,5 @@
   <%= link_to l(:button_issue_empty), edit_invoice_path(@invoice), :class => 'button-grey' %>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <%= link_to l(:label_download_pdf), invoice_download_pdf_path(@invoice.id ), :class => 'button-blu' %>
+  <%= link_to l(:label_view), invoice_to_pdf_path(@invoice.id), :class => 'button-grey' %>
 </div>
