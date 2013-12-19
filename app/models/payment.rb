@@ -1,11 +1,9 @@
 class Payment < ActiveRecord::Base
-  has_many :invoice , :dependent => :nullify
 
-
-
+  has_many :invoices, :dependent => :nullify
   def to_s
-    pagamento
+    "(" + self.abbrev + ") " + self.pagamento
   end
+   alias :name :to_s
 
-  alias :name :to_s
 end

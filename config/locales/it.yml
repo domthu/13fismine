@@ -1486,7 +1486,11 @@ it:
 #Menu
   label_table_fs: Fiscosport
   label_fee_manage: Abbonamenti
-  label_payment: Fatture
+
+  label_fatture: Fatture
+  field_payment: Pagamento
+  label_footer: Pie di pagine
+  field_footer: Pie di pagine
 
 #Fee
   label_fee: Abbonamento

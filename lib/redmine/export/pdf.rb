@@ -364,7 +364,7 @@ module Redmine
         pdf.RDMCell(20,5, invoice.iva.to_s,0,0,"R")
         pdf.RDMCell(35,5, invoice.tariffa.to_s,0,0,"R")
         pdf.RDMCell(25,5, format_date(invoice.data_fattura))
-        pdf.RDMCell(55,5, smart_truncate(invoice.pagamento, 40))
+        pdf.RDMCell(55,5, smart_truncate(invoice.payment.pagamento, 40))
         pdf.Ln
 
         pdf.SetFontStyle('B',9)

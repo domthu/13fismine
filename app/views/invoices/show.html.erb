@@ -25,7 +25,19 @@
         border: 2px;
     }
 
+<<<<<<< HEAD
 </style>
+=======
+    <p>
+      <%= l(:label_iva) %>: <%= h @invoice.iva %>
+    </p>
+
+    <p>
+      <%= l(:label_pagamento) %>: <%= h @invoice.payment %>
+    </p>
+  </fieldset>
+</div>
+>>>>>>> 8ea78bf5a18bebb2e75866902e8991983fa18b7e
 
 <div class="ipage">
   <%=  @invoice.mittente %>
@@ -39,6 +51,24 @@
         <td style="width: 25%"> fattura n. <%= @invoice.numero_fattura.to_s + ' / ' + @invoice.sezione.to_s %> <br/>
           del  <%= I18n.localize(@invoice.data_fattura.to_date, :format => :giorno_mese_anno_barra) %></td>
       </tr>
+<<<<<<< HEAD
+=======
+      <% @invoice.user.invoices.each do |user_invoice| %>
+          <tr>
+            <% if (user_invoice != @invoice) %>
+                <td class="buttons">
+                  <%= link_to(h(user_invoice.numero_fattura), invoice_path(user_invoice, :id => user_invoice.id), :class => 'icon icon-summary') if User.current.admin? %>
+            <% else %>
+                <td><b><%= h user_invoice.numero_fattura %></b></td>
+            <% end %>
+            </td>
+            <td><%= format_date(user_invoice.data_fattura) %></td>
+            <td><%= h user_invoice.anno %></td>
+            <td><%= h user_invoice.tariffa %></td>
+            <td><%= h user_invoice.payment.abbrev %></td>
+          </tr>
+      <% end %>
+>>>>>>> 8ea78bf5a18bebb2e75866902e8991983fa18b7e
     </table>
   </div>
   <div class="icentre">
@@ -62,8 +92,22 @@
           <% end %>
           <% unless @invoice.user.mail.blank? || @invoice.user.mail.nil? %>
               <tr>
+<<<<<<< HEAD
                 <td>e-mail</td>
                 <td><%= @invoice.user.mail.to_s %></td>
+=======
+                <% if (item != @invoice) %>
+                    <td class="buttons">
+                      <%= link_to(h(item.numero_fattura), invoice_path(item, :id => item.id), :class => 'icon icon-summary') if User.current.admin? %>
+                <% else %>
+                    <td><b><%= h item.numero_fattura %></b></td>
+                <% end %>
+                </td>
+                <td><%= format_date(item.data_fattura) %></td>
+                <td><%= h item.anno %></td>
+                <td><%= h item.tariffa %></td>
+                <td><%= h item.payment.abbrev %></td>
+>>>>>>> 8ea78bf5a18bebb2e75866902e8991983fa18b7e
               </tr>
           <% end %>
         </table>
@@ -129,3 +173,12 @@
   <br/>
   <%= Setting.default_invoices_footer %>
 </div>
+<<<<<<< HEAD
+=======
+<div class='btn-footer'>
+  <%= link_to l(:button_issue_empty), edit_invoice_path(@invoice), :class => 'button-grey' %>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <%= link_to l(:label_download_pdf), invoice_download_pdf_path(@invoice.id ), :class => 'button-blu' %>
+  <%= link_to l(:label_view), invoice_to_pdf_path(@invoice.id), :class => 'button-grey' %>
+</div>
+>>>>>>> 8ea78bf5a18bebb2e75866902e8991983fa18b7e

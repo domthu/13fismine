@@ -163,19 +163,24 @@ class InvoicesController < ApplicationController
     @pu = params[:user_id].present?
     @pc = params[:convention_id].present?
     @invoice = Invoice.new
-    @anno = Date.today.year
-    #@cnt = Invoice.count(:conditions => ['anno = ' + @anno.to_s ])
+    @invoice.iva = 22
+    @invoice.anno = Date.today.year
     @invoices = Invoice.find(:all,
                              :order => 'id DESC',
                              :limit => 7)
     @cnt = Invoice.maximum(:numero_fattura, :conditions => ['anno = ' + @anno.to_s])
     if @cnt.nil? or @cnt == 0
       @cnt = 1
-    else
-      @cnt += 1
-    end
 
-#Person.minimum(:age, :conditions => ['last_name != ?', 'Drake']) # Selects the minimum age for everyone with a last name other than 'Drake'
+    else
+      cnt += 1
+    end
+    @invoice.numero_fattura = cnt
+    @invoice.destinatario = @dest
+    @invoice.mittente = Setting.default_invoices_header
+    @invoice.description = Setting.default_invoices_description
+    @invoice.footer = Setting.default_invoices_footer
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml { render :xml => @invoice }
@@ -330,10 +335,12 @@ class InvoicesController < ApplicationController
           @invoice.description = Setting.default_invoices_description
         end
         #footer default_invoices_footer
+
       if @invoice.footer.nil? || @invoice.footer.blank?
         @invoice.footer = Setting.default_invoices_footer
         end
         @invoice.destinatario =  @dest
+
         @invoice.save
       end
   #  @invoice.destinatario = '>>>>>>' +  (!@invoice.user_id.nil? && !@invoice.convention_id.nil?).to_s
