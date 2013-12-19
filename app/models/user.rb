@@ -363,9 +363,26 @@ class User < Principal
     end
     return (str.nil? || str.blank?) ? "-" : str
   end
+=begin
   def getDefault4invoice()
     str = ""
     str += "<b>" + (self.firstname  unless  self.firstname.blank? || self.firstname.nil?) + " " + (self.lastname  unless self.firstname.blank? || self.firstname.nil? ) + "</b><br />"
+    str += self.indirizzo + "<br />" unless self.indirizzo.blank?
+    if self.comune_id && self.comune
+      str += self.comune.cap + " " unless !self.comune.cap
+      str += self.comune.name
+      str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
+    end
+    str += "<br /> C.F. " + self.codicefiscale.to_s  unless self.codicefiscale.blank?
+    str += "<br /> P.I. " +self.partitaiva.to_s  unless self.partitaiva.blank?
+    return (str.nil? || str.blank?) ? "-" : str
+  end
+=end
+  def getDefault4invoice()
+    str = ""
+    str += "<b>" + (self.firstname  unless  self.firstname.blank? || self.firstname.nil?) + " " + (self.lastname  unless self.firstname.blank? || self.firstname.nil? ) + "</b><br />"
+    str += self.titolo + " di: <br />" unless self.titolo.blank?
+    str += "<b>" + self.soc + " </b><br />" unless self.soc.blank?
     str += self.indirizzo + "<br />" unless self.indirizzo.blank?
     if self.comune_id && self.comune
       str += self.comune.cap + " " unless !self.comune.cap

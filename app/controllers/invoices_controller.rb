@@ -167,7 +167,7 @@ class InvoicesController < ApplicationController
     #@cnt = Invoice.count(:conditions => ['anno = ' + @anno.to_s ])
     @invoices = Invoice.find(:all,
                              :order => 'id DESC',
-                             :limit => 5)
+                             :limit => 7)
     @cnt = Invoice.maximum(:numero_fattura, :conditions => ['anno = ' + @anno.to_s])
     if @cnt.nil? or @cnt == 0
       @cnt = 1
