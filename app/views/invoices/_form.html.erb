@@ -10,7 +10,8 @@
     <% if @invoice.new_record? %>
            <%= link_to " < cambia", invoice_receiver_path %>
         <% else %>
-        <%= link_to " < cambia", invoice_receiver_path(:id => @invoice.id) %>  <span class="mini-legend" style="color:firebrick;"> *Attenzione alle modifiche questa fattura è già stata compilata! </span>
+        <%= link_to " < cambia", invoice_receiver_path(:id => @invoice.id) %>
+        <span class="mini-legend" style="color:firebrick;"> *Attenzione alle modifiche questa fattura è già stata compilata! <br />Si sconsiglano modifiche di layout nelle textbox<br /> se necessario modificare solo il testo (meglio in html per rispettare i tags) </span>
         <% end %>
 
     </span>
@@ -18,11 +19,19 @@
                         :label => (:label_destinatario),
                         :value => @invoice.destinatario %>  </p>
 
-  <p><%= f.text_field :numero_fattura, :label => :field_numero_fattura, :size => 5, :required => true %>
+
+  <p>  <%= raw f.text_area :contatto,
+                        :label => (:label_contact),
+                        :value => @invoice.contatto %>  </p>
+
+ <div style="padding:3% 0; background-color: #EAECF6; border:solid 1px #fbec88" >
+  <p>
+  <%= f.text_field :numero_fattura, :label => :field_numero_fattura, :size => 5, :required => true %>
     <% unless @invoice.numero_fattura.blank? %>
         prossima fattura: <%= @invoice.numero_fattura %> [<%= @invoice.anno %>]
     <% end %>
   </p>
+
   <table style="float: right; margin: -30px 30px 0 0; border: dotted 1px #a9a9a9 ">
     <thead>
     <th>numero</th>
@@ -42,6 +51,7 @@
     <%# end %>
     </tbody>
   </table>
+
   <p><%= f.date_select :data_fattura, :label => :field_data_fattura, :required => true %></p>
 
   <p><%= f.text_field :tariffa, :label => :field_tariffa, :size => 5, :required => true %></p>
@@ -50,16 +60,17 @@
 
   <p><%= f.text_field :iva, :value => @invoice.iva.to_s, :label => :field_iva, :size => 5, :required => true %></p>
 
-    <p>
-      <%= f.select :payment_id, options_for_select(Payment.all.collect { |pay| [pay.name, pay.id] }, @invoices[0].payment_id), {:disabled => false, :include_blank => false, :required => true} %>
-    </p>
+  <p>
+    <%= f.select :payment_id, options_for_select(Payment.all.collect { |pay| [pay.name, pay.id] }, @invoices[0].payment_id), {:disabled => false, :include_blank => false, :required => true} %>
+  </p>
 
   <p><%= f.text_field :anno, :label => :field_anno, :value => @invoice.anno.to_s, :size => 5 %></p>
 
   <p><%= f.text_field :sezione, :value => @invoices[0].sezione.to_s, :label => :field_sezione, :size => 5 %></p>
-
+</div>
 
 </div>
+<!--
 
 <div class="box tabular">
   <p>
@@ -72,8 +83,10 @@
                         :label => (:label_footer),
                         :value => @invoice.footer %>  </p>
 </div>
+-->
 <script type="text/javascript">
-    CKEDITOR.replace('invoice_destinatario', { toolbar: 'Mini', height: 200, width: 450 });
-    CKEDITOR.replace('invoice_footer', { toolbar: 'Mini', height: 200, width: 450 });
-    CKEDITOR.replace('invoice_mittente', { toolbar: 'Mini', height: 200, width: 450 });
+    CKEDITOR.replace('invoice_destinatario', { toolbar: 'Mini', height: 120, width: 540 });
+    CKEDITOR.replace('invoice_contatto', { toolbar: 'Mini', height: 80, width: 540 });
+ // CKEDITOR.replace('invoice_footer', { toolbar: 'Mini', height: 200, width: 450 });
+//    CKEDITOR.replace('invoice_mittente', { toolbar: 'Mini', height: 200, width: 450 });
 </script>

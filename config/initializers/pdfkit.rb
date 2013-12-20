@@ -5,8 +5,10 @@ PDFKit.configure do |config|
   config.wkhtmltopdf = 'W:\Programs\wkhtmltopdf\wkhtmltopdf.exe'
   config.default_options = {
       :page_size => 'Legal',
-      :print_media_type => true
-      #  config.root_url = "http://localhost" # Use only if your external hostname is unavailable on the server.
+      :print_media_type => true ,
+      :footer_html => "#{RAILS_ROOT}/app/views/common/footer_pdf.html"
+
+       #  config.root_url = "http://localhost" # Use only if your external hostname is unavailable on the server.
   }
 end
 =begin  ---remote

@@ -1,29 +1,27 @@
-<h1><%= l(:label_pagamento_metodo_plural) %></h1>
-<% form_for(@payment) do |f| %>
-  <%= f.error_messages %>
-  <p>
-<<<<<<< HEAD
-      <%= f.text_field :pagamento , :size => 120 , :style => "border: solid #F5BC13 1px; padding: 1.2em!important;"%>
-=======
-    <%= f.label :abbrev %><br />
-    <%= f.text_field :abbrev, :label => :field_abbrev, :size => 3 %>
+<h2><%= l(:label_pagamento_metodo_plural) %></h2>
+<br/>
+<div class="box tabular">
+  <% form_for(@payment) do |f| %>
+      <%= f.error_messages %>
+      <br/>
 
-  </p>
-  <p>
-    <%= f.label :pagamento %><br />
-    <%= f.text_field :pagamento, :label => :field_pagamento, :size => 100 %>
+      <p>
+        <%= f.label :abbrev %>
+        <%= f.text_field :abbrev, :label => :field_abbrev, :size => 3 %>
+      </p>
 
->>>>>>> 8ea78bf5a18bebb2e75866902e8991983fa18b7e
-  </p>
-  <p>
-    <%= f.submit  l(:button_update) ,:class=> "button-blu" %>
-  </p>
-<% end %>
-<<<<<<< HEAD
-<br />
-<%= link_to l(:button_back), payments_path, :class => "button-grey"  %>
-=======
+      <p>
+        <%= f.label :pagamento %>
+        <%= f.text_field :pagamento, :label => :field_pagamento, :size => 100 %>
+      </p>
+      <br/>
 
-<%= link_to 'Show', @payment %> |
-<%= link_to 'Back', payments_path %>
->>>>>>> 8ea78bf5a18bebb2e75866902e8991983fa18b7e
+      <p>
+        <%= f.submit l(:button_update), :class => "button-blu" %>
+      </p>
+  <% end %>
+</div>
+<p class="btn-footer">
+  <%= link_to l(:button_index), payments_path, :class => "button-grey" %>
+
+</p>

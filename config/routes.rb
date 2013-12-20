@@ -150,9 +150,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :top_sections
 
   map.resources :invoices
-  map.invoice_receiver '/invoice_receiver', :controller => 'invoices', :action => 'invoice_receiver' , :conditions => {:method => :get}
+  map.invoice_receiver '/invoice_receiver', :controller => 'invoices', :action => 'invoice_receiver'
   map.invoice_to_pdf '/invoice_to_pdf/:id', :controller => 'invoices', :action => 'invoice_to_pdf'
-  map.invoice_download_pdf '/invoice_to_pdf/:id.pdf', :controller => 'invoices', :action => 'invoice_download_pdf'
+  map.invoice_download_pdf '/invoice_to_pdf/:id.pdf', :controller => 'invoices', :action => 'invoice_download_pdf',:conditions => {:method => :get}
   map.fee 'fee', :controller => 'fees', :action => 'index'
   map.liste_utenti 'liste_utenti', :controller => 'fees', :action => 'liste_utenti'
   map.scaduti 'scaduti', :controller => 'fees', :action => 'scaduti'

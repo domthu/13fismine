@@ -1,0 +1,206 @@
+<style type="text/css">
+    html, body, #container {
+        min-height: 100%;
+        width: 100%;
+        height: 100%;
+    }
+    html>body, html>body #container {
+        height: auto;
+    }
+
+    #contatto {
+
+        font-size: 0.9em;
+        width: 100%;
+        color: #000;
+        font-weight: normal;
+    }
+    #contatto span {
+        font-weight: bold;
+        color: #005D85;
+        margin-left: 30px;
+    }
+    .legends {
+        color: #3d4345;
+        font-size: 1em;
+        text-align: left;
+
+    }
+    .legends span {
+        margin-left:15%!important;
+
+    }
+    .legendsnum {
+        text-align: right!important;
+    }
+    .legendsnum span {
+            margin-right:60%!important;
+
+    }
+     .pagamento {
+        margin-top: 4%;
+    }
+
+    div.pagamento dl dt {
+        width: 100px !important;
+    }
+
+        /*DL, DT, DD TAGS LIST per destinatario e numero fattura*/
+    dl {
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    dl dt {
+        color: #005D85;
+        float: left;
+        font-weight: bold;
+        min-width: 70px;
+        display: table;
+        padding: 2px;
+    }
+
+    dl dd {
+        padding: 2px;
+        display: table;
+    }
+
+        /* table per il dettaglio spese */
+    .bordernd {
+        padding: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        border: 1px dotted #CCDCDF;
+        -webkit-box-shadow: #B3B3B3 1px 1px 1px;
+        -moz-box-shadow: #B3B3B3 1px 1px 1px;
+        box-shadow: #B3B3B3 1px 1px 1px;
+
+    }
+
+    table.details {
+        font-size: 12px;
+        color: #333333;
+        width: 100%;
+        border-width: 1px;
+        border-color: #729ea5;
+        border-collapse: collapse;
+    }
+
+    table.details th {
+        font-size: 12px;
+        background-color: #e1e4ff;
+        border-width: 1px;
+        padding: 6px 12px;
+        border-style: solid;
+        border-color: #729ea5;
+        text-align: left;
+    }
+
+    table.details tr {
+        background-color: #ffffff;
+    }
+
+    table.details td {
+        font-size: 12px;
+        border-width: 1px;
+        padding: 6px 12px;
+        border-style: solid;
+        border-color: #729ea5;
+    }
+
+</style>
+
+<div id="container">
+  <%= @invoice.mittente %>
+ <br />
+  <table style="width: 100%;">
+    <tr>
+      <td style="width: 72%;" class="bordernd">
+        <%= @invoice.destinatario %>
+      </td>
+      <td style="width: 3%;">&nbsp;
+      </td>
+      <td style="width: 25%;" class="bordernd">
+        <dl>
+          <dt>fattura n.</dt>
+          <dd><b><%= @invoice.numero_fattura.to_s + ' / ' + @invoice.sezione.to_s %></b>
+          </dd>
+          <dt>del</dt>
+          <dd><%= I18n.localize(@invoice.data_fattura.to_date, :format => :giorno_mese_anno_barra) %></dd>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <br/>
+
+        <div class="bordernd">
+          <% unless @invoice.user.nil? %>
+              <%= @invoice.contatto %>
+          <% end %>
+        </div>
+        <br/>
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <br/>
+  <table class="details">
+    <thead>
+    <tr>
+      <th style="width: 75%" class="legends"><span> Descrizione</span></th>
+      <th style="width: 25%" class="legendsnum"><span>Totale</span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td colspan="2">
+        <%= @invoice.description %>
+        <span style="margin-left: 11%;">
+         <b>Abbonamento per l'anno: <%= @invoice.anno.to_s unless @invoice.anno.blank? %>&nbsp; scadenza:
+           <% unless @invoice.user.nil? %>
+               <%= I18n.localize(@invoice.user.datascadenza.to_date, :format => :giorno_mese_anno_barra) %>
+           <% end %>
+           <% unless @invoice.convention.nil? %>
+               <%= I18n.localize(@invoice.convention.data_scadenza.to_date, :format => :giorno_mese_anno_barra) %>
+           <% end %>
+         </b></span>
+    </tr>
+    <tr>
+      <td class="legends"> <span> tariffa ordinaria</span></td>
+      <td class="legendsnum"><span>&euro;&nbsp;<%= "%.2f" % @tariffa.to_s %></span></td>
+    </tr>
+    <tr>
+      <td class="legends"><span>- sconto <%= @scontopercent.to_s %> %</span></td>
+      <td class="legendsnum"><span>&euro;&nbsp;<%= "%.2f" % @sconto %></span></td>
+    </tr>
+    <tr>
+      <td class="legends"><span>Imponibile</span></td>
+      <td class="legendsnum"><span>&euro;&nbsp;<%= "%.2f" % @imponibile %></span></td>
+    </tr>
+    <tr>
+      <td class="legends"><span>Imposta  <%= @impostapercent.to_s %> %</span></td>
+      <td class="legendsnum"><span>&euro;&nbsp;<%= "%.2f" % @imposta %></span></td>
+    </tr>
+    <tr>
+      <td class="legends"><span>TOTALE FATTURA</span></td>
+      <td class="legendsnum"><span>&euro;&nbsp;<%= "%.2f" % @totale %></span></td>
+    </tr>
+    </tbody>
+  </table>
+  <br/>
+  <br/>
+  <br/>
+  <div class="pagamento bordernd">
+    <dl>
+      <dt>Pagamento</dt>
+      <dd><b><%= @invoice.se_pagato? ? ' Effettuato' : '' %></b>
+      </dd>
+      <dt>Modalit&agrave;</dt>
+      <dd><%= @invoice.payment %></dd>
+    </dl>
+  </div>
+  <br/>
+  <br/>
+</div>

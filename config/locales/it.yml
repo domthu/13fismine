@@ -670,6 +670,7 @@ it:
   label_close_versions: Versioni completate chiuse
   label_confirmation: Conferma
   label_export_to: Esporta su
+  label_create_pdf: Crea Pdf
   label_download_pdf: Download Pdf
   button_pdf: "Pdf  "
   label_read: Leggi...
@@ -960,6 +961,7 @@ it:
   button_view: Mostra
   button_move: Sposta
   button_move_and_follow: Sposta e segui
+  button_index: Indice
   button_back: Indietro
   button_cancel: Annulla
   button_remove: Rimuovi
@@ -1134,7 +1136,6 @@ it:
 #Add to project
   field_search_key: Chiave di ricerca
   label_search_key: tags
-
   field_summary: Sommario
   label_summary: Sommario
   field_Invoice: Fattura
@@ -1144,7 +1145,7 @@ it:
   label_invoice: Fattura
   label_invoice_plural: Fatture
   label_invoice_new: Nuova fattura
-  label_invoice_list: Lista delle fatture
+  label_invoice_list: Fatturazione
   label_numero_fattura: Numero fattura
   label_numero_fattura_abbr: Num.Fatt.
   label_data_fattura: Data fattura
@@ -1488,7 +1489,7 @@ it:
   label_fee_manage: Abbonamenti
 
   label_fatture: Fatture
-  field_payment: Pagamento
+  label_payment: Pagamento
   label_footer: Pie di pagine
   field_footer: Pie di pagine
 

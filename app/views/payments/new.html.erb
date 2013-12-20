@@ -1,32 +1,24 @@
-<h1> <%= l(:label_metodo_pagamento) %> </h1>
+
+<h2> <%= l(:label_pagamento_metodo) %> </h2>
+ <br />
+<div class ="box tabular">
 <% form_for(@payment) do |f| %>
-<<<<<<< HEAD
     <%= f.error_messages %>
     <p>
-      <%= f.text_field :pagamento ,  :size => 120 , :style => "border: solid #F5BC13 1px; padding: 1.2em!important;" %>
+      <%= f.label :abbrev %><br/>
+      <%= f.text_field :abbrev, :label => :field_abbrev, :size => 3 %>
     </p>
+    <p>
+      <%= f.label :pagamento %><br/>
+      <%= f.text_field :pagamento, :label => :field_pagamento, :size => 100 %>
+    </p>
+      <br />
     <p>
       <%= f.submit l(:button_create), :class => "button-blu" %>
     </p>
 <% end %>
-<br/>
-<%= link_to l(:button_back), payments_path, :class => "button-grey" %>
-=======
-  <%= f.error_messages %>
+</div>
+<p class="btn-footer">
+  <%= link_to l(:button_index), payments_path, :class => "button-grey" %>
 
-  <p>
-    <%= f.label :abbrev %><br />
-    <%= f.text_field :abbrev, :label => :field_abbrev, :size => 3 %>
-
-  </p>
-  <p>
-    <%= f.label :pagamento %><br />
-    <%= f.text_field :pagamento, :label => :field_pagamento, :size => 100 %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
-<% end %>
-
-<%= link_to 'Back', payments_path %>
->>>>>>> 8ea78bf5a18bebb2e75866902e8991983fa18b7e
+</p>

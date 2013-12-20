@@ -13,10 +13,10 @@
 
       <label for='name'><%= l(:label_user) %>:</label>
       <% if @invid %>
-      <%= hidden_field_tag 'id', params[:id] %>
-          <% end %>
+          <%= hidden_field_tag 'id', params[:id] %>
+      <% end %>
       <%= text_field_tag 'name', params[:name], :size => 30 %>
-      <%= submit_tag l(:button_apply),  :class => "small", :name => nil %>
+      <%= submit_tag l(:button_apply), :class => "small", :name => nil %>
       <%= link_to l(:button_clear), users_path, :class => 'icon icon-reload' %>
     </fieldset>
 <% end %>

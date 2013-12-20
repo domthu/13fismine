@@ -34,6 +34,7 @@ class SettingsController < ApplicationController
         value.delete_if { |v| v.blank? } if value.is_a?(Array)
         Setting[name] = value
       end
+      up_footer_pdf()
       flash[:notice] = l(:notice_successful_update)
       redirect_to :action => 'edit', :tab => params[:tab]
     else
@@ -94,6 +95,30 @@ class SettingsController < ApplicationController
   def img_refresh_banners
     GroupBanner.all.each { |s| s.image.reprocess! }
     redirect_to :action => 'edit', :tab => :display
+  end
+  def up_footer_pdf
+    # WKtoPdf utilizza come footer necessariamente una url che deve puntare necessariamente ad un file html , questo aggiorna il file
+    contents = '<html>
+      <head>
+      <script type="text/javascript">
+          function subst() {
+        var vars={};
+        var x=document.location.search.substring(1).split("&");
+        for(var i in x) {var z=x[i].split("=",2);vars[z[0]] = unescape(z[1]);}
+        var x=["frompage","topage","page"];
+        for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+        for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+        }
+        </script>
+</head><body onload="subst();">' + Setting.default_invoices_footer + ' </body></html>'
+    #<td> documento<br />
+    #	pagina <span class="page"> &nbsp;</span> di <span class="topage">&nbsp;</span></td>
+    fname = "#{RAILS_ROOT}/app/views/common/footer_pdf.html"
+    somefile = File.open(fname, "w")
+    somefile.puts contents
+    somefile.close
   end
 
 end

@@ -1,6 +1,6 @@
 <div class="contextual">
-  <%= link_to(l(:button_pdf), invoice_download_pdf_path(@invoice.id),:target => '_blank', :class => 'icon icon-file application-pdf') %>
-  <%= link_to(l(:button_edit), edit_invoice_path( :id=>@invoice.id ), :class => 'icon icon-edit') if User.current.admin? %>
+  <%= link_to(l(:button_pdf), invoice_download_pdf_path(@invoice.id), :target => '_blank', :class => 'icon icon-file application-pdf') %>
+  <%= link_to(l(:button_edit), edit_invoice_path(:id => @invoice.id), :class => 'icon icon-edit') if User.current.admin? %>
   <%= link_to(l(:button_delete),
               invoice_path(@invoice),
               :confirm => l(:text_are_you_sure),
@@ -18,16 +18,17 @@
           <br/>
       <% end %>
     </p>
-    <%	 unless @invoice.user.nil?  %>
+    <% unless @invoice.user.nil? %>
         <p>
           <%= l(:label_user) %>: <%= link_to h(@invoice.user), user_path(@invoice.user, :id => @invoice.user_id) %>
         </p>
-    <%	end  %>
-    <%	 unless @invoice.convention.nil?  %>
+    <% end %>
+    <% unless @invoice.convention.nil? %>
         <p>
-          <%= l(:label_convention) %>: <%= link_to h(@invoice.convention), convention_path(@invoice.convention, :id => @invoice.convention_id) %>
+          <%= l(:label_convention) %>
+          : <%= link_to h(@invoice.convention), convention_path(@invoice.convention, :id => @invoice.convention_id) %>
         </p>
-    <%	end  %>
+    <% end %>
     <p>
       <%= l(:label_data_fattura) %>: <%= format_date(@invoice.data_fattura) %>
     </p>
@@ -69,6 +70,7 @@
     <p>
       <%= l(:label_pagamento) %>: <%= h @invoice.pagamento %>
     </p>
+
     <p style="font-style: italic;">
       user_id : <%= h @invoice.user_id.to_s %> - convention_id : <%= h @invoice.convention_id.to_s %>
     </p>
@@ -76,7 +78,7 @@
 </div>
 
 <div class="splitcontentright">
-  <% unless @invoice.user.nil?  %>
+  <% unless @invoice.user.nil? %>
       <fieldset class="box tabular">
         <legend><%= l(:label_user_invoices) %></legend>
         <table>
@@ -104,8 +106,8 @@
           <% end %>
         </table>
       </fieldset>
-  <%	end  %>
-  <% unless @invoice.convention.nil?  %>
+  <% end %>
+  <% unless @invoice.convention.nil? %>
       <fieldset class="box tabular">
         <legend><%= l(:label_convention_invoices) %></legend>
         <table>
@@ -133,7 +135,7 @@
           <% end %>
         </table>
       </fieldset>
-  <%	end  %>
+  <% end %>
 </div>
 <div class='btn-footer'>
   <%= link_to l(:button_back), invoice_path, :class => 'button-blu' %>

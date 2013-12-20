@@ -24,8 +24,7 @@ class CreatePayments < ActiveRecord::Migration
     drop_table :payments
     remove_column :invoices, :payment_id
     remove_column :invoices, :footer
-
-    add_column :invoices, :pagamento, :text, :limit => 100, :null => true
+    add_column :invoices, :pagamento
 
   end
 end

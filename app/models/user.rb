@@ -377,11 +377,9 @@ class User < Principal
     str += "<br /> P.I. " +self.partitaiva.to_s  unless self.partitaiva.blank?
     return (str.nil? || str.blank?) ? "-" : str
   end
-=end
+
   def getDefault4invoice()
     str = ""
-    str += "<b>" + (self.firstname  unless  self.firstname.blank? || self.firstname.nil?) + " " + (self.lastname  unless self.firstname.blank? || self.firstname.nil? ) + "</b><br />"
-    str += self.titolo + " di: <br />" unless self.titolo.blank?
     str += "<b>" + self.soc + " </b><br />" unless self.soc.blank?
     str += self.indirizzo + "<br />" unless self.indirizzo.blank?
     if self.comune_id && self.comune
@@ -392,6 +390,40 @@ class User < Principal
     str += "<br /> C.F. " + self.codicefiscale.to_s  unless self.codicefiscale.blank?
     str += "<br /> P.I. " +self.partitaiva.to_s  unless self.partitaiva.blank?
     return (str.nil? || str.blank?) ? "-" : str
+  end
+
+  def getDefault4invoice_contatto2()
+    str = ""
+    str += "<dl id='contatto'><dt> Codice Fiscosport </dt><dd>" +  self.id.to_s + "</dd>"
+    str += ("<dl><dt> Nome e Cognome </dt><dd>" +  self.firstname + "</dd>" unless  self.firstname.blank? || self.firstname.nil?) + " " + (self.lastname  unless self.firstname.blank? || self.firstname.nil? )
+    str += ("<dl><dt> Email </dt><dd>" +  self.mail + "</dd>" unless  self.mail.blank? || self.mail.nil?)
+    str += "</dl>"
+  end
+=end
+  def getDefault4invoice()
+    str = ""
+    str += "<dl><dt> Spett.le </dt><dd>"
+    str += "<b>" + self.soc + " </b><br />" unless self.soc.blank?
+    str += self.indirizzo + "<br />" unless self.indirizzo.blank?
+    if self.comune_id && self.comune
+      str += self.comune.cap + " " unless !self.comune.cap
+      str += self.comune.name
+      str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
+    end
+    str += "</dd>"
+    str += "<dt> C.F. </dt><dd>" + self.codicefiscale.to_s + "</dd>" unless self.codicefiscale.blank?
+    str += "<dt> P.I. </dt><dd>" +self.partitaiva.to_s  + "</dd>"  unless self.partitaiva.blank?
+    str += "</dl>"
+    return (str.nil? || str.blank?) ? "-" : str
+  end
+
+  def getDefault4invoice_contatto()
+    str = ""
+    str += "<p id='contatto'><span style='font-size:1.1em;margin-left:0;'>Contatto</span><br />"
+    str += ("<span> Nome e Cognome </span>" +  self.firstname unless  self.firstname.blank? || self.firstname.nil?) + " " + (self.lastname  unless self.firstname.blank? || self.firstname.nil? )
+    str += "<span>Codice Fiscosport </span>" +  self.id.to_s
+    str += ("<span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Email </span>" +  self.mail  unless  self.mail.blank? || self.mail.nil?)
+    str += "</p>"
   end
 
   def pubblicita()

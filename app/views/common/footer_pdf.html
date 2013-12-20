@@ -1,0 +1,49 @@
+<html>
+      <head>
+      <script type="text/javascript">
+          function subst() {
+        var vars={};
+        var x=document.location.search.substring(1).split("&");
+        for(var i in x) {var z=x[i].split("=",2);vars[z[0]] = unescape(z[1]);}
+        var x=["frompage","topage","page"];
+        for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+        for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+        }
+        }
+        </script>
+</head><body onload="subst();"><style type="text/css">
+.page {
+    }
+    .topage {
+    }
+    .tbl {
+        width: 100%;
+     }
+    .tbl td {
+        text-align: center;
+        width: 33%;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 0.9em;
+color:#333;
+
+
+    }</style>
+<hr />
+<table border="0" cellpadding="1" cellspacing="1" class="tbl">
+	<tbody>
+		<tr>
+			<td>
+				e-mail: sgreteria@fiscosport.it</td>
+			<td>
+				fax :&nbsp;075 7823078</td>
+			<td>
+				pagina&nbsp;<span class="page">&nbsp;</span>&nbsp; di &nbsp;<span class="topage">&nbsp;</span></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				&nbsp; &nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+ </body></html>

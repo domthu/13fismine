@@ -5,6 +5,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :contract_user, :class_name => 'ContractUser', :foreign_key => 'contract_user_id'
   belongs_to :payment, :class_name => 'Payment', :foreign_key => 'payment_id'
 
+
   def to_s
     numero_fattura.to_s
   end
@@ -23,6 +24,23 @@ class Invoice < ActiveRecord::Base
 
   def numero_fiscale
     numero_fattura.to_s + '/' + anno.to_s
+  end
+  def getInvoiceFilePath
+    s= ''
+    a = '0000'
+
+    if (self.convention_id && self.convention)
+     s +="c" + self.convention_id.to_s
+    end
+    if (self.user_id && self.user)
+     s += "u" + self.user_id.to_s
+    end
+    if self.anno
+      a = 'fs' + self.anno.to_s
+    end
+
+  return   "/public/images/files/fattura_" + self.id.to_s + a +  s + ".pdf"
+
   end
 
 end

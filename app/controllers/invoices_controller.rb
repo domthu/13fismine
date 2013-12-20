@@ -8,6 +8,8 @@ class InvoicesController < ApplicationController
   before_filter :set_menu
   before_filter :get_dest, :only => [:new]
   before_filter :retreive_dest, :only => [:show , :edit]
+  before_filter :get_pdf_file_path,  :only => [:show , :invoice_to_pdf]
+  before_filter :get_money, :only => [:show , :invoice_to_pdf]
   menu_item :invoice, :only => [:index]
   menu_item :invoices, :only => [:invoices]
   menu_item :email_fee, :only => [:email_fee]
@@ -81,26 +83,60 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_to_pdf
-    @invoice = Invoice.find(params[:id])
-    @tariffa = @invoice.tariffa || 0
-    @scontoperc = @invoice.sconto || 0
-    @sconto = (@tariffa * @scontoperc) / 100
-    @imponibile = @tariffa - @sconto
-    @impostaperc = @invoice.iva || 0
-    @imposta = (@imponibile * @impostaperc) / 100
-    @totale = @imponibile + @imposta
-  end
 
+    html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
+    i = Invoice.find(params[:id])
+    f= RAILS_ROOT + i.getInvoiceFilePath
+    kit = PDFKit.new(html)
+    kit.to_file(f)
+    @invoice.attached_invoice = @file_pdf
+    @invoice.save!
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml { render :xml => @invoice }
+      # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
+    end
+
+end
+=begin
+  def invoice_create_pdf
+
+      if !params[:id].nil?
+        invoice_to_pdf()
+        f=''
+
+        html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
+        i = Invoice.find(params[:id])
+
+        f= RAILS_ROOT + i.getInvoiceFilePath
+         kit = PDFKit.new(html)
+
+        kit.to_file(f)
+        @invoice =i
+        flash[:notice] = 'fattura creata in: ' + @file_pdf
+        redirect_to :back , :notice => 'fattura creata in: ' +  @file_pdf
+      else
+        flash[:error] = 'Nessuna fattura passata come parametro. '
+        redirect_to :back , :error => 'Nessuna fattura passata come parametro. '
+      end
+
+  end
   def invoice_download_pdf
+
     unless params[:id].nil?
+      invoice_to_pdf()
+      @invoice = Invoice.find(params[:id])
       html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
       pdf = PDFKit.new(html)
+      pdf.stylesheets << "/public/stylesheets/pdf_in.css"
       send_data(pdf.to_pdf)
     else
-      flash[:error] = 'Nessuna fattura passata come parametro. '
+      flash[:error] = 'Nessun parametro passato... errore in reservation_controller action: download_pdf '
     end
-  end
 
+
+   end
+=end
   # GET /invoices
   # GET /invoices.xml
   def index
@@ -139,18 +175,9 @@ class InvoicesController < ApplicationController
   # GET /invoices/1
   # GET /invoices/1.xml
   def show
-    @invoice = Invoice.find(params[:id])
-    @tariffa =  @invoice.tariffa || 0.00
-    @scontoperc = @invoice.sconto || 0.00
-    @sconto = (@tariffa * @scontoperc) / 100
-    @imponibile = @tariffa - @sconto
-    @impostapercent = @invoice.iva * 100 || 0.00
-    @impostaperc = @invoice.iva  || 0.00
-    @imposta = (@imponibile * @impostaperc) / 100
-    @totale = @imponibile + @imposta
     respond_to do |format|
       format.html # show.html.erb
-      format.xml { render :xml => @invoice }
+      format.xml #{ render :xml => @invoice }
       # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
     end
 
@@ -197,35 +224,19 @@ class InvoicesController < ApplicationController
       unless params[:user_id].nil?
         item = User.find_by_id(params[:user_id])
         @dest += item.getDefault4invoice()
+        @cont += item.getDefault4invoice_contatto()
         @invoice.convention_id = nil
       end
       unless params[:convention_id].nil?
         item = Convention.find_by_id(params[:convention_id])
         @dest += item.getDefault4invoice()
+        @cont += item.getDefault4invoice_contatto()
         @invoice.user_id = nil
       end
 
       @invoice.destinatario = @dest
    #end
      end
-=begin
-      if (@dest == '') && (@invoice.convention_id.nil? && @invoice.user_id.nil?)
-        flash[:notice] = "Selezionare un utente o una convenzione prima di creare la fattura..."
-        redirect_to(invoice_receiver_path)
-      else
-        #mittente default_invoices_header:
-        if @invoice.mittente.nil? || @invoice.mittente.blank?
-          @invoice.mittente = Setting.default_invoices_header
-        end
-        #description default_invoices_description
-        if @invoice.description.nil? || @invoice.description.blank?
-          @invoice.description = Setting.default_invoices_description
-        end
-        #footer default_invoices_footer
-        @invoice.footer = Setting.default_invoices_footer
-        @invoice.destinatario = @dest
-      end
-=end
     @invoices = Invoice.find(:all,
                              :order => 'id DESC',
                              :limit => 7)
@@ -283,10 +294,12 @@ class InvoicesController < ApplicationController
     if params[:user_id].present?
       item = User.find_by_id(params[:user_id])
       @dest += item.getDefault4invoice()
+      @cont += item.getDefault4invoice_contatto()
     end
     if params[:convention_id].present?
       item = Convention.find_by_id(params[:convention_id])
       @dest += item.getDefault4invoice()
+      @cont += item.getDefault4invoice_contatto()
     end
     if @dest == ''
       flash[:notice] = "Selezionare un utente o una convenzione prima di creare la fattura..."
@@ -295,7 +308,28 @@ class InvoicesController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render_404
   end
-
+   def get_pdf_file_path
+     @file_pdf = nil
+     if params[:id].present?
+       item = Invoice.find(params[:id])
+       if File.exist?("#{RAILS_ROOT}" + item.getInvoiceFilePath ) and File.file?("#{RAILS_ROOT}" + item.getInvoiceFilePath )
+         @file_pdf =  "http://" + Setting.host_name  + item.getInvoiceFilePath
+       end
+     end
+   rescue ActiveRecord::RecordNotFound
+     render_404
+   end
+  def get_money
+    @invoice = Invoice.find(params[:id])
+    @tariffa =  @invoice.tariffa || 0.00
+    @scontoperc = @invoice.sconto || 0.00
+    @sconto = (@tariffa * @scontoperc) / 100
+    @imponibile = @tariffa - @sconto
+    @impostapercent = @invoice.iva * 100 || 0.00
+    @impostaperc = @invoice.iva  || 0.00
+    @imposta = (@imponibile * @impostaperc)
+    @totale = @imponibile + @imposta
+  end
 
   def retreive_dest
     @invoice = Invoice.find(params[:id])
@@ -303,10 +337,12 @@ class InvoicesController < ApplicationController
     if (@invoice.destinatario.nil? || @invoice.destinatario.blank?) || (!@invoice.user_id.nil? && !@invoice.convention_id.nil?) || (@invoice.user_id.nil? && @invoice.convention_id.nil?)
 #    if @invoice.destinatario.nil? || @invoice.destinatario.blank? || }"
       @dest = ''
+      @cont = ''
       unless @invoice.user_id.nil? || @invoice.user_id.blank?
         item = User.find_by_id(params[:user_id])
         if item
         @dest += item.getDefault4invoice()
+        @cont += item.getDefault4invoice_contatto()
         @invoice.convention_id = nil
         else
           @invoice.user_id = nil
@@ -316,6 +352,7 @@ class InvoicesController < ApplicationController
         item = Convention.find_by_id(params[:convention_id])
         if item
         @dest += item.getDefault4invoice()
+        @cont += item.getDefault4invoice_contatto()
         @invoice.user_id = nil
         else
           @invoice.convention_id = nil
@@ -340,6 +377,7 @@ class InvoicesController < ApplicationController
         @invoice.footer = Setting.default_invoices_footer
         end
         @invoice.destinatario =  @dest
+        @invoice.contatto = @cont
 
         @invoice.save
       end

@@ -221,6 +221,8 @@
           </fieldset>
           <fieldset>
             <legend><%= l(:default_invoices_footer) %></legend>
+            <span class="mini-legend" style="color:firebrick;"> *Attenzione alle modifiche nel footer, lasciarlo più semplice possibile perchè verrà visualizzato su tutti i files pdf del sito </span>
+
             <%= setting_text_area :default_invoices_footer, :label => false %>
             <div style="float:right;">
             </div>

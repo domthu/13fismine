@@ -2,7 +2,7 @@
 <% labelled_form_for @invoice do |f| %>
     <%= render :partial => 'form', :locals => {:f => f} %>
     <div class='btn-footer'>
-      <%= link_to l(:label_view), invoice_to_pdf_path(@invoice), :class => 'button-grey' %>
+      <%= link_to l(:label_view), invoice_path(@invoice), :class => 'button-grey' %>
       &nbsp;&nbsp;&nbsp;&nbsp;
       <%= submit_tag l(:button_save), :class => 'button-blu' %>
     </div>
