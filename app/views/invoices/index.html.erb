@@ -19,9 +19,6 @@
       <tbody>
       <% @invoices.each do |invoice| %>
           <tr class="<%= cycle 'odd', 'even' %>">
-
-            <!-- <<<<<<< HEAD   -->
-
             <td align="center"><%= link_to h(invoice.numero_fattura), invoice_path(invoice, :user_id => invoice.user_id, :convention_id => invoice.convention_id) %></td>
             <% if  invoice.user.nil? && invoice.convention.nil? %>
                 <td align="left"><%= link_to "Utente mancante ?", invoice_receiver_path(:id => invoice.id) %></td>
@@ -32,7 +29,10 @@
             <% end %>
             <td align="center"><%= format_date(invoice.data_fattura) %></td>
             <td align="center"><%= h invoice.anno %></td>
-            <td class="buttons"><%= link_to('', invoice_download_pdf_path(invoice.id), :target => '_blank', :class => 'icon icon-file application-pdf') %></td>
+            <td class="buttons"><%= link_to('', invoice_path(invoice.id), :target => '_blank', :class => 'icon icon-preview') %></td>
+             <td class="buttons"><%= link_to('', edit_invoice_path(invoice), :class => 'icon icon-edit') if User.current.admin? %></td>
+            <td class="buttons"><%= link_to('', invoice, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
+
             <!--
 =======
 
@@ -44,9 +44,6 @@
             <td align="left"><%# h invoice.payment.abbrev %></td>
             <td class="buttons"><%= link_to('', invoice_download_pdf_path(invoice.id), :target => '_blank', :class => 'icon icon-file application-pdf') if User.current.admin? %></td>
  >>>>>> 8ea78bf5a18bebb2e75866902e8991983fa18b7e  -->
-
-            <td class="buttons"><%= link_to('', edit_invoice_path(invoice), :class => 'icon icon-edit') if User.current.admin? %></td>
-            <td class="buttons"><%= link_to('', invoice, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') if User.current.admin? %></td>
 
           </tr>
       <% end %>

@@ -31,6 +31,7 @@
       <%= sort_header_tag('lastname', :caption => l(:field_lastname)) %>
       <%= sort_header_tag('email', :caption => l(:label_user_mail_to)) %>
       <th style="width:10%;"><%= l(:label_choice) %></th>
+
     </tr>
     </thead>
     <tbody>
@@ -45,7 +46,7 @@
           <% else %>
               <td align="center"> <%= link_to ">>>", edit_invoice_path(:id => @invid, :user_id => user.id, :convention_id => nil), :class => "button-grey", :id => "btn-scegli" %></td>
           <% end %>
-        </tr>
+            </tr>
     <% end -%>
     </tbody>
   </table>

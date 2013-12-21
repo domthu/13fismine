@@ -245,7 +245,7 @@ Redmine::MenuManager.map :admin_menu do |menu|
   #menu abbonamento
   menu.push :abbo, {:controller => 'fees', :action => 'index'}, :caption => :label_abbo_plural, :if => Proc.new { Setting.fee? }
   #menu.push :abbo, {:controller => 'fees', :action => 'registrati'}, :caption => :label_abbo_plural, :if => Proc.new { Setting.fee? }
-  menu.push :payment, :invoices_path, :if => Proc.new { Setting.fee? }
+  menu.push :invoices, :invoices_path, :if => Proc.new { Setting.fee? }
   #menu.push :projects, {:controller => 'admin', :action => 'projects'}, :caption => :label_project_plural
   menu.push :users, {:controller => 'users'}, :caption => :label_user_plural
   menu.push :comunes, :comunes_path, :caption => :label_comune_plural, :if => Proc.new { User.current.admin? }

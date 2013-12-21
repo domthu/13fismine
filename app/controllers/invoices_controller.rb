@@ -7,145 +7,19 @@ class InvoicesController < ApplicationController
   include Redmine::Export::PDF
   before_filter :set_menu
   before_filter :get_dest, :only => [:new]
-  before_filter :retreive_dest, :only => [:show , :edit]
-  before_filter :get_pdf_file_path,  :only => [:show , :invoice_to_pdf]
-  before_filter :get_money, :only => [:show , :invoice_to_pdf]
-  menu_item :invoice, :only => [:index]
-  menu_item :invoices, :only => [:invoices]
-  menu_item :email_fee, :only => [:email_fee]
-  menu_item :invia_fatture, :only => [:invia_fatture]
-
+  before_filter :retreive_dest, :only => [:show, :edit]
+  before_filter :get_pdf_file_path, :only => [:show, :invoice_to_pdf]
+  before_filter :get_money, :only => [:show, :invoice_to_pdf]
+  menu_item :invoices
 
   def set_menu
-    case self.action_name
-      when 'index', 'show', 'edit', 'invoice_receiver','invoice_to_pdf' ,'download_pdf'
-        @menu_fs = :menu_payment_fs
-      else
-        @menu_fs = :application_menu
-    end
+    @menu_fs = :menu_payment_fs
   end
 
-  def invoice_receiver
-    #serve eventualemte per assegnare un utente alla fattura che non ne ha
-    @invid = params[:id] || nil
 
-    sort_init 'username', 'asc'
-    sort_update 'username' => 'login',
-                'firstname' => 'firstname',
-                'lastname' => 'lastname',
-                'email' => 'mail'
-
-    case params[:format]
-      when 'xml', 'json'
-        @offset, @limit = api_offset_and_limit
-      else
-        @limit = per_page_option
-    end
-
-    scope = User
-    scope = scope.in_group(params[:group_id].to_i) if params[:group_id].present?
-
-    @status = params[:status] ? params[:status].to_i : 1
-    c = ARCondition.new(@status == 0 ? "status <> 0" : ["status = ?", @status])
-
-    unless params[:name].blank?
-      name = "%#{params[:name].strip.downcase}%"
-      c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
-    end
-
-    @user_count = scope.count(:conditions => c.conditions)
-    @user_pages = Paginator.new self, @user_count, @limit, params['page']
-    @offset ||= @user_pages.current.offset
-    @limit = 10
-    @users = scope.find :all,
-                        :order => sort_clause,
-                        :conditions => c.conditions,
-                        :limit => @limit,
-                        :offset => @offset
-
-    @limit = 8
-    @conventions_count = Convention.all.count
-    @conventions_pages = Paginator.new self, @conventions_count, @limit, params['page']
-    @offset2 ||= @conventions_pages.current.offset
-    @conventions = Convention.find(:all,
-                                   :include => [:province, :comune, :user, {:cross_organization => [:type_organization]}],
-                                   :order => 'ragione_sociale',
-                                   :limit => @limit,
-                                   :offset => @offset2
-    )
-    respond_to do |format|
-      format.html {
-
-        render :layout => !request.xhr?
-      }
-      format.api
-    end
-  end
-
-  def invoice_to_pdf
-
-    html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
-    i = Invoice.find(params[:id])
-    f= RAILS_ROOT + i.getInvoiceFilePath
-    kit = PDFKit.new(html)
-    kit.to_file(f)
-    @invoice.attached_invoice = @file_pdf
-    @invoice.save!
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml { render :xml => @invoice }
-      # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
-    end
-
-end
-=begin
-  def invoice_create_pdf
-
-      if !params[:id].nil?
-        invoice_to_pdf()
-        f=''
-
-        html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
-        i = Invoice.find(params[:id])
-
-        f= RAILS_ROOT + i.getInvoiceFilePath
-         kit = PDFKit.new(html)
-
-        kit.to_file(f)
-        @invoice =i
-        flash[:notice] = 'fattura creata in: ' + @file_pdf
-        redirect_to :back , :notice => 'fattura creata in: ' +  @file_pdf
-      else
-        flash[:error] = 'Nessuna fattura passata come parametro. '
-        redirect_to :back , :error => 'Nessuna fattura passata come parametro. '
-      end
-
-  end
-  def invoice_download_pdf
-
-    unless params[:id].nil?
-      invoice_to_pdf()
-      @invoice = Invoice.find(params[:id])
-      html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
-      pdf = PDFKit.new(html)
-      pdf.stylesheets << "/public/stylesheets/pdf_in.css"
-      send_data(pdf.to_pdf)
-    else
-      flash[:error] = 'Nessun parametro passato... errore in reservation_controller action: download_pdf '
-    end
-
-
-   end
-=end
   # GET /invoices
   # GET /invoices.xml
   def index
-    #@invoices = Invoice.all
-    #respond_to do |format|
-    #  format.html # index.html.erb
-    #  format.xml  { render :xml => @invoices }
-    #end
-
     #Sorting
     sort_init 'data_fattura', 'desc'
     sort_update 'numero_fattura' => 'numero_fattura',
@@ -162,7 +36,7 @@ end
         @invoice_count = Invoice.all.count
         @invoice_pages = Paginator.new self, @invoice_count, per_page_option, params['page']
         @invoices = Invoice.find(:all,
-                                 :include => [:user , :convention],
+                                 :include => [:user, :convention],
                                  :order => sort_clause,
                                  :limit => @invoice_pages.items_per_page,
                                  :offset => @invoice_pages.current.offset)
@@ -178,7 +52,7 @@ end
     respond_to do |format|
       format.html # show.html.erb
       format.xml #{ render :xml => @invoice }
-      # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
+                 # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
     end
 
   end
@@ -189,21 +63,29 @@ end
     item = ''
     @pu = params[:user_id].present?
     @pc = params[:convention_id].present?
+    @invoices = Invoice.find(:all, :order => 'id DESC', :limit => 7)
     @invoice = Invoice.new
     @invoice.iva = 22
     @invoice.anno = Date.today.year
-    @invoices = Invoice.find(:all,
-                             :order => 'id DESC',
-                             :limit => 7)
-    @cnt = Invoice.maximum(:numero_fattura, :conditions => ['anno = ' + @anno.to_s])
+    #sopra mette i default sotto prova a correggerli in base all'ultimo record
+    if  @invoices.count > 0
+      unless @invoices[0].iva.nil?
+        @invoice.iva = @invoices[0].iva.to_s
+      end
+      unless @invoices[0].anno.nil?
+        @invoice.anno = @invoices[0].anno.to_s
+      end
+    end
+
+    @cnt = Invoice.maximum(:numero_fattura, :conditions => ['anno = ' + @invoice.anno.to_s])
     if @cnt.nil? or @cnt == 0
       @cnt = 1
-
     else
-      cnt += 1
+      @cnt += 1
     end
-    @invoice.numero_fattura = cnt
+    @invoice.numero_fattura = @cnt.to_s
     @invoice.destinatario = @dest
+    @invoice.contatto = @cont
     @invoice.mittente = Setting.default_invoices_header
     @invoice.description = Setting.default_invoices_description
     @invoice.footer = Setting.default_invoices_footer
@@ -218,9 +100,10 @@ end
   def edit
     @invoice = Invoice.find(params[:id])
     #destinatario
-   # if @invoice.destinatario.nil? || @invoice.destinatario.blank?
-   if !params[:convention_id].nil? ||  !params[:user_id].nil?
+    # if @invoice.destinatario.nil? || @invoice.destinatario.blank?
+    if !params[:convention_id].nil? || !params[:user_id].nil?
       @dest = ''
+      @cont = ''
       unless params[:user_id].nil?
         item = User.find_by_id(params[:user_id])
         @dest += item.getDefault4invoice()
@@ -235,8 +118,8 @@ end
       end
 
       @invoice.destinatario = @dest
-   #end
-     end
+      #end
+    end
     @invoices = Invoice.find(:all,
                              :order => 'id DESC',
                              :limit => 7)
@@ -286,15 +169,104 @@ end
     end
   end
 
+  def invoice_receiver
+    #@invid serve di rientro alla pagina modifica fatture: eventualemte per assegnare un utente alla fattura che occorre cambiare
+    @invid = params[:id] || nil
+
+    sort_init 'username', 'asc'
+    sort_update 'username' => 'login',
+                'firstname' => 'firstname',
+                'lastname' => 'lastname',
+                'email' => 'mail'
+
+    case params[:format]
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        @limit = per_page_option
+    end
+
+    scope = User
+    scope = scope.in_group(params[:group_id].to_i) if params[:group_id].present?
+
+    @status = params[:status] ? params[:status].to_i : 1
+    c = ARCondition.new(@status == 0 ? "status <> 0" : ["status = ?", @status])
+
+    unless params[:name].blank?
+      name = "%#{params[:name].strip.downcase}%"
+      c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+    end
+
+    @user_count = scope.count(:conditions => c.conditions)
+    @user_pages = Paginator.new self, @user_count, @limit, params['page']
+    @offset ||= @user_pages.current.offset
+    @limit = 20
+    @users = scope.find :all,
+                        :order => sort_clause,
+                        :conditions => c.conditions,
+                        :limit => @limit,
+                        :offset => @offset
+
+    @limit = 10
+    @conventions_count = Convention.all.count
+    @conventions_pages = Paginator.new self, @conventions_count, @limit, params['page']
+    @offset2 ||= @conventions_pages.current.offset
+    @conventions = Convention.find(:all,
+                                   :include => [:province, :comune, :user, {:cross_organization => [:type_organization]}],
+                                   :order => 'ragione_sociale',
+                                   :limit => @limit,
+                                   :offset => @offset2
+    )
+    respond_to do |format|
+      format.html {
+
+        render :layout => !request.xhr?
+      }
+      format.api
+    end
+  end
+
+  def invoice_to_pdf
+    html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
+    i = Invoice.find(params[:id])
+    f= RAILS_ROOT + i.getInvoiceFilePath
+    kit = PDFKit.new(html)
+    kit.to_file(f)
+    @invoice.attached_invoice = @file_pdf
+    @invoice.save!
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml { render :xml => @invoice }
+      # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
+    end
+
+  end
+
+=begin
+    def invoice_download_pdf
+    unless params[:id].nil?
+      invoice_to_pdf()
+      @invoice = Invoice.find(params[:id])
+      html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
+      pdf = PDFKit.new(html)
+      pdf.stylesheets << "/public/stylesheets/pdf_in.css"
+      send_data(pdf.to_pdf)
+    else
+      flash[:error] = 'Nessun parametro passato... errore in reservation_controller action: download_pdf '
+    end
+   end
+=end
 
   private
 
   def get_dest
     @dest = ''
+    @cont = ''
     if params[:user_id].present?
       item = User.find_by_id(params[:user_id])
       @dest += item.getDefault4invoice()
       @cont += item.getDefault4invoice_contatto()
+      @cont += 'bla' # item.getDefault4invoice_contatto()
     end
     if params[:convention_id].present?
       item = Convention.find_by_id(params[:convention_id])
@@ -308,25 +280,27 @@ end
   rescue ActiveRecord::RecordNotFound
     render_404
   end
-   def get_pdf_file_path
-     @file_pdf = nil
-     if params[:id].present?
-       item = Invoice.find(params[:id])
-       if File.exist?("#{RAILS_ROOT}" + item.getInvoiceFilePath ) and File.file?("#{RAILS_ROOT}" + item.getInvoiceFilePath )
-         @file_pdf =  "http://" + Setting.host_name  + item.getInvoiceFilePath
-       end
-     end
-   rescue ActiveRecord::RecordNotFound
-     render_404
-   end
+
+  def get_pdf_file_path
+    @file_pdf = nil
+    if params[:id].present?
+      item = Invoice.find(params[:id])
+      if File.exist?("#{RAILS_ROOT}" + item.getInvoiceFilePath) and File.file?("#{RAILS_ROOT}" + item.getInvoiceFilePath)
+        @file_pdf = "http://" + Setting.host_name + item.getInvoiceFilePath
+      end
+    end
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
+
   def get_money
     @invoice = Invoice.find(params[:id])
-    @tariffa =  @invoice.tariffa || 0.00
+    @tariffa = @invoice.tariffa || 0.00
     @scontoperc = @invoice.sconto || 0.00
     @sconto = (@tariffa * @scontoperc) / 100
     @imponibile = @tariffa - @sconto
     @impostapercent = @invoice.iva * 100 || 0.00
-    @impostaperc = @invoice.iva  || 0.00
+    @impostaperc = @invoice.iva || 0.00
     @imposta = (@imponibile * @impostaperc)
     @totale = @imponibile + @imposta
   end
@@ -341,19 +315,19 @@ end
       unless @invoice.user_id.nil? || @invoice.user_id.blank?
         item = User.find_by_id(params[:user_id])
         if item
-        @dest += item.getDefault4invoice()
-        @cont += item.getDefault4invoice_contatto()
-        @invoice.convention_id = nil
+          @dest += item.getDefault4invoice()
+          @cont += item.getDefault4invoice_contatto()
+          @invoice.convention_id = nil
         else
           @invoice.user_id = nil
-          end
         end
+      end
       unless @invoice.convention_id.nil? || @invoice.convention_id.blank?
         item = Convention.find_by_id(params[:convention_id])
         if item
-        @dest += item.getDefault4invoice()
-        @cont += item.getDefault4invoice_contatto()
-        @invoice.user_id = nil
+          @dest += item.getDefault4invoice()
+          @cont += item.getDefault4invoice_contatto()
+          @invoice.user_id = nil
         else
           @invoice.convention_id = nil
         end
@@ -363,26 +337,26 @@ end
         flash[:notice] = "Selezionare un utente o una convenzione prima di creare la fattura..."
         redirect_to(invoice_receiver_path)
       end
-        #mittente default_invoices_header:
-        if @invoice.mittente.nil? || @invoice.mittente.blank?
-          @invoice.mittente = Setting.default_invoices_header
-        end
-        #description default_invoices_description
-        if @invoice.description.nil? || @invoice.description.blank?
-          @invoice.description = Setting.default_invoices_description
-        end
-        #footer default_invoices_footer
+      #mittente default_invoices_header:
+      if @invoice.mittente.nil? || @invoice.mittente.blank?
+        @invoice.mittente = Setting.default_invoices_header
+      end
+      #description default_invoices_description
+      if @invoice.description.nil? || @invoice.description.blank?
+        @invoice.description = Setting.default_invoices_description
+      end
+      #footer default_invoices_footer
 
       if @invoice.footer.nil? || @invoice.footer.blank?
         @invoice.footer = Setting.default_invoices_footer
-        end
-        @invoice.destinatario =  @dest
-        @invoice.contatto = @cont
-
-        @invoice.save
       end
-  #  @invoice.destinatario = '>>>>>>' +  (!@invoice.user_id.nil? && !@invoice.convention_id.nil?).to_s
-     #  @invoice.update_attributes(params[:user_id,:convention_id,:mittente,:destinatario,:description,:footer ])
+      @invoice.destinatario = @dest
+      @invoice.contatto = @cont
+
+      @invoice.save
+    end
+      #  @invoice.destinatario = '>>>>>>' +  (!@invoice.user_id.nil? && !@invoice.convention_id.nil?).to_s
+      #  @invoice.update_attributes(params[:user_id,:convention_id,:mittente,:destinatario,:description,:footer ])
   rescue ActiveRecord::RecordNotFound
     render_404
   end

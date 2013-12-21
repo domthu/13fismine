@@ -144,26 +144,11 @@ class Convention < ActiveRecord::Base
     User.all(:conditions => {:convention_id => self.id})
   end
 
-=begin
-  def getDefault4invoice()
-    str = ""
-    str += "<b>" + self.ragione_sociale + "</b><br />" unless self.ragione_sociale.blank?
-    str += self.indirizzo + "<br />" unless self.indirizzo.blank?
-    if self.comune_id && self.comune
-      str += self.comune.cap + " " unless !self.comune.cap
-      str += self.comune.name
-      str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
-    end
-   # str += "<br /> C.F. " + self.codicefiscale.to_s  unless self.codicefiscale.blank?
-   # str += "<br /> P.I. " +self.partitaiva.to_s  unless self.partitaiva.blank?
-    return (str.nil? || str.blank?) ? "-" : str
-  end
-=end
 
   def getDefault4invoice()
     str = ""
     str += "<dl><dt> Spett.le </dt><dd>"
-    str += "<b>" + self.ragione_sociale + " </b><br />" unless self.ragione_sociale.blank?
+    str += "<b>" + self.ragione_sociale + " </b><br />" unless self.ragione_sociale.blank? || self.ragione_sociale.nil?
     str += self.indirizzo + "<br />" unless self.indirizzo.blank?
     if self.comune_id && self.comune
       str += self.comune.cap + " " unless !self.comune.cap
@@ -171,11 +156,10 @@ class Convention < ActiveRecord::Base
       str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
     end
     str += "</dd>"
-    str += "<dt> C.F. </dt><dd style='color:red;'> mancano i campi!!! </dd>"
-   # str += "<dt> C.F. </dt><dd>" + self.codicefiscale.to_s + "</dd>" unless self.codicefiscale.blank?
-   # str += "<dt> P.I. </dt><dd>" +self.partitaiva.to_s  + "</dd>"  unless self.partitaiva.blank?
+    str += "<dt> C.F. </dt><dd>" + self.codicefiscale.to_s + "</dd>" unless self.codicefiscale.blank? || self.codicefiscale.nil?
+    str += "<dt> P.I. </dt><dd>" +self.partitaiva.to_s  + "</dd>"  unless self.partitaiva.blank? || self.partitaiva.nil?
     str += "</dl>"
-    return (str.nil? || str.blank?) ? "-" : str
+    return str
   end
   def getDefault4invoice_contatto()
     str = ""
@@ -184,5 +168,6 @@ class Convention < ActiveRecord::Base
     str += ("<dl><dt> Referente </dt><dd>" +  self.referente + "</dd>" unless  self.referente.blank? || self.referente.nil?)
     str += ("<dl><dt> Email </dt><dd>" +  self.email + "</dd>" unless  self.email.blank? || self.email.nil?)
     str += "</dl>"
+    return str
   end
 end

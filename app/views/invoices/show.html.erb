@@ -28,6 +28,8 @@
   </div>
 </div>
 <div class='btn-footer'>
+  <%= link_to l(:button_list), invoices_path, :class => 'button-grey' %>
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <%= link_to l(:button_issue_empty), edit_invoice_path(@invoice), :class => 'button-grey' %>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <%= link_to l(:label_create_pdf), invoice_download_pdf_path(@invoice.id), :class => 'button-blu', :target => '_blank' %>

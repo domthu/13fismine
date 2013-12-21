@@ -1,12 +1,9 @@
 <h2><%= link_to l(:label_invoice_plural), invoices_path %> &#187; <%= l(:label_invoice_new) %></h2>
-<div id="footer-menu" class="box">
-  <%= render_menu :menu_payment_fs %>
-</div>
-
 <% labelled_form_for @invoice do |f| %>
     <%= render :partial => 'form', :locals => {:f => f} %>
-    <p>
-      <%= f.submit l(:button_create) %>
-      <%= f.submit l(:button_create_and_continue), :name => 'continue' %>
+    <p class="btn-footer">
+      <%= link_to l(:button_cancel), invoices_path, :class => 'button-grey' %>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <%= f.submit l(:button_create), :class=> 'button-blu'  %>
     </p>
 <% end %>

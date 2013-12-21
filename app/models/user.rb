@@ -204,13 +204,13 @@ class User < Principal
     str = ''
     #Control user status
     if self.locked?
-     str += "<br />Utente bloccato. Contattare l'amministratore o acquistare abbonamento"
+      str += "<br />Utente bloccato. Contattare l'amministratore o acquistare abbonamento"
 #     if self.last_login_on
 #        str += "<br />Inattivo da " + distance_of_date_in_words(Time.now, self.last_login_on)
 #     end
     end
     if !self.active?
-     str += "<br />Utente non attivo"
+      str += "<br />Utente non attivo"
     end
     #PUBLIC INSTALLATION con uso gestione abbonamento
     if Setting.fee?
@@ -218,21 +218,21 @@ class User < Principal
       #Control Always Undesired User RoleId
       if self.isarchivied?
         str += Setting.webmsg_isarchivied
-      # str += "<br />Abbonamento non valido da " + distance_of_date_in_words(Time.now, self.scadenza)
+        # str += "<br />Abbonamento non valido da " + distance_of_date_in_words(Time.now, self.scadenza)
       end
       if self.isexpired?
         str += Setting.webmsg_isexpired
-       # str += "<br />Abbonamento scaduto da " + distance_of_date_in_words(Time.now, self.scadenza)
+        # str += "<br />Abbonamento scaduto da " + distance_of_date_in_words(Time.now, self.scadenza)
       end
       if self.isrenewing?
         str += Setting.webmsg_isrenewing
-      #  str += "<br />Scadenza abbonamento prossima! tra " + distance_of_date_in_words(Time.now, self.scadenza)
-      #  str += "<br />Rinnovare l'abbonamento."
+        #  str += "<br />Scadenza abbonamento prossima! tra " + distance_of_date_in_words(Time.now, self.scadenza)
+        #  str += "<br />Rinnovare l'abbonamento."
       end
       if self.isregistered?
         str += Setting.webmsg_isregistered
-       # str += "<br />Abbonamento valido ancora per " + distance_of_date_in_words(self.scadenza, Time.now)
-       # str += "<br />periodo di prova."
+        # str += "<br />Abbonamento valido ancora per " + distance_of_date_in_words(self.scadenza, Time.now)
+        # str += "<br />periodo di prova."
       end
     end
     if str.include? '@@distance_of_date_in_words@@'
@@ -253,62 +253,62 @@ class User < Principal
       #puts "=============exit"
       return
     end
-      #controllo della scadenza
-      role_atteso = nil
-      today = Date.today
-      if self.admin? || self.ismanager?
-        role_atteso = FeeConst::ROLE_MANAGER
-        #self.datascadenza = nil # Volendo
+    #controllo della scadenza
+    role_atteso = nil
+    today = Date.today
+    if self.admin? || self.ismanager?
+      role_atteso = FeeConst::ROLE_MANAGER
+      #self.datascadenza = nil # Volendo
 
-      elsif self.isauthor?
-        role_atteso = FeeConst::ROLE_AUTHOR
-        #self.datascadenza = nil # Volendo
+    elsif self.isauthor?
+      role_atteso = FeeConst::ROLE_AUTHOR
+      #self.datascadenza = nil # Volendo
 
-      elsif self.isvip?
-        role_atteso = FeeConst::ROLE_VIP
-        #self.datascadenza = nil # Volendo
+    elsif self.isvip?
+      role_atteso = FeeConst::ROLE_VIP
+      #self.datascadenza = nil # Volendo
 
-      elsif self.isarchivied?
-        #non fare niente. Lui esce solo attraverso cambio ruolo dalla pagina utente
+    elsif self.isarchivied?
+      #non fare niente. Lui esce solo attraverso cambio ruolo dalla pagina utente
 
-        #domthu 20131030 eccezione alla regola --> pesco dentro gli archiviati alla crea-modify di una convention?
-        #NON lo fare
-        #tipo = "archiviato"
-        #if (self.convention_id && self.convention && self.convention.scadenza && self.convention.scadenza > today )
-        #  role_atteso = FeeConst::ROLE_ABBONATO
-        #end
+      #domthu 20131030 eccezione alla regola --> pesco dentro gli archiviati alla crea-modify di una convention?
+      #NON lo fare
+      #tipo = "archiviato"
+      #if (self.convention_id && self.convention && self.convention.scadenza && self.convention.scadenza > today )
+      #  role_atteso = FeeConst::ROLE_ABBONATO
+      #end
 
-      elsif self.isregistered?
-        if (today > self.scadenza)
-          #scaduto
-          role_atteso = FeeConst::ROLE_EXPIRED
-          tipo = "renew"
-        end
-
-      elsif self.isabbonato? || self.isrenewing? || self.isexpired?
-
+    elsif self.isregistered?
+      if (today > self.scadenza)
+        #scaduto
+        role_atteso = FeeConst::ROLE_EXPIRED
         tipo = "renew"
-        #puts "control_state " + today.to_s
+      end
 
-        #puts "=============ruolo " + self.role_id.to_s + " ==========control_state[" + today.to_s + "/" + self.scadenza.to_s + "]==(" + (today > self.scadenza).to_s + ")====================="
-        if (today > self.scadenza)
-          #scaduto
-          role_atteso = FeeConst::ROLE_EXPIRED
-          tipo = "renew"
+    elsif self.isabbonato? || self.isrenewing? || self.isexpired?
+
+      tipo = "renew"
+      #puts "control_state " + today.to_s
+
+      #puts "=============ruolo " + self.role_id.to_s + " ==========control_state[" + today.to_s + "/" + self.scadenza.to_s + "]==(" + (today > self.scadenza).to_s + ")====================="
+      if (today > self.scadenza)
+        #scaduto
+        role_atteso = FeeConst::ROLE_EXPIRED
+        tipo = "renew"
+      else
+        renew_deadline = self.scadenza - Setting.renew_days.to_i.days
+        if (today > renew_deadline)
+          #sta per scadere solo per abbonato
+          role_atteso = FeeConst::ROLE_RENEW
+          tipo = "proposal"
         else
-          renew_deadline = self.scadenza - Setting.renew_days.to_i.days
-          if (today > renew_deadline)
-            #sta per scadere solo per abbonato
-            role_atteso = FeeConst::ROLE_RENEW
-            tipo = "proposal"
-          else
-            #tutto ok
-            role_atteso = FeeConst::ROLE_ABBONATO
-            tipo = "asso"
-          end
+          #tutto ok
+          role_atteso = FeeConst::ROLE_ABBONATO
+          tipo = "asso"
         end
+      end
     else
-        #puts "=============Non è soggeto a controllo "
+      #puts "=============Non è soggeto a controllo "
     end
     if !role_atteso.nil? && self.role_id != role_atteso
       self.role_id = role_atteso
@@ -342,7 +342,8 @@ class User < Principal
       end
     end
   end
-#  # ruolo elaborato in funzione dello stato della scadenza
+
+  #  # ruolo elaborato in funzione dello stato della scadenza
 
   def hide_name
     str = " utente Fiscosport n° " + self.id.to_s
@@ -363,74 +364,45 @@ class User < Principal
     end
     return (str.nil? || str.blank?) ? "-" : str
   end
-=begin
-  def getDefault4invoice()
-    str = ""
-    str += "<b>" + (self.firstname  unless  self.firstname.blank? || self.firstname.nil?) + " " + (self.lastname  unless self.firstname.blank? || self.firstname.nil? ) + "</b><br />"
-    str += self.indirizzo + "<br />" unless self.indirizzo.blank?
-    if self.comune_id && self.comune
-      str += self.comune.cap + " " unless !self.comune.cap
-      str += self.comune.name
-      str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
-    end
-    str += "<br /> C.F. " + self.codicefiscale.to_s  unless self.codicefiscale.blank?
-    str += "<br /> P.I. " +self.partitaiva.to_s  unless self.partitaiva.blank?
-    return (str.nil? || str.blank?) ? "-" : str
-  end
 
-  def getDefault4invoice()
-    str = ""
-    str += "<b>" + self.soc + " </b><br />" unless self.soc.blank?
-    str += self.indirizzo + "<br />" unless self.indirizzo.blank?
-    if self.comune_id && self.comune
-      str += self.comune.cap + " " unless !self.comune.cap
-      str += self.comune.name
-      str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
-    end
-    str += "<br /> C.F. " + self.codicefiscale.to_s  unless self.codicefiscale.blank?
-    str += "<br /> P.I. " +self.partitaiva.to_s  unless self.partitaiva.blank?
-    return (str.nil? || str.blank?) ? "-" : str
-  end
 
-  def getDefault4invoice_contatto2()
-    str = ""
-    str += "<dl id='contatto'><dt> Codice Fiscosport </dt><dd>" +  self.id.to_s + "</dd>"
-    str += ("<dl><dt> Nome e Cognome </dt><dd>" +  self.firstname + "</dd>" unless  self.firstname.blank? || self.firstname.nil?) + " " + (self.lastname  unless self.firstname.blank? || self.firstname.nil? )
-    str += ("<dl><dt> Email </dt><dd>" +  self.mail + "</dd>" unless  self.mail.blank? || self.mail.nil?)
-    str += "</dl>"
-  end
-=end
   def getDefault4invoice()
     str = ""
     str += "<dl><dt> Spett.le </dt><dd>"
-    str += "<b>" + self.soc + " </b><br />" unless self.soc.blank?
-    str += self.indirizzo + "<br />" unless self.indirizzo.blank?
+    if self.soc.blank? || self.soc.nil?
+      str += ("<b>" + self.firstname.to_s unless  self.firstname.blank? || self.firstname.nil?)
+      str += (" " + self.lastname.to_s + " </b><br />" unless self.lastname.blank? || self.lastname.nil?)
+    else
+      str += "<b>" + self.soc + " </b><br />"
+    end
+    str += self.indirizzo + "<br />" unless self.indirizzo.blank? || self.indirizzo.nil?
     if self.comune_id && self.comune
       str += self.comune.cap + " " unless !self.comune.cap
       str += self.comune.name
       str += "<br />" + self.comune.province.name + " (" + self.comune.province.sigla + ")" unless self.comune.province.nil?
     end
     str += "</dd>"
-    str += "<dt> C.F. </dt><dd>" + self.codicefiscale.to_s + "</dd>" unless self.codicefiscale.blank?
-    str += "<dt> P.I. </dt><dd>" +self.partitaiva.to_s  + "</dd>"  unless self.partitaiva.blank?
+    str += "<dt> C.F. </dt><dd>" + self.codicefiscale.to_s + "</dd>" unless self.codicefiscale.blank? || self.codicefiscale.nil?
+    str += "<dt> P.I. </dt><dd>" +self.partitaiva.to_s + "</dd>" unless self.partitaiva.blank? || self.partitaiva.nil?
     str += "</dl>"
-    return (str.nil? || str.blank?) ? "-" : str
+    return str
   end
 
   def getDefault4invoice_contatto()
     str = ""
     str += "<p id='contatto'><span style='font-size:1.1em;margin-left:0;'>Contatto</span><br />"
-    str += ("<span> Nome e Cognome </span>" +  self.firstname unless  self.firstname.blank? || self.firstname.nil?) + " " + (self.lastname  unless self.firstname.blank? || self.firstname.nil? )
-    str += "<span>Codice Fiscosport </span>" +  self.id.to_s
-    str += ("<span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Email </span>" +  self.mail  unless  self.mail.blank? || self.mail.nil?)
+    str += ("<span> Nome e Cognome </span>" + self.firstname.to_s unless  self.firstname.blank? || self.firstname.nil?) + " " + (self.lastname.to_s unless self.lastname.blank? || self.lastname.nil?)
+    str += "<span>Codice Fiscosport </span>" + self.id.to_s
+    str += ("<span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Email </span>" + self.mail.to_s unless  self.mail.blank? || self.mail.nil?)
     str += "</p>"
+    return str
   end
 
   def pubblicita()
     if self.privato?
       nil
     else
-      GroupBanner.find(:all,  :conditions => ["se_visibile = 1 AND convention_id = #{self.convention_id}"])
+      GroupBanner.find(:all, :conditions => ["se_visibile = 1 AND convention_id = #{self.convention_id}"])
     end
   end
 
@@ -774,7 +746,7 @@ class User < Principal
     return nil if password.to_s.empty?
     #domthu20130919
     if login.length > 30
-      user = find_by_login(login[0,30])
+      user = find_by_login(login[0, 30])
     else
       user = find_by_login(login)
     end
@@ -843,8 +815,8 @@ class User < Principal
     if self.admin?
       s = "Admin"
     else
-      s = (!self.lastname.blank? && self.lastname.length > 3) ? self.lastname[0,3].upcase : ""
-      s += (!self.firstname.blank? && self.firstname.length > 3) ? self.firstname[0,3].downcase : ""
+      s = (!self.lastname.blank? && self.lastname.length > 3) ? self.lastname[0, 3].upcase : ""
+      s += (!self.firstname.blank? && self.firstname.length > 3) ? self.firstname[0, 3].downcase : ""
     end
     return s.html_safe
   end

@@ -9,9 +9,11 @@
 
     <% if @invoice.new_record? %>
            <%= link_to " < cambia", invoice_receiver_path %>
+        <span class="mini-legend" style="color:firebrick;"> *Nelle textbox lasciare il layout preimpostato se necessario modificare solo il testo (meglio in html per rispettare i tags) </span>
+
         <% else %>
         <%= link_to " < cambia", invoice_receiver_path(:id => @invoice.id) %>
-        <span class="mini-legend" style="color:firebrick;"> *Attenzione alle modifiche questa fattura è già stata compilata! <br />Si sconsiglano modifiche di layout nelle textbox<br /> se necessario modificare solo il testo (meglio in html per rispettare i tags) </span>
+        <span class="mini-legend" style="color:firebrick;"> *Attenzione alle modifiche la fattura è già stata compilata salvata. Nelle textbox modificare se necessario solo il testo in html per rispettare i tags. </span>
         <% end %>
 
     </span>

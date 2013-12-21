@@ -1408,7 +1408,7 @@ p.changeauthor img.gravatar{
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background-color:#ededed;
+	background-color: #dfdfdf;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	border-radius:6px;
@@ -1417,7 +1417,7 @@ p.changeauthor img.gravatar{
 	color: #2A5685;
 	font-size:1.2em;
 	font-weight:bold;
-	padding:6px 24px;
+	padding: 7px 28px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #ffffff;
 }
@@ -1449,10 +1449,9 @@ body a.button-grey:visited{
 	border:1px solid #dcdcdc;
 	display:inline-block;
 	color:#fff7ff;
-	font-family: arial , sans-serif;
-	font-size:15px;
+    font-size:1.2em;
 	font-weight:bold;
-	padding:8px 30px;
+	padding:7px 28px;
 	text-decoration:none;
 }.button-blu:hover {
 	background-color:#80826b;
