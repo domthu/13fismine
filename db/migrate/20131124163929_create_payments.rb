@@ -12,11 +12,9 @@ class CreatePayments < ActiveRecord::Migration
 
     existing_payments = Payment.all()
     if (existing_payments.nil?) || (existing_payments.count < 1)
-      Payment.create!(:id => 1, :abbrev => "BON", :pagamento => "bonifico bancario")
-      Payment.create!(:id => 2, :abbrev => "WEB", :pagamento => "Pagamento online (Fismine)")
-      Payment.create!(:id => 3, :abbrev => "DEN", :pagamento => "Contante")
-      Payment.create!(:id => 4, :abbrev => "POS", :pagamento => "Bonifico postale")
-      Payment.create!(:id => 5, :abbrev => "CAR", :pagamento => "Carte di credito o di debito")
+      Payment.create!(:id => 1, :abbrev => "BON", :pagamento => "Bonifico bancario")
+      Payment.create!(:id => 2, :abbrev => "POS", :pagamento => "Bollettino Postale")
+      Payment.create!(:id => 3, :abbrev => "CAR", :pagamento => "Carte di credito o di debito")
     end
 
   end
@@ -24,7 +22,7 @@ class CreatePayments < ActiveRecord::Migration
     drop_table :payments
     remove_column :invoices, :payment_id
     remove_column :invoices, :footer
-    add_column :invoices, :pagamento
+    add_column :invoices, :pagamento, :text, :null => true
 
   end
 end
