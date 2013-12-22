@@ -7,6 +7,8 @@ class InvoicesController < ApplicationController
   include Redmine::Export::PDF
   before_filter :set_menu
   before_filter :get_dest, :only => [:new]
+  before_filter :control_dest, :only => [:create]
+  before_filter :get_invoice, :only => [:show, :edit, :update, :invoice_to_pdf, :destroy]
   before_filter :retreive_dest, :only => [:show, :edit]
   before_filter :get_pdf_file_path, :only => [:show, :invoice_to_pdf]
   before_filter :get_money, :only => [:show, :invoice_to_pdf]
@@ -52,7 +54,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml #{ render :xml => @invoice }
-                 # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
+      #format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => @invoice.attached_invoice) }
     end
 
   end
@@ -60,20 +62,33 @@ class InvoicesController < ApplicationController
   # GET /invoices/new
   # GET /invoices/new.xml
   def new
-    item = ''
-    @pu = params[:user_id].present?
-    @pc = params[:convention_id].present?
-    @invoices = Invoice.find(:all, :order => 'id DESC', :limit => 7)
     @invoice = Invoice.new
-    @invoice.iva = 22
+    item = ''
+    if params[:user_id].present?
+      @invoice.user_id = params[:user_id]
+    end
+    if params[:invoice].present? && params[:invoice][:user_id].present?
+      @invoice.user_id = params[:invoice][:user_id]
+    end
+    if params[:convention_id].present?
+      @invoice.convention_id = params[:convention_id]
+    end
+    if params[:invoice].present? && params[:invoice][:convention_id].present?
+      @invoice.convention_id = params[:invoice][:convention_id]
+    end
     @invoice.anno = Date.today.year
+    @invoices = Invoice.find(:all, :conditions => ['anno = ' + @invoice.anno.to_s], :order => 'numero_fattura DESC', :limit => 7)
+    @invoice.iva = 22
     #sopra mette i default sotto prova a correggerli in base all'ultimo record
     if  @invoices.count > 0
       unless @invoices[0].iva.nil?
-        @invoice.iva = @invoices[0].iva.to_s
+        @invoice.iva = @invoices[0].iva
       end
-      unless @invoices[0].anno.nil?
-        @invoice.anno = @invoices[0].anno.to_s
+#      unless @invoices[0].anno.nil?
+#        @invoice.anno = @invoices[0].anno
+#      end
+      unless @invoices[0].tariffa.nil?
+        @invoice.tariffa = @invoices[0].tariffa
       end
     end
 
@@ -81,7 +96,7 @@ class InvoicesController < ApplicationController
     if @cnt.nil? or @cnt == 0
       @cnt = 1
     else
-      @cnt += 1
+      @cnt = @cnt + 1
     end
     @invoice.numero_fattura = @cnt.to_s
     @invoice.destinatario = @dest
@@ -98,7 +113,6 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1/edit
   def edit
-    @invoice = Invoice.find(params[:id])
     #destinatario
     # if @invoice.destinatario.nil? || @invoice.destinatario.blank?
     if !params[:convention_id].nil? || !params[:user_id].nil?
@@ -128,13 +142,23 @@ class InvoicesController < ApplicationController
   # POST /invoices
   # POST /invoices.xml
   def create
-    @invoice = Invoice.new(params[:invoice])
+    if @invoice.sezione.blank?
+      @invoice.sezione = "A"
+    end
+
 
     respond_to do |format|
       if @invoice.save
+        #creazione pdf
+        get_pdf_file_path
+        get_money
+        crea_pdf_fattura
+        #send email
+        #format.html { redirect_to(invoice_to_pdf_path(@invoice), :notice => l(:notice_successful_create)) }
         format.html { redirect_to(@invoice, :notice => l(:notice_successful_create)) }
-        format.xml { render :xml => @invoice, :status => :created, :location => @invoice }
+        #format.xml { render :xml => @invoice, :status => :created, :location => @invoice }
       else
+        flash[:error] = @invoice.errors
         format.html { render :action => "new" }
         format.xml { render :xml => @invoice.errors, :status => :unprocessable_entity }
       end
@@ -144,8 +168,6 @@ class InvoicesController < ApplicationController
   # PUT /invoices/1
   # PUT /invoices/1.xml
   def update
-    @invoice = Invoice.find(params[:id])
-
     respond_to do |format|
       if @invoice.update_attributes(params[:invoice])
         format.html { redirect_to(@invoice, :notice => l(:notice_successful_update)) }
@@ -160,7 +182,6 @@ class InvoicesController < ApplicationController
   # DELETE /invoices/1
   # DELETE /invoices/1.xml
   def destroy
-    @invoice = Invoice.find(params[:id])
     @invoice.destroy
 
     respond_to do |format|
@@ -227,17 +248,10 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_to_pdf
-    html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
-    i = Invoice.find(params[:id])
-    f= RAILS_ROOT + i.getInvoiceFilePath
-    kit = PDFKit.new(html)
-    kit.to_file(f)
-    @invoice.attached_invoice = @file_pdf
-    @invoice.save!
+    crea_pdf_fattura
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.xml { render :xml => @invoice }
-      # format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => 'export.pdf') }
     end
 
   end
@@ -246,7 +260,6 @@ class InvoicesController < ApplicationController
     def invoice_download_pdf
     unless params[:id].nil?
       invoice_to_pdf()
-      @invoice = Invoice.find(params[:id])
       html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
       pdf = PDFKit.new(html)
       pdf.stylesheets << "/public/stylesheets/pdf_in.css"
@@ -258,6 +271,25 @@ class InvoicesController < ApplicationController
 =end
 
   private
+
+  #@invoice esiste sempre
+  def crea_pdf_fattura
+    #html = render_to_string(:controller => 'invoices', :action => 'show_invoice_html', :layout => false)
+    html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
+    f= RAILS_ROOT + @invoice.getInvoiceFilePath
+    kit = PDFKit.new(html)
+    kit.to_file(f)
+    @invoice.attached_invoice = @file_pdf
+    @invoice.save!
+  end
+
+  def control_dest
+    @invoice = Invoice.new(params[:invoice])
+    if !@invoice.user_id.present? && !@invoice.convention_id.present?
+      flash[:notice] = "Selezionare un utente o una convenzione prima di creare la fattura..."
+      redirect_to(invoice_receiver_path)
+    end
+  end
 
   def get_dest
     @dest = ''
@@ -283,18 +315,12 @@ class InvoicesController < ApplicationController
 
   def get_pdf_file_path
     @file_pdf = nil
-    if params[:id].present?
-      item = Invoice.find(params[:id])
-      if File.exist?("#{RAILS_ROOT}" + item.getInvoiceFilePath) and File.file?("#{RAILS_ROOT}" + item.getInvoiceFilePath)
-        @file_pdf = "http://" + Setting.host_name + item.getInvoiceFilePath
-      end
+    if File.exist?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath) and File.file?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath)
+      @file_pdf = "http://" + Setting.host_name + @invoice.getInvoiceFilePath
     end
-  rescue ActiveRecord::RecordNotFound
-    render_404
   end
 
   def get_money
-    @invoice = Invoice.find(params[:id])
     @tariffa = @invoice.tariffa || 0.00
     @scontoperc = @invoice.sconto || 0.00
     @sconto = (@tariffa * @scontoperc) / 100
@@ -305,8 +331,16 @@ class InvoicesController < ApplicationController
     @totale = @imponibile + @imposta
   end
 
+  def get_invoice
+    if !params[:id].present?
+      redirect_to(invoices_path)
+    end
+    @invoice = Invoice.find_by_id(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
+
   def retreive_dest
-    @invoice = Invoice.find(params[:id])
     #destinatario
     if (@invoice.destinatario.nil? || @invoice.destinatario.blank?) || (!@invoice.user_id.nil? && !@invoice.convention_id.nil?) || (@invoice.user_id.nil? && @invoice.convention_id.nil?)
 #    if @invoice.destinatario.nil? || @invoice.destinatario.blank? || }"
@@ -355,10 +389,6 @@ class InvoicesController < ApplicationController
 
       @invoice.save
     end
-      #  @invoice.destinatario = '>>>>>>' +  (!@invoice.user_id.nil? && !@invoice.convention_id.nil?).to_s
-      #  @invoice.update_attributes(params[:user_id,:convention_id,:mittente,:destinatario,:description,:footer ])
-  rescue ActiveRecord::RecordNotFound
-    render_404
   end
 
 end

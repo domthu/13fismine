@@ -5,6 +5,8 @@ class Invoice < ActiveRecord::Base
   belongs_to :contract_user, :class_name => 'ContractUser', :foreign_key => 'contract_user_id'
   belongs_to :payment, :class_name => 'Payment', :foreign_key => 'payment_id'
 
+  validates_presence_of :numero_fattura, :anno, :data_fattura, :tariffa, :iva
+  validates_uniqueness_of :numero_fattura, :scope => [:numero_fattura, :anno]
 
   def to_s
     numero_fattura.to_s
@@ -25,6 +27,7 @@ class Invoice < ActiveRecord::Base
   def numero_fiscale
     numero_fattura.to_s + '/' + anno.to_s
   end
+
   def getInvoiceFilePath
     s= ''
     a = '0000'

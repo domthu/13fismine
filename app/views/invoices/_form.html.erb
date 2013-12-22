@@ -1,8 +1,8 @@
 <%= f.error_messages %>
 
 <div class="box tabular">
-  <%= f.hidden_field :user_id, :value => @user_id %>
-  <%= f.hidden_field :convention_id, :value => @convention_id %>
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :convention_id %>
   <%# f.hidden_field :mittente, :value =>  Setting.default_invoices_header  %>
 
   <p><span style="font-weight: bold;">
@@ -34,6 +34,7 @@
     <% end %>
   </p>
 
+<% if @invoices && @invoices.count > 0 %>
   <table style="float: right; margin: -30px 30px 0 0; border: dotted 1px #a9a9a9 ">
     <thead>
     <th>numero</th>
@@ -43,16 +44,15 @@
     <tr>
       <td align="center" colspan="2" style="font-size: 0.8em;"> Ultime 5 fatture</td>
     </tr>
-    <%# if @invoice5.nil? %>
     <% @invoices.each do |i| %>
         <tr>
-          <td> <%= link_to i.numero_fattura.to_s, edit_invoice_path(i) %></td>
+          <td> <%= link_to i.numero_fiscale, edit_invoice_path(i) %></td>
           <td> <%= I18n.localize(i.data_fattura.to_date, :format => :giorno_mese_anno) unless i.data_fattura.blank? %></td>
         </tr>
     <% end %>
-    <%# end %>
     </tbody>
   </table>
+<% end %>
 
   <p><%= f.date_select :data_fattura, :label => :field_data_fattura, :required => true %></p>
 
@@ -63,12 +63,12 @@
   <p><%= f.text_field :iva, :value => @invoice.iva.to_s, :label => :field_iva, :size => 5, :required => true %></p>
 
   <p>
-    <%= f.select :payment_id, options_for_select(Payment.all.collect { |pay| [pay.name, pay.id] }, @invoices[0].payment_id), {:disabled => false, :include_blank => false, :required => true} %>
+    <%= f.select :payment_id, options_for_select(Payment.all.collect { |pay| [pay.name, pay.id] }, (@invoices[0].payment_id if (@invoices && @invoices.count > 0))), {:disabled => false, :include_blank => false, :required => true} %>
   </p>
 
   <p><%= f.text_field :anno, :label => :field_anno, :value => @invoice.anno.to_s, :size => 5 %></p>
 
-  <p><%= f.text_field :sezione, :value => @invoices[0].sezione.to_s, :label => :field_sezione, :size => 5 %></p>
+  <p><%= f.text_field :sezione, :value => ( @invoices[0].sezione.to_s if (@invoices && @invoices.count > 0)), :label => :field_sezione, :size => 5 %></p>
 </div>
 
 </div>
