@@ -31,7 +31,6 @@ class Invoice < ActiveRecord::Base
   def getInvoiceFilePath
     s= ''
     a = '0000'
-
     if (self.convention_id && self.convention)
      s +="c" + self.convention_id.to_s
     end
@@ -39,11 +38,9 @@ class Invoice < ActiveRecord::Base
      s += "u" + self.user_id.to_s
     end
     if self.anno
-      a = 'fs' + self.anno.to_s
+      a = self.anno.to_s
     end
-
-  return   "/public/images/files/fattura_" + self.id.to_s + a +  s + ".pdf"
-
+    return   "/files/invoices/fattura_" + a + '_' + self.numero_fattura.to_s + '_' + s + ".pdf"
   end
 
 end
