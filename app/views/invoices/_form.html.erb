@@ -1,9 +1,8 @@
 <%= f.error_messages %>
-
+<h1><%=  @user_id.to_s  %></h1>
 <div class="box tabular">
   <%= f.hidden_field :user_id %>
   <%= f.hidden_field :convention_id %>
-  <%# f.hidden_field :mittente, :value =>  Setting.default_invoices_header  %>
 
   <p><span style="font-weight: bold;">
 
@@ -72,23 +71,7 @@
 </div>
 
 </div>
-<!--
-
-<div class="box tabular">
-  <p>
-    <%= raw f.text_area :mittente,
-                        :label => (:label_mittente),
-                        :value => @invoice.mittente %>  </p>
-
-  <p>
-    <%= raw f.text_area :footer,
-                        :label => (:label_footer),
-                        :value => @invoice.footer %>  </p>
-</div>
--->
 <script type="text/javascript">
     CKEDITOR.replace('invoice_destinatario', { toolbar: 'Mini', height: 120, width: 540 });
     CKEDITOR.replace('invoice_contatto', { toolbar: 'Mini', height: 80, width: 540 });
- // CKEDITOR.replace('invoice_footer', { toolbar: 'Mini', height: 200, width: 450 });
-//    CKEDITOR.replace('invoice_mittente', { toolbar: 'Mini', height: 200, width: 450 });
 </script>

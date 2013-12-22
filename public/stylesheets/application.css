@@ -74,7 +74,7 @@ margin:-1px 0 0 -11px; background-color: #336BA8; color: #f8f8f8; font-weight: b
 #admin-menu a.server_authentication { background-image: url(../images/server_key.png); }
 #admin-menu a.table_fs { background-image: url(../images/server_key.png); }
 #admin-menu a.abbo { background-image: url(../images/locked.png); }
-#admin-menu a.payment { background-image: url(../images/report.png); }
+#admin-menu a.invoices { background-image: url(../images/report.png); }
 #admin-menu a.table-fs { background-image: url(../images/fs.png); }
 #admin-menu a.comunes { background-image: url(../images/it.png); }
 
