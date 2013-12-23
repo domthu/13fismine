@@ -20,7 +20,6 @@
         width: 100%;
      }
 
-
 </style>
 <div id="iwrapper">
   <div id="ipage">
@@ -31,10 +30,12 @@
   <%= link_to l(:button_list), invoices_path, :class => 'button-grey' %>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <%= link_to l(:button_issue_empty), edit_invoice_path(@invoice), :class => 'button-grey' %>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <%= link_to l(:label_create_pdf), invoice_download_pdf_path(@invoice.id), :class => 'button-blu', :target => '_blank' %>
-  <% unless  @file_pdf.nil? %>
-      <p id="pdf_link"><%= link_to "show me not nill  Invoice (PDF)", @file_pdf %></p>
+  <% unless @file_pdf.nil? %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <%= link_to "Scarica '" + @file_pdf + "'", @file_pdf, :class => 'button-blu', :target => '_blank' %>
   <% end %>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <%= link_to l(:label_send_me_invoice_pdf), send_me_invoice_path(@invoice.id), :class => 'button-blu'%>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <%= link_to l(:label_send_invoice_pdf), send_customer_invoice_path(@invoice.id), :class => 'button-blu'%>
 </div>
-

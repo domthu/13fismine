@@ -153,6 +153,9 @@ ActionController::Routing::Routes.draw do |map|
   map.invoice_receiver '/invoice_receiver', :controller => 'invoices', :action => 'invoice_receiver'
   map.invoice_to_pdf '/invoice_to_pdf/:id', :controller => 'invoices', :action => 'invoice_to_pdf'
   map.invoice_download_pdf '/invoice_to_pdf/:id.pdf', :controller => 'invoices', :action => 'invoice_download_pdf',:conditions => {:method => :get}
+
+  map.send_me_invoice '/invoice_me/:id', :controller => 'invoices', :action => 'send_me'
+  map.send_customer_invoice '/invoice_him/:id', :controller => 'invoices', :action => 'send_customer'
   map.fee 'fee', :controller => 'fees', :action => 'index'
   map.liste_utenti 'liste_utenti', :controller => 'fees', :action => 'liste_utenti'
   map.scaduti 'scaduti', :controller => 'fees', :action => 'scaduti'

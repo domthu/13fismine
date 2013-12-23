@@ -322,65 +322,54 @@ class Mailer < ActionMailer::Base
       part :content_type => "text/html",
            :body => '<div style="font-weight:bold;"> Email:[' + email + '] </div><br /> <hr> <p>'  + body_as_string + '</p>'
     end
-=begin
-    if user.nil?
-      part :content_type => "text/html",
-           :body => '<div style="font-wheight:bold;"> Anonymous email:[' + email + '] </div><br /> <hr> <p>'  + body_as_string + '</p>'
-    else
-      part :content_type => "text/html",
-           :body => '<div style="font-wheight:bold;"> User id:[' + user.id.to_s + '] Nome: ' + user.name +  '</div><br /> <hr> <p>'  + body_as_string + '</p>'
-    end
-=end
   end
 
   #Via js non vede Application Helper
   def newsletter(user, body_as_string, project)
     from Setting.newsletter_from
-    #set_language_if_valid user.language
     recipients user.mail #TODO rimettere in produzione
-    #recipients Setting.fee_bcc_recipients
-    #recipients Setting.fee_email
-    #recipients 'dom.thual@gmail.com'
-
     ed = ''
-    #mail_subject_newsletter: "%{compagny}: %{edizione} del %{date}"
-    #ed = user.nil? ? '--' : user.id.to_s
     ed = user.nil? ? '' : ('[' + user.name.html_safe + ']')
     ed += ' '
     ed += project.nil? ? '..' : project.name.html_safe
     ed += ' '
-    #subject l(:mail_subject_newsletter, :compagny => Setting.app_title, :edizione => ed, :date => project.data_al)
     subject ed
-
     ##Kappao (protected method `render_to_string' called for #)
-    #if !user.privato?
     #  _html = render_to_string( #undefined method `render_to_string' for #
-    #  ac = ActionController::Base.new()
-    #  _html = ac.render_to_string(
-    #        :layout => false,
-    #        :partial => 'editorial/edizione_smtp_convention',
-    #        :locals => { :user => user }
-    #      )
-    #  body_as_string = body_as_string.gsub('@@user_convention@@', _html)
-    #end
-
     clean_html = clean_fs_html(body_as_string, user, project)
-    #clean_html = body_as_string
-    #ed = user.nil? ? '--' : user.mail
-    #clean_html = "<h1>" + ed + "</h1>"+ clean_html
-    #subject "invia questa mail"
-    #body :token => token,
-    #     :url => url_for(:controller => 'account', :action => 'activate', :token => token.value)
-    #render_multipart('register', body)
-
     #content_type "multipart/alternative"
     #Method1 Non usare view
     part :content_type => "text/html",
          :body => clean_html #render_message("#{method_name}.html.erb", body)
-
     #Method2 usa views
     #body :news => clean_html, :fee_url => url_for(:controller => 'fees'), :app_title => Setting.app_title
     #render_multipart('newsletter', body)
+  end
+
+  def invoice(user, invoice, body_as_string, reader, file_path)
+    from Setting.newsletter_from
+    recipients user.mail
+    ed = 'Fiscosport fattura '
+    ed += invoice.nil? ? '' : invoice.numero_fiscale_mail
+    ed += ' '
+    ed += user.name.html_safe
+    subject ed
+    if !reader.nil?
+      #bcc(reader.mail)
+      cc(reader.mail)
+    end
+    clean_html = clean_fs_html(body_as_string, user, nil)
+    #content_type "multipart/alternative" non allega email
+    #Method1 Non usare view
+    part :content_type => "text/html",
+         :body => clean_html #render_message("#{method_name}.html.erb", body)
+    #Method2 usa views
+    #body :news => clean_html, :fee_url => url_for(:controller => 'fees'), :app_title => Setting.app_title
+    #render_multipart('newsletter', body)
+    attachment "application/pdf" do |a|
+      #a.body =  File.read(invoice.attached_invoice)
+      a.body =  File.read(file_path)
+    end
   end
 
   # Builds a tmail object used to email fee management.

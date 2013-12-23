@@ -641,6 +641,11 @@ en:
   label_close_versions: Close completed versions
   label_confirmation: Confirmation
   label_export_to: 'Also available in:'
+  label_create_pdf: Do Pdf
+  label_download_pdf: Download Pdf
+  label_send_me_invoice_pdf: Send me
+  label_send_invoice_pdf: Send to customer
+  button_pdf: "Pdf  "
   label_read: Read...
   label_public_projects: Public projects
   label_open_issues: open

@@ -8,10 +8,11 @@ class InvoicesController < ApplicationController
   before_filter :set_menu
   before_filter :get_dest, :only => [:new]
   before_filter :control_dest, :only => [:create]
-  before_filter :get_invoice, :only => [:show, :edit, :update, :invoice_to_pdf, :destroy]
+  before_filter :get_invoice, :only => [:show, :edit, :update, :invoice_to_pdf, :destroy, :send_customer, :send_me]
   before_filter :retreive_dest, :only => [:show, :edit]
   before_filter :get_pdf_file_path, :only => [:show, :invoice_to_pdf]
-  before_filter :get_money, :only => [:show, :invoice_to_pdf]
+  before_filter :get_money, :only => [:show, :invoice_to_pdf, :send_customer, :send_me]
+  before_filter :send_invoice, :only => [:send_customer, :send_me]
   menu_item :invoices
 
   def set_menu
@@ -256,6 +257,24 @@ class InvoicesController < ApplicationController
 
   end
 
+  def send_me
+    Mailer.deliver_invoice(User.current, @invoice, @body_as_string, nil, @file_path)
+    #attachments = Attachment.attach_files(@document, params[:attachments])
+    #render_attachment_warning_if_needed(@document)
+    #Mailer.deliver_attachments_added(attachments[:files]) if attachments.present? && attachments[:files].present? && Setting.notified_events.include?('document_added')
+    redirect_to :action => 'show', :id => @invoice
+    flash[:notice] = 'email inviato con pdf allegato a ' + User.current.mail
+  end
+
+  def send_customer
+    user = @invoice.user
+    if user.nil?
+      user = @invoice.convention.user
+    end
+    Mailer.deliver_invoice(user, @invoice, @body_as_string, User.current, @file_path)
+    redirect_to :action => 'show', :id => @invoice
+    flash[:notice] = 'email inviato con pdf allegato al cliente ' + user.mail
+  end
 =begin
     def invoice_download_pdf
     unless params[:id].nil?
@@ -271,6 +290,22 @@ class InvoicesController < ApplicationController
 =end
 
   private
+
+  def send_invoice
+    @body_as_string = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
+    if @invoice.attached_invoice.nil? || @invoice.attached_invoice.blank?
+      get_pdf_file_path
+      if @file_pdf.nil? || @file_pdf.blank?
+        crea_pdf_fattura
+        get_pdf_file_path
+      end
+      if !@file_pdf.nil? && !@file_pdf.blank?
+        @invoice.attached_invoice = @file_pdf
+        @invoice.save!
+      end
+    end
+    @file_path = "#{RAILS_ROOT}" + @invoice.getInvoiceFilePath
+  end
 
   #@invoice esiste sempre
   def crea_pdf_fattura
@@ -315,7 +350,8 @@ class InvoicesController < ApplicationController
 
   def get_pdf_file_path
     @file_pdf = nil
-    if File.exist?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath) and File.file?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath)
+    #if File.exist?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath) and File.file?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath)
+    if File.exist?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath)
       @file_pdf = "http://" + Setting.host_name + @invoice.getInvoiceFilePath
     end
   end

@@ -28,6 +28,10 @@ class Invoice < ActiveRecord::Base
     numero_fattura.to_s + '/' + anno.to_s
   end
 
+  def numero_fiscale_mail
+    numero_fattura.to_s + '_' + anno.to_s
+  end
+
   def getInvoiceFilePath
     s= ''
     a = '0000'

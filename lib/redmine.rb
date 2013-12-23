@@ -299,7 +299,7 @@ end
 # MENU LATERALE DX -> FATTURE
 Redmine::MenuManager.map :menu_payment_fs do |menu|
   menu.push :invoices, :invoices_path, :caption =>  :label_invoice_list , :if => Proc.new { User.current.admin? }
-  menu.push :invia_fatture, :invia_fatture_path , :label =>  :label_emetti_fattura , :if => Proc.new { User.current.admin? }
+  #menu.push :invia_fatture, :invia_fatture_path , :label =>  :label_emetti_fattura , :if => Proc.new { User.current.admin? }
   #menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
   #menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
   menu.push :payments, :payments_path , :caption => :label_pagamento_metodo_plural

@@ -672,6 +672,8 @@ it:
   label_export_to: Esporta su
   label_create_pdf: Crea Pdf
   label_download_pdf: Download Pdf
+  label_send_me_invoice_pdf: invia a me
+  label_send_invoice_pdf: invia al cliente
   button_pdf: "Pdf  "
   label_read: Leggi...
   label_public_projects: Edizioni pubbliche
