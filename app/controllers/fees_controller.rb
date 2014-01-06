@@ -29,14 +29,11 @@ class FeesController < ApplicationController
   #selected menu payments
   menu_item :invoices, :only => [:invoices]
   menu_item :email_fee, :only => [:email_fee]
-  menu_item :invia_fatture, :only => [:invia_fatture]
 
   def set_menu
     case self.action_name
       when 'index', 'liste_utenti', 'associati', 'paganti','abbonamenti'
         @menu_fs = :menu_fee_fs
-      when 'fatture', 'email_fee', 'invia_fatture'
-        @menu_fs = :menu_payment_fs
       else
         @menu_fs = :application_menu
     end
@@ -320,10 +317,6 @@ class FeesController < ApplicationController
     @users = User.find :all,
                        :order => sort_clause,
                        :conditions => c.conditions
-  end
-
-##########GESTIONE PAGAMENTI ABBONAMENTO
-  def invia_fatture
   end
 
   #Mailer.Deliver_fee

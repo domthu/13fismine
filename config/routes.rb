@@ -160,7 +160,6 @@ ActionController::Routing::Routes.draw do |map|
   map.liste_utenti 'liste_utenti', :controller => 'fees', :action => 'liste_utenti'
   map.scaduti 'scaduti', :controller => 'fees', :action => 'scaduti'
   map.archiviati 'archiviati', :controller => 'fees', :action => 'archiviati'
-  map.invia_fatture 'invia_fatture', :controller => 'fees', :action => 'invia_fatture'
   map.paganti 'paganti', :controller => 'fees', :action => 'paganti'
   map.privati 'privati', :controller => 'fees', :action => 'privati'
   map.associati 'associati', :controller => 'fees', :action => 'associati'

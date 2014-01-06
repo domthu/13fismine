@@ -79,9 +79,9 @@ class InvoicesController < ApplicationController
     end
     @invoice.anno = Date.today.year
     @invoices = Invoice.find(:all, :conditions => ['anno = ' + @invoice.anno.to_s], :order => 'numero_fattura DESC', :limit => 7)
-    @invoice.iva = 22
+    @invoice.iva = 0.22
     #sopra mette i default sotto prova a correggerli in base all'ultimo record
-    if  @invoices.count > 0
+    if @invoices.count > 0
       unless @invoices[0].iva.nil?
         @invoice.iva = @invoices[0].iva
       end
@@ -102,9 +102,9 @@ class InvoicesController < ApplicationController
     @invoice.numero_fattura = @cnt.to_s
     @invoice.destinatario = @dest
     @invoice.contatto = @cont
-    @invoice.mittente = Setting.default_invoices_header
-    @invoice.description = Setting.default_invoices_description
-    @invoice.footer = Setting.default_invoices_footer
+    #@invoice.mittente = Setting.default_invoices_header
+    #@invoice.description = Setting.default_invoices_description
+    #@invoice.footer = Setting.default_invoices_footer
 
     respond_to do |format|
       format.html # new.html.erb
@@ -114,27 +114,6 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1/edit
   def edit
-    #destinatario
-    # if @invoice.destinatario.nil? || @invoice.destinatario.blank?
-    if !params[:convention_id].nil? || !params[:user_id].nil?
-      @dest = ''
-      @cont = ''
-      unless params[:user_id].nil?
-        item = User.find_by_id(params[:user_id])
-        @dest += item.getDefault4invoice()
-        @cont += item.getDefault4invoice_contatto()
-        @invoice.convention_id = nil
-      end
-      unless params[:convention_id].nil?
-        item = Convention.find_by_id(params[:convention_id])
-        @dest += item.getDefault4invoice()
-        @cont += item.getDefault4invoice_contatto()
-        @invoice.user_id = nil
-      end
-
-      @invoice.destinatario = @dest
-      #end
-    end
     @invoices = Invoice.find(:all,
                              :order => 'id DESC',
                              :limit => 7)
@@ -147,6 +126,9 @@ class InvoicesController < ApplicationController
       @invoice.sezione = "A"
     end
 
+    @invoice.mittente = Setting.default_invoices_header
+    @invoice.description = Setting.default_invoices_description
+    @invoice.footer = Setting.default_invoices_footer
 
     respond_to do |format|
       if @invoice.save
@@ -333,7 +315,6 @@ class InvoicesController < ApplicationController
       item = User.find_by_id(params[:user_id])
       @dest += item.getDefault4invoice()
       @cont += item.getDefault4invoice_contatto()
-      @cont += 'bla' # item.getDefault4invoice_contatto()
     end
     if params[:convention_id].present?
       item = Convention.find_by_id(params[:convention_id])
@@ -350,7 +331,6 @@ class InvoicesController < ApplicationController
 
   def get_pdf_file_path
     @file_pdf = nil
-    #if File.exist?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath) and File.file?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath)
     if File.exist?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath)
       @file_pdf = "http://" + Setting.host_name + @invoice.getInvoiceFilePath
     end
@@ -378,51 +358,62 @@ class InvoicesController < ApplicationController
 
   def retreive_dest
     #destinatario
-    if (@invoice.destinatario.nil? || @invoice.destinatario.blank?) || (!@invoice.user_id.nil? && !@invoice.convention_id.nil?) || (@invoice.user_id.nil? && @invoice.convention_id.nil?)
-#    if @invoice.destinatario.nil? || @invoice.destinatario.blank? || }"
+    if @invoice.destinatario.nil? || @invoice.destinatario.blank?
       @dest = ''
       @cont = ''
-      unless @invoice.user_id.nil? || @invoice.user_id.blank?
-        item = User.find_by_id(params[:user_id])
-        if item
-          @dest += item.getDefault4invoice()
-          @cont += item.getDefault4invoice_contatto()
-          @invoice.convention_id = nil
-        else
-          @invoice.user_id = nil
+      if @invoice.user_id
+        @dest += @invoice.user.getDefault4invoice()
+        @cont += @invoice.user.getDefault4invoice_contatto()
+      else
+        if !params[:user_id].nil? && !params[:user_id].blank?
+          item = User.find_by_id(params[:user_id])
+          if item
+            @dest += item.getDefault4invoice()
+            @cont += item.getDefault4invoice_contatto()
+            @invoice.user_id = item.id
+          end
         end
       end
-      unless @invoice.convention_id.nil? || @invoice.convention_id.blank?
-        item = Convention.find_by_id(params[:convention_id])
-        if item
-          @dest += item.getDefault4invoice()
-          @cont += item.getDefault4invoice_contatto()
-          @invoice.user_id = nil
-        else
-          @invoice.convention_id = nil
-        end
 
+      if @invoice.convention_id
+        @dest += @invoice.convention.getDefault4invoice()
+        @cont += @invoice.convention.getDefault4invoice_contatto()
+      else
+        if !params[:convention_id].nil? && !params[:convention_id].blank?
+          item = Convention.find_by_id(params[:convention_id])
+          if item
+            @dest += item.getDefault4invoice()
+            @cont += item.getDefault4invoice_contatto()
+            @invoice.convention_id = item.id
+          end
+        end
       end
+
       if @dest == ''
         flash[:notice] = "Selezionare un utente o una convenzione prima di creare la fattura..."
         redirect_to(invoice_receiver_path)
       end
-      #mittente default_invoices_header:
-      if @invoice.mittente.nil? || @invoice.mittente.blank?
-        @invoice.mittente = Setting.default_invoices_header
-      end
+      @invoice.destinatario = @dest
+      @invoice.contatto = @cont
+      @invoice.save
+
+      #creazione pdf
+      get_pdf_file_path
+      get_money
+      crea_pdf_fattura
+
+    end
+    #mittente default_invoices_header:
+    if @invoice.mittente.nil? || @invoice.mittente.blank?
+      @invoice.mittente = Setting.default_invoices_header
       #description default_invoices_description
       if @invoice.description.nil? || @invoice.description.blank?
         @invoice.description = Setting.default_invoices_description
       end
       #footer default_invoices_footer
-
       if @invoice.footer.nil? || @invoice.footer.blank?
         @invoice.footer = Setting.default_invoices_footer
       end
-      @invoice.destinatario = @dest
-      @invoice.contatto = @cont
-
       @invoice.save
     end
   end
