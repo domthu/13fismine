@@ -33,6 +33,10 @@ class Invoice < ActiveRecord::Base
   end
 
   def getInvoiceFilePath
+    return   "/files/invoices/" + self.getInvoiceFilename
+  end
+
+  def getInvoiceFilename
     s= ''
     a = '0000'
     if (self.convention_id && self.convention)
@@ -44,7 +48,7 @@ class Invoice < ActiveRecord::Base
     if self.anno
       a = self.anno.to_s
     end
-    return   "/files/invoices/fattura_" + a + '_' + self.numero_fattura.to_s + '_' + s + ".pdf"
+    return   "fattura_" + a + '_' + self.numero_fattura.to_s + '_' + s + ".pdf"
   end
 
 end

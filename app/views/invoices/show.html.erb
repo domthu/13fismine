@@ -32,7 +32,11 @@
   <%= link_to l(:button_issue_empty), edit_invoice_path(@invoice), :class => 'button-grey' %>
   <% unless @file_pdf.nil? %>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <%= link_to "Scarica '" + @file_pdf + "'", @file_pdf, :class => 'button-blu', :target => '_blank' %>
+    <%# link_to "Scarica '" + @file_pdf + "'", @file_pdf, :class => 'button-blu', :target => '_blank' %>
+  <% end %>
+  <% unless @filename_pdf.nil? %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <%= link_to "Scarica '" + @file_pdf + "'", "/fatture/" + @filename_pdf, :class => 'button-blu', :target => '_blank' %>
   <% end %>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <%= link_to l(:label_send_me_invoice_pdf), send_me_invoice_path(@invoice.id), :class => 'button-blu'%>

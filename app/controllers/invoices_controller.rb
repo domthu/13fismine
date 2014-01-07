@@ -11,6 +11,7 @@ class InvoicesController < ApplicationController
   before_filter :get_invoice, :only => [:show, :edit, :update, :invoice_to_pdf, :destroy, :send_customer, :send_me]
   before_filter :retreive_dest, :only => [:show, :edit]
   before_filter :get_pdf_file_path, :only => [:show, :invoice_to_pdf]
+  before_filter :get_filename_pdf, :only => [:show, :invoice_to_pdf]
   before_filter :get_money, :only => [:show, :invoice_to_pdf, :send_customer, :send_me]
   before_filter :send_invoice, :only => [:send_customer, :send_me]
   menu_item :invoices
@@ -270,6 +271,17 @@ class InvoicesController < ApplicationController
     end
    end
 =end
+  def fatture
+    @filename =  params[:filename]
+    @filepath = "#{RAILS_ROOT}/files/invoices/" + @filename
+    #@content = File.new(@filepath, "pdf").read
+    #format.pdf  { :type => 'application/pdf', :filename => @filename }
+    #send_data(@content, :type => 'application/pdf', :filename => @filename)
+    #send_data(nil, :type => 'application/pdf', :filename => @filename)
+    File.open(@filepath, 'rb') do |f|
+      send_data f.read, :type => "application/pdf", :filename => @filename, :disposition => "inline"
+    end
+  end
 
   private
 
@@ -333,6 +345,13 @@ class InvoicesController < ApplicationController
     @file_pdf = nil
     if File.exist?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath)
       @file_pdf = "http://" + Setting.host_name + @invoice.getInvoiceFilePath
+    end
+  end
+
+  def get_filename_pdf
+    @filename_pdf = nil
+    if File.exist?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath)
+      @filename_pdf = @invoice.getInvoiceFilename
     end
   end
 
