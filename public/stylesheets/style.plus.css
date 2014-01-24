@@ -2154,53 +2154,52 @@ h3.fs-postheader {
     background: url('/images/ico/flash_success_s.png') center left no-repeat;
 }
 
-.f-error {
+.f-error, .f-errors {
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 1.5em !important;
     background-color: #ffa07a;
-
 }
 
-.f-success {
+.f-success, .f-successes {
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 1.5em !important;
     background-color: #faffc5;
 }
 
-.f-notice {
+.f-notice, .f-notices {
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 1.5em !important;
     background-color: #BDEBFF;
 }
 
-.f-alert {
+.f-alert, .f-alerts {
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 1.5em !important;
     background-color: #ffa07a;
 }
 
-.notice-fs {
+.notice-fs, .notices-fs {
     background: url('/images/ico/flash_notice.png') center center no-repeat;
     float: left;
     width: 70px;
     height: 75px;
 }
 
-.success-fs {
+.success-fs, .successes-fs {
     background: url('/images/ico/flash_success.png') center right no-repeat;
     float: left;
     width: 70px;
     height: 75px;
 }
 
-.alert-fs {
+.alert-fs, .alerts-fs {
     background: url('/images/ico/flash_alert.png') center center no-repeat;
     float: left;
     width: 70px;
     height: 75px;
 }
 
-.error-fs {
+.error-fs, .errors-fs {
     background: url('/images/ico/flash_error.png') center center no-repeat;
     float: left;
     width: 70px;

@@ -1,13 +1,16 @@
 <html>
 <head>
 <style>
-body, .strat { font-family: "Segoe UI", Arial, Helvetica, sans-serif; font-size: 14px; color: #000; background-color: #EBA800; }
+body, .strat { font-family: "Segoe UI", Arial, Helvetica, sans-serif; font-size: 14px; color: #000; background-color: #EBA800; padding-bottom: 30px; }
 .font {font-family: "Segoe UI", Arial, Helvetica, sans-serif; }
 p {margin-top: 5px;margin-bottom: 10px;}
 a, a:link { color: #1AC2FF; text-decoration: none; }
 a:visited { color: #1AC2FF; text-decoration: none; }
 a:hover { color: #8C8C8C; text-decoration: underline; }
 img { border: none; margin: 0; }
+h3 { font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 25px;color: #016284; margin-bottom: 15px; margin-top: 15px; }
+.fiscosport {width:100%; text-align:center; margin: 10px; padding: 10px; font-family: 'Segoe UI', arial,  helvetica, sans-serif;font-size: 12px;color: #666666; }
+.footer {width:100%; font-family: Verdana, Arial, Helvetica, sans-serif; color:#666666; font-size:10px; }
 </style>
 </head>
 <body>
@@ -35,33 +38,22 @@ img { border: none; margin: 0; }
         </TR>
         <TR>
           <TD>
-            <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 25px;color: #016284;'>&nbsp;<br><h3><%= @title %></h3></p><br>
-            <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 16px;color: #016285;'>&nbsp;</p>
+            <h3><%= @title %></h3>
             <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 14px;color: #666666;'>
-            <%= yield %>
+              <%= yield %>
             </p>
-            <table width="200" align="right" border="0" cellspacing="5" cellpadding="5">
-              <tr>
-                <td><a href="#"><img src="<%= defurl %>/images/ico/home_no.gif" border="0" /></a></td>
-                <td><a href="#"><img src="<%= defurl %>/images/ico/home_yes.gif" border="0" /></a></td>
-              </tr>
-            </table>
-            <br>
-            <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 15px;color: #666666;'>&nbsp;<%# Subtitle 02%></p>
-            <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 12px;color: #666666;'>&nbsp;<%# content 02%></p>
-            <table width="100%" align="center" cellpadding="5" cellspacing="5" style="border: #666666 1px solid;">
-              <tr>
-                <td width="2%"><img src="<%= defurl %>/images/ico/fs.png"></td>
-                <td width="98%"><p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 12px;color: #666666;'><a target="_blank" href="<%= editorial_url %>" >Vai a <%= Setting.app_title %> </a><%# auto_link(editorial_url) %></p></td>
-              </tr>
-            </table>
-            <br>
-            <font face="Verdana, Arial, Helvetica, sans-serif" color="#666666" size="1"><%= Setting.emails_footer %><br /></font><br><br> </TD>
+            <div class="fiscosport">
+              <a target="_blank" href="<%= editorial_url %>">
+                <img src="<%= defurl %>/images/ico/fs.png" title="Vai a <%= Setting.app_title %>" >
+              </a>
+            </div>
+            <div class="footer">
+              <%= Setting.emails_footer %>
+            </div>
+           </TD>
         </TR>
       </TABLE>
 </table>
-<table bgcolor="#EBA800" align="center" width="600" cellpadding="2" cellspacing="2">
-<tr><td><font face="Segoe UI, Arial, Helvetica, sans-serif" size="1" color="#016284">&nbsp;</font></td></tr></table>
 </div>
 </body>
 </html>
