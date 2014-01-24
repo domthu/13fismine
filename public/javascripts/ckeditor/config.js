@@ -26,9 +26,11 @@ CKEDITOR.editorConfig = function (config) {
     config.filebrowserImageBrowseUrl = '/ckeditor/images' ;
 
     // works only with en, ru, uk languages
+    //config.extraPlugins = "embed,attachment";
     config.extraPlugins = "embed,attachment";
     config.toolbar = 'Full';
 
+    //, 'Flash'
     config.toolbar_Full =
         [
             [ 'Source', 'Maximize', '-', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', '-', 'Templates' ],
@@ -38,7 +40,7 @@ CKEDITOR.editorConfig = function (config) {
             [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] ,
             [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl' ],
             [ 'Link', 'Unlink', 'Anchor' ],
-            [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak' ],
+            [ 'Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak' ],
             '/',
             [ 'Styles', 'Format', 'Font', 'FontSize' ] ,
             [ 'TextColor', 'BGColor' ],
@@ -48,7 +50,7 @@ CKEDITOR.editorConfig = function (config) {
         [
             [ 'Source',  'Maximize','Save', 'Preview', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
             [ 'SelectAll', '-', 'Scayt' ] ,
-            [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] ,
+            [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak' ] ,
             [ 'Link', 'Unlink', 'Anchor', '-'],
             '/',
             [ 'Format', 'Font', 'FontSize' ] ,
@@ -65,4 +67,3 @@ CKEDITOR.editorConfig = function (config) {
             [  'Source','Save','RemoveFormat', '-', 'Font', 'FontSize', 'Bold', 'Italic']
         ];
 };
-

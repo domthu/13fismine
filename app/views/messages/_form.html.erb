@@ -22,7 +22,12 @@
 <%= f.text_area :content, :cols => 80, :rows => 15, :class => 'wiki-edit', :id => 'message_content' %></p>
 <%#wikitoolbar_for 'message_content' %>
 <!--[eoform:message]-->
+<%# setting_text_area :template_fee_proposal, :label => false, :rows => 5 %>
 
 <p><%= l(:label_attachment_plural) %><br />
 <%= render :partial => 'attachments/form' %></p>
 </div>
+
+<script type="text/javascript">
+    CKEDITOR.replace('message_content', { toolbar:'Light'});
+</script>

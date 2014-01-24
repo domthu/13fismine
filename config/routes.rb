@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pages
   map.resources :user_profiles
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "lost_password"
+#rake routes | grep -r "ckeditor"
   map.resources :top_menus
   map.resources :contract_users
   map.resources :contracts

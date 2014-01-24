@@ -60,7 +60,10 @@ class ApplicationController < ActionController::Base
 
   def user_setup
     # Check the settings cache for each request
+   # puts ">>>>>>>>>>>>>>xxxxxxxx  act:::> " + params[:action] + "  ctl:::> " + params[:controller]
+   unless params[:controller] == 'ckeditor'
     Setting.check_cache
+   end
     # Find the current user
     User.current = find_current_user
   end
