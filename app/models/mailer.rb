@@ -384,6 +384,9 @@ class Mailer < ActionMailer::Base
     #    * Mailer.X-Redmine-Host
     #redmine_headers 'Project' => 'Abbonamento test'
     recipients user.mail #undefined method `mail' for #<AccountController:0xb42f920c>
+    #blind carbon copy (Bcc:)
+    #bcc Setting.fee_email
+    bcc Setting.fee_bcc_recipients
     subject Setting.app_title + " > abbonamenti: [#{type}]"
     #body :document => document,
     #     :document_url => url_for(:controller => 'documents', :action => 'show', :id => document)
