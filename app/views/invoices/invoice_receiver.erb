@@ -26,6 +26,7 @@
   <table class="list">
     <thead>
     <tr>
+      <%= sort_header_tag('id', :caption => l(:field_id), :style => 'width: 5%; text-align:left;') %>
       <%= sort_header_tag('username', :caption => l(:label_user_edit)) %>
       <%= sort_header_tag('firstname', :caption => l(:field_firstname)) %>
       <%= sort_header_tag('lastname', :caption => l(:field_lastname)) %>
@@ -37,6 +38,7 @@
     <tbody>
     <% for user in @users -%>
         <tr class="user <%= cycle("odd", "even") %> <%= %w(anon active registered locked)[user.status] %>">
+          <td class="id"><%= h(user.id.to_s) %></td>
           <td class="username"><%= avatar(user, {:size => "14", :class => "no-div"}) %><%= link_to h(user.login), edit_user_path(user) %></td>
           <td class="firstname"><%= h(user.firstname) %></td>
           <td class="lastname"><%= h(user.lastname) %></td>

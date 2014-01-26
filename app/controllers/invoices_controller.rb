@@ -179,7 +179,8 @@ class InvoicesController < ApplicationController
     @invid = params[:id] || nil
 
     sort_init 'username', 'asc'
-    sort_update 'username' => 'login',
+    sort_update 'id' => 'id',
+                'username' => 'login',
                 'firstname' => 'firstname',
                 'lastname' => 'lastname',
                 'email' => 'mail'
@@ -198,8 +199,13 @@ class InvoicesController < ApplicationController
     c = ARCondition.new(@status == 0 ? "status <> 0" : ["status = ?", @status])
 
     unless params[:name].blank?
-      name = "%#{params[:name].strip.downcase}%"
-      c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+      n = Integer( params[:name]) rescue nil
+      if n
+        c << ['id = ? ', n.to_s]
+      else
+        name = "%#{params[:name].strip.downcase}%"
+        c << ['LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ? ', name, name, name, name]
+      end
     end
 
     @user_count = scope.count(:conditions => c.conditions)

@@ -32,12 +32,13 @@ class FeesController < ApplicationController
 
   def set_menu
     case self.action_name
-      when 'index', 'liste_utenti', 'associati', 'paganti','abbonamenti'
+      when 'index', 'liste_utenti', 'associati', 'paganti', 'abbonamenti'
         @menu_fs = :menu_fee_fs
       else
         @menu_fs = :application_menu
     end
   end
+
   def index
     #@msg[] << ""
     #__User_all = User.all()
@@ -129,7 +130,8 @@ class FeesController < ApplicationController
     #  FeeConst::ROLE_REGISTERED     = 7  #periodo di prova durante Setting.register_days
     #@users = User.all(:conditions => {:role_id => FeeConst::ROLE_REGISTERED}, :include => :role)
     sort_init 'person ASC'
-    sort_update 'person' => 'users.firstname, users.lastname',
+    sort_update  'id' => 'id',
+                'person' => 'users.firstname, users.lastname',
                 'role' => 'users.role_id',
                 'scadenza' => 'users.datascadenza',
                 'registration' => 'users.created_on'
@@ -149,8 +151,13 @@ class FeesController < ApplicationController
     c = ARCondition.new(@status == 0 ? "status <> 0" : ["status = ?", @status])
 
     unless params[:name].blank?
-      name = "%#{params[:name].strip.downcase}%"
-      c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+      n = Integer(params[:name]) rescue nil
+      if n
+        c << ['id = ? ', n.to_s]
+      else
+        name = "%#{params[:name].strip.downcase}%"
+        c << ['LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ? ', name, name, name, name]
+      end
     end
 
     @user_count = scope.count(:conditions => c.conditions)
@@ -195,7 +202,8 @@ class FeesController < ApplicationController
 
   def associati
     sort_init 'person ASC'
-    sort_update 'person' => 'users.firstname, users.lastname',
+    sort_update 'id' => 'id',
+                'person' => 'users.firstname, users.lastname',
                 'mail' => 'users.mail',
                 'datascadenza' => 'users.datascadenza',
                 'role_id' => 'users.role_id',
@@ -204,21 +212,26 @@ class FeesController < ApplicationController
     scope = @users_by_roles
 
     case params[:format]
-       when 'xml', 'json'
-         @offset, @limit = api_offset_and_limit
-       else
-         @limit = per_page_option
-     end
+      when 'xml', 'json'
+        @offset, @limit = api_offset_and_limit
+      else
+        @limit = per_page_option
+    end
 
     c = ARCondition.new(["users.type = 'User'"])
     c << ["convention_id > 0"]
     if request.get?
       #ricerca testuale
       unless params[:name].blank?
-        name = "%#{params[:name].strip.downcase}%"
-        c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+        n = Integer(params[:name]) rescue nil
+        if n
+          c << ['id = ? ', n.to_s]
+        else
+          name = "%#{params[:name].strip.downcase}%"
+          c << ['LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ? ', name, name, name, name]
+        end
       end
-     # puts "XXXXXXXXXXXXX" + params[:convention_id].to_s
+      # puts "XXXXXXXXXXXXX" + params[:convention_id].to_s
       @convention_id = (params[:convention_id]) ? params[:convention_id].to_i : 0
       if @convention_id > 0
         c << ["convention_id = ? ", @convention_id.to_s]
@@ -230,7 +243,7 @@ class FeesController < ApplicationController
     end
     @cs = @convention_id
 
-    @cselected  = params[:convention_id]
+    @cselected = params[:convention_id]
     @user_count = User.count(:conditions => c.conditions)
     @user_pages = Paginator.new self, @user_count, @limit, params['page']
     @offset ||= @user_pages.current.offset
@@ -240,40 +253,21 @@ class FeesController < ApplicationController
                        :limit => @limit,
                        :offset => @offset
 
-                           respond_to do |format|
-                             format.html {
-                               render :layout => !request.xhr?
-                             }
-                             format.api
-                           end
-
-
+    respond_to do |format|
+      format.html {
+        render :layout => !request.xhr?
+      }
+      format.api
+    end
 
 
   end
 
   def paganti
-    #  FeeConst::ROLE_ABBONATO       = 5  #user.data_scadenza > (today - Setting.renew_days)
-    #  FeeConst::ROLE_RENEW          = 8  #periodo prima della scadenza dipende da Setting.renew_days
-    #@users = User.find(
-    #:all,
-    #:conditions => ["role_id = :role_1 OR role_id = :role_2 ", { :role_1 => FeeConst::ROLE_ABBONATO, :role_2 => FeeConst::ROLE_RENEW } ],
-    #:include => :role)
-    #:conditions => {:role_id => FeeConst::ROLE_ABBONATO, :role_id => FeeConst::ROLE_RENEW },
 
-    #    workflows.find(:al,
-    #        :include => :new_status,
-    #        :conditions => ["role_id IN (:role_ids) AND tracker_id = :tracker_id AND (#{conditions})",
-    #          {:role_ids => roles.collect(&:id), :tracker_id => tracker.id, :true => true, :false => false}
-    #          ]
-    #        ).collect{|w| w.new_status}.compact.sort
-
-    #sort and filters users
     sort_init 'login', 'asc'
-    #sort_update %w(login firstname lastname mail admin created_on last_login_on)
-    sort_update %w(lastname mail data convention_id role_id)
+    sort_update %w(id lastname mail data convention_id role_id)
 
-    #@limit = per_page_option
 
     scope = @users_by_roles
 
@@ -283,37 +277,25 @@ class FeesController < ApplicationController
       @abbo = params[:abbo] ? params[:abbo].to_i : 0
       if (@abbo > 0)
         c << ["role_id = ?", @abbo]
-        #else
-        #  c << ["role_id IN (?) ", FeeConst::NEWSLETTER_ROLES]
       end
       #ricerca testuale
       unless params[:name].blank?
         @name = params[:name]
-        name = "%#{params[:name].strip.downcase}%"
-        c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
       end
-      #Convention filter
-      #@convention_id = (params[:convention] && params[:convention][:convention_id]) ? params[:convention][:convention_id].to_i : 0
-      #if @convention_id > 0
-      #  c << ["convention_id = ? ", @convention_id.to_s]
-      #end
+      unless params[:name].blank?
+        n = Integer(params[:name]) rescue nil
+        if n
+          c << ['id = ? ', n.to_s]
+        else
+          name = "%#{params[:name].strip.downcase}%"
+          c << ['LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ? ', name, name, name, name]
+        end
+      end
     else
       @abbo = FeeConst::ROLE_ABBONATO
       c << ["role_id = ?", @abbo]
 
     end
-
-    #@user_count = scope.count(:conditions => c.conditions)
-    #@user_count = User.all.count(:conditions => c.conditions)
-    #@user_pages = Paginator.new self, @user_count, @limit, params['page']
-    #@offset ||= @user_pages.current.offset
-    #@users =  scope.find :all,
-    #@users =  User.find :all,
-    #            :order => sort_clause,
-    #            :conditions => c.conditions,
-    #            :limit  =>  @limit,
-    #            :offset =>  @offset
-
     @users = User.find :all,
                        :order => sort_clause,
                        :conditions => c.conditions

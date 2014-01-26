@@ -308,6 +308,7 @@ it:
   field_mail_notification: Notifiche via email
   field_admin: Amministratore
   field_last_login_on: Ultima connessione
+  field_last_login_on2: Ultima visita
   field_language: Lingua
   field_effective_date: Data
   field_password: Password
@@ -1468,7 +1469,7 @@ it:
   field_data_accredito: (old) data di accredito
   field_anno_competenza: (old) anno di competenza
   field_crediti: (old) Credito
-  field_annotazioni: (old) Annotazioni
+  field_annotazioni: Note per le fatturazioni utente
 
   field_image_file_name: Nome del file
   field_image_content_type: Tipo file

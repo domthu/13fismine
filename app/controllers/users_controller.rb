@@ -31,7 +31,9 @@ class UsersController < ApplicationController
 
   def index
     sort_init 'login', 'asc'
-    sort_update %w(login firstname lastname mail admin created_on last_login_on)
+    sort_update %w(id login firstname lastname mail convention_id datascadenza created_on last_login_on)
+
+
 
     case params[:format]
     when 'xml', 'json'
@@ -45,10 +47,14 @@ class UsersController < ApplicationController
 
     @status = params[:status] ? params[:status].to_i : 1
     c = ARCondition.new(@status == 0 ? "status <> 0" : ["status = ?", @status])
-
     unless params[:name].blank?
-      name = "%#{params[:name].strip.downcase}%"
-      c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+      n = Integer( params[:name]) rescue nil
+      if n
+        c << ['id = ? ', n.to_s]
+      else
+        name = "%#{params[:name].strip.downcase}%"
+        c << ['LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ? ', name, name, name, name]
+      end
     end
 
     @user_count = scope.count(:conditions => c.conditions)
