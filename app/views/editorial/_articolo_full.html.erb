@@ -47,9 +47,12 @@
                 <span style="width: 32px;">Di:</span><span>  <%= h articolo.author %> </span>
             <% end %>
           </div>
+
           <div class='fs-social'>
-            <div class='fs-social-fb '>
-              <%= image_tag "ico/fb-share.jpg", :onclick => 'postToFeed()' %>
+            <div class="fb_share_button">
+              <div class="fb_share_buttonIcon">
+                <button onclick="postToFeed();">Condividi</button>
+              </div>
             </div>
             <div class='fs-social-tw '>
               <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>

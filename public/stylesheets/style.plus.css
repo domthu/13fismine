@@ -868,15 +868,6 @@ h3.fs-postheader {
     height: 30px;
 }
 
-.fs-social-fb {
-    width: 78px;
-    display: block;
-    float: left;
-}
-
-.fs-social-fb img:hover {
-    cursor: pointer;
-}
 
 .fs-social-tw {
     width: 86px;
@@ -4274,3 +4265,50 @@ input.inputerror {
     display: none;
 
 }
+
+.fb_share_button {
+    background: #3B5582;
+    background: -webkit-gradient(linear, center top, center bottom, from(#4c699c), to(#3b5582));
+    background: -webkit-linear-gradient(#4c699c, #3b5582);
+    border-color: #5874c3 #4961a8 #41599f;
+    -webkit-border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    height: 19px;
+    line-height: 14px;
+    padding-top: 1px;
+    text-shadow: 0 -1px 0 #354c6e;
+    white-space: nowrap;
+    width: 78px;
+    float: left;
+    margin: 0 9px;
+}
+
+.fb_share_button button {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    margin: 2px 0 0 11px;
+    text-shadow: 0 -1px 0 #354c6e;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'lucida grande', tahoma, verdana, arial, sans-serif;
+    font-size: 11px;
+}
+
+.fb_share_buttonIcon {
+    margin: 0 4px 0 4px;
+    background: url('/images/ico/fb.png') no-repeat 0 -28px;
+    width: 14px;
+}
+
+.fb_share_button:hover {
+    background: #5b7bb7;
+    background: -webkit-gradient(linear, center top, center bottom, from(#5b7bb7), to(#48649d));
+    background: -webkit-linear-gradient(#5b7bb7, #48649d);
+    border-color: #5874c3 #4961a8 #41599f;
+    -webkit-box-shadow: inset 0 0 1px #607fd6
+}
+
