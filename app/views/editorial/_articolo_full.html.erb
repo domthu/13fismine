@@ -2,7 +2,7 @@
     <script type="text/javascript">
         function fbshareme() {
             window.open(
-                    'http://www.facebook.com/sharer.php?s=100&p[title]=<%= ERB::Util.url_encode(articolo.subject)%>&p[summary]=<%= ERB::Util.url_encode(smart_truncate(articolo.summary, 220)) %>&p[url]=<%= link_to_articolo(articolo, :only_path => false).to_s %>&p[images][0]=<%= (art_image(articolo, :l, :only_path => false)) %>&p[images][1]=http://www.fiscosport.it/images/commons/fs_fb1.png&p[images][2]=http://www.fiscosport.it/images/commons/fs_fb2.png&p[images][3]=http://www.fiscosport.it/images/commons/fs_fb0.png',
+                    'https://www.facebook.com/sharer/sharer.php?s=100&p[url]=<%= link_to_articolo(articolo, :only_path => false).to_s %>&p[images][0]=http://<%= Setting.host_name.to_s + '/images/' + art_image(articolo, :l) %>&p[title]=<%= ERB::Util.url_encode(articolo.subject)%>&p[summary]=<%= ERB::Util.url_encode(smart_truncate(articolo.summary, 220)) %>',
                     'facebook-share-dialog',
                     'width=626,height=436'
                 );
@@ -22,8 +22,7 @@
               <%= raw(articolo.summary).html_safe %>
           <% end %>
         </p>
-
-        <div class="fs-postmetadata-full">
+          <div class="fs-postmetadata-full">
           <div class="fs-author">
             <% if !articolo.author.nil? && !articolo.author.user_profile.nil? %>
                 <span><%= link_to articolo.author.my_avatar(:s), profile_show_path(articolo.author.user_profile) %> </span><span style="padding-left:10px;"> <%= h articolo.author %>
@@ -64,6 +63,7 @@
         </div>
       </div>
     </div>
+    <div id="fbx" style="min-height: 20px; background-color: navajowhite; "></div>
     <div class="clearfix">&nbsp; <br/></div>
     <div class="fs-layout-cell layout-item-1">
      <div id="fs-articolo-full ">
