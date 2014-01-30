@@ -4,6 +4,30 @@
         $("#accordion-events").accordion({heightStyle:"content", autoHeight:false, active:1 });
     });
 </script>
+<% if @conv_prossimo %>
+<div id="fb-root"></div>
+<script src='http://connect.facebook.net/en_US/all.js'></script>
+<script>
+    // app_id on fb :
+    // fiscosport.it = 471915342913619
+    //localhost:3000 = 615981538449222
+    FB.init({appId: "471915342913619", status: true, cookie: true});
+
+    function postToFeed() {
+        // calling the API ...
+        var obj = {
+            method: "feed",
+            redirect_uri: "<%= link_to_articolo(@conv_prossimo, :only_path => false).to_s %>",
+            link: "<%= link_to_articolo(@conv_prossimo, :only_path => false).to_s %>",
+            picture: "<%= Setting.host_name.to_s + '/images/' + art_image(@conv_prossimo, :l) %>",
+            name: "<%=conv_prossimo.subject.tr('"',"'") %>",
+            caption: "",
+            description: "<%= smart_truncate(conv_prossimo.summary, 220).tr('"',"'") %>"
+        };
+        FB.ui(obj);
+    }
+</script>
+<%	end  %>
 <link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
 <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
   <div class="fs-content-layout" style="width: 99%; margin-top: 3px;">
@@ -83,7 +107,7 @@
                       <div class="fs-postmetadata-full-convegni">
                         <div class='fs-social'>
                           <div class='fs-social-fb '>
-                            <%= image_tag "ico/fb-share.jpg",:onclick=> 'fbshareme()' %>
+                            <%= image_tag "ico/fb-share.jpg",:onclick=> 'postToFeed()' %>
                           </div>
                           <div class='fs-social-tw '>
                             <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
