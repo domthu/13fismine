@@ -64,6 +64,13 @@ class InvoicesController < ApplicationController
   # GET /invoices/new
   # GET /invoices/new.xml
   def new
+    sort_init 'id', 'id DESC'
+    sort_update 'id' => 'id',
+                'numero_fattura' => 'numero_fattura',
+                'data_fattura' => 'data_fattura',
+                'anno' => 'anno'
+
+
     @invoice = Invoice.new
     item = ''
     if params[:user_id].present?
@@ -79,8 +86,16 @@ class InvoicesController < ApplicationController
       @invoice.convention_id = params[:invoice][:convention_id]
     end
     @invoice.anno = Date.today.year
-    @invoices = Invoice.find(:all, :conditions => ['anno = ' + @invoice.anno.to_s], :order => 'numero_fattura DESC', :limit => 7)
-    @invoice.iva = 0.22
+    anno_scorso = Date.today.year - 1
+
+    @invoices_count = Invoice.find(:all, :conditions => ["anno = #{@invoice.anno.to_s} OR anno = #{anno_scorso.to_s}"]).count
+    @invoices_pages = Paginator.new self, @invoices_count, per_page_option * 1.5 , params['page']
+
+    @invoices =  Invoice.find(:all,
+                              :conditions => ["anno = #{@invoice.anno.to_s } OR anno = #{anno_scorso.to_s}"],
+                              :order => sort_clause,
+                              :limit => @invoices_pages.items_per_page,
+                              :offset => @invoices_pages.current.offset)
     #sopra mette i default sotto prova a correggerli in base all'ultimo record
     if @invoices.count > 0
       unless @invoices[0].iva.nil?
@@ -91,6 +106,9 @@ class InvoicesController < ApplicationController
 #      end
       unless @invoices[0].tariffa.nil?
         @invoice.tariffa = @invoices[0].tariffa
+      end
+      unless @invoices[0].iva.nil?
+        @invoice.iva = @invoices[0].iva
       end
     end
 
@@ -115,9 +133,21 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1/edit
   def edit
-    @invoices = Invoice.find(:all,
-                             :order => 'id DESC',
-                             :limit => 7)
+    sort_init 'id', 'id DESC'
+    sort_update 'id' => 'id',
+                'numero_fattura' => 'numero_fattura',
+                'data_fattura' => 'data_fattura',
+                'anno' => 'anno'
+    @invoice.anno = Date.today.year
+    anno_scorso = Date.today.year - 1
+    @invoices_count = Invoice.find(:all, :conditions => ["anno = #{@invoice.anno.to_s} OR anno = #{anno_scorso.to_s}"]).count
+    @invoices_pages = Paginator.new self, @invoices_count, per_page_option * 1.5, params['page']
+
+    @invoices =  Invoice.find(:all,
+                              :conditions => ["anno = #{@invoice.anno.to_s } OR anno = #{anno_scorso.to_s}"],
+                              :order => sort_clause,
+                              :limit => @invoices_pages.items_per_page,
+                              :offset => @invoices_pages.current.offset)
   end
 
   # POST /invoices
