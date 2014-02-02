@@ -1,33 +1,33 @@
 <%# render :partial => 'blocco_sidebar2' %>
 <script>
     $(document).ready(function () {
-        $("#accordion-events").accordion({heightStyle:"content", autoHeight:false, active:1 });
+        $("#accordion-events").accordion({heightStyle: "content", autoHeight: false, active: 1 });
     });
 </script>
 <% if @conv_prossimo %>
-<div id="fb-root"></div>
-<script src='http://connect.facebook.net/en_US/all.js'></script>
-<script>
-    // app_id on fb :
-    // fiscosport.it = 257254957785307
-    //localhost:3000 = 615981538449222
-    FB.init({appId: "257254957785307", status: true, cookie: true});
+    <div id="fb-root"></div>
+    <script src='http://connect.facebook.net/en_US/all.js'></script>
+    <script>
+        // app_id on fb :
+        // fiscosport.it = 257254957785307
+        //localhost:3000 = 615981538449222
+        FB.init({appId: "257254957785307", status: true, cookie: true});
 
-    function postToFeed() {
-        // calling the API ...
-        var obj = {
-            method: "feed",
-            redirect_uri: "<%= link_to_articolo(@conv_prossimo, :only_path => false).to_s %>",
-            link: "<%= link_to_articolo(@conv_prossimo, :only_path => false).to_s %>",
-            picture: "<%= Setting.host_name.to_s + '/images/' + art_image(@conv_prossimo, :l) %>",
-            name: "<%=@conv_prossimo.subject.tr('"',"'") %>",
-            caption: "",
-            description: "<%= smart_truncate(@conv_prossimo.summary, 220).tr('"',"'") %>"
-        };
-        FB.ui(obj);
-    }
-</script>
-<%	end  %>
+        function postToFeed() {
+            // calling the API ...
+            var obj = {
+                method: "feed",
+                redirect_uri: "<%= link_to_articolo(@conv_prossimo, :only_path => false).to_s %>",
+                link: "<%= link_to_articolo(@conv_prossimo, :only_path => false).to_s %>",
+                picture: "<%= Setting.host_name.to_s + '/images/' + art_image(@conv_prossimo, :l) %>",
+                name: "<%=@conv_prossimo.subject.tr('"',"'") %>",
+                caption: "",
+                description: "<%= smart_truncate(@conv_prossimo.summary, 220).tr('"',"'") %>"
+            };
+            FB.ui(obj);
+        }
+    </script>
+<% end %>
 <link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
 <div class="fs-layout-cell fs-content clearfix" style="width: 100%; position:relative;">
   <div class="fs-content-layout" style="width: 99%; margin-top: 3px;">
@@ -48,11 +48,11 @@
                       </div>
                       <div class="fs-convegni-futuri">
                         <%= image_tag art_image(con, :m) %>
-                        <span> <%=link_to_articolo(con, :title => h(con.subject)) %></span>
+                        <span> <%= link_to_articolo(con, :title => h(con.subject)) %></span>
 
                         <p>
-                          <%= link_to_articolo(con, :title => smart_truncate(con.summary, 125) )%>
-                          <%= link_to_articolo(con, :title => 'Più info' , :class => 'fs-giallo-inline-button') %></p>
+                          <%= link_to_articolo(con, :title => smart_truncate(con.summary, 125)) %>
+                          <%= link_to_articolo(con, :title => 'Più info', :class => 'fs-giallo-inline-button') %></p>
                         <br/>
 
                       </div>
@@ -93,16 +93,19 @@
                           <%= image_tag art_image(@conv_prossimo, :l) %>
                         </div>
                         <% unless @conv_prossimo.hide_summary? %>
-                        <div class="fs-riassunto-full"><p>
-                          <%= @conv_prossimo.summary %></p><br/>
-                        </div>
-                        <%	end  %>
+                            <div class="fs-riassunto-full"><p>
+                              <%= @conv_prossimo.summary %></p><br/>
+                            </div>
+                        <% end %>
                       </div>
                       <div class="clearfix"></div>
                       <div class="fs-layout-cell layout-item-1">
                         <div id="fs-articolo-full">
                           <%= @conv_prossimo.description %></div>
-                        <br/> &nbsp;
+                        <br/>&nbsp;
+                      </div>
+                      <div class="fs-attachments">
+                        <%= link_to_fs_attachments(@conv_prossimo, :author => false) %>
                       </div>
                       <div class="fs-postmetadata-full-convegni">
                         <div class='fs-social'>
@@ -119,7 +122,7 @@
                             <div class="g-plusone" data-size="medium" data-recommendations="false">
                               <!-- Place this tag after the last +1 button tag. -->
                               <script type="text/javascript">
-                                  window.___gcfg = {lang:'it'};
+                                  window.___gcfg = {lang: 'it'};
                                   (function () {
                                       var po = document.createElement('script');
                                       po.type = 'text/javascript';
@@ -136,7 +139,7 @@
                           </div>
                         </div>
                       </div>
-                        <% if @conv_prossimo.show_reservation? && User.current.logged? %>
+                      <% if @conv_prossimo.show_reservation? && User.current.logged? %>
                           <div class="fs-convegni-prenota">
                             <%= render :partial => 'reservation' %>
                           </div>
@@ -159,9 +162,10 @@
                       <div class="fs-content-layout-row">
 
                         <div class="fs-postheader fs-blockheader-edizioni fs-convegni-border" style="text-align: left;">
-                          <span><%= link_to_articolo(con, :title=> h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno))) %> </span>
+                          <span><%= link_to_articolo(con, :title => h(I18n.localize(con.due_date.to_date, :format => :giorno_mese_anno))) %> </span>
+
                           <p class="event-tetx"><%= link_to_articolo(con, :title => con.subject) %></p>
-                           </div>
+                        </div>
                       </div>
                     </div>
                     <p style="padding:2px"></p>
