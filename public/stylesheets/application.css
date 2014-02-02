@@ -3890,24 +3890,33 @@ hr.quesiti hr {
     overflow: hidden;
     word-wrap: break-word;
 }
-
+.invoices-box-ext {
+    width: 67%;
+    padding: 3px 3px 2px 0;
+    border: 2px solid #90bff1;
+    float:right;
+    position: relative;
+    border-radius: 5px;
+}
 .invoices-box {
-    width: 66%;
+    width: 99%;
     font-size: 1em;
     float: right;
-    border: solid 2px #a3b1b4;
-    background-color: #818181;
-
+    border-radius: 5px;
+    position: relative;
+    background: #fff;
+    border: 2px solid #759FCF;
+    margin-bottom: 1px;
 }
 .invoices-box label{
-    color: #ffda06;
+    color: #7ca8d9;
 }
 .invoices-box input, .invoices-box select{
     font-weight: bold;
     color: #354c6e;
 }
 .invoices-box a{
-    color: #ffbd13;
+    color: #48649d;
 }
 .invoices-table {
     border: solid 2px #eaeaea;

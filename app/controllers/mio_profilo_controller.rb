@@ -24,7 +24,8 @@ class MioProfiloController < ApplicationController
 
   # Show user's page account
   def page
-    @user = User.current
+    @user = User.find(User.current,  :include => :invoices)
+
   end
 
   # Edit user's page account

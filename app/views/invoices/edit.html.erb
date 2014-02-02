@@ -1,4 +1,4 @@
-<h2><%= link_to l(:label_invoice_plural), invoices_path %> &#187; <%= h(@invoice) %></h2>
+<h2><%= link_to l(:label_invoice_edit), invoices_path %> &#187; <%= h(@invoice) %></h2>
 <% labelled_form_for @invoice do |f| %>
     <%= render :partial => 'form', :locals => {:f => f} %>
     <div class='btn-footer'>

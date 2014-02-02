@@ -83,7 +83,12 @@
   <% end %>
   <% if  @issue.description.blank? || @issue.description.nil? %>
       <div id="issue_showinfo"><p> Questo articolo non ha un contenuto ...</p> <br/>
-        <%= link_to(l(:button_issue_empty), edit_issue_path(@issue), :class => "button-blu") unless @issue.is_public_fs? %>
+        <% if @issue.is_quesito? %>
+            <%= link_to(l(:button_issue_empty_quesito), edit_issue_path(@issue), :class => "button-blu") unless @issue.is_public_fs? %>
+        <% else %>
+            <%= link_to(l(:button_issue_empty), edit_issue_path(@issue), :class => "button-blu") unless @issue.is_public_fs? %>
+        <% end %>
+
         <br/>
       </div>
   <% end %>
@@ -174,8 +179,7 @@
 
         <div id="responses" style="margin-bottom:1%; padding: 1%; ">
           <% unless @issue.description? %>
-              <p>per creare una <span style="color: red;">risposta*</span> e generare un articolo che andrà a finire su
-                una edizione allora dovete scrivere la risposta nel campo
+              <p> Per creare una <span style="color: red; font-weight: bold;">risposta</span> cliccare il pulsante <b> Rispondi al quesito </b> e scrivere nel riquadro
                 <b><%= l(:content_articolo) %></b></p>
           <% end %>
           <div class="responses">

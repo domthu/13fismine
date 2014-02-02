@@ -1,7 +1,7 @@
 Errore : <h2 style="display:inline;"><%= h @status %></h2>
 
 <% if @message.present? %>
-    <% if @status = 404 %>
+    <% if @status == 404 %>
         <div style="display: table; margin: 1% auto;">
           <div class="error-in fs-flash-in">
             <%= @message %>

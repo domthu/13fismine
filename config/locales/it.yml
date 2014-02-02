@@ -1006,7 +1006,7 @@ it:
   button_issue_reply_article: Pubblica spostando in quindicinale
   button_issue_empty: Modifica
   label_fail_update: Non è possibile aggiornare questo contenuto
-
+  button_issue_empty_quesito: Rispondi al quesito
   status_active: attivo
   status_registered: registrato
   status_locked: bloccato
@@ -1145,10 +1145,11 @@ it:
   field_Date_from: Valido dal
   field_Date_to: fino al
   label_fee_templates: Personalizza fattura e messaggi
+  label_invoice_edit: Modifica Fattura
+  label_invoice_show: Anteprima Fattura
   label_invoice: Fattura
   label_invoice_plural: Fatture
   label_invoice_new: Nuova fattura
-  label_invoice_list: Fatturazione
   label_numero_fattura: Numero fattura
   label_numero_fattura_abbr: Num.Fatt.
   label_data_fattura: Data fattura

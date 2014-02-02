@@ -30,63 +30,71 @@
     </div>
 
 <% end %>
-<div class="box tabular invoices-box">
-  <%= f.hidden_field :user_id %>
-  <%= f.hidden_field :convention_id %>
+<div class="invoices-box-ext">
+  <div class="tabular invoices-box">
+    <%= f.hidden_field :user_id %>
+    <%= f.hidden_field :convention_id %>
 
-  <p><span style="font-weight: bold;">
+    <p><span style="font-weight: bold;">
 
     <% if @invoice.new_record? %>
         <span class="mini-legend" style="color:#505050;"> *Nelle textbox lasciare il layout preimpostato se necessario modificare solo il testo (meglio in html per rispettare i tags) </span>
         <br/>
-        <%= link_to "cambia", invoice_receiver_path %>
+          <%= link_to "cambia", invoice_receiver_path %>
         <% else %>
         <span class="mini-legend" style="color:#505050;"> *Attenzione alle modifiche la fattura è già stata compilata salvata. Nelle textbox modificare se necessario solo il testo in html per rispettare i tags. </span>
     <br/>
-        <%= link_to "cambia", invoice_receiver_path(:id => @invoice.id) %>
+          <%= link_to "cambia", invoice_receiver_path(:id => @invoice.id) %>
     <% end %>
 
     </span>
-    <%= raw f.text_area :destinatario,
-                        :label => (:label_destinatario),
-                        :value => @invoice.destinatario %>  </p>
+      <%= raw f.text_area :destinatario,
+                          :label => (:label_destinatario),
+                          :value => @invoice.destinatario %>  </p>
 
 
-  <p>  <%= raw f.text_area :contatto,
-                           :label => (:label_contact),
-                           :value => @invoice.contatto %>  </p>
+    <p>  <%= raw f.text_area :contatto,
+                             :label => (:label_contact),
+                             :value => @invoice.contatto %>  </p>
 
-  <div style="padding:3% 0;">
-    <p>
-      <%= f.text_field :numero_fattura, :label => :field_numero_fattura, :size => 5, :required => true %>
+    <div style="padding:3% 0;">
+      <!--
+    <p style="text-align: right;">
+
       <% unless @invoice.numero_fattura.blank? %>
-          <span style="font-size: 0.9em; font-style: italic;"> suggerimento: fattura <%= @invoice.numero_fattura %>
+          <span style="font-size: 0.8em; font-style: italic; font-weight: bold;"> *suggerimento: fattura <%= @invoice.numero_fattura %>
             [<%= @invoice.anno %>]</span>
-      <% end %>
-    </p>
+      <% end %></p>
+      -->
+      <p>
+        <%= f.text_field :numero_fattura, :label => :field_numero_fattura, :size => 5, :required => true %>
 
-    <p><%= f.date_select :data_fattura, :label => :field_data_fattura, :required => true %></p>
+      </p>
 
-    <p><%= f.text_field :tariffa, :label => :field_tariffa, :size => 5, :required => true %></p>
+      <p><%= f.date_select :data_fattura, :label => :field_data_fattura, :required => true %></p>
 
-    <p><%= f.text_field :sconto, :label => :field_sconto, :size => 5 %></p>
+      <p><%= f.text_field :tariffa, :label => :field_tariffa, :precision => 2 , :size => 5, :required => true %></p>
 
-    <p><%= f.text_field :iva, :value => @invoice.iva.to_s, :label => :field_iva, :size => 5, :required => true %></p>
+      <p><%= f.text_field :sconto, :label => :field_sconto, :precision => 2 ,:size => 5 %></p>
 
-    <p>
-      <%= f.select :payment_id, options_for_select(Payment.all.collect { |pay| [pay.name, pay.id] }, (@invoices[0].payment_id if (@invoices && @invoices.count > 0))), {:disabled => false, :include_blank => false, :required => true} %>
-    </p>
+      <p><%= f.text_field :iva, :value => @invoice.iva.to_s, :label => :field_iva, :precision => 2 ,:size => 5, :required => true %></p>
 
-    <p><%= f.text_field :anno, :label => :field_anno, :value => @invoice.anno.to_s, :size => 5 %></p>
+      <p>
+        <%= f.select :payment_id, options_for_select(Payment.all.collect { |pay| [pay.name, pay.id] }, (@invoices[0].payment_id if (@invoices && @invoices.count > 0))), {:disabled => false, :include_blank => false, :required => true} %>
+      </p>
 
-    <p><%= f.text_field :sezione, :value => (@invoices[0].sezione.to_s if (@invoices && @invoices.count > 0)), :label => :field_sezione, :size => 5 %></p>
+      <p><%= f.text_field :anno, :label => :field_anno, :value => @invoice.anno.to_s, :size => 5 %></p>
+
+      <p><%= f.text_field :sezione, :value => (@invoices[0].sezione.to_s if (@invoices && @invoices.count > 0)), :label => :field_sezione, :size => 5 %></p>
+    </div>
+    <br />
   </div>
+  <div class="cleared"></div>
 </div>
-
 
 
 <div class="cleared"></div>
 <script type="text/javascript">
-    CKEDITOR.replace('invoice_destinatario', { toolbar: 'Mini', height: 120, width: 440 });
+    CKEDITOR.replace('invoice_destinatario', { toolbar: 'Mini', height: 80, width: 440 });
     CKEDITOR.replace('invoice_contatto', { toolbar: 'Mini', height: 80, width: 440 });
 </script>

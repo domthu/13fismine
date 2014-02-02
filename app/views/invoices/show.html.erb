@@ -1,4 +1,4 @@
-<h2><%= link_to l(:label_invoice), invoices_path %> &#187; <%= h(@invoice) %></h2>
+<h2><%= link_to l(:label_invoice_show), invoices_path %> &#187; <%= h(@invoice) %></h2>
 <style type="text/css">
 
     #ipage {
@@ -6,11 +6,11 @@
         height: 100%;
         width: 90%;
         padding: 2%;
-        margin-left: -3% ;
+        margin-left: -3%;
         -webkit-box-shadow: 1px 6px 22px rgba(50, 50, 50, 1);
         -moz-box-shadow: 1px 6px 22px rgba(50, 50, 50, 1);
         box-shadow: 1px 6px 22px rgba(50, 50, 50, 1);
-        }
+    }
 
     #iwrapper {
         position: relative;
@@ -18,7 +18,7 @@
         margin: 0 auto;
         padding: 1% 5% 3%;
         width: 100%;
-     }
+    }
 
 </style>
 <div id="iwrapper">
@@ -26,20 +26,23 @@
     <%= render :partial => "show_invoice_html" %>
   </div>
 </div>
+
 <div class='btn-footer'>
   <%= link_to l(:button_list), invoices_path, :class => 'button-grey' %>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <%= link_to l(:button_issue_empty), edit_invoice_path(@invoice), :class => 'button-grey' %>
-  <% unless @file_pdf.nil? %>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <%# link_to "Scarica '" + @file_pdf + "'", @file_pdf, :class => 'button-blu', :target => '_blank' %>
-  <% end %>
-  <% unless @filename_pdf.nil? %>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <%= link_to "Scarica '" + @file_pdf + "'", "/fatture/" + @filename_pdf, :class => 'button-blu', :target => '_blank' %>
-  <% end %>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <%= link_to l(:label_send_me_invoice_pdf), send_me_invoice_path(@invoice.id), :class => 'button-blu'%>
+  <%= link_to l(:label_send_me_invoice_pdf), send_me_invoice_path(@invoice.id), :class => 'button-blu' %>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <%= link_to l(:label_send_invoice_pdf), send_customer_invoice_path(@invoice.id), :class => 'button-blu'%>
+  <%= link_to l(:label_send_invoice_pdf), send_customer_invoice_path(@invoice.id), :class => 'button-blu' %>
+  <br/> <br/>
+
 </div>
+<% unless @invoice.attached_invoice.blank? %>
+    <div style="width: 98%; text-align: center;">
+      <div class="bordernd" style="height: 3em; width: 94%; font-weight: bold; margin: 0 auto; background-color: #EAF3EA">
+        <span>Download Pdf Link <br/> </span>
+        <%= link_to @invoice.attached_invoice || 'no file', @invoice.attached_invoice, :target => '_blank', :style => "color: darkslategrey;" %>
+      </div>
+    </div>
+<% end %>
