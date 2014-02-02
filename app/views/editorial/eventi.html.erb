@@ -20,9 +20,9 @@
             redirect_uri: "<%= link_to_articolo(@conv_prossimo, :only_path => false).to_s %>",
             link: "<%= link_to_articolo(@conv_prossimo, :only_path => false).to_s %>",
             picture: "<%= Setting.host_name.to_s + '/images/' + art_image(@conv_prossimo, :l) %>",
-            name: "<%=conv_prossimo.subject.tr('"',"'") %>",
+            name: "<%=@conv_prossimo.subject.tr('"',"'") %>",
             caption: "",
-            description: "<%= smart_truncate(conv_prossimo.summary, 220).tr('"',"'") %>"
+            description: "<%= smart_truncate(@conv_prossimo.summary, 220).tr('"',"'") %>"
         };
         FB.ui(obj);
     }
