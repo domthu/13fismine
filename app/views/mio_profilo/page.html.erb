@@ -36,7 +36,8 @@
                       <tr>
                         <th style='width: 33%;text-align:left;'><%= l(:label_numero_fattura) %></th>
                         <th style='width: 33%;text-align:left;'><%= l(:label_data_fattura) %></th>
-                     <!--   <th style='width: 33%;text-align:left;'><%= l(:button_download) %></th>  -->
+                        <th style='width: 33%;text-align:left;'><%= l(:button_download) %>
+                        </th>
                       </tr>
                       </thead>
                       <tbody>
@@ -46,13 +47,13 @@
                               <%= h(invoice.to_s) %>
                             </td>
                             <td><%= format_date(invoice.data_fattura) %></td>
-                            <!--
                             <td align="left">
-                              <%= invoice.attached_invoice.blank?.to_s %>
-                              <%= link_to('PDF', invoice.attached_invoice, :class => 'icon icon-pdf') %>
-                              <%= link_to('PDF2', fatture_path(:filename=> 'fattura_2014_413_u6.pdf'), :class => 'icon icon-pdf') %>
-                            </td>    -->
-                          </tr>
+                              <%= link_to('PDF', invoice.attached_invoice, :target => '_blank', :class => 'icon icon-pdf') %>
+                               <br />
+                              <%= link_to('inviami', send_me_invoice_fs_path(invoice), :class => 'icon icon-pdf') %>
+
+
+                                                     </tr>
                       <% end %>
                       </table>
                   </div>
