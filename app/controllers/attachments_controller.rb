@@ -110,7 +110,8 @@ class AttachmentsController < ApplicationController
     # images are sent inline
     send_file @attachment.diskfile, :filename => filename_for_content_disposition(@attachment.filename),
               :type => detect_content_type(@attachment),
-              :disposition => (@attachment.image? ? 'inline' : 'attachment')
+              :disposition => (@attachment.image? || @attachment.pdf? ? 'inline' : 'attachment')
+             #:disposition => (@attachment.image? ? 'inline' : 'attachment')
 
   end
 

@@ -298,11 +298,12 @@ Redmine::MenuManager.map :menu_fee_fs do |menu|
 end
 # MENU LATERALE DX -> FATTURE
 Redmine::MenuManager.map :menu_payment_fs do |menu|
-  menu.push :invoices, :invoices_path, :caption =>  :label_invoice_list , :if => Proc.new { User.current.admin? }
+  menu.push :invoices, :invoices_path, :caption =>  :label_invoice_plural , :if => Proc.new { User.current.admin? }
+  menu.push :invoice_receiver, :invoice_receiver_path , :caption =>  :label_invoice_new , :if => Proc.new { User.current.admin? }
   #menu.push :contract, :contracts_path, :if => Proc.new { User.current.admin? }
   #menu.push :contract_per_user, :contract_users_path, :if => Proc.new { User.current.admin? }
-  menu.push :payments, :payments_path , :caption => :label_pagamento_metodo_plural
-  menu.push :email_fee, :email_fee_path, :caption => :label_fee_templates
+  menu.push :payments, :payments_path , :caption => :label_pagamento_metodo_plural, :if => Proc.new { User.current.admin? }
+  menu.push :email_fee, :email_fee_path, :caption => :label_fee_templates, :if => Proc.new { User.current.admin? }
   end
 # MENU LATERALE DX -> FISCOSPORT
 Redmine::MenuManager.map :menu_fiscosport do |menu|

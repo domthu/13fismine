@@ -1,10 +1,9 @@
-
-<div class="splitcontentleft">
+<div style="width: 98%">
+  <div class="contextual" style="margin-top: 10px;">
+    <%= link_to l(:label_invoice_new), new_invoice_path({:user_id => @user.id}), :class => 'icon icon-add' if User.current.admin? %>
+  </div>
   <fieldset class="box tabular">
     <legend><%= l(:user_invoices, :num => @user.invoices.count.to_s) %></legend>
-    <div class="contextual" style="margin-bottom: 20px;">
-      <%= link_to l(:label_invoice_new), new_invoice_path({:user_id => @user.id }), :class => 'icon icon-add' if User.current.admin? %>
-    </div>
     <% if !@user.invoices.nil? && @user.invoices.count > 0 %>
         <div class="autoscroll">
           <table class="list invoices">
@@ -44,54 +43,36 @@
               <td></td>
               <td></td>
               <td></td>
-              <td class="total buttons"><%= @user.invoices.sum(:tariffa).to_f %></td>
+              <td class="total buttons"><%= number_with_precision(@user.invoices.sum(:tariffa).to_f || 0, :precision => 2) %></td>
               <td></td>
               <td></td>
             </tr>
           </table>
         </div>
     <% else %>
-      <p class="nodata"><%= l(:label_invoices_none) %></p>
+        <p class="nodata"><%= l(:label_invoices_none) %></p>
     <% end %>
   </fieldset>
+  <br/>
+  <hr>
+  <div>
+    <% remote_form_for(:user, :url => {:action => 'edit_fatture', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
+        <p><%= f.text_area :annotazioni, :label => :field_annotazioni, :required => false %></p>
+    <% end %>
+  </div>
 </div>
-
-<div class="splitcontentright">
-  <% remote_form_for(:user, :url => { :action => 'edit_fatture', :id => @user}, :builder => TabularFormBuilder, :html => {:method => :post}) do |f| %>
-  <%# form_for @user, :url => { :action => 'edit_fatture', :id => @user}, :builder => TabularFormBuilder do |f| %>
-
-    <div id="edit_dati_form">
-      <fieldset class="box tabular">
-
-        <legend><%=l(:label_dati_pagamento)%></legend>
-        <p><%= f.text_field :tariffa_precedente, :label => l(:field_tariffa_precedente), :required => false, :size => 5 %><p>
-
-        <p><%= f.text_field :iva_precedente, :label => :field_iva_precedente, :required => false %></p>
-
-        <p><%= f.text_field :pagamento_precedente, :label => :field_pagamento_precedente %></p>
-
-        <p>   <%= f.text_field :data_ultimo_pagamento, :label => l(:field_data_ultimo_pagamento), :size => 10 %><%= calendar_for('user_data_ultimo_pagamento') %>
-        </p>
-        <p>
-          <%# f.date_select :data_accredito, :label => :field_data_accredito %>
-          <%= f.text_field :data_accredito, :label => l(:field_data_accredito), :size => 10 %><%= calendar_for('user_data_accredito') %>
-        </p>
-        <p>
-          <%# f.text_field :anno_competenza, :label => :field_anno_competenza, :required => false, :size => 3  %>
-          <% dates = (Date.today.year-5)..(Date.today.year+5)  %>
-          <%= f.select(:anno_competenza, dates.collect {|d| [d.to_s,d.to_s]}, {:include_blank => "Select", :selected => @user.anno_competenza.to_s }, {:class => "some_class"} )  %>
-          <%# select_year :anno_competenza, {:label => :field_anno_competenza, :required => false, :size => 3, :include_blank => true, :default => nil}  %>
-        </p><%= @user.anno_competenza %>
-        <p><%= f.text_field :crediti, :label => :field_crediti, :required => false, :size => 3  %></p>
-
-        <p><%= f.text_area :annotazioni, :label => :field_annotazioni, :required => false, :rows => 15 %></p>
-
-      </fieldset>
-
-    </div>
-    <p><%= submit_tag l(:button_save_fatture) %></p>
-  <% end %>
-</div>
-
 <div style="clear:left;"></div>
 <%# wikitoolbar_for 'annotazioni' %>
+<script type="text/javascript">
+    CKEDITOR.replace('user_annotazioni', { toolbar: 'Save', height: '80', width: '88%'});
+</script>
+
+<style type="text/css">
+    .total:before {
+        content: "Totale: "
+    }
+
+    .total {
+        border: solid 1px #b1c1c4;
+    }
+</style>

@@ -1,6 +1,23 @@
 <div class="contextual">
   <%= link_to l(:label_invoice_new), invoice_receiver_path, :class => 'icon icon-add' %>
 </div>
+<h3 style="color: #ffffff; border: none;" class="gradient-dx-blu"><%= l(:label_users) %></h3>
+<% form_tag({}, :method => :get) do %>
+    <fieldset>
+      <legend><%= l(:label_filter_plural) %></legend>
+      <label for='status'><%= l(:field_status) %>:</label>
+      <%= select_tag 'status', users_status_options_for_select(@status), :class => "small", :onchange => "this.form.submit(); return false;" %>
+
+      <label for='name'><%= l(:label_user) %>:</label>
+      <% if @invid %>
+          <%= hidden_field_tag 'id', params[:id] %>
+      <% end %>
+      <%= text_field_tag 'name', params[:name], :size => 30 %>
+      <%= submit_tag l(:button_apply), :class => "small", :name => nil %>
+      <%= link_to l(:button_clear), invoices_path, :class => 'icon icon-reload' %>
+    </fieldset>
+<% end %>
+&nbsp;
 
 <% if @invoices.any? %>
     <table class="list invoices">

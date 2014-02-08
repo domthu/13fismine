@@ -14,8 +14,8 @@ class InvoicesController < ApplicationController
   before_filter :get_filename_pdf, :only => [:show, :invoice_to_pdf]
   before_filter :get_money, :only => [:show, :invoice_to_pdf, :send_customer, :send_me]
   before_filter :send_invoice, :only => [:send_customer, :send_me]
-  menu_item :invoices
-
+  menu_item :invoices, :only => [:index]
+  menu_item :invoice_receiver, :only => [:invoice_receiver]
   def set_menu
     @menu_fs = :menu_payment_fs
   end
@@ -32,18 +32,45 @@ class InvoicesController < ApplicationController
                 'data_fattura' => 'data_fattura',
                 'anno' => 'anno'
 
+    @status = params[:status] ? params[:status].to_i : 1
+    c = ARCondition.new(@status == 0 ? "status <> 0" : ["status = ?", @status])
+
+    if !params[:name].blank?
+      n = Integer( params[:name]) rescue nil
+      if n
+        c << ['id = ? ', n.to_s]
+      else
+        name = "%#{params[:name].strip.downcase}%"
+        c << ['LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ? ', name, name, name, name]
+      end
+      @users = User.all(:select => "DISTINCT(id)", :conditions => c.conditions)
+
+      @invoice_count = Invoice.find(:all,:conditions => ["invoices.user_id IN (?)", @users.map(&:id)]).count
+      @invoice_pages = Paginator.new self, @invoice_count, per_page_option, params['page']
+      @offset ||= @invoice_pages.current.offset
+      @invoices = Invoice.find :all,
+                            :include => [:user, :convention ] ,
+                           :order => sort_clause,
+                           :conditions => ["invoices.user_id IN (?)", @users.map(&:id)],
+                           :limit => @limit,
+                           :offset => @offset
+    else
+      # Paginate results
+      @invoice_count = Invoice.all.count
+      @invoice_pages = Paginator.new self, @invoice_count, per_page_option * 1.5, params['page']
+      @invoices = Invoice.find(:all,
+                               :include => [:user, :convention],
+                               :order => sort_clause,
+                               :limit => @invoice_pages.items_per_page,
+                               :offset => @invoice_pages.current.offset)
+
+
+    end
+
 
     respond_to do |format|
       #ovverride for paging format.html # index.html.erb
       format.html {
-        # Paginate results
-        @invoice_count = Invoice.all.count
-        @invoice_pages = Paginator.new self, @invoice_count, per_page_option, params['page']
-        @invoices = Invoice.find(:all,
-                                 :include => [:user, :convention],
-                                 :order => sort_clause,
-                                 :limit => @invoice_pages.items_per_page,
-                                 :offset => @invoice_pages.current.offset)
         render :layout => !request.xhr?
       }
       format.xml { render :xml => @invoices }
@@ -56,7 +83,7 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml #{ render :xml => @invoice }
-      #format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => @invoice.attached_invoice) }
+                 #format.pdf { send_data(invoice_to_pdf(@invoice), :type => 'application/pdf', :filename => @invoice.attached_invoice) }
     end
 
   end
@@ -64,6 +91,13 @@ class InvoicesController < ApplicationController
   # GET /invoices/new
   # GET /invoices/new.xml
   def new
+    sort_init 'id', 'id desc'
+    sort_update 'id' => 'id',
+                'numero_fattura' => 'numero_fattura',
+                'data_fattura' => 'data_fattura',
+                'anno' => 'anno'
+
+
     @invoice = Invoice.new
     item = ''
     if params[:user_id].present?
@@ -79,8 +113,20 @@ class InvoicesController < ApplicationController
       @invoice.convention_id = params[:invoice][:convention_id]
     end
     @invoice.anno = Date.today.year
-    @invoices = Invoice.find(:all, :conditions => ['anno = ' + @invoice.anno.to_s], :order => 'numero_fattura DESC', :limit => 7)
+
+    #tabella riepilogo vecchie fatture fino 13 mesi prima
+    start_date = Date.today  << 13
+    @invoices_count = Invoice.find(:all, :conditions => ["data_fattura > ?",start_date]).count
+    @invoices_pages = Paginator.new self, @invoices_count, per_page_option * 1.5 , params['page']
+    @invoices =  Invoice.find(:all,
+                              :conditions => ["data_fattura > ?",start_date],
+                              :order => sort_clause,
+                              :limit => @invoices_pages.items_per_page,
+                              :offset => @invoices_pages.current.offset)
+
+
     @invoice.iva = 0.22
+    @invoice.sconto = 0.00
     #sopra mette i default sotto prova a correggerli in base all'ultimo record
     if @invoices.count > 0
       unless @invoices[0].iva.nil?
@@ -90,7 +136,10 @@ class InvoicesController < ApplicationController
 #        @invoice.anno = @invoices[0].anno
 #      end
       unless @invoices[0].tariffa.nil?
-        @invoice.tariffa = @invoices[0].tariffa
+        @invoice.tariffa = @invoices[0].tariffa || 0.0
+      end
+      unless @invoices[0].sezione.nil?
+        @invoice.sezione = @invoices[0].sezione || 'A'
       end
     end
 
@@ -115,21 +164,31 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1/edit
   def edit
-    @invoices = Invoice.find(:all,
-                             :order => 'id DESC',
-                             :limit => 7)
+    sort_init 'id', 'id desc'
+    sort_update 'id' => 'id',
+                'numero_fattura' => 'numero_fattura',
+                'data_fattura' => 'data_fattura',
+                'anno' => 'anno'
+    @invoice.anno = Date.today.year
+    #tabella riepilogo vecchie fatture fino 13 mesi prima
+    start_date = Date.today  << 13
+    @invoices_count = Invoice.find(:all, :conditions => ["data_fattura > ?",start_date]).count
+    @invoices_pages = Paginator.new self, @invoices_count, per_page_option * 1.5 , params['page']
+    @invoices =  Invoice.find(:all,
+                              :conditions => ["data_fattura > ?",start_date],
+                              :order => sort_clause,
+                              :limit => @invoices_pages.items_per_page,
+                              :offset => @invoices_pages.current.offset)
   end
 
   # POST /invoices
   # POST /invoices.xml
   def create
-    if @invoice.sezione.blank?
-      @invoice.sezione = "A"
-    end
 
     @invoice.mittente = Setting.default_invoices_header
     @invoice.description = Setting.default_invoices_description
     @invoice.footer = Setting.default_invoices_footer
+    @invoice.attached_invoice = get_file_on_new
 
     respond_to do |format|
       if @invoice.save
@@ -154,10 +213,15 @@ class InvoicesController < ApplicationController
   def update
     respond_to do |format|
       if @invoice.update_attributes(params[:invoice])
+        get_pdf_file_path
+        get_money
+        crea_pdf_fattura
+
         format.html { redirect_to(@invoice, :notice => l(:notice_successful_update)) }
-        format.xml { head :ok }
+       # format.xml { head :ok }
       else
-        format.html { render :action => "edit" }
+       # format.html { render :action => "edit" }
+        flash_now [:error] => "errore"
         format.xml { render :xml => @invoice.errors, :status => :unprocessable_entity }
       end
     end
@@ -179,7 +243,8 @@ class InvoicesController < ApplicationController
     @invid = params[:id] || nil
 
     sort_init 'username', 'asc'
-    sort_update 'username' => 'login',
+    sort_update 'id' => 'id',
+                'username' => 'login',
                 'firstname' => 'firstname',
                 'lastname' => 'lastname',
                 'email' => 'mail'
@@ -198,8 +263,13 @@ class InvoicesController < ApplicationController
     c = ARCondition.new(@status == 0 ? "status <> 0" : ["status = ?", @status])
 
     unless params[:name].blank?
-      name = "%#{params[:name].strip.downcase}%"
-      c << ["LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ?", name, name, name, name]
+      n = Integer( params[:name]) rescue nil
+      if n
+        c << ['id = ? ', n.to_s]
+      else
+        name = "%#{params[:name].strip.downcase}%"
+        c << ['LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ? ', name, name, name, name]
+      end
     end
 
     @user_count = scope.count(:conditions => c.conditions)
@@ -274,6 +344,7 @@ class InvoicesController < ApplicationController
   def fatture
     @filename =  params[:filename]
     @filepath = "#{RAILS_ROOT}/files/invoices/" + @filename
+
     #@content = File.new(@filepath, "pdf").read
     #format.pdf  { :type => 'application/pdf', :filename => @filename }
     #send_data(@content, :type => 'application/pdf', :filename => @filename)
@@ -303,13 +374,16 @@ class InvoicesController < ApplicationController
 
   #@invoice esiste sempre
   def crea_pdf_fattura
+
+    #get_file_on_new
     #html = render_to_string(:controller => 'invoices', :action => 'show_invoice_html', :layout => false)
     html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
     f= RAILS_ROOT + @invoice.getInvoiceFilePath
     kit = PDFKit.new(html)
     kit.to_file(f)
-    @invoice.attached_invoice = @file_pdf
+    @invoice.attached_invoice = get_file_on_new
     @invoice.save!
+
   end
 
   def control_dest
@@ -354,16 +428,31 @@ class InvoicesController < ApplicationController
       @filename_pdf = @invoice.getInvoiceFilename
     end
   end
+  def get_file_on_new
+        s= ''
+      a = '0000'
+      if (@invoice.convention_id && @invoice.convention)
+        s +="c" + @invoice.convention_id.to_s
+      end
+      if (@invoice.user_id && @invoice.user)
+        s += "u" + @invoice.user_id.to_s
+      end
+      if @invoice.anno
+        a = @invoice.anno.to_s
+      end
+        return  "http://" + Setting.host_name + "/files/invoices/fattura_" + a + '_' + @invoice.numero_fattura.to_s + '_' + s + ".pdf"
+
+  end
 
   def get_money
-    @tariffa = @invoice.tariffa || 0.00
-    @scontoperc = @invoice.sconto || 0.00
-    @sconto = (@tariffa * @scontoperc) / 100
-    @imponibile = @tariffa - @sconto
-    @impostapercent = @invoice.iva * 100 || 0.00
-    @impostaperc = @invoice.iva || 0.00
-    @imposta = (@imponibile * @impostaperc)
-    @totale = @imponibile + @imposta
+    @tariffa = (@invoice.tariffa || 0.00).round(2)
+    @scontoperc = (@invoice.sconto || 0.00).round(2)
+    @sconto = ((@tariffa * @scontoperc) / 100 || 0.00).round(2)
+    @imponibile = (@tariffa - @sconto).round(2)
+    @impostapercent = (@invoice.iva * 100 || 0.00).round(2)
+    @impostaperc = (@invoice.iva || 0.00 ).round(2)
+    @imposta = (@imponibile * @impostaperc).round(2)
+    @totale = (@imponibile + @imposta ).round(2)
   end
 
   def get_invoice

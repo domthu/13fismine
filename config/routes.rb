@@ -153,7 +153,7 @@ ActionController::Routing::Routes.draw do |map|
   map.invoice_receiver '/invoice_receiver', :controller => 'invoices', :action => 'invoice_receiver'
   map.invoice_to_pdf '/invoice_to_pdf/:id', :controller => 'invoices', :action => 'invoice_to_pdf'
   map.invoice_download_pdf '/invoice_to_pdf/:id.pdf', :controller => 'invoices', :action => 'invoice_download_pdf',:conditions => {:method => :get}
-
+  map.fatture '/files/invoices/:filename', :controller => 'invoices', :action => 'fatture', :filename => /.*/,:conditions => {:method => :get}
   map.send_me_invoice '/invoice_me/:id', :controller => 'invoices', :action => 'send_me'
   map.send_customer_invoice '/invoice_him/:id', :controller => 'invoices', :action => 'send_customer'
   map.fee 'fee', :controller => 'fees', :action => 'index'
@@ -402,9 +402,6 @@ ActionController::Routing::Routes.draw do |map|
   # additional routes for having the file name at the end of url
   map.connect 'attachments/:id/:filename', :controller => 'attachments', :action => 'show', :id => /\d+/, :filename => /.*/
   map.connect 'attachments/download/:id/:filename', :controller => 'attachments', :action => 'download', :id => /\d+/, :filename => /.*/
-
-  map.connect 'fatture/:filename', :controller => 'invoices', :action => 'fatture', :filename => /.*/
-
   map.resources :groups, :member => {:autocomplete_for_user => :get}
   map.group_users 'groups/:id/users', :controller => 'groups', :action => 'add_users', :id => /\d+/, :conditions => {:method => :post}
   map.group_user 'groups/:id/users/:user_id', :controller => 'groups', :action => 'remove_user', :id => /\d+/, :conditions => {:method => :delete}

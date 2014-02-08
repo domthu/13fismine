@@ -1,13 +1,27 @@
 <% if articolo %>
-    <script type="text/javascript">
-        function fbshareme() {
-            window.open(
-                    'http://www.facebook.com/sharer.php?s=100&p[title]=<%= ERB::Util.url_encode(articolo.subject)%>&p[summary]=<%= ERB::Util.url_encode(smart_truncate(articolo.summary, 220)) %>&p[url]=<%= link_to_articolo(articolo, :only_path => false).to_s %>&p[images][0]=<%= (art_image(articolo, :l, :only_path => false)) %>&p[images][1]=http://www.fiscosport.it/images/commons/fs_fb1.png&p[images][2]=http://www.fiscosport.it/images/commons/fs_fb2.png&p[images][3]=http://www.fiscosport.it/images/commons/fs_fb0.png',
-                    'facebook-share-dialog',
-                    'width=626,height=436'
-                );
+    <div id="fb-root"></div>
+    <script src='http://connect.facebook.net/en_US/all.js'></script>
+    <script>
+        // app_id on fb :
+        // fiscosport.it = 257254957785307
+        //localhost:3000 = 615981538449222
+        FB.init({appId: "257254957785307", status: true, cookie: true});
+
+        function postToFeed() {
+            // calling the API ...
+            var obj = {
+                method: "feed",
+                redirect_uri: "<%= link_to_articolo(articolo, :only_path => false).to_s %>",
+                link: "<%= link_to_articolo(articolo, :only_path => false).to_s %>",
+                picture: "<%= Setting.host_name.to_s + '/images/' + art_image(articolo, :l) %>",
+                name: "<%= articolo.subject.tr('"',"'") %>",
+                caption: "",
+                description: "<%= smart_truncate(articolo.summary, 220).tr('"',"'") %>"
+            };
+            FB.ui(obj);
         }
     </script>
+
     <div class="fs-postmetadataheader">
       <div class="fs-art-sezione-full">&nbsp;<%= articolo.section.full_name %></div>
       <div class="fs-postheader-full">      <%= articolo.subject %>  </div>
@@ -33,9 +47,12 @@
                 <span style="width: 32px;">Di:</span><span>  <%= h articolo.author %> </span>
             <% end %>
           </div>
+
           <div class='fs-social'>
-            <div class='fs-social-fb '>
-              <%= image_tag "ico/fb-share.jpg",:onclick=> 'fbshareme()' %>
+            <div class="fb_share_button">
+              <div class="fb_share_buttonIcon">
+                <button onclick="postToFeed();">Condividi</button>
+              </div>
             </div>
             <div class='fs-social-tw '>
               <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="fiscosport">Tweet</a>
@@ -45,7 +62,7 @@
               <div class="g-plusone" data-size="medium" data-recommendations="false">
                 <!-- Place this tag after the last +1 button tag. -->
                 <script type="text/javascript">
-                    window.___gcfg = {lang:'it'};
+                    window.___gcfg = {lang: 'it'};
                     (function () {
                         var po = document.createElement('script');
                         po.type = 'text/javascript';
@@ -66,13 +83,13 @@
     </div>
     <div class="clearfix">&nbsp; <br/></div>
     <div class="fs-layout-cell layout-item-1">
-     <div id="fs-articolo-full ">
+      <div id="fs-articolo-full ">
         <%= raw(articolo.description) %>
         <br/>
       </div>
     </div>
     <div class="fs-attachments">
-      <%= link_to_fs_attachments(articolo, :author => false ) %>
+      <%= link_to_fs_attachments(articolo, :author => false) %>
     </div>
     <div class="fs-articolo-full-bottom">
 

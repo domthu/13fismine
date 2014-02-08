@@ -21,9 +21,10 @@
 <div class="autoscroll">
 <table class="table-fix list">
   <thead><tr>
+  <%= sort_header_tag('id', :caption => l(:field_id), :style => 'width: 5%; text-align:left;') %>
   <%= sort_header_tag('person', :caption => l(:label_person), :style => 'width: 35%;') %>
   <%= sort_header_tag('role', :caption => l(:label_role), :style => 'width: 20%;') %>
-  <%= sort_header_tag('scadenza', :caption => l(:field_due_date), :default_order => 'desc', :style => 'width: 15%; text-align:left;') %>
+  <%= sort_header_tag('scadenza', :caption => l(:label_scadenza), :default_order => 'desc', :style => 'width: 15%; text-align:left;') %>
   <%= sort_header_tag('registration', :caption => l(:field_registration_date), :default_order => 'desc', :style => 'width: 15%;') %>
   <%=sort_header_tag('conv', :caption => 'Conv.', :default_order => 'desc', :style => 'width: 5%;') %>
     <th></th>
@@ -31,6 +32,7 @@
   <tbody>
 <% for user in @users -%>
   <tr class="user <%= cycle("odd", "even") %> <%= %w(anon active registered locked)[user.status] %>">
+    <td class="id"><%= h(user.id.to_s) %></td>
   <td class="firstname"><%= avatar(user, { :size => "14", :class => "no-div" }) %><%= link_to h(user.name), edit_user_path(user) %></td>
   <td class="role" align="left"><%= get_status_role(user) %></td>
     <td>
@@ -48,7 +50,7 @@
     </td>
   <td class="created_on" align="center"><%= format_date(user.created_on) %></td>
      <td align="center">
-    <%= checked_image user.privato? %></td>
+    <%= checked_image !user.privato? %></td>
     <td class="buttons">
       <!-- temporanemaente rimosso per non creare confusione --><%# change_role_status_link(user) %>
       <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>

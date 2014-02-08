@@ -66,4 +66,8 @@ CKEDITOR.editorConfig = function (config) {
         [
             [  'Source','Save','RemoveFormat', '-', 'Font', 'FontSize', 'Bold', 'Italic']
         ];
+    config.toolbar_Save =
+        [
+            [  'Save']
+        ];
 };

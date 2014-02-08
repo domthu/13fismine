@@ -11,8 +11,9 @@
           <div>
             <h2><%= l(:label_abbo) %> <%= link_to l(:label_login_with_open_id_option), signin_url if Setting.openid? %></h2>
             <blockquote>
-              <strong>Il tuo profilo personale</strong> <br />
-               <%= get_status_role(User.current) %><br />Validità: <strong> <%= User.current.scadenza_fra  %></strong>
+              <strong>Il tuo profilo personale</strong> <br/>
+              <%= get_status_role(User.current) %>
+              <br/>Validità: <strong> <%= User.current.scadenza_fra %></strong>
             </blockquote>
             <br/>
           </div>
@@ -24,6 +25,44 @@
                 <span style="float: right;"><%= link_to(l(:button_change_password), url_for({:controller => "account", :action => "lost_password"}), :class => 'fs-blu-button') %> </span>
             <% end %>
           </p>
+
+          <div style="width: 98%">
+            <fieldset class="box tabular">
+              <legend><%= l(:user_invoices, :num => @user.invoices.count.to_s) %></legend>
+              <% if !@user.invoices.nil? && @user.invoices.count > 0 %>
+                  <div class="autoscroll">
+                    <table class="list invoices">
+                      <thead>
+                      <tr>
+                        <th style='width: 33%;text-align:left;'><%= l(:label_numero_fattura) %></th>
+                        <th style='width: 33%;text-align:left;'><%= l(:label_data_fattura) %></th>
+                     <!--   <th style='width: 33%;text-align:left;'><%= l(:button_download) %></th>  -->
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <% @user.invoices.sort_by(&:data_fattura).reverse.each do |invoice| %>
+                          <tr class="<%= cycle 'odd', 'even' %>">
+                            <td align="left">
+                              <%= h(invoice.to_s) %>
+                            </td>
+                            <td><%= format_date(invoice.data_fattura) %></td>
+                            <!--
+                            <td align="left">
+                              <%= invoice.attached_invoice.blank?.to_s %>
+                              <%= link_to('PDF', invoice.attached_invoice, :class => 'icon icon-pdf') %>
+                              <%= link_to('PDF2', fatture_path(:filename=> 'fattura_2014_413_u6.pdf'), :class => 'icon icon-pdf') %>
+                            </td>    -->
+                          </tr>
+                      <% end %>
+                      </table>
+                  </div>
+              <% else %>
+                  <p class="nodata"><%= l(:label_invoices_none) %></p>
+              <% end %>
+            </fieldset>
+            <br/>
+          </div>
+
           <!------  inizio ------ -->
           <div class="fs-layout-cell fs-content clearfix">
             <% if !@user.nil? %>
@@ -93,5 +132,5 @@
         </div>
       </div>
     </div>
-    </article>
+  </article>
 </div>

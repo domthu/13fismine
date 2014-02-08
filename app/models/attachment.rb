@@ -172,7 +172,9 @@ class Attachment < ActiveRecord::Base
       |att| att.filename.downcase == filename.downcase
      }
   end
-
+  def pdf?
+    !!(self.filename =~ /\.(pdf)$/i)
+  end
 private
   def sanitize_filename(value)
     # get only the filename, not the whole path
