@@ -382,16 +382,20 @@ class Mailer < ActionMailer::Base
     clean_html = clean_fs_html(body_as_string, user, nil)
     #content_type "multipart/alternative" non allega email
     #Method1 Non usare view
+    body :fee_type => 'thanks',
+          :fee_text => clean_html,
+          :fee_url => self.default_url_options
     part :content_type => "text/html",
-         :body => clean_html #render_message("#{method_name}.html.erb", body)
+         #:body => clean_html #render_message("#{method_name}.html.erb", body)
+         :body => render(:file => "fee.html.erb", :body => body, :layout => 'mailer.html.erb')
     #Method2 usa views
     #body :news => clean_html, :fee_url => url_for(:controller => 'fees'), :app_title => Setting.app_title
     #render_multipart('newsletter', body)
-#    attachment "application/pdf" do |a|
-#      #a.body =  File.read(invoice.attached_invoice)
-#      a.body =  File.read(file_path)
-#    end
-    add_file file_path
+    #attachment :content_type => "application/pdf", :body => File.read(file_path)
+    attachment "application/pdf" do |a|
+      a.body =  File.read(file_path)
+      a.filename = invoice.getInvoiceFilename
+    end
   end
 
   # Builds a tmail object used to email fee management.
@@ -432,6 +436,7 @@ class Mailer < ActionMailer::Base
     #'renew'
   end
 
+  #Mail a destinazione della segretaria per informare del inizio periodo di prova di un utente
   def prova_gratis (user, body_as_string)
     @title = 'PERIODO DI PROVA'
     from user.mail

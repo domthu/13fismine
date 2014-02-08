@@ -335,7 +335,8 @@ class InvoicesController < ApplicationController
   private
 
   def send_invoice
-    @body_as_string = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
+    #@body_as_string = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
+    @body_as_string = Setting.template_fee_thanks
     #Controlla esistenza file
     fattura_exist?
   end
