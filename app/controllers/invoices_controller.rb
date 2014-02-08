@@ -1,17 +1,17 @@
 class InvoicesController < ApplicationController
   layout 'admin'
 
-  before_filter :require_admin
+  before_filter :require_admin , :except => [:fatture, :send_me_fs]
   helper :sort
   include SortHelper
   include Redmine::Export::PDF
   before_filter :set_menu
   before_filter :get_dest, :only => [:new]
   before_filter :control_dest, :only => [:create]
-  before_filter :get_invoice, :only => [:show, :edit, :update, :invoice_to_pdf, :destroy, :send_customer, :send_me]
+  before_filter :get_invoice, :only => [:show, :edit, :update, :invoice_to_pdf, :destroy, :send_customer, :send_me,  :send_me_fs]
   before_filter :retreive_dest, :only => [:show, :edit]
-  before_filter :get_money, :only => [:show, :invoice_to_pdf, :send_customer, :send_me]
-  before_filter :send_invoice, :only => [:send_customer, :send_me]
+  before_filter :get_money, :only => [:show, :invoice_to_pdf, :send_customer, :send_me,  :send_me_fs]
+  before_filter :send_invoice, :only => [:send_customer, :send_me , :send_me_fs]
   menu_item :invoices, :only => [:index]
   menu_item :invoice_receiver, :only => [:invoice_receiver]
   def set_menu
@@ -200,7 +200,7 @@ class InvoicesController < ApplicationController
         flash[:error] = @invoice.errors
         format.html { render :action => "new" }
         format.xml { render :xml => @invoice.errors, :status => :unprocessable_entity }
-      end4
+      end
     end
   end
 
@@ -263,7 +263,7 @@ class InvoicesController < ApplicationController
       else
         name = "%#{params[:name].strip.downcase}%"
         c << ['LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ? ', name, name, name, name]
-      end4
+      end
     end
 
     @user_count = scope.count(:conditions => c.conditions)
@@ -301,12 +301,14 @@ class InvoicesController < ApplicationController
       format.xml { render :xml => @invoice }
     end
   end
-
+  def send_me_fs
+    Mailer.deliver_invoice(User.current, @invoice, @body_as_string, nil, @invoice.getFilePath)
+   redirect_to my_profile_show_url
+    flash[:notice] = 'email inviato con pdf allegato a ' + User.current.mail
+  end
   def send_me
     Mailer.deliver_invoice(User.current, @invoice, @body_as_string, nil, @invoice.getFilePath)
-    #attachments = Attachment.attach_files(@document, params[:attachments])
-    #render_attachment_warning_if_needed(@document)
-    #Mailer.deliver_attachments_added(attachments[:files]) if attachments.present? && attachments[:files].present? && Setting.notified_events.include?('document_added')
+   #Mailer.deliver_attachments_added(attachments[:files]) if attachments.present? && attachments[:files].present? && Setting.notified_events.include?('document_added')
     redirect_to :action => 'show', :id => @invoice
     flash[:notice] = 'email inviato con pdf allegato a ' + User.current.mail
   end
@@ -322,16 +324,12 @@ class InvoicesController < ApplicationController
   end
 
   def fatture
-    respond_to do |format|
-      formt.pdf
-      format.html
-      format.xml
+
+   @filename =  params[:filename]
+    @filepath = "#{RAILS_ROOT}/files/invoices/" + @filename
+    File.open(@filepath, 'rb') do |f|
+     send_data f.read, :type => "application/pdf", :filename => @filename, :disposition => "inline"
     end
-   # @filename =  params[:filename]
-   # @filepath = "#{RAILS_ROOT}/files/invoices/" + @filename
-   # File.open(@filepath, 'rb') do |f|
-   #   send_data f.read, :type => "application/pdf", :filename => @filename, :disposition => "inline"
-   # end
   end
 
   private

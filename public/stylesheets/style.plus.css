@@ -4311,4 +4311,13 @@ input.inputerror {
     border-color: #5874c3 #4961a8 #41599f;
     -webkit-box-shadow: inset 0 0 1px #607fd6
 }
-
+.application-pdf {
+    background-image: url(../images/files/pdf.png);
+}
+.icon {
+    background-position: 0% 50%;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+}
