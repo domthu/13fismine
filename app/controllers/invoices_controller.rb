@@ -10,8 +10,6 @@ class InvoicesController < ApplicationController
   before_filter :control_dest, :only => [:create]
   before_filter :get_invoice, :only => [:show, :edit, :update, :invoice_to_pdf, :destroy, :send_customer, :send_me]
   before_filter :retreive_dest, :only => [:show, :edit]
-  before_filter :get_pdf_file_path, :only => [:show, :invoice_to_pdf]
-  before_filter :get_filename_pdf, :only => [:show, :invoice_to_pdf]
   before_filter :get_money, :only => [:show, :invoice_to_pdf, :send_customer, :send_me]
   before_filter :send_invoice, :only => [:send_customer, :send_me]
   menu_item :invoices, :only => [:index]
@@ -127,7 +125,7 @@ class InvoicesController < ApplicationController
 
     @invoice.iva = 0.22
     @invoice.sconto = 0.00
-    #sopra mette i default sotto prova a correggerli in base all'ultimo record
+    #sopra mette i default sotto prova a correg4gerli in base all'ultimo record
     if @invoices.count > 0
       unless @invoices[0].iva.nil?
         @invoice.iva = @invoices[0].iva
@@ -171,7 +169,7 @@ class InvoicesController < ApplicationController
                 'anno' => 'anno'
     @invoice.anno = Date.today.year
     #tabella riepilogo vecchie fatture fino 13 mesi prima
-    start_date = Date.today  << 13
+    start_date = Date.today  << 134
     @invoices_count = Invoice.find(:all, :conditions => ["data_fattura > ?",start_date]).count
     @invoices_pages = Paginator.new self, @invoices_count, per_page_option * 1.5 , params['page']
     @invoices =  Invoice.find(:all,
@@ -188,13 +186,11 @@ class InvoicesController < ApplicationController
     @invoice.mittente = Setting.default_invoices_header
     @invoice.description = Setting.default_invoices_description
     @invoice.footer = Setting.default_invoices_footer
-    @invoice.attached_invoice = get_file_on_new
+    @invoice.attached_invoice = @invoice.getFileUrl
 
     respond_to do |format|
       if @invoice.save
         #creazione pdf
-        get_pdf_file_path
-        get_money
         crea_pdf_fattura
         #send email
         #format.html { redirect_to(invoice_to_pdf_path(@invoice), :notice => l(:notice_successful_create)) }
@@ -204,7 +200,7 @@ class InvoicesController < ApplicationController
         flash[:error] = @invoice.errors
         format.html { render :action => "new" }
         format.xml { render :xml => @invoice.errors, :status => :unprocessable_entity }
-      end
+      end4
     end
   end
 
@@ -213,8 +209,6 @@ class InvoicesController < ApplicationController
   def update
     respond_to do |format|
       if @invoice.update_attributes(params[:invoice])
-        get_pdf_file_path
-        get_money
         crea_pdf_fattura
 
         format.html { redirect_to(@invoice, :notice => l(:notice_successful_update)) }
@@ -269,7 +263,7 @@ class InvoicesController < ApplicationController
       else
         name = "%#{params[:name].strip.downcase}%"
         c << ['LOWER(login) LIKE ? OR LOWER(firstname) LIKE ? OR LOWER(lastname) LIKE ? OR LOWER(mail) LIKE ? ', name, name, name, name]
-      end
+      end4
     end
 
     @user_count = scope.count(:conditions => c.conditions)
@@ -302,16 +296,14 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_to_pdf
-    crea_pdf_fattura
     respond_to do |format|
       format.html
       format.xml { render :xml => @invoice }
     end
-
   end
 
   def send_me
-    Mailer.deliver_invoice(User.current, @invoice, @body_as_string, nil, @file_path)
+    Mailer.deliver_invoice(User.current, @invoice, @body_as_string, nil, @invoice.getFilePath)
     #attachments = Attachment.attach_files(@document, params[:attachments])
     #render_attachment_warning_if_needed(@document)
     #Mailer.deliver_attachments_added(attachments[:files]) if attachments.present? && attachments[:files].present? && Setting.notified_events.include?('document_added')
@@ -324,66 +316,40 @@ class InvoicesController < ApplicationController
     if user.nil?
       user = @invoice.convention.user
     end
-    Mailer.deliver_invoice(user, @invoice, @body_as_string, User.current, @file_path)
+    Mailer.deliver_invoice(user, @invoice, @body_as_string, User.current, @invoice.getFilePath)
     redirect_to :action => 'show', :id => @invoice
     flash[:notice] = 'email inviato con pdf allegato al cliente ' + user.mail
   end
-=begin
-    def invoice_download_pdf
-    unless params[:id].nil?
-      invoice_to_pdf()
-      html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
-      pdf = PDFKit.new(html)
-      pdf.stylesheets << "/public/stylesheets/pdf_in.css"
-      send_data(pdf.to_pdf)
-    else
-      flash[:error] = 'Nessun parametro passato... errore in reservation_controller action: download_pdf '
-    end
-   end
-=end
-  def fatture
-    @filename =  params[:filename]
-    @filepath = "#{RAILS_ROOT}/files/invoices/" + @filename
 
-    #@content = File.new(@filepath, "pdf").read
-    #format.pdf  { :type => 'application/pdf', :filename => @filename }
-    #send_data(@content, :type => 'application/pdf', :filename => @filename)
-    #send_data(nil, :type => 'application/pdf', :filename => @filename)
-    File.open(@filepath, 'rb') do |f|
-      send_data f.read, :type => "application/pdf", :filename => @filename, :disposition => "inline"
+  def fatture
+    respond_to do |format|
+      formt.pdf
+      format.html
+      format.xml
     end
+   # @filename =  params[:filename]
+   # @filepath = "#{RAILS_ROOT}/files/invoices/" + @filename
+   # File.open(@filepath, 'rb') do |f|
+   #   send_data f.read, :type => "application/pdf", :filename => @filename, :disposition => "inline"
+   # end
   end
 
   private
 
   def send_invoice
     @body_as_string = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
-    if @invoice.attached_invoice.nil? || @invoice.attached_invoice.blank?
-      get_pdf_file_path
-      if @file_pdf.nil? || @file_pdf.blank?
-        crea_pdf_fattura
-        get_pdf_file_path
-      end
-      if !@file_pdf.nil? && !@file_pdf.blank?
-        @invoice.attached_invoice = @file_pdf
-        @invoice.save!
-      end
-    end
-    @file_path = "#{RAILS_ROOT}" + @invoice.getInvoiceFilePath
+    #Controlla esistenza file
+    fattura_exist?
   end
 
   #@invoice esiste sempre
   def crea_pdf_fattura
-
-    #get_file_on_new
-    #html = render_to_string(:controller => 'invoices', :action => 'show_invoice_html', :layout => false)
+    get_money
     html = render_to_string(:controller => 'invoices', :action => 'invoice_to_pdf', :id => params[:id], :layout => false)
-    f= RAILS_ROOT + @invoice.getInvoiceFilePath
     kit = PDFKit.new(html)
-    kit.to_file(f)
-    @invoice.attached_invoice = get_file_on_new
+    kit.to_file(@invoice.getFilePath)
+    @invoice.attached_invoice = @invoice.getFileUrl
     @invoice.save!
-
   end
 
   def control_dest
@@ -415,33 +381,11 @@ class InvoicesController < ApplicationController
     render_404
   end
 
-  def get_pdf_file_path
-    @file_pdf = nil
-    if File.exist?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath)
-      @file_pdf = "http://" + Setting.host_name + @invoice.getInvoiceFilePath
+  def fattura_exist?
+    if !File.exist?(@invoice.getFilePath)
+      crea_pdf_fattura
     end
-  end
-
-  def get_filename_pdf
-    @filename_pdf = nil
-    if File.exist?("#{RAILS_ROOT}" + @invoice.getInvoiceFilePath)
-      @filename_pdf = @invoice.getInvoiceFilename
-    end
-  end
-  def get_file_on_new
-        s= ''
-      a = '0000'
-      if (@invoice.convention_id && @invoice.convention)
-        s +="c" + @invoice.convention_id.to_s
-      end
-      if (@invoice.user_id && @invoice.user)
-        s += "u" + @invoice.user_id.to_s
-      end
-      if @invoice.anno
-        a = @invoice.anno.to_s
-      end
-        return  "http://" + Setting.host_name + "/files/invoices/fattura_" + a + '_' + @invoice.numero_fattura.to_s + '_' + s + ".pdf"
-
+    return File.exist?(@invoice.getFilePath)
   end
 
   def get_money
@@ -506,8 +450,6 @@ class InvoicesController < ApplicationController
       @invoice.save
 
       #creazione pdf
-      get_pdf_file_path
-      get_money
       crea_pdf_fattura
 
     end

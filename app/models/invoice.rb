@@ -32,8 +32,17 @@ class Invoice < ActiveRecord::Base
     numero_fattura.to_s + '_' + anno.to_s
   end
 
-  def getInvoiceFilePath
-    return   "/files/invoices/" + self.getInvoiceFilename
+  def getFilePath
+    #return RAILS_ROOT + self.getFileDir
+    return "#{RAILS_ROOT}" + self.getFileDir
+  end
+
+  def getFileUrl
+    return "http://" + Setting.host_name + self.getFileDir
+  end
+
+  def getFileDir
+    return "/files/invoices/" + self.getInvoiceFilename
   end
 
   def getInvoiceFilename

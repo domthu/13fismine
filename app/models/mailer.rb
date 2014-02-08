@@ -354,6 +354,7 @@ class Mailer < ActionMailer::Base
     ed += ' '
     ed += user.name.html_safe
     subject ed
+    bcc Setting.fee_bcc_recipients
     if !reader.nil?
       #bcc(reader.mail)
       cc(reader.mail)
