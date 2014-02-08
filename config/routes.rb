@@ -298,6 +298,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'projects/:id/members/new', :controller => 'members', :action => 'new'
 
+  map.resend_user '/users/:id/resend', :controller => 'users', :action => 'resend'
   map.with_options :controller => 'users' do |users|
     users.connect 'users/:id/edit/:tab', :action => 'edit', :tab => nil, :conditions => {:method => :get}
 

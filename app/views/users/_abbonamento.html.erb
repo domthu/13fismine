@@ -251,8 +251,29 @@
         </ul> -->
       </fieldset>
 
-      <p class="btn-footer"><%= submit_tag l(:button_save_abbonamento), :class => 'button-grey' %></p>
+      <p class="btn-footer"><%= submit_tag l(:button_save_abbonamento), :class => 'button-grey' %>
+      <% if (FeeConst::RESEND_ROLES.include? @user.role_id) %>
+      show me
+      <% end %>
+        <%= link_to_remote l(:button_resend_abbo),
+             {:url => resend_user_path(:id => @user),
+              :method => 'post',
+              :complete => "Element.scrollTo('resend_result')",
+              :title => l(:setting_emails_fee_proposal)
+             }, {:accesskey => accesskey(:preview),
+              :class => 'button-grey'
+             }
+      %>
+      </p>
     </div> <!-- id="edit_dati_form">-->
+    <div>
+      <div style="clear:both;"></div>
+      <fieldset class="htmldraft">
+        <legend><%= l(:setting_emails_fee_proposal) %>:</legend>
+        <div id="resend_result" class=""><%= l(:setting_emails_fee_proposal) %>
+        </div>
+      </fieldset>
+    </div>
   </div> <!-- id="edit_dati_form">-->
   <div style="clear:left;"></div>
 <% end %>

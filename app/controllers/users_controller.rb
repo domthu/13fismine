@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
 #  before_filter :require_admin, :except => :show
   before_filter :require_admin, :except => [:show, :edit_abbonamento]
-  before_filter :find_user, :only =>  [:show, :edit, :update, :destroy, :edit_membership, :destroy_membership]
+  before_filter :find_user, :only =>  [:show, :edit, :update, :destroy, :edit_membership, :destroy_membership, :resend]
   accept_api_auth :index, :show, :create, :update, :destroy
   before_filter :only_find_user, :only =>  [:edit_dati, :edit_abbonamento, :edit_fatture, :send_newsletter]
 
@@ -255,6 +255,7 @@ class UsersController < ApplicationController
       end
     end
   end
+
   #via js
   def edit_dati
     @user.safe_attributes = params[:user]
@@ -281,6 +282,7 @@ class UsersController < ApplicationController
       end
     end
   end
+
   #via js
   def edit_fatture
     @user.safe_attributes = params[:user]
@@ -356,6 +358,15 @@ class UsersController < ApplicationController
           }
         }
       end
+    end
+  end
+
+  #via js Send email for lost users
+  def resend
+    tmail = Mailer.deliver_fee(@user, 'proposal', Setting.template_fee_proposal)
+    respond_to do |format|
+      format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'abbonamento' }
+      format.js { render(:update) {|page| page.replace_html "resend_result", tmail.body} }
     end
   end
 

@@ -999,6 +999,7 @@ it:
 #dom verify
   all: tutti
   button_save_abbonamento: Salva abbonamento
+  button_resend_abbo: Rilancia utente (mail)
   button_save_dati: Salva dati
   button_save_fatture: Salva fatture
   button_news_update_txt: Salva le modifiche al quesito

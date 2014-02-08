@@ -32,6 +32,9 @@ module FeeConst
 #  role_registered: Registrato
 #  role_renew: Rinnovo, In scadenza
 
+  #ruoli sottoposti al riinvio per invitare ad abbonarsi
+  RESEND_ROLES =[ROLE_REGISTERED, ROLE_RENEW, ROLE_EXPIRED, ROLE_ARCHIVIED]
+
   EDIZIONE_KEY = "e-" #Identificatore
 
   #EMAIL_TYPE
