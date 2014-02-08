@@ -393,7 +393,7 @@ class UsersController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     flash[:error] = l(:notice_user_not_found, {:id => params[:id]})
     redirect_to :controller => 'users', :action => 'index'
-    render_404
+    #render_404
   end
 
   def only_find_user
@@ -401,6 +401,6 @@ class UsersController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     flash[:error] = l(:notice_user_not_found, {:id => params[:id]})
     redirect_to :controller => 'users', :action => 'index'
-    render_404
+    #render_404
   end
 end
