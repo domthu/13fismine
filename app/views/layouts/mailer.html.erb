@@ -1,59 +1,71 @@
-<html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
+  <title><%= Setting.app_title %> - Notifiche</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <style>
-body, .strat { font-family: "Segoe UI", Arial, Helvetica, sans-serif; font-size: 14px; color: #000; background-color: #EBA800; padding-bottom: 30px; }
-.font {font-family: "Segoe UI", Arial, Helvetica, sans-serif; }
-p {margin-top: 5px;margin-bottom: 10px;}
-a, a:link { color: #1AC2FF; text-decoration: none; }
-a:visited { color: #1AC2FF; text-decoration: none; }
-a:hover { color: #8C8C8C; text-decoration: underline; }
-img { border: none; margin: 0; }
-h3 { font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 25px;color: #016284; margin-bottom: 15px; margin-top: 15px; }
-.fiscosport {width:100%; text-align:center; margin: 10px; padding: 10px; font-family: 'Segoe UI', arial,  helvetica, sans-serif;font-size: 12px;color: #666666; }
-.footer {width:100%; font-family: Verdana, Arial, Helvetica, sans-serif; color:#666666; font-size:10px; }
+body, html{height: 100%;width: 100%;text-align: center;padding: 0;margin: 20px 0 0 20px;}
+table {margin: 0 auto;}
+table.nl-grey {background-color:transparent;}
+table.nl-grey td h1,table td h2{margin:0;}
+table.nl-grey tr{height:36px;background-color:#E5E5E5;}
+table.nl-grey td{height:36px;}
+h4{font-size: 17px; font-weight: 600; line-height: 20px;}
+h4, p{margin: 0;}
+.tex{font-size: 13px;text-align: left;font-family: "Segoe UI",Arial, Helvetica, sans-serif;}
+.tex1{font-size: 9px;font-family: "Segoe UI",Arial, Helvetica, sans-serif;}
+a{color: #006184;text-decoration: none;}
+a:hover{color: #B92A24;text-decoration: underline;}
+a:visited{color: #B92A24;text-decoration: none;}
+.sep{margin-bottom: 25px;}
 </style>
 </head>
 <body>
 <% defurl = "http://" + Setting.host_name %>
-<div class="strat">
-<table bgcolor="#EBA800" align="center" width="600" cellpadding="2" cellspacing="2">
-<tr><td ><font face="Segoe UI, Arial, Helvetica, sans-serif" size="1" color="#016284"><a target="_blank" href="<%= editorial_url %>" >Vai al sito <%= Setting.app_title %></a></font></td>
-</tr></table>
-<table bgcolor="#FFFFFF" align="center" width="600" style="border: #666666 1px solid;" cellpadding="0" cellspacing="0">
-  <tr>
-    <td bgcolor="#efefef" style="border-bottom: #666666 1px solid;" ><br>
-      <TABLE border="0" align="center">
-        <TR>
-          <TD style="color:	#016284"><img src="'<%= auto_link(@fee_img) %>'" alt="" border="0"><h2><%= Setting.welcome_text_fs %></h2>
-          </TD>
-        </TR>
-      </TABLE>
-      <br>
-    </td>
-  </tr>
-  <tr>
-    <td><TABLE width="510" border="0" cellpadding="0" cellspacing="0" align="center">
-        <TR>
-          <TD><%= Setting.emails_header %></TD>
-        </TR>
-        <TR>
-          <TD>
-            <h3><%= @title %></h3>
-            <p style='font-family: "Segoe UI", arial,  helvetica, sans-serif;font-size: 14px;color: #666666;'>
-              <%= yield %>
-            </p>
-            <div class="fiscosport">
-              <a target="_blank" href="<%= editorial_url %>">
-                <img src="<%= defurl %>/images/commons/m_fs-no-image.png" title="Vai a <%= Setting.app_title %>" >
-              </a>
-            </div>
-            <div class="footer">
-              <%= Setting.emails_footer %>
-            </div>
-           </TD>
-        </TR>
-      </TABLE>
-</table>
-</div>
+  <table style="width:640px; border:solid 1px #DADADA; padding:10px;" class="tex">
+    <tr>
+      <td>
+        <table style="width:620px; border:0; margin:0; padding:0;">
+          <tr>
+            <td style="width:60px; text-align:left; vertical-align:top;">
+              <img alt="" width="60" height="60" src="<%= defurl %>/images/commons/m_fs-no-image.png"/>
+            </td>
+            <td style="width:240px; vertical-align:top;">
+              <h4>
+                <a target="_blank" href="<%= editorial_url %>">
+                  <%= Setting.app_title %>
+                </a>
+              </h4>
+              <%= Setting.welcome_text_fs %>
+            </td>
+            <td style="width:220px; border:0; margin:0; padding:0; text-align:right;">
+              <%= Setting.emails_header %>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:620px; vertical-align:top; padding: 10px 0px;"  colspan="3">
+              <img alt="" src="<%= defurl %>/images/commons/servizi-fiscosport.jpg" width="620" />
+            </td>
+          </tr>
+          <tr>
+            <td style="width:620px; height:35px; padding-left:10px; background-color:#006184; color: #FFFFFF;" colspan="3">
+                INFORMAZIONI
+            </td>
+          </tr>
+          <tr>
+            <td style="width:620px; padding: 2px 0px 0px 0px;" colspan="3">
+                <%= yield %>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <table style="width:640px; padding:10px;" class="tex1" >
+    <tr>
+      <td style="padding-top: 40px;">
+          <%= Setting.emails_footer %>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>

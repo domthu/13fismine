@@ -1,8 +1,7 @@
-<h2>Messaggio gestione degli abbonamenti inviato da Fiscosport</h2>
-<h3> <%= l(@fee_type) %></h3>
+<h3>Gestione abbonamenti  <%= l(@fee_type) %></h3>
 <hr />
 <a target="_blank" href="<%= auto_link(@fee_url) %>" >Vai a <%= Setting.app_title %> </a>
 <hr />
 <p>
-<%= l(@fee_text) %>
+<%= @fee_text %>
 </p>

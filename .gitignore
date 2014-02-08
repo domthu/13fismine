@@ -24,7 +24,7 @@
 /tmp/cache/*
 /tmp/sessions/*
 /tmp/sockets/*
-/tmp/test/*
+/tmp/test/*app/views/common/footer_pdf.html
 /vendor/rails
 *.rbc
 
@@ -62,4 +62,4 @@ config/database.yml
 /public/images/commons/banners/*
 /public/images/commons/banners/*
 /public/images/ckeditor_assets/*
-
+/app/views/common/footer_pdf.html

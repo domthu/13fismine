@@ -378,6 +378,7 @@ class Mailer < ActionMailer::Base
   #   document_added(document) => tmail object
   #   Mailer.deliver_document_added(document) => sends an email to the document's project recipients
   def fee(user, type, setting_text)
+
     #    * host_name  in settings.xml
     #    * Setting.host_name
     #    * Mailer.default_url_options

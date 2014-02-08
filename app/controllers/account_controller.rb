@@ -342,7 +342,8 @@ class AccountController < ApplicationController
             self.logged_user = @user
             @stat = l(:notice_account_activated)
             Mailer.deliver_account_information(user, user.pwd)
-            tmail = Mailer.deliver_fee(user, 'thanks', Setting.template_fee_thanks)
+            #tmail = Mailer.deliver_fee(user, 'thanks', Setting.template_fee_thanks)
+            #Questa non perchè è per la prova gratis
           else
             @stat += " Errore nella creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente. Riprovare</span>"
           end
