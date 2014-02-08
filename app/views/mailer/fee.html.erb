@@ -1,7 +1,6 @@
-<h3>Gestione abbonamenti  <%= l(@fee_type) %></h3>
-<hr />
-<a target="_blank" href="<%= auto_link(@fee_url) %>" >Vai a <%= Setting.app_title %> </a>
-<hr />
 <p>
 <%= @fee_text %>
 </p>
+<hr />
+Vai al sito <a target="_blank" href="<%= auto_link(@fee_url) %>" ><%= Setting.app_title %> </a>.
+<hr />

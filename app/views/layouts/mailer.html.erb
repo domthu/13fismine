@@ -26,29 +26,15 @@ a:visited{color: #B92A24;text-decoration: none;}
       <td>
         <table style="width:620px; border:0; margin:0; padding:0;">
           <tr>
-            <td style="width:60px; text-align:left; vertical-align:top;">
-              <img alt="" width="60" height="60" src="<%= defurl %>/images/commons/m_fs-no-image.png"/>
-            </td>
-            <td style="width:240px; vertical-align:top;">
-              <h4>
-                <a target="_blank" href="<%= editorial_url %>">
-                  <%= Setting.app_title %>
-                </a>
-              </h4>
-              <%= Setting.welcome_text_fs %>
-            </td>
-            <td style="width:220px; border:0; margin:0; padding:0; text-align:right;">
-              <%= Setting.emails_header %>
+            <td style="width:620px; vertical-align:top; padding: 10px 0px; position: relative;"  colspan="3">
+              <a target="_blank" href="editorial_url">
+                <img alt="" src="<%= defurl %>/images/commons/object_testa.png" width="620" />
+              </a>
             </td>
           </tr>
           <tr>
-            <td style="width:620px; vertical-align:top; padding: 10px 0px;"  colspan="3">
-              <img alt="" src="<%= defurl %>/images/commons/servizi-fiscosport.jpg" width="620" />
-            </td>
-          </tr>
-          <tr>
-            <td style="width:620px; height:35px; padding-left:10px; background-color:#006184; color: #FFFFFF;" colspan="3">
-                INFORMAZIONI
+            <td style="width:620px; height:35px; padding-left:10px; color:#006184; background-color: #FFFFFF;" colspan="3">
+              <%= @title %>
             </td>
           </tr>
           <tr>

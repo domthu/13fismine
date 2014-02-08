@@ -241,7 +241,10 @@ it:
   mail_subject_lost_password: "La tua password %{value}"
   mail_body_lost_password: 'Per cambiare la password, usa il seguente collegamento:'
   lost_password_unvalid_token: "L'email vale per un tentativo. Per riprovare dovete iniziare da capo il recupero password per generare un nuovo email"
-  mail_subject_register: "Attivazione utente %{value}"
+  mail_subject_register_activated: "Account attivato %{value}"
+  mail_subject_register_confirm: "Conferma email %{value}"
+  mail_subject_register_info: "Account informazioni %{value}"
+  mail_subject_register: "Conferma email %{value}"
   mail_body_register: "<b>Confermi la tua email.</b><p>Per attivare il tuo account, usa il seguente collegamento:<p>"
   mail_body_account_information_external: "Puoi utilizzare il tuo account %{value} per accedere al sistema."
   mail_body_account_information: Le informazioni riguardanti il tuo account
@@ -1542,10 +1545,10 @@ it:
   static_page_progettofs: " Progetto Fiscosport"
   static_page_contattaci: "Contattaci"
 #Deliver_fee  type
-  proposal: Abbonamenti disponibili
-  thanks: Pagamento ricevuto, grazie
-  asso: Conferma registrazione nuovo membro convenzionato
-  renew: Rinnova abbonamento
+  proposal: ABBONAMENTI DISPONIBILI
+  thanks: RICEVUTA PAGAMENTO
+  asso: ABBONATO
+  renew: RINNOVA ABBONAMENTO
   label_list_user_no_role: lista utenti senza ruoli
 
 #Application menu FS

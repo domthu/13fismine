@@ -365,9 +365,11 @@ class AccountController < ApplicationController
           end
       end
       htmlpartial = ''
+      #Mail a destinazione della segretaria per informare dell'abbonamento di una nuova persona
       @tmail = Mailer.deliver_prova_gratis(@user, @stat + "<br />" + htmlpartial)
     rescue Exception => e
       @errors += "<span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+      @tmail = Mailer.deliver_errore("Prova Gratis", l(:notice_email_error, e.message))
     end
     ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
 
@@ -423,7 +425,8 @@ class AccountController < ApplicationController
         #in caso di prova gratis inviare dati di accesso
         if (user.pwd && !user.pwd.blank?) || user.isregistered?
           Mailer.deliver_account_information(user, user.pwd)
-          tmail = Mailer.deliver_fee(user, 'thanks', Setting.template_fee_thanks)
+          #Non è questo il messaggio. deve essere quello di prova che definisce la scadenza ed invita all'abbonamento
+          #tmail = Mailer.deliver_fee(user, 'thanks', Setting.template_fee_thanks)
         end
       end
     else

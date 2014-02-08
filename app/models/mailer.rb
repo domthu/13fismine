@@ -39,6 +39,7 @@ class Mailer < ActionMailer::Base
   #   issue_add(issue) => tmail object
   #   Mailer.deliver_issue_add(issue) => sends an email to issue recipients
   def issue_add(issue)
+    @title = 'ARTICOLO CREATO'
     redmine_headers 'Project' => issue.project.identifier,
                     'Issue-Id' => issue.id,
                     'Issue-Author' => issue.author.login
@@ -59,6 +60,7 @@ class Mailer < ActionMailer::Base
   #   issue_edit(journal) => tmail object
   #   Mailer.deliver_issue_edit(journal) => sends an email to issue recipients
   def issue_edit(journal)
+    @title = 'ARTICOLO MODIFICATO'
     issue = journal.journalized.reload
     redmine_headers 'Project' => issue.project.identifier,
                     'Issue-Id' => issue.id,
@@ -83,6 +85,7 @@ class Mailer < ActionMailer::Base
   end
 
   def reminder(user, issues, days)
+    @title = 'PROMEMORIA'
     set_language_if_valid user.language
     recipients user.mail
     subject l(:mail_subject_reminder, :count => issues.size, :days => days)
@@ -100,6 +103,7 @@ class Mailer < ActionMailer::Base
   #   document_added(document) => tmail object
   #   Mailer.deliver_document_added(document) => sends an email to the document's project recipients
   def document_added(document)
+    @title = 'DOCUMENTO CREATO'
     redmine_headers 'Project' => document.project.identifier
     recipients document.recipients
     subject acronym(nil) << "[#{document.project.name}] #{l(:label_document_new)}: #{document.title}"
@@ -119,14 +123,17 @@ class Mailer < ActionMailer::Base
     added_to_url = ''
     case container.class.name
     when 'Project'
+      @title = 'ALLEGATO CREATO PER EDIZIONE'
       added_to_url = url_for(:controller => 'files', :action => 'index', :project_id => container)
       added_to = "#{l(:label_project)}: #{container}"
       recipients container.project.notified_users.select {|user| user.allowed_to?(:view_files, container.project)}.collect  {|u| u.mail}
     when 'Version'
+      @title = 'ALLEGATO CREATO PER VERSIONE'
       added_to_url = url_for(:controller => 'files', :action => 'index', :project_id => container.project)
       added_to = "#{l(:label_version)}: #{container.name}"
       recipients container.project.notified_users.select {|user| user.allowed_to?(:view_files, container.project)}.collect  {|u| u.mail}
     when 'Document'
+      @title = 'ALLEGATO CREATO PER DOCUMENTO'
       added_to_url = url_for(:controller => 'documents', :action => 'show', :id => container.id)
       added_to = "#{l(:label_document)}: #{container.title}"
       recipients container.recipients
@@ -145,6 +152,7 @@ class Mailer < ActionMailer::Base
   #   news_added(news) => tmail object
   #   Mailer.deliver_news_added(news) => sends an email to the news' project recipients
   def news_added(news)
+    @title = 'QUESITO CREATO'
     redmine_headers 'Project' => news.project.identifier
     message_id news
     recipients news.recipients
@@ -162,6 +170,7 @@ class Mailer < ActionMailer::Base
   #   news_comment_added(comment) => tmail object
   #   Mailer.news_comment_added(comment) => sends an email to the news' project recipients
   def news_comment_added(comment)
+    @title = 'QUESITO COMMENTATO'
     news = comment.commented
     redmine_headers 'Project' => news.project.identifier
     message_id comment
@@ -180,6 +189,7 @@ class Mailer < ActionMailer::Base
   #   message_posted(message) => tmail object
   #   Mailer.deliver_message_posted(message) => sends an email to the recipients
   def message_posted(message)
+    @title = 'MESSAGGIO INVIATO'
     redmine_headers 'Project' => message.project.identifier,
                     'Topic-Id' => (message.parent_id || message.id)
     message_id message
@@ -198,6 +208,7 @@ class Mailer < ActionMailer::Base
   #   wiki_content_added(wiki_content) => tmail object
   #   Mailer.deliver_wiki_content_added(wiki_content) => sends an email to the project's recipients
   def wiki_content_added(wiki_content)
+    @title = 'WIKI CREATO'
     redmine_headers 'Project' => wiki_content.project.identifier,
                     'Wiki-Page-Id' => wiki_content.page.id
     message_id wiki_content
@@ -217,6 +228,7 @@ class Mailer < ActionMailer::Base
   #   wiki_content_updated(wiki_content) => tmail object
   #   Mailer.deliver_wiki_content_updated(wiki_content) => sends an email to the project's recipients
   def wiki_content_updated(wiki_content)
+    @title = 'WIKI AGGIORNATO'
     redmine_headers 'Project' => wiki_content.project.identifier,
                     'Wiki-Page-Id' => wiki_content.page.id
     message_id wiki_content
@@ -239,9 +251,10 @@ class Mailer < ActionMailer::Base
   #   account_information(user, password) => tmail object
   #   Mailer.deliver_account_information(user, password) => sends account information to the user
   def account_information(user, password)
+    @title = 'INFORMAZIONE DELL\'ACCOUNT'
     set_language_if_valid user.language
     recipients user.mail
-    subject l(:mail_subject_register, Setting.app_title)
+    subject l(:mail_subject_register_info, Setting.app_title)
     body :user => user,
          :password => password,
          :login_url => url_for(:controller => 'editorial', :action => 'home')
@@ -255,6 +268,7 @@ class Mailer < ActionMailer::Base
   #   account_activation_request(user) => tmail object
   #   Mailer.deliver_account_activation_request(user)=> sends an email to all active administrators
   def account_activation_request(user)
+    @title = 'RICHIESTA ATTIVAZIONE'
     # Send the email to all active administrators
     recipients User.active.find(:all, :conditions => {:admin => true}).collect { |u| u.mail }.compact
     subject l(:mail_subject_account_activation_request, Setting.app_title)
@@ -272,9 +286,10 @@ class Mailer < ActionMailer::Base
   #   account_activated(user) => tmail object
   #   Mailer.deliver_account_activated(user) => sends an email to the registered user
   def account_activated(user)
+    @title = 'ATTIVAZIONE UTENTE'
     set_language_if_valid user.language
     recipients user.mail
-    subject l(:mail_subject_register, Setting.app_title)
+    subject l(:mail_subject_register_activated, Setting.app_title)
     body :user => user,
          :login_url => url_for(:controller => 'editorial', :action => 'home')
          #:login_url => url_for(:controller => 'account', :action => 'login')
@@ -282,6 +297,7 @@ class Mailer < ActionMailer::Base
   end
 
   def lost_password(token)
+    @title = 'RECUPERO PASSWORD'
     set_language_if_valid(token.user.language)
     recipients token.user.mail
     subject l(:mail_subject_lost_password, Setting.app_title)
@@ -292,9 +308,10 @@ class Mailer < ActionMailer::Base
 
   #Invio email di confermazione prima di attivare
   def register(token)
+    @title = 'CONFERMA EMAIL'
     set_language_if_valid(token.user.language)
     recipients token.user.mail
-    subject l(:mail_subject_register, Setting.app_title)
+    subject l(:mail_subject_register_confirm, Setting.app_title)
     body :token => token,
          :layout => 'mailer.html.erb',
          :url => url_for(:controller => 'account', :action => 'activate', :token => token.value)
@@ -302,6 +319,7 @@ class Mailer < ActionMailer::Base
   end
 
   def test(user)
+    @title = 'PROVA'
     set_language_if_valid(user.language)
     recipients user.mail
     subject 'Redmine test'
@@ -310,6 +328,7 @@ class Mailer < ActionMailer::Base
   end
 
   def proposal_meeting (email, user, body_as_string)
+    @title = 'CONVEGNO / EVENTO'
     #recipients Setting.fee_bcc_recipients
     recipients Setting.fee_email
     #recipients 'sandro@ks3000495.kimsufi.com'
@@ -347,6 +366,7 @@ class Mailer < ActionMailer::Base
   end
 
   def invoice(user, invoice, body_as_string, reader, file_path)
+    @title = 'GESTIONE FATTURA'
     from Setting.newsletter_from
     recipients user.mail
     ed = 'Fiscosport fattura '
@@ -367,10 +387,11 @@ class Mailer < ActionMailer::Base
     #Method2 usa views
     #body :news => clean_html, :fee_url => url_for(:controller => 'fees'), :app_title => Setting.app_title
     #render_multipart('newsletter', body)
-    attachment "application/pdf" do |a|
-      #a.body =  File.read(invoice.attached_invoice)
-      a.body =  File.read(file_path)
-    end
+#    attachment "application/pdf" do |a|
+#      #a.body =  File.read(invoice.attached_invoice)
+#      a.body =  File.read(file_path)
+#    end
+    add_file file_path
   end
 
   # Builds a tmail object used to email fee management.
@@ -379,6 +400,7 @@ class Mailer < ActionMailer::Base
   #   document_added(document) => tmail object
   #   Mailer.deliver_document_added(document) => sends an email to the document's project recipients
   def fee(user, type, setting_text)
+    @title = 'GESTIONE ABBONAMENTI ' + l(type)
 
     #    * host_name  in settings.xml
     #    * Setting.host_name
@@ -411,9 +433,9 @@ class Mailer < ActionMailer::Base
   end
 
   def prova_gratis (user, body_as_string)
-    recipients user.mail #TODO rimettere in produzione
-    #recipients Setting.fee_bcc_recipients
-    #recipients Setting.fee_email
+    @title = 'PERIODO DI PROVA'
+    from user.mail
+    recipients Setting.fee_email
     #recipients 'dom_thual@yahoo.fr'
     subject Setting.app_title + ' > Prova Gratis ' + user.name.html_safe + ' ' + user.mail.html_safe
 
@@ -428,6 +450,15 @@ class Mailer < ActionMailer::Base
 #               :layout => 'mailer.html.erb'
 #         )
 
+  end
+
+  def errore (who, what)
+    @title = 'ERRORE DA ' + who
+    from Setting.newsletter_from
+    recipients 'dom_thual@yahoo.fr'
+    subject Setting.app_title + ' > Errore '
+    body :html_body => what
+    render_multipart('errore', body)
   end
 
   # Overrides default deliver! method to prevent from sending an email
