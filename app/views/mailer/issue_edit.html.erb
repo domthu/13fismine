@@ -1,4 +1,4 @@
-<p style="font-size: 0.8em; font-style: italic; ">
+<p style="font-size: 0.8em; font-style: italic; text-align: left;">
 <%= l(:text_issue_updated, :id => "##{@issue.id}", :author => h(@journal.user)) %>
 </p>
 <ul>
@@ -8,5 +8,5 @@
 </ul>
 <%= raw(@journal.notes).html_safe %>
 <%# @journal, :notes, :only_path => false) %>
- <hr>
+<hr />
 <%= render :partial => "issue.html.erb", :locals => { :issue => @issue, :issue_url => @issue_url } %>
