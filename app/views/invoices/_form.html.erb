@@ -77,7 +77,7 @@
 
       <p><%= f.text_field :sconto, :label => :field_sconto, :precision => 2 ,:size => 5 %></p>
 
-      <p><%= f.text_field :iva, :value => @invoice.iva.to_s, :label => :field_iva, :precision => 2 ,:size => 5, :required => true %></p>
+      <p><%= f.text_field :iva, :label => :field_iva, :precision => 2 ,:size => 5, :required => true %></p>
 
       <p>
         <%= f.select :payment_id, options_for_select(Payment.all.collect { |pay| [pay.name, pay.id] }, (@invoices[0].payment_id if (@invoices && @invoices.count > 0))), {:disabled => false, :include_blank => false, :required => true} %>
@@ -92,6 +92,7 @@
   <div class="cleared"></div>
 </div>
 
+ <p><%= f.date_select :data_fattura, :label => :field_data_fattura, :required => true %></p>
 
 <div class="cleared"></div>
 <script type="text/javascript">
