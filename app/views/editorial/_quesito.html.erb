@@ -1,8 +1,7 @@
 <article class="fs-article">
   <div class="fs-convegni-border">
-    <div class="fs-quesiti-data">  <span>
-     <%# Quesito di:  q.author unless !q.author %>
-     <%= q.author.hide_name unless !q.author %>
+    <div class="fs-quesiti-data">
+      <span><%= q.author.hide_name unless !q.author %>
      </span>
       <span class="fs-quesiti-data-data"><%= I18n.localize(q.created_on.to_date, :format => :giorno_mese_anno) %>&nbsp; </span>
     </div>
