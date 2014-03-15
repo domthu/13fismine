@@ -99,6 +99,7 @@ h4, .wiki h3 {
 #top-menu #loggedas {
     float: right;
     margin-right: 0.5em;
+    margin-bottom: 0;
     color: #fff;
 }
 
@@ -3924,4 +3925,10 @@ hr.quesiti hr {
     font-size: 0.8em;
     float: left;
     margin-right: 5px;
+}
+.xnotes {
+    font-style: italic;
+    font-size: 0.8em;
+    padding-left: 10px;
+    color: #b22222;
 }

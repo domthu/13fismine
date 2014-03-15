@@ -7,9 +7,8 @@
           <div class="floating-items3"><%= check_box_tag 'watcher_user_ids[]', user.id, false %> <%= h user %></div>
       <% end %>
     </div>
-    <%# f_a.submit 'Assegna uno o più collaboratori per rispondere' unless (!User.current.admin? ||  !User.current.ismanager?) %>
     <hr style="height: 5px; background-color: transparent;" />
-    <p style="text-align: center; width: 100%;">
+    <p style="text-align: center; width: 100%; padding: 3% 0;">
     <%= submit_tag('Assegna uno o più collaboratori per rispondere', :class => 'button-blu') unless (!User.current.admin? || !User.current.ismanager?) %>
     </p><% end %>
 
