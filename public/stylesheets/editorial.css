@@ -17,12 +17,44 @@
 }
 
 .fs-postmetadata-full {
-    border:0 !important;
-    width: 60%!important;
+    border: 0 !important;
+    width: 60% !important;
 }
+
 .fs-content-layout .fs-sidebar2 {
     display: none !important;
 }
-.fs-articolo-full-bottom  {
+
+.fs-articolo-full-bottom {
     display: none !important;
+}
+
+.fs-post, .fs-post2, .fs-sheet, .fs-post-convegni, .fs-convegni-border {
+    background: #FFFFFF;
+    border: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.fs-attachments {
+    display: none !important;
+}
+
+.fs-riassunto-full {
+    font-size: 19px !important;
+    line-height: 22px !important;
+}
+
+.fs-postcontent, #fs-articolo-full p {
+    font-size: 18px !important;
+    line-height: 20px !important;
+}
+
+.fs-convegni-deco-tl, .fs-convegni-deco-bl, .fs-convegni-deco-tr, .fs-convegni-deco-br, .counter-bg-fade1, .fs-quesiti-gravatar {
+    display: none !important;
+}
+
+.fs-content, .counter-bg {
+    padding: 0 !important;
+    margin: 0 !important;
 }
