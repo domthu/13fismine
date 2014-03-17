@@ -136,16 +136,16 @@ class ConventionsController < ApplicationController
   # DELETE /conventions/1.xml
   def destroy
     @conv = Convention.find(params[:id])
-    @conv.destroy
-
-    @user = User.all(:conditions => {:convention_id => params[:id]})
-    @user.each do |usr|
+    #@user = User.all(:conditions => {:convention_id => params[:id]})
+    #@user.each do |usr|
+    @conv.soci.each do |usr|
       # sandro rimosso il send_warning per errore di cookie
       #send_warning(msg + "<b style='color: green;'>Tolto con per utente</b> "+ usr.name + "(" + usr.id.to_s + ") di ruolo (" + get_abbonamento_name(usr.role_id) + ")")
       usr.convention_id = nil
       usr.save! #--> save_without_transactions
       usr.control_state
     end
+    @conv.destroy
 
     respond_to do |format|
       format.html { redirect_to(conventions_url) }
@@ -153,11 +153,28 @@ class ConventionsController < ApplicationController
     end
   end
 
+  def controlla
+    call_rake :cron_fismine, :conv_id => params[:id].to_i
+    @conv = Convention.find(params[:id])
+    s = "Controlliamo " + @conv.to_s
+    respond_to do |format|
+      format.json { render :json => s }
+      #format.js {
+      #  render(:update) {|page|
+      #    #page.alert("Chiuso il circo per " + @conv.to_s)
+      #    #page.updconv(s)
+      #    #page.call << 'updconv', 's'
+      #    page << "updconv('#{s}');"
+      #  }
+      #}
+    end
+  end
+
   private
 
   def control_conv(_conv)
     return
-    #STEP1/2 find susceptible federati by zone
+    #STEP1/2 find susceptible federati by activation code
     if (!_conv.codice_attivazione.nil? && !_conv.codice_attivazione.blank?)
       @user = User.all(:conditions => ["LOWER(codice_attivazione)=?", _conv.codice_attivazione])
       @user.each do |usr|
@@ -166,7 +183,7 @@ class ConventionsController < ApplicationController
     end
     #STEP2/2 find susceptible federati by zone
     #@user = User.all(:conditions => {:cross_organization_id => _conv.cross_organization_id})
-    @user = User.all(:conditions => ["comune_id is not null AND cross_organization_id is not null AND cross_organization_id=?", _conv.cross_organization_id])
+    @user = User.all(:conditions => ["comune_id is not null AND cross_organization_id is not null AND convention_id is null AND cross_organization_id=? AND role_id IN (?)", _conv.cross_organization_id])
     if _conv.region_id && _conv.region
       @Conv_Comuni_By_region = Province.find(:all, :include => [:comunes], :conditions => ["provinces.region_id=?", _conv.region_id]).collect { |u| [u.comunes.id] }
     end

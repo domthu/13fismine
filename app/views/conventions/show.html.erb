@@ -1,4 +1,13 @@
 <div class="contextual">
+  <%= link_to_remote(l(:label_controlla_convention), { :url => {:controller => 'conventions', :action => 'controlla', :id => @conv},
+                                                  :method => :get,
+                                                  :confirm => l(:text_are_you_sure),
+                                                  :complete => "updconv(request.responseText);"
+                                                }, { :title => l(:label_controlla_convention),
+                                                  :class => 'icon icon-link_break'
+                                                }) if User.current.admin? %>
+<%# attenzione definire funzione updconv dentro application.js %>
+  <%# link_to(l(:label_controlla_convention), edit_convention_path(@conv), :class => 'icon icon-link_break') if User.current.admin? %>
   <%= link_to(l(:button_edit), edit_convention_path(@conv), :class => 'icon icon-edit') if User.current.admin? %>
   <%= link_to(l(:button_delete),
               convention_path(@conv),
@@ -9,6 +18,7 @@
 
 <h2><%= link_to l(:label_convention_plural), conventions_path %> &#187; <%= h @conv.ragione_sociale %></h2>
 
+<div id="div_conv" class=""> </div>
 
 <div class="splitcontentleft">
   <fieldset class="box tabular">

@@ -1277,6 +1277,7 @@ en:
   label_fax: Fax
   label_comunicazioni: Comunicazioni
   label_email_alt: Email alternativo
+  label_controlla_convention: Expiration control
 
   field_ragione_sociale: Ragione sociale
   field_email: Email

@@ -144,6 +144,85 @@ class Convention < ActiveRecord::Base
     User.all(:conditions => {:convention_id => self.id})
   end
 
+  #Chiamare quando
+  def control_state
+    puts "=============ruolo " + self.role_id.to_s + " ==========control_state[" + self.scadenza.to_s + "]======================="
+    if self.scadenza == nil
+      return "scadenza non definita"
+    end
+    #controllo della scadenza
+    role_atteso = nil
+    today = Date.today
+    if (today > self.scadenza)
+      #scaduto
+      role_atteso = FeeConst::ROLE_EXPIRED
+      tipo = "renew"
+    end
+
+    elsif self.isabbonato? || self.isrenewing? || self.isexpired?
+
+      tipo = "renew"
+      #puts "control_state " + today.to_s
+
+      #puts "=============ruolo " + self.role_id.to_s + " ==========control_state[" + today.to_s + "/" + self.scadenza.to_s + "]==(" + (today > self.scadenza).to_s + ")====================="
+      if (today > self.scadenza)
+        #scaduto
+        role_atteso = FeeConst::ROLE_EXPIRED
+        tipo = "renew"
+      else
+        renew_deadline = self.scadenza - Setting.renew_days.to_i.days
+        if (today > renew_deadline)
+          #sta per scadere solo per abbonato
+          role_atteso = FeeConst::ROLE_RENEW
+          tipo = "proposal"
+        else
+          #tutto ok
+          role_atteso = FeeConst::ROLE_ABBONATO
+          tipo = "asso"
+        end
+      end
+    else
+      #puts "=============Non è soggeto a controllo "
+    end
+    if !role_atteso.nil? && self.role_id != role_atteso
+      self.role_id = role_atteso
+      if self.save!
+        begin
+          if tipo == "renew"
+            #invia email solo ai paganti
+            if self.convention_id.nil?
+              tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
+            end
+          elsif tipo == "asso"
+            #tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_register_asso) Attenzione questo è il messaggio destinato al power_user per convalidare o no una persona
+          elsif tipo == "proposal"
+            #invia email solo ai paganti
+            if self.convention_id.nil?
+              tmail = Mailer.deliver_fee(self, "renew", Setting.template_fee_renew)
+            end
+            #invia email solo ai paganti
+            #if self.convention_id.nil?
+            #  tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_proposal)
+            #end
+          else
+            #invia email solo ai paganti
+            #if self.convention_id.nil?
+            #  tmail = Mailer.deliver_fee(self, tipo, Setting.template_fee_renew)
+            #end
+          end
+        rescue Exception => e
+          #" <span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+        end
+      end
+    end
+    @conv.soci.each do |usr|
+      # sandro rimosso il send_warning per errore di cookie
+      #send_warning(msg + "<b style='color: green;'>Tolto con per utente</b> "+ usr.name + "(" + usr.id.to_s + ") di ruolo (" + get_abbonamento_name(usr.role_id) + ")")
+      usr.convention_id = nil
+      usr.save! #--> save_without_transactions
+      usr.control_state
+    end
+  end
 
   def getDefault4invoice()
     str = ""

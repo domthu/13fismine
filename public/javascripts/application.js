@@ -499,5 +499,22 @@ function CKEDITOR_value_for_remote(journal_id) {
   };
 }
 
+function updconv(txt) {
+  var mydiv = document.getElementById("div_conv");
+  var newcontent = document.createElement('div');
+  newcontent.className = "nodata";
+  var newp = document.createElement('p');
+  var currentdate = new Date();
+  var datetime = "- " + currentdate.getDay() + "/"+currentdate.getMonth()
+  + "/" + currentdate.getFullYear() + " "
+  + currentdate.getHours() + ":"
+  + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+  newp.innerHTML = datetime + ' ' + txt;
+  newcontent.appendChild(newp);
+  while (newcontent.firstChild) {
+      mydiv.appendChild(newcontent.firstChild);
+  }
+}
+
     //Event.observe(window, 'load', hideOnLoad);
     document.observe("dom:loaded", hideOnLoad);

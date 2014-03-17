@@ -1328,6 +1328,7 @@ it:
   label_fax: Fax
   label_comunicazioni: Comunicazioni
   label_email_alt: Email alternativa
+  label_controlla_convention: controlla scadenza
 
   field_ragione_sociale: Ragione sociale
   field_email: Email

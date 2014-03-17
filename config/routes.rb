@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pages
   map.resources :user_profiles
 #http://guides.rubyonrails.org/v2.3.11/routing.html
-#rake routes | grep -r "ckeditor"
+#rake routes | grep -r "convention"
   map.resources :top_menus
   map.resources :contract_users
   map.resources :contracts
@@ -143,6 +143,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :group_banners
 
   map.resources :conventions
+  map.convention_controlla '/convention_controlla/:id',
+      :controller => 'conventions',
+      :action => 'controlla',
+      :id => /\d.+/,
+      :conditions => {:method => [:get]}
   map.resources :cross_organizations
   map.resources :type_organizations
 

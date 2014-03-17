@@ -2464,7 +2464,9 @@ a.close-icon:hover {
 .icon-edit {
     background-image: url(../images/edit.png);
 }
-
+.icon-link_break {
+    background-image: url(../images/link_break.png);
+}
 .icon-copy {
     background-image: url(../images/copy.png);
 }
