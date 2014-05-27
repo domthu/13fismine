@@ -86,3 +86,7 @@ function setVisible(id, visible) {
         }
     }
 }
+
+function speak(divid) {
+  $("#divaudio").html("<audio autoplay><source src=http://tts-api.com/tts.mp3?q=" + escape($("#" + divid).html()) + " type=audio/mpeg></audio>")
+}
