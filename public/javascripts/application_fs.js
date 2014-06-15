@@ -88,5 +88,8 @@ function setVisible(id, visible) {
 }
 
 function speak(divid) {
-  $("#divaudio").html("<audio autoplay><source src=http://tts-api.com/tts.mp3?q=" + escape($("#" + divid).html()) + " type=audio/mpeg></audio>")
+  //var urltts = "http://tts-api.com/tts.mp3?q="; solo inglese
+  //var urltts = "http://www.ispeech.org/text.to.speech?voice=euritalianfemale&action=convert&speed=0&text=";
+  var urltts = "https://www.yakitome.com/api/rest/tts?api_key=your_api_key&voice=Audrey&speed=5&text="
+  $("#divaudio").html("<audio  controls autoplay><source src=" + urltts + escape($("#" + divid).html()) + " type=audio/mpeg></audio>")
 }
