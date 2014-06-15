@@ -477,19 +477,19 @@ h3.fs-postheader {
 .fs-chisiamo-item-txt1, .fs-chisiamo-item-txt2 {
     display: table-cell;
     vertical-align: middle;
-    font-size: 11px;
+    font-size: 0.84em;
     text-align: left;
     font-weight: bold;
 }
 
 .fs-chisiamo-item-txt1 {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 1em;
 }
 
 .fs-chisiamo-item-txt2 {
     font-style: italic;
-    font-size: 11px;
+    font-size: 0.84em;
 }
 
 .fs-chisiamo-item p, .fs-chisiamo-item2 p {
@@ -824,7 +824,7 @@ h3.fs-postheader {
 }
 
 .fs-postmetadatafooter-author-qualifica {
-    font-size: 0.8em;
+    font-size: 13px;
     font-style: italic;
     text-align: left;
     font-variant: small-caps;
@@ -914,8 +914,8 @@ h3.fs-postheader {
 }
 
 .fs-riassunto-full {
-    font-size: 14px;
-    line-height: 19px;
+  font-size: 0.9em;
+    line-height: 1.35em;
     display: block;
     font-weight: bold;
 
@@ -998,8 +998,8 @@ h3.fs-postheader {
 .fs-box-link a:hover {
     text-decoration: none;
     color: #000000;
-    font-size: 12px;
-    line-height: 15px;
+    font-size: 0.8em;
+    line-height: 0.9em;
 }
 
 .fs-box-link span {
@@ -1033,7 +1033,7 @@ h3.fs-postheader {
 .fs-blockheader-edizioni a:visited,
 .fs-blockheader-edizioni a:hover {
 
-    font-size: 13px !important;
+  /*  font-size: 13px !important;  */
     font-family: Arial, Helvetica, Sans-Serif;
     font-weight: bold;
     font-style: normal;
@@ -1557,7 +1557,8 @@ h3.fs-postheader {
 #fs-form-quesito-new {
     background: transparent url('/images/commons/lapis-giallo.jpg') no-repeat;
     background-position: right -10px;
-    height: 250px;
+    min-height: 250px;
+    display: table;
 }
 
 #fs-form-quesito-new p {
@@ -4315,9 +4316,67 @@ input.inputerror {
     background-image: url(../images/files/pdf.png);
 }
 .icon {
-    background-position: 0% 50%;
+    background-position: 0 50%;
     background-repeat: no-repeat;
     padding-left: 20px;
     padding-top: 2px;
     padding-bottom: 3px;
 }
+
+/* slider per font resize */
+#background_slider{
+    width: 100%;
+    /*   height: 40px;
+     background-color: #48649d;   */
+}
+
+#slider{
+    float: left;
+    width: 80%;
+    height: 10px;
+    margin-left: 0px;
+    margin-top: 5px;
+    border: 1px solid #2A69A4;
+    color: #2A69A4;
+}
+
+
+#a-left{
+    float: left;
+    width: 8%;
+    height: 15px;
+    font-size: 14px;
+    color: #F1E5C9;
+    text-align: center;
+    margin-top: 0px;
+    margin-left: 0px;
+    font-weight: bold;
+}
+
+
+#motto{
+    float: left;
+    width: 100%;
+    height: 1em;
+    font-size: 0.75em;
+    color: #ccc;
+    text-align: center;
+    margin-top: -1em;
+    margin-left: 10px;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+#a-right{
+    float: left;
+    width: 9%;
+    height: 18px;
+    font-size: 16px;
+    color: #F1E5C9;
+    text-align: center;
+    margin-top: 0px;
+    margin-right:1px;
+    font-weight: bold;
+}
+
+

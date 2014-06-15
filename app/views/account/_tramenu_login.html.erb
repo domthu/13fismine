@@ -1,6 +1,6 @@
 <% if User.current && User.current.logged? %>
     <div class="fs-tramenu-blockheader x-granata" style="overflow: hidden;"> <%= User.current.name() %></div>
-    <div class="fs-blockcontent fs-login-logged">
+    <div class="fs-blockcontentz fs-login-logged">
       <div id='fs-login-avatar'>
         <div class="fs-login">
               <%= User.current.my_avatar(:xs) %>
@@ -34,7 +34,7 @@
     </div>
 <% else %>
     <p class="fs-tramenu-blockheader x-granata">Accesso Utenti Abbonati</p>
-    <div class="fs-blockcontent">
+    <div class="fs-blockcontentz">
       <% form_tag({:controller => 'account', :action => 'login'}, :method => 'post') do %>
           <%= back_url_hidden_field_tag %>
           <fieldset class="input" style="border:none; margin-top:-7px; ">

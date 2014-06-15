@@ -30,7 +30,7 @@
       <div class="fs-image-caption-wrapper-full">
         <%= image_tag art_image(articolo, :l) %>
       </div>
-      <div class="fs-riassunto-full">
+      <div class="fs-content fs-riassunto-full">
         <p>
           <% if articolo.hide_summary? == false %>
               <%= raw(articolo.summary).html_safe %>
@@ -84,7 +84,7 @@
     <div class="clearfix">&nbsp; <br/></div>
     <div class="fs-layout-cell layout-item-1">
       <img src="/images/tts.png" alt="speak it" title="speak it" onclick="return speak('fs-articolo-full');"/>
-      <div id="fs-articolo-full">
+      <div id="fs-articolo-full" class="fs-content fs-articolo-full">
         <%= raw(articolo.description) %>
         <br/>
       </div>

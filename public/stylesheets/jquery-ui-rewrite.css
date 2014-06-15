@@ -87,7 +87,30 @@ h4.ui-state-default span.accordion{
 h4.ui-state-active span.accordion{
     color: #5f0100;
 }
-
+   /* font magnifier */
+#background_slider #slider .ui-state-default  {
+    padding:9px 0 !important;
+    height: 0;
+    background: #FFFFFF;
+    background: linear-gradient(top, #FFFFFF 0, #80DDFF 100%) no-repeat;
+    background: -webkit-linear-gradient(top, #FFFFFF 0, #80DDFF 100%) no-repeat;
+    background: -moz-linear-gradient(top, #FFFFFF 0, #80DDFF 100%) no-repeat;
+    background: -o-linear-gradient(top, #FFFFFF 0, #80DDFF 100%) no-repeat;
+    background: -ms-linear-gradient(top, #FFFFFF 0, #80DDFF 100%) no-repeat;
+    background: linear-gradient(top, #FFFFFF 0, #80DDFF 100%) no-repeat;
+    -svg-background: linear-gradient(top, #FFFFFF 0, #80DDFF 100%) no-repeat;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4);
+    border: 1px solid #36C9FF;
+    margin: 0 auto;
+    display: inline-block;
+    vertical-align: top;
+    content: ' ';
+}
 
 /* inizio bootone inattivo */
 

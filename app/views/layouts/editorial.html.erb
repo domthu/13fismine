@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en-EN" xmlns="http://www.w3.org/1999/html" xmlns:fb="https://www.facebook.com/2008/fbml">
+<html dir="ltr" lang="en-EN" xmlns="http://www.w3.org/1999/html">
 <head><!-- Created by DomThu & SPecchiaSoft -->
   <meta charset="utf-8"/>
   <title>FiscoSport<%#h html_title %></title>
@@ -9,7 +9,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="title" content="Professionisti esperti in materie fiscali sportive"/>
   <meta name="description" content="Visita il sito fiscosport per tenerti sempre aggiornato"/>
-  <link rel="image_src" type="image/jpeg" href='<%="#{request.protocol}#{request.host_with_port}/images/ico/fs.png" %>'/>
+  <link rel="image_src" type="image/jpeg" href='<%= "#{request.protocol}#{request.host_with_port}/images/ico/fs.png" %>'/>
   <%= csrf_meta_tag %>
   <%#<meta name="csrf-token" content="<%= form_authenticity_token % >" />
   <meta name="csrf-param" content="authenticity_token" />
@@ -36,59 +36,93 @@
   <%= javascript_include_tag "src/jquery-glowing.js" %>
   <%= javascript_include_tag "src/text_ticker.js" %>
   <%= javascript_include_tag "application_fs.js" %>
-  <%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
-  <%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
-  <%= stylesheet_link_tag 'jquery-ui-rewrite.css', :media => 'all' %>
   <%= javascript_include_tag "script.js" %>
+<%= javascript_include_tag "jquery/jquery-ui-1.9.2.custom.min.js" %>
+<%= stylesheet_link_tag 'jquery/start/jquery-ui-1.9.2.custom.min.css', :media => 'all' %>
+<%= stylesheet_link_tag 'jquery-ui-rewrite.css', :media => 'all' %>
   <%= javascript_include_tag "script.responsive.js" %>
   <%= javascript_include_tag "jquery.carouFredSel-6.2.1-packed.js" %>
   <%= javascript_include_tag "application_fs.js" %>
 
+<script type="text/javascript">
+       // http://www.shopdev.co.uk/blog/text-resizing-with-jquery/
+    $(document).ready(function() {
+
+        //get current font-size
+        var current_font_size=$(".fs-postcontent").css("font-size");
+        if (current_font_size == null){current_font_size= 13;};
+
+        //add to attribute "title"
+        $( "#slider" ).attr("title",current_font_size);
+        current_font_size=parseInt(current_font_size);
+        //create slider
+        $("#slider").slider({ value: current_font_size },{ range: 'min' },{ orientation: 'horizontal' });
+        //set "min" and "max" options
+        $("#slider").slider( "option", "min",8 );
+        $("#slider").slider( "option", "max",48 );
+
+        //when slider is moving, get value and set "css font-size"
+        $("#slider").bind( "slide", function zoom_fonts(){
+            var value = $( "#slider" ).slider( "option", "value" );
+            $(".fs-blockcontent").css("font-size",value);
+            $(".fs-postcontent").css("font-size",value);
+            $(".fs-postheader").css("font-size",value);
+            $(".fs-postheader-full").css("font-size",value + parseInt(value / 4)+"px");
+            $(".fs-postcontent").css("line-height",value + parseInt(value / 3)+"px");
+            $(".fs-postheader").css("line-height",value + parseInt(value / 3)+"px");
+            //add to attribute "title"
+            $("#slider").attr("title",value.toString()+"px");
+
+        });
+       });
+
+</script>
+<%# javascript_include_tag "jquery-ui-1.8.4.custom.min.js" %>
   <script type="text/javascript">
       //$(function () {
       $(document).ready(function () {
           'use strict';
           $("#carousel_assos_js").carouFredSel({
-              items:3,
-              scroll:{
-                  items:3,
-                  easing:"elastic",
-                  duration:2000,
-                  pauseOnHover:true
+              items: 3,
+              scroll: {
+                  items: 3,
+                  easing: "elastic",
+                  duration: 2000,
+                  pauseOnHover: true
               }
           });
           if ($("#carousel_tramenu_js").length > 0) {
               $("#carousel_tramenu_js").carouFredSel({
-                  responsive:true,
-                  scroll:{
-                      fx:"crossfade",
-                      easing : "swing",
-                       duration : 2000
+                  responsive: true,
+                  scroll: {
+                      fx: "crossfade",
+                      easing: "swing",
+                      duration: 2000
 
                   },
-                  items:{
-                      visible:1,
-                      width:290,
-                      height:94
+                  items: {
+                      visible: 1,
+                      width: 290,
+                      height: 94
                   }
               });
           }
           if ($("#carousel_block_l_js").length > 0) {
               $("#carousel_block_l_js").carouFredSel({
-                  height:215,
-                  items:{
-                      visible:1,
-                      start:"random",
-                      width:256,
-                      height:215
+                  height: 215,
+                  items: {
+                      visible: 1,
+                      start: "random",
+                      width: 256,
+                      height: 215
                   },
-                  auto:{
-                      timeoutDuration:3000,
-                      fx:"fade",
-                      duration:2000
+                  auto: {
+                      timeoutDuration: 3000,
+                      fx: "fade",
+                      duration: 2000
                   },
-                  pagination:"#block_l_js_pag",
-                  keys:false
+                  pagination: "#block_l_js_pag",
+                  keys: false
               });
           }
           //Scroll to top
@@ -101,7 +135,7 @@
           });
 
           $('#toTop').click(function () {
-              jQuery('body,html').animate({scrollTop:0}, 800);
+              jQuery('body,html').animate({scrollTop: 0}, 800);
           });
 
           //auto hide when clicking
@@ -121,15 +155,16 @@
           }
           ;
 
-          $('.x-white').addGlow({ textColor:'white', haloColor:'#aaa', radius:100 });
-          $('.x-blue').addGlow({ textColor:'#00f', haloColor:'#00f', radius:100, duration:200 });
-          $('.x-yellow').addGlow({ textColor:'#F8DA00', haloColor:'#F8DA00', radius:10, duration:200 });
-          $('.x-red').addGlow({ textColor:'#f00', haloColor:'#f00', radius:100 });
-          $('.x-granata').addGlow({ textColor:'#a03823', haloColor:'#a03823', radius:100 });
-          $('.x-yellow2').addGlow({ textColor:'#000', haloColor:'#F8DA00', radius:5, duration:300 });
-          $('.x-yellow3').addGlow({ textColor:'#000', haloColor:'#F8DA00', radius:10, duration:300 });
+          $('.x-white').addGlow({ textColor: 'white', haloColor: '#aaa', radius: 100 });
+          $('.x-blue').addGlow({ textColor: '#00f', haloColor: '#00f', radius: 100, duration: 200 });
+          $('.x-yellow').addGlow({ textColor: '#F8DA00', haloColor: '#F8DA00', radius: 10, duration: 200 });
+          $('.x-red').addGlow({ textColor: '#f00', haloColor: '#f00', radius: 100 });
+          $('.x-granata').addGlow({ textColor: '#a03823', haloColor: '#a03823', radius: 100 });
+          $('.x-yellow2').addGlow({ textColor: '#000', haloColor: '#F8DA00', radius: 5, duration: 300 });
+          $('.x-yellow3').addGlow({ textColor: '#000', haloColor: '#F8DA00', radius: 10, duration: 300 });
       });
   </script>
+
   <%= yield :header_tags -%>
 </head>
 <body>
@@ -142,17 +177,17 @@
         <h1 class="fs-headline" data-left="58%">
           <%= Setting.welcome_text_fs %>
         </h1>
-      </div>
       <div class="fs-textblock fs-object375974515" data-left="80%">
         <% form_tag({:controller => 'editorial', :action => 'ricerca'}, :method => :get, :class => "fs-search") do %>
             <%= text_field_tag 'q', @question, :accesskey => accesskey(:quick_search) %>
             <input type="submit" value="" class="fs-search-button"/>
         <% end %>
       </div>
+          </div>
     </header>
     <div class="fs-responsive-loginbg"></div>
     <nav class="fs-nav clearfix">
-      <%= @rendered_navigation1 ||= render_navigation(:context=> 'giallo') %>
+      <%= @rendered_navigation1 ||= render_navigation(:context => 'giallo') %>
     </nav>
 
     <aside class="fs-tramenu-wrapper">
@@ -160,13 +195,12 @@
     </aside>
 
     <nav class="fs-menu2-nav clearfix">
-       <%= @rendered_navigation2 ||= render_navigation(:context=> 'rosso', :level => 1..2, :expand_all => true) %>
+      <%= @rendered_navigation2 ||= render_navigation(:context => 'rosso', :level => 1..2, :expand_all => true) %>
     </nav>
     <div class="clearfix"></div>
     <div id="fs-flash" style="display:none;">
       <% flash.each do |key, msg| %>
           <p class='f-<%= key.to_s %>'><span class='<%= key.to_s %>-fs'> </span>  <%= msg %> </p>
-
           <div id="fs-flash-close-me"> clicca per chiudere</div>
       <% end %>
     </div>
@@ -179,15 +213,15 @@
     </div>
     <div id="toTop" style="display: none;"></div>
     <div id="ajax-indicator" style="display: none;"><span><%= l(:label_loading) %></span></div>
-      <p>
-        <%= render :partial => 'editorial/footer' %>
-      </p>
+    <p>
+      <%= render :partial => 'editorial/footer' %>
+    </p>
   </div>
 
   <div class="fs-page-footer">
-      <div class="clearfix"></div>
-      <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank"></a></span>
-    </div>
+    <div class="clearfix"></div>
+    <span id="fs-footnote-links"><a href="http://www.fiscosport.it/" target="_blank"></a></span>
+  </div>
 
 </div>
 <div id="divaudio"></div>
