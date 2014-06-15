@@ -102,12 +102,12 @@ ul.fs-vmenu a {
 .fs-headline, .fs-headline a, .fs-headline a:link, .fs-headline a:visited, .fs-headline a:hover,
 .fs-slogan, .fs-slogan a, .fs-slogan a:link, .fs-slogan a:visited, .fs-slogan a:hover,
 .fs-postheader, .fs-postheader a, .fs-postheader a:link, .fs-postheader a:visited, .fs-postheader a:hover {
-    font-size: 30px;
+   /* font-size: 30px;   */
     font-family: Arial, Helvetica, Sans-Serif;
     font-weight: normal;
     font-style: normal;
-    /*  font-variant: small-caps;*/
-    line-height: 120%;
+    /*  font-variant: small-caps;
+    line-height: 120%;*/
 }
 
 .fs-postcontent a, .fs-postcontent a:link {
@@ -1089,7 +1089,7 @@ div.fs-block img {
     padding: 0;
     margin: 0 auto;
     color: #00212D;
-    font-size: 13px;
+   /* font-size: 13px; */
     font-family: Arial, Helvetica, Sans-Serif;
     text-align: justify;
 }
@@ -1101,7 +1101,7 @@ div.fs-block img {
 .fs-blockcontent a:visited,
 .fs-blockcontent a:hover {
     color: #00212D;
-    font-size: 13px;
+   /* font-size: 0.8em;  */
     font-family: Arial, Helvetica, Sans-Serif;
     text-align: justify;
 }
@@ -1646,8 +1646,8 @@ pre {
 .fs-postheader a.visited,
 .fs-postheader a:hover,
 .fs-postheader a.hovered {
-    font-size: 15px;
-    line-height: 17px;
+   /* font-size: 15px;
+    line-height: 17px; */
     font-family: Arial, Helvetica, Sans-Serif;
     color: #016285;
     font-weight: bold;

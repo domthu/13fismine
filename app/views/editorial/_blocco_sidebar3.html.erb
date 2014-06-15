@@ -1,6 +1,7 @@
 <!-- usata in convegni -->
 
 <div class="fs-layout-cell fs-sidebar1 clearfix">
+  <%= render :partial => 'editorial/blocco_font' %>
   <%= render :partial => 'editorial/blocco_eventi_contact_me' unless request.url.match('/editoriale/home') %>
   <%= render :partial => 'editorial/blocco_eventi' %>
   <%= render :partial => 'editorial/blocco_banners_l' %>
