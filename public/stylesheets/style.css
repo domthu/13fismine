@@ -43,8 +43,8 @@ h1, h2, h3, h4, h5, h6, p, a, ul, ol, li {
     padding: 0;
 }
 
-/* Reset buttons border. It's important for input and button tags. 
- * border-collapse should be separate for shadow in IE. 
+/* Reset buttons border. It's important for input and button tags.
+ * border-collapse should be separate for shadow in IE.
  */
 .fs-button {
     border: 0;

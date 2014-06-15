@@ -43,7 +43,7 @@
   <%= javascript_include_tag "script.responsive.js" %>
   <%= javascript_include_tag "jquery.carouFredSel-6.2.1-packed.js" %>
   <%= javascript_include_tag "application_fs.js" %>
-
+<script type="text/javascript" src="http://vozme.com/get_text.js"></script>
 <script type="text/javascript">
        // http://www.shopdev.co.uk/blog/text-resizing-with-jquery/
     $(document).ready(function() {
@@ -168,6 +168,7 @@
   <%= yield :header_tags -%>
 </head>
 <body>
+<a href="#contenuto" title="Salta la paginazione e vai direttamente al contenuto della pagina" style="display: none;">Salta la paginazione e vai direttamente al contenuto della pagina</a>
 <div id="fs-main">
   <div id="fs-header-bg" class="clearfix">
   </div>
@@ -204,9 +205,11 @@
           <div id="fs-flash-close-me"> clicca per chiudere</div>
       <% end %>
     </div>
+    <a name="contenuto"></a>
     <div class="fs-layout-wrapper clearfix">
       <div class="fs-content-layout">
         <div class="fs-content-layout-row">
+
           <%= yield %>
         </div>
       </div>
