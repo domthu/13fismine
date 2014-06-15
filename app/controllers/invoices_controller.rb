@@ -125,10 +125,10 @@ class InvoicesController < ApplicationController
 
     @invoice.iva = 0.22
     @invoice.sconto = 0.00
-    #sopra mette i default sotto prova a correg4gerli in base all'ultimo record
+    #sopra mette i default, sotto prova a correggerli in base all'ultimo record
     if @invoices.count > 0
-      unless @invoices[0].iva.nil?
-        @invoice.iva = @invoices[0].iva
+      unless @invoices.last.iva.nil?
+        @invoice.iva = @invoices.last.iva
       end
 #      unless @invoices[0].anno.nil?
 #        @invoice.anno = @invoices[0].anno
@@ -141,7 +141,7 @@ class InvoicesController < ApplicationController
       end
     end
 
-    @cnt = Invoice.maximum(:numero_fattura, :conditions => ['anno = ' + @invoice.anno.to_s])
+    @cnt = Invoice.maximum(:numero_fattura, :conditions => ["anno = ? AND YEAR(data_fattura) = ?", @invoice.anno.to_s, @invoice.anno.to_s])
     if @cnt.nil? or @cnt == 0
       @cnt = 1
     else
@@ -187,9 +187,11 @@ class InvoicesController < ApplicationController
     @invoice.description = Setting.default_invoices_description
     @invoice.footer = Setting.default_invoices_footer
     @invoice.attached_invoice = @invoice.getFileUrl
+    #numero_fattura_must_be_unique_in_anno_and_data_fattura
+    not_uniq = Invoice.count(:conditions => ["anno = ? AND numero_fattura = ? AND YEAR(data_fattura) = ?", @invoice.anno, @invoice.numero_fattura, @invoice.data_fattura.year])
 
     respond_to do |format|
-      if @invoice.save
+      if (not_uniq == 0) && @invoice.save
         #creazione pdf
         crea_pdf_fattura
         #send email
@@ -197,7 +199,13 @@ class InvoicesController < ApplicationController
         format.html { redirect_to(@invoice, :notice => l(:notice_successful_create)) }
         #format.xml { render :xml => @invoice, :status => :created, :location => @invoice }
       else
-        flash[:error] = @invoice.errors
+        if not_uniq > 0
+          #Overflow cookie?
+          #@invoice.errors.add(:data_fattura, "anno, numero_fattura e anno di data_fattura devono essere unici")
+          flash[:error] = "anno, numero_fattura e anno di data_fattura devono essere unici"
+        else
+          flash[:error] = @invoice.errors
+        end
         format.html { render :action => "new" }
         format.xml { render :xml => @invoice.errors, :status => :unprocessable_entity }
       end

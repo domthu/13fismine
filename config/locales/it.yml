@@ -647,6 +647,7 @@ it:
   label_news_status_2: Risposta rapida nel quesito
   label_news_status_3: Risposta con articolo/i
   button_edit_news: Modifica la domanda
+  notice_no_logged: Gentile utente occorre essere autenticati per accedere a questa sezione
 
   #Dom verifica
   field_news: Da quesito?

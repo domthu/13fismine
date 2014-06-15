@@ -49,6 +49,9 @@
   <p><%= f.select :region_id, (Region.all(:order => 'name').collect { |c| [c.name, c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_region) %></p>
 
   <p><%= f.select :province_id, (Province.all(:include => [:region], :order => 'name').collect { |c| [c.name + ' (' + c.sigla + ')', c.id] }), :include_blank => true, :required => false, :size => 60, :title => l(:label_province) %></p>
+  <span class="xnotes">NB Campi che determinano la visibilità per una convenzione sportiva:  Se provincia  e regione valorizzati = PROVINCIALE  <br />   Se provincia nullo e regione valorizzato = REGIONALE . Se provincia nullo e regione nullo = NAZIONALE.
+
+  </span>
   <hr>
   <% if @conv.new_record? %>
       <h4><%= @conv.name %></h4>

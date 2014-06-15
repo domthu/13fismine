@@ -12,11 +12,11 @@
                     <% form_tag({:controller => "editorial", :action => "quesito_edit", :id => @quesito_news.id, :method => "post"}, :class => "input", :id => "fs-quesito-new") do %>
                         <div>
                           <label>Oggetto </label>
-                          <span>  <%= text_area_tag :summary, @quesito_news.summary, :rows => 2, :cols => 25, :tabindex => '1' %>  </span>
+                          <span>  <%= text_area_tag :summary, raw(@quesito_news.summary), :rows => 2, :cols => 25, :tabindex => '1' %>  </span>
                         </div>
                         <div>
                           <label>Quesito </label>
-                          <span>  <%= text_area_tag :description, @quesito_news.description, :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
+                          <span>  <%= text_area_tag :description, raw(@quesito_news.description), :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
                         </div>
                         <div id="fs-form-quesito-new-btn">
                            <%= link_to('Elimina', { :action => 'quesito_destroy',:id=>@quesito_news.id }, :class => "fs-giallo-button", :confirm => 'Confermi la cancellazione del quesito?') if (User.current.admin? || User.current.ismanager? || User.current == @quesito_news.author) %> &nbsp;
@@ -66,8 +66,7 @@
       <div class="clearfix"></div>
     </div>
 <% else %>
-    <h2 style="color:red;">
-      Gentile utente per porre quesiti a fiscosport occorre essere autenticati </h2>
+    <h2 style="color:red; margin:2%;"><%= l(:notice_no_logged)%></h2>
 <% end %>
 
 <%= render :partial => 'blocco_sidebar1' %>
