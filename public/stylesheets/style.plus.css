@@ -477,19 +477,19 @@ h3.fs-postheader {
 .fs-chisiamo-item-txt1, .fs-chisiamo-item-txt2 {
     display: table-cell;
     vertical-align: middle;
-    font-size: 11px;
+    font-size: 0.84em;
     text-align: left;
     font-weight: bold;
 }
 
 .fs-chisiamo-item-txt1 {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 1em;
 }
 
 .fs-chisiamo-item-txt2 {
     font-style: italic;
-    font-size: 11px;
+    font-size: 0.84em;
 }
 
 .fs-chisiamo-item p, .fs-chisiamo-item2 p {
@@ -1557,7 +1557,8 @@ h3.fs-postheader {
 #fs-form-quesito-new {
     background: transparent url('/images/commons/lapis-giallo.jpg') no-repeat;
     background-position: right -10px;
-    height: 250px;
+    min-height: 250px;
+    display: table;
 }
 
 #fs-form-quesito-new p {

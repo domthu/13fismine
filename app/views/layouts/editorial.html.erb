@@ -45,7 +45,7 @@
   <%= javascript_include_tag "application_fs.js" %>
 
 <script type="text/javascript">
-
+       // http://www.shopdev.co.uk/blog/text-resizing-with-jquery/
     $(document).ready(function() {
 
         //get current font-size
@@ -74,15 +74,7 @@
             $("#slider").attr("title",value.toString()+"px");
 
         });
-        //animate
-          /*
-        $("body").bind('mouseover', function(){
-
-            $("#background_slider>#motto").fadeOut(6500);
-            $("#background_slider>#motto").fadeIn(100);
-
-        }); */
-    });
+       });
 
 </script>
 <%# javascript_include_tag "jquery-ui-1.8.4.custom.min.js" %>
@@ -172,59 +164,7 @@
           $('.x-yellow3').addGlow({ textColor: '#000', haloColor: '#F8DA00', radius: 10, duration: 300 });
       });
   </script>
-  <script type="text/javascript">
-      //     JQuery Text resize + Cookie recall
-      //     by Jonny Kamaly
-      //     based on script written by Faisal &amp; Homar
-      //
 
-
-      var sitefunctions = {
-          textresize : function(){
-              // show text resizing links
-              $(".FontSize").show();
-              var $cookie_name = "sitename-FontSize";
-             // var originalFontSize = $("html").css("font-size");
-              // if exists load saved value, otherwise store it
-              var originalFontSize = $(".accessiblility").css("font-size");
-              if($.cookie($cookie_name)) {
-                  var $getSize = $.cookie($cookie_name);
-                  $(".accessiblility").css({fontSize : $getSize + ($getSize.indexOf("px")!=-1 ? "" : "px")}); // IE fix for double "pxpx" error
-              } else {
-                  $.cookie($cookie_name, originalFontSize);
-              }
-              // reset link
-              $(".FontSizeReset").bind("click", function() {
-                  $(".accessiblility").css("font-size", originalFontSize);
-                  $.cookie($cookie_name, originalFontSize);
-              });
-              $(".FontSizeInc").bind("click", function() {
-                  var currentFontSize = $(".accessiblility").css("font-size");
-                  var currentFontSizeNum = parseFloat(currentFontSize, 10);
-                  var newFontSize = currentFontSizeNum*1.2;
-                  if (newFontSize, 11) {
-                      $(".accessiblility").css("font-size", newFontSize);
-                      $.cookie($cookie_name, newFontSize);
-                  }
-                  return false;
-              });
-              $(".FontSizeDec").bind("click", function() {
-                  var currentFontSize = $(".accessiblility").css("font-size");
-                  var currentFontSizeNum = parseFloat(currentFontSize, 10);
-                  var newFontSize = currentFontSizeNum*0.8;
-                  if (newFontSize, 11) {
-                      $(".accessiblility").css("font-size", newFontSize);
-                      $.cookie($cookie_name, newFontSize);
-                  }
-                  return false;
-              });
-          }
-      }
-
-      $(document).ready(function(){
-          sitefunctions.textresize();
-      })
-  </script>
   <%= yield :header_tags -%>
 </head>
 <body>
@@ -237,12 +177,6 @@
         <h1 class="fs-headline" data-left="58%">
           <%= Setting.welcome_text_fs %>
         </h1>
-        <div class="changeFont" style="position: absolute; right: 10%; top:10%; background-color: yellow;">
-          <a href="#" class="FontSizeInc" rel="nofollow">Increase</a>
-          <a href="#" class="FontSizeDec" rel="nofollow">Decrease</a>
-          <a href="#" class="FontSizeReset" rel="nofollow">Reset</a>
-        </div>
-
       <div class="fs-textblock fs-object375974515" data-left="80%">
         <% form_tag({:controller => 'editorial', :action => 'ricerca'}, :method => :get, :class => "fs-search") do %>
             <%= text_field_tag 'q', @question, :accesskey => accesskey(:quick_search) %>

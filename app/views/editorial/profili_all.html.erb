@@ -24,7 +24,7 @@
         <article class="fs-post-profile">
           <h3 class="fs-postheader">RESPONSABILI DI REDAZIONE </h3>
           <% @responsabili.each do |item| %>
-              <div class="fs-chisiamo-item">
+              <div class="fs-blockcontent fs-chisiamo-item">
                 <%= link_to(item.user.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
                 <p>
                   <span  class="fs-chisiamo-item-txt1">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span>
@@ -43,7 +43,7 @@
         <article class="fs-post-profile">
           <h3 class="fs-postheader">COLLABORATORI DI REDAZIONE </h3>
           <% @collaboratori.each do |item| %>
-              <div class="fs-chisiamo-item2">
+              <div class="fs-blockcontent fs-chisiamo-item2">
                 <%= link_to(item.user.my_avatar(:m), :controller => "editorial", :action => "profilo_show", :id => item.id) %>
                 <p>
                   <span  class="fs-chisiamo-item-txt1">  <%= link_to((item.user.firstname + ' ' + item.user.lastname), :controller => "editorial", :action => "profilo_show", :id => item.id) %></span>
@@ -51,7 +51,7 @@
               </div>
           <% end %>
           <% @users.each do |item| %>
-              <div class="fs-chisiamo-item2">
+              <div class="fs-blockcontent fs-chisiamo-item2">
                 <%= link_to image_tag("/images/commons/m-no_avatar.jpg", :alt => item.firstname + ' ' + item.lastname, :height => "80", :class => "fs-lightbox"), :controller => "editorial", :action => "profilo_new", :id => item.id %>
                 <p>
                   <span  class="fs-chisiamo-item-txt1">  <%= link_to((item.firstname + ' ' + item.lastname), :controller => "editorial", :action => "profilo_new", :id => item.id) %></span>
