@@ -144,8 +144,8 @@ class Convention < ActiveRecord::Base
     User.all(:conditions => {:convention_id => self.id})
   end
 
-  #Chiamare quando
-  def control_state
+  #Chiamare con il motore notturno
+  def controlla_convenzione
     puts "=============ruolo " + self.role_id.to_s + " ==========control_state[" + self.scadenza.to_s + "]======================="
     if self.scadenza == nil
       return "scadenza non definita"

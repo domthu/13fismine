@@ -11,12 +11,10 @@ namespace :db do
 #========================= controlla i ruoli per convenzione
 
     #call_rake :cron_fismine, :conv_id => params[:id].to_i
+    # controlla ogni soci per ogni convention
     conv = Convention.find(ENV["CONV_ID"])
     s = "Controllato " + conv.name_with_users_count
-    conv.controlla
-    soci
-
-    per ogni convention
+    conv.controlla_convenzione()
 
 #user = User.new
 #user.role_id = FeeConst::ROLE_REGISTERED
