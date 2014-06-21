@@ -46,6 +46,7 @@ module ApplicationHelper
 
 
   def link_to_articolo(articolo, options={})
+    #back_url = options[:back_url] || ""
     only_path =options[:only_path]
     if only_path == false
       if articolo.is_convegno?

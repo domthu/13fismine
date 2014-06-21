@@ -302,15 +302,11 @@ class AccountController < ApplicationController
         #@errors += @user.errors.join(', ') undefined method join
         @errors += "Errore incontrate: " + @user.errors.full_messages.join('<br />')
       end
-      #puts "********************Prova user not valid (" + @errors + ")********************"
-      #format.html { return redirect_to :controller => 'editorial', :action => 'prova', :user => @user }
-      #format.js {
       return render :json => {
           :success => false,
           :response => @stat,
           :errors => @errors
       }
-      #}
     end
 
     @user.register
@@ -601,7 +597,8 @@ class AccountController < ApplicationController
       Mailer.deliver_register(token)
       send_notice l(:notice_account_register_done)
       #redirect_to :action => 'login'
-      redirect_to editorial_url
+      #redirect_to editorial_url
+      redirect_back_or_default(editorial_url)
     else
       yield if block_given?
     end
@@ -618,7 +615,8 @@ class AccountController < ApplicationController
       self.logged_user = user
       send_notice l(:notice_account_activated)
       #redirect_to :controller => 'my', :action => 'account'
-      redirect_to editorial_url
+      #redirect_to editorial_url
+      redirect_back_or_default(editorial_url)
     else
       yield if block_given?
     end

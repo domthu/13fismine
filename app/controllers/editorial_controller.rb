@@ -747,10 +747,17 @@ class EditorialController < ApplicationController
   end
 
   def reroute_log(who)
+    if request.get?
+      url = url_for(params)
+    else
+      url = url_for(:controller => params[:controller], :action => params[:action], :id => params[:id], :project_id => params[:project_id])
+    end
+    #format.html { redirect_to :controller => "account", :action => "login", :back_url => url }
     send_notice("Per accedere al contenuto devi essere autenticato")
     send_notice("Fai il login per favore... Se non hai abbonamento, registrati ora!")
     #redirect_to(signin_path)
-    redirect_to(page_abbonamento_path)
+    #redirect_to(page_abbonamento_path)
+    redirect_to(page_abbonamento_path(:back_url => url))
   end
 
   #definisce se l'utente è loggato o no, se no verifica che l'articolo è pubblico
@@ -783,13 +790,20 @@ class EditorialController < ApplicationController
   end
 
   def reroute_auth(msg)
+    # Extract only the basic url parameters on non-GET requests
+    if request.get?
+      url = url_for(params)
+    else
+      url = url_for(:controller => params[:controller], :action => params[:action], :id => params[:id], :project_id => params[:project_id])
+    end
+    #format.html { redirect_to :controller => "account", :action => "login", :back_url => url }
     if msg
       flash[:notice] = msg
     else
       flash[:notice] = "Per accedere devi avere un abbonamento valido..."
     end
     #redirect_to(my_profile_edit_path)
-    redirect_to(my_profile_show_path)
+    redirect_to(my_profile_show_path, :back_url => url)
   end
 
   #privato. Usato sia per articolo che preview (anche se non pubblico il project ed issue)
@@ -828,7 +842,6 @@ class EditorialController < ApplicationController
   #privato. Usato sia per evento che preview (anche se non pubblico il project ed issue)
   def other_evento_datas()
     @backurl = request.url
-
     @rcount = Reservation.count(:conditions => "issue_id = #{@articolo.id} AND user_id = #{User.current.id}")
     if @rcount <= 0
       #@reservation_new = Reservation.new(:user_id => User.current.id, :issue_id => params[:issue_id],:num_persone => params[:num_persone],:msg => params[:msg])
