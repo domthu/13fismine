@@ -46,9 +46,6 @@ module ApplicationHelper
 
 
   def link_to_articolo(articolo, options={})
-    title = options[:title] || " "
-    classe = options[:class] || " "
-    target = options[:target] || "_self"
     only_path =options[:only_path]
     if only_path == false
       if articolo.is_convegno?
@@ -62,13 +59,12 @@ module ApplicationHelper
       else
         s = url_for(:controller => 'editorial', :action => "articolo", :topmenu_key => articolo.section.top_section.top_menu.key, :topsection_key => articolo.section.top_section.key, :article_id => articolo.id.to_s, :article_slug => h(truncate(articolo.subject, :length => 125).to_slug))
       end
-      if User.current.logged?
-        #return link_to(title, s ,:class => classe, :escape => false, :target => target, :rel => "nofollow" )
-        return link_to(title, s, :class => classe, :target => target, :rel => "nofollow")
-      else
-        #return link_to(title, s ,:class => classe, :escape => false, :rel => "nofollow", :target => target, :back_url =>  s )
-        return link_to(title, s, :class => classe, :target => target, :rel => "nofollow", :back_url => s)
+      title = options.delete(:title)
+      options.merge!({:rel => "nofollow"})
+      if !User.current.logged? && articolo.se_protetto
+        options.merge!({:back_url => s})
       end
+      return link_to(title, s, options)
     end
   end
 

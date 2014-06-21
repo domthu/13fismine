@@ -24,13 +24,15 @@
 
     <div class="fs-postmetadataheader">
       <div class="fs-art-sezione-full">&nbsp;<%= articolo.section.full_name %></div>
-      <div class="fs-postheader-full">      <%= articolo.subject %>  </div>
+        <div class="fs-tts"><img width="36" border="0" height="36" src="/images/ico/tts.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('tts-txt0-<%= articolo.id.to_s %>' ,'tts-txt1-<%= articolo.id.to_s %>');"/></div>
+
+      <div class="fs-postheader-full" id='tts-txt0-<%= articolo.id.to_s %>'><%= articolo.subject %>  </div>
     </div>
     <div style="width:100%;">
       <div class="fs-image-caption-wrapper-full">
         <%= image_tag art_image(articolo, :l) %>
       </div>
-      <div class="fs-content fs-riassunto-full">
+      <div class="fs-content fs-riassunto-full" id='tts-txt1-<%= articolo.id.to_s %>'>
         <p>
           <% if articolo.hide_summary? == false %>
               <%= raw(articolo.summary).html_safe %>
@@ -77,14 +79,14 @@
             <div class="fs-resize-box">
               <%= link_to_function(image_tag('ico/printer-icon.png'), "javascript:print()") %>
             </div>
+
           </div>
         </div>
       </div>
     </div>
     <div class="clearfix">&nbsp; <br/></div>
     <div class="fs-layout-cell layout-item-1">
-      <div class="fs-tts"><img width="30" border="0" height="30" src="/images/blind-non vedente-non voyant.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('fs-articolo-full');"/></div>
-      <div id="fs-articolo-full" class="fs-content fs-articolo-full">
+      <div id='tts-txt2-<%= articolo.id.to_s %>' class="fs-content fs-articolo-full">
         <%= raw(articolo.description) %>
         <br/>
       </div>
