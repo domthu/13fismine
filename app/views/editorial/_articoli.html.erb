@@ -6,7 +6,7 @@
           <% if articolo %>
             <!--  <h5>debug edizione: <%= articolo.project_id.to_s + ' data:' +	articolo.project.data_dal.to_s %> --- debug edizione: <%= articolo.project_id.to_s + ' data:' +	articolo.project.data_dal.to_s %> </h5> -->
               <div class="fs-postmetadataheader">
-                <div class="fs-tts"><img width="30" border="0" height="30" src="/images/blind-non vedente-non voyant.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('articolo-ttl-<%= articolo.id.to_s %>');"/></div>
+                <div class="fs-tts"><img src="/images/ico/tts.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('tts-txt0-<%= articolo.id.to_s %>' ,'tts-txt1-<%= articolo.id.to_s %>'  );"/></div>
                 <% if articolo.se_protetto %>
                   <span class="fs-art-sezione fs-art-sez-ko fs-art-ko">&nbsp;<%= articolo.section.full_name %></span>
                   <span class="fs-postdateicon fs-art-ko" style="float:right;"><%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
@@ -15,11 +15,8 @@
                   <span class="fs-postdateicon fs-art-ok" style="float:right;"><%= I18n.localize(articolo.due_date.to_date, :format => :mese_anno) %></span>
                 <%end%>
                 <h5 class="fs-postheader">
-                  <%=   link_to_articolo(articolo, :title=> articolo.subject ) %>
+                  <%=   link_to_articolo(articolo, {:title=> articolo.subject, :id => 'tts-txt0-' + articolo.id.to_s }  ) %>
                 </h5>
-                <div id='articolo-ttl-<%= articolo.id.to_s %>' class="hide">
-                  <%= raw(articolo.subject) %>
-                </div>
               </div>
               <div class="fs-postcontent fs-postcontent-0 clearfix">
                 <div class="fs-content-layout-wrapper layout-item-0">
@@ -59,8 +56,8 @@
                       <% end %>
                     </div>
                   </div>
-                  <div class="fs-tts"><img width="30" border="0" height="30" src="/images/blind-non vedente-non voyant.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('articolo-txt-<%= articolo.id.to_s %>');"/></div>
-                  <div id='articolo-txt-<%= articolo.id.to_s %>' class="accessiblility">
+             <!--     <div class="fs-tts"><img width="30" border="0" height="30" src="/images/blind-non vedente-non voyant.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('tts-txt-<%= articolo.id.to_s %>');"/></div> -->
+                  <div id='tts-txt1-<%= articolo.id.to_s %>'>
                     <%= raw(articolo.summary) %>
                   </div>
                 </div>

@@ -87,7 +87,20 @@ function setVisible(id, visible) {
     }
 }
 
-function speak(divid) {
+function speak(div0,div1,div2 ) {
+
+         var htmlcontents = $("#" + div0).html();
+    if (div1 !== undefined)
+    {
+        htmlcontents += $("#" + div1).html();
+
+    }
+    if (div2 !== undefined)
+    {
+        htmlcontents += $("#" + div2).html();
+
+    }
+
   //get_id(divid,'it','fm');
   //testare Oddcast e Intranslator
   //www.ispeech.org/text.to.speech?link=http%3A%2F%2Fwww.ispeech.org%2Ftext.to.speech%3Fvoice%3Deuritalianfemale%26action%3Dconvert%26speed%3D0%26text%3Ddire%2520qualcosa
@@ -96,5 +109,5 @@ function speak(divid) {
   //var urltts = "http://www.ispeech.org/text.to.speech?link=http%3A%2F%2Fwww.ispeech.org%2Ftext.to.speech%3Fvoice%3Deuritalianfemale%26action%3Dconvert%26speed%3D0%26text%3D"
   //var urltts = "https://www.yakitome.com/api/rest/tts?api_key=your_api_key&voice=Audrey&speed=5&text=";
   var urltts = "http://api.voicerss.org?hl=it-it&r=0&key=c68635f1104b452e8dbe740c0c0330f3&src="
-  $("#divaudio").html("<audio controls autoplay><source src='" + urltts + escape($("#" + divid).html()) + "' type=audio/mpeg></audio>")
+  $("#divaudio").html("<audio controls autoplay><source src='" + urltts + escape(htmlcontents) + "' type=audio/mpeg></audio>")
 }
