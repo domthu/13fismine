@@ -5,18 +5,18 @@
         // app_id on fb :
         // fiscosport.it = 257254957785307
         //localhost:3000 = 615981538449222
-        FB.init({appId: "257254957785307", status: true, cookie: true});
+        FB.init({appId:"257254957785307", status:true, cookie:true});
 
         function postToFeed() {
             // calling the API ...
             var obj = {
-                method: "feed",
-                redirect_uri: "<%= link_to_articolo(articolo, :only_path => false).to_s %>",
-                link: "<%= link_to_articolo(articolo, :only_path => false).to_s %>",
-                picture: "<%= Setting.host_name.to_s + '/images/' + art_image(articolo, :l) %>",
-                name: "<%= articolo.subject.tr('"',"'") %>",
-                caption: "",
-                description: "<%= smart_truncate(articolo.summary, 220).tr('"',"'") %>"
+                method:"feed",
+                redirect_uri:"<%= link_to_articolo(articolo, :only_path => false).to_s %>",
+                link:"<%= link_to_articolo(articolo, :only_path => false).to_s %>",
+                picture:"<%= Setting.host_name.to_s + '/images/' + art_image(articolo, :l) %>",
+                name:"<%= sanitize(articolo.subject.gsub('"','\'').gsub(/[^0-9A-Za-z ]/,'' )) %>",
+                caption:"",
+                description:"<%=  sanitize(smart_truncate(articolo.summary, 220).tr('"','\'')) %>"
             };
             FB.ui(obj);
         }
@@ -24,20 +24,24 @@
 
     <div class="fs-postmetadataheader">
       <div class="fs-art-sezione-full">&nbsp;<%= articolo.section.full_name %></div>
-        <div class="fs-tts"><img width="36" border="0" height="36" src="/images/ico/tts.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('tts-txt0-<%= articolo.id.to_s %>' ,'tts-txt1-<%= articolo.id.to_s %>');"/></div>
-
-      <div class="fs-postheader-full" id='tts-txt0-<%= articolo.id.to_s %>'><%= articolo.subject %>  </div>
+       <div class="fs-tts">
+        <img src="/images/ico/tts.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('tts-txt0-<%= articolo.id.to_s %>' ,'tts-txt1-<%= articolo.id.to_s %>','tts-txt2-<%= articolo.id.to_s %>');"/>
+      </div>
+    <!--
+      <div class="fs-tts"><img src="/images/ico/tts.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('tts-txt2-<%= articolo.id.to_s %>');"/></div>
+      -->
+      <div class="fs-postheader-full" id='tts-txt0-<%= articolo.id.to_s %>'>  <%= articolo.subject %>  </div>
     </div>
     <div style="width:100%;">
       <div class="fs-image-caption-wrapper-full">
         <%= image_tag art_image(articolo, :l) %>
       </div>
-      <div class="fs-content fs-riassunto-full" id='tts-txt1-<%= articolo.id.to_s %>'>
-        <p>
-          <% if articolo.hide_summary? == false %>
+      <div class="fs-content fs-riassunto-full">
+        <% if articolo.hide_summary? == false %>
+            <p id='tts-txt1-<%= articolo.id.to_s %>'>
               <%= raw(articolo.summary).html_safe %>
-          <% end %>
-        </p>
+            </p>
+        <% end %>
 
         <div class="fs-postmetadata-full">
           <div class="fs-author">
@@ -64,7 +68,7 @@
               <div class="g-plusone" data-size="medium" data-recommendations="false">
                 <!-- Place this tag after the last +1 button tag. -->
                 <script type="text/javascript">
-                    window.___gcfg = {lang: 'it'};
+                    window.___gcfg = {lang:'it'};
                     (function () {
                         var po = document.createElement('script');
                         po.type = 'text/javascript';
@@ -79,17 +83,20 @@
             <div class="fs-resize-box">
               <%= link_to_function(image_tag('ico/printer-icon.png'), "javascript:print()") %>
             </div>
-
           </div>
         </div>
       </div>
     </div>
     <div class="clearfix">&nbsp; <br/></div>
     <div class="fs-layout-cell layout-item-1">
-      <div id='tts-txt2-<%= articolo.id.to_s %>' class="fs-content fs-articolo-full">
+      <div class="fs-content fs-articolo-full">
         <%= raw(articolo.description) %>
         <br/>
       </div>
+      <!--
+      <div id='tts-txt2-<%= articolo.id.to_s %>' class="fs-tts-strip_tags">
+        <%#  smart_truncate(strip_tags(articolo.description).gsub(/[^0-9A-Za-z \/\.,:;&']/,'' ).gsub("&39;",'\'' ),1400) %>
+      </div>   -->
     </div>
     <div class="fs-attachments">
       <%= link_to_fs_attachments(articolo, :author => false) %>

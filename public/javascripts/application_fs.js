@@ -89,15 +89,15 @@ function setVisible(id, visible) {
 
 function speak(div0,div1,div2 ) {
 
-         var htmlcontents = $("#" + div0).html();
+    var htmlcontents = $("#" + div0).html().replace("&nbsp;","");
     if (div1 !== undefined)
     {
-        htmlcontents += $("#" + div1).html();
+        htmlcontents += $("#" + div1).html().replace("&nbsp;","");
 
     }
     if (div2 !== undefined)
     {
-        htmlcontents += $("#" + div2).html();
+        htmlcontents += $("#" + div2).html().replace("&nbsp;","");
 
     }
 

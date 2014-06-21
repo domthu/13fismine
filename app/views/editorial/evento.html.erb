@@ -43,7 +43,10 @@
               </div>
               <div class="counter-bg-fade2"></div>
               <div class="fs-postmetadataheader">
-                <div class="fs-postheader-full fs-postheader-eventi-full">
+                <div class="fs-tts">
+                  <img src="/images/ico/tts.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('tts-txt0-<%= @articolo.id.to_s %>' ,'tts-txt1-<%= @articolo.id.to_s %>');"/>
+                </div>
+                <div id='tts-txt0-<%= @articolo.id.to_s %>' class="fs-postheader-full fs-postheader-eventi-full">
                   <%= @articolo.subject %>  </div>
               </div>
               <div style="width:100%;">
@@ -51,8 +54,10 @@
                   <%= image_tag art_image(@articolo, :l) %>
                 </div>
                 <% unless @articolo.hide_summary? %>
-                    <div class="fs-riassunto-full"><p>
-                      <%= @articolo.summary %></p>
+                    <div class="fs-riassunto-full">
+                      <p id='tts-txt1-<%= @articolo.id.to_s %>'>
+                      <%= @articolo.summary %>
+                      </p>
                     </div>
                 <% end %>
               </div>

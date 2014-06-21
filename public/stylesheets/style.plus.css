@@ -4380,12 +4380,16 @@ input.inputerror {
 
 .fs-tts {
     float: right;
-    padding-left: 10px;
     cursor: pointer;
+    margin: -0.8em -1.8em 0 1em;
 
 }
 .fs-tts img{
-    height: 50px;
-    width: 50px;
+    height: 48px;
+    width: 48px;
 
+}
+.fs-tts-strip_tags{
+display: block;
+    background-color: #F7E98D;
 }
