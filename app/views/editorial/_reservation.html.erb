@@ -16,8 +16,6 @@
 <% if (@reservation.nil?) %>
     <% form_tag({:controller => "editorial", :action => "evento_prenotazione"}) do %>
         <%# back_url_hidden_field_tag %>
-        <%# f.hidden_field :back_url, {:value => @backurl} %>
-        <%# Non usiamo f.hidden_field perchè ci sposta il params sotto il params["@reservation_new"] %>
         <%= hidden_field_tag "back_url", @backurl %>
 
         <div class="fs-reservation-header">  Partecipa a questo evento </div>
@@ -44,7 +42,7 @@
       Non desideri più partecipare? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <div>
         <% form_tag({:controller => "editorial", :action => "evento_prenotazione_delete", :id => @reservation.id}) do %>
-            <%# hidden_field_tag "back_url", @backurl %>
+            <%# back_url_hidden_field_tag %>
             <%= hidden_field_tag :back_url, @backurl %>
             <%= submit_tag 'Cancella prenotazione!' , :class => "fs-rosso-button", :confirm => 'Confermi?' %>
             <%# link_to 'Cancella prenotazione!', '/reservations/'+ @reservation.id.to_s, :method => :delete, :class => "fs-rosso-button" %>

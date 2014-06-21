@@ -16,6 +16,7 @@
           <br />
           <!------  inizio ------ -->
           <% labelled_form_for @user, :url => {:action => 'register'}, :html => {:method => :post, :class => "register tabular", :class => "step"} do |f| %>
+              <%= back_url_hidden_field_tag %>
               <%= error_messages_for 'user' %>
               <fieldset class="fs-abbo-fields">
                 <legend title="Anagrafica"> Dati personali e di accesso</legend>
