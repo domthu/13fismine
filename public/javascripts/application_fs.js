@@ -87,26 +87,21 @@ function setVisible(id, visible) {
     }
 }
 
-function speak(div0,div1,div2 ) {
-
+function speak(div0,div1,div2) {
     var htmlcontents = $("#" + div0).html().replace("&nbsp;","");
     if (div1 !== undefined)
     {
         htmlcontents += $("#" + div1).html().replace("&nbsp;","");
-
     }
     if (div2 !== undefined)
     {
         htmlcontents += $("#" + div2).html().replace("&nbsp;","");
-
     }
-
-  //get_id(divid,'it','fm');
+  //get_id(divid,'it','fm'); vozme richiedi script
   //testare Oddcast e Intranslator
   //www.ispeech.org/text.to.speech?link=http%3A%2F%2Fwww.ispeech.org%2Ftext.to.speech%3Fvoice%3Deuritalianfemale%26action%3Dconvert%26speed%3D0%26text%3Ddire%2520qualcosa
   //var urltts = "http://tts-api.com/tts.mp3?q="; //solo inglese
   //var urltts = "http://www.ispeech.org/text.to.speech?voice=euritalianfemale&action=convert&speed=0&text=";
-  //var urltts = "http://www.ispeech.org/text.to.speech?link=http%3A%2F%2Fwww.ispeech.org%2Ftext.to.speech%3Fvoice%3Deuritalianfemale%26action%3Dconvert%26speed%3D0%26text%3D"
   //var urltts = "https://www.yakitome.com/api/rest/tts?api_key=your_api_key&voice=Audrey&speed=5&text=";
   var urltts = "http://api.voicerss.org?hl=it-it&r=0&key=c68635f1104b452e8dbe740c0c0330f3&src="
   $("#divaudio").html("<audio controls autoplay><source src='" + urltts + escape(htmlcontents) + "' type=audio/mpeg></audio>")
