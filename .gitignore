@@ -3,6 +3,7 @@
 /config/additional_environment.rb
 /config/configuration.yml
 /config/environment.rb
+config/environment.rb
 config/environments/production.rb
 /config/environments/development.rb
 /config/environments/production.rb
