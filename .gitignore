@@ -2,12 +2,15 @@
 /.loadpath
 /config/additional_environment.rb
 /config/configuration.yml
+/config/environment.rb
+config/environments/production.rb
 /config/environments/development.rb
 /config/environments/production.rb
 /config/database.yml
 /config/email.yml
 /config/old_email.yml
 /config/initializers/session_store.rb
+config/initializers/pdfkit.rb
 /config/initializers/pdfkit.rb
 /coverage
 /db/*.db
@@ -26,6 +29,8 @@
 /tmp/sockets/*
 /tmp/test/*app/views/common/footer_pdf.html
 /vendor/rails
+vendor/plugins/rfpdf
+/vendor/plugins/rfpdf
 *.rbc
 
 /.bundle
@@ -49,8 +54,6 @@ config/database.yml
 
 .rvmrc
 
-/config/environment.rb
-/config/environments/production.rb
 /lib/redmine/imap.rb
 /lib/redmine/pop3.rb
 /public/images/users/*
