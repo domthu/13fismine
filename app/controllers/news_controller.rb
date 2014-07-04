@@ -150,7 +150,7 @@ class NewsController < ApplicationController
   #via js
   def assegna_js
     #puts "******************ASSEGNA************************+"
-    #find_project reccupera il progetto associato
+    #find_project recupera il progetto associato
     #if params[:watcher_user_ids].is_a?(Hash)
     if !@news.nil? && @news.project.identifier == FeeConst::QUESITO_KEY
       #if params[:watcher_user_ids] && params[:watcher_user_ids].is_a?(Hash)

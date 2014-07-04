@@ -482,8 +482,12 @@ class User < Principal
       return true
     end
     if self.isregistered?
-      #periodo di prova non accede ai contenuti rossi
-      return false
+      #durante il periodo di prova l'utente accede ai contenuti rossi
+      if issue && issue.section && issue.section.protetto
+        #tranne quelli che hanno una sezione protetta
+        return false
+      end
+      return true
     end
   end
 
