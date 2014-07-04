@@ -1,3 +1,6 @@
+
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("#accordion-events-contact").accordion({heightStyle:"content", autoHeight:false, active:1 });
@@ -16,6 +19,10 @@
             js_flash("alert", "Descrivi il convegno o l'evento che intendi proporre");
             return false;
         }
+    <% if User.current && User.current.logged? %>
+        js_flash("alert", "Devi essere abbonato e loggato per proporre il tuo evento!");
+        return false;
+        <% else %>
         $.post(urlpropose, { user_mail: email, body: msg, authenticity_token:$("input[name='authenticity_token']").val(), back_url:$('#back_url').val() },
                 function (data) {
                     data = data || {};
@@ -28,6 +35,7 @@
                     }
                 }
         );
+      <% end %>
     }
 </script>
 <!--
