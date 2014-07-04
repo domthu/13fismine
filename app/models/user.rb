@@ -492,74 +492,24 @@ class User < Principal
   end
 
   #CALL this procedure from Frontend only
-  #questa funzione ritorna
-  #  FALSE se l'utente non ha diritto di accedere ai contenuti
-  #     basandosi sullo stato Redmine User
-  #     basandosi sulla gestione abbonanemto
-  #     basandosi sullo stato dell'articolo
-  #  TRUE se tutto ok
+  #questa funzione viene chiamata dopo User.logged?
+  #questa funzione viene chiamata dopo canread?
   def candownload?(issue = nil)
-    #Control Always Undesired User RoleId
-    if self.isarchivied?
-      return false
-    end
-
-    #return false
-    #Control issue status
-    if issue && !issue.se_protetto
-      return true
-    end
-
-    #Control fismine user status
-    if self.locked?
-      return false
-    end
-    if self.registered?
-      #USER Must be confirmed by administrator
-      return false
-    end
-    if !self.active?
-      return false
-    end
-
-    #PUBLIC INSTALLATION
-    if !Setting.fee?
-      return true #PUBLIC AREA
-    end
-
-    #Control Always abilitated User RoleId
-    if self.ismanager? || self.isauthor? || self.isvip?
-      return true
-    end
-
-    #Control Always Undesired User RoleId
-    if self.isexpired?
-      return false
-    end
-
-    #Control content if public
-    if issue && !issue.se_visible_web?
-      # --> kappao flash[:notice] = "Articolo ancora non in linea. A breve verrà reso disponibile."
-      return false
-    end
-
-    #control fee state
-    self.control_state
-
-    if self.isabbonato?
-      return true
-    end
-    if self.isrenewing?
-      return true
-    end
     if self.isregistered?
-      #durante il periodo di prova l'utente accede ai contenuti rossi
+      #durante il periodo di prova l'utente NON accede ai attachment degli contenuti rossi che hanno una sezione protetta
       if issue && issue.section && issue.section.protetto
         #tranne quelli che hanno una sezione protetta
         return false
       end
-      return true
     end
+    return true
+  end
+
+  def candoquesito?
+    if self.isregistered?
+      return false
+    end
+    return true
   end
 
   def icon()

@@ -8,7 +8,7 @@
   <h2>Allegati</h2>
   <% for attachment in attachments %>
       <p>
-      <% if !User.current.logged? || (User.current && !User.current.candownload?(attachment.container)) %>
+      <% if !@candonwload %>
         <a class='icon-attachment' target="_blank" onclick="return notpermit();"> <%= attachment.filename + ( attachment.description.nil? ? "" : " - #{attachment.description}") %></a>
       <% else %>
         <%= link_to_fs_attachment attachment , :text => attachment.filename + ( attachment.description.nil? ? "" : " - #{attachment.description}"), :deletable => false , :class => 'icon-attachment', :target => '_blank' %>
