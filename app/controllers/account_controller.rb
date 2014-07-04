@@ -323,10 +323,10 @@ class AccountController < ApplicationController
           token = Token.new(:user => @user, :action => "register")
           if @user.save and token.save
             Mailer.deliver_register(token)
-            @stat = "Email inviata correttamente: <br /><strong>Verifichi la sua casella postale e confermi la sua email</strong>"
+            @stat = "Email inviata correttamente: <br /><strong>Verifichi la sua casella postale e confermi la sua email</strong><br />"
             @stat += l(:notice_account_register_done)
           else
-            @stat += " Errore nella procedura di conferam email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span>"
+            @stat += " Errore nella procedura di conferma email: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi nessuna email di conferma inviata</span><br />"
           end
 
         when '3' # Automatic activation
@@ -341,7 +341,7 @@ class AccountController < ApplicationController
             #tmail = Mailer.deliver_fee(user, 'thanks', Setting.template_fee_thanks)
             #Questa non perchè è per la prova gratis
           else
-            @stat += " Errore nella creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente. Riprovare</span>"
+            @stat += " Errore nella creazione automatica: <span style='color: red; font-weight: bolder;'> Utente NON registrato automaticamente. Riprovare</span><br />"
           end
 
         else
@@ -351,9 +351,9 @@ class AccountController < ApplicationController
             # Sends an email to the administrators
             Mailer.deliver_account_activation_request(user)
             account_pending
-            @stat += "Registrazione effettuata: <br /><strong>In attesa di abilitazione utente</strong>"
+            @stat += "Registrazione effettuata: <br /><strong>In attesa di abilitazione utente</strong><br />"
           else
-            @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span>"
+            @stat += " Creazione manuale da Admin: <span style='color: red; font-weight: bolder;'>Utente NON registrato e quindi l'amministratore deve fare una registrazione manuale</span><br />"
           end
 
           if !@user.errors.empty?
@@ -364,7 +364,7 @@ class AccountController < ApplicationController
       #Mail a destinazione della segretaria per informare dell'abbonamento di una nuova persona
       @tmail = Mailer.deliver_prova_gratis(@user, @stat + "<br />" + htmlpartial)
     rescue Exception => e
-      @errors += "<span style='color: red;'>" + l(:notice_email_error, e.message) + "</span>"
+      @errors += "<span style='color: red;'>" + l(:notice_email_error, e.message) + "</span><br />"
       @tmail = Mailer.deliver_errore("Prova Gratis", l(:notice_email_error, e.message))
     end
     ActionMailer::Base.raise_delivery_errors = raise_delivery_errors
