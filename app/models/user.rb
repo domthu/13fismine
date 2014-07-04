@@ -482,9 +482,34 @@ class User < Principal
       return true
     end
     if self.isregistered?
-      #periodo di prova non accede ai contenuti rossi
+      ##durante il periodo di prova l'utente accede ai contenuti rossi
+      #if issue && issue.section && issue.section.protetto
+      #  #tranne quelli che hanno una sezione protetta
+      #  return false
+      #end
+      return true
+    end
+  end
+
+  #CALL this procedure from Frontend only
+  #questa funzione viene chiamata dopo User.logged?
+  #questa funzione viene chiamata dopo canread?
+  def candownload?(issue = nil)
+    if self.isregistered?
+      #durante il periodo di prova l'utente NON accede ai attachment degli contenuti rossi che hanno una sezione protetta
+      if issue && issue.section && issue.section.protetto
+        #tranne quelli che hanno una sezione protetta
+        return false
+      end
+    end
+    return true
+  end
+
+  def candoquesito?
+    if self.isregistered?
       return false
     end
+    return true
   end
 
   def icon()

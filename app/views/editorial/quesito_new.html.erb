@@ -29,7 +29,18 @@
                       <span>  <%= text_area 'quesito','description',  :rows => 10, :cols => 25, :tabindex => '2' %>  </span>
                     </div>
                     <div id="fs-form-quesito-new-btn">
-                      <%= submit_tag 'Invia', :class => "fs-giallo-button", :confirm => 'Confermi?' %>   </div>
+                    <% if @candoquesito %>
+                      <%= submit_tag 'Invia', :class => "fs-giallo-button", :confirm => 'Confermi?' %>
+                    <% else %>
+                      <%= submit_tag 'Invia', :class => "fs-giallo-button", :onclick => 'javascript: return noquesito();' %>
+                      <script type="text/javascript">
+                          function noquesito() {
+                            js_flash("alert", "Senza abbonamento questo documento non è scaricabile. <br /> Abbonati");
+                            return false;
+                          }
+                      </script>
+                    <% end %>
+                    </div>
                 <% end %>
               </div>
             </div>

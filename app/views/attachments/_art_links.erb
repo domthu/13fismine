@@ -1,7 +1,18 @@
+<script type="text/javascript">
+  function notpermit() {
+    js_flash("alert", "Senza abbonamento questo documento non è scaricabile. <br /> Abbonati");
+    return false;
+  }
+</script>
 <div class="fs-art-attachments">
   <h2>Allegati</h2>
   <% for attachment in attachments %>
-      <p><%= link_to_fs_attachment attachment , :text => attachment.filename + ( attachment.description.nil? ? "" : " - #{attachment.description}")    ,:deletable => false , :class => 'icon-attachment' %>
+      <p>
+      <% if !@candonwload %>
+        <a class='icon-attachment' target="_blank" onclick="return notpermit();"> <%= attachment.filename + ( attachment.description.nil? ? "" : " - #{attachment.description}") %></a>
+      <% else %>
+        <%= link_to_fs_attachment attachment , :text => attachment.filename + ( attachment.description.nil? ? "" : " - #{attachment.description}"), :deletable => false , :class => 'icon-attachment', :target => '_blank' %>
+      <% end %>
         <span class="size">(<%= number_to_human_size attachment.filesize %>)</span>
         <% if options[:author] %>
             <span class="author"><%= h(attachment.author) %>, <%= format_time(attachment.created_on) %></span>

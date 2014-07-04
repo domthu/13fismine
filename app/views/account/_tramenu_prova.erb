@@ -63,10 +63,10 @@
         return false;
     }
     function fs_reload() {
-        //var btnid = $('#editoriale a').id;
-        //javascript:__doPostBack(btnid,'');
-        $('#editoriale a').click(); //non funziona?
-        javascript:__doPostBack('editoriale', '');
+        if (!!$('#editoriale a').length)
+        {
+          $('#editoriale a').click();
+        }
     }
 </script>
 

@@ -12,6 +12,7 @@ class EditorialController < ApplicationController
   before_filter :find_articolo, :only => [:articolo, :evento] #, :preview_articolo can be not visible]  #recupero articolo status
   before_filter :correct_user_article, :only => [:articolo, :evento] #LOGGATO O ARTICOLO LIBERO
   before_filter :enabled_user_article, :only => [:articolo, :evento] #ABBONATO E ARTICOLO protetto o SECTION protetto
+  before_filter :user_can_download, :only => [:articolo] #ABBONATO E ARTICOLO protetto o SECTION protetto
   before_filter :find_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_show]
   before_filter :correct_user_profile, :only => [:profilo_edit, :profilo_destroy, :profilo_create] #Admin o se stesso
   before_filter :find_quesito_fs, :only => [:quesito_destroy, :quesito_edit, :quesito_show]
@@ -389,6 +390,10 @@ class EditorialController < ApplicationController
   end
 
   def quesito_new
+    @candoquesito = false
+    if User.current.logged?
+      @candoquesito = User.current.candoquesito?
+    end
   end
 
   #POST del quesito_new
@@ -407,10 +412,12 @@ class EditorialController < ApplicationController
       if @news.save
         flash[:success] = "Il suo quesito è stato registrato grazie."
         redirect_to :controller => 'editorial', :action => 'quesiti_my' #, :id => @news
+        return
       else
-        flash[:error] = "Non ho potuto registrare il quesito... qualcosa è andato storto"
+        flash[:error] = 'Non ho potuto registrare il quesito...<br />' + @news.errors.full_messages.join('<br />').gsub('Testo', 'Quesito')
       end
     end
+    redirect_to :controller => 'editorial', :action => 'quesito_new'
   end
 
   #Il dato @quesito_news viene caricato dentro il before_filter
@@ -422,7 +429,7 @@ class EditorialController < ApplicationController
       if @quesito_news.save
         flash[:success] = l(:notice_successful_update)
       else
-        flash[:error] = 'non ho potuto aggiornare ... qualcosa è andato storto!'
+        flash[:error] = 'non ho potuto aggiornare ...<br />' + @quesito_news.errors.full_messages.join('<br />').gsub('Testo', 'Quesito')
       end
     end
     redirect_to :controller => 'editorial', :action => 'quesito_show', :id => @quesito_news
@@ -780,11 +787,21 @@ class EditorialController < ApplicationController
         elsif User.current.isexpired?
           reroute_auth("Il tuo abbonamento è scaduto. Per vedere di nuovo gli articoli protetti devi fare il rinnovo")
         elsif User.current.isregistered?
-          flash[:notice] = "Durante il periodo di prova solo gli abbonati regolari possono vedere tutti i contenuti protetti. Abbonati anche tu!"
+          flash[:notice] = "Durante il periodo di prova, puoi accedere a quasi tutti contenuti protetti tranne alcune sezioni. Gli abbonati regolari possono vedere tutti i contenuti. <br />Abbonati anche tu!"
           redirect_to(my_profile_edit_path)
         else
           reroute_auth("Gli articoli protetti sono riservati ed accessibile solo ai utenti abbonati")
         end
+      end
+    end
+  end
+
+  def user_can_download
+    @candonwload = true
+    if @articolo.se_protetto
+      #controllo del ruolo
+      if User.current.candownload?(@articolo)
+        @candonwload = false
       end
     end
   end

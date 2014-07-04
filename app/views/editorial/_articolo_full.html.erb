@@ -23,14 +23,18 @@
     </script>
 
     <div class="fs-postmetadataheader">
-      <div class="fs-art-sezione-full">&nbsp;<%= articolo.section.full_name %></div>
-       <div class="fs-tts">
+      <div class="fs-art-sezione-full"><span>&nbsp;<%= articolo.section.full_name %></span>
+        <div class="fs-tts">
         <img src="/images/ico/tts.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('tts-txt0-<%= articolo.id.to_s %>' ,'tts-txt1-<%= articolo.id.to_s %>','tts-txt2-<%= articolo.id.to_s %>');"/>
       </div>
-    <!--
+        <div class="fs-art-full-date">
+          <%= I18n.localize(articolo.due_date.to_date, :format => :data_articolo) %>
+        </div>
+      </div>
+     <!--
       <div class="fs-tts"><img src="/images/ico/tts.png" alt="Ascolta questo testo" title="Ascolta questo testo" onclick="return speak('tts-txt2-<%= articolo.id.to_s %>');"/></div>
       -->
-      <div class="fs-postheader-full" id='tts-txt0-<%= articolo.id.to_s %>'>  <%= articolo.subject %>  </div>
+    <div class="fs-postheader-full" id='tts-txt0-<%= articolo.id.to_s %>'>  <%= articolo.subject %>  </div>
     </div>
     <div style="width:100%;">
       <div class="fs-image-caption-wrapper-full">
