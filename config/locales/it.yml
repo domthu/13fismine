@@ -21,7 +21,7 @@ it:
       giorno_mese_anno: "%d %b %Y"
       giorno_settimana: "%A"
       giorno_mese_anno_barra: "%d/%m/%Y"
-
+      data_articolo: "%A %d %B %Y"
     day_names: [Domenica, Lunedì, Martedì, Mercoledì, Giovedì, Venerdì, Sabato]
     abbr_day_names: [Dom, Lun, Mar, Mer, Gio, Ven, Sab]
 
