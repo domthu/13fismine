@@ -780,7 +780,7 @@ class EditorialController < ApplicationController
         elsif User.current.isexpired?
           reroute_auth("Il tuo abbonamento è scaduto. Per vedere di nuovo gli articoli protetti devi fare il rinnovo")
         elsif User.current.isregistered?
-          flash[:notice] = "Durante il periodo di prova solo gli abbonati regolari possono vedere tutti i contenuti protetti. Abbonati anche tu!"
+          flash[:notice] = "Durante il periodo di prova, puoi accedere a quasi tutti contenuti protetti tranne alcune sezioni. Gli abbonati regolari possono vedere tutti i contenuti. <br />Abbonati anche tu!"
           redirect_to(my_profile_edit_path)
         else
           reroute_auth("Gli articoli protetti sono riservati ed accessibile solo ai utenti abbonati")

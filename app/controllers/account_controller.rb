@@ -426,7 +426,7 @@ class AccountController < ApplicationController
         end
       end
     else
-      send_notice("La conferma è gia avvenuta. Se non riccordi le tue credentiali usi la gestione reccupero password.")
+      send_notice("La conferma è gia avvenuta. <br />Se non riccordi le tue credentiali usi la gestione recupero password.")
     end
     #redirect_to :action => 'login'
     redirect_to editorial_url
@@ -534,7 +534,7 @@ class AccountController < ApplicationController
     # Valid user
     self.logged_user = user
     if params[:username].present? && !params[:username].blank? && params[:username].length > 30
-      send_notice "La tua username (" + params[:username] + ") è lunga " + params[:username].length.to_s + " caratteri: ti invitiamo a scegliere un login più corto, inferiore a 30 caratteri per favore. Puoi cambiarlo nel tuo profilo."
+      send_notice "La tua username (" + params[:username] + ") è lunga " + params[:username].length.to_s + " caratteri: ti invitiamo a scegliere un login più corto, inferiore a 30 caratteri per favore. <br />Puoi cambiarlo nel tuo profilo."
     end
     # generate a key and set cookie if autologin
     if params[:autologin] && Setting.autologin?
