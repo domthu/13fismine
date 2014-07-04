@@ -67,3 +67,5 @@ config/database.yml
 /public/images/commons/banners/*
 /public/images/ckeditor_assets/*
 /app/views/common/footer_pdf.html
+/lib/pdfkit/*
+lib/pdfkit/
