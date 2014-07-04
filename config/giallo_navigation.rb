@@ -5,7 +5,7 @@ SimpleNavigation::Configuration.run do |navigation|
   navigation.selected_class = 'active'
   # Define the primary navigation
   navigation.items do |menu_generale|
-    menu_generale.item :key_home, 'Home', editorial_path,  :highlights_on => %r(/editorial)
+    menu_generale.item :key_home, 'Home', editorial_path,  :highlights_on => %r(/editorial), :id => "editoriale"
     menu_generale.item :key_2, 'Chi Siamo', profiles_all_path, :highlights_on => %r(/chi-siamo)
     menu_generale.item :key_3, 'Cosa Offriamo', cosaoffriamo_path
     menu_generale.item :key_5, 'Lavora con Noi', lavoraconnoi_path
