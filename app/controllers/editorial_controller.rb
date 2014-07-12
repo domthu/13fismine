@@ -800,7 +800,7 @@ class EditorialController < ApplicationController
     @candonwload = true
     if @articolo.se_protetto
       #controllo del ruolo
-      if User.current.candownload?(@articolo)
+      if !User.current.candownload?(@articolo)
         @candonwload = false
       end
     end
