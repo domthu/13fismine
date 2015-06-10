@@ -17,8 +17,7 @@
     var cookieTI = (function () {
 
         var cookieName = 'FiscosportCookie';
-        var domainName = 'fiscopsport.it';
-        //var domainName = 'localhost';
+        var domainName = 'fiscosport.it';
         var cookieTIId = 'cookieChoiceInfo';
         var dismissLinkId = 'cookieChoiceDismiss';
 
