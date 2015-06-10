@@ -59,6 +59,7 @@ ActionController::Routing::Routes.draw do |map|
   map.newsport '/news-sport', :controller => 'editorial', :action => 'newsport'
   map.progettofs '/progetto-fiscosport', :controller => 'editorial', :action => 'pages_progetto-fs'
   map.lavoraconnoi '/lavora-con-noi', :controller => 'editorial', :action => 'pages_lavora-con-noi'
+  map.cookieslegacy '/cookies-policy', :controller => 'editorial', :action => 'pages_cookies-consent'
   map.page_abbonamento '/account/abbonati-a-fiscosport', :controller => 'editorial', :action => 'pages_abbonamenti'
   #-> Edizioni e Newletter (table: projects)-
   map.edizioni '/edizioni', :controller => 'editorial', :action => 'edizioni'

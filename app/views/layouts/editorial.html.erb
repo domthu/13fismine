@@ -43,6 +43,7 @@
   <%= javascript_include_tag "script.responsive.js" %>
   <%= javascript_include_tag "jquery.carouFredSel-6.2.1-packed.js" %>
   <%= javascript_include_tag "application_fs.js" %>
+  <%= javascript_include_tag "cookies-fs.js" %>
   <%#<script type="text/javascript" src="http://vozme.com/get_text.js"></script> %>
   <script type="text/javascript">
       // http://www.shopdev.co.uk/blog/text-resizing-with-jquery/
@@ -238,5 +239,8 @@
   </div>
 
 </div>
-
+	<script>
+		document.addEventListener('DOMContentLoaded', function(event) {cookieTI.showCookieTIDialog('<%= Setting.host_name.to_s + '/cookieslegacy' %>'); });");
+		//ga('set', 'anonymizeIp', true);
+	</script>
 </body>
