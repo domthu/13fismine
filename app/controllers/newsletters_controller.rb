@@ -122,7 +122,7 @@ class NewslettersController < ApplicationController
                 info.description = truncate(e.message, :length => 997, :omission => '...')
               end
               info.save!
-              nl_user.information = info
+              nl_usr.information = info
             end
             nl_usr.save
           else
